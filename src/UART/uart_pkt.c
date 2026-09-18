@@ -887,7 +887,7 @@ uint8_t Uart_Pkt_Send(
     uint8_t seq;
     uint16_t i;
 
-    if(len > UART_PKT_MAX_PAYLOAD)
+    if(len > UART_MAX_PAYLOAD)
     {
         RTT_LOG("[UART_ERR] Payload too large len=%u\\r\\n",
                 (unsigned)len);
