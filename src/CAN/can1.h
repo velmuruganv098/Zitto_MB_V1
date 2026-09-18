@@ -10,16 +10,16 @@
  *     - On frame detected → Phase 2
  *     - No frame after all 4 → restart cycle (never exit LOM untested)
  *
- *   Phase 2: CONFIRMING  (LPB=1 internal loopback, bus completely isolated)
- *     - TX disconnected from external bus (hardware guarantee, no bus impact)
- *     - Send test pattern, verify echo in RX mailbox
- *     - Pass → Phase 3 (normal mode)
- *     - Fail → next baud candidate, back to Phase 1
+ *   Phase 2: CONFIRMING  (internal loopback self-test, bus isolated)
+ *     - TX disconnected from external bus
+ *     - Validate the configured FlexCAN path before normal operation
+ *     - PASS → READY; FAIL → next baud candidate
  *
  *   Phase 3: READY  (LOM=0, LPB=0, normal CAN operation)
  *     - Receive and forward frames
- *     - Bus-off or RX error burst → back to Phase 1
- *     - No frames for 10s → back to Phase 1
+ *     - Bus-off → recovery/re-detection
+ *     - Ordinary RX error counts are diagnostic only
+ *     - No-traffic timeout does NOT invalidate a detected baud
  *
  * IRQ NUMBERS (S32K144, confirmed from SDK S32K144.h):
  *   CAN1_ORed_IRQn          = 85  NVIC[2] bit21  IPSR=0x65
@@ -46,9 +46,10 @@ extern "C" {
 #define CAN1_SHDN_PTB_PIN           2U
 
 /* Auto-baud timing: task period × ticks = time per candidate */
+#define CAN1_NO_RX_TIMEOUT_MS    2000U
+#define CAN1_ERROR_TIMEOUT_MS    2000U
 #define CAN1_TASK_PERIOD_MS         50U
-#define CAN1_DETECT_TICKS           4U    /* 4 × 50ms = 200ms per baud */
-#define CAN1_NO_FRAME_LIMIT         200U  /* 200 × 50ms = 10s idle → re-detect */
+#define CAN1_DETECT_TICKS           2U    /* 2 × 50ms = 100ms per baud */
 
 /* Baud rate candidates */
 #define CAN1_BAUD_500K              0U
@@ -81,8 +82,9 @@ extern "C" {
 
 typedef enum
 {
-    CAN1_STATE_DETECTING = 0,  /* LOM active, scanning for frames */
-    CAN1_STATE_READY,          /* Baud confirmed, normal reception */
+    CAN1_STATE_DETECTING = 0,  /* LOM active, scanning for valid frames */
+    CAN1_STATE_CONFIRMING,     /* Internal loopback self-test */
+    CAN1_STATE_READY,          /* Candidate accepted, normal reception */
     CAN1_STATE_ERROR           /* Unrecoverable - re-detecting     */
 } Can1_State_t;
 
