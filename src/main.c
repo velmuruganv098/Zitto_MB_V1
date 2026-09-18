@@ -16,20 +16,26 @@
  */
 
 /* --------------------------------------------------------------------------
- * MODULE ENABLE FLAGS
+ * V0.005 MODULE CONFIGURATION
+ *
+ * These are the only build-time enable switches.
+ * Every module owns its own hardware/state and is initialized independently.
  * -------------------------------------------------------------------------- */
+#define APP_UART_ENABLE     1U
+#define APP_CAN1_ENABLE     1U
+#define APP_CAN2_ENABLE     1U
+#define APP_IMU_ENABLE      0U
+#define APP_CSA_ENABLE      0U
+#define APP_GPIO_ENABLE     1U
+#define APP_FLM_ENABLE      1U
+#define APP_OTA_ENABLE      0U
 
-#define APP_IMU_ENABLE     0
-#define APP_CSA_ENABLE     0
-#define APP_CAN1_ENABLE    1
-#define APP_CAN2_ENABLE    0
-#define APP_FLM_ENABLE     1
-#define APP_GPIO_ENABLE    1
-
-#define TASK_DT_MS         50U
+#define APP_TASK_PERIOD_MS   1U
 
 /* --------------------------------------------------------------------------
  * INCLUDES
+ * -------------------------------------------------------------------------- */
+
  * -------------------------------------------------------------------------- */
 
 #include <stdint.h>
