@@ -465,8 +465,8 @@ int main(void)
     /* CAN2 - FlexCAN0  PTB0/PTB1 */
 #if APP_CAN2_ENABLE
     RTT_LOG("[BOOT] CAN2 init\r\n");
-    Can2_Init();
     Can2_SetRxCallback(can2_rx);
+    Can2_Init();
     RTT_LOG("[BOOT] CAN2 ok\r\n");
 #endif
 
