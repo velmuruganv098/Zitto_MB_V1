@@ -501,6 +501,7 @@ int main(void)
         }
 
         Uart_Poll();
+        Uart_Pkt_Task();
         Uart_Pkt_ForwardRTT();
         OTA_Task();
 
