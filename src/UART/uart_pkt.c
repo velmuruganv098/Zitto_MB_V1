@@ -48,7 +48,69 @@
 
 #define UART_FRAME_HEADER_SIZE      7U
 #define UART_FRAME_CRC_SIZE         2U
+#define UART_TX_QUEUE_SIZE          4096U
+#define UART_TX_DRAIN_BYTES         8U
 
+/* ========================================================================
+ * TX queue
+ *
+ * Producers only enqueue complete UART frames. Hardware transmission is
+ * drained by Uart_Pkt_Task(), so CAN/IMU/CSA never wait for UART wire time.
+ * ======================================================================== */
+
+static uint16_t uart_tx_next(uint16_t index)
+{
+    index++;
+    if(index >= UART_TX_QUEUE_SIZE)
+    {
+        index = 0U;
+    }
+    return index;
+}
+
+static uint16_t uart_tx_free(void)
+{
+    uint16_t head = g_tx_head;
+    uint16_t tail = g_tx_tail;
+
+    if(head >= tail)
+    {
+        return (uint16_t)((UART_TX_QUEUE_SIZE - 1U) - (head - tail));
+    }
+
+    return (uint16_t)((tail - head) - 1U);
+}
+
+static uint8_t uart_tx_enqueue(const uint8_t *data, uint16_t len)
+{
+    uint16_t i;
+    uint16_t head;
+
+    if((data == NULL) || (len == 0U))
+    {
+        return 0U;
+    }
+
+    if(len > uart_tx_free())
+    {
+        RTT_LOG("[UART_ERR] TX queue full len=%u free=%u\\r\\n",
+                (unsigned)len, (unsigned)uart_tx_free());
+        return 0U;
+    }
+
+    head = g_tx_head;
+
+    for(i = 0U; i < len; i++)
+    {
+        g_tx_queue[head] = data[i];
+        head = uart_tx_next(head);
+    }
+
+    g_tx_head = head;
+    return 1U;
+}
+
+/* ======================================================================== */
 /* ========================================================================
  * RX parser states
  * ======================================================================== */
@@ -82,6 +144,10 @@ static volatile uint16_t g_rx_head = 0U;
 static volatile uint16_t g_rx_tail = 0U;
 
 static uint8_t g_tx_buffer[UART_TX_BUFFER_SIZE];
+
+static uint8_t g_tx_queue[UART_TX_QUEUE_SIZE];
+static volatile uint16_t g_tx_head = 0U;
+static volatile uint16_t g_tx_tail = 0U;
 
 static uint8_t g_tx_seq = 0U;
 
@@ -290,6 +356,8 @@ static void uart_hw_init(void)
     g_rx_tail = 0U;
 
     g_tx_seq = 0U;
+    g_tx_head = 0U;
+    g_tx_tail = 0U;
 }
 
 /* ========================================================================
@@ -813,240 +881,70 @@ uint8_t Uart_Pkt_Send(
     uint16_t len
 )
 {
-    uint16_t index;
+    uint16_t index = 0U;
     uint16_t crc;
     uint8_t seq;
     uint16_t i;
 
-
-    /* ------------------------------------------------------------
-     * Validate
-     * ------------------------------------------------------------ */
-
     if(len > UART_PKT_MAX_PAYLOAD)
     {
-        RTT_LOG(
-            "[UART_ERR] Payload too large len=%u\r\n",
-            (unsigned)len
-        );
-
+        RTT_LOG("[UART_ERR] Payload too large len=%u\\r\\n",
+                (unsigned)len);
         return 0U;
     }
 
-
-    if(
-        (len > 0U) &&
-        (payload == NULL)
-    )
+    if((len > 0U) && (payload == NULL))
     {
-        RTT_LOG(
-            "[UART_ERR] NULL payload len=%u\r\n",
-            (unsigned)len
-        );
-
+        RTT_LOG("[UART_ERR] NULL payload len=%u\\r\\n",
+                (unsigned)len);
         return 0U;
     }
 
+    seq = g_tx_seq++;
 
-    /* ------------------------------------------------------------
-     * Initialize frame
-     * ------------------------------------------------------------ */
+    g_tx_buffer[index++] = UART_SOF0;
+    g_tx_buffer[index++] = UART_SOF1;
+    g_tx_buffer[index++] = UART_PROTOCOL_VERSION;
+    g_tx_buffer[index++] = type;
+    g_tx_buffer[index++] = (uint8_t)(len & 0xFFU);
+    g_tx_buffer[index++] = (uint8_t)((len >> 8U) & 0xFFU);
+    g_tx_buffer[index++] = seq;
 
-    index =
-        0U;
+    crc = 0xFFFFU;
+    crc = crc16_update(crc, UART_PROTOCOL_VERSION);
+    crc = crc16_update(crc, type);
+    crc = crc16_update(crc, (uint8_t)(len & 0xFFU));
+    crc = crc16_update(crc, (uint8_t)((len >> 8U) & 0xFFU));
+    crc = crc16_update(crc, seq);
 
-
-    seq =
-        g_tx_seq++;
-
-
-    /* SOF */
-
-    g_tx_buffer[index++] =
-        UART_SOF0;
-
-    g_tx_buffer[index++] =
-        UART_SOF1;
-
-
-    /* VERSION */
-
-    g_tx_buffer[index++] =
-        UART_PROTOCOL_VERSION;
-
-
-    /* TYPE */
-
-    g_tx_buffer[index++] =
-        type;
-
-
-    /* LENGTH */
-
-    g_tx_buffer[index++] =
-        (uint8_t)(len & 0xFFU);
-
-    g_tx_buffer[index++] =
-        (uint8_t)(
-            (len >> 8U) &
-            0xFFU
-        );
-
-
-    /* SEQUENCE */
-
-    g_tx_buffer[index++] =
-        seq;
-
-
-    /* ------------------------------------------------------------
-     * CRC starts from VERSION
-     * ------------------------------------------------------------ */
-
-    crc =
-        0xFFFFU;
-
-
-    crc =
-        crc16_update(
-            crc,
-            UART_PROTOCOL_VERSION
-        );
-
-
-    crc =
-        crc16_update(
-            crc,
-            type
-        );
-
-
-    crc =
-        crc16_update(
-            crc,
-            (uint8_t)(len & 0xFFU)
-        );
-
-
-    crc =
-        crc16_update(
-            crc,
-            (uint8_t)(
-                (len >> 8U) &
-                0xFFU
-            )
-        );
-
-
-    crc =
-        crc16_update(
-            crc,
-            seq
-        );
-
-
-    /* ------------------------------------------------------------
-     * Payload
-     * ------------------------------------------------------------ */
-
-    if(len > 0U)
+    for(i = 0U; i < len; i++)
     {
-        memcpy(
-            &g_tx_buffer[index],
-            payload,
-            len
-        );
-
-
-        for(i = 0U; i < len; i++)
-        {
-            crc =
-                crc16_update(
-                    crc,
-                    payload[i]
-                );
-        }
-
-
-        index +=
-            len;
+        g_tx_buffer[index++] = payload[i];
+        crc = crc16_update(crc, payload[i]);
     }
 
+    g_tx_buffer[index++] = (uint8_t)(crc & 0xFFU);
+    g_tx_buffer[index++] = (uint8_t)((crc >> 8U) & 0xFFU);
 
-    /* ------------------------------------------------------------
-     * CRC little endian
-     * ------------------------------------------------------------ */
-
-    g_tx_buffer[index++] =
-        (uint8_t)(
-            crc &
-            0xFFU
-        );
-
-
-    g_tx_buffer[index++] =
-        (uint8_t)(
-            (crc >> 8U) &
-            0xFFU
-        );
-
-
-    /* ------------------------------------------------------------
-     * Frame complete
-     * ------------------------------------------------------------ */
-
-    RTT_LOG(
-        "[UART_TX] Frame ready "
-        "type=0x%02X "
-        "payload=%u "
-        "total=%u\r\n",
-
-        (unsigned)type,
-
-        (unsigned)len,
-
-        (unsigned)index
-    );
-
-
-    /* ------------------------------------------------------------
-     * Send frame
-     *
-     * IMPORTANT:
-     *
-     * ESP does NOT need to be connected.
-     *
-     * UART failure must never stop the MCU.
-     * ------------------------------------------------------------ */
-
-    for(i = 0U; i < index; i++)
-    {
-        if(
-            uart_hw_send_byte(
-                g_tx_buffer[i]
-            ) == 0U
-        )
-        {
-            RTT_LOG(
-                "[UART_ERR] Packet TX failed "
-                "byte=%u/%u "
-                "type=0x%02X\r\n",
-
-                (unsigned)i,
-
-                (unsigned)index,
-
-                (unsigned)type
-            );
-
-
-            return 0U;
-        }
-    }
-
-
-    return 1U;
+    return uart_tx_enqueue(g_tx_buffer, index);
 }
+
+void Uart_Pkt_Task(void)
+{
+    uint16_t sent = 0U;
+
+    while((g_tx_tail != g_tx_head) && (sent < UART_TX_DRAIN_BYTES))
+    {
+        if(uart_hw_send_byte(g_tx_queue[g_tx_tail]) == 0U)
+        {
+            return;
+        }
+
+        g_tx_tail = uart_tx_next(g_tx_tail);
+        sent++;
+    }
+}
+
 uint8_t Uart_Pkt_SendLog(
     const char *text
 )
