@@ -63,6 +63,10 @@ static void csa_SclH(void)
 volatile uint32_t t=5000U;
 PTA->PDDR&=~(1UL<<CSA_SCL);
 while(!(PTA->PDIR&(1UL<<CSA_SCL))&&--t){;}
+if(t==0U)
+{
+    SEGGER_RTT_printf(0,"[CSA_ERR] I2C SCL release timeout\\r\\n");
+}
 csa_Us(CSA_DLY);
 }
 
@@ -317,6 +321,7 @@ SEGGER_RTT_printf(0,
 void Csa_Task(void)
 {
 uint16_t masken=0U;
+static uint32_t s_errors=0U;
 uint8_t cvrf,ovf;
 
 
@@ -327,6 +332,11 @@ s_taskCnt++;
 csa_ReadMeasurement();
 
 csa_RdReg(INA226_REG_MASKEN,&masken);
+if((s_taskCnt % CSA_PRINT_EVERY)==0U && s_data.vbus_mv==0 && s_data.current_ma==0)
+{
+    s_errors++;
+    SEGGER_RTT_printf(0,"[CSA_ERR] Measurement unavailable count=%lu\\r\\n",(unsigned long)s_errors);
+}
 
 cvrf=(uint8_t)((masken>>3U)&1U);
 ovf=(uint8_t)((masken>>2U)&1U);
