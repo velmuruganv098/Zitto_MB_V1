@@ -448,7 +448,7 @@ static void prv_lock_baud(void)
 void Can2_Init(void)
 {
     memset(&g_status, 0, sizeof(g_status));
-    g_rx_cb = NULL;
+    /* Preserve a callback installed before Init(). */
     g_state = CAN2_STATE_OFF;
 
     RTT_LOG("\r\n[CAN2] INIT START\r\n");
