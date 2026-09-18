@@ -36,8 +36,6 @@
  * INCLUDES
  * -------------------------------------------------------------------------- */
 
- * -------------------------------------------------------------------------- */
-
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
@@ -390,8 +388,8 @@ int main(void)
     SEGGER_RTT_printf(0,
         "\r\n================================================\r\n"
         " Zitto MB V1 - VCU Firmware Boot\r\n"
-        " Firmware Revision : V0.003\r\n"
-        " Change            : CAN1 automatic re-detection after 2s CAN inactivity/error\r\n"
+        " Firmware Revision : V0.005\r\n"
+        " Change            : Independent S32K144 modules + CAN2\r\n"
         " MCU: S32K144  Clock: 80MHz SPLL  WDOG: OFF\r\n"
         " Modules: IMU=%d CSA=%d CAN1=%d CAN2=%d FLM=%d GPIO=%d\r\n"
         "================================================\r\n\r\n",
@@ -488,7 +486,7 @@ int main(void)
 
         Uart_Poll();
         Uart_Pkt_ForwardRTT();
-        OTA_Task();   /* always run, no #ifdef */
+        OTA_Task();
 
         /* Software reset */
         if(g_reset_arm != 0U)
@@ -547,7 +545,7 @@ int main(void)
         }
 
         led_task();
-        delay_ms(TASK_DT_MS);
+        delay_ms(APP_TASK_PERIOD_MS);
     }
 
     return 0;
