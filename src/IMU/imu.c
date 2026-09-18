@@ -73,6 +73,10 @@ static void prv_SclH(void)
 volatile uint32_t t=5000U;
 PTA->PDDR&=~(1UL<<BB_SCL);
 while(!(PTA->PDIR&(1UL<<BB_SCL))&&--t){;}
+if(t==0U)
+{
+    SEGGER_RTT_printf(0,"[IMU_ERR] I2C SCL release timeout\\r\\n");
+}
 prv_Us(BB_DLY);
 }
 
