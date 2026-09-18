@@ -222,15 +222,29 @@ static void can1_rx(uint32_t id, uint8_t ide, uint8_t rtr,
  * CAN2 RX CALLBACK
  * -------------------------------------------------------------------------- */
 #if APP_CAN2_ENABLE
-static void can2_rx(uint32_t id, uint8_t ide, uint8_t rtr,
-                    uint8_t dlc, const uint8_t *data, uint32_t baud)
+static void can2_rx(const Can2_Frame_t *frame)
 {
     CanFramePkt_t f;
     uint8_t i;
-    (void)baud;
+
+    if(frame == NULL)
+    {
+        return;
+    }
+
     memset(&f, 0, sizeof(f));
-    f.bus=2U; f.ide=ide; f.rtr=rtr; f.dlc=dlc; f.can_id=id; f.ts_ms=Uart_GetMs();
-    if(data) { for(i=0U;i<8U;i++) f.data[i]=(i<dlc)?data[i]:0U; }
+    f.bus = 2U;
+    f.ide = frame->extended;
+    f.rtr = frame->rtr;
+    f.dlc = frame->dlc;
+    f.can_id = frame->id;
+    f.ts_ms = Uart_GetMs();
+
+    for(i = 0U; i < 8U; i++)
+    {
+        f.data[i] = (i < frame->dlc) ? frame->data[i] : 0U;
+    }
+
     (void)Uart_Pkt_SendCan(&f);
 }
 #endif
