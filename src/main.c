@@ -419,8 +419,10 @@ int main(void)
     /* UART - LPUART0  PTC3=TX  PTC2=RX  115200 8N1
      * Clock: SPLLDIV2 = 20MHz (running now because clock_init_80mhz was called) */
     RTT_LOG("[BOOT] UART init\r\n");
+#if APP_UART_ENABLE
     Uart_Init(cmd_handler);
     RTT_LOG("[BOOT] UART ok  uptime=%lums\r\n", (unsigned long)Uart_GetMs());
+#endif
 
     /* GPIO */
 #if APP_GPIO_ENABLE
@@ -503,7 +505,9 @@ int main(void)
         Uart_Poll();
         Uart_Pkt_Task();
         Uart_Pkt_ForwardRTT();
+#if APP_OTA_ENABLE
         OTA_Task();
+#endif
 
         /* Software reset */
         if(g_reset_arm != 0U)
