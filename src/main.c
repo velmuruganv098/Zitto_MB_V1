@@ -1,8 +1,8 @@
 /*
  * main.c  -  Zitto_MB_V1 / S32K144
  *
- * Firmware Revision : V0.001
- * Change Note       : CAN1 external auto-baud state-machine architecture
+ * Firmware Revision : V0.004
+ * Change Note       : CAN1 fast auto-baud; re-detect only on BUS HEAVY/BUS-OFF
  *
  * ==========================================================================
  * CRITICAL BOOT ORDER (do not change):
