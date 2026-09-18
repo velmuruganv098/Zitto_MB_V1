@@ -475,15 +475,12 @@ static uint8_t uart_rx_pop(
 static void uart_hw_poll_rx(void)
 {
     uint8_t data;
+    uint8_t budget = 32U;
 
-    /*
-     * Drain all available RX bytes.
-     */
-
-    while(LPUART0->STAT & LPUART_STAT_RDRF_MASK)
+    /* Bounded RX work: continuous ESP32 traffic cannot starve CAN/IMU/CSA. */
+    while((LPUART0->STAT & LPUART_STAT_RDRF_MASK) && (budget-- != 0U))
     {
         data = (uint8_t)LPUART0->DATA;
-
         uart_rx_push(data);
     }
 }
@@ -860,15 +857,14 @@ void Uart_Poll(void)
         rx_parser_reset();
     }
 
-    /*
-     * Process all received bytes.
-     */
-
-    while(uart_rx_pop(&data))
+    /* Bounded parser work per scheduler pass. */
     {
-        g_rx_last_ms = g_ms;
-
-        rx_parser_byte(data);
+        uint8_t budget = 32U;
+        while((budget-- != 0U) && uart_rx_pop(&data))
+        {
+            g_rx_last_ms = g_ms;
+            rx_parser_byte(data);
+        }
     }
 }
 
