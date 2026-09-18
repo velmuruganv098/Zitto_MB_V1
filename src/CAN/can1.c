@@ -486,7 +486,7 @@ static void prv_ProcessRx(void)
 
 /* ============================================================
  * START / RESTART DETECTION
- * Always starts at 500 kbps in listen-only mode.
+ * Always starts at 500 kbps in NORMAL/active mode so PCAN can be ACKed.
  * Called from Init, BUS HEAVY (error-passive), and BUS-OFF.
  * ============================================================ */
 static void prv_StartDetection(void)
@@ -502,7 +502,7 @@ static void prv_StartDetection(void)
     g_status.error_passive      = 0U;
     g_status.rx_active          = 0U;
 
-    if(prv_ApplyBaud(0U, 1U) == 0U)
+    if(prv_ApplyBaud(0U, 0U) == 0U)
     {
         g_state = CAN1_STATE_ERROR;
         RTT_LOG("[CAN1_ERR] Failed to enter detection at 500 kbps\r\n");
@@ -510,7 +510,7 @@ static void prv_StartDetection(void)
     }
 
     g_state = CAN1_STATE_DETECTING;
-    RTT_LOG("[CAN1] Detection start: 500kbps LOM\r\n");
+    RTT_LOG("[CAN1] Detection start: 500kbps NORMAL/ACTIVE\r\n");
 }
 
 /* ============================================================
@@ -527,7 +527,7 @@ static void prv_NextBaud(void)
 
     g_detect_ticks = 0U;
 
-    if(prv_ApplyBaud(g_rate_idx, 1U) == 0U)
+    if(prv_ApplyBaud(g_rate_idx, 0U) == 0U)
     {
         g_state = CAN1_STATE_ERROR;
         RTT_LOG("[CAN1_ERR] Failed to switch baud candidate\r\n");
@@ -535,7 +535,7 @@ static void prv_NextBaud(void)
     }
 
     g_state = CAN1_STATE_DETECTING;
-    RTT_LOG("[CAN1] Next baud: %lu kbps LOM CTRL1=0x%08lX\r\n",
+    RTT_LOG("[CAN1] Next baud: %lu kbps NORMAL/ACTIVE CTRL1=0x%08lX\r\n",
             (unsigned long)g_baud_kbps[g_rate_idx],
             (unsigned long)CAN1->CTRL1);
 }
