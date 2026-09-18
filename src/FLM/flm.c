@@ -51,6 +51,8 @@ static uint32_t s_last_page;
 static uint32_t s_records;
 
 static uint8_t s_ready;
+static uint8_t s_scanning;
+static uint32_t s_scan_page;
 
 
 /* ============================================================
@@ -532,88 +534,18 @@ static uint8_t prv_FindPreviousRecord(
 
 void Flm_Init(void)
 {
-    uint32_t page;
+    s_next_page = FLM_USER_FIRST_PAGE;
+    s_last_page = 0U;
+    s_records = 0U;
+    s_ready = 0U;
+    s_scanning = 1U;
+    s_scan_page = FLM_USER_FIRST_PAGE;
 
-    FlmRecHdr_t hdr;
+    memset(s_page_buf, 0xFF, sizeof(s_page_buf));
 
-
-    s_next_page =
-        FLM_USER_FIRST_PAGE;
-
-    s_last_page =
-        0U;
-
-    s_records =
-        0U;
-
-    s_ready =
-        0U;
-
-
-    for (
-        page = FLM_USER_FIRST_PAGE;
-        page <= FLM_USER_LAST_PAGE;
-        page++
-    )
-    {
-        /*
-         * First empty page becomes the next write page.
-         */
-
-        if (prv_PageEmpty(page) != 0U)
-        {
-            s_next_page = page;
-
-            break;
-        }
-
-
-        /*
-         * Count valid records.
-         */
-
-        if (prv_RecordValid(
-                page,
-                &hdr
-            ) != 0U)
-        {
-            s_last_page =
-                page;
-
-            s_records++;
-
-            s_next_page =
-                page + 1U;
-        }
-        else
-        {
-            /*
-             * Non-empty but invalid page.
-             *
-             * Most likely interrupted write.
-             *
-             * Stop scanning here to avoid walking into
-             * undefined data.
-             */
-
-            s_next_page =
-                page;
-
-            break;
-        }
-    }
-
-
-    if (s_next_page > FLM_USER_LAST_PAGE)
-    {
-        s_next_page =
-            FLM_USER_LAST_PAGE + 1U;
-    }
-
-
-    s_ready =
-        1U;
+    RTT_LOG("[FLM] Init started; background scan active\\r\\n");
 }
+
 
 
 /* ============================================================
@@ -1073,7 +1005,49 @@ uint8_t Flm_IsReady(void)
 
 void Flm_Task(void)
 {
-    /*
-     * Reserved for future asynchronous flash operations.
-     */
+    uint8_t budget = 2U;
+    FlmRecHdr_t hdr;
+
+    if(!s_scanning || s_ready) return;
+
+    while((budget-- != 0U) && (s_scan_page <= FLM_USER_LAST_PAGE))
+    {
+        if(prv_PageEmpty(s_scan_page) != 0U)
+        {
+            s_next_page = s_scan_page;
+            s_ready = 1U;
+            s_scanning = 0U;
+            RTT_LOG("[FLM] Scan complete records=%lu next=%lu\\r\\n",
+                    (unsigned long)s_records,
+                    (unsigned long)s_next_page);
+            return;
+        }
+
+        if(prv_RecordValid(s_scan_page, &hdr) != 0U)
+        {
+            s_last_page = s_scan_page;
+            s_records++;
+            s_next_page = s_scan_page + 1U;
+        }
+        else
+        {
+            s_next_page = s_scan_page;
+            s_ready = 1U;
+            s_scanning = 0U;
+            RTT_LOG("[FLM_ERR] Invalid page %lu; scan stopped safely\\r\\n",
+                    (unsigned long)s_scan_page);
+            return;
+        }
+
+        s_scan_page++;
+    }
+
+    if(s_scan_page > FLM_USER_LAST_PAGE)
+    {
+        s_next_page = FLM_USER_LAST_PAGE + 1U;
+        s_ready = 1U;
+        s_scanning = 0U;
+        RTT_LOG("[FLM] Scan complete: storage full records=%lu\\r\\n",
+                (unsigned long)s_records);
+    }
 }
