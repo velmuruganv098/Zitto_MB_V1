@@ -1,7 +1,7 @@
 /*
  * main.c  -  Zitto_MB_V1 / S32K144
  *
- * Firmware Revision : V0.005
+ * Firmware Revision : V0.006
  * Change Note       : Independent S32K144 module architecture + CAN2
  *
  * ==========================================================================
@@ -403,7 +403,7 @@ int main(void)
         "\r\n================================================\r\n"
         " Zitto MB V1 - VCU Firmware Boot\r\n"
         " Firmware Revision : V0.005\r\n"
-        " Change            : Independent S32K144 modules + CAN2\r\n"
+        " Change            : Non-blocking supervision + bounded scheduler\r\n"
         " MCU: S32K144  Clock: 80MHz SPLL  WDOG: OFF\r\n"
         " Modules: IMU=%d CSA=%d CAN1=%d CAN2=%d FLM=%d GPIO=%d\r\n"
         "================================================\r\n\r\n",
@@ -443,7 +443,7 @@ int main(void)
     RTT_LOG("[BOOT] IMU init\r\n");
     Imu_Init();
     Imu_Calibrate();
-    RTT_LOG("[BOOT] IMU ok\r\n");
+    RTT_LOG("[BOOT] IMU init ok; calibration runs in background\r\n");
 #endif
 
     /* CSA */
@@ -487,10 +487,13 @@ int main(void)
      * ====================================================================== */
     while(1)
     {
-        g_tick++;
+        /* Scheduler is driven by SysTick; never sleep here. */
+        { static uint32_t s_last_ms = 0U; uint32_t now_ms = Uart_GetMs();
+          if(now_ms == s_last_ms) { continue; }
+          s_last_ms = now_ms; g_tick = now_ms;
 
         /* Alive log every 1s */
-        if((g_tick % 20U) == 0U)
+        if((now_ms % 1000U) == 0U)
         {
             RTT_LOG("[MAIN] tick=%lu uptime=%lums  CAN1=%lukbps  state=%u  IRQs: or=%lu err=%lu mb=%lu\r\n",
                     (unsigned long)g_tick,
@@ -525,7 +528,7 @@ int main(void)
         if(g_imu_en != 0U)
         {
             Imu_Task();
-            if((g_tick % 10U) == 0U)
+            if((now_ms % 50U) == 0U)
             {
                 ImuPkt_t p; memset(&p,0,sizeof(p));
                 Imu_GetLastPkt(&p);
@@ -539,7 +542,7 @@ int main(void)
         if(g_csa_en != 0U)
         {
             Csa_Task();
-            if((g_tick % 4U) == 0U)
+            if((now_ms % 20U) == 0U)
             {
                 CsaPkt_t p; memset(&p,0,sizeof(p));
                 Csa_GetLastPkt(&p);
@@ -559,15 +562,15 @@ int main(void)
 #endif
 
         /* Heartbeat + status every 5s */
-        if((g_tick % 100U) == 0U)
+        if((now_ms % 5000U) == 0U)
         {
             (void)Uart_Pkt_SendHb();
             send_status();
         }
 
         led_task();
-        delay_ms(APP_TASK_PERIOD_MS);
-    }
+        }
+        }
 
     return 0;
 }
