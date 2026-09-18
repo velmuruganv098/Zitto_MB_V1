@@ -383,7 +383,7 @@ Gpio_ControlInit();
 #if defined(CAN1_MODULE_EN)
 
 #if (CAN1_MODULE_EN != 0U)
-CAN1_Init();
+Can1_Init();
 #endif
 
 #endif
@@ -391,7 +391,7 @@ CAN1_Init();
 #if defined(CAN2_MODULE_EN)
 
 #if (CAN2_MODULE_EN != 0U)
-CAN2_Init();
+Can2_Init();
 #endif
 
 #endif
@@ -419,7 +419,7 @@ Imu_Init();
 #if defined(OTA_MODULE_EN)
 
 #if (OTA_MODULE_EN != 0U)
-Ota_Init();
+OTA_Init();
 #endif
 
 #endif
@@ -526,7 +526,7 @@ Imu_Task();
 #if defined(OTA_MODULE_EN)
 
 #if (OTA_MODULE_EN != 0U)
-Ota_Task();
+OTA_Task();
 #endif
 
 #endif
