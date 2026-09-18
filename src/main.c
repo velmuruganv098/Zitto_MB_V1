@@ -225,6 +225,7 @@ static void can1_rx(uint32_t id, uint8_t ide, uint8_t rtr,
 static void can2_rx(const Can2_Frame_t *frame)
 {
     CanFramePkt_t f;
+    uint8_t i;
     if(frame == NULL)
     {
         return;
@@ -378,8 +379,6 @@ static void cmd_handler(uint8_t type, const uint8_t *pl, uint16_t len)
  * ========================================================================== */
 int main(void)
 {
-    uint8_t i;
-
     /* ======================================================================
      * STEP 1: WDOG DISABLE  - absolute first call
      * STEP 2: CLOCK INIT    - starts bus clock (40MHz for CAN) and
