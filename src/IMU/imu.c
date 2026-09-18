@@ -16,6 +16,11 @@ static int32_t s_ax_mg,s_ay_mg,s_az_mg;
 static int32_t s_gx_mdps,s_gy_mdps,s_gz_mdps;
 static int16_t s_temp_c10;
 static uint8_t s_still,s_ready;
+static uint8_t s_calibrating;
+static uint8_t s_cal_samples;
+static int32_t s_cal_sa,s_cal_sb,s_cal_sc,s_cal_sd,s_cal_se,s_cal_sf;
+static int32_t s_cal_ca,s_cal_cd;
+static uint32_t s_cal_start_ms,s_cal_last_ms;
 static uint32_t s_n;
 
 
@@ -232,17 +237,42 @@ SEGGER_RTT_printf(0,"[IMU] ACCEL_X1=0x%02X %s\r\n",v,s_ready?"SENSORS ON":"FAIL"
 
 void Imu_Calibrate(void)
 {
-uint8_t raw[14],i;
-int32_t sa=0,sb=0,sc=0,sd=0,se=0,sf=0;
-int32_t ca=0,cd=0;
+    if(!s_ready)
+    {
+        SEGGER_RTT_printf(0,"[IMU_ERR] Calibration requested before sensor ready\r\n");
+        return;
+    }
 
+    s_calibrating = 1U;
+    s_cal_samples = 0U;
+    s_cal_sa = s_cal_sb = s_cal_sc = 0;
+    s_cal_sd = s_cal_se = s_cal_sf = 0;
+    s_cal_ca = s_cal_cd = 0;
+    s_cal_start_ms = Uart_GetMs();
+    s_cal_last_ms = s_cal_start_ms - IMU_DT_MS;
 
-if(!s_ready)return;
+    SEGGER_RTT_printf(0,"[IMU] Calibration started (non-blocking)\r\n");
+}
 
-SEGGER_RTT_printf(0,"Calibrating - keep STILL for 2s...\r\n");
+static void prv_CalibrationTask(void)
+{
+    uint8_t raw[14];
 
-for(i=0U;i<IMU_CAL_SAMPLES;i++){
-    if(prv_Rd(ICM_REG_TEMP_DATA1,raw,14U)==0){
+    if(!s_calibrating || !s_ready) return;
+
+    if((uint32_t)(Uart_GetMs() - s_cal_start_ms) >= 2500U)
+    {
+        s_calibrating = 0U;
+        SEGGER_RTT_printf(0,"[IMU_ERR] Calibration timeout samples=%u accel=%ld gyro=%ld\r\n",
+                          (unsigned)s_cal_samples,(long)s_cal_ca,(long)s_cal_cd);
+        return;
+    }
+
+    if((uint32_t)(Uart_GetMs() - s_cal_last_ms) < IMU_DT_MS) return;
+    s_cal_last_ms = Uart_GetMs();
+
+    if(prv_Rd(ICM_REG_TEMP_DATA1,raw,14U)==0)
+    {
         int16_t ax=prv_S16(raw[2],raw[3]);
         int16_t ay=prv_S16(raw[4],raw[5]);
         int16_t az=prv_S16(raw[6],raw[7]);
@@ -250,44 +280,38 @@ for(i=0U;i<IMU_CAL_SAMPLES;i++){
         int16_t gy=prv_S16(raw[10],raw[11]);
         int16_t gz=prv_S16(raw[12],raw[13]);
 
-        if(ax!=(int16_t)0x8000){
-            sa+=ax;sb+=ay;sc+=az;ca++;
+        if(ax!=(int16_t)0x8000)
+        {
+            s_cal_sa+=ax; s_cal_sb+=ay; s_cal_sc+=az; s_cal_ca++;
         }
 
         if(gx>-IMU_GYRO_ZRO_THR&&gx<IMU_GYRO_ZRO_THR&&
            gy>-IMU_GYRO_ZRO_THR&&gy<IMU_GYRO_ZRO_THR&&
-           gz>-IMU_GYRO_ZRO_THR&&gz<IMU_GYRO_ZRO_THR){
-            sd+=gx;se+=gy;sf+=gz;cd++;
+           gz>-IMU_GYRO_ZRO_THR&&gz<IMU_GYRO_ZRO_THR)
+        {
+            s_cal_sd+=gx; s_cal_se+=gy; s_cal_sf+=gz; s_cal_cd++;
         }
     }
-    prv_Ms(IMU_DT_MS);
-}
 
-if(ca>0){
-    s_ax0=sa/ca;
-    s_ay0=sb/ca;
-    s_az0=sc/ca;
-}
+    s_cal_samples++;
 
-if(cd>0){
-    s_gx0=sd/cd;
-    s_gy0=se/cd;
-    s_gz0=sf/cd;
-}
+    if(s_cal_samples >= IMU_CAL_SAMPLES)
+    {
+        if(s_cal_ca>0){ s_ax0=s_cal_sa/s_cal_ca; s_ay0=s_cal_sb/s_cal_ca; s_az0=s_cal_sc/s_cal_ca; }
+        if(s_cal_cd>0){ s_gx0=s_cal_sd/s_cal_cd; s_gy0=s_cal_se/s_cal_cd; s_gz0=s_cal_sf/s_cal_cd; }
 
-SEGGER_RTT_printf(0,"Accel: AX=%-6d AY=%-6d AZ=%-6d (%d)\r\n",
-    (int)s_ax0,(int)s_ay0,(int)s_az0,(int)ca);
-
-SEGGER_RTT_printf(0,"Gyro: GX=%-6d GY=%-6d GZ=%-6d (%d)\r\n\r\n",
-    (int)s_gx0,(int)s_gy0,(int)s_gz0,(int)cd);
-
-SEGGER_RTT_printf(0," N X mm Y mm Z mm AX cm/s AY cm/s AZ cm/s GX d/s GY d/s GZ d/s T C\r\n");
-SEGGER_RTT_printf(0,"-------------------------------------------------\r\n");
+        s_calibrating = 0U;
+        SEGGER_RTT_printf(0,"[IMU] Calibration complete accel=%ld gyro=%ld\r\n",
+                          (long)s_cal_ca,(long)s_cal_cd);
+    }
 }
 
 void Imu_Task(void)
 {
 uint8_t raw[14],still;
+
+prv_CalibrationTask();
+if(s_calibrating) return;
 int16_t tp,ax,ay,az,gx,gy,gz;
 int32_t dax,day,daz,dgx,dgy,dgz;
 int32_t acx,acy,acz,gdx,gdy,gdz,tc;
