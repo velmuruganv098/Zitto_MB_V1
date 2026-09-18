@@ -429,10 +429,12 @@ int main(void)
     RTT_LOG("[BOOT] GPIO ok\r\n");
 #endif
 
-    /* OTA - always init, no #ifdef guards */
+    /* OTA */
+#if APP_OTA_ENABLE
     RTT_LOG("[BOOT] OTA init\r\n");
     OTA_Init();
     RTT_LOG("[BOOT] OTA ok  state=%u\r\n", (unsigned)OTA_GetState());
+#endif
 
     /* IMU */
 #if APP_IMU_ENABLE
