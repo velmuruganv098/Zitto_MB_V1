@@ -4,18 +4,13 @@
  * FlexCAN1 driver header.
  *
  * AUTO-BAUD ARCHITECTURE:
- *   Phase 1: DETECTING  (LOM=1, Listen-Only, no bus impact)
+ *   DETECTING  (LOM=1, Listen-Only, no bus impact)
  *     - Try 500 / 250 / 125 / 1000 kbps, 200ms each
  *     - Non-blocking: IFLAG1 polled each Can1_Task() call
  *     - On frame detected → Phase 2
  *     - No frame after all 4 → restart cycle (never exit LOM untested)
  *
- *   Phase 2: CONFIRMING  (internal loopback self-test, bus isolated)
- *     - TX disconnected from external bus
- *     - Validate the configured FlexCAN path before normal operation
- *     - PASS → READY; FAIL → next baud candidate
- *
- *   Phase 3: READY  (LOM=0, LPB=0, normal CAN operation)
+ *   READY  (LOM=0, LPB=0, normal CAN operation)
  *     - Receive and forward frames
  *     - Bus-off → recovery/re-detection
  *     - Ordinary RX error counts are diagnostic only
@@ -47,7 +42,7 @@ extern "C" {
 
 /* Auto-baud timing: task period × ticks = time per candidate */
 #define CAN1_TASK_PERIOD_MS         50U
-#define CAN1_DETECT_TICKS           4U    /* 4 × 50ms = 200ms per baud */
+#define CAN1_DETECT_TICKS           1U    /* 4 × 50ms = 200ms per baud */
 
 /* Baud rate candidates */
 #define CAN1_BAUD_500K              0U
@@ -81,7 +76,7 @@ extern "C" {
 typedef enum
 {
     CAN1_STATE_DETECTING = 0,  /* LOM active, scanning for valid frames */
-    CAN1_STATE_CONFIRMING,     /* Internal loopback self-test */
+    /* Internal loopback self-test */
     CAN1_STATE_READY,          /* Candidate accepted, normal reception */
     CAN1_STATE_ERROR           /* Unrecoverable - re-detecting     */
 } Can1_State_t;
