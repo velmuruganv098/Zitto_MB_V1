@@ -225,8 +225,6 @@ static void can1_rx(uint32_t id, uint8_t ide, uint8_t rtr,
 static void can2_rx(const Can2_Frame_t *frame)
 {
     CanFramePkt_t f;
-    uint8_t i;
-
     if(frame == NULL)
     {
         return;
@@ -413,7 +411,6 @@ int main(void)
     /* LED */
     RTT_LOG("[BOOT] LED init\r\n");
     led_init();
-    for(i=0U; i<6U; i++) { PTA->PTOR=(1UL<<0U); PTE->PTOR=(1UL<<5U); delay_ms(40U); }
     RTT_LOG("[BOOT] LED ok\r\n");
 
     /* UART - LPUART0  PTC3=TX  PTC2=RX  115200 8N1
