@@ -2,7 +2,7 @@
  * main.c  -  Zitto_MB_V1 / S32K144
  *
  * Firmware Revision : V0.006
- * Change Note       : Independent S32K144 module architecture + CAN2
+ * Change Note       : Non-blocking module supervision + bounded scheduler
  *
  * ==========================================================================
  * CRITICAL BOOT ORDER (do not change):
@@ -510,6 +510,9 @@ int main(void)
         Uart_Pkt_ForwardRTT();
 #if APP_OTA_ENABLE
         OTA_Task();
+#endif
+#if APP_FLM_ENABLE
+        Flm_Task();
 #endif
 
         /* Software reset */
