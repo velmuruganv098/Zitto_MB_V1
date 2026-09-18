@@ -52,6 +52,56 @@
 #define UART_TX_DRAIN_BYTES         8U
 
 /* ========================================================================
+ * RX parser states
+ * ======================================================================== */
+
+typedef enum
+{
+    RX_WAIT_SOF0 = 0,
+    RX_WAIT_SOF1,
+    RX_VERSION,
+    RX_TYPE,
+    RX_LEN_L,
+    RX_LEN_H,
+    RX_SEQ,
+    RX_PAYLOAD,
+    RX_CRC_L,
+    RX_CRC_H
+
+} UartRxState_t;
+
+/* ========================================================================
+ * Internal variables
+ * ======================================================================== */
+
+static UartCmdHandler_t g_cmd_handler = NULL;
+
+static volatile uint32_t g_ms = 0U;
+
+static uint8_t g_rx_buffer[UART_RX_BUFFER_SIZE];
+
+static volatile uint16_t g_rx_head = 0U;
+static volatile uint16_t g_rx_tail = 0U;
+
+static uint8_t g_tx_buffer[UART_TX_BUFFER_SIZE];
+
+static uint8_t g_tx_queue[UART_TX_QUEUE_SIZE];
+static volatile uint16_t g_tx_head = 0U;
+static volatile uint16_t g_tx_tail = 0U;
+
+static uint8_t g_tx_seq = 0U;
+
+static UartRxState_t g_rx_state = RX_WAIT_SOF0;
+
+static UartPkt_t g_rx_pkt;
+
+static uint16_t g_rx_payload_index = 0U;
+
+static uint16_t g_rx_crc = 0U;
+
+static uint32_t g_rx_last_ms = 0U;
+
+/* ========================================================================
  * TX queue
  *
  * Producers only enqueue complete UART frames. Hardware transmission is
@@ -111,55 +161,6 @@ static uint8_t uart_tx_enqueue(const uint8_t *data, uint16_t len)
 }
 
 /* ======================================================================== */
-/* ========================================================================
- * RX parser states
- * ======================================================================== */
-
-typedef enum
-{
-    RX_WAIT_SOF0 = 0,
-    RX_WAIT_SOF1,
-    RX_VERSION,
-    RX_TYPE,
-    RX_LEN_L,
-    RX_LEN_H,
-    RX_SEQ,
-    RX_PAYLOAD,
-    RX_CRC_L,
-    RX_CRC_H
-
-} UartRxState_t;
-
-/* ========================================================================
- * Internal variables
- * ======================================================================== */
-
-static UartCmdHandler_t g_cmd_handler = NULL;
-
-static volatile uint32_t g_ms = 0U;
-
-static uint8_t g_rx_buffer[UART_RX_BUFFER_SIZE];
-
-static volatile uint16_t g_rx_head = 0U;
-static volatile uint16_t g_rx_tail = 0U;
-
-static uint8_t g_tx_buffer[UART_TX_BUFFER_SIZE];
-
-static uint8_t g_tx_queue[UART_TX_QUEUE_SIZE];
-static volatile uint16_t g_tx_head = 0U;
-static volatile uint16_t g_tx_tail = 0U;
-
-static uint8_t g_tx_seq = 0U;
-
-static UartRxState_t g_rx_state = RX_WAIT_SOF0;
-
-static UartPkt_t g_rx_pkt;
-
-static uint16_t g_rx_payload_index = 0U;
-
-static uint16_t g_rx_crc = 0U;
-
-static uint32_t g_rx_last_ms = 0U;
 
 /* ========================================================================
  * CRC16
