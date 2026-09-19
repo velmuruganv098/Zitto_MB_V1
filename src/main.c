@@ -489,7 +489,7 @@ int main(void)
     /* ======================================================================
      * MAIN LOOP
      *
-     * V0.0043 CAN priority:
+     * V0.0046 CAN priority:
      *   - 5ms cooperative loop instead of 50ms fixed loop
      *   - CAN1 is serviced first
      *   - UART/OTA remain frequent
