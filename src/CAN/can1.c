@@ -998,7 +998,7 @@ static void prv_NextBaud(void)
     prv_ResetDetectEvidence();
 
     RTT_LOG("[CAN1] DETECT next=%lu kbps CTRL1=0x%08lX\r\n",
-            (unsigned long)g_baud_kbps[g_rate_idx],
+            (unsigned long)CAN1_PROFILE(g_rate_idx).baud_kbps,
             (unsigned long)CAN1->CTRL1);
 }
 
@@ -1008,7 +1008,7 @@ static void prv_NextBaud(void)
 
 static void prv_LockCandidate(uint32_t now)
 {
-    g_status.detected_baud_kbps = g_baud_kbps[g_rate_idx];
+    g_status.detected_baud_kbps = CAN1_PROFILE(g_rate_idx).baud_kbps;
     g_status.detecting = 0U;
     g_status.hw_ready = 1U;
     g_status.ready = 1U;
@@ -1153,7 +1153,7 @@ void Can1_Task(void)
              * Error-active/passive by itself does not reject a candidate.
              */
             if((g_detect_frames >= CAN1_PROFILE(g_rate_idx).min_frames) &&
-               ((now - g_detect_verify_start_ms) >= CAN1_DETECT_VERIFY_MS))
+               ((now - g_detect_verify_start_ms) >= CAN1_PROFILE(g_rate_idx).verify_ms))
             {
                 if((verify_fault & 0x02U) == 0U)
                 {
@@ -1162,7 +1162,7 @@ void Can1_Task(void)
                 else
                 {
                     RTT_LOG("[CAN1] Candidate %lu rejected: BUS-OFF ESR1=0x%08lX ECR=0x%08lX\r\n",
-                            (unsigned long)g_baud_kbps[g_rate_idx],
+                            (unsigned long)CAN1_PROFILE(g_rate_idx).baud_kbps,
                             (unsigned long)verify_esr,
                             (unsigned long)CAN1->ECR);
                     prv_NextBaud();
@@ -1175,10 +1175,10 @@ void Can1_Task(void)
          * No valid frame yet: move on after a bounded observation window.
          */
         if((g_detect_verify_pending == 0U) &&
-           ((now - g_detect_window_start_ms) >= CAN1_DETECT_WINDOW_MS))
+           ((now - g_detect_window_start_ms) >= CAN1_PROFILE(g_rate_idx).detect_window_ms))
         {
             RTT_LOG("[CAN1] Candidate %lu no valid RX -> next\r\n",
-                    (unsigned long)g_baud_kbps[g_rate_idx]);
+                    (unsigned long)CAN1_PROFILE(g_rate_idx).baud_kbps);
             prv_NextBaud();
         }
 
