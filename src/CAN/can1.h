@@ -3,21 +3,25 @@
  *
  * FlexCAN1 driver header.
  *
+ * V0.0044: detection is LOM-based; READY is normal mode with automatic
+ * bus-off recovery enabled (CTRL1[BOFFREC]=0).
+ *
  * AUTO-BAUD ARCHITECTURE:
- *   Phase 1: DETECTING  (NORMAL/ACTIVE external-bus detection)
- *     - Try 500 / 250 / 125 / 1000 kbps, 700ms candidate window
+ *   Phase 1: DETECTING  (LOM / listen-only external-bus detection)
+ *     - Try 500 / 250 / 125 / 1000 kbps, 600ms candidate window
  *     - 125/250/500 kbps use 16TQ / 87.5% sample point; 1Mbps uses
  *       8TQ / 75% sample point to match common PCAN nominal timing
  *     - Require 1 valid received frame before baud lock
- *     - A 700ms window covers slow external traffic (e.g. 500ms/frame)
+ *     - A 600ms window covers slow external traffic (e.g. 500ms/frame)
  *       while wrong candidates still advance immediately on fault
  *     - Bad candidate with protocol errors/Error Passive/Bus-Off is abandoned early
- *     - Non-blocking: bounded RX polling from Can1_Task()
+ *     - Non-blocking RX polling; candidate confirmation uses a bounded
+ *       internal loopback self-test before entering normal mode
  *
- *   Phase 2: READY  (LOM=0, LPB=0, normal CAN operation)
+ *   Phase 2: READY  (LOM=0, LPB=0, BOFFREC=0, normal CAN operation)
  *     - Receive and forward frames with RX priority
  *     - Hold the confirmed baud for 2s before fault-triggered recovery
- *     - After the guard, persistent fault/high error counters trigger recovery
+ *     - After the guard, persistent fault/error evidence triggers recovery
  *     - No-traffic/inactivity alone never invalidates a detected baud
  *
  * IRQ NUMBERS (S32K144, confirmed from SDK S32K144.h):
@@ -46,13 +50,18 @@ extern "C" {
 
 /* Auto-baud timing: task period × ticks = time per candidate */
 #define CAN1_ERROR_GUARD_MS       2000U
-#define CAN1_DETECT_WINDOW_MS       700U
+#define CAN1_DETECT_WINDOW_MS       600U
 #define CAN1_DETECT_MIN_FRAMES        1U
+#define CAN1_DETECT_LOM                 1U
+#define CAN1_LOOPBACK_TIMEOUT           50000U
 #define CAN1_DETECT_VERIFY_MS        20U
 #define CAN1_LIVE_BAUD_LOSS_MS     1500U
 #define CAN1_FAULT_CONFIRM_MS        100U
 #define CAN1_ERROR_COUNT_LIMIT        96U
 #define CAN1_RX_BUDGET                 8U    /* bounded RX service per task */
+
+/* Bus-off recovery: 0 = automatic, 1 = manual. */
+#define CAN1_CTRL1_BOFFREC_MASK        (1UL << 6U)
 
 /* Baud rate candidates */
 #define CAN1_BAUD_500K              0U
@@ -85,7 +94,7 @@ extern "C" {
 
 typedef enum
 {
-    CAN1_STATE_DETECTING = 0,  /* active external-bus baud scan */
+    CAN1_STATE_DETECTING = 0,  /* LOM external-bus baud scan */
     CAN1_STATE_READY,          /* Candidate accepted, normal reception */
     CAN1_STATE_ERROR           /* Unrecoverable - re-detecting     */
 } Can1_State_t;
