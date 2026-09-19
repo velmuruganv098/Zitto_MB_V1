@@ -16,6 +16,8 @@
  * is decoupled from mailbox service.
  *
  * All wait paths in the CAN driver are bounded.
+ * V0.0045 adds candidate-relative error diagnostics and keeps valid RX
+ * stronger than transient protocol-error history from active probing.
  */
 
 #ifndef CAN1_H
@@ -35,7 +37,7 @@ extern "C" {
 #define CAN1_SHDN_PTB_PIN           2U  /* LOW=normal, HIGH=shutdown */
 
 #define CAN1_ERROR_GUARD_MS       2000U
-#define CAN1_DETECT_WINDOW_MS      120U
+#define CAN1_DETECT_WINDOW_MS      250U
 #define CAN1_DETECT_MIN_FRAMES      1U
 #define CAN1_DETECT_LOM             0U  /* NORMAL: PCAN-only topology */
 #define CAN1_LOOPBACK_TIMEOUT    50000U
@@ -43,7 +45,7 @@ extern "C" {
 #define CAN1_LIVE_BAUD_LOSS_MS    1500U
 #define CAN1_FAULT_CONFIRM_MS      100U
 #define CAN1_ERROR_COUNT_LIMIT      96U
-#define CAN1_RX_BUDGET              16U
+#define CAN1_RX_BUDGET               8U
 
 /* FlexCAN1 has 16 classic 8-byte MBs in this configuration. */
 #define CAN1_RX_MB_FIRST             4U
@@ -115,6 +117,11 @@ typedef struct
     uint32_t rx_hw_overrun;
     uint32_t last_esr1;
     uint32_t last_ecr;
+
+    /* Candidate-only error evidence; ECR is hardware-managed. */
+    uint32_t detect_error_esr;
+    uint8_t  detect_txerr_delta;
+    uint8_t  detect_rxerr_delta;
 } Can1_Status_t;
 
 /* --------------------------------------------------------------------------
