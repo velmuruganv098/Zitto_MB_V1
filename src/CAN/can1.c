@@ -14,10 +14,14 @@
  *   - More reliable than SOSC for LPMACK sequence
  *
  * BAUD TIMING TABLE (40MHz bus clock, 16 TQ per bit):
- *   Index 0:  500 kbps  PRESDIV=4   SP=81.25%
- *   Index 1:  250 kbps  PRESDIV=9   SP=81.25%
- *   Index 2:  125 kbps  PRESDIV=19  SP=81.25%
+ *   Index 0:  500 kbps  PRESDIV=4   SP=87.50%
+ *   Index 1:  250 kbps  PRESDIV=9   SP=87.50%
+ *   Index 2:  125 kbps  PRESDIV=19  SP=87.50%
  *   Index 3: 1000 kbps  PRESDIV=4   SP=75.00%  (8 TQ total)
+ *
+ * 125/250/500 kbps use 16 TQ with an 87.5% sample point. This matches
+ * common PCAN predefined nominal timing and gives more propagation margin
+ * than the previous 81.25% timing. 1 Mbps retains the 8 TQ / 75% timing.
  *
  * V0.0043 CAN1 DETECTION / BUS-HEAVY CORRECTION:
  *   - Detection uses NORMAL/ACTIVE mode so PCAN traffic is ACKed.
@@ -86,9 +90,9 @@ static const uint32_t g_baud_kbps[CAN1_BAUD_COUNT] =
 
 static const uint32_t g_ctrl1_base[CAN1_BAUD_COUNT] =
 {
-    0x045A0007UL,   /* 500  kbps: PRESDIV=4  16TQ SP=81.3% */
-    0x095A0007UL,   /* 250  kbps: PRESDIV=9  16TQ SP=81.3% */
-    0x135A0007UL,   /* 125  kbps: PRESDIV=19 16TQ SP=81.3% */
+    0x04690006UL,   /* 500  kbps: PRESDIV=4  16TQ SP=87.5% */
+    0x09690006UL,   /* 250  kbps: PRESDIV=9  16TQ SP=87.5% */
+    0x13690006UL,   /* 125  kbps: PRESDIV=19 16TQ SP=87.5% */
     0x04490002UL    /* 1000 kbps: PRESDIV=4   8TQ SP=75.0% */
 };
 
