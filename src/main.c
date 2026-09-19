@@ -363,6 +363,7 @@ static void cmd_handler(uint8_t type, const uint8_t *pl, uint16_t len)
 int main(void)
 {
     uint8_t i;
+    uint8_t clock_ok;
     uint32_t now_ms;
     uint32_t last_alive_ms = 0U;
     uint32_t last_hb_ms = 0U;
@@ -380,11 +381,22 @@ int main(void)
      *   DefaultISR trap             (WDOG fired during init)
      * ====================================================================== */
     wdog_disable();
-    clock_init_80mhz();
+    clock_ok = clock_init_80mhz();
 
     /* THEN RTT can be initialized */
     SEGGER_RTT_Init();
     Debug_RTT_Init();
+
+    if(clock_ok == 0U)
+    {
+        /* Clock failure is a fatal hardware-init condition, but never spin.
+         * Keep RTT alive so the failure is visible and prevent CAN timing
+         * code from running against an unknown clock. */
+        SEGGER_RTT_printf(0,
+            "[BOOT_ERR] 80MHz clock tree init timeout - CAN1 disabled safely\\r\\n");
+        g_can1_en = 0U;
+        g_can2_en = 0U;
+    }
 
     SEGGER_RTT_printf(0,
         "\r\n================================================\r\n"
