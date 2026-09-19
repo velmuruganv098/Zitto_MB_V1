@@ -1,7 +1,7 @@
 /*
  * main.c  -  Zitto_MB_V1 / S32K144
  *
- * Firmware Revision : V0.0043
+ * Firmware Revision : V0.0044
  * Change Note       : CAN1 external auto-baud state-machine architecture
  *
  * ==========================================================================
@@ -390,7 +390,7 @@ int main(void)
         "\r\n================================================\r\n"
         " Zitto MB V1 - VCU Firmware Boot\r\n"
         " Firmware Revision : V0.0043\r\n"
-        " Change            : CAN1 slow-traffic detection + bus-heavy correction\r\n"
+        " Change            : CAN1 LOM detection + loopback verification + recovery hardening\r\n"
         " MCU: S32K144  Clock: 80MHz SPLL  WDOG: OFF\r\n"
         " Modules: IMU=%d CSA=%d CAN1=%d CAN2=%d FLM=%d GPIO=%d\r\n"
         "================================================\r\n\r\n",
@@ -438,8 +438,8 @@ int main(void)
 
     /* CAN1 - FlexCAN1  PTA12/PTA13  TCAN334  SHDN=PTB2
      * Bus clock (40MHz) used as CAN clock source.
-     * Auto-baud: 500→250→125→1000 kbps, non-blocking; 700ms candidate window for slow PCAN traffic.
-     * Active external-bus detection; no loopback confirmation step. */
+     * Auto-baud: 500→250→125→1000 kbps, non-blocking; 600ms LOM candidate window for slow PCAN traffic.
+     * LOM detection + data-verified loopback confirmation; normal mode only after lock. */
 #if APP_CAN1_ENABLE
     RTT_LOG("[BOOT] CAN1 init  FlexCAN1  PTA12/PTA13  SHDN=PTB2\r\n");
     Can1_Init();
