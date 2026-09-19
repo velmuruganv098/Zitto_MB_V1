@@ -4,21 +4,17 @@
  * FlexCAN1 driver header.
  *
  * AUTO-BAUD ARCHITECTURE:
- *   Phase 1: DETECTING  (LOM=1, Listen-Only, no bus impact)
- *     - Try 500 / 250 / 125 / 1000 kbps, 200ms each
+ *   Phase 1: DETECTING  (NORMAL/ACTIVE external-bus detection)
+ *     - Try 500 / 250 / 125 / 1000 kbps, 100ms each
  *     - Non-blocking: IFLAG1 polled each Can1_Task() call
- *     - On frame detected → Phase 2
- *     - No frame after all 4 → restart cycle (never exit LOM untested)
+ *     - A received external frame confirms the candidate timing
+ *     - No frame for the candidate window → try the next baud
  *
- *   Phase 2: CONFIRMING  (internal loopback self-test, bus isolated)
- *     - TX disconnected from external bus
- *     - Validate the configured FlexCAN path before normal operation
- *     - PASS → READY; FAIL → next baud candidate
- *
- *   Phase 3: READY  (LOM=0, LPB=0, normal CAN operation)
+ *   Phase 2: READY  (LOM=0, LPB=0, normal CAN operation)
  *     - Receive and forward frames
- *     - Bus-off → recovery/re-detection
- *     - Ordinary RX error counts are diagnostic only
+ *     - Hold the confirmed baud for 2s before fault-triggered re-detection
+ *     - After the 2s guard, Error Passive or Bus-Off triggers re-detection
+ *     - Ordinary non-passive error counts are diagnostic only
  *     - No-traffic timeout does NOT invalidate a detected baud
  *
  * IRQ NUMBERS (S32K144, confirmed from SDK S32K144.h):
@@ -47,9 +43,10 @@ extern "C" {
 
 /* Auto-baud timing: task period × ticks = time per candidate */
 #define CAN1_NO_RX_TIMEOUT_MS    2000U
-#define CAN1_ERROR_TIMEOUT_MS    2000U
+#define CAN1_ERROR_TIMEOUT_MS    2000U    /* post-lock fault guard */
 #define CAN1_TASK_PERIOD_MS         50U
 #define CAN1_DETECT_TICKS           2U    /* 2 × 50ms = 100ms per baud */
+#define CAN1_RX_BUDGET              8U    /* bounded RX service per task */
 
 /* Baud rate candidates */
 #define CAN1_BAUD_500K              0U
