@@ -44,7 +44,6 @@ extern "C" {
 /* Auto-baud timing: task period × ticks = time per candidate */
 #define CAN1_NO_RX_TIMEOUT_MS    2000U
 #define CAN1_ERROR_TIMEOUT_MS    2000U    /* post-lock fault guard */
-#define CAN1_TASK_PERIOD_MS          5U
 #define CAN1_DETECT_CANDIDATE_MS    50U    /* faster 4-baud scan */
 #define CAN1_RX_BUDGET               8U    /* bounded RX service per task */
 
