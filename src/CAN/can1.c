@@ -879,6 +879,15 @@ static void prv_StartDetection(uint8_t retry_last)
     g_status.error_passive = 0U;
     g_status.rx_active = 0U;
     g_status.rx_count = 0U;
+
+    /*
+     * Detection epoch boundary: discard any application frames left from
+     * the previous baud. A frame received at an old baud must never be
+     * delivered later with the new baud value.
+     */
+    g_rx_q_head = 0U;
+    g_rx_q_tail = 0U;
+
     g_last_rx_ms = 0U;
     g_fault_seen_ms = 0U;
 
@@ -1210,26 +1219,17 @@ void Can1_Task(void)
             (uint8_t)((g_status.tx_err_cnt >= CAN1_ERROR_COUNT_LIMIT) ||
                       (g_status.rx_err_cnt >= CAN1_ERROR_COUNT_LIMIT));
 
-        uint8_t no_recent_rx =
-            (uint8_t)((g_last_rx_ms == 0U) ||
-                      ((now - g_last_rx_ms) >= CAN1_LIVE_BAUD_LOSS_MS));
-
-        uint8_t bus_off_event =
-            (uint8_t)(((fault & 0x02U) != 0U) ||
-                      ((esr & CAN1_ESR_BOFFINT_BIT) != 0U));
-
-        uint8_t persistent_error_loss =
-            (uint8_t)((no_recent_rx != 0U) &&
-                      ((rx_warning != 0U) || (high_errors != 0U)));
-
+        /*
+         * READY must not re-enter auto-baud merely because the bus becomes
+         * quiet or because RX error counters are elevated. Both are valid
+         * CAN conditions during normal operation. Only a real Bus-Off event
+         * is allowed to trigger a baud recovery scan.
+         */
         if(bus_off_event != 0U)
         {
-            /*
-             * Bus-Off is an explicit recovery trigger. Do not wait for the
-             * generic fault confirmation timer.
-             */
-            RTT_LOG("[CAN1] BUS-OFF recovery baud=%lu TxErr=%u RxErr=%u ESR1=0x%08lX\\r\\n",
+            RTT_LOG("[CAN1] BUS-OFF recovery baud=%lu fault=%u TxErr=%u RxErr=%u ESR1=0x%08lX\\r\\n",
                     (unsigned long)g_status.detected_baud_kbps,
+                    (unsigned)fault,
                     (unsigned)g_status.tx_err_cnt,
                     (unsigned)g_status.rx_err_cnt,
                     (unsigned long)esr);
@@ -1239,32 +1239,8 @@ void Can1_Task(void)
             return;
         }
 
-        if(persistent_error_loss != 0U)
-        {
-            if(g_fault_seen_ms == 0U)
-            {
-                g_fault_seen_ms = now;
-            }
-
-            if((now - g_fault_seen_ms) >= CAN1_FAULT_CONFIRM_MS)
-            {
-                RTT_LOG("[CAN1] RECOVERY baud=%lu fault=%u TxErr=%u RxErr=%u ESR1=0x%08lX\\r\\n",
-                        (unsigned long)g_status.detected_baud_kbps,
-                        (unsigned)fault,
-                        (unsigned)g_status.tx_err_cnt,
-                        (unsigned)g_status.rx_err_cnt,
-                        (unsigned long)esr);
-
-                g_status.error_count++;
-                g_state = CAN1_STATE_ERROR;
-                return;
-            }
-        }
-        else
-        {
-            g_fault_seen_ms = 0U;
-        }
-    }
+        /* Keep the evidence visible, but never change baud because of it. */
+        g_status.detect_error_esr |= (esr & CAN1_ESR_ERR_BUS_MASK);
 
     if((now - g_last_stat_ms) >= 5000U)
     {
