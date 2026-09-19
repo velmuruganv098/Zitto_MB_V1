@@ -29,11 +29,12 @@
  *
  * V0.0044 CAN1 DETECTION / BUS-HEAVY CORRECTION:
  *   - PCAN-only detection uses NORMAL/ACTIVE mode so the MCU can ACK.
- *   - Wrong candidates are limited to a short 25ms probe to minimize
+ *   - Wrong candidates are limited to a short 100ms probe to minimize
  *     wrong-baud error-frame disturbance.
- *   - A candidate is accepted only after a real external frame is received.
- *   - A received external frame starts a bounded internal loopback/data check.
- *   - Only after loopback data verification does the controller enter NORMAL.
+ *   - A candidate is accepted only after two real external frames are received.
+ *   - Any protocol error seen during that candidate rejects the candidate.
+ *   - Internal loopback is not used as baud confirmation because it cannot
+ *     prove external-bus timing.
  *   - The confirmed baud is latched once per detection cycle.
  *   - Recovery retries the last confirmed baud first, then scans all rates.
  *   - READY uses BOFFREC=0: FlexCAN automatic bus-off recovery is enabled.
@@ -52,7 +53,7 @@ static uint32_t g_detect_start_ms;
 static uint32_t g_fault_seen_ms;
 static uint8_t  g_fault_active;
 static uint8_t  g_detect_frames;
-static uint32_t g_detect_verify_start_ms;
+static uint8_t  g_detect_error_seen;
 static uint32_t g_last_rx_ms;
 static uint8_t  g_detect_verify_pending;
 static uint8_t  g_last_ok_idx;
@@ -277,8 +278,8 @@ static void prv_SetRxMailbox(void)
 /* ============================================================
  * APPLY BAUD RATE
  *
- * listen_only=1: LOM=1  (no ACK/error on bus, detection phase)
- * listen_only=0: LOM=0  (normal mode, after baud confirmed)
+ * listen_only=1: LOM=1
+ * listen_only=0: LOM=0 (PCAN-only detection and READY)
  * ============================================================ */
 static uint8_t prv_ApplyBaud(uint8_t idx, uint8_t listen_only)
 {
@@ -319,13 +320,13 @@ static uint8_t prv_ApplyBaud(uint8_t idx, uint8_t listen_only)
 }
 
 /* ============================================================
- * INTERNAL LOOPBACK + DATA VERIFICATION
- *
- * This is a controller self-test only. External-bus timing has already been
- * validated by reception of a real CAN frame while the candidate was in LOM.
- * The loopback prevents a flag-only confirmation from being accepted if the
- * RX mailbox was corrupted or coincidentally triggered.
+ * NOTE: No internal loopback confirmation is used for auto-baud.
+ * Internal loopback only proves the controller can self-transmit/receive at
+ * its configured timing; it cannot prove that the external PCAN bus uses
+ * the same timing. External-frame confirmation is therefore done directly
+ * in Can1_Task().
  * ============================================================ */
+#if 0
 static uint8_t prv_LoopbackVerify(uint8_t idx)
 {
     static const uint8_t pat[8] = {0xCAU,0xFEU,0xBAU,0xBEU,0xDEU,0xADU,0xBEU,0xEFU};
@@ -402,6 +403,7 @@ static uint8_t prv_LoopbackVerify(uint8_t idx)
             (unsigned long)CAN1->ESR1);
     return ok;
 }
+#endif
 
 /* ============================================================
  * HARDWARE INITIALIZATION
@@ -669,7 +671,7 @@ static void prv_StartDetection(uint8_t retry_last)
     uint8_t start_idx;
 
     g_detect_frames = 0U;
-    g_detect_verify_start_ms = 0U;
+    g_detect_error_seen = 0U;
     g_detect_verify_pending = 0U;
     g_detect_start_ms = Uart_GetMs();
     g_scan_pos = 0U;
@@ -704,7 +706,7 @@ static void prv_StartDetection(uint8_t retry_last)
     }
 
     g_state = CAN1_STATE_DETECTING;
-    RTT_LOG("[CAN1] Detection start: %lu kbps LOM%s  window=%ums\r\n",
+    RTT_LOG("[CAN1] Detection start: %lu kbps NORMAL%s  window=%ums\r\n",
             (unsigned long)g_baud_kbps[g_rate_idx],
             ((retry_last != 0U) && (g_last_ok_valid != 0U)) ? " (last-known first)" : "",
             (unsigned)CAN1_DETECT_WINDOW_MS);
@@ -713,15 +715,15 @@ static void prv_StartDetection(uint8_t retry_last)
 /* ============================================================
  * MOVE TO NEXT BAUD CANDIDATE
  *
- * Advances through candidates in LOM.
+ * Advances through candidates in NORMAL/ACTIVE mode.
  * ============================================================ */
 static void prv_NextBaud(void)
 {
     uint8_t next;
 
     g_detect_verify_pending = 0U;
-    g_detect_verify_start_ms = 0U;
     g_detect_frames = 0U;
+    g_detect_error_seen = 0U;
     g_scan_pos++;
 
     /* If recovery started with last-known baud, scan 0..3 after that first try. */
@@ -750,7 +752,7 @@ static void prv_NextBaud(void)
         return;
     }
 
-    RTT_LOG("[CAN1] Trying %lu kbps LOM  CTRL1=0x%08lX\r\n",
+    RTT_LOG("[CAN1] Trying %lu kbps NORMAL CTRL1=0x%08lX\r\n",
             (unsigned long)g_baud_kbps[g_rate_idx],
             (unsigned long)CAN1->CTRL1);
 }
@@ -782,6 +784,7 @@ void Can1_Init(void)
     g_fault_active   = 0U;
     g_fault_seen_ms  = 0U;
     g_detect_frames  = 0U;
+    g_detect_error_seen = 0U;
     g_last_ok_idx    = 0U;
     g_last_ok_valid  = 0U;
     g_lock_logged    = 0U;
@@ -824,8 +827,9 @@ void Can1_Init(void)
  * STATE MACHINE:
  *
  *   DETECTING: poll IFLAG1 each task call (non-blocking)
- *     Frame detected → loopback/data check → LATCHED/READY
- *     No frame during short candidate window → prv_NextBaud()
+ *     Two external frames + no protocol errors → LATCHED/READY
+ *     One frame alone is NOT sufficient; no frame during candidate window
+ *     → prv_NextBaud()
  *
  *   READY: process RX, monitor errors
  *     Bus-off/error evidence → retry last-known baud first
@@ -853,20 +857,31 @@ void Can1_Task(void)
             g_detect_frames++;
             rx_budget--;
 
+            /*
+             * Reading ESR1 clears the latched protocol-error flags. Capture
+             * them during the candidate so a random false frame at a wrong
+             * baud cannot be accepted as the detected rate.
+             */
+            {
+                uint32_t probe_esr = CAN1->ESR1;
+                uint32_t probe_ecr = CAN1->ECR;
+
+                if((probe_esr & 0x0000FC00UL) != 0U ||
+                   ((probe_ecr & 0x0000FFFFUL) != 0U))
+                {
+                    g_detect_error_seen = 1U;
+                }
+            }
+
+            /*
+             * A single frame is deliberately insufficient. A wrong CAN
+             * timing can occasionally decode one apparent mailbox frame.
+             * Require two external frames on the same candidate and no
+             * protocol/error-counter evidence during that probe.
+             */
             if(g_detect_frames >= CAN1_DETECT_MIN_FRAMES)
             {
-                uint8_t lpb_ok;
-
-                /*
-                 * Wrong NORMAL candidates can generate protocol errors. They
-                 * are intentionally time-bounded; do not wait for a fault
-                 * counter threshold before moving to the next candidate.
-                 */
-                RTT_LOG("[CAN1] Frame detected %lu kbps -> loopback confirm\r\n",
-                        (unsigned long)g_baud_kbps[g_rate_idx]);
-
-                lpb_ok = prv_LoopbackVerify(g_rate_idx);
-                if(lpb_ok != 0U)
+                if(g_detect_error_seen == 0U)
                 {
                     g_status.detected_baud_kbps = g_baud_kbps[g_rate_idx];
                     g_status.detecting = 0U;
@@ -882,6 +897,9 @@ void Can1_Task(void)
                     g_detect_verify_pending = 0U;
                     g_state = CAN1_STATE_READY;
 
+                    RTT_LOG("[CAN1] External confirmation PASS: %lu kbps  frames=%u\r\n",
+                            (unsigned long)g_baud_kbps[g_rate_idx],
+                            (unsigned)g_detect_frames);
                     RTT_LOG("[CAN1] ============================================\r\n");
                     RTT_LOG("[CAN1] *** BAUD LOCKED: %lu kbps ***\r\n",
                             (unsigned long)g_status.detected_baud_kbps);
@@ -890,7 +908,7 @@ void Can1_Task(void)
                 }
                 else
                 {
-                    RTT_LOG("[CAN1] Candidate %lu rejected: loopback data verify failed\r\n",
+                    RTT_LOG("[CAN1] Candidate %lu rejected: external frame(s) seen with CAN errors\r\n",
                             (unsigned long)g_baud_kbps[g_rate_idx]);
                     prv_NextBaud();
                 }
@@ -898,7 +916,11 @@ void Can1_Task(void)
             }
         }
 
-        /* Candidate timing is deliberately short in PCAN-only NORMAL mode. */
+        /*
+         * Wrong candidates are intentionally time-bounded. A correct
+         * candidate with continuous PCAN traffic should produce two clean
+         * frames before this expires.
+         */
         if((now - g_detect_start_ms) >= CAN1_DETECT_WINDOW_MS)
         {
             prv_NextBaud();
