@@ -19,14 +19,16 @@
  *   Index 2:  125 kbps  PRESDIV=19  SP=81.25%
  *   Index 3: 1000 kbps  PRESDIV=4   SP=75.00%  (8 TQ total)
  *
- * V0.0041 BUS-HEAVY / LIVE-BAUD FIX:
+ * V0.0042 CAN1 DETECTION CORRECTION:
  *   - Detection uses NORMAL/ACTIVE mode so PCAN traffic is ACKed.
  *   - A received external frame is the baud confirmation.
  *   - After confirmation, the baud is protected for 2 seconds.
  *   - After the guard, persistent error-passive/bus-off or sustained high
  *     error counters start recovery and a clean re-detection cycle.
- *   - Each candidate gets enough time for normal traffic to produce frames,
- *     while a bad candidate is abandoned early on controller faults.
+ *   - Each candidate is given a 250ms observation window.
+ *   - One correctly received external CAN frame is sufficient to confirm the
+ *     candidate; FlexCAN has already validated the CAN frame at the bit level.
+ *   - Bad candidates are abandoned early on controller faults.
  *   - CAN RX is serviced before diagnostics with a bounded budget.
  */
 
@@ -756,7 +758,7 @@ void Can1_Task(void)
             g_detect_frames++;
             rx_budget--;
 
-            /* Require two valid CAN frames before locking the baud. */
+            /* One valid CAN frame is sufficient to lock the baud. */
             if(g_detect_frames >= CAN1_DETECT_MIN_FRAMES)
             {
                 g_status.detected_baud_kbps = g_baud_kbps[g_rate_idx];
