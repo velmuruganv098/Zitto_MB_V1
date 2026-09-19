@@ -113,6 +113,28 @@ V0.005 established the independent CAN1/CAN2 and non-blocking data-path
 foundation.
 
 
+V0.0042
+------
+CAN1 ACTIVE AUTO-BAUD DETECTION CORRECTION
+
+Issue observed:
+- CAN1 did not detect any of the configured PCAN baud rates during bench testing.
+- The observed RTT image also showed legacy V0.0041-style LOM/loopback messages, so the flashed image must be verified against the V0.0042 ELF before judging the new source.
+
+Updates from V0.0041 to V0.0042:
+1. Detection is explicitly NORMAL/ACTIVE, not Listen-Only (LOM=0), so the VCU can ACK PCAN traffic.
+2. Baud candidates remain 500 / 250 / 125 / 1000 kbps.
+3. Candidate observation window increased to 250 ms.
+4. Baud confirmation changed from 2 received frames to 1 correctly received CAN frame. A frame accepted by FlexCAN is sufficient to identify the active timing; this also supports single-shot PCAN tests.
+5. CAN RX remains first priority in the cooperative scheduler with a bounded RX budget.
+6. The 2 s post-lock protection and fault-confirmation recovery architecture remain unchanged.
+7. Firmware banner is explicitly V0.0042 so an old ELF can be identified immediately from RTT.
+
+Validation status:
+- Source changes committed to the V0.0042 development branch.
+- S32DS build, ELF generation, J-Link flash, RTT and PCAN bench validation are still required.
+- Do not treat a boot log containing legacy LOM/loopback text as a V0.0042 test result.
+
 V0.006
 ------
 NON-BLOCKING / BOUNDED EXECUTION HARDENING
