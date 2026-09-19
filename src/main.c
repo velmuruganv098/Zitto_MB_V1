@@ -1,8 +1,8 @@
 /*
  * main.c  -  Zitto_MB_V1 / S32K144
  *
- * Firmware Revision : V0.0045
- * Change Note       : CAN1 candidate-relative error diagnostics + RX hardening
+ * Firmware Revision : V0.0046
+ * Change Note       : CAN1 per-baud detection profiles + Bus-Off-only recovery + RX/application hardening
  *
  * ==========================================================================
  * CRITICAL BOOT ORDER (do not change):
