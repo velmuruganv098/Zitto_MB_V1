@@ -3,12 +3,11 @@
  *
  * FlexCAN1 driver with external-bus auto-baud architecture:
  *
- *   DETECTING → READY → FAULT_GUARD → DETECTING
+ *   DETECTING → READY → RECOVERY → DETECTING
  *
- * A valid frame received while LOM=1 is the evidence that the external
- * bus matches the current candidate timing. The loopback phase is only an
- * internal controller self-test; it is NOT treated as independent proof of
- * the external bus baud rate.
+ * A validated external frame received in NORMAL/ACTIVE mode confirms the
+ * candidate timing. Detection is performed only at startup or explicit
+ * recovery; normal inactivity never starts a scan.
  *
  * CLOCK SOURCE: CLKSRC=1  (bus clock = 40MHz)
  *   - Always running after clock_init_80mhz() in main()
@@ -24,9 +23,11 @@
  *   - Detection uses NORMAL/ACTIVE mode so PCAN traffic is ACKed.
  *   - A received external frame is the baud confirmation.
  *   - After confirmation, the baud is protected for 2 seconds.
- *   - Only Error Passive or Bus-Off after that guard starts re-detection.
- *   - No-traffic/inactivity alone never causes re-detection.
- *   - CAN RX is serviced before fault evaluation and with a bounded budget.
+ *   - After the guard, persistent error-passive/bus-off or sustained high
+ *     error counters start recovery and a clean re-detection cycle.
+ *   - Each candidate gets enough time for normal traffic to produce frames,
+ *     while a bad candidate is abandoned early on controller faults.
+ *   - CAN RX is serviced before diagnostics with a bounded budget.
  */
 
 #include "can1.h"
@@ -38,7 +39,9 @@
 static uint32_t g_fault_start_ms;
 static uint32_t g_ready_since_ms;
 static uint32_t g_detect_start_ms;
+static uint32_t g_fault_seen_ms;
 static uint8_t  g_fault_active;
+static uint8_t  g_detect_frames;
 /* --------------------------------------------------------------------------
  * EXCEPTION DIAGNOSTIC (written by DefaultISR in startup assembly)
  * -------------------------------------------------------------------------- */
@@ -60,7 +63,13 @@ extern volatile uint32_t g_can1_debug_step;
 
 /* TX mailbox for loopback test */
 
-/* Error burst threshold before re-detection */
+/* Detection/recovery policy */
+#define CAN1_DETECT_MIN_FRAMES       2U
+#define CAN1_DETECT_WINDOW_MS      150U
+#define CAN1_ERROR_GUARD_MS       2000U
+#define CAN1_FAULT_CONFIRM_MS       100U
+#define CAN1_ERROR_COUNT_LIMIT       96U
+
 
 /* --------------------------------------------------------------------------
  * BAUD RATE TABLES  (40MHz bus clock, CLKSRC=1 is OR'd in at runtime)
@@ -83,12 +92,6 @@ static const uint32_t g_ctrl1_base[CAN1_BAUD_COUNT] =
     0x095A0007UL,   /* 250  kbps: PRESDIV=9  16TQ SP=81.3% */
     0x135A0007UL,   /* 125  kbps: PRESDIV=19 16TQ SP=81.3% */
     0x04490002UL    /* 1000 kbps: PRESDIV=4   8TQ SP=75.0% */
-};
-
-static const uint8_t k_test_pat[8] =
-{
-    0xCAU, 0xFEU, 0xBAU, 0xBEU,
-    0xDEU, 0xADU, 0xBEU, 0xEFU
 };
 
 /* --------------------------------------------------------------------------
@@ -530,13 +533,14 @@ static void prv_ProcessRx(void)
 /* ============================================================
  * START / RESTART DETECTION
  *
- * Always starts in LOM at 500kbps.
- * Called from: Init, bus-off recovery, idle timeout.
+ * Always starts in NORMAL/ACTIVE mode at 500kbps.
+ * Called from: Init and confirmed fault recovery only.
  * ============================================================ */
 static void prv_StartDetection(void)
 {
     g_rate_idx       = 0U;
     g_detect_start_ms = Uart_GetMs();
+    g_detect_frames   = 0U;
 
     g_status.ready              = 0U;
     g_status.hw_ready          = 0U;
@@ -569,9 +573,7 @@ static void prv_StartDetection(void)
 /* ============================================================
  * MOVE TO NEXT BAUD CANDIDATE
  *
- * Cycles 0→1→2→3→0→...
- * All in LOM.
- * NEVER exits to normal mode without loopback confirmation.
+ * Cycles 0→1→2→3→0→... in NORMAL/ACTIVE detection mode.
  * ============================================================ */
 static void prv_NextBaud(void)
 {
@@ -583,6 +585,7 @@ static void prv_NextBaud(void)
     }
 
     g_detect_start_ms = Uart_GetMs();
+    g_detect_frames   = 0U;
 
     /*
      * PCAN-only auto-baud detection.
@@ -660,6 +663,8 @@ void Can1_Init(void)
     g_ready_since_ms = 0U;
     g_fault_start_ms = 0U;
     g_fault_active   = 0U;
+    g_fault_seen_ms  = 0U;
+    g_detect_frames  = 0U;
 
     /* Zero status struct */
     {
@@ -710,69 +715,76 @@ void Can1_Init(void)
  * ============================================================ */
 void Can1_Task(void)
 {
-    uint32_t esr, ecr;
-    uint8_t  fault;
-    uint8_t  rx_budget;
+    uint32_t now, esr, ecr;
+    uint8_t fault;
+    uint8_t rx_budget;
 
     g_task_cnt++;
+    now = Uart_GetMs();
 
-    /* ------------------------------------------------------------------ */
-    /* DETECTING: active external-bus scan.                               */
-    /* A received frame is the only positive baud-rate confirmation.      */
-    /* The candidate window is 100ms (2 x 50ms task calls).               */
-    /* ------------------------------------------------------------------ */
     if(g_state == CAN1_STATE_DETECTING)
     {
-        if(prv_RxAvailable())
+        /* RX has absolute priority during detection. */
+        rx_budget = CAN1_RX_BUDGET;
+        while((rx_budget != 0U) && prv_RxAvailable())
         {
-            g_status.detected_baud_kbps = g_baud_kbps[g_rate_idx];
-            g_status.detecting           = 0U;
-            g_status.hw_ready            = 1U;
-            g_status.ready               = 1U;
-            g_status.bus_off             = 0U;
-            g_status.error_passive       = 0U;
+            prv_ProcessRx();
+            g_detect_frames++;
+            rx_budget--;
 
-            /* Start the 2s post-lock protection window. During this
-             * window even transient CAN errors do not force a re-detect. */
-            g_ready_since_ms = Uart_GetMs();
-            g_fault_start_ms = 0U;
-            g_fault_active   = 0U;
+            /* Require two valid CAN frames before locking the baud. */
+            if(g_detect_frames >= CAN1_DETECT_MIN_FRAMES)
+            {
+                g_status.detected_baud_kbps = g_baud_kbps[g_rate_idx];
+                g_status.detecting = 0U;
+                g_status.hw_ready = 1U;
+                g_status.ready = 1U;
+                g_status.bus_off = 0U;
+                g_status.error_passive = 0U;
+                g_ready_since_ms = now;
+                g_fault_seen_ms = 0U;
+                g_fault_active = 0U;
+                g_state = CAN1_STATE_READY;
 
-            g_state = CAN1_STATE_READY;
-
-            RTT_LOG(
-                "[CAN1] BAUD CONFIRMED: %lu kbps -> READY (2s guard)\r\n",
-                (unsigned long)g_status.detected_baud_kbps
-            );
-
-            /* Do not consume the frame here. The normal RX path will
-             * dispatch it on this same task pass. */
+                RTT_LOG("[CAN1] BAUD LOCKED: %lu kbps -> READY (2s guard)\r\n",
+                        (unsigned long)g_status.detected_baud_kbps);
+                break;
+            }
         }
-        else
+
+        if(g_state == CAN1_STATE_DETECTING)
         {
-            if((Uart_GetMs() - g_detect_start_ms) >= CAN1_DETECT_CANDIDATE_MS)
+            esr = CAN1->ESR1;
+            fault = (uint8_t)((esr >> 4U) & 0x03U);
+
+            /* A candidate that is already error-passive/bus-off cannot be
+             * the correct live baud. Move on immediately. */
+            if(fault != 0U)
+            {
+                RTT_LOG("[CAN1] Candidate %lu fault FLTCONF=%u ESR1=0x%08lX -> next\r\n",
+                        (unsigned long)g_baud_kbps[g_rate_idx],
+                        (unsigned)fault,
+                        (unsigned long)esr);
+                prv_NextBaud();
+                return;
+            }
+
+            if((now - g_detect_start_ms) >= CAN1_DETECT_WINDOW_MS)
             {
                 prv_NextBaud();
             }
-            return;
         }
+        return;
     }
 
-    /* ------------------------------------------------------------------ */
-    /* ERROR: restart detection immediately.                              */
-    /* ------------------------------------------------------------------ */
     if(g_state == CAN1_STATE_ERROR)
     {
-        RTT_LOG("[CAN1] ERROR state - restarting detection\r\n");
+        RTT_LOG("[CAN1] RECOVERY: restarting clean baud detection\r\n");
         prv_StartDetection();
         return;
     }
 
-    /* ------------------------------------------------------------------ */
-    /* READY: CAN RX has priority.                                        */
-    /* Service a bounded number of pending mailbox frames before reading  */
-    /* fault status so high traffic is not needlessly delayed by logging. */
-    /* ------------------------------------------------------------------ */
+    /* READY: always drain RX before evaluating errors/logging. */
     rx_budget = CAN1_RX_BUDGET;
     while((rx_budget != 0U) && prv_RxAvailable())
     {
@@ -780,8 +792,8 @@ void Can1_Task(void)
         rx_budget--;
     }
 
-    esr   = CAN1->ESR1;
-    ecr   = CAN1->ECR;
+    esr = CAN1->ESR1;
+    ecr = CAN1->ECR;
     fault = (uint8_t)((esr >> 4U) & 0x03U);
 
     g_status.bus_idle      = (uint8_t)((esr >> 7U) & 1U);
@@ -790,52 +802,57 @@ void Can1_Task(void)
     g_status.tx_err_cnt    = (uint8_t)(ecr & 0xFFU);
     g_status.rx_err_cnt    = (uint8_t)((ecr >> 8U) & 0xFFU);
 
-    /* ------------------------------------------------------------------ */
-    /* V0.0041 fault guard: do not re-detect immediately after a baud is  */
-    /* accepted. This prevents a transient error/bus-heavy condition from */
-    /* causing rapid baud hopping. Once the 2s guard expires, a persistent */
-    /* Error Passive or Bus-Off state means the current baud is no longer */
-    /* considered healthy and detection is restarted.                    */
-    /* ------------------------------------------------------------------ */
-    if((g_state == CAN1_STATE_READY) &&
-       ((Uart_GetMs() - g_ready_since_ms) >= CAN1_ERROR_TIMEOUT_MS))
+    /* Keep the confirmed baud protected for 2 seconds. */
+    if((now - g_ready_since_ms) >= CAN1_ERROR_GUARD_MS)
     {
-        if(fault != 0U)
+        uint8_t severe = (uint8_t)(
+            (fault != 0U) ||
+            (g_status.tx_err_cnt >= CAN1_ERROR_COUNT_LIMIT) ||
+            (g_status.rx_err_cnt >= CAN1_ERROR_COUNT_LIMIT));
+
+        if(severe != 0U)
         {
-            RTT_LOG(
-                "[CAN1] FAULT after 2s guard: state=%u ESR1=0x%08lX "
-                "TxErr=%u RxErr=%u -> re-detect\r\n",
-                (unsigned)fault,
-                (unsigned long)esr,
-                (unsigned)g_status.tx_err_cnt,
-                (unsigned)g_status.rx_err_cnt);
+            if(g_fault_seen_ms == 0U)
+            {
+                g_fault_seen_ms = now;
+            }
 
-            g_status.error_count++;
-            g_fault_active = 1U;
-            g_fault_start_ms = Uart_GetMs();
+            if((now - g_fault_seen_ms) >= CAN1_FAULT_CONFIRM_MS)
+            {
+                RTT_LOG("[CAN1] RECOVERY REQUEST: baud=%lu FLTCONF=%u "
+                        "TxErr=%u RxErr=%u ESR1=0x%08lX\r\n",
+                        (unsigned long)g_status.detected_baud_kbps,
+                        (unsigned)fault,
+                        (unsigned)g_status.tx_err_cnt,
+                        (unsigned)g_status.rx_err_cnt,
+                        (unsigned long)esr);
 
-            /* Re-detect immediately; no inactivity-based restart. */
-            prv_StartDetection();
-            return;
+                g_status.error_count++;
+                g_fault_active = 1U;
+                prv_StartDetection();
+                return;
+            }
+        }
+        else
+        {
+            g_fault_seen_ms = 0U;
+            g_fault_active = 0U;
         }
     }
 
-    /* Diagnostic only before the guard expires, and for ordinary
-     * error-active traffic after the guard. */
-    if((Uart_GetMs() - g_last_stat_ms) >= 5000U)
+    /* Diagnostics are deliberately slow so RTT never competes with CAN RX. */
+    if((now - g_last_stat_ms) >= 5000U)
     {
-        g_last_stat_ms = Uart_GetMs();
-        RTT_LOG("[CAN1_STAT] baud=%lu rx=%lu drop=%lu frames=%lu"
-                " ESR1=0x%08lX TxErr=%u RxErr=%u guard=%lums\r\n",
+        g_last_stat_ms = now;
+        RTT_LOG("[CAN1_STAT] baud=%lu state=%u rx=%lu drop=%lu "
+                "ESR1=0x%08lX TxErr=%u RxErr=%u\r\n",
                 (unsigned long)g_status.detected_baud_kbps,
+                (unsigned)g_state,
                 (unsigned long)g_rx_total,
                 (unsigned long)g_rx_dropped,
-                (unsigned long)g_status.frames_rcvd,
                 (unsigned long)esr,
                 (unsigned)g_status.tx_err_cnt,
-                (unsigned)g_status.rx_err_cnt,
-                (unsigned long)((g_ready_since_ms != 0U)
-                                ? (Uart_GetMs() - g_ready_since_ms) : 0U));
+                (unsigned)g_status.rx_err_cnt);
     }
 }
 
