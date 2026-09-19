@@ -135,6 +135,39 @@ Validation status:
 - S32DS build, ELF generation, J-Link flash, RTT and PCAN bench validation are still required.
 - Do not treat a boot log containing legacy LOM/loopback text as a V0.0042 test result.
 
+V0.0043
+------
+CAN1 SLOW-TRAFFIC / BUS-HEAVY / FALSE-RECOVERY CORRECTION
+
+From revision -> To revision:
+- V0.0042 -> V0.0043
+
+Bench issues addressed:
+1. 125 kbps detection needed to work with slow PCAN traffic (including about 500ms/frame).
+2. Wrong baud candidates could remain active too long and generate unnecessary active CAN error traffic.
+3. A healthy detected baud could later be forced back into detection because the RX error counter remained high even though valid frames were still being received.
+4. Live PCAN baud changes could leave the firmware reporting the previous latched baud for too long.
+
+Updates in V0.0043:
+1. Candidate window is 700ms so a 500ms-period external frame can be observed.
+2. One valid received frame starts a 20ms clean verification interval before the baud is latched.
+3. Detection now rejects a candidate immediately on FlexCAN protocol error flags (BIT1ERR/BIT0ERR/ACKERR/CRCERR/FRMERR/STFERR) or Bus-Off instead of waiting for the full candidate window.
+4. READY recovery no longer treats a high RX/TX error counter by itself as sufficient evidence. FlexCAN can retain RXERRCNT near 119..127 after a successful reception.
+5. RWRNINT is interpreted at the correct ESR1 bit (bit 16). The previous V0.0043 code incorrectly used bit 18 (SYNCH) as the warning condition.
+6. A live baud-change recovery is now allowed after the 2s guard only when CAN error evidence exists and no valid frame has been received for 1500ms. Inactivity alone still never starts re-detection.
+7. The successful baud message remains a single latch message per detection event.
+
+Important interpretation of the current bench log:
+- The shown sequence did successfully detect 125 kbps: "BAUD DETECTED: 125 kbps -> LATCHED".
+- The later 125 kbps recovery was caused by RXERRCNT reaching 124 while FLTCONF remained Error Active. The old recovery expression used ESR1 bit 18 (SYNCH), so it effectively treated the high counter as a recovery trigger. V0.0043 now removes that false-recovery path.
+- A line such as "CAN1=250kbps" is the firmware's currently latched timing; it is not a readback of the PCAN Viewer configuration. If PCAN is changed from 250 to 500kbps, V0.0043 waits for actual CAN error evidence plus loss of valid frames before re-detecting.
+
+Validation status:
+- Source correction committed on dev/can1-v0.0043.
+- This log analysis is based on the supplied RTT trace and the S32K1 FlexCAN register definitions.
+- S32DS clean build, new ELF flash, and PCAN bench validation are still required.
+
+
 V0.006
 ------
 NON-BLOCKING / BOUNDED EXECUTION HARDENING
