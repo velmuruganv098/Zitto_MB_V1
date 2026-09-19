@@ -5,8 +5,8 @@
  *
  * AUTO-BAUD ARCHITECTURE:
  *   Phase 1: DETECTING  (NORMAL/ACTIVE external-bus detection)
- *     - Try 500 / 250 / 125 / 1000 kbps, 150ms candidate window
- *     - Require 2 received frames before baud lock
+ *     - Try 500 / 250 / 125 / 1000 kbps, 250ms candidate window
+ *     - Require 1 valid received frame before baud lock
  *     - Bad candidate with Error Passive/Bus-Off is abandoned early
  *     - Non-blocking: bounded RX polling from Can1_Task()
  *
@@ -42,8 +42,8 @@ extern "C" {
 
 /* Auto-baud timing: task period × ticks = time per candidate */
 #define CAN1_ERROR_GUARD_MS       2000U
-#define CAN1_DETECT_WINDOW_MS       150U
-#define CAN1_DETECT_MIN_FRAMES        2U
+#define CAN1_DETECT_WINDOW_MS       250U
+#define CAN1_DETECT_MIN_FRAMES        1U
 #define CAN1_FAULT_CONFIRM_MS        100U
 #define CAN1_ERROR_COUNT_LIMIT        96U
 #define CAN1_RX_BUDGET                 8U    /* bounded RX service per task */
