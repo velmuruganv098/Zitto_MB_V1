@@ -29,9 +29,9 @@
  *
  * V0.0044 CAN1 DETECTION / BUS-HEAVY CORRECTION:
  *   - PCAN-only detection uses NORMAL/ACTIVE mode so the MCU can ACK.
- *   - Wrong candidates are limited to a short 100ms probe to minimize
+ *   - Wrong candidates are limited to a short 250ms probe to minimize
  *     wrong-baud error-frame disturbance.
- *   - A candidate is accepted only after two real external frames are received.
+ *   - A candidate is accepted after one real external frame plus a 20ms clean verification interval.
  *   - Any protocol error seen during that candidate rejects the candidate.
  *   - Internal loopback is not used as baud confirmation because it cannot
  *     prove external-bus timing.
@@ -873,14 +873,18 @@ void Can1_Task(void)
                 }
             }
 
-            /*
-             * A single frame is deliberately insufficient. A wrong CAN
-             * timing can occasionally decode one apparent mailbox frame.
-             * Require two external frames on the same candidate and no
-             * protocol/error-counter evidence during that probe.
-             */
-            if(g_detect_frames >= CAN1_DETECT_MIN_FRAMES)
+            /* First valid external frame starts the short clean verification interval. */
+            if(g_detect_frames >= 1U)
             {
+                g_detect_verify_pending = 1U;
+                g_detect_start_ms = now;
+                g_detect_error_seen = 0U;
+            }
+        }
+
+        if((g_detect_verify_pending != 0U) &&
+           ((now - g_detect_start_ms) >= CAN1_DETECT_VERIFY_MS))
+        {
                 if(g_detect_error_seen == 0U)
                 {
                     g_status.detected_baud_kbps = g_baud_kbps[g_rate_idx];
