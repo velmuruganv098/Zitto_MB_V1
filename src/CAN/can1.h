@@ -5,17 +5,16 @@
  *
  * AUTO-BAUD ARCHITECTURE:
  *   Phase 1: DETECTING  (NORMAL/ACTIVE external-bus detection)
- *     - Try 500 / 250 / 125 / 1000 kbps, 100ms each
- *     - Non-blocking: IFLAG1 polled each Can1_Task() call
- *     - A received external frame confirms the candidate timing
- *     - No frame for the candidate window → try the next baud
+ *     - Try 500 / 250 / 125 / 1000 kbps, 150ms candidate window
+ *     - Require 2 received frames before baud lock
+ *     - Bad candidate with Error Passive/Bus-Off is abandoned early
+ *     - Non-blocking: bounded RX polling from Can1_Task()
  *
  *   Phase 2: READY  (LOM=0, LPB=0, normal CAN operation)
- *     - Receive and forward frames
- *     - Hold the confirmed baud for 2s before fault-triggered re-detection
- *     - After the 2s guard, Error Passive or Bus-Off triggers re-detection
- *     - Ordinary non-passive error counts are diagnostic only
- *     - No-traffic timeout does NOT invalidate a detected baud
+ *     - Receive and forward frames with RX priority
+ *     - Hold the confirmed baud for 2s before fault-triggered recovery
+ *     - After the guard, persistent fault/high error counters trigger recovery
+ *     - No-traffic/inactivity alone never invalidates a detected baud
  *
  * IRQ NUMBERS (S32K144, confirmed from SDK S32K144.h):
  *   CAN1_ORed_IRQn          = 85  NVIC[2] bit21  IPSR=0x65
@@ -42,10 +41,12 @@ extern "C" {
 #define CAN1_SHDN_PTB_PIN           2U
 
 /* Auto-baud timing: task period × ticks = time per candidate */
-#define CAN1_NO_RX_TIMEOUT_MS    2000U
-#define CAN1_ERROR_TIMEOUT_MS    2000U    /* post-lock fault guard */
-#define CAN1_DETECT_CANDIDATE_MS    50U    /* faster 4-baud scan */
-#define CAN1_RX_BUDGET               8U    /* bounded RX service per task */
+#define CAN1_ERROR_GUARD_MS       2000U
+#define CAN1_DETECT_WINDOW_MS       150U
+#define CAN1_DETECT_MIN_FRAMES        2U
+#define CAN1_FAULT_CONFIRM_MS        100U
+#define CAN1_ERROR_COUNT_LIMIT        96U
+#define CAN1_RX_BUDGET                 8U    /* bounded RX service per task */
 
 /* Baud rate candidates */
 #define CAN1_BAUD_500K              0U
