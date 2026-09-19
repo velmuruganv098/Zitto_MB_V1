@@ -3,7 +3,7 @@
  *
  * FlexCAN1 register-level driver.
  *
- * V0.0045 hardened architecture
+ * V0.0046 hardened architecture
  * --------------------------------
  *   DETECTING -> READY
  *       ^          |
@@ -22,6 +22,13 @@
  *      confirmed Bus-Off state.
  *   6. After lock, inactivity alone never starts another baud scan.
  *   7. Recovery retries the last confirmed baud first, then scans all rates.
+ *
+ * V0.0046 revision note
+ *   - Keeps the same DETECTING -> READY -> ERROR architecture and PCAN NORMAL/ACK topology.
+ *   - Uses explicit per-baud detection profiles instead of one shared timing window.
+ *   - 500k remains the fast/default profile; 250k/125k get longer observation windows
+ *     so lower-rate traffic is not missed; 1M gets a short high-rate profile.
+ *   - READY recovery remains Bus-Off-only; idle/error-passive never starts a scan.
  *
  * RX rules:
  *   - MB4..MB15 are armed as a receive pool.
@@ -79,18 +86,30 @@
  *   1M   = 40M / (5 * 8)
  * -------------------------------------------------------------------------- */
 
-static const uint32_t g_baud_kbps[CAN1_BAUD_COUNT] =
+typedef struct
 {
-    500U, 250U, 125U, 1000U
+    uint32_t baud_kbps;
+    uint32_t ctrl1;
+    uint16_t detect_window_ms;
+    uint16_t verify_ms;
+    uint8_t  min_frames;
+} Can1_BaudProfile_t;
+
+/*
+ * Each rate keeps the same CAN register/application architecture but has its
+ * own bounded detection timing. Lower rates are intentionally given more time
+ * because a valid frame can arrive less frequently; 1M is kept short because
+ * a continuous 1M bus produces evidence quickly.
+ */
+static const Can1_BaudProfile_t g_baud_profile[CAN1_BAUD_COUNT] =
+{
+    { 500U,  0x04690006UL, 250U, 20U, 1U }, /* 500k, 16TQ, 87.5% */
+    { 250U,  0x09690006UL, 500U, 40U, 1U }, /* 250k, 16TQ, 87.5% */
+    { 125U,  0x13690006UL, 1000U, 60U, 1U },/* 125k, 16TQ, 87.5% */
+    { 1000U, 0x04490002UL, 200U, 20U, 1U }  /* 1M,   8TQ,  75.0% */
 };
 
-static const uint32_t g_ctrl1_base[CAN1_BAUD_COUNT] =
-{
-    0x04690006UL, /* 500k, 16TQ, 87.5% */
-    0x09690006UL, /* 250k, 16TQ, 87.5% */
-    0x13690006UL, /* 125k, 16TQ, 87.5% */
-    0x04490002UL  /* 1M,   8TQ,  75.0% */
-};
+#define CAN1_PROFILE(idx) (g_baud_profile[(idx)])
 
 /* --------------------------------------------------------------------------
  * MODULE STATE
@@ -427,7 +446,7 @@ static uint8_t prv_ApplyBaud(uint8_t idx)
     }
 
     RTT_LOG("[CAN1] Baud candidate=%lu kbps CTRL1=0x%08lX NORMAL\r\n",
-            (unsigned long)g_baud_kbps[idx],
+            (unsigned long)CAN1_PROFILE(idx).baud_kbps,
             (unsigned long)CAN1->CTRL1);
 
     return 1U;
@@ -912,10 +931,11 @@ static void prv_StartDetection(uint8_t retry_last)
 
     g_state = CAN1_STATE_DETECTING;
 
-    RTT_LOG("[CAN1] DETECT start baud=%lu window=%ums verify=%ums%s\r\n",
-            (unsigned long)g_baud_kbps[g_rate_idx],
-            (unsigned)CAN1_DETECT_WINDOW_MS,
-            (unsigned)CAN1_DETECT_VERIFY_MS,
+    RTT_LOG("[CAN1] DETECT start baud=%lu window=%ums verify=%ums minframes=%u%s\r\n",
+            (unsigned long)CAN1_PROFILE(g_rate_idx).baud_kbps,
+            (unsigned)CAN1_PROFILE(g_rate_idx).detect_window_ms,
+            (unsigned)CAN1_PROFILE(g_rate_idx).verify_ms,
+            (unsigned)CAN1_PROFILE(g_rate_idx).min_frames,
             ((retry_last != 0U) && (g_last_ok_valid != 0U))
                 ? " last-known-first"
                 : "");
@@ -1132,7 +1152,7 @@ void Can1_Task(void)
              *
              * Error-active/passive by itself does not reject a candidate.
              */
-            if((g_detect_frames >= CAN1_DETECT_MIN_FRAMES) &&
+            if((g_detect_frames >= CAN1_PROFILE(g_rate_idx).min_frames) &&
                ((now - g_detect_verify_start_ms) >= CAN1_DETECT_VERIFY_MS))
             {
                 if((verify_fault & 0x02U) == 0U)
