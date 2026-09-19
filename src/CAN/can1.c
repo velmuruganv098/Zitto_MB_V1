@@ -35,7 +35,6 @@
 #include "UART/uart_pkt.h"
 #include <stdint.h>
 #include <stddef.h>
-static uint32_t g_last_rx_ms;
 static uint32_t g_fault_start_ms;
 static uint32_t g_ready_since_ms;
 static uint32_t g_detect_start_ms;
@@ -60,13 +59,6 @@ extern volatile uint32_t g_can1_debug_step;
 #define CAN1_CODE_TX_DATA       0x0CU
 
 /* TX mailbox for loopback test */
-#define CAN1_MB_TX              0U
-#define CAN1_TX_MB_BASE         (CAN1_MB_TX * 4U)
-#define CAN1_TX_MB_FLAG         (1UL << CAN1_MB_TX)
-
-/* Test frame */
-#define CAN1_TEST_ID            0x123U
-#define CAN1_TEST_DLC           8U
 
 /* Error burst threshold before re-detection */
 
@@ -107,7 +99,6 @@ static Can1_RxCallback_t  g_rx_cb            = NULL;
 static Can1_Status_t      g_status;
 static Can1_State_t       g_state            = CAN1_STATE_DETECTING;
 static uint8_t            g_rate_idx         = 0U;
-static uint8_t            g_detect_ticks     = 0U;
 static uint32_t           g_task_cnt         = 0U;
 static uint32_t           g_rx_total         = 0U;
 static uint32_t           g_rx_dropped       = 0U;
@@ -449,109 +440,6 @@ static uint8_t prv_HardwareInit(void)
 }
 
 /* ============================================================
- * LOOPBACK CONFIRMATION TEST
- *
- * WHY: Prevents "bus heavy" by ensuring baud is correct BEFORE
- * exiting Listen-Only mode.  In LPB=1 mode the TX pin is
- * HARDWARE-DISCONNECTED from the external CAN bus - zero impact.
- *
- * Flow:
- *   1. Enter freeze
- *   2. Set LPB=1, clear LOM, allow self-reception (SRXDIS=0)
- *   3. Exit freeze → CAN controller starts
- *   4. Transmit test frame into MB0
- *   5. Poll MB4 (RX) for echo  (max ~1ms at 125kbps)
- *   6. Re-enter freeze
- *   7. If pass: clear LPB, clear LOM → normal external mode
- *      If fail: clear LPB, set LOM  → back to listen-only
- *   8. Exit freeze
- *
- * Returns 1=baud confirmed, 0=no echo (wrong baud)
- * ============================================================ */
-static uint8_t prv_LoopbackConfirm(void)
-{
-    volatile uint32_t timeout;
-    uint8_t           ok = 0U;
-
-    RTT_LOG("[CAN1] Loopback test at %lu kbps\r\n",
-            (unsigned long)g_baud_kbps[g_rate_idx]);
-
-    /* Enter freeze */
-    if(prv_EnterFreeze() == 0U) { return 0U; }
-
-    /* Set LPB=1 (internal loopback, TX disconnected from bus)
-     * Clear LOM (loopback needs TX active internally)
-     * Allow self-reception: SRXDIS=0 */
-    CAN1->CTRL1 = (CAN1->CTRL1 & ~CAN_CTRL1_LOM_MASK) | CAN_CTRL1_LPB_MASK;
-    CAN1->MCR  &= ~CAN_MCR_SRXDIS_MASK;
-
-    /* Clear flags and re-arm RX mailbox */
-    CAN1->IFLAG1 = 0xFFFFFFFFUL;
-    prv_SetRxMailbox();
-
-    /* Setup TX mailbox (MB0) */
-    CAN1->RAMn[CAN1_TX_MB_BASE + 0U] = 0U;
-    CAN1->RAMn[CAN1_TX_MB_BASE + 1U] = (CAN1_TEST_ID << 18U);   /* Std ID */
-    CAN1->RAMn[CAN1_TX_MB_BASE + 2U] =
-        ((uint32_t)k_test_pat[0] << 24U) | ((uint32_t)k_test_pat[1] << 16U) |
-        ((uint32_t)k_test_pat[2] <<  8U) | (uint32_t)k_test_pat[3];
-    CAN1->RAMn[CAN1_TX_MB_BASE + 3U] =
-        ((uint32_t)k_test_pat[4] << 24U) | ((uint32_t)k_test_pat[5] << 16U) |
-        ((uint32_t)k_test_pat[6] <<  8U) | (uint32_t)k_test_pat[7];
-
-    /* Activate TX: CODE=0x0C (data frame), DLC=8 */
-    CAN1->RAMn[CAN1_TX_MB_BASE + 0U] =
-        (uint32_t)(CAN1_CODE_TX_DATA << 24U) |
-        ((uint32_t)CAN1_TEST_DLC << 16U);
-
-    /* Exit freeze → controller starts, will transmit MB0 */
-    if(prv_ExitFreeze() == 0U) { goto cleanup; }
-
-    /* Wait for echo in RX mailbox (MB4) */
-    timeout = 500000U;
-    while(((CAN1->IFLAG1 & CAN1_RX_MB_FLAG) == 0U) && (--timeout != 0U)) {}
-
-    if(timeout != 0U)
-    {
-        ok = 1U;
-        RTT_LOG("[CAN1] Loopback echo received OK\r\n");
-    }
-    else
-    {
-        RTT_LOG("[CAN1_ERR] Loopback no echo  ESR1=0x%08lX\r\n",
-                (unsigned long)CAN1->ESR1);
-    }
-
-    /* Clear RX flag */
-    CAN1->IFLAG1 = CAN1_RX_MB_FLAG | CAN1_TX_MB_FLAG;
-
-cleanup:
-    /* Return to appropriate mode */
-    if(prv_EnterFreeze() == 0U) { return 0U; }
-
-    if(ok != 0U)
-    {
-        /* CONFIRMED: clear LPB, clear LOM → normal external mode */
-        CAN1->CTRL1 &= ~(CAN_CTRL1_LPB_MASK | CAN_CTRL1_LOM_MASK);
-        CAN1->MCR   |= CAN_MCR_SRXDIS_MASK;   /* disable self-reception */
-        RTT_LOG("[CAN1] Entering NORMAL mode (LOM=0 LPB=0)\r\n");
-    }
-    else
-    {
-        /* NOT CONFIRMED: clear LPB, set LOM → stay listen-only */
-        CAN1->CTRL1 = (CAN1->CTRL1 & ~CAN_CTRL1_LPB_MASK) | CAN_CTRL1_LOM_MASK;
-        CAN1->MCR   |= CAN_MCR_SRXDIS_MASK;
-        RTT_LOG("[CAN1] Back to LOM (loopback failed)\r\n");
-    }
-
-    CAN1->IFLAG1 = 0xFFFFFFFFUL;
-    CAN1->ESR1   = 0xFFFFFFFFUL;
-    prv_ExitFreeze();
-
-    return ok;
-}
-
-/* ============================================================
  * RX FRAME AVAILABLE (polling)
  * ============================================================ */
 static uint8_t prv_RxAvailable(void)
@@ -648,7 +536,6 @@ static void prv_ProcessRx(void)
 static void prv_StartDetection(void)
 {
     g_rate_idx       = 0U;
-    g_detect_ticks   = 0U;
     g_detect_start_ms = Uart_GetMs();
 
     g_status.ready              = 0U;
@@ -695,7 +582,6 @@ static void prv_NextBaud(void)
         g_rate_idx = 0U;
     }
 
-    g_detect_ticks = 0U;
     g_detect_start_ms = Uart_GetMs();
 
     /*
@@ -813,10 +699,8 @@ void Can1_Init(void)
  * STATE MACHINE:
  *
  *   DETECTING: poll IFLAG1 each tick (non-blocking)
- *     Frame detected → prv_LoopbackConfirm() (brief ~1ms)
- *       Confirm OK  → READY state
- *       Confirm fail→ prv_NextBaud(), stay DETECTING
- *     No frame after CAN1_DETECT_TICKS → prv_NextBaud()
+ *     Frame detected → baud confirmed → READY
+ *     No frame during candidate window → prv_NextBaud()
  *
  *   READY: process RX, monitor errors
  *     Bus-off → prv_StartDetection()
