@@ -1,4 +1,6 @@
 #ifndef SYSTEM_INIT_H
+
+#include <stdint.h>
 #define SYSTEM_INIT_H
 
 #ifdef __cplusplus
@@ -7,7 +9,7 @@ extern "C" {
 
 void wdog_disable(void);
 
-void clock_init_80mhz(void);
+uint8_t clock_init_80mhz(void);
 
 #ifdef __cplusplus
 }
