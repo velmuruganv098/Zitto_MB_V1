@@ -44,6 +44,8 @@ static uint32_t g_detect_start_ms;
 static uint32_t g_fault_seen_ms;
 static uint8_t  g_fault_active;
 static uint8_t  g_detect_frames;
+static uint32_t g_detect_verify_start_ms;
+static uint8_t  g_detect_verify_pending;
 /* --------------------------------------------------------------------------
  * EXCEPTION DIAGNOSTIC (written by DefaultISR in startup assembly)
  * -------------------------------------------------------------------------- */
@@ -567,6 +569,8 @@ static void prv_StartDetection(void)
     g_rate_idx       = 0U;
     g_detect_start_ms = Uart_GetMs();
     g_detect_frames   = 0U;
+    g_detect_verify_start_ms = 0U;
+    g_detect_verify_pending = 0U;
 
     g_status.ready              = 0U;
     g_status.hw_ready          = 0U;
@@ -603,6 +607,8 @@ static void prv_StartDetection(void)
  * ============================================================ */
 static void prv_NextBaud(void)
 {
+    g_detect_verify_pending = 0U;
+    g_detect_verify_start_ms = 0U;
     g_rate_idx++;
 
     if(g_rate_idx >= CAN1_BAUD_COUNT)
@@ -612,6 +618,8 @@ static void prv_NextBaud(void)
 
     g_detect_start_ms = Uart_GetMs();
     g_detect_frames   = 0U;
+    g_detect_verify_start_ms = 0U;
+    g_detect_verify_pending = 0U;
 
     /*
      * PCAN-only auto-baud detection.
@@ -760,22 +768,15 @@ void Can1_Task(void)
             g_detect_frames++;
             rx_budget--;
 
-            /* One valid CAN frame is sufficient to lock the baud. */
+            /*
+             * One valid CAN frame is enough to start candidate verification.
+             * The actual latch happens after CAN1_DETECT_VERIFY_MS of clean
+             * controller status in the detection loop below.
+             */
             if(g_detect_frames >= CAN1_DETECT_MIN_FRAMES)
             {
-                g_status.detected_baud_kbps = g_baud_kbps[g_rate_idx];
-                g_status.detecting = 0U;
-                g_status.hw_ready = 1U;
-                g_status.ready = 1U;
-                g_status.bus_off = 0U;
-                g_status.error_passive = 0U;
-                g_ready_since_ms = now;
-                g_fault_seen_ms = 0U;
-                g_fault_active = 0U;
-                g_state = CAN1_STATE_READY;
-
-                RTT_LOG("[CAN1] BAUD DETECTED: %lu kbps -> LATCHED (2s guard)\r\n",
-                        (unsigned long)g_status.detected_baud_kbps);
+                g_detect_verify_pending = 1U;
+                g_detect_verify_start_ms = now;
                 break;
             }
         }
@@ -785,15 +786,49 @@ void Can1_Task(void)
             esr = CAN1->ESR1;
             fault = (uint8_t)((esr >> 4U) & 0x03U);
 
-            /* A candidate that is already error-passive/bus-off cannot be
-             * the correct live baud. Move on immediately. */
-            if(fault != 0U)
+            /*
+             * Reject a wrong timing as soon as FlexCAN reports a protocol
+             * error. ESR1 error bits are cleared by a read, so this is a
+             * deliberate per-task probe during detection.
+             *
+             * Bits 15..10 = BIT1ERR, BIT0ERR, ACKERR, CRCERR, FRMERR,
+             * STFERR. BOFFINT (bit 2) is also an immediate reject.
+             */
+            if((fault != 0U) || ((esr & 0x0000FC04UL) != 0U))
             {
-                RTT_LOG("[CAN1] Candidate %lu fault FLTCONF=%u ESR1=0x%08lX -> next\r\n",
+                RTT_LOG("[CAN1] Candidate %lu rejected ESR1=0x%08lX\r\n",
                         (unsigned long)g_baud_kbps[g_rate_idx],
-                        (unsigned)fault,
                         (unsigned long)esr);
                 prv_NextBaud();
+                return;
+            }
+
+            /*
+             * A single accepted frame identifies the candidate, but do not
+             * latch immediately. Hold the candidate for a short clean
+             * verification interval. This rejects a false/unstable frame
+             * without requiring a second frame, so 500ms-period traffic is
+             * still supported.
+             */
+            if(g_detect_verify_pending != 0U)
+            {
+                if((now - g_detect_verify_start_ms) >= CAN1_DETECT_VERIFY_MS)
+                {
+                    g_status.detected_baud_kbps = g_baud_kbps[g_rate_idx];
+                    g_status.detecting = 0U;
+                    g_status.hw_ready = 1U;
+                    g_status.ready = 1U;
+                    g_status.bus_off = 0U;
+                    g_status.error_passive = 0U;
+                    g_ready_since_ms = now;
+                    g_fault_seen_ms = 0U;
+                    g_fault_active = 0U;
+                    g_state = CAN1_STATE_READY;
+                    g_detect_verify_pending = 0U;
+
+                    RTT_LOG("[CAN1] BAUD DETECTED: %lu kbps -> LATCHED (2s guard)\r\n",
+                            (unsigned long)g_status.detected_baud_kbps);
+                }
                 return;
             }
 
@@ -835,8 +870,9 @@ void Can1_Task(void)
     {
         uint8_t severe = (uint8_t)(
             (fault != 0U) ||
-            (g_status.tx_err_cnt >= CAN1_ERROR_COUNT_LIMIT) ||
-            (g_status.rx_err_cnt >= CAN1_ERROR_COUNT_LIMIT));
+            (((esr & 0x00040000UL) != 0U) &&
+             ((g_status.tx_err_cnt >= CAN1_ERROR_COUNT_LIMIT) ||
+              (g_status.rx_err_cnt >= CAN1_ERROR_COUNT_LIMIT))));
 
         if(severe != 0U)
         {
