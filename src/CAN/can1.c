@@ -965,7 +965,7 @@ void Can1_Task(void)
             }
             else
             {
-                RTT_LOG("[CAN1] Candidate %lu rejected: verification saw CAN errors\\r\\n",
+                RTT_LOG("[CAN1] Candidate %lu rejected: BUS-OFF during verification\\r\\n",
                         (unsigned long)g_baud_kbps[g_rate_idx]);
                 prv_NextBaud();
             }
