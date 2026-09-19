@@ -490,6 +490,7 @@ static void prv_Dispatch(uint32_t can_id, uint8_t ide, uint8_t rtr,
     g_status.rx_count++;
     g_status.frames_rcvd++;
     g_status.rx_active = 1U;
+    g_last_rx_ms = Uart_GetMs();
 
     if(g_rx_cb != NULL)
     {
@@ -576,6 +577,7 @@ static void prv_StartDetection(void)
     g_status.hw_ready          = 0U;
     g_status.detecting         = 1U;
     g_status.detected_baud_kbps = 0U;
+    g_last_rx_ms = 0U;
     g_status.bus_off           = 0U;
     g_status.error_passive     = 0U;
     g_ready_since_ms           = 0U;
@@ -694,6 +696,7 @@ void Can1_Init(void)
     g_rx_total       = 0U;
     g_rx_dropped     = 0U;
     g_last_stat_ms   = 0U;
+    g_last_rx_ms      = 0U;
     g_ready_since_ms = 0U;
     g_fault_start_ms = 0U;
     g_fault_active   = 0U;
@@ -868,11 +871,31 @@ void Can1_Task(void)
     /* Keep the confirmed baud protected for 2 seconds. */
     if((now - g_ready_since_ms) >= CAN1_ERROR_GUARD_MS)
     {
+        /*
+         * Recovery is based on actual CAN fault state, not merely a high
+         * historical RX error counter. FlexCAN may keep RXERRCNT near
+         * 119..127 even after a successful reception, so using the counter
+         * alone can force a healthy slow-traffic bus back into detection.
+         *
+         * For a live PCAN baud change, require both:
+         *   - warning/error evidence, and
+         *   - no valid frame for CAN1_LIVE_BAUD_LOSS_MS.
+         *
+         * This is NOT inactivity-only recovery.
+         * RWRNINT is ESR1 bit 16 (not SYNCH bit 18).
+         */
+        uint8_t error_flags = (uint8_t)((esr & 0x0000FC00UL) != 0U);
+        uint8_t rx_warning = (uint8_t)((esr & 0x00010000UL) != 0U);
+        uint8_t high_errors = (uint8_t)(
+            (g_status.tx_err_cnt >= CAN1_ERROR_COUNT_LIMIT) ||
+            (g_status.rx_err_cnt >= CAN1_ERROR_COUNT_LIMIT));
+        uint8_t no_recent_rx = (uint8_t)(
+            (now - g_last_rx_ms) >= CAN1_LIVE_BAUD_LOSS_MS);
         uint8_t severe = (uint8_t)(
             (fault != 0U) ||
-            (((esr & 0x00040000UL) != 0U) &&
-             ((g_status.tx_err_cnt >= CAN1_ERROR_COUNT_LIMIT) ||
-              (g_status.rx_err_cnt >= CAN1_ERROR_COUNT_LIMIT))));
+            (no_recent_rx != 0U &&
+             ((error_flags != 0U) ||
+              (rx_warning != 0U && high_errors != 0U))));
 
         if(severe != 0U)
         {
