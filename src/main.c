@@ -206,10 +206,19 @@ static void can1_rx(uint32_t id, uint8_t ide, uint8_t rtr,
 {
     CanFramePkt_t f;
     uint8_t i;
-    (void)baud;
     memset(&f, 0, sizeof(f));
     f.bus=1U; f.ide=ide; f.rtr=rtr; f.dlc=dlc; f.can_id=id; f.ts_ms=Uart_GetMs();
     if(data) { for(i=0U;i<8U;i++) f.data[i]=(i<dlc)?data[i]:0U; }
+
+    RTT_LOG("[CAN1_APP] baud=%lu ID=0x%08lX DLC=%u DATA=%02X %02X %02X %02X %02X %02X %02X %02X\\r\\n",
+            (unsigned long)baud,
+            (unsigned long)id,
+            (unsigned)dlc,
+            (unsigned)f.data[0], (unsigned)f.data[1],
+            (unsigned)f.data[2], (unsigned)f.data[3],
+            (unsigned)f.data[4], (unsigned)f.data[5],
+            (unsigned)f.data[6], (unsigned)f.data[7]);
+
     (void)Uart_Pkt_SendCan(&f);
 }
 #endif
@@ -499,7 +508,7 @@ int main(void)
             /* Application/UART forwarding is intentionally outside the CAN
              * mailbox service path. This prevents UART latency from causing
              * FlexCAN MB4 overrun under heavy traffic. */
-            Can1_ProcessRxQueue(1U);
+            Can1_ProcessRxQueue(2U);
         }
 #endif
 
