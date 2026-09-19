@@ -1170,6 +1170,7 @@ void Can1_Task(void)
         {
             g_fault_seen_ms = 0U;
         }
+    }
 
     if((now - g_last_stat_ms) >= 5000U)
     {
