@@ -995,18 +995,23 @@ uint8_t Uart_Pkt_Send(
      * Frame complete
      * ------------------------------------------------------------ */
 
-    RTT_LOG(
-        "[UART_TX] Frame ready "
-        "type=0x%02X "
-        "payload=%u "
-        "total=%u\r\n",
+    /*
+     * CAN frames can arrive much faster than RTT can display them.
+     * Keep the packet path bounded without one debug line per CAN frame.
+     */
+    if(type != MSG_CAN)
+    {
+        RTT_LOG(
+            "[UART_TX] Frame ready "
+            "type=0x%02X "
+            "payload=%u "
+            "total=%u\\r\\n",
 
-        (unsigned)type,
-
-        (unsigned)len,
-
-        (unsigned)index
-    );
+            (unsigned)type,
+            (unsigned)len,
+            (unsigned)index
+        );
+    }
 
 
     /* ------------------------------------------------------------
