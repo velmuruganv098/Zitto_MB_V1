@@ -1,6 +1,9 @@
 /*
  * main.c  -  Zitto_MB_V1 / S32K144
  *
+ * Firmware Revision : V0.001
+ * Change Note       : CAN1 external auto-baud state-machine architecture
+ *
  * ==========================================================================
  * CRITICAL BOOT ORDER (do not change):
  *   1. wdog_disable()       - default WDOG ~256ms, fires during CAN init
@@ -381,6 +384,8 @@ int main(void)
     SEGGER_RTT_printf(0,
         "\r\n================================================\r\n"
         " Zitto MB V1 - VCU Firmware Boot\r\n"
+        " Firmware Revision : V0.003\r\n"
+        " Change            : CAN1 automatic re-detection after 2s CAN inactivity/error\r\n"
         " MCU: S32K144  Clock: 80MHz SPLL  WDOG: OFF\r\n"
         " Modules: IMU=%d CSA=%d CAN1=%d CAN2=%d FLM=%d GPIO=%d\r\n"
         "================================================\r\n\r\n",

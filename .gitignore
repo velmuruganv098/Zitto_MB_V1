@@ -53,3 +53,9 @@ $RECYCLE.BIN/
 # ---- J-Link / debug session logs ----
 *.jlink.log
 JLinkLog.txt
+
+# Keep project DEBUG source files; ignore generated DEBUG build files
+!DEBUG/
+!DEBUG/*.c
+!DEBUG/*.h
+DEBUG/subdir.mk

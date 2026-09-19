@@ -15,7 +15,7 @@
  */
 
 #include "boot_main.h"
-
+#include "DEBUG/debug_rtt.h"
 #include <stdint.h>
 
 volatile uint32_t g_last_exception_ipsr = 0U;
