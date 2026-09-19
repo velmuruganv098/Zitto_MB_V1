@@ -1,7 +1,7 @@
 #ifndef SYSTEM_INIT_H
+#define SYSTEM_INIT_H
 
 #include <stdint.h>
-#define SYSTEM_INIT_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -9,6 +9,7 @@ extern "C" {
 
 void wdog_disable(void);
 
+/* Returns 1 when the 80MHz/40MHz clock tree is valid, otherwise 0. */
 uint8_t clock_init_80mhz(void);
 
 #ifdef __cplusplus
