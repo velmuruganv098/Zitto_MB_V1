@@ -51,8 +51,6 @@
 /* --------------------------------------------------------------------------
  * FLEXCAN STATUS BITS USED BY THIS DRIVER
  * -------------------------------------------------------------------------- */
-#define CAN1_ESR_ERRINT_BIT       (1UL << 1U)
-#define CAN1_ESR_BOFFINT_BIT      (1UL << 2U)
 #define CAN1_ESR_FLTCONF_MASK     (3UL << 4U)
 #define CAN1_ESR_RXWRN_BIT        (1UL << 8U)
 #define CAN1_ESR_TXWRN_BIT        (1UL << 9U)
