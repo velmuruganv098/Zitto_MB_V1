@@ -45,6 +45,7 @@ static uint32_t g_fault_seen_ms;
 static uint8_t  g_fault_active;
 static uint8_t  g_detect_frames;
 static uint32_t g_detect_verify_start_ms;
+static uint32_t g_last_rx_ms;
 static uint8_t  g_detect_verify_pending;
 /* --------------------------------------------------------------------------
  * EXCEPTION DIAGNOSTIC (written by DefaultISR in startup assembly)
