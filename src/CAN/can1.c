@@ -653,7 +653,6 @@ void Can1_Init(void)
     g_state          = CAN1_STATE_DETECTING;
     g_task_cnt       = 0U;
     g_rate_idx       = 0U;
-    g_detect_ticks   = 0U;
     g_detect_start_ms = 0U;
     g_rx_total       = 0U;
     g_rx_dropped     = 0U;
