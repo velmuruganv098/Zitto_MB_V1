@@ -3,7 +3,7 @@
  *
  * FlexCAN1 register-level driver.
  *
- * V0.0044 hardened architecture
+ * V0.0045 hardened architecture
  * --------------------------------
  *   DETECTING -> READY
  *       ^          |
@@ -116,6 +116,19 @@ static uint32_t g_detect_window_start_ms;
 static uint32_t g_detect_verify_start_ms;
 static uint8_t  g_detect_frames;
 static uint8_t  g_detect_verify_pending;
+
+typedef struct
+{
+    uint32_t error_esr;
+    uint8_t  txerr_baseline;
+    uint8_t  rxerr_baseline;
+    uint8_t  txerr_last;
+    uint8_t  rxerr_last;
+    uint8_t  txerr_delta;
+    uint8_t  rxerr_delta;
+} Can1_DetectEvidence_t;
+
+static Can1_DetectEvidence_t g_detect_evidence;
 
 static uint32_t g_fault_seen_ms;
 
@@ -797,6 +810,10 @@ static void prv_StartDetection(uint8_t retry_last)
     g_detect_verify_start_ms = 0U;
     g_scan_pos = 0U;
 
+    g_detect_evidence.error_esr = 0U;
+    g_detect_evidence.txerr_delta = 0U;
+    g_detect_evidence.rxerr_delta = 0U;
+
     g_status.ready = 0U;
     g_status.hw_ready = 1U;
     g_status.detecting = 1U;
@@ -880,6 +897,10 @@ static void prv_NextBaud(void)
     g_detect_window_start_ms = Uart_GetMs();
     g_detect_verify_start_ms = 0U;
 
+    g_detect_evidence.error_esr = 0U;
+    g_detect_evidence.txerr_delta = 0U;
+    g_detect_evidence.rxerr_delta = 0U;
+
     if(prv_ApplyBaud(g_rate_idx) == 0U)
     {
         g_state = CAN1_STATE_ERROR;
@@ -912,9 +933,12 @@ static void prv_LockCandidate(uint32_t now)
     g_detect_verify_pending = 0U;
     g_state = CAN1_STATE_READY;
 
-    RTT_LOG("[CAN1] *** BAUD LOCKED %lu kbps *** frames=%u CTRL1=0x%08lX\r\n",
+    RTT_LOG("[CAN1] *** BAUD LOCKED %lu kbps *** frames=%u err=0x%08lX txd=%u rxd=%u CTRL1=0x%08lX\r\n",
             (unsigned long)g_status.detected_baud_kbps,
             (unsigned)g_detect_frames,
+            (unsigned long)g_detect_evidence.error_esr,
+            (unsigned)g_detect_evidence.txerr_delta,
+            (unsigned)g_detect_evidence.rxerr_delta,
             (unsigned long)CAN1->CTRL1);
 }
 
@@ -956,6 +980,14 @@ void Can1_Init(void)
     g_detect_verify_start_ms = 0U;
     g_detect_frames = 0U;
     g_detect_verify_pending = 0U;
+
+    g_detect_evidence.error_esr = 0U;
+    g_detect_evidence.txerr_baseline = 0U;
+    g_detect_evidence.rxerr_baseline = 0U;
+    g_detect_evidence.txerr_last = 0U;
+    g_detect_evidence.rxerr_last = 0U;
+    g_detect_evidence.txerr_delta = 0U;
+    g_detect_evidence.rxerr_delta = 0U;
 
     g_rx_q_head = 0U;
     g_rx_q_tail = 0U;
@@ -1020,6 +1052,41 @@ void Can1_Task(void)
 
             g_status.last_esr1 = verify_esr;
             g_status.last_ecr = CAN1->ECR;
+
+            /*
+             * Candidate-relative diagnostics are deliberately not used as
+             * the acceptance gate. A valid external frame proves that the
+             * selected timing can decode traffic; protocol-error history
+             * from previous active probes must not reject it.
+             */
+            {
+                uint32_t ecr_now = CAN1->ECR;
+                uint8_t txerr_now = (uint8_t)(ecr_now & 0xFFU);
+                uint8_t rxerr_now = (uint8_t)((ecr_now >> 8U) & 0xFFU);
+
+                g_detect_evidence.error_esr |=
+                    verify_esr & CAN1_ESR_ERR_BUS_MASK;
+
+                if(txerr_now > g_detect_evidence.txerr_last)
+                {
+                    g_detect_evidence.txerr_delta =
+                        (uint8_t)(g_detect_evidence.txerr_delta +
+                                  (txerr_now - g_detect_evidence.txerr_last));
+                }
+                if(rxerr_now > g_detect_evidence.rxerr_last)
+                {
+                    g_detect_evidence.rxerr_delta =
+                        (uint8_t)(g_detect_evidence.rxerr_delta +
+                                  (rxerr_now - g_detect_evidence.rxerr_last));
+                }
+
+                g_detect_evidence.txerr_last = txerr_now;
+                g_detect_evidence.rxerr_last = rxerr_now;
+
+                g_status.detect_error_esr = g_detect_evidence.error_esr;
+                g_status.detect_txerr_delta = g_detect_evidence.txerr_delta;
+                g_status.detect_rxerr_delta = g_detect_evidence.rxerr_delta;
+            }
 
             /*
              * Candidate acceptance:
