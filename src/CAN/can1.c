@@ -878,7 +878,6 @@ void Can1_Task(void)
             {
                 g_detect_verify_pending = 1U;
                 g_detect_start_ms = now;
-                g_detect_error_seen = 0U;
             }
         }
 
