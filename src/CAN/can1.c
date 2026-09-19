@@ -697,8 +697,11 @@ static void prv_ProcessRx(void)
     if(code == 0x06U)
     {
         g_rx_dropped++;
-        RTT_LOG("[CAN1] RX overrun: latest frame retained  drop=%lu\r\n",
-                (unsigned long)g_rx_dropped);
+        if((g_rx_dropped <= 3U) || ((g_rx_dropped % 100U) == 0U))
+        {
+            RTT_LOG("[CAN1] RX overrun: latest frame retained drop=%lu\r\n",
+                    (unsigned long)g_rx_dropped);
+        }
     }
 
     g_rx_total++;
