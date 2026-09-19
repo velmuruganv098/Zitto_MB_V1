@@ -1,126 +1,27 @@
 /*
- * can1.h  -  Zitto_MB_V1 / S32K144
+ * can1.h - Zitto_MB_V1 / S32K144
  *
- * FlexCAN1 driver header.
+ * CAN1 architecture:
+ *   DETECTING -> READY
+ *   READY -> ERROR only for confirmed bus fault/loss
+ *   ERROR -> DETECTING
  *
- * V0.0044: PCAN-only detection is NORMAL/ACK-based with a short probe;
- * READY is normal mode with automatic bus-off recovery enabled (BOFFREC=0).
+ * Detection is non-blocking and does not transmit any probe frame.
+ * The PCAN-only topology remains in NORMAL mode so the MCU can ACK a
+ * correctly received external frame. A valid hardware RX frame is the
+ * primary baud evidence; transient protocol errors on wrong candidates
+ * are diagnostic only. A candidate is rejected only when it reaches the
+ * bounded observation/verification deadline without valid RX evidence, or
+ * when the controller is actually Bus-Off.
  *
- * AUTO-BAUD ARCHITECTURE:
- *   Phase 1: DETECTING  (NORMAL / active external-bus observation)
- *     - Try 500 / 250 / 125 / 1000 kbps, 150ms candidate observation
- *     - 125/250/500 kbps use 16TQ / 87.5% sample point; 1Mbps uses
- *       8TQ / 75% sample point
- *     - Require 1 valid received frame, then 15ms bounded verification before lock
- *     - No TX probe is generated; the MCU remains a receiver/ACKing node
- *     - Wrong-candidate protocol-error flags are not used to reject a valid RX frame
- *     - RX mailbox service is decoupled from UART/application forwarding
+ * RX uses MB4..MB15 as a software-backed hardware receive pool. Application
+ * forwarding is decoupled from mailbox service so UART latency cannot hold
+ * FlexCAN reception.
  *
- *   Phase 2: READY  (LOM=0, LPB=0, BOFFREC=0, normal CAN operation)
- *     - Receive and forward frames with RX priority
- *     - Hold the confirmed baud for 2s before fault-triggered recovery
- *     - After the guard, persistent fault/error evidence triggers recovery
- *     - No-traffic/inactivity alone never invalidates a detected baud
+ * All wait paths in the CAN driver are bounded.
  *
- * IRQ NUMBERS (S32K144, confirmed from SDK S32K144.h):
- *   CAN1_ORed_IRQn          = 85  NVIC[2] bit21  IPSR=0x65
- *   CAN1_Error_IRQn         = 86  NVIC[2] bit22  IPSR=0x66
- *   CAN1_ORed_0_15_MB_IRQn  = 88  NVIC[2] bit24  IPSR=0x68
- *   Combined NVIC mask = 0x01600000 (NVIC register index 2)
- */
-
-#ifndef CAN1_H
-#define CAN1_H
-
-#include "S32K144.h"
-#include <stdint.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/* --------------------------------------------------------------------------
+ * -------------------------------------------------------------------------- 
  * CONFIGURATION
- * -------------------------------------------------------------------------- */
-
-/* Transceiver SHDN pin (PTB2: LOW=normal, HIGH=shutdown) */
-#define CAN1_SHDN_PTB_PIN           2U
-
-/* Auto-baud timing: task period × ticks = time per candidate */
-#define CAN1_ERROR_GUARD_MS       2000U
-#define CAN1_DETECT_WINDOW_MS       150U
-#define CAN1_DETECT_MIN_FRAMES        1U
-#define CAN1_DETECT_LOM                 0U /* NORMAL: PCAN requires ACK */
-#define CAN1_LOOPBACK_TIMEOUT           50000U
-#define CAN1_DETECT_VERIFY_MS        15U
-#define CAN1_LIVE_BAUD_LOSS_MS     1500U
-#define CAN1_FAULT_CONFIRM_MS        100U
-#define CAN1_ERROR_COUNT_LIMIT        96U
-#define CAN1_RX_BUDGET                16U    /* drain hardware MB quickly */
-
-/* Bus-off recovery: 0 = automatic, 1 = manual. */
-#define CAN1_CTRL1_BOFFREC_MASK        (1UL << 6U)
-
-/* Baud rate candidates */
-#define CAN1_BAUD_500K              0U
-#define CAN1_BAUD_250K              1U
-#define CAN1_BAUD_125K              2U
-#define CAN1_BAUD_1000K             3U
-#define CAN1_BAUD_COUNT             4U
-
-/* RX mailbox number */
-#define CAN1_MB_RX                  4U
-
-/* --------------------------------------------------------------------------
- * IRQ NUMBERS + NVIC MASK (S32K144.h confirmed)
- * -------------------------------------------------------------------------- */
-
-#define CAN1_OR_IRQn                85U
-#define CAN1_ERROR_IRQn             86U
-#define CAN1_MB_IRQn                88U
-#define CAN1_NVIC_REG               2U
-
-#define CAN1_OR_IRQ_MASK            (1UL << (CAN1_OR_IRQn   % 32U))  /* bit 21 */
-#define CAN1_ERROR_IRQ_MASK         (1UL << (CAN1_ERROR_IRQn % 32U)) /* bit 22 */
-#define CAN1_MB_IRQ_MASK            (1UL << (CAN1_MB_IRQn   % 32U))  /* bit 24 */
-#define CAN1_NVIC_IRQ_MASK          (CAN1_OR_IRQ_MASK | CAN1_ERROR_IRQ_MASK | CAN1_MB_IRQ_MASK)
-/* = 0x01600000 */
-
-/* --------------------------------------------------------------------------
- * STATE MACHINE
- * -------------------------------------------------------------------------- */
-
-typedef enum
-{
-    CAN1_STATE_DETECTING = 0,  /* LOM external-bus baud scan */
-    CAN1_STATE_READY,          /* Candidate accepted, normal reception */
-    CAN1_STATE_ERROR           /* Unrecoverable - re-detecting     */
-} Can1_State_t;
-
-/* --------------------------------------------------------------------------
- * STATUS
- * -------------------------------------------------------------------------- */
-
-typedef struct
-{
-    uint8_t  ready;
-    uint8_t  hw_ready;
-    uint8_t  detecting;
-    uint8_t  rx_active;
-    uint8_t  bus_idle;
-    uint8_t  bus_off;
-    uint8_t  error_passive;
-    uint8_t  shdn_state;
-    uint32_t detected_baud_kbps;
-    uint32_t rx_count;
-    uint32_t frames_rcvd;
-    uint32_t tx_err_cnt;
-    uint32_t rx_err_cnt;
-    uint32_t error_count;
-} Can1_Status_t;
-
-/* --------------------------------------------------------------------------
- * CALLBACK
  * -------------------------------------------------------------------------- */
 
 typedef void (*Can1_RxCallback_t)(
