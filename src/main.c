@@ -1,7 +1,7 @@
 /*
  * main.c  -  Zitto_MB_V1 / S32K144
  *
- * Firmware Revision : V0.001
+ * Firmware Revision : V0.0042
  * Change Note       : CAN1 external auto-baud state-machine architecture
  *
  * ==========================================================================
@@ -468,7 +468,7 @@ int main(void)
     /* ======================================================================
      * MAIN LOOP
      *
-     * V0.0041 CAN priority:
+     * V0.0042 CAN priority:
      *   - 5ms cooperative loop instead of 50ms fixed loop
      *   - CAN1 is serviced first
      *   - UART/OTA remain frequent
