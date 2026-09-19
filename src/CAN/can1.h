@@ -47,6 +47,7 @@ extern "C" {
 #define CAN1_DETECT_WINDOW_MS       700U
 #define CAN1_DETECT_MIN_FRAMES        1U
 #define CAN1_DETECT_VERIFY_MS        20U
+#define CAN1_LIVE_BAUD_LOSS_MS     1500U
 #define CAN1_FAULT_CONFIRM_MS        100U
 #define CAN1_ERROR_COUNT_LIMIT        96U
 #define CAN1_RX_BUDGET                 8U    /* bounded RX service per task */
