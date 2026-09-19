@@ -5,7 +5,7 @@ Repository:
 https://github.com/velmuruganv098/Zitto_MB_V1
 
 Revision history:
-V0.003 -> V0.004 -> V0.005 -> V0.006
+V0.003 -> V0.004 -> V0.0041 -> V0.0042 -> V0.0043 -> V0.005 -> V0.006
 
 
 V0.003
@@ -257,3 +257,40 @@ This revision note records repository/source-level changes. It does not
 claim successful hardware validation unless separately recorded by project
 test logs.
 
+
+
+V0.0043
+------
+CAN1 SLOW-TRAFFIC DETECTION / BUS-HEAVY CORRECTION
+
+From revision -> To revision:
+- V0.0042 -> V0.0043
+
+Issue observed:
+1. With PCAN traffic around one frame every 500ms, CAN1 could remain in detection and the bus showed heavy/error activity even while data was being sent.
+2. 125 kbps was not detected; the candidate scan advanced rapidly through the rates and could enter Bus-Off/error activity before the slow 125 kbps frame was seen.
+3. The successful baud indication needed to be a single latch message for each detection event.
+
+Root cause / observation:
+- V0.0042 used a 250ms candidate window. A 500ms-period sender can legitimately produce no frame during a candidate window, so the correct candidate can be skipped.
+- Wrong candidates already fail quickly through FlexCAN fault confinement, so extending the observation window does not make active-bus detection linearly slower.
+
+Updates:
+1. Candidate observation window increased from 250ms to 700ms.
+2. One valid FlexCAN-received frame remains sufficient to identify and latch the baud.
+3. Wrong candidates still advance immediately when FLTCONF indicates Error Passive/Bus-Off, preserving fast detection when traffic is present.
+4. Successful detection log changed to a single explicit message:
+   [CAN1] BAUD DETECTED: <rate> kbps -> LATCHED (2s guard)
+   This message is emitted once when the state changes from DETECTING to READY.
+5. No inactivity-based re-detection was added; after latch, CAN1 remains on the detected baud unless the existing post-guard fault recovery criteria are met.
+6. Firmware banner and CAN comments updated to V0.0043.
+
+Expected bench behavior:
+- 100ms/frame: fast detection as before.
+- 500ms/frame: correct candidate has enough time to see the next frame; false candidates still fail fast on controller fault.
+- 125kbps with slow PCAN traffic: the 125kbps candidate remains active long enough to receive a 500ms-period frame and latch.
+- After latch: one BAUD DETECTED message only for that detection event.
+
+Validation status:
+- Source changes prepared on dev/can1-v0.0043.
+- S32DS build, ELF generation, J-Link flash, RTT and PCAN bench validation are still required.
