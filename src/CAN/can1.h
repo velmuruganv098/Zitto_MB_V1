@@ -89,8 +89,7 @@ typedef enum
     CAN1_STATE_ERROR
 } Can1_State_t;
 
-/* --------------------------------------------------------------------------
- * STATUS
+* STATUS
  * -------------------------------------------------------------------------- */
 
 typedef struct
@@ -115,6 +114,11 @@ typedef struct
     uint32_t rx_hw_overrun;
     uint32_t last_esr1;
     uint32_t last_ecr;
+
+    /* Evidence collected only while testing the current baud candidate. */
+    uint32_t detect_error_esr;
+    uint8_t  detect_txerr_delta;
+    uint8_t  detect_rxerr_delta;
 } Can1_Status_t;
 
 /* --------------------------------------------------------------------------
