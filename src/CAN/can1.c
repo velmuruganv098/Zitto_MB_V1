@@ -55,6 +55,9 @@
 #include <stdint.h>
 #include <stddef.h>
 
+/* Declared by the UART timebase module; used only for bounded timestamps. */
+extern uint32_t Uart_GetMs(void);
+
 /* --------------------------------------------------------------------------
  * FLEXCAN STATUS BITS USED BY THIS DRIVER
  * -------------------------------------------------------------------------- */
@@ -411,7 +414,7 @@ static uint8_t prv_ApplyBaud(uint8_t idx)
                 CAN_MCR_MAXMB(15U) |
                 CAN_MCR_SRXDIS_MASK;
 
-    ctrl1 = g_ctrl1_base[idx] |
+    ctrl1 = CAN1_PROFILE(idx).ctrl1 |
             CAN_CTRL1_CLKSRC_MASK;
 
     /* No TX/error interrupts: polling owns the state machine. */
