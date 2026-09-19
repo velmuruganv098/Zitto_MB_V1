@@ -481,7 +481,14 @@ int main(void)
 
         /* CAN1 FIRST: minimize RX mailbox service latency. */
 #if APP_CAN1_ENABLE
-        if(g_can1_en != 0U) { Can1_Task(); }
+        if(g_can1_en != 0U)
+        {
+            Can1_Task();
+            /* Application/UART forwarding is intentionally outside the CAN
+             * mailbox service path. This prevents UART latency from causing
+             * FlexCAN MB4 overrun under heavy traffic. */
+            Can1_ProcessRxQueue(4U);
+        }
 #endif
 
         Uart_Poll();
