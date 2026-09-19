@@ -899,6 +899,8 @@ static void prv_StartDetection(uint8_t retry_last)
         return;
     }
 
+    prv_ResetDetectEvidence();
+
     g_state = CAN1_STATE_DETECTING;
 
     RTT_LOG("[CAN1] DETECT start baud=%lu window=%ums verify=%ums%s\r\n",
@@ -1112,8 +1114,6 @@ void Can1_Task(void)
 
             g_status.last_esr1 = verify_esr;
             g_status.last_ecr = CAN1->ECR;
-
-            prv_CaptureDetectEvidence();
 
             /*
              * Candidate acceptance:
