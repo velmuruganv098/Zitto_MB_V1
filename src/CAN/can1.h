@@ -18,6 +18,9 @@
  * All wait paths in the CAN driver are bounded.
  * V0.0045 adds candidate-relative error diagnostics and keeps valid RX
  * stronger than transient protocol-error history from active probing.
+ *
+ * V0.0046 revision note: same architecture/topology, but each baud candidate
+ * has an explicit bounded detection profile (window/verify/min-frame).
  */
 
 #ifndef CAN1_H
@@ -37,11 +40,11 @@ extern "C" {
 #define CAN1_SHDN_PTB_PIN           2U  /* LOW=normal, HIGH=shutdown */
 
 #define CAN1_ERROR_GUARD_MS       2000U
-#define CAN1_DETECT_WINDOW_MS      250U
-#define CAN1_DETECT_MIN_FRAMES      1U
+#define CAN1_DETECT_WINDOW_MS      250U  /* legacy/common default; V0.0046 uses profile */
+#define CAN1_DETECT_MIN_FRAMES      1U   /* legacy/common default; V0.0046 uses profile */
 #define CAN1_DETECT_LOM             0U  /* NORMAL: PCAN-only topology */
 #define CAN1_LOOPBACK_TIMEOUT    50000U
-#define CAN1_DETECT_VERIFY_MS       20U
+#define CAN1_DETECT_VERIFY_MS       20U  /* legacy/common default; V0.0046 uses profile */
 #define CAN1_LIVE_BAUD_LOSS_MS    1500U
 #define CAN1_FAULT_CONFIRM_MS      100U
 /*
