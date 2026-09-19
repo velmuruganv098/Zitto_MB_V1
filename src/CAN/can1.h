@@ -3,18 +3,17 @@
  *
  * FlexCAN1 driver header.
  *
- * V0.0044: detection is LOM-based; READY is normal mode with automatic
- * bus-off recovery enabled (CTRL1[BOFFREC]=0).
+ * V0.0044: PCAN-only detection is NORMAL/ACK-based with a short probe;
+ * READY is normal mode with automatic bus-off recovery enabled (BOFFREC=0).
  *
  * AUTO-BAUD ARCHITECTURE:
- *   Phase 1: DETECTING  (LOM / listen-only external-bus detection)
- *     - Try 500 / 250 / 125 / 1000 kbps, 600ms candidate window
+ *   Phase 1: DETECTING  (NORMAL / active external-bus detection)
+ *     - Try 500 / 250 / 125 / 1000 kbps, 50ms candidate probe
  *     - 125/250/500 kbps use 16TQ / 87.5% sample point; 1Mbps uses
- *       8TQ / 75% sample point to match common PCAN nominal timing
+ *       8TQ / 75% sample point
  *     - Require 1 valid received frame before baud lock
- *     - A 600ms window covers slow external traffic (e.g. 500ms/frame)
- *       while wrong candidates still advance immediately on fault
- *     - Bad candidate with protocol errors/Error Passive/Bus-Off is abandoned early
+ *     - Short wrong-baud probes minimize error-frame disturbance
+ *     - Normal mode is required because PCAN needs an ACKing node
  *     - Non-blocking RX polling; candidate confirmation uses a bounded
  *       internal loopback self-test before entering normal mode
  *
@@ -50,9 +49,9 @@ extern "C" {
 
 /* Auto-baud timing: task period × ticks = time per candidate */
 #define CAN1_ERROR_GUARD_MS       2000U
-#define CAN1_DETECT_WINDOW_MS       600U
+#define CAN1_DETECT_WINDOW_MS        50U
 #define CAN1_DETECT_MIN_FRAMES        1U
-#define CAN1_DETECT_LOM                 1U
+#define CAN1_DETECT_LOM                 0U /* NORMAL: PCAN requires ACK */
 #define CAN1_LOOPBACK_TIMEOUT           50000U
 #define CAN1_DETECT_VERIFY_MS        20U
 #define CAN1_LIVE_BAUD_LOSS_MS     1500U
