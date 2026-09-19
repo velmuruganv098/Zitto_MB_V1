@@ -184,16 +184,47 @@ static uint8_t prv_EnterFreeze(void)
 {
     volatile uint32_t timeout = 200000U;
 
+    /* Normal path: request Freeze + Halt. */
     CAN1->MCR |= (CAN_MCR_FRZ_MASK | CAN_MCR_HALT_MASK);
 
     while(((CAN1->MCR & CAN_MCR_FRZACK_MASK) == 0U) && (timeout-- != 0U)) {}
 
+    if(timeout != 0U)
+    {
+        return 1U;
+    }
+
+    /*
+     * Bus-Off recovery path:
+     * FlexCAN can remain busy while entering Freeze during Bus-Off.
+     * NXP's S32K1 procedure permits SOFTRST when FRZACK cannot be
+     * obtained, then re-entering Freeze and reconfiguring the controller.
+     */
+    RTT_LOG("[CAN1] Freeze timeout, forcing controller soft reset MCR=0x%08lX\r\n",
+            (unsigned long)CAN1->MCR);
+
+    CAN1->MCR |= CAN_MCR_FRZ_MASK | CAN_MCR_HALT_MASK | CAN_MCR_SOFTRST_MASK;
+    timeout = 200000U;
+    while(((CAN1->MCR & CAN_MCR_SOFTRST_MASK) != 0U) && (timeout-- != 0U)) {}
+
     if(timeout == 0U)
     {
-        RTT_LOG("[CAN1_ERR] EnterFreeze timeout MCR=0x%08lX\r\n",
+        RTT_LOG("[CAN1_ERR] Soft reset timeout MCR=0x%08lX\r\n",
                 (unsigned long)CAN1->MCR);
         return 0U;
     }
+
+    CAN1->MCR |= CAN_MCR_FRZ_MASK | CAN_MCR_HALT_MASK;
+    timeout = 200000U;
+    while(((CAN1->MCR & CAN_MCR_FRZACK_MASK) == 0U) && (timeout-- != 0U)) {}
+
+    if(timeout == 0U)
+    {
+        RTT_LOG("[CAN1_ERR] Freeze retry timeout MCR=0x%08lX\r\n",
+                (unsigned long)CAN1->MCR);
+        return 0U;
+    }
+
     return 1U;
 }
 
