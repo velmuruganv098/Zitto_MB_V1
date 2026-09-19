@@ -825,9 +825,9 @@ void Can1_Init(void)
  *     wrong candidates still fail fast on controller fault.
  *
  *   READY: process RX, monitor errors
- *     Bus-off → prv_StartDetection()
- *     RX/TX error counters are diagnostic only
- *     No traffic does not trigger re-detection
+ *     Bus-off/error evidence → retry last-known baud first
+ *     RX/TX error counters are diagnostic only unless paired with sustained loss
+ *     No traffic by itself does not trigger re-detection
  *
  *   ERROR: immediately restart detection
  * ============================================================ */
@@ -978,7 +978,7 @@ void Can1_Task(void)
 
                 g_status.error_count++;
                 g_fault_active = 1U;
-                prv_StartDetection();
+                prv_StartDetection(1U);
                 return;
             }
         }
