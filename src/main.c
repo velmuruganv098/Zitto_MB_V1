@@ -436,10 +436,10 @@ int main(void)
     RTT_LOG("[BOOT] CSA ok\r\n");
 #endif
 
-    /* CAN1 - FlexCAN1  PTA12/PTA13  TCAN334  SHDN=PTB2
-     * Bus clock (40MHz) used as CAN clock source.
-     * Auto-baud: 500→250→125→1000 kbps, non-blocking; 600ms LOM candidate window for slow PCAN traffic.
-     * LOM detection + data-verified loopback confirmation; normal mode only after lock. */
+    /* CAN1 - FlexCAN1 PTA12/PTA13 TCAN334 SHDN=PTB2
+     * BUS_CLK=40MHz, 500/250/125/1000kbps candidates.
+     * Detection is NORMAL-mode receive/ACK based, with no TX probe.
+     * RX uses MB4..MB15 and application forwarding is decoupled. */
 #if APP_CAN1_ENABLE
     RTT_LOG("[BOOT] CAN1 init  FlexCAN1  PTA12/PTA13  SHDN=PTB2\r\n");
     Can1_Init();
@@ -487,7 +487,7 @@ int main(void)
             /* Application/UART forwarding is intentionally outside the CAN
              * mailbox service path. This prevents UART latency from causing
              * FlexCAN MB4 overrun under heavy traffic. */
-            Can1_ProcessRxQueue(4U);
+            Can1_ProcessRxQueue(1U);
         }
 #endif
 
