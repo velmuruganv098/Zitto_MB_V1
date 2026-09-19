@@ -3,7 +3,7 @@
  *
  * FlexCAN1 register-level driver.
  *
- * V0.0046 hardened architecture
+ * V0.0047 hardened architecture
  * --------------------------------
  *   DETECTING -> READY
  *       ^          |
@@ -23,11 +23,14 @@
  *   6. After lock, inactivity alone never starts another baud scan.
  *   7. Recovery retries the last confirmed baud first, then scans all rates.
  *
- * V0.0046 revision note
+ * V0.0047 revision note
  *   - Keeps the same DETECTING -> READY -> ERROR architecture and PCAN NORMAL/ACK topology.
- *   - Uses explicit per-baud detection profiles instead of one shared timing window.
- *   - 500k remains the fast/default profile; 250k/125k get longer observation windows
- *     so lower-rate traffic is not missed; 1M gets a short high-rate profile.
+ *   - Keeps independent bit-timing and detection profiles for all four baud rates.
+ *   - Adds a bounded same-candidate retry for 250k and 125k when a full observation
+ *     window sees no valid RX, preventing periodic PCAN traffic from being missed
+ *     only because the first observation window started between frames.
+ *   - Detection timing starts only after the candidate has been successfully applied.
+ *   - 500k/1M remain single-pass fast profiles because 500k is the known working path.
  *   - READY recovery remains Bus-Off-only; idle/error-passive never starts a scan.
  *
  * RX rules:
@@ -96,6 +99,7 @@ typedef struct
     uint16_t detect_window_ms;
     uint16_t verify_ms;
     uint8_t  min_frames;
+    uint8_t  no_rx_retries;
 } Can1_BaudProfile_t;
 
 /*
@@ -106,10 +110,10 @@ typedef struct
  */
 static const Can1_BaudProfile_t g_baud_profile[CAN1_BAUD_COUNT] =
 {
-    { 500U,  0x04690006UL, 250U, 20U, 1U }, /* 500k, 16TQ, 87.5% */
-    { 250U,  0x09690006UL, 500U, 40U, 1U }, /* 250k, 16TQ, 87.5% */
-    { 125U,  0x13690006UL, 1000U, 60U, 1U },/* 125k, 16TQ, 87.5% */
-    { 1000U, 0x04490002UL, 200U, 20U, 1U }  /* 1M,   8TQ,  75.0% */
+    { 500U,  0x04690006UL, 250U, 20U, 1U, 0U }, /* 500k: fast, known-good */
+    { 250U,  0x09690006UL, 500U, 40U, 1U, 1U }, /* 250k: retry once */
+    { 125U, 0x13690006UL, 1000U, 60U, 1U, 1U },/* 125k: retry once */
+    { 1000U, 0x04490002UL, 200U, 20U, 1U, 0U }  /* 1M: fast */
 };
 
 #define CAN1_PROFILE(idx) (g_baud_profile[(idx)])
@@ -138,6 +142,7 @@ static uint32_t g_detect_window_start_ms;
 static uint32_t g_detect_verify_start_ms;
 static uint8_t  g_detect_frames;
 static uint8_t  g_detect_verify_pending;
+static uint8_t  g_detect_no_rx_retry;
 
 typedef struct
 {
@@ -885,9 +890,10 @@ static void prv_StartDetection(uint8_t retry_last)
 
     g_detect_frames = 0U;
     g_detect_verify_pending = 0U;
-    g_detect_window_start_ms = Uart_GetMs();
+    g_detect_window_start_ms = 0U;
     g_detect_verify_start_ms = 0U;
     g_scan_pos = 0U;
+    g_detect_no_rx_retry = 0U;
 
     g_detect_evidence.error_esr = 0U;
     g_detect_evidence.txerr_delta = 0U;
@@ -930,15 +936,17 @@ static void prv_StartDetection(uint8_t retry_last)
         return;
     }
 
+    g_detect_window_start_ms = Uart_GetMs();
     prv_ResetDetectEvidence();
 
     g_state = CAN1_STATE_DETECTING;
 
-    RTT_LOG("[CAN1] DETECT start baud=%lu window=%ums verify=%ums minframes=%u%s\r\n",
+    RTT_LOG("[CAN1] DETECT start baud=%lu window=%ums verify=%ums minframes=%u retry=%u%s\r\n",
             (unsigned long)CAN1_PROFILE(g_rate_idx).baud_kbps,
             (unsigned)CAN1_PROFILE(g_rate_idx).detect_window_ms,
             (unsigned)CAN1_PROFILE(g_rate_idx).verify_ms,
             (unsigned)CAN1_PROFILE(g_rate_idx).min_frames,
+            (unsigned)CAN1_PROFILE(g_rate_idx).no_rx_retries,
             ((retry_last != 0U) && (g_last_ok_valid != 0U))
                 ? " last-known-first"
                 : "");
@@ -982,10 +990,11 @@ static void prv_NextBaud(void)
     g_scan_pos++;
     next = prv_NextBaudIndex();
     g_rate_idx = next;
+    g_detect_no_rx_retry = 0U;
 
     g_detect_frames = 0U;
     g_detect_verify_pending = 0U;
-    g_detect_window_start_ms = Uart_GetMs();
+    g_detect_window_start_ms = 0U;
     g_detect_verify_start_ms = 0U;
 
     g_detect_evidence.error_esr = 0U;
@@ -998,10 +1007,13 @@ static void prv_NextBaud(void)
         return;
     }
 
+    g_detect_window_start_ms = Uart_GetMs();
     prv_ResetDetectEvidence();
 
-    RTT_LOG("[CAN1] DETECT next=%lu kbps CTRL1=0x%08lX\r\n",
+    RTT_LOG("[CAN1] DETECT next=%lu kbps window=%ums verify=%ums CTRL1=0x%08lX\r\n",
             (unsigned long)CAN1_PROFILE(g_rate_idx).baud_kbps,
+            (unsigned)CAN1_PROFILE(g_rate_idx).detect_window_ms,
+            (unsigned)CAN1_PROFILE(g_rate_idx).verify_ms,
             (unsigned long)CAN1->CTRL1);
 }
 
@@ -1073,6 +1085,7 @@ void Can1_Init(void)
     g_detect_verify_start_ms = 0U;
     g_detect_frames = 0U;
     g_detect_verify_pending = 0U;
+    g_detect_no_rx_retry = 0U;
 
     g_detect_evidence.error_esr = 0U;
     g_detect_evidence.txerr_baseline = 0U;
@@ -1180,9 +1193,43 @@ void Can1_Task(void)
         if((g_detect_verify_pending == 0U) &&
            ((now - g_detect_window_start_ms) >= CAN1_PROFILE(g_rate_idx).detect_window_ms))
         {
-            RTT_LOG("[CAN1] Candidate %lu no valid RX -> next\r\n",
-                    (unsigned long)CAN1_PROFILE(g_rate_idx).baud_kbps);
-            prv_NextBaud();
+            if(g_detect_no_rx_retry < CAN1_PROFILE(g_rate_idx).no_rx_retries)
+            {
+                g_detect_no_rx_retry++;
+
+                RTT_LOG("[CAN1] Candidate %lu no RX -> retry %u/%u ESR1=0x%08lX ECR=0x%08lX\r\n",
+                        (unsigned long)CAN1_PROFILE(g_rate_idx).baud_kbps,
+                        (unsigned)g_detect_no_rx_retry,
+                        (unsigned)CAN1_PROFILE(g_rate_idx).no_rx_retries,
+                        (unsigned long)CAN1->ESR1,
+                        (unsigned long)CAN1->ECR);
+
+                if(prv_ApplyBaud(g_rate_idx) == 0U)
+                {
+                    g_state = CAN1_STATE_ERROR;
+                    return;
+                }
+
+                g_detect_frames = 0U;
+                g_detect_verify_pending = 0U;
+                g_detect_verify_start_ms = 0U;
+                g_detect_window_start_ms = Uart_GetMs();
+                prv_ResetDetectEvidence();
+
+                RTT_LOG("[CAN1] DETECT retry baud=%lu window=%ums verify=%ums\r\n",
+                        (unsigned long)CAN1_PROFILE(g_rate_idx).baud_kbps,
+                        (unsigned)CAN1_PROFILE(g_rate_idx).detect_window_ms,
+                        (unsigned)CAN1_PROFILE(g_rate_idx).verify_ms);
+            }
+            else
+            {
+                RTT_LOG("[CAN1] Candidate %lu timeout RX=0 retry=%u ESR1=0x%08lX ECR=0x%08lX -> next\r\n",
+                        (unsigned long)CAN1_PROFILE(g_rate_idx).baud_kbps,
+                        (unsigned)g_detect_no_rx_retry,
+                        (unsigned long)CAN1->ESR1,
+                        (unsigned long)CAN1->ECR);
+                prv_NextBaud();
+            }
         }
 
         return;
