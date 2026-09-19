@@ -28,11 +28,11 @@
  * than the previous 81.25% timing. 1 Mbps retains the 8 TQ / 75% timing.
  *
  * V0.0044 CAN1 DETECTION / BUS-HEAVY CORRECTION:
- *   - PCAN-only detection uses NORMAL/ACTIVE mode so the MCU can ACK.
- *   - Wrong candidates are limited to a short 250ms probe to minimize
+ *   - PCAN-only detection uses NORMAL/ACTIVE mode so the MCU can ACK received frames; no TX probe is generated.
+ *   - Wrong candidates are limited to a short observation window to minimize
  *     wrong-baud error-frame disturbance.
  *   - A candidate is accepted after one real external frame plus a 20ms clean verification interval.
- *   - Any protocol error seen during that candidate rejects the candidate.
+ *   - Transient protocol-error flags from wrong active candidates do not reject a candidate after a valid RX frame.
  *   - Internal loopback is not used as baud confirmation because it cannot
  *     prove external-bus timing.
  *   - The confirmed baud is latched once per detection cycle.
@@ -60,6 +60,24 @@ static uint8_t  g_last_ok_idx;
 static uint8_t  g_last_ok_valid;
 static uint8_t  g_lock_logged;
 static uint8_t  g_scan_pos;
+
+/* --------------------------------------------------------------------------
+ * RX SOFTWARE QUEUE
+ * -------------------------------------------------------------------------- */
+#define CAN1_RX_QUEUE_LEN 32U
+typedef struct
+{
+    uint32_t id;
+    uint8_t  ide;
+    uint8_t  rtr;
+    uint8_t  dlc;
+    uint8_t  data[8];
+} Can1_QueuedFrame_t;
+
+static Can1_QueuedFrame_t g_rx_queue[CAN1_RX_QUEUE_LEN];
+static volatile uint8_t g_rx_q_head = 0U;
+static volatile uint8_t g_rx_q_tail = 0U;
+static uint32_t g_rx_q_drop = 0U;
 /* --------------------------------------------------------------------------
  * EXCEPTION DIAGNOSTIC (written by DefaultISR in startup assembly)
  * -------------------------------------------------------------------------- */
@@ -580,6 +598,35 @@ static uint8_t prv_RxAvailable(void)
 }
 
 /* ============================================================
+ * RX SOFTWARE QUEUE
+ * ============================================================ */
+static void prv_QueueFrame(uint32_t can_id, uint8_t ide, uint8_t rtr,
+                           uint8_t dlc, const uint8_t *data)
+{
+    uint8_t head = g_rx_q_head;
+    uint8_t next = (uint8_t)((head + 1U) % CAN1_RX_QUEUE_LEN);
+    uint8_t i;
+
+    if(next == g_rx_q_tail)
+    {
+        g_rx_q_tail = (uint8_t)((g_rx_q_tail + 1U) % CAN1_RX_QUEUE_LEN);
+        g_rx_q_drop++;
+    }
+
+    g_rx_queue[head].id  = can_id;
+    g_rx_queue[head].ide = ide;
+    g_rx_queue[head].rtr = rtr;
+    g_rx_queue[head].dlc = (dlc > 8U) ? 8U : dlc;
+
+    for(i = 0U; i < 8U; i++)
+    {
+        g_rx_queue[head].data[i] = (i < g_rx_queue[head].dlc) ? data[i] : 0U;
+    }
+
+    g_rx_q_head = next;
+}
+
+/* ============================================================
  * DISPATCH RECEIVED FRAME
  * ============================================================ */
 static void prv_Dispatch(uint32_t can_id, uint8_t ide, uint8_t rtr,
@@ -593,22 +640,20 @@ static void prv_Dispatch(uint32_t can_id, uint8_t ide, uint8_t rtr,
     g_status.rx_active = 1U;
     g_last_rx_ms = Uart_GetMs();
 
-    if(g_rx_cb != NULL)
+    if(g_state == CAN1_STATE_READY)
     {
-        g_rx_cb(can_id, ide, rtr, dlc, data, g_status.detected_baud_kbps);
+        prv_QueueFrame(can_id, ide, rtr, dlc, data);
     }
 
-    RTT_LOG("[CAN1] RX #%lu  %s  ID=0x%08lX  DLC=%u  %02X %02X %02X %02X %02X %02X %02X %02X\r\n",
-            (unsigned long)g_status.frames_rcvd,
-            (ide != 0U) ? "EXT" : "STD",
-            (unsigned long)can_id,
-            (unsigned)dlc,
-            (unsigned)((dlc>0U)?data[0]:0U), (unsigned)((dlc>1U)?data[1]:0U),
-            (unsigned)((dlc>2U)?data[2]:0U), (unsigned)((dlc>3U)?data[3]:0U),
-            (unsigned)((dlc>4U)?data[4]:0U), (unsigned)((dlc>5U)?data[5]:0U),
-            (unsigned)((dlc>6U)?data[6]:0U), (unsigned)((dlc>7U)?data[7]:0U));
+    if((g_status.frames_rcvd <= 4U) ||
+       ((g_status.frames_rcvd % 100U) == 0U))
+    {
+        RTT_LOG("[CAN1] RX #%lu ID=0x%08lX DLC=%u\r\n",
+                (unsigned long)g_status.frames_rcvd,
+                (unsigned long)can_id,
+                (unsigned)dlc);
+    }
     (void)i;
-}
 
 /* ============================================================
  * PROCESS RECEIVED FRAME
@@ -789,6 +834,9 @@ void Can1_Init(void)
     g_last_ok_valid  = 0U;
     g_lock_logged    = 0U;
     g_scan_pos       = 0U;
+    g_rx_q_head      = 0U;
+    g_rx_q_tail      = 0U;
+    g_rx_q_drop      = 0U;
 
     /* Zero status struct */
     {
@@ -858,22 +906,11 @@ void Can1_Task(void)
             rx_budget--;
 
             /*
-             * Reading ESR1 clears the latched protocol-error flags. Capture
-             * them during the candidate so a random false frame at a wrong
-             * baud cannot be accepted as the detected rate.
+             * ESR1 protocol-error flags are not candidate-rejection criteria.
+             * Wrong active candidates can generate transient CAN errors while
+             * the other node transmits. A frame in an RX MB has already passed
+             * CAN frame validation and is stronger baud evidence.
              */
-            {
-                uint32_t probe_esr = CAN1->ESR1;
-                uint32_t probe_ecr = CAN1->ECR;
-
-                if((probe_esr & 0x0000FC00UL) != 0U ||
-                   ((probe_ecr & 0x0000FFFFUL) != 0U))
-                {
-                    g_detect_error_seen = 1U;
-                }
-            }
-
-            /* First valid external frame starts the short clean verification interval. */
             if(g_detect_frames >= 1U)
             {
                 g_detect_verify_pending = 1U;
@@ -884,18 +921,21 @@ void Can1_Task(void)
         if((g_detect_verify_pending != 0U) &&
            ((now - g_detect_start_ms) >= CAN1_DETECT_VERIFY_MS))
         {
-            /* Verify the full interval for protocol/error evidence. */
+            /*
+             * Only a true Bus-Off state can invalidate a candidate after a
+             * valid frame. Temporary protocol-error flags are ignored here.
+             */
             {
                 uint32_t verify_esr = CAN1->ESR1;
-                uint32_t verify_ecr = CAN1->ECR;
-                if((verify_esr & 0x0000FC00UL) != 0U ||
-                   ((verify_ecr & 0x0000FFFFUL) != 0U))
+                uint8_t verify_fault = (uint8_t)((verify_esr >> 4U) & 0x03U);
+                if(verify_fault == 2U)
                 {
                     g_detect_error_seen = 1U;
                 }
             }
 
-            if(g_detect_error_seen == 0U)
+            if((g_detect_frames >= CAN1_DETECT_MIN_FRAMES) &&
+               (g_detect_error_seen == 0U))
             {
                 g_status.detected_baud_kbps = g_baud_kbps[g_rate_idx];
                 g_status.detecting = 0U;
@@ -979,19 +1019,20 @@ void Can1_Task(void)
          * This is NOT inactivity-only recovery.
          * RWRNINT is ESR1 bit 16 (not SYNCH bit 18).
          */
-        uint8_t error_flags = (uint8_t)((esr & 0x0000FC00UL) != 0U);
         uint8_t rx_warning = (uint8_t)((esr & 0x00010000UL) != 0U);
         uint8_t high_errors = (uint8_t)(
             (g_status.tx_err_cnt >= CAN1_ERROR_COUNT_LIMIT) ||
             (g_status.rx_err_cnt >= CAN1_ERROR_COUNT_LIMIT));
         uint8_t no_recent_rx = (uint8_t)(
-            (now - g_last_rx_ms) >= CAN1_LIVE_BAUD_LOSS_MS);
+            (g_last_rx_ms == 0U) ||
+            ((now - g_last_rx_ms) >= CAN1_LIVE_BAUD_LOSS_MS));
+        uint8_t bus_off_event = (uint8_t)(
+            (fault == 2U) || ((esr & 0x00000004UL) != 0U));
+        uint8_t persistent_error_loss = (uint8_t)(
+            (no_recent_rx != 0U) &&
+            (rx_warning != 0U || high_errors != 0U));
         uint8_t severe = (uint8_t)(
-            (fault == 2U) ||
-            ((esr & 0x00000004UL) != 0U) ||
-            (no_recent_rx != 0U &&
-             ((error_flags != 0U) ||
-              (rx_warning != 0U && high_errors != 0U))));
+            (bus_off_event != 0U) || (persistent_error_loss != 0U));
 
         if(severe != 0U)
         {
@@ -1036,6 +1077,34 @@ void Can1_Task(void)
                 (unsigned long)esr,
                 (unsigned)g_status.tx_err_cnt,
                 (unsigned)g_status.rx_err_cnt);
+    }
+}
+
+/* ============================================================
+ * PUBLIC: APPLICATION RX QUEUE SERVICE
+ * ============================================================ */
+void Can1_ProcessRxQueue(uint8_t budget)
+{
+    while(budget != 0U)
+    {
+        Can1_QueuedFrame_t frame;
+        uint8_t tail = g_rx_q_tail;
+
+        if(tail == g_rx_q_head)
+        {
+            break;
+        }
+
+        frame = g_rx_queue[tail];
+        g_rx_q_tail = (uint8_t)((tail + 1U) % CAN1_RX_QUEUE_LEN);
+
+        if(g_rx_cb != NULL)
+        {
+            g_rx_cb(frame.id, frame.ide, frame.rtr, frame.dlc,
+                    frame.data, g_status.detected_baud_kbps);
+        }
+
+        budget--;
     }
 }
 
