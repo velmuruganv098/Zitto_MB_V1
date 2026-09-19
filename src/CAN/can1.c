@@ -599,10 +599,13 @@ static void prv_ProcessRx(void)
     uint32_t d0   = CAN1->RAMn[base + 2U];
     uint32_t d1   = CAN1->RAMn[base + 3U];
 
-    uint8_t dlc    = (uint8_t)((cs >> 16U) & 0x0FU);
-    uint8_t ide    = (uint8_t)((cs >> 21U) & 1U);
-    uint8_t rtr    = (uint8_t)((cs >> 20U) & 1U);
-    uint32_t can_id= (ide != 0U) ? (idreg & 0x1FFFFFFFUL) : ((idreg >> 18U) & 0x7FFUL);
+    uint8_t code  = (uint8_t)((cs >> 24U) & 0x0FU);
+    uint8_t dlc   = (uint8_t)((cs >> 16U) & 0x0FU);
+    uint8_t ide   = (uint8_t)((cs >> 21U) & 1U);
+    uint8_t rtr   = (uint8_t)((cs >> 20U) & 1U);
+    uint32_t can_id = (ide != 0U)
+                    ? (idreg & 0x1FFFFFFFUL)
+                    : ((idreg >> 18U) & 0x7FFUL);
     uint8_t data[8];
 
     data[0]=(uint8_t)(d0>>24U); data[1]=(uint8_t)(d0>>16U);
@@ -610,9 +613,26 @@ static void prv_ProcessRx(void)
     data[4]=(uint8_t)(d1>>24U); data[5]=(uint8_t)(d1>>16U);
     data[6]=(uint8_t)(d1>>8U);  data[7]=(uint8_t)d1;
 
-    /* Clear flag (W1C) and re-arm mailbox */
+    /* S32K1 FlexCAN recommended RX service sequence:
+     *   1) read C/S (locks the received mailbox)
+     *   2) read mailbox contents
+     *   3) acknowledge IFLAG
+     *   4) read TIMER to unlock the mailbox
+     *
+     * Do NOT force CODE=EMPTY here. If another frame arrived while the
+     * mailbox was locked, FlexCAN can move it into the mailbox on unlock.
+     * Forcing EMPTY can discard that pending frame and aggravate bus-heavy
+     * reception/overrun behavior.
+     */
     CAN1->IFLAG1 = CAN1_RX_MB_FLAG;
-    CAN1->RAMn[base + 0U] = CAN1_CS_RX_EMPTY;
+    (void)CAN1->TIMER;
+
+    if(code == 0x06U)
+    {
+        g_rx_dropped++;
+        RTT_LOG("[CAN1] RX overrun: latest frame retained  drop=%lu\r\n",
+                (unsigned long)g_rx_dropped);
+    }
 
     g_rx_total++;
     prv_Dispatch(can_id, ide, rtr, dlc, data);
@@ -891,7 +911,7 @@ void Can1_Task(void)
     /* Error Passive or Bus-Off state means the current baud is no longer */
     /* considered healthy and detection is restarted.                    */
     /* ------------------------------------------------------------------ */
-    if((g_ready_since_ms != 0U) &&
+    if((g_state == CAN1_STATE_READY) &&
        ((Uart_GetMs() - g_ready_since_ms) >= CAN1_ERROR_TIMEOUT_MS))
     {
         if(fault != 0U)
