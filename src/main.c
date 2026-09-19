@@ -26,7 +26,7 @@
 #define APP_FLM_ENABLE     1
 #define APP_GPIO_ENABLE    1
 
-#define TASK_DT_MS         50U
+#define TASK_DT_MS          5U
 
 /* --------------------------------------------------------------------------
  * INCLUDES
@@ -363,6 +363,11 @@ static void cmd_handler(uint8_t type, const uint8_t *pl, uint16_t len)
 int main(void)
 {
     uint8_t i;
+    uint32_t now_ms;
+    uint32_t last_alive_ms = 0U;
+    uint32_t last_hb_ms = 0U;
+    uint32_t last_imu_tx_ms = 0U;
+    uint32_t last_csa_tx_ms = 0U;
 
     /* ======================================================================
      * STEP 1: WDOG DISABLE  - absolute first call
@@ -384,8 +389,8 @@ int main(void)
     SEGGER_RTT_printf(0,
         "\r\n================================================\r\n"
         " Zitto MB V1 - VCU Firmware Boot\r\n"
-        " Firmware Revision : V0.003\r\n"
-        " Change            : CAN1 automatic re-detection after 2s CAN inactivity/error\r\n"
+        " Firmware Revision : V0.0041\r\n"
+        " Change            : CAN1 2s fault guard + fast RX/baud re-detection\r\n"
         " MCU: S32K144  Clock: 80MHz SPLL  WDOG: OFF\r\n"
         " Modules: IMU=%d CSA=%d CAN1=%d CAN2=%d FLM=%d GPIO=%d\r\n"
         "================================================\r\n\r\n",
@@ -462,17 +467,34 @@ int main(void)
 
     /* ======================================================================
      * MAIN LOOP
+     *
+     * V0.0041 CAN priority:
+     *   - 5ms cooperative loop instead of 50ms fixed loop
+     *   - CAN1 is serviced first
+     *   - UART/OTA remain frequent
+     *   - slower sensor/status work keeps explicit time gates
      * ====================================================================== */
     while(1)
     {
+        now_ms = Uart_GetMs();
         g_tick++;
 
-        /* Alive log every 1s */
-        if((g_tick % 20U) == 0U)
+        /* CAN1 FIRST: minimize RX mailbox service latency. */
+#if APP_CAN1_ENABLE
+        if(g_can1_en != 0U) { Can1_Task(); }
+#endif
+
+        Uart_Poll();
+        Uart_Pkt_ForwardRTT();
+        OTA_Task();
+
+        /* Alive log every 1s, independent of loop frequency. */
+        if((now_ms - last_alive_ms) >= 1000U)
         {
+            last_alive_ms = now_ms;
             RTT_LOG("[MAIN] tick=%lu uptime=%lums  CAN1=%lukbps  state=%u  IRQs: or=%lu err=%lu mb=%lu\r\n",
                     (unsigned long)g_tick,
-                    (unsigned long)Uart_GetMs(),
+                    (unsigned long)now_ms,
                     (unsigned long)Can1_GetBaudrate(),
                     (unsigned)Can1_GetState(),
                     (unsigned long)Can1_GetIrqCount(),
@@ -480,14 +502,10 @@ int main(void)
                     (unsigned long)Can1_GetMbIrqCount());
         }
 
-        Uart_Poll();
-        Uart_Pkt_ForwardRTT();
-        OTA_Task();   /* always run, no #ifdef */
-
         /* Software reset */
         if(g_reset_arm != 0U)
         {
-            if((Uart_GetMs() - g_reset_arm_ms) >= 100U)
+            if((now_ms - g_reset_arm_ms) >= 100U)
             {
                 RTT_LOG("[RESET] Executing software reset\r\n");
                 *((volatile uint32_t *)0xE000ED0CUL) = 0x05FA0004UL;
@@ -500,8 +518,9 @@ int main(void)
         if(g_imu_en != 0U)
         {
             Imu_Task();
-            if((g_tick % 10U) == 0U)
+            if((now_ms - last_imu_tx_ms) >= 500U)
             {
+                last_imu_tx_ms = now_ms;
                 ImuPkt_t p; memset(&p,0,sizeof(p));
                 Imu_GetLastPkt(&p);
                 (void)Uart_Pkt_SendImu(&p);
@@ -514,8 +533,9 @@ int main(void)
         if(g_csa_en != 0U)
         {
             Csa_Task();
-            if((g_tick % 4U) == 0U)
+            if((now_ms - last_csa_tx_ms) >= 200U)
             {
+                last_csa_tx_ms = now_ms;
                 CsaPkt_t p; memset(&p,0,sizeof(p));
                 Csa_GetLastPkt(&p);
                 (void)Uart_Pkt_SendCsa(&p);
@@ -523,24 +543,24 @@ int main(void)
         }
 #endif
 
-        /* CAN1 */
-#if APP_CAN1_ENABLE
-        if(g_can1_en != 0U) { Can1_Task(); }
-#endif
-
-        /* CAN2 */
+        /* CAN2 remains independent; when enabled it gets the same fast
+         * cooperative service cadence and does not wait for CAN1. */
 #if APP_CAN2_ENABLE
         if(g_can2_en != 0U) { Can2_Task(); }
 #endif
 
         /* Heartbeat + status every 5s */
-        if((g_tick % 100U) == 0U)
+        if((now_ms - last_hb_ms) >= 5000U)
         {
+            last_hb_ms = now_ms;
             (void)Uart_Pkt_SendHb();
             send_status();
         }
 
         led_task();
+
+        /* Short cooperative yield. CAN1 detection timing is time-based,
+         * so it remains deterministic even if this loop is adjusted later. */
         delay_ms(TASK_DT_MS);
     }
 
