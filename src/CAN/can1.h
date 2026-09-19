@@ -7,15 +7,14 @@
  * READY is normal mode with automatic bus-off recovery enabled (BOFFREC=0).
  *
  * AUTO-BAUD ARCHITECTURE:
- *   Phase 1: DETECTING  (NORMAL / active external-bus detection)
- *     - Try 500 / 250 / 125 / 1000 kbps, 250ms candidate probe
+ *   Phase 1: DETECTING  (NORMAL / active external-bus observation)
+ *     - Try 500 / 250 / 125 / 1000 kbps, 300ms candidate observation
  *     - 125/250/500 kbps use 16TQ / 87.5% sample point; 1Mbps uses
  *       8TQ / 75% sample point
- *     - Require 1 valid received frame, then 20ms clean verification before baud lock
- *     - Short wrong-baud probes minimize error-frame disturbance
- *     - Normal mode is required because PCAN needs an ACKing node
- *     - Non-blocking RX polling; candidate confirmation uses a bounded
- *       internal loopback self-test before entering normal mode
+ *     - Require 1 valid received frame, then 15ms bounded verification before lock
+ *     - No TX probe is generated; the MCU remains a receiver/ACKing node
+ *     - Wrong-candidate protocol-error flags are not used to reject a valid RX frame
+ *     - RX mailbox service is decoupled from UART/application forwarding
  *
  *   Phase 2: READY  (LOM=0, LPB=0, BOFFREC=0, normal CAN operation)
  *     - Receive and forward frames with RX priority
@@ -49,15 +48,15 @@ extern "C" {
 
 /* Auto-baud timing: task period × ticks = time per candidate */
 #define CAN1_ERROR_GUARD_MS       2000U
-#define CAN1_DETECT_WINDOW_MS       250U
+#define CAN1_DETECT_WINDOW_MS       300U
 #define CAN1_DETECT_MIN_FRAMES        1U
 #define CAN1_DETECT_LOM                 0U /* NORMAL: PCAN requires ACK */
 #define CAN1_LOOPBACK_TIMEOUT           50000U
-#define CAN1_DETECT_VERIFY_MS        20U
+#define CAN1_DETECT_VERIFY_MS        15U
 #define CAN1_LIVE_BAUD_LOSS_MS     1500U
 #define CAN1_FAULT_CONFIRM_MS        100U
 #define CAN1_ERROR_COUNT_LIMIT        96U
-#define CAN1_RX_BUDGET                 8U    /* bounded RX service per task */
+#define CAN1_RX_BUDGET                16U    /* drain hardware MB quickly */
 
 /* Bus-off recovery: 0 = automatic, 1 = manual. */
 #define CAN1_CTRL1_BOFFREC_MASK        (1UL << 6U)
@@ -158,6 +157,9 @@ Can1_State_t Can1_GetState(void);
 uint32_t     Can1_GetBaudrate(void);
 void         Can1_GetStatus(Can1_Status_t *out);
 uint8_t      Can1_IsReady(void);
+
+/* Drain queued application RX frames without delaying FlexCAN mailbox service. */
+void         Can1_ProcessRxQueue(uint8_t budget);
 
 void         Can1_Shutdown(void);    /* SHDN pin HIGH - transceiver off */
 void         Can1_WakeNormal(void);  /* SHDN pin LOW  - transceiver on  */
