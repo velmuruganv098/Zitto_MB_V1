@@ -58,13 +58,8 @@ void CAN1_ORed_IRQHandler(void)
 
     g_can1_or_irq_count++;
 
-    RTT_LOG(
-        "[CAN1_IRQ] ORed #%lu  ESR1=0x%08lX  IFLAG1=0x%08lX\r\n",
-        (unsigned long)g_can1_or_irq_count,
-        (unsigned long)esr1,
-        (unsigned long)ifl
-    );
-
+    /* Safety-net ISR only. CAN1 is serviced by polling; never perform RTT
+     * output from an IRQ because a slow debug sink can extend ISR latency. */
     /* Disable interrupts at source and clear flags */
     CAN1->IMASK1 = 0U;
     CAN1->IFLAG1 = ifl;          /* W1C */
@@ -87,16 +82,7 @@ void CAN1_Error_IRQHandler(void)
 
     g_can1_error_irq_count++;
 
-    RTT_LOG(
-        "[CAN1_IRQ] ERROR #%lu  ESR1=0x%08lX  CTRL1=0x%08lX"
-        "  ERRINT=%u  BOFFINT=%u\r\n",
-        (unsigned long)g_can1_error_irq_count,
-        (unsigned long)esr1,
-        (unsigned long)ctrl1,
-        (unsigned)((esr1 >> 1U) & 1U),   /* ERRINT  bit1 */
-        (unsigned)((esr1 >> 2U) & 1U)    /* BOFFINT bit2 */
-    );
-
+    /* Keep this ISR bounded: diagnostics are polled from Can1_Task(). */
     /* Disable error interrupts at source */
     CAN1->CTRL1 &= ~(CAN_CTRL1_ERRMSK_MASK | CAN_CTRL1_BOFFMSK_MASK);
 
@@ -115,12 +101,6 @@ void CAN1_ORed_0_15_MB_IRQHandler(void)
     uint32_t ifl = CAN1->IFLAG1;
 
     g_can1_mb_irq_count++;
-
-    RTT_LOG(
-        "[CAN1_IRQ] MB #%lu  IFLAG1=0x%08lX\r\n",
-        (unsigned long)g_can1_mb_irq_count,
-        (unsigned long)ifl
-    );
 
     /* CAN1 uses polling - disable MB interrupts and clear flags */
     CAN1->IMASK1 = 0U;
