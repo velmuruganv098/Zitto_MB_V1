@@ -19,8 +19,11 @@
  * V0.0045 adds candidate-relative error diagnostics and keeps valid RX
  * stronger than transient protocol-error history from active probing.
  *
- * V0.0046 revision note: same architecture/topology, but each baud candidate
- * has an explicit bounded detection profile (window/verify/min-frame).
+ * V0.0047 revision note:
+ *   - Same CAN architecture/topology and same bit-timing values.
+ *   - 250k and 125k use one bounded same-candidate no-RX retry before advancing.
+ *   - Detection timing begins after the candidate is successfully applied.
+ *   - READY recovery remains Bus-Off-only.
  */
 
 #ifndef CAN1_H
