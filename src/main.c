@@ -389,8 +389,8 @@ int main(void)
     SEGGER_RTT_printf(0,
         "\r\n================================================\r\n"
         " Zitto MB V1 - VCU Firmware Boot\r\n"
-        " Firmware Revision : V0.0041\r\n"
-        " Change            : CAN1 2s fault guard + fast RX/baud re-detection\r\n"
+        " Firmware Revision : V0.0042\r\n"
+        " Change            : CAN1 active PCAN auto-baud detection correction\r\n"
         " MCU: S32K144  Clock: 80MHz SPLL  WDOG: OFF\r\n"
         " Modules: IMU=%d CSA=%d CAN1=%d CAN2=%d FLM=%d GPIO=%d\r\n"
         "================================================\r\n\r\n",
