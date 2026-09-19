@@ -1211,20 +1211,16 @@ void Can1_Task(void)
 
     if((now - g_ready_since_ms) >= CAN1_ERROR_GUARD_MS)
     {
-        uint8_t rx_warning =
-            (uint8_t)((esr & (CAN1_ESR_RXWRN_BIT |
-                              CAN1_ESR_TXWRN_BIT)) != 0U);
-
-        uint8_t high_errors =
-            (uint8_t)((g_status.tx_err_cnt >= CAN1_ERROR_COUNT_LIMIT) ||
-                      (g_status.rx_err_cnt >= CAN1_ERROR_COUNT_LIMIT));
-
         /*
          * READY must not re-enter auto-baud merely because the bus becomes
          * quiet or because RX error counters are elevated. Both are valid
          * CAN conditions during normal operation. Only a real Bus-Off event
          * is allowed to trigger a baud recovery scan.
          */
+        uint8_t bus_off_event =
+            (uint8_t)(((fault & 0x02U) != 0U) ||
+                      ((esr & CAN1_ESR_BOFFINT_BIT) != 0U));
+
         if(bus_off_event != 0U)
         {
             RTT_LOG("[CAN1] BUS-OFF recovery baud=%lu fault=%u TxErr=%u RxErr=%u ESR1=0x%08lX\\r\\n",
@@ -1239,8 +1235,9 @@ void Can1_Task(void)
             return;
         }
 
-        /* Keep the evidence visible, but never change baud because of it. */
+        /* Error evidence remains diagnostic only while READY. */
         g_status.detect_error_esr |= (esr & CAN1_ESR_ERR_BUS_MASK);
+    }
 
     if((now - g_last_stat_ms) >= 5000U)
     {
