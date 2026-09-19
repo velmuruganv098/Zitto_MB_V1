@@ -49,8 +49,8 @@ extern "C" {
 
 /* Auto-baud timing: task period × ticks = time per candidate */
 #define CAN1_ERROR_GUARD_MS       2000U
-#define CAN1_DETECT_WINDOW_MS        50U
-#define CAN1_DETECT_MIN_FRAMES        1U
+#define CAN1_DETECT_WINDOW_MS       100U
+#define CAN1_DETECT_MIN_FRAMES        2U
 #define CAN1_DETECT_LOM                 0U /* NORMAL: PCAN requires ACK */
 #define CAN1_LOOPBACK_TIMEOUT           50000U
 #define CAN1_DETECT_VERIFY_MS        20U
