@@ -63,13 +63,6 @@ extern volatile uint32_t g_can1_debug_step;
 
 /* TX mailbox for loopback test */
 
-/* Detection/recovery policy */
-#define CAN1_DETECT_MIN_FRAMES       2U
-#define CAN1_DETECT_WINDOW_MS      150U
-#define CAN1_ERROR_GUARD_MS       2000U
-#define CAN1_FAULT_CONFIRM_MS       100U
-#define CAN1_ERROR_COUNT_LIMIT       96U
-
 
 /* --------------------------------------------------------------------------
  * BAUD RATE TABLES  (40MHz bus clock, CLKSRC=1 is OR'd in at runtime)
