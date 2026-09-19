@@ -38,6 +38,7 @@
 static uint32_t g_last_rx_ms;
 static uint32_t g_fault_start_ms;
 static uint32_t g_ready_since_ms;
+static uint32_t g_detect_start_ms;
 static uint8_t  g_fault_active;
 /* --------------------------------------------------------------------------
  * EXCEPTION DIAGNOSTIC (written by DefaultISR in startup assembly)
@@ -648,6 +649,7 @@ static void prv_StartDetection(void)
 {
     g_rate_idx       = 0U;
     g_detect_ticks   = 0U;
+    g_detect_start_ms = Uart_GetMs();
 
     g_status.ready              = 0U;
     g_status.hw_ready          = 0U;
@@ -694,6 +696,7 @@ static void prv_NextBaud(void)
     }
 
     g_detect_ticks = 0U;
+    g_detect_start_ms = Uart_GetMs();
 
     /*
      * PCAN-only auto-baud detection.
@@ -765,6 +768,7 @@ void Can1_Init(void)
     g_task_cnt       = 0U;
     g_rate_idx       = 0U;
     g_detect_ticks   = 0U;
+    g_detect_start_ms = 0U;
     g_rx_total       = 0U;
     g_rx_dropped     = 0U;
     g_last_stat_ms   = 0U;
@@ -863,8 +867,7 @@ void Can1_Task(void)
         }
         else
         {
-            g_detect_ticks++;
-            if(g_detect_ticks >= CAN1_DETECT_TICKS)
+            if((Uart_GetMs() - g_detect_start_ms) >= CAN1_DETECT_CANDIDATE_MS)
             {
                 prv_NextBaud();
             }
