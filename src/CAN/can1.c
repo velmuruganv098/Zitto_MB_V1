@@ -1130,8 +1130,24 @@ void Can1_Task(void)
             (uint8_t)((no_recent_rx != 0U) &&
                       ((rx_warning != 0U) || (high_errors != 0U)));
 
-        if((bus_off_event != 0U) ||
-           (persistent_error_loss != 0U))
+        if(bus_off_event != 0U)
+        {
+            /*
+             * Bus-Off is an explicit recovery trigger. Do not wait for the
+             * generic fault confirmation timer.
+             */
+            RTT_LOG("[CAN1] BUS-OFF recovery baud=%lu TxErr=%u RxErr=%u ESR1=0x%08lX\\r\\n",
+                    (unsigned long)g_status.detected_baud_kbps,
+                    (unsigned)g_status.tx_err_cnt,
+                    (unsigned)g_status.rx_err_cnt,
+                    (unsigned long)esr);
+
+            g_status.error_count++;
+            g_state = CAN1_STATE_ERROR;
+            return;
+        }
+
+        if(persistent_error_loss != 0U)
         {
             if(g_fault_seen_ms == 0U)
             {
@@ -1140,7 +1156,7 @@ void Can1_Task(void)
 
             if((now - g_fault_seen_ms) >= CAN1_FAULT_CONFIRM_MS)
             {
-                RTT_LOG("[CAN1] RECOVERY baud=%lu fault=%u TxErr=%u RxErr=%u ESR1=0x%08lX\r\n",
+                RTT_LOG("[CAN1] RECOVERY baud=%lu fault=%u TxErr=%u RxErr=%u ESR1=0x%08lX\\r\\n",
                         (unsigned long)g_status.detected_baud_kbps,
                         (unsigned)fault,
                         (unsigned)g_status.tx_err_cnt,
@@ -1156,7 +1172,6 @@ void Can1_Task(void)
         {
             g_fault_seen_ms = 0U;
         }
-    }
 
     if((now - g_last_stat_ms) >= 5000U)
     {
