@@ -885,47 +885,54 @@ void Can1_Task(void)
         if((g_detect_verify_pending != 0U) &&
            ((now - g_detect_start_ms) >= CAN1_DETECT_VERIFY_MS))
         {
-                if(g_detect_error_seen == 0U)
+            /* Verify the full interval for protocol/error evidence. */
+            {
+                uint32_t verify_esr = CAN1->ESR1;
+                uint32_t verify_ecr = CAN1->ECR;
+                if((verify_esr & 0x0000FC00UL) != 0U ||
+                   ((verify_ecr & 0x0000FFFFUL) != 0U))
                 {
-                    g_status.detected_baud_kbps = g_baud_kbps[g_rate_idx];
-                    g_status.detecting = 0U;
-                    g_status.hw_ready = 1U;
-                    g_status.ready = 1U;
-                    g_status.bus_off = 0U;
-                    g_status.error_passive = 0U;
-                    g_ready_since_ms = now;
-                    g_fault_seen_ms = 0U;
-                    g_fault_active = 0U;
-                    g_last_ok_idx = g_rate_idx;
-                    g_last_ok_valid = 1U;
-                    g_detect_verify_pending = 0U;
-                    g_state = CAN1_STATE_READY;
-
-                    RTT_LOG("[CAN1] External confirmation PASS: %lu kbps  frames=%u\r\n",
-                            (unsigned long)g_baud_kbps[g_rate_idx],
-                            (unsigned)g_detect_frames);
-                    RTT_LOG("[CAN1] ============================================\r\n");
-                    RTT_LOG("[CAN1] *** BAUD LOCKED: %lu kbps ***\r\n",
-                            (unsigned long)g_status.detected_baud_kbps);
-                    RTT_LOG("[CAN1] Phase3 NORMAL  LOM=0 LPB=0 CTRL1=0x%08lX\r\n",
-                            (unsigned long)CAN1->CTRL1);
+                    g_detect_error_seen = 1U;
                 }
-                else
-                {
-                    RTT_LOG("[CAN1] Candidate %lu rejected: external frame(s) seen with CAN errors\r\n",
-                            (unsigned long)g_baud_kbps[g_rate_idx]);
-                    prv_NextBaud();
-                }
-                return;
             }
+
+            if(g_detect_error_seen == 0U)
+            {
+                g_status.detected_baud_kbps = g_baud_kbps[g_rate_idx];
+                g_status.detecting = 0U;
+                g_status.hw_ready = 1U;
+                g_status.ready = 1U;
+                g_status.bus_off = 0U;
+                g_status.error_passive = 0U;
+                g_ready_since_ms = now;
+                g_fault_seen_ms = 0U;
+                g_fault_active = 0U;
+                g_last_ok_idx = g_rate_idx;
+                g_last_ok_valid = 1U;
+                g_detect_verify_pending = 0U;
+                g_state = CAN1_STATE_READY;
+
+                RTT_LOG("[CAN1] External confirmation PASS: %lu kbps  frames=%u\\r\\n",
+                        (unsigned long)g_baud_kbps[g_rate_idx],
+                        (unsigned)g_detect_frames);
+                RTT_LOG("[CAN1] ============================================\\r\\n");
+                RTT_LOG("[CAN1] *** BAUD LOCKED: %lu kbps ***\\r\\n",
+                        (unsigned long)g_status.detected_baud_kbps);
+                RTT_LOG("[CAN1] Phase3 NORMAL  LOM=0 LPB=0 CTRL1=0x%08lX\\r\\n",
+                        (unsigned long)CAN1->CTRL1);
+            }
+            else
+            {
+                RTT_LOG("[CAN1] Candidate %lu rejected: verification saw CAN errors\\r\\n",
+                        (unsigned long)g_baud_kbps[g_rate_idx]);
+                prv_NextBaud();
+            }
+            return;
         }
 
-        /*
-         * Wrong candidates are intentionally time-bounded. A correct
-         * candidate with continuous PCAN traffic should produce two clean
-         * frames before this expires.
-         */
-        if((now - g_detect_start_ms) >= CAN1_DETECT_WINDOW_MS)
+        /* Wrong candidates are time-bounded; one real frame starts verification. */
+        if((g_detect_verify_pending == 0U) &&
+           ((now - g_detect_start_ms) >= CAN1_DETECT_WINDOW_MS))
         {
             prv_NextBaud();
         }
