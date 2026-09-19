@@ -19,13 +19,13 @@
  *   Index 2:  125 kbps  PRESDIV=19  SP=81.25%
  *   Index 3: 1000 kbps  PRESDIV=4   SP=75.00%  (8 TQ total)
  *
- * V0.0042 CAN1 DETECTION CORRECTION:
+ * V0.0043 CAN1 DETECTION / BUS-HEAVY CORRECTION:
  *   - Detection uses NORMAL/ACTIVE mode so PCAN traffic is ACKed.
  *   - A received external frame is the baud confirmation.
  *   - After confirmation, the baud is protected for 2 seconds.
  *   - After the guard, persistent error-passive/bus-off or sustained high
  *     error counters start recovery and a clean re-detection cycle.
- *   - Each candidate is given a 250ms observation window.
+ *   - Each candidate is given a 700ms observation window so slow PCAN traffic (for example one frame every 500ms) can still be detected. Wrong candidates still advance immediately on Error Passive/Bus-Off, so active-bus detection remains fast.
  *   - One correctly received external CAN frame is sufficient to confirm the
  *     candidate; FlexCAN has already validated the CAN frame at the bit level.
  *   - Bad candidates are abandoned early on controller faults.
@@ -724,13 +724,15 @@ void Can1_Init(void)
 }
 
 /* ============================================================
- * PUBLIC: Can1_Task  (call every 50ms from main loop)
+ * PUBLIC: Can1_Task  (call from the fast cooperative main loop)
  *
  * STATE MACHINE:
  *
- *   DETECTING: poll IFLAG1 each tick (non-blocking)
- *     Frame detected → baud confirmed → READY
+ *   DETECTING: poll IFLAG1 each task call (non-blocking)
+ *     Frame detected → baud confirmed → LATCHED/READY
  *     No frame during candidate window → prv_NextBaud()
+ *     Slow external traffic is supported by the 700ms candidate window;
+ *     wrong candidates still fail fast on controller fault.
  *
  *   READY: process RX, monitor errors
  *     Bus-off → prv_StartDetection()
@@ -772,7 +774,7 @@ void Can1_Task(void)
                 g_fault_active = 0U;
                 g_state = CAN1_STATE_READY;
 
-                RTT_LOG("[CAN1] BAUD LOCKED: %lu kbps -> READY (2s guard)\r\n",
+                RTT_LOG("[CAN1] BAUD DETECTED: %lu kbps -> LATCHED (2s guard)\r\n",
                         (unsigned long)g_status.detected_baud_kbps);
                 break;
             }
