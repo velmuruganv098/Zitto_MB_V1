@@ -8,7 +8,7 @@
  *
  * AUTO-BAUD ARCHITECTURE:
  *   Phase 1: DETECTING  (NORMAL / active external-bus observation)
- *     - Try 500 / 250 / 125 / 1000 kbps, 300ms candidate observation
+ *     - Try 500 / 250 / 125 / 1000 kbps, 150ms candidate observation
  *     - 125/250/500 kbps use 16TQ / 87.5% sample point; 1Mbps uses
  *       8TQ / 75% sample point
  *     - Require 1 valid received frame, then 15ms bounded verification before lock
@@ -48,7 +48,7 @@ extern "C" {
 
 /* Auto-baud timing: task period × ticks = time per candidate */
 #define CAN1_ERROR_GUARD_MS       2000U
-#define CAN1_DETECT_WINDOW_MS       300U
+#define CAN1_DETECT_WINDOW_MS       150U
 #define CAN1_DETECT_MIN_FRAMES        1U
 #define CAN1_DETECT_LOM                 0U /* NORMAL: PCAN requires ACK */
 #define CAN1_LOOPBACK_TIMEOUT           50000U
