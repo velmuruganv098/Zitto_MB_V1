@@ -8,10 +8,10 @@
  *
  * AUTO-BAUD ARCHITECTURE:
  *   Phase 1: DETECTING  (NORMAL / active external-bus detection)
- *     - Try 500 / 250 / 125 / 1000 kbps, 50ms candidate probe
+ *     - Try 500 / 250 / 125 / 1000 kbps, 250ms candidate probe
  *     - 125/250/500 kbps use 16TQ / 87.5% sample point; 1Mbps uses
  *       8TQ / 75% sample point
- *     - Require 1 valid received frame before baud lock
+ *     - Require 1 valid received frame, then 20ms clean verification before baud lock
  *     - Short wrong-baud probes minimize error-frame disturbance
  *     - Normal mode is required because PCAN needs an ACKing node
  *     - Non-blocking RX polling; candidate confirmation uses a bounded
@@ -49,8 +49,8 @@ extern "C" {
 
 /* Auto-baud timing: task period × ticks = time per candidate */
 #define CAN1_ERROR_GUARD_MS       2000U
-#define CAN1_DETECT_WINDOW_MS       100U
-#define CAN1_DETECT_MIN_FRAMES        2U
+#define CAN1_DETECT_WINDOW_MS       250U
+#define CAN1_DETECT_MIN_FRAMES        1U
 #define CAN1_DETECT_LOM                 0U /* NORMAL: PCAN requires ACK */
 #define CAN1_LOOPBACK_TIMEOUT           50000U
 #define CAN1_DETECT_VERIFY_MS        20U
