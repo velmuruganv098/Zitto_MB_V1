@@ -439,7 +439,7 @@ int main(void)
     /* CAN1 - FlexCAN1  PTA12/PTA13  TCAN334  SHDN=PTB2
      * Bus clock (40MHz) used as CAN clock source.
      * Auto-baud: 500→250→125→1000 kbps, non-blocking.
-     * Listen-only during detection, loopback confirm before exiting LOM. */
+     * Active external-bus detection; no loopback confirmation step. */
 #if APP_CAN1_ENABLE
     RTT_LOG("[BOOT] CAN1 init  FlexCAN1  PTA12/PTA13  SHDN=PTB2\r\n");
     Can1_Init();
