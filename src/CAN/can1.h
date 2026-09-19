@@ -6,10 +6,12 @@
  * AUTO-BAUD ARCHITECTURE:
  *   Phase 1: DETECTING  (NORMAL/ACTIVE external-bus detection)
  *     - Try 500 / 250 / 125 / 1000 kbps, 700ms candidate window
+ *     - 125/250/500 kbps use 16TQ / 87.5% sample point; 1Mbps uses
+ *       8TQ / 75% sample point to match common PCAN nominal timing
  *     - Require 1 valid received frame before baud lock
  *     - A 700ms window covers slow external traffic (e.g. 500ms/frame)
  *       while wrong candidates still advance immediately on fault
- *     - Bad candidate with Error Passive/Bus-Off is abandoned early
+ *     - Bad candidate with protocol errors/Error Passive/Bus-Off is abandoned early
  *     - Non-blocking: bounded RX polling from Can1_Task()
  *
  *   Phase 2: READY  (LOM=0, LPB=0, normal CAN operation)
