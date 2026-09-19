@@ -797,6 +797,63 @@ static uint8_t prv_ServiceRxPool(uint8_t budget,
 }
 
 /* --------------------------------------------------------------------------
+ * CANDIDATE ERROR EVIDENCE
+ * --------------------------------------------------------------------------
+ * ECR is hardware-managed. Capture snapshots and only accumulate increases
+ * relative to the current candidate baseline. Error evidence is diagnostic;
+ * a valid RX frame remains the primary baud confirmation.
+ * -------------------------------------------------------------------------- */
+
+static void prv_ResetDetectEvidence(void)
+{
+    uint32_t ecr = CAN1->ECR;
+
+    g_detect_evidence.error_esr = 0U;
+    g_detect_evidence.txerr_baseline = (uint8_t)(ecr & 0xFFU);
+    g_detect_evidence.rxerr_baseline = (uint8_t)((ecr >> 8U) & 0xFFU);
+    g_detect_evidence.txerr_last = g_detect_evidence.txerr_baseline;
+    g_detect_evidence.rxerr_last = g_detect_evidence.rxerr_baseline;
+    g_detect_evidence.txerr_delta = 0U;
+    g_detect_evidence.rxerr_delta = 0U;
+
+    g_status.detect_error_esr = 0U;
+    g_status.detect_txerr_delta = 0U;
+    g_status.detect_rxerr_delta = 0U;
+}
+
+static void prv_CaptureDetectEvidence(void)
+{
+    uint32_t esr = CAN1->ESR1;
+    uint32_t ecr = CAN1->ECR;
+    uint8_t txerr = (uint8_t)(ecr & 0xFFU);
+    uint8_t rxerr = (uint8_t)((ecr >> 8U) & 0xFFU);
+
+    g_detect_evidence.error_esr |= esr & CAN1_ESR_ERR_BUS_MASK;
+
+    if(txerr > g_detect_evidence.txerr_last)
+    {
+        g_detect_evidence.txerr_delta =
+            (uint8_t)(g_detect_evidence.txerr_delta +
+                      (txerr - g_detect_evidence.txerr_last));
+    }
+    if(rxerr > g_detect_evidence.rxerr_last)
+    {
+        g_detect_evidence.rxerr_delta =
+            (uint8_t)(g_detect_evidence.rxerr_delta +
+                      (rxerr - g_detect_evidence.rxerr_last));
+    }
+
+    g_detect_evidence.txerr_last = txerr;
+    g_detect_evidence.rxerr_last = rxerr;
+
+    g_status.last_esr1 = esr;
+    g_status.last_ecr = ecr;
+    g_status.detect_error_esr = g_detect_evidence.error_esr;
+    g_status.detect_txerr_delta = g_detect_evidence.txerr_delta;
+    g_status.detect_rxerr_delta = g_detect_evidence.rxerr_delta;
+}
+
+/* --------------------------------------------------------------------------
  * START DETECTION
  * -------------------------------------------------------------------------- */
 
@@ -906,6 +963,8 @@ static void prv_NextBaud(void)
         g_state = CAN1_STATE_ERROR;
         return;
     }
+
+    prv_ResetDetectEvidence();
 
     RTT_LOG("[CAN1] DETECT next=%lu kbps CTRL1=0x%08lX\r\n",
             (unsigned long)g_baud_kbps[g_rate_idx],
@@ -1043,6 +1102,7 @@ void Can1_Task(void)
          */
         rx_budget = CAN1_RX_BUDGET;
         (void)prv_ServiceRxPool(rx_budget, 1U);
+        prv_CaptureDetectEvidence();
 
         if(g_detect_verify_pending != 0U)
         {
@@ -1053,40 +1113,7 @@ void Can1_Task(void)
             g_status.last_esr1 = verify_esr;
             g_status.last_ecr = CAN1->ECR;
 
-            /*
-             * Candidate-relative diagnostics are deliberately not used as
-             * the acceptance gate. A valid external frame proves that the
-             * selected timing can decode traffic; protocol-error history
-             * from previous active probes must not reject it.
-             */
-            {
-                uint32_t ecr_now = CAN1->ECR;
-                uint8_t txerr_now = (uint8_t)(ecr_now & 0xFFU);
-                uint8_t rxerr_now = (uint8_t)((ecr_now >> 8U) & 0xFFU);
-
-                g_detect_evidence.error_esr |=
-                    verify_esr & CAN1_ESR_ERR_BUS_MASK;
-
-                if(txerr_now > g_detect_evidence.txerr_last)
-                {
-                    g_detect_evidence.txerr_delta =
-                        (uint8_t)(g_detect_evidence.txerr_delta +
-                                  (txerr_now - g_detect_evidence.txerr_last));
-                }
-                if(rxerr_now > g_detect_evidence.rxerr_last)
-                {
-                    g_detect_evidence.rxerr_delta =
-                        (uint8_t)(g_detect_evidence.rxerr_delta +
-                                  (rxerr_now - g_detect_evidence.rxerr_last));
-                }
-
-                g_detect_evidence.txerr_last = txerr_now;
-                g_detect_evidence.rxerr_last = rxerr_now;
-
-                g_status.detect_error_esr = g_detect_evidence.error_esr;
-                g_status.detect_txerr_delta = g_detect_evidence.txerr_delta;
-                g_status.detect_rxerr_delta = g_detect_evidence.rxerr_delta;
-            }
+            prv_CaptureDetectEvidence();
 
             /*
              * Candidate acceptance:
