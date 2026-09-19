@@ -54,6 +54,8 @@ extern "C" {
 
 /* Bus-off recovery: 0 = automatic, 1 = manual. */
 #define CAN1_CTRL1_BOFFREC_MASK     (1UL << 6U)
+#define CAN1_ESR_ERRINT_BIT          (1UL << 1U)
+#define CAN1_ESR_BOFFINT_BIT         (1UL << 2U)
 
 /* Baud-rate candidates. */
 #define CAN1_BAUD_500K              0U
