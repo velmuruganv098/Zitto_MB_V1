@@ -79,8 +79,7 @@ extern "C" {
 
 typedef enum
 {
-    CAN1_STATE_DETECTING = 0,  /* LOM active, scanning for valid frames */
-    CAN1_STATE_CONFIRMING,     /* Internal loopback self-test */
+    CAN1_STATE_DETECTING = 0,  /* active external-bus baud scan */
     CAN1_STATE_READY,          /* Candidate accepted, normal reception */
     CAN1_STATE_ERROR           /* Unrecoverable - re-detecting     */
 } Can1_State_t;
