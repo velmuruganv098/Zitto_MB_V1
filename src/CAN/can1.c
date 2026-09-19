@@ -17,10 +17,9 @@
  *   3. A valid hardware RX frame is the primary baud confirmation.
  *   4. The verification timer starts ONCE at the first valid frame. It is
  *      never restarted by subsequent traffic.
- *   5. Error evidence is captured relative to the start of each candidate;
- *      stale ECR values are never interpreted as a candidate failure. A
- *      candidate is rejected only for no valid RX before the bounded deadline
- *      or a confirmed Bus-Off state.
+ *   5. Protocol-error flags on a candidate are diagnostic only. A candidate
+ *      is rejected only for no valid RX before the bounded deadline or a
+ *      confirmed Bus-Off state.
  *   6. After lock, inactivity alone never starts another baud scan.
  *   7. Recovery retries the last confirmed baud first, then scans all rates.
  *
@@ -45,7 +44,6 @@
 
 #include "can1.h"
 #include "debug_rtt.h"
-#include "uart_pkt.h"
 #include "S32K144.h"
 #include <stdint.h>
 #include <stddef.h>
@@ -71,7 +69,24 @@
  *   [31:24] PRESDIV
  *   [23:22] RJW
  *   [21:19] PSEG1
-@@ -90,54 +92,66 @@ static const uint32_t g_ctrl1_base[CAN1_BAUD_COUNT] =
+ *   [18:16] PSEG2
+ *   [2:0]   PROPSEG
+ *
+ * 40 MHz CAN clock:
+ *   500k = 40M / (5 * 16)
+ *   250k = 40M / (10 * 16)
+ *   125k = 40M / (20 * 16)
+ *   1M   = 40M / (5 * 8)
+ * -------------------------------------------------------------------------- */
+
+static const uint32_t g_baud_kbps[CAN1_BAUD_COUNT] =
+{
+    500U, 250U, 125U, 1000U
+};
+
+static const uint32_t g_ctrl1_base[CAN1_BAUD_COUNT] =
+{
+    0x04690006UL, /* 500k, 16TQ, 87.5% */
     0x09690006UL, /* 250k, 16TQ, 87.5% */
     0x13690006UL, /* 125k, 16TQ, 87.5% */
     0x04490002UL  /* 1M,   8TQ,  75.0% */
@@ -97,22 +112,10 @@ static uint32_t g_last_stat_ms;
 static uint32_t g_last_rx_ms;
 static uint32_t g_ready_since_ms;
 
-typedef struct
-{
-    uint32_t window_start_ms;
-    uint32_t verify_start_ms;
-    uint32_t error_esr;
-    uint8_t  frames;
-    uint8_t  verify_pending;
-    uint8_t  txerr_baseline;
-    uint8_t  rxerr_baseline;
-    uint8_t  txerr_last;
-    uint8_t  rxerr_last;
-    uint8_t  txerr_delta;
-    uint8_t  rxerr_delta;
-} Can1_DetectContext_t;
-
-static Can1_DetectContext_t g_detect;
+static uint32_t g_detect_window_start_ms;
+static uint32_t g_detect_verify_start_ms;
+static uint8_t  g_detect_frames;
+static uint8_t  g_detect_verify_pending;
 
 static uint32_t g_fault_seen_ms;
 
@@ -138,7 +141,192 @@ static volatile uint8_t g_rx_q_tail;
 static uint32_t g_rx_q_drop;
 
 /* --------------------------------------------------------------------------
-@@ -330,103 +344,101 @@ static void prv_ArmRxPool(void)
+ * NVIC SAFETY
+ *
+ * CAN1 is intentionally serviced by bounded polling. IRQ vectors remain
+ * implemented in can1_irq.c so an accidental peripheral interrupt can never
+ * fall through to DefaultISR.
+ * -------------------------------------------------------------------------- */
+
+static void prv_NvicDisable(void)
+{
+    volatile uint32_t * const icer =
+        (volatile uint32_t *)0xE000E180UL;
+    volatile uint32_t * const icpr =
+        (volatile uint32_t *)0xE000E280UL;
+
+    icer[CAN1_NVIC_REG] = CAN1_NVIC_IRQ_MASK;
+    icpr[CAN1_NVIC_REG] = CAN1_NVIC_IRQ_MASK;
+}
+
+/* --------------------------------------------------------------------------
+ * BOUNDED DELAY
+ * -------------------------------------------------------------------------- */
+
+static void prv_DelayMs(uint32_t ms)
+{
+    while(ms != 0U)
+    {
+        volatile uint32_t n = 80000U;
+        while(n != 0U)
+        {
+            n--;
+            __asm volatile("nop");
+        }
+        ms--;
+    }
+}
+
+/* --------------------------------------------------------------------------
+ * TRANSCEIVER
+ * -------------------------------------------------------------------------- */
+
+static void prv_ShdnPinInit(void)
+{
+    PCC->PCCn[PCC_PORTB_INDEX] |= PCC_PCCn_CGC_MASK;
+    PORTB->PCR[CAN1_SHDN_PTB_PIN] = PORT_PCR_MUX(1U);
+    PTB->PDDR |= (1UL << CAN1_SHDN_PTB_PIN);
+    PTB->PCOR = (1UL << CAN1_SHDN_PTB_PIN);
+
+    g_status.shdn_state = 0U;
+
+    RTT_LOG("[CAN1] SHDN=PTB%u LOW=normal\r\n",
+            (unsigned)CAN1_SHDN_PTB_PIN);
+}
+
+void Can1_Shutdown(void)
+{
+    PTB->PSOR = (1UL << CAN1_SHDN_PTB_PIN);
+    g_status.shdn_state = 1U;
+    RTT_LOG("[CAN1] Transceiver shutdown\r\n");
+}
+
+void Can1_WakeNormal(void)
+{
+    PTB->PCOR = (1UL << CAN1_SHDN_PTB_PIN);
+    g_status.shdn_state = 0U;
+    prv_DelayMs(1U);
+}
+
+/* --------------------------------------------------------------------------
+ * FREEZE MODE
+ * -------------------------------------------------------------------------- */
+
+static uint8_t prv_EnterFreeze(void)
+{
+    uint32_t timeout = 200000U;
+
+    CAN1->MCR |= CAN_MCR_FRZ_MASK | CAN_MCR_HALT_MASK;
+
+    while(((CAN1->MCR & CAN_MCR_FRZACK_MASK) == 0U) &&
+          (timeout != 0U))
+    {
+        timeout--;
+    }
+
+    if(timeout != 0U)
+    {
+        return 1U;
+    }
+
+    RTT_LOG("[CAN1_ERR] Freeze timeout MCR=0x%08lX -> SOFTRST\r\n",
+            (unsigned long)CAN1->MCR);
+
+    CAN1->MCR |= CAN_MCR_FRZ_MASK |
+                 CAN_MCR_HALT_MASK |
+                 CAN_MCR_SOFTRST_MASK;
+
+    timeout = 200000U;
+    while(((CAN1->MCR & CAN_MCR_SOFTRST_MASK) != 0U) &&
+          (timeout != 0U))
+    {
+        timeout--;
+    }
+
+    if(timeout == 0U)
+    {
+        RTT_LOG("[CAN1_ERR] SOFTRST timeout MCR=0x%08lX\r\n",
+                (unsigned long)CAN1->MCR);
+        return 0U;
+    }
+
+    CAN1->MCR |= CAN_MCR_FRZ_MASK | CAN_MCR_HALT_MASK;
+
+    timeout = 200000U;
+    while(((CAN1->MCR & CAN_MCR_FRZACK_MASK) == 0U) &&
+          (timeout != 0U))
+    {
+        timeout--;
+    }
+
+    if(timeout == 0U)
+    {
+        RTT_LOG("[CAN1_ERR] Freeze retry timeout MCR=0x%08lX\r\n",
+                (unsigned long)CAN1->MCR);
+        return 0U;
+    }
+
+    return 1U;
+}
+
+static uint8_t prv_ExitFreeze(void)
+{
+    uint32_t timeout = 200000U;
+
+    CAN1->MCR &= ~(CAN_MCR_HALT_MASK | CAN_MCR_FRZ_MASK);
+
+    while(((CAN1->MCR & CAN_MCR_FRZACK_MASK) != 0U) &&
+          (timeout != 0U))
+    {
+        timeout--;
+    }
+
+    if(timeout == 0U)
+    {
+        RTT_LOG("[CAN1_ERR] ExitFreeze timeout MCR=0x%08lX\r\n",
+                (unsigned long)CAN1->MCR);
+        return 0U;
+    }
+
+    /* NOTRDY should also clear when the module is usable. */
+    timeout = 200000U;
+    while(((CAN1->MCR & CAN_MCR_NOTRDY_MASK) != 0U) &&
+          (timeout != 0U))
+    {
+        timeout--;
+    }
+
+    if(timeout == 0U)
+    {
+        RTT_LOG("[CAN1_ERR] CAN NOTRDY timeout MCR=0x%08lX\r\n",
+                (unsigned long)CAN1->MCR);
+        return 0U;
+    }
+
+    return 1U;
+}
+
+/* --------------------------------------------------------------------------
+ * MAILBOX POOL
+ * -------------------------------------------------------------------------- */
+
+static void prv_ArmRxMailbox(uint8_t mb)
+{
+    uint32_t base = ((uint32_t)mb * 4U);
+
+    CAN1->RAMn[base + 0U] = 0U;
+    CAN1->RAMn[base + 1U] = 0U;
+    CAN1->RAMn[base + 2U] = 0U;
+    CAN1->RAMn[base + 3U] = 0U;
+
+    /* CODE must be the final write that activates an RX mailbox. */
+    CAN1->RAMn[base + 0U] = CAN1_CS_RX_EMPTY;
+}
+
+static void prv_ArmRxPool(void)
+{
+    uint8_t mb;
+
     for(mb = CAN1_RX_MB_FIRST;
         mb <= CAN1_RX_MB_LAST;
         mb++)
@@ -164,9 +352,8 @@ static void prv_ClearCanStatus(void)
 /* --------------------------------------------------------------------------
  * APPLY CANDIDATE
  *
- * Every candidate starts from a clean controller state. ECR counters remain
- * hardware-managed; candidate validation uses snapshots taken after timing
- * is applied rather than writing the counter register.
+ * Every candidate starts from a clean controller state. ECR counters are
+ * explicitly reset in Freeze mode, as permitted by the S32K1 FlexCAN RM.
  * -------------------------------------------------------------------------- */
 
 static uint8_t prv_ApplyBaud(uint8_t idx)
@@ -215,6 +402,9 @@ static uint8_t prv_ApplyBaud(uint8_t idx)
         CAN1->RAMn[timeout] = 0U;
     }
 
+    /* Reset error counters in Freeze mode. */
+    CAN1->ECR = 0U;
+
     prv_ClearCanStatus();
     prv_ArmRxPool();
 
@@ -240,7 +430,298 @@ static uint8_t prv_HardwareInit(void)
     uint32_t i;
 
     RTT_LOG("[CAN1_HW] exception=%lu step=%lu\r\n",
-@@ -725,259 +737,326 @@ static uint8_t prv_ServiceRxPool(uint8_t budget,
+            (unsigned long)g_last_exception_ipsr,
+            (unsigned long)g_can1_debug_step);
+
+    /* Disable all CAN1 NVIC sources before enabling the peripheral clock. */
+    g_can1_debug_step = 10U;
+    prv_NvicDisable();
+
+    /* CAN1 RX/TX pins: PTA12/PTA13 ALT3. */
+    g_can1_debug_step = 20U;
+    PCC->PCCn[PCC_PORTA_INDEX] |= PCC_PCCn_CGC_MASK;
+    PORTA->PCR[12U] = PORT_PCR_MUX(3U);
+    PORTA->PCR[13U] = PORT_PCR_MUX(3U);
+
+    /* FlexCAN1 clock. */
+    g_can1_debug_step = 30U;
+    PCC->PCCn[PCC_FlexCAN1_INDEX] |= PCC_PCCn_CGC_MASK;
+
+    CAN1->IMASK1 = 0U;
+    CAN1->IFLAG1 = 0xFFFFFFFFUL;
+    (void)CAN1->ESR1;
+
+    /*
+     * CLKSRC=1 is the BUS_CLK/peripheral clock. It must be changed while
+     * the module is disabled.
+     */
+    g_can1_debug_step = 40U;
+
+    CAN1->MCR |= CAN_MCR_MDIS_MASK;
+
+    timeout = 200000U;
+    while(((CAN1->MCR & CAN_MCR_LPMACK_MASK) == 0U) &&
+          (timeout != 0U))
+    {
+        timeout--;
+    }
+
+    if(timeout == 0U)
+    {
+        RTT_LOG("[CAN1_ERR] LPMACK=1 timeout MCR=0x%08lX\r\n",
+                (unsigned long)CAN1->MCR);
+        return 0U;
+    }
+
+    CAN1->CTRL1 |= CAN_CTRL1_CLKSRC_MASK;
+
+    CAN1->MCR &= ~CAN_MCR_MDIS_MASK;
+
+    timeout = 200000U;
+    while(((CAN1->MCR & CAN_MCR_LPMACK_MASK) != 0U) &&
+          (timeout != 0U))
+    {
+        timeout--;
+    }
+
+    if(timeout == 0U)
+    {
+        RTT_LOG("[CAN1_ERR] LPMACK=0 timeout MCR=0x%08lX\r\n",
+                (unsigned long)CAN1->MCR);
+        return 0U;
+    }
+
+    /* Clean protocol-engine state. */
+    g_can1_debug_step = 50U;
+    CAN1->MCR |= CAN_MCR_SOFTRST_MASK;
+
+    timeout = 200000U;
+    while(((CAN1->MCR & CAN_MCR_SOFTRST_MASK) != 0U) &&
+          (timeout != 0U))
+    {
+        timeout--;
+    }
+
+    if(timeout == 0U)
+    {
+        RTT_LOG("[CAN1_ERR] initial SOFTRST timeout\r\n");
+        return 0U;
+    }
+
+    g_can1_debug_step = 60U;
+
+    if(prv_EnterFreeze() == 0U)
+    {
+        return 0U;
+    }
+
+    /* Explicit classic CAN configuration. */
+    CAN1->MCR = (CAN1->MCR & ~CAN_MCR_MAXMB_MASK) |
+                CAN_MCR_MAXMB(15U) |
+                CAN_MCR_SRXDIS_MASK;
+
+    CAN1->MCR &= ~CAN1_MCR_RFEN_BIT;
+
+    for(i = 0U; i < 64U; i++)
+    {
+        CAN1->RAMn[i] = 0U;
+    }
+
+    CAN1->RXMGMASK = 0U;
+    CAN1->RX14MASK = 0U;
+    CAN1->RX15MASK = 0U;
+    CAN1->IMASK1 = 0U;
+    CAN1->IFLAG1 = 0xFFFFFFFFUL;
+    (void)CAN1->ESR1;
+
+    g_can1_debug_step = 70U;
+
+    if(prv_ExitFreeze() == 0U)
+    {
+        return 0U;
+    }
+
+    RTT_LOG("[CAN1_HW] OK MCR=0x%08lX CTRL1=0x%08lX\r\n",
+            (unsigned long)CAN1->MCR,
+            (unsigned long)CAN1->CTRL1);
+
+    g_can1_debug_step = 90U;
+    return 1U;
+}
+
+/* --------------------------------------------------------------------------
+ * RX QUEUE
+ * -------------------------------------------------------------------------- */
+
+static void prv_QueueFrame(uint32_t id,
+                           uint8_t ide,
+                           uint8_t rtr,
+                           uint8_t dlc,
+                           const uint8_t *data)
+{
+    uint8_t head = g_rx_q_head;
+    uint8_t next = (uint8_t)(head + 1U);
+    uint8_t i;
+
+    if(next >= CAN1_RX_QUEUE_LEN)
+    {
+        next = 0U;
+    }
+
+    if(next == g_rx_q_tail)
+    {
+        /* Keep the newest traffic; discard the oldest application item. */
+        uint8_t tail = (uint8_t)(g_rx_q_tail + 1U);
+        if(tail >= CAN1_RX_QUEUE_LEN)
+        {
+            tail = 0U;
+        }
+        g_rx_q_tail = tail;
+        g_rx_q_drop++;
+        g_status.rx_queue_drop = g_rx_q_drop;
+    }
+
+    g_rx_queue[head].id = id;
+    g_rx_queue[head].ide = ide;
+    g_rx_queue[head].rtr = rtr;
+    g_rx_queue[head].dlc = (dlc > 8U) ? 8U : dlc;
+
+    for(i = 0U; i < 8U; i++)
+    {
+        g_rx_queue[head].data[i] =
+            (i < g_rx_queue[head].dlc) ? data[i] : 0U;
+    }
+
+    g_rx_q_head = next;
+}
+
+/* --------------------------------------------------------------------------
+ * DISPATCH A VALID CAN FRAME
+ * -------------------------------------------------------------------------- */
+
+static void prv_Dispatch(uint32_t can_id,
+                         uint8_t ide,
+                         uint8_t rtr,
+                         uint8_t dlc,
+                         const uint8_t *data)
+{
+    g_status.rx_count++;
+    g_status.frames_rcvd++;
+    g_status.rx_active = 1U;
+    g_last_rx_ms = Uart_GetMs();
+
+    if(g_state == CAN1_STATE_READY)
+    {
+        prv_QueueFrame(can_id, ide, rtr, dlc, data);
+    }
+
+    /*
+     * RTT output is intentionally rate-limited. A CAN frame must never wait
+     * for the debug channel.
+     */
+    if((g_status.frames_rcvd <= 4U) ||
+       ((g_status.frames_rcvd % 500U) == 0U))
+    {
+        RTT_LOG("[CAN1] RX #%lu ID=0x%08lX DLC=%u\r\n",
+                (unsigned long)g_status.frames_rcvd,
+                (unsigned long)can_id,
+                (unsigned)dlc);
+    }
+}
+
+/* --------------------------------------------------------------------------
+ * SERVICE ONE RX MAILBOX
+ *
+ * Returns 1 if a frame was actually consumed.
+ * -------------------------------------------------------------------------- */
+
+static uint8_t prv_ProcessRxMailbox(uint8_t mb)
+{
+    const uint32_t flag = (1UL << mb);
+    const uint32_t base = ((uint32_t)mb * 4U);
+
+    uint32_t cs;
+    uint32_t idreg;
+    uint32_t d0;
+    uint32_t d1;
+    uint8_t code;
+    uint8_t dlc;
+    uint8_t ide;
+    uint8_t rtr;
+    uint32_t can_id;
+    uint8_t data[8];
+
+    if((CAN1->IFLAG1 & flag) == 0U)
+    {
+        return 0U;
+    }
+
+    /*
+     * Read C/S first to lock the MB. Then read ID/data. Acknowledge the
+     * IFLAG and read TIMER to unlock the MB and permit a pending frame to
+     * move into it.
+     */
+    cs = CAN1->RAMn[base + 0U];
+    idreg = CAN1->RAMn[base + 1U];
+    d0 = CAN1->RAMn[base + 2U];
+    d1 = CAN1->RAMn[base + 3U];
+
+    code = (uint8_t)((cs >> 24U) & 0x0FU);
+    dlc  = (uint8_t)((cs >> 16U) & 0x0FU);
+    ide  = (uint8_t)((cs >> 21U) & 0x01U);
+    rtr  = (uint8_t)((cs >> 20U) & 0x01U);
+
+    if(dlc > 8U)
+    {
+        dlc = 8U;
+    }
+
+    can_id = (ide != 0U)
+           ? (idreg & 0x1FFFFFFFUL)
+           : ((idreg >> 18U) & 0x7FFUL);
+
+    data[0] = (uint8_t)(d0 >> 24U);
+    data[1] = (uint8_t)(d0 >> 16U);
+    data[2] = (uint8_t)(d0 >> 8U);
+    data[3] = (uint8_t)d0;
+    data[4] = (uint8_t)(d1 >> 24U);
+    data[5] = (uint8_t)(d1 >> 16U);
+    data[6] = (uint8_t)(d1 >> 8U);
+    data[7] = (uint8_t)d1;
+
+    CAN1->IFLAG1 = flag;
+    (void)CAN1->TIMER;
+
+    if(code == CAN1_CODE_RX_OVERRUN)
+    {
+        g_rx_dropped++;
+        g_status.rx_hw_overrun = g_rx_dropped;
+
+        if((g_rx_dropped <= 3U) ||
+           ((g_rx_dropped % 100U) == 0U))
+        {
+            RTT_LOG("[CAN1] RX mailbox overrun count=%lu\r\n",
+                    (unsigned long)g_rx_dropped);
+        }
+    }
+
+    if((code == CAN1_CODE_RX_FULL) ||
+       (code == CAN1_CODE_RX_OVERRUN))
+    {
+        g_rx_total++;
+        prv_Dispatch(can_id, ide, rtr, dlc, data);
+        return 1U;
+    }
+
+    return 0U;
+}
+
+/* --------------------------------------------------------------------------
+ * DRAIN RX POOL
+ * -------------------------------------------------------------------------- */
+
+static uint8_t prv_ServiceRxPool(uint8_t budget,
+                                 uint8_t count_for_detection)
 {
     uint8_t processed = 0U;
     uint8_t mb;
@@ -266,17 +747,17 @@ static uint8_t prv_HardwareInit(void)
 
                     if(count_for_detection != 0U)
                     {
-                        g_detect.frames++;
+                        g_detect_frames++;
 
                         /*
                          * IMPORTANT FIX:
                          * The verification timer starts only once. It must
                          * not be reset for every subsequent frame.
                          */
-                        if(g_detect.verify_pending == 0U)
+                        if(g_detect_verify_pending == 0U)
                         {
-                            g_detect.verify_pending = 1U;
-                            g_detect.verify_start_ms = Uart_GetMs();
+                            g_detect_verify_pending = 1U;
+                            g_detect_verify_start_ms = Uart_GetMs();
                         }
                     }
                 }
@@ -303,65 +784,6 @@ static uint8_t prv_HardwareInit(void)
 }
 
 /* --------------------------------------------------------------------------
- * CANDIDATE ERROR EVIDENCE
- *
- * ECR is hardware-managed.  Treat it as a counter snapshot, not as a
- * writable per-candidate flag.  ESR1 error bits are accumulated only after
- * the candidate has been applied, while counter deltas record increases from
- * the candidate baseline.  Counter decreases are normal CAN recovery and do
- * not produce false error evidence.
- * -------------------------------------------------------------------------- */
-
-static void prv_ResetDetectEvidence(void)
-{
-    uint32_t esr = CAN1->ESR1;
-    uint32_t ecr = CAN1->ECR;
-
-    g_detect.error_esr = 0U;
-    g_detect.txerr_baseline = (uint8_t)(ecr & 0xFFU);
-    g_detect.rxerr_baseline = (uint8_t)((ecr >> 8U) & 0xFFU);
-    g_detect.txerr_last = g_detect.txerr_baseline;
-    g_detect.rxerr_last = g_detect.rxerr_baseline;
-    g_detect.txerr_delta = 0U;
-    g_detect.rxerr_delta = 0U;
-
-    /* ESR1 protocol status is read-to-clear; exclude pre-candidate history. */
-    (void)esr;
-    g_status.detect_error_esr = 0U;
-    g_status.detect_txerr_delta = 0U;
-    g_status.detect_rxerr_delta = 0U;
-}
-
-static void prv_CaptureDetectEvidence(void)
-{
-    uint32_t esr = CAN1->ESR1;
-    uint32_t ecr = CAN1->ECR;
-    uint8_t txerr = (uint8_t)(ecr & 0xFFU);
-    uint8_t rxerr = (uint8_t)((ecr >> 8U) & 0xFFU);
-
-    g_detect.error_esr |= esr & CAN1_ESR_ERR_BUS_MASK;
-
-    if(txerr > g_detect.txerr_last)
-    {
-        g_detect.txerr_delta = (uint8_t)(g_detect.txerr_delta +
-                                         (txerr - g_detect.txerr_last));
-    }
-    if(rxerr > g_detect.rxerr_last)
-    {
-        g_detect.rxerr_delta = (uint8_t)(g_detect.rxerr_delta +
-                                         (rxerr - g_detect.rxerr_last));
-    }
-
-    g_detect.txerr_last = txerr;
-    g_detect.rxerr_last = rxerr;
-    g_status.last_esr1 = esr;
-    g_status.last_ecr = ecr;
-    g_status.detect_error_esr = g_detect.error_esr;
-    g_status.detect_txerr_delta = g_detect.txerr_delta;
-    g_status.detect_rxerr_delta = g_detect.rxerr_delta;
-}
-
-/* --------------------------------------------------------------------------
  * START DETECTION
  * -------------------------------------------------------------------------- */
 
@@ -369,10 +791,10 @@ static void prv_StartDetection(uint8_t retry_last)
 {
     uint8_t start_idx;
 
-    g_detect.frames = 0U;
-    g_detect.verify_pending = 0U;
-    g_detect.window_start_ms = Uart_GetMs();
-    g_detect.verify_start_ms = 0U;
+    g_detect_frames = 0U;
+    g_detect_verify_pending = 0U;
+    g_detect_window_start_ms = Uart_GetMs();
+    g_detect_verify_start_ms = 0U;
     g_scan_pos = 0U;
 
     g_status.ready = 0U;
@@ -402,8 +824,6 @@ static void prv_StartDetection(uint8_t retry_last)
         g_state = CAN1_STATE_ERROR;
         return;
     }
-
-    prv_ResetDetectEvidence();
 
     g_state = CAN1_STATE_DETECTING;
 
@@ -455,18 +875,16 @@ static void prv_NextBaud(void)
     next = prv_NextBaudIndex();
     g_rate_idx = next;
 
-    g_detect.frames = 0U;
-    g_detect.verify_pending = 0U;
-    g_detect.window_start_ms = Uart_GetMs();
-    g_detect.verify_start_ms = 0U;
+    g_detect_frames = 0U;
+    g_detect_verify_pending = 0U;
+    g_detect_window_start_ms = Uart_GetMs();
+    g_detect_verify_start_ms = 0U;
 
     if(prv_ApplyBaud(g_rate_idx) == 0U)
     {
         g_state = CAN1_STATE_ERROR;
         return;
     }
-
-    prv_ResetDetectEvidence();
 
     RTT_LOG("[CAN1] DETECT next=%lu kbps CTRL1=0x%08lX\r\n",
             (unsigned long)g_baud_kbps[g_rate_idx],
@@ -491,16 +909,12 @@ static void prv_LockCandidate(uint32_t now)
     g_last_ok_idx = g_rate_idx;
     g_last_ok_valid = 1U;
 
-    g_detect.verify_pending = 0U;
+    g_detect_verify_pending = 0U;
     g_state = CAN1_STATE_READY;
 
-    RTT_LOG("[CAN1] *** BAUD LOCKED %lu kbps *** frames=%u err=0x%08lX "
-            "txd=%u rxd=%u CTRL1=0x%08lX\r\n",
+    RTT_LOG("[CAN1] *** BAUD LOCKED %lu kbps *** frames=%u CTRL1=0x%08lX\r\n",
             (unsigned long)g_status.detected_baud_kbps,
-            (unsigned)g_detect.frames,
-            (unsigned long)g_detect.error_esr,
-            (unsigned)g_detect.txerr_delta,
-            (unsigned)g_detect.rxerr_delta,
+            (unsigned)g_detect_frames,
             (unsigned long)CAN1->CTRL1);
 }
 
@@ -538,10 +952,10 @@ void Can1_Init(void)
     g_ready_since_ms = 0U;
     g_fault_seen_ms = 0U;
 
-    for(i = 0U; i < (uint8_t)sizeof(g_detect); i++)
-    {
-        ((uint8_t *)&g_detect)[i] = 0U;
-    }
+    g_detect_window_start_ms = 0U;
+    g_detect_verify_start_ms = 0U;
+    g_detect_frames = 0U;
+    g_detect_verify_pending = 0U;
 
     g_rx_q_head = 0U;
     g_rx_q_tail = 0U;
@@ -567,7 +981,12 @@ void Can1_Init(void)
     }
 
     g_status.hw_ready = 1U;
-@@ -990,91 +1069,94 @@ void Can1_Init(void)
+
+    prv_StartDetection(0U);
+
+    RTT_LOG("[CAN1] INIT DONE non-blocking detection\r\n");
+    g_can1_debug_step = 100U;
+}
 
 /* --------------------------------------------------------------------------
  * TASK
@@ -593,13 +1012,14 @@ void Can1_Task(void)
         rx_budget = CAN1_RX_BUDGET;
         (void)prv_ServiceRxPool(rx_budget, 1U);
 
-        prv_CaptureDetectEvidence();
-
-        if(g_detect.verify_pending != 0U)
+        if(g_detect_verify_pending != 0U)
         {
-            uint32_t verify_esr = g_status.last_esr1;
+            uint32_t verify_esr = CAN1->ESR1;
             uint8_t verify_fault =
                 (uint8_t)((verify_esr & CAN1_ESR_FLTCONF_MASK) >> 4U);
+
+            g_status.last_esr1 = verify_esr;
+            g_status.last_ecr = CAN1->ECR;
 
             /*
              * Candidate acceptance:
@@ -609,8 +1029,8 @@ void Can1_Task(void)
              *
              * Error-active/passive by itself does not reject a candidate.
              */
-            if((g_detect.frames >= CAN1_DETECT_MIN_FRAMES) &&
-               ((now - g_detect.verify_start_ms) >= CAN1_DETECT_VERIFY_MS))
+            if((g_detect_frames >= CAN1_DETECT_MIN_FRAMES) &&
+               ((now - g_detect_verify_start_ms) >= CAN1_DETECT_VERIFY_MS))
             {
                 if((verify_fault & 0x02U) == 0U)
                 {
@@ -618,14 +1038,10 @@ void Can1_Task(void)
                 }
                 else
                 {
-                    RTT_LOG("[CAN1] Candidate %lu rejected: BUS-OFF ESR1=0x%08lX ECR=0x%08lX "
-                            "err=0x%08lX txd=%u rxd=%u\r\n",
+                    RTT_LOG("[CAN1] Candidate %lu rejected: BUS-OFF ESR1=0x%08lX ECR=0x%08lX\r\n",
                             (unsigned long)g_baud_kbps[g_rate_idx],
                             (unsigned long)verify_esr,
-                            (unsigned long)g_status.last_ecr,
-                            (unsigned long)g_detect.error_esr,
-                            (unsigned)g_detect.txerr_delta,
-                            (unsigned)g_detect.rxerr_delta);
+                            (unsigned long)CAN1->ECR);
                     prv_NextBaud();
                 }
                 return;
@@ -635,8 +1051,8 @@ void Can1_Task(void)
         /*
          * No valid frame yet: move on after a bounded observation window.
          */
-        if((g_detect.verify_pending == 0U) &&
-           ((now - g_detect.window_start_ms) >= CAN1_DETECT_WINDOW_MS))
+        if((g_detect_verify_pending == 0U) &&
+           ((now - g_detect_window_start_ms) >= CAN1_DETECT_WINDOW_MS))
         {
             RTT_LOG("[CAN1] Candidate %lu no valid RX -> next\r\n",
                     (unsigned long)g_baud_kbps[g_rate_idx]);
