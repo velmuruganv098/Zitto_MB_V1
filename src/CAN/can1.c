@@ -9,6 +9,10 @@
  * candidate timing. Detection is performed only at startup or explicit
  * recovery; normal inactivity never starts a scan.
  *
+ * IMPORTANT: LOM is not used for a PCAN-only two-node bus. In LOM the MCU
+ * does not ACK, so PCAN itself can enter BUS HEAVY while transmitting.
+ * Detection therefore uses NORMAL mode with a very short candidate window.
+ *
  * CLOCK SOURCE: CLKSRC=1  (bus clock = 40MHz)
  *   - Always running after clock_init_80mhz() in main()
  *   - More reliable than SOSC for LPMACK sequence
@@ -24,9 +28,10 @@
  * than the previous 81.25% timing. 1 Mbps retains the 8 TQ / 75% timing.
  *
  * V0.0044 CAN1 DETECTION / BUS-HEAVY CORRECTION:
- *   - Detection uses FlexCAN Listen-Only Mode (LOM=1) for every candidate,
- *     so the MCU does not transmit ACK/error frames while scanning.
- *   - Each candidate gets a 600ms observation window for slow PCAN traffic.
+ *   - PCAN-only detection uses NORMAL/ACTIVE mode so the MCU can ACK.
+ *   - Wrong candidates are limited to a short 25ms probe to minimize
+ *     wrong-baud error-frame disturbance.
+ *   - A candidate is accepted only after a real external frame is received.
  *   - A received external frame starts a bounded internal loopback/data check.
  *   - Only after loopback data verification does the controller enter NORMAL.
  *   - The confirmed baud is latched once per detection cycle.
@@ -656,7 +661,7 @@ static void prv_ProcessRx(void)
 /* ============================================================
  * START / RESTART DETECTION
  *
- * Starts in LOM; on recovery the last confirmed baud is tried first, then the full candidate scan.
+ * Starts in NORMAL; on recovery the last confirmed baud is tried first, then the full candidate scan.
  * Called from: Init and confirmed fault recovery only.
  * ============================================================ */
 static void prv_StartDetection(uint8_t retry_last)
@@ -691,8 +696,8 @@ static void prv_StartDetection(uint8_t retry_last)
     }
     g_rate_idx = start_idx;
 
-    /* V0.0044: LOM for every detection candidate. */
-    if(prv_ApplyBaud(g_rate_idx, CAN1_DETECT_LOM) == 0U)
+    /* PCAN-only topology: NORMAL is required so the MCU can ACK. */
+    if(prv_ApplyBaud(g_rate_idx, 0U) == 0U)
     {
         g_state = CAN1_STATE_ERROR;
         return;
@@ -739,7 +744,7 @@ static void prv_NextBaud(void)
     g_rate_idx = next;
     g_detect_start_ms = Uart_GetMs();
 
-    if(prv_ApplyBaud(g_rate_idx, CAN1_DETECT_LOM) == 0U)
+    if(prv_ApplyBaud(g_rate_idx, 0U) == 0U)
     {
         g_state = CAN1_STATE_ERROR;
         return;
@@ -819,10 +824,8 @@ void Can1_Init(void)
  * STATE MACHINE:
  *
  *   DETECTING: poll IFLAG1 each task call (non-blocking)
- *     Frame detected → baud confirmed → LATCHED/READY
- *     No frame during candidate window → prv_NextBaud()
- *     Slow external traffic is supported by the 600ms candidate window;
- *     wrong candidates still fail fast on controller fault.
+ *     Frame detected → loopback/data check → LATCHED/READY
+ *     No frame during short candidate window → prv_NextBaud()
  *
  *   READY: process RX, monitor errors
  *     Bus-off/error evidence → retry last-known baud first
@@ -842,7 +845,7 @@ void Can1_Task(void)
 
     if(g_state == CAN1_STATE_DETECTING)
     {
-        /* RX has absolute priority during detection. LOM keeps the MCU silent. */
+        /* RX has absolute priority during detection. NORMAL is required for PCAN ACK. */
         rx_budget = CAN1_RX_BUDGET;
         while((rx_budget != 0U) && prv_RxAvailable())
         {
@@ -855,9 +858,9 @@ void Can1_Task(void)
                 uint8_t lpb_ok;
 
                 /*
-                 * LOM deliberately reports Error Passive and may report
-                 * BIT0ERR when the transmitting node has no other ACKing
-                 * station. Do not reject a candidate from FLTCONF/ECR here.
+                 * Wrong NORMAL candidates can generate protocol errors. They
+                 * are intentionally time-bounded; do not wait for a fault
+                 * counter threshold before moving to the next candidate.
                  */
                 RTT_LOG("[CAN1] Frame detected %lu kbps -> loopback confirm\r\n",
                         (unsigned long)g_baud_kbps[g_rate_idx]);
@@ -877,7 +880,6 @@ void Can1_Task(void)
                     g_last_ok_idx = g_rate_idx;
                     g_last_ok_valid = 1U;
                     g_detect_verify_pending = 0U;
-                    g_lock_logged = 1U;
                     g_state = CAN1_STATE_READY;
 
                     RTT_LOG("[CAN1] ============================================\r\n");
@@ -896,7 +898,7 @@ void Can1_Task(void)
             }
         }
 
-        /* LOM candidate timing is time-based; do not use FLTCONF as a fault. */
+        /* Candidate timing is deliberately short in PCAN-only NORMAL mode. */
         if((now - g_detect_start_ms) >= CAN1_DETECT_WINDOW_MS)
         {
             prv_NextBaud();
