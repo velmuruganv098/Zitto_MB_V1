@@ -42,6 +42,15 @@
  *   - rejects candidates with growing ECR counters or CAN bus-error evidence;
  *   - analysis mode prints an explicit CLEAN/SUSPECT/REJECT verdict.
  *
+ * V0.0059 revision note:
+ *   - production auto-baud is the default build mode again;
+ *   - candidate windows use an explicit epoch/generation boundary;
+ *   - each candidate starts from a frozen, cleared and re-armed RX pool;
+ *   - lock requires six accepted frames plus zero candidate RX/TX error growth
+ *     and zero protocol/Bus-Off evidence;
+ *   - all detection/verification deadlines remain bounded;
+ *   - full bench analysis remains available as an opt-in compile-time mode.
+ *
  * V0.0056 revision note:
  *   - Isolates full-analysis CAN service from application/UART forwarding.
  *   - Analysis frames do not enter the application queue.
@@ -119,12 +128,15 @@ extern "C" {
 #define CAN1_RX_BUDGET              12U
 
 /* V0.0053: dedicated CAN1 autobaud bench-analysis mode. */
-#define CAN1_FULL_ANALYSIS_MODE      1U
+#define CAN1_FULL_ANALYSIS_MODE      0U
 #define CAN1_ANALYSIS_WINDOW_MS      2000U
 #define CAN1_ANALYSIS_PRINT_MS          0U
 #define CAN1_ANALYSIS_LOOP_DELAY_MS     1U
 #define CAN1_ANALYSIS_FRAME_PRINT_MAX 5U
 #define CAN1_ANALYSIS_FRAME_PRINT_EVERY 50U
+
+/* V0.0059: explicit candidate-boundary diagnostics. */
+#define CAN1_DETECT_MIN_CLEAN_FRAMES  6U
 
 /* Live baud-change detection while READY. */
 #define CAN1_BAUD_MISMATCH_RXERR_LIMIT   32U
