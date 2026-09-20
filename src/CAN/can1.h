@@ -20,6 +20,11 @@
  * V0.0045 adds candidate-relative error diagnostics and keeps valid RX
  * stronger than transient protocol-error history from active probing.
  *
+ * V0.0050 revision note:
+ *   - Corrects RX BUSY handling to test CS[27:24] CODE=0x1, not CS bit 0.
+ *   - Keeps V0.0049 detection/recovery behavior unchanged apart from this RX fix.
+ *   - This revision is the controlled RX-path correction before further changes.
+ *
  * V0.0049 revision note:
  *   - Restores the known-working passive LOM detection behavior and timing values.
  *   - NORMAL/ACK is entered only after valid RX evidence and bounded verification.
