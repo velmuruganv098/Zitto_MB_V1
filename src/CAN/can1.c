@@ -222,6 +222,7 @@ static uint32_t g_detect_verify_start_ms;
 static uint8_t  g_detect_frames;
 static uint8_t  g_detect_verify_pending;
 static uint8_t  g_detect_no_rx_retry;
+static uint8_t  g_detect_first_rx_seen;
 static uint32_t g_detect_epoch;
 static uint32_t g_detect_candidate_start_ms;
 
@@ -1035,6 +1036,10 @@ static void prv_QueueFrame(uint32_t id,
     g_rx_q_head = next;
 }
 
+/* Candidate evidence helper is defined below; this prototype lets the RX
+ * service re-baseline exactly at the first accepted candidate frame. */
+static void prv_BaselineDetectAfterFirstRx(void);
+
 /* --------------------------------------------------------------------------
  * DISPATCH A VALID CAN FRAME
  * -------------------------------------------------------------------------- */
@@ -1257,17 +1262,20 @@ static uint8_t prv_ServiceRxPool(uint8_t budget,
                         g_detect_frames++;
 
                         /*
-                         * IMPORTANT FIX:
-                         * The verification timer starts only once. It must
-                         * not be reset for every subsequent frame.
+                         * Candidate entry can occur in the middle of a live
+                         * CAN frame. Errors seen before the first accepted RX
+                         * are candidate-boundary evidence, not proof that the
+                         * baud is wrong. Re-baseline at the first accepted RX.
                          */
+                        if(g_detect_first_rx_seen == 0U)
+                        {
+                            g_detect_first_rx_seen = 1U;
+                            prv_BaselineDetectAfterFirstRx();
+                        }
+
                         /*
-                         * Do not start verification on the first frame.
-                         * The previous V0.0061 path gave a candidate only
-                         * verify_ms (160 ms at 125 kbps) from first RX.
-                         * A real 125-kbps sender could therefore be rejected
-                         * after four clean frames while the full 1000-ms
-                         * candidate window still had valid traffic.
+                         * Verification starts only after the minimum clean
+                         * frame count is reached and is never restarted.
                          */
                         if((g_detect_verify_pending == 0U) &&
                            (g_detect_frames >= CAN1_PROFILE(g_rate_idx).min_frames))
@@ -1328,6 +1336,35 @@ static void prv_ResetDetectEvidence(void)
     g_status.detect_rxerr_delta = 0U;
 }
 
+/*
+ * Start the meaningful candidate-quality interval at the first accepted
+ * frame. ECR/ESR activity while switching into this candidate is retained
+ * only as boundary diagnostics.
+ */
+static void prv_BaselineDetectAfterFirstRx(void)
+{
+    const uint32_t ecr = CAN1->ECR;
+
+    (void)CAN1->ESR1;
+
+    g_detect_evidence.error_esr = 0U;
+    g_detect_evidence.txerr_baseline = (uint8_t)(ecr & 0xFFU);
+    g_detect_evidence.rxerr_baseline = (uint8_t)((ecr >> 8U) & 0xFFU);
+    g_detect_evidence.txerr_last = g_detect_evidence.txerr_baseline;
+    g_detect_evidence.rxerr_last = g_detect_evidence.rxerr_baseline;
+    g_detect_evidence.txerr_delta = 0U;
+    g_detect_evidence.rxerr_delta = 0U;
+    g_detect_evidence.txerr_peak = g_detect_evidence.txerr_baseline;
+    g_detect_evidence.rxerr_peak = g_detect_evidence.rxerr_baseline;
+    g_detect_evidence.error_seen = 0U;
+
+    g_status.last_esr1 = 0U;
+    g_status.last_ecr = ecr;
+    g_status.detect_error_esr = 0U;
+    g_status.detect_txerr_delta = 0U;
+    g_status.detect_rxerr_delta = 0U;
+}
+
 static void prv_CaptureDetectEvidence(void)
 {
     /*
@@ -1343,20 +1380,54 @@ static void prv_CaptureDetectEvidence(void)
     const uint32_t error_bits =
         esr & (CAN1_ESR_ERR_BUS_MASK | CAN1_ESR_BOFFINT_BIT);
 
+    if(g_detect_first_rx_seen == 0U)
+    {
+        /*
+         * Pre-RX errors can be caused by entering the candidate mid-frame.
+         * Record them for diagnostics, but do not treat them as quality
+         * failures for the candidate.
+         */
+        if(error_bits != 0U)
+        {
+            g_detect_evidence.error_before_rx = 1U;
+        }
+
+        if(txerr > g_detect_evidence.txerr_last)
+        {
+            g_detect_evidence.error_before_rx = 1U;
+        }
+
+        if(rxerr > g_detect_evidence.rxerr_last)
+        {
+            g_detect_evidence.error_before_rx = 1U;
+        }
+
+        if(txerr > g_detect_evidence.txerr_peak)
+        {
+            g_detect_evidence.txerr_peak = txerr;
+        }
+
+        if(rxerr > g_detect_evidence.rxerr_peak)
+        {
+            g_detect_evidence.rxerr_peak = rxerr;
+        }
+
+        g_detect_evidence.txerr_last = txerr;
+        g_detect_evidence.rxerr_last = rxerr;
+
+        g_status.last_esr1 = esr;
+        g_status.last_ecr = ecr;
+        g_status.detect_error_esr = 0U;
+        g_status.detect_txerr_delta = 0U;
+        g_status.detect_rxerr_delta = 0U;
+        return;
+    }
+
+    /* Post-RX history is the actual candidate quality gate. */
     if(error_bits != 0U)
     {
         g_detect_evidence.error_esr |= error_bits;
         g_detect_evidence.error_seen = 1U;
-
-        /*
-         * If this happens before the first accepted frame, the candidate
-         * is not allowed to become a baud lock merely because a later
-         * harmonic/alias frame happens to look valid.
-         */
-        if(g_detect_frames == 0U)
-        {
-            g_detect_evidence.error_before_rx = 1U;
-        }
     }
 
     if(txerr > g_detect_evidence.txerr_last)
@@ -1365,10 +1436,6 @@ static void prv_CaptureDetectEvidence(void)
             (uint8_t)(g_detect_evidence.txerr_delta +
                       (txerr - g_detect_evidence.txerr_last));
         g_detect_evidence.error_seen = 1U;
-        if(g_detect_frames == 0U)
-        {
-            g_detect_evidence.error_before_rx = 1U;
-        }
     }
 
     if(rxerr > g_detect_evidence.rxerr_last)
@@ -1377,10 +1444,6 @@ static void prv_CaptureDetectEvidence(void)
             (uint8_t)(g_detect_evidence.rxerr_delta +
                       (rxerr - g_detect_evidence.rxerr_last));
         g_detect_evidence.error_seen = 1U;
-        if(g_detect_frames == 0U)
-        {
-            g_detect_evidence.error_before_rx = 1U;
-        }
     }
 
     if(txerr > g_detect_evidence.txerr_peak)
@@ -1414,6 +1477,7 @@ static void prv_StartDetection(uint8_t retry_last)
     g_detect_verify_pending = 0U;
     g_detect_window_start_ms = 0U;
     g_detect_verify_start_ms = 0U;
+    g_detect_first_rx_seen = 0U;
     g_scan_pos = 0U;
     g_detect_no_rx_retry = 0U;
     g_rx_diag_candidate_logged = 0U;
@@ -1526,6 +1590,7 @@ static void prv_NextBaud(void){    uint8_t next;
     g_detect_verify_pending = 0U;
     g_detect_window_start_ms = 0U;
     g_detect_verify_start_ms = 0U;
+    g_detect_first_rx_seen = 0U;
 
     /* Discard all frames from the previous candidate epoch. */
     g_rx_q_head = 0U;
@@ -1588,6 +1653,7 @@ static uint8_t prv_Start125AliasCheck(void)
     g_detect_frames = 0U;
     g_detect_verify_pending = 0U;
     g_detect_verify_start_ms = 0U;
+    g_detect_first_rx_seen = 0U;
     prv_BeginCandidateEpoch(idx);
     g_detect_window_start_ms = g_detect_candidate_start_ms;
     g_alias_check_start_ms = g_detect_candidate_start_ms;
@@ -1611,6 +1677,7 @@ static void prv_Restore125AfterAliasCheck(void)
     g_detect_verify_pending = 0U;
     g_detect_verify_start_ms = 0U;
     g_detect_window_start_ms = 0U;
+    g_detect_first_rx_seen = 0U;
 
     if(prv_ApplyBaud(g_rate_idx) == 0U)
     {
@@ -1636,7 +1703,6 @@ static uint8_t prv_AliasCandidateClean(uint8_t idx)
                      (g_detect_evidence.rxerr_delta == 0U) &&
                      (g_detect_evidence.error_esr == 0U) &&
                      (g_detect_evidence.error_seen == 0U) &&
-                     (g_detect_evidence.error_before_rx == 0U) &&
                      ((fault & 0x02U) == 0U));
 }
 
@@ -2074,6 +2140,7 @@ void Can1_Init(void)
     g_detect_frames = 0U;
     g_detect_verify_pending = 0U;
     g_detect_no_rx_retry = 0U;
+    g_detect_first_rx_seen = 0U;
     g_detect_epoch = 0U;
     g_detect_candidate_start_ms = 0U;
     g_alias_check_active = 0U;
@@ -2198,6 +2265,7 @@ void Can1_Task(void){
      */
     if(g_alias_check_active != 0U)
     {
+        prv_CaptureDetectEvidence();
         (void)prv_ServiceRxPool(CAN1_RX_BUDGET, 1U);
         prv_CaptureDetectEvidence();
 
@@ -2242,6 +2310,7 @@ void Can1_Task(void){
          * flags produced while testing a wrong active candidate.
          */
         rx_budget = CAN1_RX_BUDGET;
+        prv_CaptureDetectEvidence();
         (void)prv_ServiceRxPool(rx_budget, 1U);
         prv_CaptureDetectEvidence();
 
@@ -2283,8 +2352,7 @@ void Can1_Task(void){
                               (g_detect_evidence.txerr_delta == 0U) &&
                               (g_detect_evidence.rxerr_delta == 0U) &&
                               (g_detect_evidence.error_esr == 0U) &&
-                              (g_detect_evidence.error_seen == 0U) &&
-                              (g_detect_evidence.error_before_rx == 0U));
+                              (g_detect_evidence.error_seen == 0U));
 
                 if(clean_candidate != 0U)
                 {
@@ -2329,9 +2397,7 @@ void Can1_Task(void){
          * was entered in the middle of an existing CAN frame.
          */
         if((g_detect_verify_pending == 0U) &&
-           (((g_detect_frames == 0U) &&
-             (g_detect_evidence.error_before_rx != 0U)) ||
-            ((now - g_detect_window_start_ms) >= CAN1_PROFILE(g_rate_idx).detect_window_ms)))
+           ((now - g_detect_window_start_ms) >= CAN1_PROFILE(g_rate_idx).detect_window_ms))
         {
             const uint8_t early_error =
                 (uint8_t)((g_detect_frames == 0U) &&
@@ -2358,6 +2424,7 @@ void Can1_Task(void){
                 g_detect_frames = 0U;
                 g_detect_verify_pending = 0U;
                 g_detect_verify_start_ms = 0U;
+                g_detect_first_rx_seen = 0U;
 
                 /* Retry starts a fresh application-visible candidate epoch. */
                 g_rx_q_head = 0U;
