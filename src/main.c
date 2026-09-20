@@ -1,7 +1,7 @@
 /*
  * main.c  -  Zitto_MB_V1 / S32K144
  *
- * Firmware Revision : V0.0061
+ * Firmware Revision : V0.0062
  * Change Note       : CAN1 harmonic-alias rejection + gated application RX
  *
  * V0.0049 PROJECT BASELINE
@@ -421,7 +421,7 @@ int main(void)
         "\r\n================================================\r\n"
         " Zitto MB V1 - VCU Firmware Boot\r\n"
         " Firmware Revision : V0.0061\r\n"
-        " Change            : CAN1 candidate-boundary error fix + 125/250 alias corroboration; fixed test OFF\r\n"
+        " Change            : CAN1 pre-RX error immunity + symmetric 2:1 baud corroboration; fixed test OFF\r\n"
         " MCU: S32K144  Clock: 80MHz SPLL  WDOG: OFF\r\n"
         " Modules: IMU=%d CSA=%d CAN1=%d CAN2=%d FLM=%d GPIO=%d\r\n"
         "================================================\r\n\r\n",
