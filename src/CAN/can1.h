@@ -48,6 +48,9 @@
  *     protocol/error-counter activity is never promoted by a later harmonic/alias RX frame;
  *   - wrong-rate candidates with pre-RX errors are rejected/retried without waiting for
  *     the full window when the profile permits a bounded retry;
+ *   - verification now starts only after the minimum clean frame count is reached;
+ *   - a clean 125 kbps candidate is corroborated at 250 kbps before lock to reject
+ *     the known 2:1 harmonic/alias path;
  *   - all detection and queue-delivery paths remain non-blocking and bounded.
  *
  * V0.0060 revision note:
