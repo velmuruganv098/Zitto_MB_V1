@@ -30,6 +30,13 @@
  *   - Continues bench-analysis only; no production detection/recovery decisions are changed.
  *   - Corrects the firmware banner revision so RTT captures identify the actual analysis build.
  *
+ * V0.0056 revision note:
+ *   - Isolates full-analysis CAN service from application/UART forwarding.
+ *   - Analysis frames do not enter the application queue.
+ *   - Candidate windows begin after hardware reconfiguration completes.
+ *   - Candidate-local sequence/index and RX-span diagnostics are explicit.
+ *   - No CAN timing values or production recovery rules are changed.
+ *
  * V0.0054 revision note:
  *   - Expands bench analysis only; no production detection/recovery decisions are changed.
  *   - Prints decoded PRESDIV/RJW/PROPSEG/PSEG1/PSEG2, calculated bitrate and sample point.
@@ -102,7 +109,8 @@ extern "C" {
 /* V0.0053: dedicated CAN1 autobaud bench-analysis mode. */
 #define CAN1_FULL_ANALYSIS_MODE      1U
 #define CAN1_ANALYSIS_WINDOW_MS      2000U
-#define CAN1_ANALYSIS_PRINT_MS        100U
+#define CAN1_ANALYSIS_PRINT_MS        250U
+#define CAN1_ANALYSIS_LOOP_DELAY_MS     1U
 #define CAN1_ANALYSIS_FRAME_PRINT_MAX 20U
 #define CAN1_ANALYSIS_FRAME_PRINT_EVERY 50U
 
