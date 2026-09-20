@@ -26,6 +26,13 @@
  *     IFLAG-seen mask, mailbox hit distribution, RX CODE distribution and maximum
  *     CAN task gap per candidate. No production recovery decision is changed.
  *
+ * V0.0054 revision note:
+ *   - Expands bench analysis only; no production detection/recovery decisions are changed.
+ *   - Prints decoded PRESDIV/RJW/PROPSEG/PSEG1/PSEG2, calculated bitrate and sample point.
+ *   - Prints MCR/RX-pin state, detailed ACK/CRC/FRM/STF/BIT error flags, IFLAG pressure,
+ *     RX-service calls, budget saturation and mailbox BUSY/code activity.
+ *   - Keeps the four-candidate continuous sequence and no firmware CAN TX probe.
+ *
  * V0.0053 revision note:
  *   - Dedicated full-analysis bench mode. It continuously tests every
  *     candidate without latching or baud-mismatch recovery.
