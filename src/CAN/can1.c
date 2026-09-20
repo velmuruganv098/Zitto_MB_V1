@@ -487,17 +487,33 @@ static void prv_LogRxPathSnapshot(const char *reason)
     for(mb = CAN1_RX_MB_FIRST; mb <= CAN1_RX_MB_LAST; mb++)
     {
         const uint32_t base = ((uint32_t)mb * 4U);
-        const uint32_t cs = CAN1->RAMn[base + 0U];
-        const uint8_t code = (uint8_t)((cs >> 24U) & 0x0FU);
         const uint8_t flagged = (uint8_t)((iflag >> mb) & 1UL);
 
-        RTT_LOG("[CAN1_DIAG] MB%u I=%u CS=0x%08lX CODE=%u ID=0x%08lX\r\n",
-                (unsigned)mb,
-                (unsigned)flagged,
-                (unsigned long)cs,
-                (unsigned)code,
-                (unsigned long)CAN1->RAMn[base + 1U]);
+        /*
+         * Do not read CS for a mailbox whose IFLAG is still asserted.
+         * Reading CS is part of the FlexCAN receive-lock sequence and can
+         * lock a FULL mailbox until the normal receive sequence reaches
+         * TIMER. The diagnostic path must never interfere with mailbox
+         * service or create the RX starvation it is trying to diagnose.
+         */
+        if(flagged == 0U)
+        {
+            const uint32_t cs = CAN1->RAMn[base + 0U];
+            const uint8_t code = (uint8_t)((cs >> 24U) & 0x0FU);
+
+            RTT_LOG("[CAN1_DIAG] MB%u I=0 CS=0x%08lX CODE=%u ID=0x%08lX\r\n",
+                    (unsigned)mb,
+                    (unsigned long)cs,
+                    (unsigned)code,
+                    (unsigned long)CAN1->RAMn[base + 1U]);
+        }
+        else
+        {
+            RTT_LOG("[CAN1_DIAG] MB%u I=1 CS_READ_SKIPPED (mailbox service owns it)\r\n",
+                    (unsigned)mb);
+        }
     }
+}
 }
 
 static void prv_ArmRxMailbox(uint8_t mb)
