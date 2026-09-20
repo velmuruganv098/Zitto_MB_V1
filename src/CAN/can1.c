@@ -1275,7 +1275,7 @@ static void prv_AnalysisTiming(uint32_t ctrl1)
     const uint32_t tq=1U+propseg+pseg1+pseg2;
     const uint32_t bitrate=(40000000UL/presdiv)/tq;
     const uint32_t sp=((1U+propseg+pseg1)*10000U)/tq;
-    RTT_LOG("[CAN1_A TIM] PRESDIV=%lu RJW=%lu PROPSEG=%lu PSEG1=%lu PSEG2=%lu TQ=%lu bitrate_calc=%lu sample=%lu.%02lu%%\\r\\n",
+    RTT_LOG("[CAN1_A TIM] PRESDIV=%lu RJW=%lu PROPSEG=%lu PSEG1=%lu PSEG2=%lu TQ=%lu bitrate_calc=%lu sample=%lu.%02lu%%\r\n",
             (unsigned long)presdiv,(unsigned long)rjw,(unsigned long)propseg,
             (unsigned long)pseg1,(unsigned long)pseg2,(unsigned long)tq,
             (unsigned long)bitrate,(unsigned long)(sp/100U),(unsigned long)(sp%100U));
@@ -1283,7 +1283,7 @@ static void prv_AnalysisTiming(uint32_t ctrl1)
 
 static void prv_AnalysisErrorBits(uint32_t esr)
 {
-    RTT_LOG("[CAN1_A ERRBITS] ACK=%u CRC=%u FRM=%u STF=%u BIT=%u ERRINT=%u BOFFINT=%u BUSIDLE=%u\\r\\n",
+    RTT_LOG("[CAN1_A ERRBITS] ACK=%u CRC=%u FRM=%u STF=%u BIT=%u ERRINT=%u BOFFINT=%u BUSIDLE=%u\r\n",
             (unsigned)((esr&(1UL<<14U))!=0U),(unsigned)((esr&(1UL<<13U))!=0U),
             (unsigned)((esr&(1UL<<12U))!=0U),(unsigned)((esr&(1UL<<11U))!=0U),
             (unsigned)((esr&(1UL<<10U))!=0U),(unsigned)((esr&CAN1_ESR_ERRINT_BIT)!=0U),
@@ -1300,7 +1300,7 @@ static void prv_AnalysisSnapshot(uint32_t now)
     const uint32_t rxpin = (PTA->PDIR >> 12U) & 1UL;
     const uint32_t qdepth = (g_rx_q_head >= g_rx_q_tail) ? (uint32_t)(g_rx_q_head-g_rx_q_tail) : (uint32_t)CAN1_RX_QUEUE_LEN-(uint32_t)g_rx_q_tail+(uint32_t)g_rx_q_head;
     if(iflag != 0U) g_analysis_iflag_nonzero_count++;
-    if(iflag != 0U && g_analysis_service_frames == 0U) g_analysis_iflag_persistent_count++;
+    if(iflag != 0U && g_analysis_service_frames == g_analysis_service_start) g_analysis_iflag_persistent_count++;
 
     RTT_LOG("[CAN1_A SNAP] cycle=%lu cand=%lu kbps elapsed=%lums "
             "rx=%lu(+%lu) overrun=%lu(+%lu) qdrop=%lu(+%lu) "
@@ -1360,7 +1360,7 @@ static void prv_AnalysisSnapshot(uint32_t now)
             (unsigned long)g_detect_evidence.error_esr,
             (unsigned)g_detect_evidence.txerr_delta,
             (unsigned)g_detect_evidence.rxerr_delta);
-    RTT_LOG("[CAN1_A RATE] first_rx=%lums last_rx=%lums rx_span=%lums max_task_gap=%lums busy=%lu iflag_seen=0x%08lX\\r\\n",
+    RTT_LOG("[CAN1_A RATE] first_rx=%lums last_rx=%lums rx_span=%lums max_task_gap=%lums busy=%lu iflag_seen=0x%08lX\r\n",
             (unsigned long)g_analysis_first_rx_ms,
             (unsigned long)g_analysis_last_rx_ms,
             (unsigned long)((g_analysis_last_rx_ms != 0U && g_analysis_first_rx_ms != 0U)
@@ -1368,7 +1368,7 @@ static void prv_AnalysisSnapshot(uint32_t now)
             (unsigned long)g_analysis_max_task_gap_ms,
             (unsigned long)g_analysis_busy_count,
             (unsigned long)g_analysis_iflag_seen_mask);
-    RTT_LOG("[CAN1_A CODE] EMPTY=%lu FULL=%lu BUSY=%lu OVERRUN=%lu code0=%lu code3=%lu code5=%lu code7=%lu\\r\\n",
+    RTT_LOG("[CAN1_A CODE] EMPTY=%lu FULL=%lu BUSY=%lu OVERRUN=%lu code0=%lu code3=%lu code5=%lu code7=%lu\r\n",
             (unsigned long)g_analysis_code_count[CAN1_CODE_RX_EMPTY],
             (unsigned long)g_analysis_code_count[CAN1_CODE_RX_FULL],
             (unsigned long)g_analysis_code_count[CAN1_CODE_RX_BUSY],
@@ -1377,7 +1377,7 @@ static void prv_AnalysisSnapshot(uint32_t now)
             (unsigned long)g_analysis_code_count[3U],
             (unsigned long)g_analysis_code_count[5U],
             (unsigned long)g_analysis_code_count[7U]);
-    RTT_LOG("[CAN1_A MBHIT] MB4=%lu MB5=%lu MB6=%lu MB7=%lu MB8=%lu MB9=%lu MB10=%lu MB11=%lu MB12=%lu MB13=%lu MB14=%lu MB15=%lu\\r\\n",
+    RTT_LOG("[CAN1_A MBHIT] MB4=%lu MB5=%lu MB6=%lu MB7=%lu MB8=%lu MB9=%lu MB10=%lu MB11=%lu MB12=%lu MB13=%lu MB14=%lu MB15=%lu\r\n",
             (unsigned long)g_analysis_mb_count[4U],
             (unsigned long)g_analysis_mb_count[5U],
             (unsigned long)g_analysis_mb_count[6U],
@@ -1473,7 +1473,14 @@ static void prv_AnalysisFinishCandidate(uint32_t now)
             (unsigned long)CAN1->IFLAG1);
     RTT_LOG("[CAN1_A RESULT] RX>0 means FlexCAN accepted frame(s) at this "
             "timing. RX=0 must be correlated with ECR/ESR/IFLAG and PCAN "
-            "transmit timing; ECR alone is not a baud verdict.\r\n");
+            "transmit timing; ECR alone is not a baud verdict.\r\n");    RTT_LOG("[CAN1_A RESULT2] service=%lu frames=%lu budget_hits=%lu IFLAG_nonzero=%lu IFLAG_persist=%lu busy=%lu max_task_gap=%lums\r\n",
+            (unsigned long)(g_analysis_service_calls-g_analysis_service_start),
+            (unsigned long)(g_analysis_service_frames-g_analysis_service_start),
+            (unsigned long)(g_analysis_budget_hits-g_analysis_budget_start),
+            (unsigned long)(g_analysis_iflag_nonzero_count-g_analysis_iflag_start),
+            (unsigned long)(g_analysis_iflag_persistent_count-g_analysis_iflag_persistent_start),
+            (unsigned long)g_analysis_busy_count,(unsigned long)g_analysis_max_task_gap_ms);
+
     prv_LogRxPathSnapshot("candidate-end");
 }
 
