@@ -511,3 +511,21 @@ Do not use V0.0053 as the production CAN1 firmware. After the RTT evidence is
 collected, the production detector should be changed only from conclusions
 supported by that evidence.
 
+
+
+V0.0054
+------
+CAN1 DEEPER BENCH TELEMETRY
+
+Built on V0.0053 analysis mode. This revision adds measurement-only diagnostics:
+- first RX timestamp per candidate
+- last RX timestamp and RX span
+- maximum observed CAN1 task gap
+- count of RX BUSY observations
+- IFLAG-seen mailbox mask
+- RX mailbox CODE histogram
+- per-mailbox hit distribution
+
+These fields help distinguish bit-timing failure, receive acceptance, mailbox BUSY/overrun behavior, and scheduler/service-rate limitations. The analysis mode still does not latch a baud, perform live mismatch recovery, or generate a CAN TX probe.
+
+Test method: keep PCAN at one known nominal bitrate for the capture, let the firmware cycle 500/250/125/1000, then upload the RTT output and state the PCAN bitrate used.
