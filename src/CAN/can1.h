@@ -19,11 +19,15 @@
  * V0.0045 adds candidate-relative error diagnostics and keeps valid RX
  * stronger than transient protocol-error history from active probing.
  *
- * V0.0047 revision note:
+ * V0.0048 revision note:
  *   - Same CAN architecture/topology and same bit-timing values.
- *   - 250k and 125k use one bounded same-candidate no-RX retry before advancing.
+ *   - The valid frame that proves a baud candidate is retained in the RX queue,
+ *     so detection cannot consume the only frame and leave main.c with nothing to print.
+ *   - RX mailbox service uses IFLAG polling, BUSY protection, W1C flag clear and TIMER unlock.
+ *   - 250k/125k use one bounded same-candidate no-RX retry before advancing.
  *   - Detection timing begins after the candidate is successfully applied.
- *   - READY recovery remains Bus-Off-only.
+ *   - READY recovery remains Bus-Off-only; idle/no-data/error-passive never starts a scan.
+ *   - This is the CAN1 baseline for upcoming project revisions; preserve these invariants.
  */
 
 #ifndef CAN1_H
