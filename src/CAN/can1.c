@@ -215,6 +215,14 @@ static uint32_t g_analysis_candidate_overrun_start;
 static uint32_t g_analysis_candidate_qdrop_start;
 static uint32_t g_analysis_candidate_task_start;
 static uint32_t g_analysis_candidate_frame_prints;
+static uint32_t g_analysis_first_rx_ms;
+static uint32_t g_analysis_last_rx_ms;
+static uint32_t g_analysis_busy_count;
+static uint32_t g_analysis_iflag_seen_mask;
+static uint32_t g_analysis_code_count[16];
+static uint32_t g_analysis_mb_count[16];
+static uint32_t g_analysis_prev_task_ms;
+static uint32_t g_analysis_max_task_gap_ms;
 #endif
 
 /* --------------------------------------------------------------------------
@@ -826,6 +834,12 @@ static uint8_t prv_ProcessRxMailbox(uint8_t mb)
      */
     if(((cs >> 24U) & 0x0FU) == CAN1_CODE_RX_BUSY)
     {
+#if CAN1_FULL_ANALYSIS_MODE
+        if(g_analysis_active != 0U)
+        {
+            g_analysis_busy_count++;
+        }
+#endif
         return 0U;
     }
 
@@ -835,6 +849,14 @@ static uint8_t prv_ProcessRxMailbox(uint8_t mb)
 
     code = (uint8_t)((cs >> 24U) & 0x0FU);
     dlc  = (uint8_t)((cs >> 16U) & 0x0FU);
+#if CAN1_FULL_ANALYSIS_MODE
+    if(g_analysis_active != 0U)
+    {
+        if(code < 16U) g_analysis_code_count[code]++;
+        if(mb < 16U) g_analysis_mb_count[mb]++;
+        g_analysis_iflag_seen_mask |= flag;
+    }
+#endif
     ide  = (uint8_t)((cs >> 21U) & 0x01U);
     rtr  = (uint8_t)((cs >> 20U) & 0x01U);
 
@@ -877,6 +899,12 @@ static uint8_t prv_ProcessRxMailbox(uint8_t mb)
     {
         g_rx_total++;
 #if CAN1_FULL_ANALYSIS_MODE
+        if(g_analysis_active != 0U)
+        {
+            const uint32_t rx_now = Uart_GetMs();
+            if(g_analysis_first_rx_ms == 0U) g_analysis_first_rx_ms = rx_now;
+            g_analysis_last_rx_ms = rx_now;
+        }
         if((g_analysis_active != 0U) &&
            ((g_analysis_candidate_frame_prints < CAN1_ANALYSIS_FRAME_PRINT_MAX) ||
             ((g_rx_total % CAN1_ANALYSIS_FRAME_PRINT_EVERY) == 0U)))
@@ -1297,6 +1325,20 @@ static void prv_AnalysisStartCandidate(uint8_t idx, uint32_t now)
     g_analysis_candidate_qdrop_start = g_rx_q_drop;
     g_analysis_candidate_task_start = g_task_cnt;
     g_analysis_candidate_frame_prints = 0U;
+    g_analysis_first_rx_ms = 0U;
+    g_analysis_last_rx_ms = 0U;
+    g_analysis_busy_count = 0U;
+    g_analysis_iflag_seen_mask = 0U;
+    g_analysis_prev_task_ms = now;
+    g_analysis_max_task_gap_ms = 0U;
+    {
+        uint8_t i;
+        for(i = 0U; i < 16U; i++)
+        {
+            g_analysis_code_count[i] = 0U;
+            g_analysis_mb_count[i] = 0U;
+        }
+    }
 
     if(prv_ApplyBaud(idx) == 0U)
     {
@@ -1357,6 +1399,13 @@ static void prv_AnalysisTask(uint32_t now)
 {
     (void)prv_ServiceRxPool(CAN1_RX_BUDGET, 0U);
     prv_CaptureDetectEvidence();
+
+    if(g_analysis_prev_task_ms != 0U)
+    {
+        const uint32_t task_gap = now - g_analysis_prev_task_ms;
+        if(task_gap > g_analysis_max_task_gap_ms) g_analysis_max_task_gap_ms = task_gap;
+    }
+    g_analysis_prev_task_ms = now;
 
     if((now - g_analysis_last_print_ms) >= CAN1_ANALYSIS_PRINT_MS)
     {
@@ -1423,6 +1472,24 @@ void Can1_Init(void)
     g_ready_rxerr_baseline = 0U;
     g_ready_txerr_baseline = 0U;
     g_fault_seen_ms = 0U;
+#if CAN1_FULL_ANALYSIS_MODE
+    g_analysis_active = 0U;
+    g_analysis_candidate = 0U;
+    g_analysis_candidate_start_ms = 0U;
+    g_analysis_last_print_ms = 0U;
+    g_analysis_cycle = 0U;
+    g_analysis_candidate_rx_start = 0U;
+    g_analysis_candidate_overrun_start = 0U;
+    g_analysis_candidate_qdrop_start = 0U;
+    g_analysis_candidate_task_start = 0U;
+    g_analysis_candidate_frame_prints = 0U;
+    g_analysis_first_rx_ms = 0U;
+    g_analysis_last_rx_ms = 0U;
+    g_analysis_busy_count = 0U;
+    g_analysis_iflag_seen_mask = 0U;
+    g_analysis_prev_task_ms = 0U;
+    g_analysis_max_task_gap_ms = 0U;
+#endif
 
     g_detect_window_start_ms = 0U;
     g_detect_verify_start_ms = 0U;
