@@ -30,6 +30,12 @@
  *   - Continues bench-analysis only; no production detection/recovery decisions are changed.
  *   - Corrects the firmware banner revision so RTT captures identify the actual analysis build.
  *
+ * V0.0057 revision note:
+ *   - fixes corrupted candidate summary field ordering in RTT diagnostics;
+ *   - removes periodic analysis snapshots from the measured 1 ms service path;
+ *   - uses the full MB4..MB15 receive-service budget;
+ *   - validates a 10-TQ / 80% sample-point 1 Mbps timing candidate.
+ *
  * V0.0056 revision note:
  *   - Isolates full-analysis CAN service from application/UART forwarding.
  *   - Analysis frames do not enter the application queue.
@@ -104,14 +110,14 @@ extern "C" {
  * together with a bounded no-valid-RX interval.
  */
 #define CAN1_ERROR_COUNT_LIMIT      96U
-#define CAN1_RX_BUDGET               8U
+#define CAN1_RX_BUDGET              12U
 
 /* V0.0053: dedicated CAN1 autobaud bench-analysis mode. */
 #define CAN1_FULL_ANALYSIS_MODE      1U
 #define CAN1_ANALYSIS_WINDOW_MS      2000U
-#define CAN1_ANALYSIS_PRINT_MS        250U
+#define CAN1_ANALYSIS_PRINT_MS          0U
 #define CAN1_ANALYSIS_LOOP_DELAY_MS     1U
-#define CAN1_ANALYSIS_FRAME_PRINT_MAX 20U
+#define CAN1_ANALYSIS_FRAME_PRINT_MAX 5U
 #define CAN1_ANALYSIS_FRAME_PRINT_EVERY 50U
 
 /* Live baud-change detection while READY. */
