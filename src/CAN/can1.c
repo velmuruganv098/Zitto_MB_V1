@@ -2138,21 +2138,34 @@ void Can1_Task(void){
         }
 
         /*
-         * No valid frame yet: move on after a bounded observation window.
+         * No valid frame yet:
+         *   - a pre-RX error is an immediate wrong-candidate signal;
+         *   - otherwise the candidate has a bounded no-RX observation window.
+         *
+         * A retry is still allowed for profiles that permit one. This avoids
+         * rejecting a genuinely correct baud merely because the candidate
+         * was entered in the middle of an existing CAN frame.
          */
         if((g_detect_verify_pending == 0U) &&
-           ((now - g_detect_window_start_ms) >= CAN1_PROFILE(g_rate_idx).detect_window_ms))
+           (((g_detect_frames == 0U) &&
+             (g_detect_evidence.error_before_rx != 0U)) ||
+            ((now - g_detect_window_start_ms) >= CAN1_PROFILE(g_rate_idx).detect_window_ms)))
         {
+            const uint8_t early_error =
+                (uint8_t)((g_detect_frames == 0U) &&
+                          (g_detect_evidence.error_before_rx != 0U));
+
             if(g_detect_no_rx_retry < CAN1_PROFILE(g_rate_idx).no_rx_retries)
             {
                 g_detect_no_rx_retry++;
 
-                RTT_LOG("[CAN1] Candidate %lu no RX -> retry %u/%u ESR1=0x%08lX ECR=0x%08lX\r\n",
+                RTT_LOG("[CAN1] Candidate %lu %s -> retry %u/%u ESR1=0x%08lX ECR=0x%08lX\r\n",
                         (unsigned long)CAN1_PROFILE(g_rate_idx).baud_kbps,
+                        (early_error != 0U) ? "pre-RX error" : "no RX timeout",
                         (unsigned)g_detect_no_rx_retry,
                         (unsigned)CAN1_PROFILE(g_rate_idx).no_rx_retries,
-                        (unsigned long)CAN1->ESR1,
-                        (unsigned long)CAN1->ECR);
+                        (unsigned long)g_status.last_esr1,
+                        (unsigned long)g_status.last_ecr);
 
                 if(prv_ApplyBaud(g_rate_idx) == 0U)
                 {
@@ -2179,15 +2192,15 @@ void Can1_Task(void){
             }
             else
             {
-                RTT_LOG("[CAN1] Candidate %lu timeout RX=0 retry=%u ESR1=0x%08lX ECR=0x%08lX -> next\r\n",
+                RTT_LOG("[CAN1] Candidate %lu rejected before RX: reason=%s retry=%u ESR1=0x%08lX ECR=0x%08lX -> next\r\n",
                         (unsigned long)CAN1_PROFILE(g_rate_idx).baud_kbps,
+                        (early_error != 0U) ? "CAN_ERROR" : "NO_RX_TIMEOUT",
                         (unsigned)g_detect_no_rx_retry,
-                        (unsigned long)CAN1->ESR1,
-                        (unsigned long)CAN1->ECR);
+                        (unsigned long)g_status.last_esr1,
+                        (unsigned long)g_status.last_ecr);
                 prv_NextBaud();
             }
         }
-
         return;
     }
 
