@@ -9,8 +9,9 @@
  *
  * Detection uses NORMAL/ACK mode, no TX probe,
  * candidate order 500/250/125/1000 kbps, and a valid hardware RX frame is
- * the primary baud evidence. After bounded verification the driver clears
- * LOM and enters NORMAL mode so the MCU ACKs subsequent PCAN traffic.
+ * the primary baud evidence. Detection already runs in NORMAL mode so the
+ * MCU ACKs the external PCAN frame; after bounded verification the baud is
+ * latched.
  * Transient protocol errors on wrong candidates are diagnostic only.
  *
  * RX uses MB4..MB15 as a hardware receive pool. Application/UART forwarding
