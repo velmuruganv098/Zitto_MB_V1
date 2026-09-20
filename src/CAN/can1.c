@@ -1485,6 +1485,10 @@ static void prv_NextBaud(void){    uint8_t next;
     g_detect_window_start_ms = 0U;
     g_detect_verify_start_ms = 0U;
 
+    /* Discard all frames from the previous candidate epoch. */
+    g_rx_q_head = 0U;
+    g_rx_q_tail = 0U;
+
     g_detect_evidence.error_esr = 0U;
     g_detect_evidence.txerr_delta = 0U;
     g_detect_evidence.rxerr_delta = 0U;
@@ -2159,6 +2163,11 @@ void Can1_Task(void){
                 g_detect_frames = 0U;
                 g_detect_verify_pending = 0U;
                 g_detect_verify_start_ms = 0U;
+
+                /* Retry starts a fresh application-visible candidate epoch. */
+                g_rx_q_head = 0U;
+                g_rx_q_tail = 0U;
+
                 prv_BeginCandidateEpoch(g_rate_idx);
                 g_detect_window_start_ms = g_detect_candidate_start_ms;
                 prv_ResetDetectEvidence();
