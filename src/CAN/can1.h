@@ -159,6 +159,8 @@ extern "C" {
 
 /* V0.0059: explicit candidate-boundary diagnostics. */
 #define CAN1_DETECT_MIN_CLEAN_FRAMES  6U  /* minimum error-free accepted frames before lock */
+#define CAN1_DETECT_ALIAS_BAUD_KBPS    250U /* 125 kbps candidate must corroborate against 250 kbps */
+#define CAN1_DETECT_ALIAS_WINDOW_MS    500U /* bounded higher-rate corroboration window */
 
 /* Live baud-change detection while READY. */
 #define CAN1_BAUD_MISMATCH_RXERR_LIMIT   32U
