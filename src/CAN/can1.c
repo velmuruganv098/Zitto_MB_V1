@@ -2209,14 +2209,12 @@ void Can1_Task(void){
             if(prv_AliasCandidateClean(g_alias_check_idx) != 0U)
             {
                 RTT_LOG("[CAN1] 250 kbps corroboration CLEAN -> reject 125 harmonic/alias and lock 250 kbps\r\n");
-");
                 g_alias_check_active = 0U;
                 prv_LockCandidate(now);
             }
             else
             {
                 RTT_LOG("[CAN1] 250 kbps corroboration rejected: frames=%u txd=%u rxd=%u err=0x%08lX -> restore 125\r\n",
-",
                         (unsigned)g_detect_frames,
                         (unsigned)g_detect_evidence.txerr_delta,
                         (unsigned)g_detect_evidence.rxerr_delta,
@@ -2229,7 +2227,6 @@ void Can1_Task(void){
         if((now - g_alias_check_start_ms) >= CAN1_DETECT_ALIAS_WINDOW_MS)
         {
             RTT_LOG("[CAN1] 250 kbps corroboration timeout: frames=%u txd=%u rxd=%u err=0x%08lX -> restore 125\r\n",
-",
                     (unsigned)g_detect_frames,
                     (unsigned)g_detect_evidence.txerr_delta,
                     (unsigned)g_detect_evidence.rxerr_delta,
