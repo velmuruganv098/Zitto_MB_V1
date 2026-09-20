@@ -1,14 +1,14 @@
 /*
  * main.c  -  Zitto_MB_V1 / S32K144
  *
- * Firmware Revision : V0.0048
- * Change Note       : CAN1 live baud-mismatch recovery + detection-frame preservation + mailbox BUSY hardening
+ * Firmware Revision : V0.0049
+ * Change Note       : CAN1 working-behavior auto-baud + RX/mailbox hardening
  *
- * V0.0048 PROJECT BASELINE
- *   - CAN1 detection remains RX-evidence based and never transmits a baud probe.
+ * V0.0049 PROJECT BASELINE
+ *   - CAN1 detection follows the known-working LOM/RX-evidence sequence and never transmits a baud probe.
  *   - The frame that proves the baud is preserved into the application queue and
  *     is therefore visible through [CAN1_APP] and MSG_CAN.
- *   - Live PCAN baud changes can recover only from bounded error evidence plus
+ *   - After a valid RX candidate is verified, CAN1 enters NORMAL mode for PCAN ACK; live PCAN baud changes can recover only from bounded error evidence plus
  *     no-valid-RX confirmation; quiet/no-data operation does not trigger scanning.
  *   - FlexCAN mailbox move-in is protected by a bounded BUSY check.
  *   - Future revisions must keep every CAN/UART/module wait bounded and must not
@@ -468,8 +468,8 @@ int main(void)
 #endif
 
     /* CAN1 - FlexCAN1 PTA12/PTA13 TCAN334 SHDN=PTB2
-     * BUS_CLK=40MHz, 500/250/125/1000kbps candidates.
-     * Detection is NORMAL-mode receive/ACK based, with no TX probe.
+     * BUS_CLK=40MHz, known-working 500/250/125/1000kbps candidates.
+     * Detection uses LOM and RX evidence; NORMAL/ACK begins only after lock.
      * RX uses MB4..MB15 and application forwarding is decoupled. */
 #if APP_CAN1_ENABLE
     RTT_LOG("[BOOT] CAN1 init  FlexCAN1  PTA12/PTA13  SHDN=PTB2\r\n");
