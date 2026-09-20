@@ -42,6 +42,15 @@
  *   - rejects candidates with growing ECR counters or CAN bus-error evidence;
  *   - analysis mode prints an explicit CLEAN/SUSPECT/REJECT verdict.
  *
+ * V0.0061 revision note:
+ *   - production mode is restored as the default; fixed-baud validation is opt-in only;
+ *   - candidate RX frames are kept out of APP/UART/Server until a baud candidate is locked;
+ *   - candidate error evidence is captured ECR-first and a candidate that shows any
+ *     protocol/error-counter activity is never promoted by a later harmonic/alias RX frame;
+ *   - wrong-rate candidates with pre-RX errors are rejected/retried without waiting for
+ *     the full window when the profile permits a bounded retry;
+ *   - all detection and queue-delivery paths remain non-blocking and bounded.
+ *
  * V0.0060 revision note:
  *   - adds an opt-in fixed-baud validation mode so each PCAN baud can be
  *     tested without candidate switching or auto-recovery;
@@ -139,7 +148,7 @@ extern "C" {
 #define CAN1_FULL_ANALYSIS_MODE      0U
 
 /* V0.0060: opt-in fixed-baud hardware-truth test. Keep 0 for production. */
-#define CAN1_FIXED_BAUD_TEST_MODE    1U  /* V0.0060 current bench build: fixed-rate diagnostics */
+#define CAN1_FIXED_BAUD_TEST_MODE    0U  /* V0.0061 production default; enable only for fixed-rate bench validation */
 #define CAN1_FIXED_BAUD_KBPS         125U  /* change to 250/500/1000 for the next fixed test */
 #define CAN1_FIXED_TEST_PRINT_MS     500U
 #define CAN1_FIXED_TEST_MIN_FRAMES   6U
@@ -150,7 +159,7 @@ extern "C" {
 #define CAN1_ANALYSIS_FRAME_PRINT_EVERY 50U
 
 /* V0.0059: explicit candidate-boundary diagnostics. */
-#define CAN1_DETECT_MIN_CLEAN_FRAMES  6U
+#define CAN1_DETECT_MIN_CLEAN_FRAMES  6U  /* minimum error-free accepted frames before lock */
 
 /* Live baud-change detection while READY. */
 #define CAN1_BAUD_MISMATCH_RXERR_LIMIT   32U
