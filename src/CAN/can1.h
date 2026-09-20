@@ -19,11 +19,13 @@
  * V0.0045 adds candidate-relative error diagnostics and keeps valid RX
  * stronger than transient protocol-error history from active probing.
  *
- * V0.0047 revision note:
- *   - Same CAN architecture/topology and same bit-timing values.
- *   - 250k and 125k use one bounded same-candidate no-RX retry before advancing.
- *   - Detection timing begins after the candidate is successfully applied.
- *   - READY recovery remains Bus-Off-only.
+ * V0.0048 revision note:
+ *   - Same DETECTING -> READY -> ERROR architecture and NORMAL/ACK topology.
+ *   - 250k/125k keep bounded no-RX retry profiles.
+ *   - READY now detects a live PCAN baud change from a sustained error burst
+ *     plus a bounded no-valid-RX interval; idle traffic alone never rescans.
+ *   - Bus-Off remains an immediate recovery trigger.
+ *   - All CAN waits remain bounded.
  */
 
 #ifndef CAN1_H
@@ -56,6 +58,12 @@ extern "C" {
  */
 #define CAN1_ERROR_COUNT_LIMIT      96U
 #define CAN1_RX_BUDGET               8U
+
+/* Live baud-change detection while READY. */
+#define CAN1_BAUD_MISMATCH_RXERR_LIMIT   32U
+#define CAN1_BAUD_MISMATCH_TXERR_LIMIT   32U
+#define CAN1_BAUD_MISMATCH_NO_RX_MS      250U
+#define CAN1_BAUD_MISMATCH_CONFIRM_MS    100U
 
 /* FlexCAN1 has 16 classic 8-byte MBs in this configuration. */
 #define CAN1_RX_MB_FIRST             4U
