@@ -2,7 +2,17 @@
  * main.c  -  Zitto_MB_V1 / S32K144
  *
  * Firmware Revision : V0.0048
- * Change Note       : CAN1 live baud-mismatch recovery + per-baud detection profiles + RX/application hardening
+ * Change Note       : CAN1 live baud-mismatch recovery + detection-frame preservation + mailbox BUSY hardening
+ *
+ * V0.0048 PROJECT BASELINE
+ *   - CAN1 detection remains RX-evidence based and never transmits a baud probe.
+ *   - The frame that proves the baud is preserved into the application queue and
+ *     is therefore visible through [CAN1_APP] and MSG_CAN.
+ *   - Live PCAN baud changes can recover only from bounded error evidence plus
+ *     no-valid-RX confirmation; quiet/no-data operation does not trigger scanning.
+ *   - FlexCAN mailbox move-in is protected by a bounded BUSY check.
+ *   - Future revisions must keep every CAN/UART/module wait bounded and must not
+ *     introduce an indefinite wait on CAN, IMU, CSA, APP, Server or UART activity.
  *
  * ==========================================================================
  * CRITICAL BOOT ORDER (do not change):
