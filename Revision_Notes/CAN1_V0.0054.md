@@ -57,3 +57,13 @@ Do not change CAN ID/DLC/data between captures unless specifically testing those
 ## Validation status
 
 Source changes are committed to the analysis branch. Full S32DS build, ELF generation, flashing and PCAN hardware validation are still required.
+
+## Additional V0.0054 telemetry added in the latest analysis pass
+
+- decoded PRESDIV/RJW/PROPSEG/PSEG1/PSEG2, total TQ, calculated bitrate and sample point
+- MCR value and RX pin level
+- detailed ESR1 ACK/CRC/FRM/STF/BIT/ERRINT/BOFFINT/BUSIDLE indicators
+- RX service-call count, serviced-frame count and RX-budget saturation count
+- IFLAG non-zero/persistent observations and RX queue depth
+
+These are diagnostic measurements only; candidate timing values and the no-TX-probe test architecture remain unchanged.
