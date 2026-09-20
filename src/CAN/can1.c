@@ -2307,6 +2307,8 @@ void Can1_Task(void){
                     (unsigned long)esr);
 
             g_status.error_count++;
+            g_status.ready = 0U;
+            g_status.detecting = 0U;
             g_state = CAN1_STATE_ERROR;
             return;
         }
@@ -2330,6 +2332,8 @@ void Can1_Task(void){
                         (unsigned long)esr);
 
                 g_status.error_count++;
+                g_status.ready = 0U;
+                g_status.detecting = 0U;
                 g_state = CAN1_STATE_ERROR;
                 g_ready_recovery_active = 0U;
                 return;
