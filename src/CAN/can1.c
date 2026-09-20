@@ -459,7 +459,7 @@ static uint8_t prv_ExitFreeze(void)
  * MAILBOX POOL
  * -------------------------------------------------------------------------- */
 
-static void prv_LogRxPathSnapshot(const char *reason)
+static uint32_t prv_LogRxPathSnapshot(const char *reason)
 {
     uint32_t iflag = CAN1->IFLAG1;
     uint32_t esr = CAN1->ESR1;
@@ -514,6 +514,8 @@ static void prv_LogRxPathSnapshot(const char *reason)
                     (unsigned)mb);
         }
     }
+
+    return esr;
 }
 
 static void prv_ArmRxMailbox(uint8_t mb)
@@ -691,29 +693,35 @@ static void prv_FixedTestResetEvidence(void)
 
 static void prv_FixedTestCapture(void)
 {
-    const uint32_t esr = CAN1->ESR1;
+    /*
+     * Read ECR first. If RXERR/TXERR has changed, take the diagnostic
+     * snapshot BEFORE reading ESR1 here. ESR1 error-event bits are
+     * read/clear status; reading ESR1 first would consume the exact
+     * evidence we need in the snapshot.
+     */
     const uint32_t ecr = CAN1->ECR;
     const uint8_t txerr = (uint8_t)(ecr & 0xFFU);
     const uint8_t rxerr = (uint8_t)((ecr >> 8U) & 0xFFU);
-    const uint32_t error_bits = esr & CAN1_ESR_CANDIDATE_ERROR_MASK;
+    uint32_t esr;
 
-    g_fixed_test_error_esr |= error_bits;
+    if((g_fixed_test_diag_logged == 0U) &&
+       ((txerr != g_fixed_test_txerr_baseline) ||
+        (rxerr != g_fixed_test_rxerr_baseline)))
+    {
+        g_fixed_test_diag_logged = 1U;
+        esr = prv_LogRxPathSnapshot("fixed-first-ecr-change");
+    }
+    else
+    {
+        esr = CAN1->ESR1;
+    }
+
+    g_fixed_test_error_esr |= esr & CAN1_ESR_CANDIDATE_ERROR_MASK;
 
     if(txerr > g_fixed_test_txerr_last)
         g_fixed_test_txerr_last = txerr;
     if(rxerr > g_fixed_test_rxerr_last)
         g_fixed_test_rxerr_last = rxerr;
-
-    /* One-shot hardware snapshot at the first real CAN error event. This
-     * distinguishes RX-pin activity, FlexCAN protocol errors, and mailbox
-     * service problems without adding a wait or changing CAN state. */
-    if((g_fixed_test_diag_logged == 0U) &&
-       ((error_bits != 0U) || (txerr != g_fixed_test_txerr_baseline) ||
-        (rxerr != g_fixed_test_rxerr_baseline)))
-    {
-        g_fixed_test_diag_logged = 1U;
-        prv_LogRxPathSnapshot("fixed-first-error");
-    }
 }
 
 static void prv_FixedTestPrint(uint32_t now)
@@ -723,10 +731,26 @@ static void prv_FixedTestPrint(uint32_t now)
         (uint8_t)(g_fixed_test_txerr_last - g_fixed_test_txerr_baseline);
     const uint8_t rxerr_delta =
         (uint8_t)(g_fixed_test_rxerr_last - g_fixed_test_rxerr_baseline);
+    const uint32_t esr_now = CAN1->ESR1;
+    const uint32_t ecr_now = CAN1->ECR;
     const uint8_t fltconf =
-        (uint8_t)((CAN1->ESR1 & CAN1_ESR_FLTCONF_MASK) >> 4U);
+        (uint8_t)((esr_now & CAN1_ESR_FLTCONF_MASK) >> 4U);
     const uint8_t boff =
         (uint8_t)((fltconf & 0x02U) != 0U);
+    const uint8_t sync =
+        (uint8_t)((esr_now >> 18U) & 1U);
+    const uint8_t bit0 =
+        (uint8_t)((esr_now >> 14U) & 1U);
+    const uint8_t bit1 =
+        (uint8_t)((esr_now >> 15U) & 1U);
+    const uint8_t stf =
+        (uint8_t)((esr_now >> 10U) & 1U);
+    const uint8_t frm =
+        (uint8_t)((esr_now >> 11U) & 1U);
+    const uint8_t crc =
+        (uint8_t)((esr_now >> 12U) & 1U);
+    const uint8_t ack =
+        (uint8_t)((esr_now >> 13U) & 1U);
     const char *verdict;
 
     if((rx >= CAN1_FIXED_TEST_MIN_FRAMES) &&
@@ -750,14 +774,25 @@ static void prv_FixedTestPrint(uint32_t now)
     }
 
     RTT_LOG("[CAN1_FIXED] baud=%lu elapsed=%lums rx=%lu rxdelta=%u txdelta=%u "
-            "ESRERR=0x%08lX FLTCONF=%u verdict=%s CTRL1=0x%08lX\r\n",
+            "ESRERR=0x%08lX ESRNOW=0x%08lX ECRNOW=0x%08lX FLTCONF=%u "
+            "SYNC=%u BIT0=%u BIT1=%u STF=%u FRM=%u CRC=%u ACK=%u "
+            "verdict=%s CTRL1=0x%08lX\r\n",
             (unsigned long)CAN1_PROFILE(g_fixed_test_idx).baud_kbps,
             (unsigned long)(now - g_fixed_test_start_ms),
             (unsigned long)rx,
             (unsigned)rxerr_delta,
             (unsigned)txerr_delta,
             (unsigned long)g_fixed_test_error_esr,
+            (unsigned long)esr_now,
+            (unsigned long)ecr_now,
             (unsigned)fltconf,
+            (unsigned)sync,
+            (unsigned)bit0,
+            (unsigned)bit1,
+            (unsigned)stf,
+            (unsigned)frm,
+            (unsigned)crc,
+            (unsigned)ack,
             verdict,
             (unsigned long)CAN1->CTRL1);
 
@@ -1913,6 +1948,7 @@ void Can1_Init(void)
     RTT_LOG("[CAN1_FIXED] START baud=%lu kbps CTRL1=0x%08lX PCAN must match; no auto-scan/recovery\r\n",
             (unsigned long)CAN1_PROFILE(g_fixed_test_idx).baud_kbps,
             (unsigned long)CAN1->CTRL1);
+    RTT_LOG("[CAN1_FIXED] DIAG_BUILD=V0060_RXPATH_V2 ECR-first ESR-decode enabled\r\n");
 #elif CAN1_FULL_ANALYSIS_MODE
     g_analysis_active = 1U;
     g_analysis_candidate = CAN1_BAUD_500K;
