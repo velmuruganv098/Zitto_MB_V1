@@ -8,11 +8,10 @@
  *   READY -> ERROR -> DETECTING
  *
  * Detection uses NORMAL/ACK mode, no TX probe,
- * candidate order 500/250/125/1000 kbps, and a valid hardware RX frame is
- * the primary baud evidence. Detection already runs in NORMAL mode so the
- * MCU ACKs the external PCAN frame; after bounded verification the baud is
- * latched.
- * Transient protocol errors on wrong candidates are diagnostic only.
+ * candidate order 500/250/125/1000 kbps. A valid hardware RX frame is candidate
+ * evidence only; baud lock requires multiple accepted frames plus a complete
+ * error-free candidate history and bounded verification. Detection runs in NORMAL
+ * mode so the MCU ACKs the external PCAN frame; after verification the baud is latched.
  *
  * RX uses MB4..MB15 as a hardware receive pool. Application/UART forwarding
  * is decoupled from mailbox service.
