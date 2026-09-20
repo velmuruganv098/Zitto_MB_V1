@@ -26,6 +26,10 @@
  *     IFLAG-seen mask, mailbox hit distribution, RX CODE distribution and maximum
  *     CAN task gap per candidate. No production recovery decision is changed.
  *
+ * V0.0055 revision note:
+ *   - Continues bench-analysis only; no production detection/recovery decisions are changed.
+ *   - Corrects the firmware banner revision so RTT captures identify the actual analysis build.
+ *
  * V0.0054 revision note:
  *   - Expands bench analysis only; no production detection/recovery decisions are changed.
  *   - Prints decoded PRESDIV/RJW/PROPSEG/PSEG1/PSEG2, calculated bitrate and sample point.
