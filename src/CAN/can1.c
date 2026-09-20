@@ -23,15 +23,16 @@
  *   6. After lock, inactivity alone never starts another baud scan.
  *   7. Recovery retries the last confirmed baud first, then scans all rates.
  *
- * V0.0047 revision note
- *   - Keeps the same DETECTING -> READY -> ERROR architecture and PCAN NORMAL/ACK topology.
- *   - Keeps independent bit-timing and detection profiles for all four baud rates.
- *   - Adds a bounded same-candidate retry for 250k and 125k when a full observation
- *     window sees no valid RX, preventing periodic PCAN traffic from being missed
- *     only because the first observation window started between frames.
- *   - Detection timing starts only after the candidate has been successfully applied.
- *   - 500k/1M remain single-pass fast profiles because 500k is the known working path.
- *   - READY recovery remains Bus-Off-only; idle/error-passive never starts a scan.
+ * V0.0048 revision note
+ *   - Keeps DETECTING -> READY -> ERROR and PCAN NORMAL/ACK; no TX probe is added.
+ *   - Keeps independent bit-timing profiles and bounded per-candidate detection windows.
+ *   - Adds live baud-mismatch recovery: a sustained RX/TX error burst with no valid
+ *     RX evidence requests a fresh baud scan. Idle traffic alone can never trigger it.
+ *   - This specifically handles changing PCAN baud while the MCU is already READY,
+ *     while still avoiding recovery on a quiet but healthy CAN bus.
+ *   - Recovery is confirmed by a bounded error/no-RX condition; Bus-Off remains an
+ *     immediate recovery trigger.
+ *   - RX mailbox servicing remains ahead of application/UART forwarding.
  *
  * RX rules:
  *   - MB4..MB15 are armed as a receive pool.
@@ -136,6 +137,10 @@ static uint32_t g_rx_total;
 static uint32_t g_rx_dropped;
 static uint32_t g_last_stat_ms;
 static uint32_t g_last_rx_ms;
+static uint32_t g_ready_recovery_fault_ms;
+static uint8_t  g_ready_recovery_active;
+static uint8_t  g_ready_rxerr_baseline;
+static uint8_t  g_ready_txerr_baseline;
 static uint32_t g_ready_since_ms;
 
 static uint32_t g_detect_window_start_ms;
@@ -1030,6 +1035,10 @@ static void prv_LockCandidate(uint32_t now)
     g_status.bus_off = 0U;
 
     g_ready_since_ms = now;
+    g_ready_recovery_fault_ms = 0U;
+    g_ready_recovery_active = 0U;
+    g_ready_rxerr_baseline = (uint8_t)((CAN1->ECR >> 8U) & 0xFFU);
+    g_ready_txerr_baseline = (uint8_t)(CAN1->ECR & 0xFFU);
     g_fault_seen_ms = 0U;
 
     g_last_ok_idx = g_rate_idx;
@@ -1079,6 +1088,10 @@ void Can1_Init(void)
     g_last_stat_ms = 0U;
     g_last_rx_ms = 0U;
     g_ready_since_ms = 0U;
+    g_ready_recovery_fault_ms = 0U;
+    g_ready_recovery_active = 0U;
+    g_ready_rxerr_baseline = 0U;
+    g_ready_txerr_baseline = 0U;
     g_fault_seen_ms = 0U;
 
     g_detect_window_start_ms = 0U;
@@ -1282,18 +1295,40 @@ void Can1_Task(void)
     if((now - g_ready_since_ms) >= CAN1_ERROR_GUARD_MS)
     {
         /*
-         * READY must not re-enter auto-baud merely because the bus becomes
-         * quiet or because RX error counters are elevated. Both are valid
-         * CAN conditions during normal operation. Only a real Bus-Off event
-         * is allowed to trigger a baud recovery scan.
+         * READY recovery policy:
+         *   1. Bus-Off is always an immediate recovery trigger.
+         *   2. A live baud change is recoverable without waiting for Bus-Off,
+         *      but ONLY after a sustained error burst AND no valid RX frame.
+         *   3. A quiet/healthy bus cannot trigger recovery because no-RX by
+         *      itself is never treated as a baud fault.
+         *
+         * This specifically handles changing PCAN from 1 Mbps to 500 kbps
+         * while the MCU is already locked. At the old baud FlexCAN sees
+         * protocol errors; after a bounded confirmation period we rescan.
          */
         uint8_t bus_off_event =
             (uint8_t)(((fault & 0x02U) != 0U) ||
                       ((esr & CAN1_ESR_BOFFINT_BIT) != 0U));
+        uint8_t rx_delta =
+            (uint8_t)(g_status.rx_err_cnt - g_ready_rxerr_baseline);
+        uint8_t tx_delta =
+            (uint8_t)(g_status.tx_err_cnt - g_ready_txerr_baseline);
+        uint8_t error_burst =
+            (uint8_t)((rx_delta >= CAN1_BAUD_MISMATCH_RXERR_LIMIT) ||
+                      (tx_delta >= CAN1_BAUD_MISMATCH_TXERR_LIMIT) ||
+                      ((esr & CAN1_ESR_ERR_BUS_MASK) != 0U &&
+                       (g_status.rx_count == 0U)));
+        uint8_t no_recent_rx =
+            (uint8_t)((g_last_rx_ms == 0U) ||
+                      ((now - g_last_rx_ms) >= CAN1_BAUD_MISMATCH_NO_RX_MS));
+        uint8_t baud_mismatch =
+            (uint8_t)((bus_off_event == 0U) &&
+                      (error_burst != 0U) &&
+                      (no_recent_rx != 0U));
 
         if(bus_off_event != 0U)
         {
-            RTT_LOG("[CAN1] BUS-OFF recovery baud=%lu fault=%u TxErr=%u RxErr=%u ESR1=0x%08lX\\r\\n",
+            RTT_LOG("[CAN1] BUS-OFF recovery baud=%lu fault=%u TxErr=%u RxErr=%u ESR1=0x%08lX\r\n",
                     (unsigned long)g_status.detected_baud_kbps,
                     (unsigned)fault,
                     (unsigned)g_status.tx_err_cnt,
@@ -1305,7 +1340,37 @@ void Can1_Task(void)
             return;
         }
 
-        /* Error evidence remains diagnostic only while READY. */
+        if(baud_mismatch != 0U)
+        {
+            if(g_ready_recovery_active == 0U)
+            {
+                g_ready_recovery_active = 1U;
+                g_ready_recovery_fault_ms = now;
+            }
+
+            if((now - g_ready_recovery_fault_ms) >= CAN1_BAUD_MISMATCH_CONFIRM_MS)
+            {
+                RTT_LOG("[CAN1] BAUD-MISMATCH recovery baud=%lu TxErr=%u(+%u) RxErr=%u(+%u) ESR1=0x%08lX -> rescan\r\n",
+                        (unsigned long)g_status.detected_baud_kbps,
+                        (unsigned)g_status.tx_err_cnt,
+                        (unsigned)tx_delta,
+                        (unsigned)g_status.rx_err_cnt,
+                        (unsigned)rx_delta,
+                        (unsigned long)esr);
+
+                g_status.error_count++;
+                g_state = CAN1_STATE_ERROR;
+                g_ready_recovery_active = 0U;
+                return;
+            }
+        }
+        else
+        {
+            g_ready_recovery_active = 0U;
+            g_ready_recovery_fault_ms = 0U;
+        }
+
+        /* Error evidence remains diagnostic while READY. */
         g_status.detect_error_esr |= (esr & CAN1_ESR_ERR_BUS_MASK);
     }
 
