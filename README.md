@@ -362,3 +362,25 @@ Expected bench behavior:
 Validation status:
 - Source changes prepared on dev/can1-v0.0043.
 - S32DS build, ELF generation, J-Link flash, RTT and PCAN bench validation are still required.
+
+
+V0.0052
+------
+CAN1 PCAN-ONLY AUTO-BAUD ACK FIX
+
+- Root cause: CAN1 detection was using FlexCAN Listen-Only Mode (LOM).
+- In LOM, FlexCAN does not transmit the CAN ACK. NXP documents that a frame
+  not acknowledged by another CAN node is not received by FlexCAN in LOM.
+- The current bench topology uses PCAN as the external transmitter, so the
+  MCU must participate in normal CAN operation and provide the ACK.
+- Detection now uses NORMAL mode with RX evidence only. The firmware still
+  generates no CAN TX probe.
+- Existing 500/250/125/1000 kbps timing, bounded scan, RX mailbox pool,
+  RX BUSY handling, queue, and recovery architecture are retained.
+- This explains the previous ESR1 activity with RX=0 and no mailbox delivery.
+
+Validation:
+- Source-level change committed on dev/can1-v0.0052.
+- Hardware validation requires flashing this revision and running continuous
+  PCAN traffic at each candidate baud.
+
