@@ -2375,7 +2375,7 @@ void Can1_ProcessRxQueue(uint8_t budget)
      * retained while DETECTING so a genuinely locked candidate can still
      * deliver its first valid frames after the lock.
      */
-    if(g_status.ready == 0U)
+    if((g_status.ready == 0U) || (g_state != CAN1_STATE_READY))
     {
         return;
     }
