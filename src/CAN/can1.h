@@ -42,6 +42,14 @@
  *   - rejects candidates with growing ECR counters or CAN bus-error evidence;
  *   - analysis mode prints an explicit CLEAN/SUSPECT/REJECT verdict.
  *
+ * V0.0060 revision note:
+ *   - adds an opt-in fixed-baud validation mode so each PCAN baud can be
+ *     tested without candidate switching or auto-recovery;
+ *   - fixed mode classifies the bus as CLEAN_RX, BUS_ACTIVITY_BAD_TIMING,
+ *     or NO_BUS_ACTIVITY using bounded RX/ECR/ESR evidence;
+ *   - keeps production auto-baud as the default (fixed mode is 0);
+ *   - keeps all waits bounded and does not generate a CAN TX probe.
+ *
  * V0.0059 revision note:
  *   - production auto-baud is the default build mode again;
  *   - candidate windows use an explicit epoch/generation boundary;
@@ -129,6 +137,12 @@ extern "C" {
 
 /* V0.0053: dedicated CAN1 autobaud bench-analysis mode. */
 #define CAN1_FULL_ANALYSIS_MODE      0U
+
+/* V0.0060: opt-in fixed-baud hardware-truth test. Keep 0 for production. */
+#define CAN1_FIXED_BAUD_TEST_MODE    0U
+#define CAN1_FIXED_BAUD_KBPS         125U
+#define CAN1_FIXED_TEST_PRINT_MS     500U
+#define CAN1_FIXED_TEST_MIN_FRAMES   6U
 #define CAN1_ANALYSIS_WINDOW_MS      2000U
 #define CAN1_ANALYSIS_PRINT_MS          0U
 #define CAN1_ANALYSIS_LOOP_DELAY_MS     1U
