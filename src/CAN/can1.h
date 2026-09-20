@@ -7,9 +7,10 @@
  *   DETECTING -> READY
  *   READY -> ERROR -> DETECTING
  *
- * Detection is non-blocking and never transmits a probe frame. The PCAN-only
- * topology remains in NORMAL mode so the MCU can ACK a correctly received
- * external frame. A valid hardware RX frame is the primary baud evidence.
+ * Detection follows the known-working CAN1 behavior: LOM=1, no TX probe,
+ * candidate order 500/250/125/1000 kbps, and a valid hardware RX frame is
+ * the primary baud evidence. After bounded verification the driver clears
+ * LOM and enters NORMAL mode so the MCU ACKs subsequent PCAN traffic.
  * Transient protocol errors on wrong candidates are diagnostic only.
  *
  * RX uses MB4..MB15 as a hardware receive pool. Application/UART forwarding
@@ -19,8 +20,9 @@
  * V0.0045 adds candidate-relative error diagnostics and keeps valid RX
  * stronger than transient protocol-error history from active probing.
  *
- * V0.0048 revision note:
- *   - Same DETECTING -> READY -> ERROR architecture and NORMAL/ACK topology.
+ * V0.0049 revision note:
+ *   - Restores the known-working passive LOM detection behavior and timing values.
+ *   - NORMAL/ACK is entered only after valid RX evidence and bounded verification.
  *   - 250k/125k keep bounded no-RX retry profiles.
  *   - READY detects a live PCAN baud change from sustained error evidence plus
  *     a bounded no-valid-RX interval; idle traffic alone never rescans.
@@ -49,7 +51,7 @@ extern "C" {
 #define CAN1_ERROR_GUARD_MS       2000U
 #define CAN1_DETECT_WINDOW_MS      250U  /* legacy/common default; V0.0046 uses profile */
 #define CAN1_DETECT_MIN_FRAMES      1U   /* legacy/common default; V0.0046 uses profile */
-#define CAN1_DETECT_LOM             0U  /* NORMAL: PCAN-only topology */
+#define CAN1_DETECT_LOM             1U  /* LOM during detection; NORMAL after lock */
 #define CAN1_LOOPBACK_TIMEOUT    50000U
 #define CAN1_DETECT_VERIFY_MS       20U  /* legacy/common default; V0.0046 uses profile */
 #define CAN1_LIVE_BAUD_LOSS_MS    1500U
