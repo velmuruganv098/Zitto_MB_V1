@@ -1,8 +1,18 @@
 /*
  * main.c  -  Zitto_MB_V1 / S32K144
  *
- * Firmware Revision : V0.0046
- * Change Note       : CAN1 per-baud detection profiles + Bus-Off-only recovery + RX/application hardening
+ * Firmware Revision : V0.0048
+ * Change Note       : CAN1 detection-frame preservation + mailbox BUSY hardening + bounded RX/application flow
+ *
+ * V0.0048 PROJECT REVISION NOTE
+ *   - CAN1 remains the reference non-blocking CAN architecture for upcoming revisions.
+ *   - A valid RX frame received during baud detection is preserved for application delivery;
+ *     the frame used to prove the baud must also be visible at [CAN1_APP].
+ *   - FlexCAN RX mailbox service protects the BUSY/move-in window and never waits forever.
+ *   - Per-baud detection remains bounded; 250k/125k may retry once, 500k/1M stay fast.
+ *   - READY recovery remains Bus-Off-only. Idle, no-data and Error Passive do not trigger scans.
+ *   - Future project revisions must retain bounded waits/timeouts and must not add blocking
+ *     waits on CAN, IMU, CSA, APP, Server, UART or other module response paths.
  *
  * ==========================================================================
  * CRITICAL BOOT ORDER (do not change):
@@ -410,8 +420,8 @@ int main(void)
     SEGGER_RTT_printf(0,
         "\r\n================================================\r\n"
         " Zitto MB V1 - VCU Firmware Boot\r\n"
-        " Firmware Revision : V0.0044\r\n"
-        " Change            : CAN1 PCAN ACK detection + candidate-relative error diagnostics + RX hardening\r\n"
+        " Firmware Revision : V0.0048\r\n"
+        " Change            : CAN1 detection-frame preservation + mailbox BUSY hardening + bounded RX/application flow\r\n"
         " MCU: S32K144  Clock: 80MHz SPLL  WDOG: OFF\r\n"
         " Modules: IMU=%d CSA=%d CAN1=%d CAN2=%d FLM=%d GPIO=%d\r\n"
         "================================================\r\n\r\n",
@@ -489,7 +499,7 @@ int main(void)
     /* ======================================================================
      * MAIN LOOP
      *
-     * V0.0046 CAN priority:
+     * V0.0048 CAN priority:
      *   - 5ms cooperative loop instead of 50ms fixed loop
      *   - CAN1 is serviced first
      *   - UART/OTA remain frequent
