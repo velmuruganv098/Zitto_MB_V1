@@ -53,8 +53,9 @@ extern "C" {
 #define CAN1_LIVE_BAUD_LOSS_MS    1500U
 #define CAN1_FAULT_CONFIRM_MS      100U
 /*
- * READY must not fall back to auto-baud merely because traffic is quiet or
- * the receive error counter is elevated. Recovery is reserved for Bus-Off.
+ * READY never falls back to auto-baud on inactivity alone. Bus-Off is an
+ * immediate trigger; a live baud change requires a sustained error burst
+ * together with a bounded no-valid-RX interval.
  */
 #define CAN1_ERROR_COUNT_LIMIT      96U
 #define CAN1_RX_BUDGET               8U
