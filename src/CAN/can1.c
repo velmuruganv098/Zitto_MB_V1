@@ -179,7 +179,6 @@ typedef struct
     uint16_t detect_window_ms;
     uint16_t verify_ms;
     uint8_t  min_frames;
-    uint8_t  no_rx_retries;
 } Can1_BaudProfile_t;
 
 /*
@@ -227,7 +226,6 @@ static uint32_t g_detect_window_start_ms;
 static uint32_t g_detect_verify_start_ms;
 static uint8_t  g_detect_frames;
 static uint8_t  g_detect_verify_pending;
-static uint8_t  g_detect_no_rx_retry;
 static uint8_t  g_detect_first_rx_seen;
 static uint32_t g_detect_epoch;
 static uint32_t g_detect_candidate_start_ms;
@@ -1485,7 +1483,7 @@ static void prv_StartDetection(uint8_t retry_last)
     g_detect_verify_start_ms = 0U;
     g_detect_first_rx_seen = 0U;
     g_scan_pos = 0U;
-    g_detect_no_rx_retry = 0U;
+
     g_rx_diag_candidate_logged = 0U;
     g_alias_check_active = 0U;
     g_alias_check_done = 0U;
@@ -1541,12 +1539,12 @@ static void prv_StartDetection(uint8_t retry_last)
 
     g_state = CAN1_STATE_DETECTING;
 
-    RTT_LOG("[CAN1] Detection start: %lu kbps NORMAL/RX window=%ums verify=%ums minframes=%u retry=%u%s\r\n",
+    RTT_LOG("[CAN1] Detection start: %lu kbps NORMAL/RX window=%ums verify=%ums minframes=%u%s\r\n",
             (unsigned long)CAN1_PROFILE(g_rate_idx).baud_kbps,
             (unsigned)CAN1_PROFILE(g_rate_idx).detect_window_ms,
             (unsigned)CAN1_PROFILE(g_rate_idx).verify_ms,
             (unsigned)CAN1_PROFILE(g_rate_idx).min_frames,
-            (unsigned)CAN1_PROFILE(g_rate_idx).no_rx_retries,
+
             ((retry_last != 0U) && (g_last_ok_valid != 0U))
                 ? " last-known-first"
                 : "");
@@ -1587,7 +1585,7 @@ static void prv_NextBaud(void){    uint8_t next;
     g_scan_pos++;
     next = prv_NextBaudIndex();
     g_rate_idx = next;
-    g_detect_no_rx_retry = 0U;
+
     g_rx_diag_candidate_logged = 0U;
     g_alias_check_active = 0U;
     g_alias_check_done = 0U;
@@ -2180,7 +2178,7 @@ void Can1_Init(void)
     g_detect_verify_start_ms = 0U;
     g_detect_frames = 0U;
     g_detect_verify_pending = 0U;
-    g_detect_no_rx_retry = 0U;
+
     g_detect_first_rx_seen = 0U;
     g_detect_epoch = 0U;
     g_detect_candidate_start_ms = 0U;
