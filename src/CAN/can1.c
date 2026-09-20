@@ -219,6 +219,10 @@ typedef struct
     uint8_t  rxerr_last;
     uint8_t  txerr_delta;
     uint8_t  rxerr_delta;
+    uint8_t  txerr_peak;
+    uint8_t  rxerr_peak;
+    uint8_t  error_seen;
+    uint8_t  error_before_rx;
 } Can1_DetectEvidence_t;
 
 static Can1_DetectEvidence_t g_detect_evidence;
@@ -1276,6 +1280,10 @@ static void prv_ResetDetectEvidence(void)
     g_detect_evidence.rxerr_last = g_detect_evidence.rxerr_baseline;
     g_detect_evidence.txerr_delta = 0U;
     g_detect_evidence.rxerr_delta = 0U;
+    g_detect_evidence.txerr_peak = g_detect_evidence.txerr_baseline;
+    g_detect_evidence.rxerr_peak = g_detect_evidence.rxerr_baseline;
+    g_detect_evidence.error_seen = 0U;
+    g_detect_evidence.error_before_rx = 0U;
 
     g_status.detect_error_esr = 0U;
     g_status.detect_txerr_delta = 0U;
@@ -1284,24 +1292,66 @@ static void prv_ResetDetectEvidence(void)
 
 static void prv_CaptureDetectEvidence(void)
 {
-    uint32_t esr = CAN1->ESR1;
-    uint32_t ecr = CAN1->ECR;
-    uint8_t txerr = (uint8_t)(ecr & 0xFFU);
-    uint8_t rxerr = (uint8_t)((ecr >> 8U) & 0xFFU);
+    /*
+     * Read ECR before ESR1. ESR1 error bits are cleared by a read, while
+     * ECR preserves the fault-confinement counters. Capturing ECR first
+     * prevents the diagnostic path from losing the first RX/TX error
+     * evidence for a candidate.
+     */
+    const uint32_t ecr = CAN1->ECR;
+    const uint32_t esr = CAN1->ESR1;
+    const uint8_t txerr = (uint8_t)(ecr & 0xFFU);
+    const uint8_t rxerr = (uint8_t)((ecr >> 8U) & 0xFFU);
+    const uint32_t error_bits =
+        esr & (CAN1_ESR_ERR_BUS_MASK | CAN1_ESR_BOFFINT_BIT);
 
-    g_detect_evidence.error_esr |= esr & (CAN1_ESR_ERR_BUS_MASK | CAN1_ESR_BOFFINT_BIT);
+    if(error_bits != 0U)
+    {
+        g_detect_evidence.error_esr |= error_bits;
+        g_detect_evidence.error_seen = 1U;
+
+        /*
+         * If this happens before the first accepted frame, the candidate
+         * is not allowed to become a baud lock merely because a later
+         * harmonic/alias frame happens to look valid.
+         */
+        if(g_detect_frames == 0U)
+        {
+            g_detect_evidence.error_before_rx = 1U;
+        }
+    }
 
     if(txerr > g_detect_evidence.txerr_last)
     {
         g_detect_evidence.txerr_delta =
             (uint8_t)(g_detect_evidence.txerr_delta +
                       (txerr - g_detect_evidence.txerr_last));
+        g_detect_evidence.error_seen = 1U;
+        if(g_detect_frames == 0U)
+        {
+            g_detect_evidence.error_before_rx = 1U;
+        }
     }
+
     if(rxerr > g_detect_evidence.rxerr_last)
     {
         g_detect_evidence.rxerr_delta =
             (uint8_t)(g_detect_evidence.rxerr_delta +
                       (rxerr - g_detect_evidence.rxerr_last));
+        g_detect_evidence.error_seen = 1U;
+        if(g_detect_frames == 0U)
+        {
+            g_detect_evidence.error_before_rx = 1U;
+        }
+    }
+
+    if(txerr > g_detect_evidence.txerr_peak)
+    {
+        g_detect_evidence.txerr_peak = txerr;
+    }
+    if(rxerr > g_detect_evidence.rxerr_peak)
+    {
+        g_detect_evidence.rxerr_peak = rxerr;
     }
 
     g_detect_evidence.txerr_last = txerr;
@@ -1333,6 +1383,10 @@ static void prv_StartDetection(uint8_t retry_last)
     g_detect_evidence.error_esr = 0U;
     g_detect_evidence.txerr_delta = 0U;
     g_detect_evidence.rxerr_delta = 0U;
+    g_detect_evidence.txerr_peak = 0U;
+    g_detect_evidence.rxerr_peak = 0U;
+    g_detect_evidence.error_seen = 0U;
+    g_detect_evidence.error_before_rx = 0U;
 
     g_status.ready = 0U;
     g_status.hw_ready = 1U;
@@ -1434,6 +1488,10 @@ static void prv_NextBaud(void){    uint8_t next;
     g_detect_evidence.error_esr = 0U;
     g_detect_evidence.txerr_delta = 0U;
     g_detect_evidence.rxerr_delta = 0U;
+    g_detect_evidence.txerr_peak = 0U;
+    g_detect_evidence.rxerr_peak = 0U;
+    g_detect_evidence.error_seen = 0U;
+    g_detect_evidence.error_before_rx = 0U;
 
     if(prv_ApplyBaud(g_rate_idx) == 0U)
     {
@@ -2042,12 +2100,14 @@ void Can1_Task(void){
              */
             if((now - g_detect_verify_start_ms) >= CAN1_PROFILE(g_rate_idx).verify_ms)
             {
-                const uint8_t clean_candidate =
+                            const uint8_t clean_candidate =
                     (uint8_t)((g_detect_frames >= CAN1_PROFILE(g_rate_idx).min_frames) &&
                               ((verify_fault & 0x02U) == 0U) &&
                               (g_detect_evidence.txerr_delta == 0U) &&
                               (g_detect_evidence.rxerr_delta == 0U) &&
-                              (g_detect_evidence.error_esr == 0U));
+                              (g_detect_evidence.error_esr == 0U) &&
+                              (g_detect_evidence.error_seen == 0U) &&
+                              (g_detect_evidence.error_before_rx == 0U));
 
                 if(clean_candidate != 0U)
                 {
@@ -2055,12 +2115,16 @@ void Can1_Task(void){
                 }
                 else
                 {
-                    RTT_LOG("[CAN1] Candidate %lu rejected: quality frames=%u txd=%u rxd=%u err=0x%08lX ESR1=0x%08lX ECR=0x%08lX\\r\\n",
+                    RTT_LOG("[CAN1] Candidate %lu rejected: frames=%u txd=%u rxd=%u err=0x%08lX "
+                            "peakT=%u peakR=%u preRXerr=%u ESR1=0x%08lX ECR=0x%08lX\\r\\n",
                             (unsigned long)CAN1_PROFILE(g_rate_idx).baud_kbps,
                             (unsigned)g_detect_frames,
                             (unsigned)g_detect_evidence.txerr_delta,
                             (unsigned)g_detect_evidence.rxerr_delta,
                             (unsigned long)g_detect_evidence.error_esr,
+                            (unsigned)g_detect_evidence.txerr_peak,
+                            (unsigned)g_detect_evidence.rxerr_peak,
+                            (unsigned)g_detect_evidence.error_before_rx,
                             (unsigned long)verify_esr,
                             (unsigned long)CAN1->ECR);
                     prv_NextBaud();
@@ -2266,6 +2330,19 @@ void Can1_Task(void){
 
 void Can1_ProcessRxQueue(uint8_t budget)
 {
+    /*
+     * Candidate RX is hardware evidence only. Do not expose frames to the
+     * application until a baud candidate has been quality-locked. This
+     * prevents a harmonic/alias frame received at the wrong rate from
+     * reaching APP/UART/Server even briefly. The queue is intentionally
+     * retained while DETECTING so a genuinely locked candidate can still
+     * deliver its first valid frames after the lock.
+     */
+    if(g_status.ready == 0U)
+    {
+        return;
+    }
+
     while(budget != 0U)
     {
         Can1_QueuedFrame_t frame;
