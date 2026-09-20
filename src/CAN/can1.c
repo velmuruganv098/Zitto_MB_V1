@@ -1319,7 +1319,7 @@ static void prv_AnalysisSnapshot(uint32_t now)
     if(iflag != 0U) g_analysis_iflag_nonzero_count++;
     if(iflag != 0U && g_analysis_service_frames == g_analysis_service_start) g_analysis_iflag_persistent_count++;
 
-    RTT_LOG("[CAN1_A SNAP] cycle=%lu cand=%lu kbps elapsed=%lums "
+    RTT_LOG("[CAN1_A SNAP] cycle=%lu index=%u sequence=%lu cand=%lu kbps elapsed=%lums "
             "rx=%lu(+%lu) overrun=%lu(+%lu) qdrop=%lu(+%lu) "
             "tasks=%lu(+%lu) gapmax=%lums service=%lu(+%lu) frames=%lu(+%lu) budget=%lu(+%lu) qdepth=%lu CTRL1=0x%08lX MCR=0x%08lX "
             "IFLAG=0x%08lX ESR1=0x%08lX ECR=0x%08lX\r\n",
