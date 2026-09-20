@@ -372,7 +372,7 @@ static void prv_LogRxPathSnapshot(const char *reason)
     uint32_t ecr = CAN1->ECR;
     uint8_t mb;
 
-    RTT_LOG("[CAN1_DIAG] %s MCR=0x%08lX CTRL1=0x%08lX IFLAG1=0x%08lX IMASK1=0x%08lX ESR1=0x%08lX ECR=0x%08lX\\r\\n",
+    RTT_LOG("[CAN1_DIAG] %s MCR=0x%08lX CTRL1=0x%08lX IFLAG1=0x%08lX IMASK1=0x%08lX ESR1=0x%08lX ECR=0x%08lX\r\n",
             reason,
             (unsigned long)CAN1->MCR,
             (unsigned long)CAN1->CTRL1,
@@ -381,7 +381,7 @@ static void prv_LogRxPathSnapshot(const char *reason)
             (unsigned long)esr,
             (unsigned long)ecr);
 
-    RTT_LOG("[CAN1_DIAG] RXMGMASK=0x%08lX RX14MASK=0x%08lX RX15MASK=0x%08lX PORTA12=0x%08lX PORTA13=0x%08lX PTB_SHDN=%u\\r\\n",
+    RTT_LOG("[CAN1_DIAG] RXMGMASK=0x%08lX RX14MASK=0x%08lX RX15MASK=0x%08lX PORTA12=0x%08lX PORTA13=0x%08lX PTB_SHDN=%u\r\n",
             (unsigned long)CAN1->RXMGMASK,
             (unsigned long)CAN1->RX14MASK,
             (unsigned long)CAN1->RX15MASK,
@@ -396,7 +396,7 @@ static void prv_LogRxPathSnapshot(const char *reason)
         const uint8_t code = (uint8_t)((cs >> 24U) & 0x0FU);
         const uint8_t flagged = (uint8_t)((iflag >> mb) & 1UL);
 
-        RTT_LOG("[CAN1_DIAG] MB%u I=%u CS=0x%08lX CODE=%u ID=0x%08lX\\r\\n",
+        RTT_LOG("[CAN1_DIAG] MB%u I=%u CS=0x%08lX CODE=%u ID=0x%08lX\r\n",
                 (unsigned)mb,
                 (unsigned)flagged,
                 (unsigned long)cs,
