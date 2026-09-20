@@ -2389,12 +2389,12 @@ void Can1_Task(void){
 
         /*
          * No valid frame yet:
-         *   - a pre-RX error is an immediate wrong-candidate signal;
-         *   - otherwise the candidate has a bounded no-RX observation window.
+         *   - pre-RX errors are candidate-boundary diagnostics only;
+         *   - the candidate has a bounded no-RX observation window.
          *
-         * A retry is still allowed for profiles that permit one. This avoids
-         * rejecting a genuinely correct baud merely because the candidate
-         * was entered in the middle of an existing CAN frame.
+         * A retry is still allowed for profiles that permit one. This keeps
+         * wrong-rate detection bounded while allowing a correct candidate
+         * entered mid-frame to reach its next clean RX frame.
          */
         if((g_detect_verify_pending == 0U) &&
            ((now - g_detect_window_start_ms) >= CAN1_PROFILE(g_rate_idx).detect_window_ms))
