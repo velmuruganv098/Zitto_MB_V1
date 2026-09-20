@@ -80,6 +80,12 @@
  *   - captures Bus-Off indication in candidate error evidence;
  *   - changes 1 Mbps to a 10-TQ / 80% sample-point timing for A/B validation.
  *
+ * V0.0058 quality-validation additions:
+ *   - valid RX alone is no longer sufficient for baud lock;
+ *   - requires multiple clean RX frames during a bounded verification window;
+ *   - rejects a candidate when RX/TX error counters grow or bus-error bits are seen;
+ *   - adds explicit CLEAN/SUSPECT/REJECT analysis verdicts.
+ *
  * V0.0056 analysis/fix additions:
  *   - isolates continuous CAN bench analysis from UART/OTA/application work;
  *   - prevents analysis frames from filling the application queue;
@@ -148,10 +154,10 @@ typedef struct
 static const Can1_BaudProfile_t g_baud_profile[CAN1_BAUD_COUNT] =
 {
     /* These CTRL1 timing values are the known-working V0.004 baseline. */
-    { 500U,  0x045A0007UL, 250U, 20U, 1U, 0U }, /* 500k: 16 TQ, ~81.25% SP */
-    { 250U,  0x095A0007UL, 500U, 40U, 1U, 1U }, /* 250k: 16 TQ, ~81.25% SP */
+    { 500U,  0x045A0007UL, 250U, 40U, 4U, 0U }, /* 500k: 16 TQ, ~81.25% SP */
+    { 250U,  0x095A0007UL, 500U, 60U, 4U, 1U }, /* 250k: 16 TQ, ~81.25% SP */
     { 125U,  0x135A0007UL, 1000U, 60U, 1U, 1U },/* 125k: 16 TQ, ~81.25% SP */
-    { 1000U, 0x03510003UL, 200U, 20U, 1U, 0U }  /* 1M: 10 TQ, 80% SP */
+    { 1000U, 0x03510003UL, 200U, 40U, 4U, 0U }  /* 1M: 10 TQ, 80% SP */
 };
 
 #define CAN1_PROFILE(idx) (g_baud_profile[(idx)])
@@ -296,8 +302,7 @@ static void prv_DelayMs(uint32_t ms)
  * -------------------------------------------------------------------------- */
 
 static void prv_ShdnPinInit(void)
-{
-    PCC->PCCn[PCC_PORTB_INDEX] |= PCC_PCCn_CGC_MASK;
+{    PCC->PCCn[PCC_PORTB_INDEX] |= PCC_PCCn_CGC_MASK;
     PORTB->PCR[CAN1_SHDN_PTB_PIN] = PORT_PCR_MUX(1U);
     PTB->PDDR |= (1UL << CAN1_SHDN_PTB_PIN);
     PTB->PCOR = (1UL << CAN1_SHDN_PTB_PIN);
@@ -696,8 +701,7 @@ static uint8_t prv_HardwareInit(void)
 
     g_can1_debug_step = 60U;
 
-    if(prv_EnterFreeze() == 0U)
-    {
+    if(prv_EnterFreeze() == 0U)    {
         return 0U;
     }
 
@@ -1196,8 +1200,7 @@ static uint8_t prv_NextBaudIndex(void)
 }
 
 static void prv_NextBaud(void)
-{
-    uint8_t next;
+{    uint8_t next;
 
     g_scan_pos++;
     next = prv_NextBaudIndex();
@@ -1517,7 +1520,25 @@ static void prv_AnalysisFinishCandidate(uint32_t now)
                 ? (unsigned long)(g_analysis_last_rx_ms - g_analysis_first_rx_ms) : 0UL);
     RTT_LOG("[CAN1_A RESULT] RX>0 means FlexCAN accepted frame(s) at this "
             "timing. RX=0 must be correlated with ECR/ESR/IFLAG and PCAN "
-            "transmit timing; ECR alone is not a baud verdict.\r\n");    RTT_LOG("[CAN1_A RESULT2] service=%lu frames=%lu budget_hits=%lu IFLAG_nonzero=%lu IFLAG_persist=%lu busy=%lu max_task_gap=%lums\r\n",
+            "transmit timing; ECR alone is not a baud verdict.\r\n");    {
+        const uint8_t clean = (uint8_t)((rx >= CAN1_PROFILE(g_analysis_candidate).min_frames) &&
+                                         (g_detect_evidence.txerr_delta == 0U) &&
+                                         (g_detect_evidence.rxerr_delta == 0U) &&
+                                         ((esr & CAN1_ESR_ERR_BUS_MASK) == 0U) &&
+                                         ((esr & CAN1_ESR_BOFFINT_BIT) == 0U) &&
+                                         (((esr & CAN1_ESR_FLTCONF_MASK) >> 4U) != 2U));
+        const uint8_t suspect = (uint8_t)((rx > 0U) && (clean == 0U));
+        RTT_LOG("[CAN1_A VERDICT] candidate=%lu %s frames=%lu min=%u TXdelta=%u RXdelta=%u BUSERR=0x%08lX\\r\\n",
+                (unsigned long)CAN1_PROFILE(g_analysis_candidate).baud_kbps,
+                (clean != 0U) ? "CLEAN" : ((suspect != 0U) ? "SUSPECT" : "REJECT"),
+                (unsigned long)rx,
+                (unsigned)CAN1_PROFILE(g_analysis_candidate).min_frames,
+                (unsigned)g_detect_evidence.txerr_delta,
+                (unsigned)g_detect_evidence.rxerr_delta,
+                (unsigned long)(esr & CAN1_ESR_ERR_BUS_MASK));
+    }
+
+    RTT_LOG("[CAN1_A RESULT2] service=%lu frames=%lu budget_hits=%lu IFLAG_nonzero=%lu IFLAG_persist=%lu busy=%lu max_task_gap=%lums\r\n",
             (unsigned long)(g_analysis_service_calls-g_analysis_service_start),
             (unsigned long)(g_analysis_service_frames-g_analysis_service_start),
             (unsigned long)(g_analysis_budget_hits-g_analysis_budget_start),
@@ -1696,8 +1717,7 @@ void Can1_Init(void)
  * TASK
  * -------------------------------------------------------------------------- */
 
-void Can1_Task(void)
-{
+void Can1_Task(void){
     const uint32_t now = Uart_GetMs();
     uint32_t esr;
     uint32_t ecr;
@@ -1757,14 +1777,24 @@ void Can1_Task(void)
             if((g_detect_frames >= CAN1_PROFILE(g_rate_idx).min_frames) &&
                ((now - g_detect_verify_start_ms) >= CAN1_PROFILE(g_rate_idx).verify_ms))
             {
-                if((verify_fault & 0x02U) == 0U)
+                const uint8_t clean_candidate =
+                    (uint8_t)(((verify_fault & 0x02U) == 0U) &&
+                              (g_detect_evidence.txerr_delta == 0U) &&
+                              (g_detect_evidence.rxerr_delta == 0U) &&
+                              (g_detect_evidence.error_esr == 0U));
+
+                if(clean_candidate != 0U)
                 {
                     prv_LockCandidate(now);
                 }
                 else
                 {
-                    RTT_LOG("[CAN1] Candidate %lu rejected: BUS-OFF ESR1=0x%08lX ECR=0x%08lX\r\n",
+                    RTT_LOG("[CAN1] Candidate %lu rejected: quality frames=%u txd=%u rxd=%u err=0x%08lX ESR1=0x%08lX ECR=0x%08lX\\r\\n",
                             (unsigned long)CAN1_PROFILE(g_rate_idx).baud_kbps,
+                            (unsigned)g_detect_frames,
+                            (unsigned)g_detect_evidence.txerr_delta,
+                            (unsigned)g_detect_evidence.rxerr_delta,
+                            (unsigned long)g_detect_evidence.error_esr,
                             (unsigned long)verify_esr,
                             (unsigned long)CAN1->ECR);
                     prv_NextBaud();
