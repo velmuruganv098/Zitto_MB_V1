@@ -1,8 +1,8 @@
 /*
  * main.c  -  Zitto_MB_V1 / S32K144
  *
- * Firmware Revision : V0.0055
- * Change Note       : CAN1 full auto-baud analysis mode
+ * Firmware Revision : V0.0061
+ * Change Note       : CAN1 harmonic-alias rejection + gated application RX
  *
  * V0.0049 PROJECT BASELINE
  *   - CAN1 detection uses NORMAL/RX-evidence sequence so the MCU ACKs PCAN and never transmits a baud probe.
@@ -420,8 +420,8 @@ int main(void)
     SEGGER_RTT_printf(0,
         "\r\n================================================\r\n"
         " Zitto MB V1 - VCU Firmware Boot\r\n"
-        " Firmware Revision : V0.0060\r\n"
-        " Change            : CAN1 V0.0060 fixed-baud validation + boundary-safe quality-gated CAN auto-baud\r\n"
+        " Firmware Revision : V0.0061\r\n"
+        " Change            : CAN1 harmonic-alias rejection + error-gated auto-baud; fixed test OFF\r\n"
         " MCU: S32K144  Clock: 80MHz SPLL  WDOG: OFF\r\n"
         " Modules: IMU=%d CSA=%d CAN1=%d CAN2=%d FLM=%d GPIO=%d\r\n"
         "================================================\r\n\r\n",
