@@ -296,8 +296,7 @@ static void prv_DelayMs(uint32_t ms)
         ms--;
     }
 }
-/* --------------------------------------------------------------------------
- * TRANSCEIVER
+/* -------------------------------------------------------------------------- * TRANSCEIVER
  * -------------------------------------------------------------------------- */
 
 static void prv_ShdnPinInit(void)
@@ -696,7 +695,6 @@ static uint8_t prv_HardwareInit(void)
     {
         RTT_LOG("[CAN1_ERR] initial SOFTRST timeout\r\n");
         return 0U;    }
-
     g_can1_debug_step = 60U;
 
     if(prv_EnterFreeze() == 0U)    {
@@ -1196,8 +1194,7 @@ static uint8_t prv_NextBaudIndex(void)
 
     return next;}
 
-static void prv_NextBaud(void)
-{    uint8_t next;
+static void prv_NextBaud(void){    uint8_t next;
 
     g_scan_pos++;
     next = prv_NextBaudIndex();
@@ -1696,8 +1693,7 @@ void Can1_Init(void)
 #if CAN1_FULL_ANALYSIS_MODE
     g_analysis_active = 1U;
     g_analysis_candidate = CAN1_BAUD_500K;
-    g_analysis_cycle = 0U;
-    g_status.ready = 0U;
+    g_analysis_cycle = 0U;    g_status.ready = 0U;
     g_status.detecting = 1U;
     g_status.detected_baud_kbps = 0U;
     prv_AnalysisStartCandidate(g_analysis_candidate, Uart_GetMs());
@@ -1770,11 +1766,11 @@ void Can1_Task(void){
              *
              * Error-active/passive by itself does not reject a candidate.
              */
-            if((g_detect_frames >= CAN1_PROFILE(g_rate_idx).min_frames) &&
-               ((now - g_detect_verify_start_ms) >= CAN1_PROFILE(g_rate_idx).verify_ms))
+            if((now - g_detect_verify_start_ms) >= CAN1_PROFILE(g_rate_idx).verify_ms)
             {
                 const uint8_t clean_candidate =
-                    (uint8_t)(((verify_fault & 0x02U) == 0U) &&
+                    (uint8_t)((g_detect_frames >= CAN1_PROFILE(g_rate_idx).min_frames) &&
+                              ((verify_fault & 0x02U) == 0U) &&
                               (g_detect_evidence.txerr_delta == 0U) &&
                               (g_detect_evidence.rxerr_delta == 0U) &&
                               (g_detect_evidence.error_esr == 0U));
