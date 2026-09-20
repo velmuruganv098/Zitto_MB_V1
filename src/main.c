@@ -530,6 +530,7 @@ int main(void)
         OTA_Task();
 #endif
 
+#if !CAN1_FULL_ANALYSIS_MODE
         /* Alive log every 1s, independent of loop frequency. */
         if((now_ms - last_alive_ms) >= 1000U)
         {
@@ -554,6 +555,7 @@ int main(void)
                 while(1) {}
             }
         }
+#endif
 
         /* IMU */
 #if APP_IMU_ENABLE
@@ -591,6 +593,7 @@ int main(void)
         if(g_can2_en != 0U) { Can2_Task(); }
 #endif
 
+#if !CAN1_FULL_ANALYSIS_MODE
         /* Heartbeat + status every 5s */
         if((now_ms - last_hb_ms) >= 5000U)
         {
@@ -600,6 +603,7 @@ int main(void)
         }
 
         led_task();
+#endif
 
         /* Short cooperative yield. CAN1 detection timing is time-based,
          * so it remains deterministic even if this loop is adjusted later. */
