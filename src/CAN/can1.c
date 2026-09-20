@@ -23,6 +23,12 @@
  *   6. After lock, inactivity alone never starts another baud scan.
  *   7. Recovery retries the last confirmed baud first, then scans all rates.
  *
+ * V0.0050 revision note
+ *   - Fixes FlexCAN RX BUSY detection: CODE=0x1 in CS[27:24] is checked;
+ *     CS bit 0 is the timestamp LSB and must not be treated as BUSY.
+ *   - Keeps the V0.0049 LOM detection, known-working timing, bounded waits,
+ *     MB4..MB15 pool, queue, and READY/recovery architecture unchanged.
+ *
  * V0.0049 revision note
  *   - Detection behavior is restored to the known-working baseline: LOM=1,
  *     no TX probe, candidate order 500/250/125/1000 kbps, bounded RX evidence.
@@ -73,6 +79,7 @@ extern uint32_t Uart_GetMs(void);
 #define CAN1_MCR_RFEN_BIT         (1UL << 29U)
 
 /* RX mailbox CODE values. */
+#define CAN1_CODE_RX_BUSY        0x01U
 #define CAN1_CODE_RX_FULL         0x02U
 #define CAN1_CODE_RX_EMPTY        0x04U
 #define CAN1_CODE_RX_OVERRUN      0x06U
@@ -745,12 +752,16 @@ static uint8_t prv_ProcessRxMailbox(uint8_t mb)
     cs = CAN1->RAMn[base + 0U];
 
     /*
-     * FlexCAN sets the BUSY bit (bit 0 of CODE) while the move-in operation
-     * is still copying the received frame into the mailbox. Never read an
-     * incoherent mailbox. Do not spin here: leave IFLAG asserted and retry
-     * from the next bounded Can1_Task() call.
+     * FlexCAN RX BUSY is CODE=0x1 in CS[27:24]. Bit 0 of the full CS word
+     * is the timestamp LSB, NOT the BUSY indication. The previous V0.0049
+     * test used (cs & 0x01), which could reject valid frames whenever the
+     * timestamp LSB was 1. Under heavy traffic that could leave IFLAG set
+     * and starve the detector of valid RX evidence.
+     *
+     * Never read an incoherent mailbox. Do not spin here: leave IFLAG
+     * asserted and retry from the next bounded Can1_Task() call.
      */
-    if((cs & 0x01UL) != 0U)
+    if(((cs >> 24U) & 0x0FU) == CAN1_CODE_RX_BUSY)
     {
         return 0U;
     }
