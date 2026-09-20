@@ -420,8 +420,8 @@ int main(void)
     SEGGER_RTT_printf(0,
         "\r\n================================================\r\n"
         " Zitto MB V1 - VCU Firmware Boot\r\n"
-        " Firmware Revision : V0.0053\r\n"
-        " Change            : CAN1 full auto-baud analysis mode\r\n"
+        " Firmware Revision : V0.0056\r\n"
+        " Change            : CAN1 V0.0056 CAN-service-isolated auto-baud analysis mode\r\n"
         " MCU: S32K144  Clock: 80MHz SPLL  WDOG: OFF\r\n"
         " Modules: IMU=%d CSA=%d CAN1=%d CAN2=%d FLM=%d GPIO=%d\r\n"
         "================================================\r\n\r\n",
@@ -515,16 +515,20 @@ int main(void)
         if(g_can1_en != 0U)
         {
             Can1_Task();
-            /* Application/UART forwarding is intentionally outside the CAN
-             * mailbox service path. This prevents UART latency from causing
-             * FlexCAN MB4 overrun under heavy traffic. */
+#if !CAN1_FULL_ANALYSIS_MODE
             Can1_ProcessRxQueue(2U);
+#endif
         }
 #endif
 
+#if CAN1_FULL_ANALYSIS_MODE
+        /* V0.0056: CAN-only bench mode. Do not let UART/RTT/OTA/application
+         * work distort the FlexCAN RX-service measurement. */
+#else
         Uart_Poll();
         Uart_Pkt_ForwardRTT();
         OTA_Task();
+#endif
 
         /* Alive log every 1s, independent of loop frequency. */
         if((now_ms - last_alive_ms) >= 1000U)
@@ -599,7 +603,11 @@ int main(void)
 
         /* Short cooperative yield. CAN1 detection timing is time-based,
          * so it remains deterministic even if this loop is adjusted later. */
+#if CAN1_FULL_ANALYSIS_MODE
+        delay_ms(CAN1_ANALYSIS_LOOP_DELAY_MS);
+#else
         delay_ms(TASK_DT_MS);
+#endif
     }
 
     return 0;
