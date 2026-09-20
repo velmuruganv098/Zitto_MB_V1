@@ -135,6 +135,41 @@ Validation status:
 - S32DS build, ELF generation, J-Link flash, RTT and PCAN bench validation are still required.
 - Do not treat a boot log containing legacy LOM/loopback text as a V0.0042 test result.
 
+V0.0050
+------
+CAN1 RX BUSY FIX + BUILD CORRECTION
+
+Branch:
+- dev/can1-v0.0050-rx-busy-fix
+- Base: dev/can1-v0.0049-working-autobaud
+
+CAN1 functional fix:
+1. Corrected FlexCAN RX BUSY detection in src/CAN/can1.c.
+2. RX BUSY is CODE=0x01 in CS[27:24]. The previous V0.0049 check used CS bit 0, which is the timestamp LSB and could reject valid received frames.
+3. No CAN baud table, LOM detection strategy, RX queue architecture, recovery policy, or detection timeout was changed for this correction.
+
+Build issue found after the V0.0050 update:
+1. S32DS build reported undeclared identifiers in src/UART/uart_pkt.c:
+   - g_tx_head
+   - g_tx_tail
+   - g_tx_queue
+2. These symbols are used by bounded UART TX-queue helper code in the S32DS workspace copy, but the corresponding storage was missing from that source revision.
+3. Added the UART TX queue storage and initialized head/tail to zero in uart_pkt.c.
+4. This is a compile/build correction only; it does not alter CAN1 behavior.
+
+Build warnings observed:
+- prv_LoopbackConfirm() unused.
+- g_fault_active unused.
+- g_fault_start_ms unused.
+- g_last_rx_ms unused.
+These are warnings, not the build-stopping error. They are intentionally not changed in V0.0050 so the CAN RX correction remains isolated.
+
+Validation status:
+- GitHub branch updated with the UART symbol correction.
+- S32DS clean build/ELF generation and hardware flash still need to be performed from the synchronized V0.0050 source tree.
+- If the local workspace still reports these symbols as undeclared after synchronizing the branch, verify that the local src/UART/uart_pkt.c exactly matches the branch; the earlier build log indicates the local copy contained TX-queue helper code not present in the repository snapshot.
+
+
 V0.0043
 ------
 CAN1 SLOW-TRAFFIC / BUS-HEAVY / FALSE-RECOVERY CORRECTION
