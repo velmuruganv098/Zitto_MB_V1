@@ -8,9 +8,7 @@
  *   READY -> ERROR -> DETECTING
  *
  * Detection uses NORMAL/ACK mode, no TX probe,
- * candidate order 500/250/125/1000 kbps. A valid hardware RX frame is candidate
- * evidence only; baud lock requires multiple accepted frames plus a complete
- * error-free candidate history and bounded verification. Detection runs in NORMAL
+ * candidate order 500/250/125/1000 kbps. A valid hardware RX frame is candidate evidence only; baud lock requires multiple accepted frames, a clean post-RX quality window, and bounded 2:1 higher-rate corroboration where applicable. Detection runs in NORMAL
  * mode so the MCU ACKs the external PCAN frame; after verification the baud is latched.
  *
  * RX uses MB4..MB15 as a hardware receive pool. Application/UART forwarding
@@ -47,12 +45,19 @@
  *   - candidate error evidence is captured ECR-first; errors before the first accepted
  *     RX frame are retained as boundary diagnostics and re-baselined at first RX, while
  *     post-RX protocol/error-counter activity rejects the candidate;
- *   - a candidate is not rejected merely because baud switching began mid-frame; no-RX
- *     candidates still expire through the normal bounded window/retry path;
- *   - verification now starts only after the minimum clean frame count is reached;
- *   - a clean 125 kbps candidate is corroborated at 250 kbps before lock to reject
- *     the known 2:1 harmonic/alias path;
- *   - all detection and queue-delivery paths remain non-blocking and bounded.
+ *   - a candidate is not rejected merely because baud switching began mid-frame;
+ *   - verification starts only after the minimum clean frame count is reached.
+ *
+ * V0.0062 revision note:
+ *   - removes the remaining pre-RX-error retry/reject path; startup/boundary errors
+ *     can never advance the baud scan by themselves;
+ *   - only a bounded no-valid-RX deadline advances a candidate with zero received frames;
+ *   - generalizes harmonic protection to 125->250, 250->500 and 500->1000;
+ *   - after a lower-rate candidate is clean, the corresponding 2x higher rate is tested
+ *     with the same post-first-RX quality gate before the lower rate can lock;
+ *   - if the higher-rate corroboration is not clean, the original lower candidate is
+ *     freshly revalidated and only then locked;
+ *   - all waits remain bounded and no firmware CAN TX probe is generated.
  *
  * V0.0060 revision note:
  *   - adds an opt-in fixed-baud validation mode so each PCAN baud can be
@@ -163,7 +168,7 @@ extern "C" {
 
 /* V0.0059: explicit candidate-boundary diagnostics. */
 #define CAN1_DETECT_MIN_CLEAN_FRAMES  6U  /* minimum error-free accepted frames before lock */
-#define CAN1_DETECT_ALIAS_BAUD_KBPS    250U /* 125 kbps candidate must corroborate against 250 kbps */
+#define CAN1_DETECT_ALIAS_BAUD_KBPS      0U /* legacy; V0.0062 derives the 2x rate from the baud table */
 #define CAN1_DETECT_ALIAS_WINDOW_MS    500U /* bounded higher-rate corroboration window */
 
 /* Live baud-change detection while READY. */
