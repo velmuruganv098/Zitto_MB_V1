@@ -429,7 +429,8 @@ static void prv_LogRxPathSnapshot(const char *reason)
             (unsigned long)CAN1->RX15MASK,
             (unsigned long)PORTA->PCR[12U],
             (unsigned long)PORTA->PCR[13U],
-            (unsigned)rxpin,(unsigned)((PTB->PDIR >> CAN1_SHDN_PTB_PIN) & 1UL));
+            (unsigned)((PTA->PDIR >> 12U) & 1UL),
+            (unsigned)((PTB->PDIR >> CAN1_SHDN_PTB_PIN) & 1UL));
 
     for(mb = CAN1_RX_MB_FIRST; mb <= CAN1_RX_MB_LAST; mb++)
     {
