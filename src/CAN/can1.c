@@ -204,6 +204,18 @@ static Can1_QueuedFrame_t g_rx_queue[CAN1_RX_QUEUE_LEN];
 static volatile uint8_t g_rx_q_head;
 static volatile uint8_t g_rx_q_tail;
 static uint32_t g_rx_q_drop;
+#if CAN1_FULL_ANALYSIS_MODE
+static uint8_t  g_analysis_active;
+static uint8_t  g_analysis_candidate;
+static uint32_t g_analysis_candidate_start_ms;
+static uint32_t g_analysis_last_print_ms;
+static uint32_t g_analysis_cycle;
+static uint32_t g_analysis_candidate_rx_start;
+static uint32_t g_analysis_candidate_overrun_start;
+static uint32_t g_analysis_candidate_qdrop_start;
+static uint32_t g_analysis_candidate_task_start;
+static uint32_t g_analysis_candidate_frame_prints;
+#endif
 
 /* --------------------------------------------------------------------------
  * NVIC SAFETY
@@ -864,6 +876,25 @@ static uint8_t prv_ProcessRxMailbox(uint8_t mb)
        (code == CAN1_CODE_RX_OVERRUN))
     {
         g_rx_total++;
+#if CAN1_FULL_ANALYSIS_MODE
+        if((g_analysis_active != 0U) &&
+           ((g_analysis_candidate_frame_prints < CAN1_ANALYSIS_FRAME_PRINT_MAX) ||
+            ((g_rx_total % CAN1_ANALYSIS_FRAME_PRINT_EVERY) == 0U)))
+        {
+            RTT_LOG("[CAN1_A RX] cand=%lu frame=%lu MB%u ID=0x%08lX IDE=%u "
+                    "RTR=%u DLC=%u DATA=%02X %02X %02X %02X %02X %02X %02X %02X "
+                    "CS=0x%08lX ECR=0x%08lX ESR1=0x%08lX\r\n",
+                    (unsigned long)CAN1_PROFILE(g_analysis_candidate).baud_kbps,
+                    (unsigned long)g_rx_total, (unsigned)mb,
+                    (unsigned long)can_id, (unsigned)ide, (unsigned)rtr,
+                    (unsigned)dlc, (unsigned)data[0], (unsigned)data[1],
+                    (unsigned)data[2], (unsigned)data[3], (unsigned)data[4],
+                    (unsigned)data[5], (unsigned)data[6], (unsigned)data[7],
+                    (unsigned long)cs, (unsigned long)CAN1->ECR,
+                    (unsigned long)CAN1->ESR1);
+            g_analysis_candidate_frame_prints++;
+        }
+#endif
         prv_Dispatch(can_id, ide, rtr, dlc, data);
         return 1U;
     }
@@ -1176,6 +1207,180 @@ static void prv_LockCandidate(uint32_t now)
 }
 
 /* --------------------------------------------------------------------------
+ * V0.0053 FULL CAN AUTOBAUD BENCH ANALYSIS
+ * -------------------------------------------------------------------------- */
+#if CAN1_FULL_ANALYSIS_MODE
+static void prv_AnalysisMailboxCodes(void)
+{
+    uint8_t mb;
+    RTT_LOG("[CAN1_A MB] ");
+    for(mb = CAN1_RX_MB_FIRST; mb <= CAN1_RX_MB_LAST; mb++)
+    {
+        const uint32_t cs = CAN1->RAMn[((uint32_t)mb * 4U)];
+        RTT_LOG("M%u:C%u/I%u ",
+                (unsigned)mb,
+                (unsigned)((cs >> 24U) & 0x0FU),
+                (unsigned)((CAN1->IFLAG1 >> mb) & 1UL));
+    }
+    RTT_LOG("\r\n");
+}
+
+static void prv_AnalysisSnapshot(uint32_t now)
+{
+    const uint32_t esr = CAN1->ESR1;
+    const uint32_t ecr = CAN1->ECR;
+    const uint32_t mcr = CAN1->MCR;
+    const uint32_t ctrl1 = CAN1->CTRL1;
+
+    RTT_LOG("[CAN1_A SNAP] cycle=%lu cand=%lu kbps elapsed=%lums "
+            "rx=%lu(+%lu) overrun=%lu(+%lu) qdrop=%lu(+%lu) "
+            "tasks=%lu(+%lu) CTRL1=0x%08lX MCR=0x%08lX "
+            "IFLAG=0x%08lX ESR1=0x%08lX ECR=0x%08lX\r\n",
+            (unsigned long)g_analysis_cycle,
+            (unsigned long)CAN1_PROFILE(g_analysis_candidate).baud_kbps,
+            (unsigned long)(now - g_analysis_candidate_start_ms),
+            (unsigned long)g_rx_total,
+            (unsigned long)(g_rx_total - g_analysis_candidate_rx_start),
+            (unsigned long)g_rx_dropped,
+            (unsigned long)(g_rx_dropped - g_analysis_candidate_overrun_start),
+            (unsigned long)g_rx_q_drop,
+            (unsigned long)(g_rx_q_drop - g_analysis_candidate_qdrop_start),
+            (unsigned long)g_task_cnt,
+            (unsigned long)(g_task_cnt - g_analysis_candidate_task_start),
+            (unsigned long)ctrl1,
+            (unsigned long)mcr,
+            (unsigned long)CAN1->IFLAG1,
+            (unsigned long)esr,
+            (unsigned long)ecr);
+
+    RTT_LOG("[CAN1_A CFG] cand=%lu kbps expected_ctrl1=0x%08lX "
+            "CANCLK=40MHz CLKSRC=%u LOM=%u LPB=%u "
+            "MAXMB=%lu RFEN=%u SRXDIS=%u IMASK=0x%08lX "
+            "RXMGMASK=0x%08lX RX14=0x%08lX RX15=0x%08lX "
+            "PORTA12=0x%08lX PORTA13=0x%08lX SHDN=%u\r\n",
+            (unsigned long)CAN1_PROFILE(g_analysis_candidate).baud_kbps,
+            (unsigned long)CAN1_PROFILE(g_analysis_candidate).ctrl1,
+            (unsigned)((ctrl1 & CAN_CTRL1_CLKSRC_MASK) != 0U),
+            (unsigned)((ctrl1 & CAN_CTRL1_LOM_MASK) != 0U),
+            (unsigned)((ctrl1 & CAN_CTRL1_LPB_MASK) != 0U),
+            (unsigned long)(mcr & CAN_MCR_MAXMB_MASK),
+            (unsigned)((mcr & CAN1_MCR_RFEN_BIT) != 0U),
+            (unsigned)((mcr & CAN_MCR_SRXDIS_MASK) != 0U),
+            (unsigned long)CAN1->IMASK1,
+            (unsigned long)CAN1->RXMGMASK,
+            (unsigned long)CAN1->RX14MASK,
+            (unsigned long)CAN1->RX15MASK,
+            (unsigned long)PORTA->PCR[12U],
+            (unsigned long)PORTA->PCR[13U],
+            (unsigned)((PTB->PDIR >> CAN1_SHDN_PTB_PIN) & 1UL));
+
+    RTT_LOG("[CAN1_A ERR] FLTCONF=%u RXWRN=%u TXWRN=%u "
+            "BUSERR=0x%08lX detect_err=0x%08lX "
+            "txdelta=%u rxdelta=%u\r\n",
+            (unsigned)((esr & CAN1_ESR_FLTCONF_MASK) >> 4U),
+            (unsigned)((esr & CAN1_ESR_RXWRN_BIT) != 0U),
+            (unsigned)((esr & CAN1_ESR_TXWRN_BIT) != 0U),
+            (unsigned long)(esr & CAN1_ESR_ERR_BUS_MASK),
+            (unsigned long)g_detect_evidence.error_esr,
+            (unsigned)g_detect_evidence.txerr_delta,
+            (unsigned)g_detect_evidence.rxerr_delta);
+    prv_AnalysisMailboxCodes();
+}
+
+static void prv_AnalysisStartCandidate(uint8_t idx, uint32_t now)
+{
+    g_analysis_candidate = idx;
+    g_analysis_candidate_start_ms = now;
+    g_analysis_last_print_ms = now;
+    g_analysis_candidate_rx_start = g_rx_total;
+    g_analysis_candidate_overrun_start = g_rx_dropped;
+    g_analysis_candidate_qdrop_start = g_rx_q_drop;
+    g_analysis_candidate_task_start = g_task_cnt;
+    g_analysis_candidate_frame_prints = 0U;
+
+    if(prv_ApplyBaud(idx) == 0U)
+    {
+        RTT_LOG("[CAN1_A ERROR] apply baud %lu failed; candidate skipped\r\n",
+                (unsigned long)CAN1_PROFILE(idx).baud_kbps);
+        return;
+    }
+
+    prv_ResetDetectEvidence();
+
+    RTT_LOG("\r\n[CAN1_A START] cycle=%lu candidate=%lu kbps "
+            "window=%ums verify_profile=%ums minframes=%u CTRL1=0x%08lX\r\n",
+            (unsigned long)g_analysis_cycle,
+            (unsigned long)CAN1_PROFILE(idx).baud_kbps,
+            (unsigned)CAN1_ANALYSIS_WINDOW_MS,
+            (unsigned)CAN1_PROFILE(idx).verify_ms,
+            (unsigned)CAN1_PROFILE(idx).min_frames,
+            (unsigned long)CAN1->CTRL1);
+    RTT_LOG("[CAN1_A START] PCAN must transmit continuously at exactly "
+            "%lu kbps during this candidate. Firmware sends NO CAN TX.\r\n",
+            (unsigned long)CAN1_PROFILE(idx).baud_kbps);
+    prv_AnalysisSnapshot(now);
+}
+
+static void prv_AnalysisFinishCandidate(uint32_t now)
+{
+    const uint32_t esr = CAN1->ESR1;
+    const uint32_t ecr = CAN1->ECR;
+    const uint32_t rx = g_rx_total - g_analysis_candidate_rx_start;
+    const uint32_t overrun = g_rx_dropped - g_analysis_candidate_overrun_start;
+    const uint32_t qdrop = g_rx_q_drop - g_analysis_candidate_qdrop_start;
+
+    RTT_LOG("[CAN1_A RESULT] cycle=%lu candidate=%lu kbps elapsed=%lums "
+            "RX=%lu overrun=%lu qdrop=%lu ECR_TX=%u ECR_RX=%u "
+            "TXdelta=%u RXdelta=%u ESR1=0x%08lX BUSERR=0x%08lX "
+            "FLTCONF=%u IFLAG=0x%08lX\r\n",
+            (unsigned long)g_analysis_cycle,
+            (unsigned long)CAN1_PROFILE(g_analysis_candidate).baud_kbps,
+            (unsigned long)(now - g_analysis_candidate_start_ms),
+            (unsigned long)rx,
+            (unsigned long)overrun,
+            (unsigned long)qdrop,
+            (unsigned)(ecr & 0xFFU),
+            (unsigned)((ecr >> 8U) & 0xFFU),
+            (unsigned)g_detect_evidence.txerr_delta,
+            (unsigned)g_detect_evidence.rxerr_delta,
+            (unsigned long)esr,
+            (unsigned long)(esr & CAN1_ESR_ERR_BUS_MASK),
+            (unsigned)((esr & CAN1_ESR_FLTCONF_MASK) >> 4U),
+            (unsigned long)CAN1->IFLAG1);
+    RTT_LOG("[CAN1_A RESULT] RX>0 means FlexCAN accepted frame(s) at this "
+            "timing. RX=0 must be correlated with ECR/ESR/IFLAG and PCAN "
+            "transmit timing; ECR alone is not a baud verdict.\r\n");
+    prv_LogRxPathSnapshot("candidate-end");
+}
+
+static void prv_AnalysisTask(uint32_t now)
+{
+    (void)prv_ServiceRxPool(CAN1_RX_BUDGET, 0U);
+    prv_CaptureDetectEvidence();
+
+    if((now - g_analysis_last_print_ms) >= CAN1_ANALYSIS_PRINT_MS)
+    {
+        g_analysis_last_print_ms = now;
+        prv_AnalysisSnapshot(now);
+    }
+
+    if((now - g_analysis_candidate_start_ms) >= CAN1_ANALYSIS_WINDOW_MS)
+    {
+        prv_AnalysisFinishCandidate(now);
+        g_analysis_candidate++;
+        if(g_analysis_candidate >= CAN1_BAUD_COUNT)
+        {
+            g_analysis_candidate = 0U;
+            g_analysis_cycle++;
+            RTT_LOG("\r\n[CAN1_A CYCLE] completed all 4 candidates; starting cycle=%lu\r\n",
+                    (unsigned long)g_analysis_cycle);
+        }
+        prv_AnalysisStartCandidate(g_analysis_candidate, now);
+    }
+}
+#endif /* CAN1_FULL_ANALYSIS_MODE */
+
+/* --------------------------------------------------------------------------
  * INIT
  * -------------------------------------------------------------------------- */
 
@@ -1187,7 +1392,13 @@ void Can1_Init(void)
     RTT_LOG("[CAN1] INIT FlexCAN1 PTA12/PTA13 SHDN=PTB%u\r\n",
             (unsigned)CAN1_SHDN_PTB_PIN);
     RTT_LOG("[CAN1] Auto-baud: 500/250/125/1000 kbps\r\n");
+#if CAN1_FULL_ANALYSIS_MODE
+    RTT_LOG("[CAN1] MODE: FULL AUTOBAUD ANALYSIS - NO LATCH / NO RECOVERY / NO TX PROBE\r\n");
+    RTT_LOG("[CAN1] Analysis window=%ums snapshot=%ums candidates=500/250/125/1000\r\n",
+            (unsigned)CAN1_ANALYSIS_WINDOW_MS, (unsigned)CAN1_ANALYSIS_PRINT_MS);
+#else
     RTT_LOG("[CAN1] Detection: NORMAL/ACK, RX evidence only, no TX probe\r\n");
+#endif
     RTT_LOG("[CAN1] RX pool: MB4..MB15, queue=%u; NORMAL after lock\r\n",
             (unsigned)CAN1_RX_QUEUE_LEN);
     RTT_LOG("[CAN1] ============================================\r\n");
@@ -1252,9 +1463,19 @@ void Can1_Init(void)
 
     g_status.hw_ready = 1U;
 
+#if CAN1_FULL_ANALYSIS_MODE
+    g_analysis_active = 1U;
+    g_analysis_candidate = CAN1_BAUD_500K;
+    g_analysis_cycle = 0U;
+    g_status.ready = 0U;
+    g_status.detecting = 1U;
+    g_status.detected_baud_kbps = 0U;
+    prv_AnalysisStartCandidate(g_analysis_candidate, Uart_GetMs());
+#else
     prv_StartDetection(0U);
+#endif
 
-    RTT_LOG("[CAN1] INIT DONE non-blocking detection\r\n");
+    RTT_LOG("[CAN1] INIT DONE non-blocking analysis/detection\r\n");
     g_can1_debug_step = 100U;
 }
 
@@ -1271,6 +1492,13 @@ void Can1_Task(void)
     uint8_t rx_budget;
 
     g_task_cnt++;
+#if CAN1_FULL_ANALYSIS_MODE
+    if(g_analysis_active != 0U)
+    {
+        prv_AnalysisTask(now);
+        return;
+    }
+#endif
 
     if(g_state == CAN1_STATE_DETECTING)
     {
