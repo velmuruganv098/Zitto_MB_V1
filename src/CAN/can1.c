@@ -3,7 +3,7 @@
  *
  * FlexCAN1 register-level driver.
  *
- * V0.0047 hardened architecture
+ * V0.0049 working-behavior architecture
  * --------------------------------
  *   DETECTING -> READY
  *       ^          |
@@ -23,19 +23,17 @@
  *   6. After lock, inactivity alone never starts another baud scan.
  *   7. Recovery retries the last confirmed baud first, then scans all rates.
  *
- * V0.0048 revision note
- *   - Keeps DETECTING -> READY -> ERROR and PCAN NORMAL/ACK; no TX probe is added.
- *   - Keeps independent bit-timing profiles and bounded per-candidate detection windows.
- *   - Live baud-mismatch recovery handles a PCAN baud change while MCU is READY,
- *     using sustained error evidence plus bounded no-valid-RX confirmation; quiet
- *     healthy buses never rescan.
- *   - The valid frame that proves a detection candidate is now retained in the
- *     application queue, so a one-frame PCAN test cannot lock 500k and then appear
- *     to have no CAN message at application level.
- *   - RX mailbox servicing now checks the FlexCAN BUSY/move-in bit without any
- *     unbounded wait, then uses IFLAG W1C and TIMER unlock as required.
- *   - Bus-Off remains an immediate recovery trigger; all waits remain bounded.
- *   - This V0.0048 implementation is the baseline for upcoming project revisions.
+ * V0.0049 revision note
+ *   - Detection behavior is restored to the known-working baseline: LOM=1,
+ *     no TX probe, candidate order 500/250/125/1000 kbps, bounded RX evidence.
+ *   - The known-working 40 MHz CAN timing values are retained exactly.
+ *   - A valid external RX frame is the baud evidence; after bounded verification
+ *     the controller changes to NORMAL mode and becomes READY.
+ *   - The proving RX frame is retained in the application queue.
+ *   - Once READY, quiet/no-data operation never starts another baud scan.
+ *   - Bus-Off and sustained live-baud-mismatch recovery remain bounded.
+ *   - RX mailbox BUSY protection, queue decoupling, and bounded hardware waits
+ *     from V0.0048 are retained.
  *
  * RX rules:
  *   - MB4..MB15 are armed as a receive pool.
@@ -114,10 +112,11 @@ typedef struct
  */
 static const Can1_BaudProfile_t g_baud_profile[CAN1_BAUD_COUNT] =
 {
-    { 500U,  0x04690006UL, 250U, 20U, 1U, 0U }, /* 500k: fast, known-good */
-    { 250U,  0x09690006UL, 500U, 40U, 1U, 1U }, /* 250k: retry once */
-    { 125U, 0x13690006UL, 1000U, 60U, 1U, 1U },/* 125k: retry once */
-    { 1000U, 0x04490002UL, 200U, 20U, 1U, 0U }  /* 1M: fast */
+    /* These CTRL1 timing values are the known-working V0.004 baseline. */
+    { 500U,  0x045A0007UL, 250U, 20U, 1U, 0U }, /* 500k: 16 TQ, ~81.25% SP */
+    { 250U,  0x095A0007UL, 500U, 40U, 1U, 1U }, /* 250k: 16 TQ, ~81.25% SP */
+    { 125U,  0x135A0007UL, 1000U, 60U, 1U, 1U },/* 125k: 16 TQ, ~81.25% SP */
+    { 1000U, 0x04490002UL, 200U, 20U, 1U, 0U }  /* 1M: 8 TQ, 75% SP */
 };
 
 #define CAN1_PROFILE(idx) (g_baud_profile[(idx)])
@@ -430,12 +429,12 @@ static uint8_t prv_ApplyBaud(uint8_t idx)
     ctrl1 = CAN1_PROFILE(idx).ctrl1 |
             CAN_CTRL1_CLKSRC_MASK;
 
-    /* No TX/error interrupts: polling owns the state machine. */
-    ctrl1 &= ~(CAN_CTRL1_LOM_MASK |
-               CAN_CTRL1_LPB_MASK |
+    /* Known-working detection behavior: passive Listen-Only Mode. */
+    ctrl1 &= ~(CAN_CTRL1_LPB_MASK |
                CAN_CTRL1_ERRMSK_MASK |
                CAN_CTRL1_BOFFMSK_MASK |
                CAN1_CTRL1_BOFFREC_MASK);
+    ctrl1 |= CAN_CTRL1_LOM_MASK;
 
     CAN1->CTRL1 = ctrl1;
 
@@ -461,10 +460,41 @@ static uint8_t prv_ApplyBaud(uint8_t idx)
         return 0U;
     }
 
-    RTT_LOG("[CAN1] Baud candidate=%lu kbps CTRL1=0x%08lX NORMAL\r\n",
+    RTT_LOG("[CAN1] Baud %lu kbps LOM CTRL1=0x%08lX\r\n",
             (unsigned long)CAN1_PROFILE(idx).baud_kbps,
             (unsigned long)CAN1->CTRL1);
 
+    return 1U;
+}
+
+/* --------------------------------------------------------------------------
+ * ENTER NORMAL MODE AFTER BAUD EVIDENCE
+ *
+ * Detection itself remains identical to the known-working implementation:
+ * LOM=1 and no transmitted probe. Only after a real external RX frame has
+ * survived the bounded verification window do we clear LOM. The transition is
+ * done in Freeze mode so the controller never sees a partially changed timing
+ * register. No unbounded wait is introduced.
+ * -------------------------------------------------------------------------- */
+static uint8_t prv_EnterNormalMode(void)
+{
+    uint32_t ctrl1;
+
+    if(prv_EnterFreeze() == 0U)
+    {
+        return 0U;
+    }
+
+    ctrl1 = CAN1->CTRL1;
+    ctrl1 &= ~(CAN_CTRL1_LOM_MASK | CAN_CTRL1_LPB_MASK);
+    CAN1->CTRL1 = ctrl1;
+
+    if(prv_ExitFreeze() == 0U)
+    {
+        return 0U;
+    }
+
+    RTT_LOG("[CAN1] Entering NORMAL mode (LOM=0 LPB=0)\r\n");
     return 1U;
 }
 
@@ -964,7 +994,7 @@ static void prv_StartDetection(uint8_t retry_last)
 
     g_state = CAN1_STATE_DETECTING;
 
-    RTT_LOG("[CAN1] DETECT start baud=%lu window=%ums verify=%ums minframes=%u retry=%u%s\r\n",
+    RTT_LOG("[CAN1] Detection start: %lu kbps LOM window=%ums verify=%ums minframes=%u retry=%u%s\r\n",
             (unsigned long)CAN1_PROFILE(g_rate_idx).baud_kbps,
             (unsigned)CAN1_PROFILE(g_rate_idx).detect_window_ms,
             (unsigned)CAN1_PROFILE(g_rate_idx).verify_ms,
@@ -1033,7 +1063,7 @@ static void prv_NextBaud(void)
     g_detect_window_start_ms = Uart_GetMs();
     prv_ResetDetectEvidence();
 
-    RTT_LOG("[CAN1] DETECT next=%lu kbps window=%ums verify=%ums CTRL1=0x%08lX\r\n",
+    RTT_LOG("[CAN1] Next baud: %lu kbps LOM window=%ums verify=%ums CTRL1=0x%08lX\r\n",
             (unsigned long)CAN1_PROFILE(g_rate_idx).baud_kbps,
             (unsigned)CAN1_PROFILE(g_rate_idx).detect_window_ms,
             (unsigned)CAN1_PROFILE(g_rate_idx).verify_ms,
@@ -1046,6 +1076,13 @@ static void prv_NextBaud(void)
 
 static void prv_LockCandidate(uint32_t now)
 {
+    if(prv_EnterNormalMode() == 0U)
+    {
+        RTT_LOG("[CAN1_ERR] NORMAL transition failed after baud evidence\r\n");
+        g_state = CAN1_STATE_ERROR;
+        return;
+    }
+
     g_status.detected_baud_kbps = CAN1_PROFILE(g_rate_idx).baud_kbps;
     g_status.detecting = 0U;
     g_status.hw_ready = 1U;
@@ -1086,8 +1123,8 @@ void Can1_Init(void)
     RTT_LOG("[CAN1] INIT FlexCAN1 PTA12/PTA13 SHDN=PTB%u\r\n",
             (unsigned)CAN1_SHDN_PTB_PIN);
     RTT_LOG("[CAN1] Auto-baud: 500/250/125/1000 kbps\r\n");
-    RTT_LOG("[CAN1] PCAN topology: NORMAL receive/ACK, no TX probe\r\n");
-    RTT_LOG("[CAN1] RX pool: MB4..MB15, queue=%u\r\n",
+    RTT_LOG("[CAN1] Detection: LOM, RX evidence only, no TX probe\r\n");
+    RTT_LOG("[CAN1] RX pool: MB4..MB15, queue=%u; NORMAL after lock\r\n",
             (unsigned)CAN1_RX_QUEUE_LEN);
     RTT_LOG("[CAN1] ============================================\r\n");
 
