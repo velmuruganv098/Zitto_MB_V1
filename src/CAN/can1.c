@@ -650,10 +650,16 @@ static void prv_Dispatch(uint32_t can_id,
     g_status.rx_active = 1U;
     g_last_rx_ms = Uart_GetMs();
 
-    if(g_state == CAN1_STATE_READY)
-    {
-        prv_QueueFrame(can_id, ide, rtr, dlc, data);
-    }
+    /*
+     * Keep every valid frame in the software queue, including the frame that
+     * proves a detection candidate. If this frame were queued only after the
+     * state became READY, the exact frame that caused the 500/250/125/1000
+     * lock could be consumed for detection and never reach main.c.
+     *
+     * The queue is reset at every detection epoch, so a frame from a rejected
+     * candidate cannot leak into the next candidate's application path.
+     */
+    prv_QueueFrame(can_id, ide, rtr, dlc, data);
 
     /*
      * RTT output is intentionally rate-limited. A CAN frame must never wait
@@ -702,6 +708,17 @@ static uint8_t prv_ProcessRxMailbox(uint8_t mb)
      * move into it.
      */
     cs = CAN1->RAMn[base + 0U];
+
+    /*
+     * BUSY is bit 0 of the CODE field. During move-in the mailbox contents
+     * are temporarily incoherent. Do not spin here: leave IFLAG asserted and
+     * let the next bounded Can1_Task() attempt service it again.
+     */
+    if((cs & 0x01UL) != 0U)
+    {
+        return 0U;
+    }
+
     idreg = CAN1->RAMn[base + 1U];
     d0 = CAN1->RAMn[base + 2U];
     d1 = CAN1->RAMn[base + 3U];
