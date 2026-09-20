@@ -68,6 +68,9 @@
  *   1 Mbps   : PRESDIV=4, 8 TQ, 75.0% SP
  *
  * Every software wait in this file is bounded.
+ *
+ * V0.0054 analysis additions decode timing, MCR/RX-pin/error details, and
+ * RX-service pressure so baud mismatch can be separated from starvation.
  */
 
 #include "can1.h"
@@ -223,6 +226,15 @@ static uint32_t g_analysis_code_count[16];
 static uint32_t g_analysis_mb_count[16];
 static uint32_t g_analysis_prev_task_ms;
 static uint32_t g_analysis_max_task_gap_ms;
+static uint32_t g_analysis_service_calls;
+static uint32_t g_analysis_service_frames;
+static uint32_t g_analysis_budget_hits;
+static uint32_t g_analysis_iflag_nonzero_count;
+static uint32_t g_analysis_iflag_persistent_count;
+static uint32_t g_analysis_service_start;
+static uint32_t g_analysis_budget_start;
+static uint32_t g_analysis_iflag_start;
+static uint32_t g_analysis_iflag_persistent_start;
 #endif
 
 /* --------------------------------------------------------------------------
@@ -417,7 +429,7 @@ static void prv_LogRxPathSnapshot(const char *reason)
             (unsigned long)CAN1->RX15MASK,
             (unsigned long)PORTA->PCR[12U],
             (unsigned long)PORTA->PCR[13U],
-            (unsigned)((PTB->PDIR >> CAN1_SHDN_PTB_PIN) & 1UL));
+            (unsigned)rxpin,(unsigned)((PTB->PDIR >> CAN1_SHDN_PTB_PIN) & 1UL));
 
     for(mb = CAN1_RX_MB_FIRST; mb <= CAN1_RX_MB_LAST; mb++)
     {
@@ -1253,16 +1265,46 @@ static void prv_AnalysisMailboxCodes(void)
     RTT_LOG("\r\n");
 }
 
+static void prv_AnalysisTiming(uint32_t ctrl1)
+{
+    const uint32_t presdiv=((ctrl1>>24U)&0xFFU)+1U;
+    const uint32_t rjw=((ctrl1>>22U)&0x03U)+1U;
+    const uint32_t pseg1=((ctrl1>>19U)&0x07U)+1U;
+    const uint32_t pseg2=((ctrl1>>16U)&0x07U)+1U;
+    const uint32_t propseg=(ctrl1&0x07U)+1U;
+    const uint32_t tq=1U+propseg+pseg1+pseg2;
+    const uint32_t bitrate=(40000000UL/presdiv)/tq;
+    const uint32_t sp=((1U+propseg+pseg1)*10000U)/tq;
+    RTT_LOG("[CAN1_A TIM] PRESDIV=%lu RJW=%lu PROPSEG=%lu PSEG1=%lu PSEG2=%lu TQ=%lu bitrate_calc=%lu sample=%lu.%02lu%%\\r\\n",
+            (unsigned long)presdiv,(unsigned long)rjw,(unsigned long)propseg,
+            (unsigned long)pseg1,(unsigned long)pseg2,(unsigned long)tq,
+            (unsigned long)bitrate,(unsigned long)(sp/100U),(unsigned long)(sp%100U));
+}
+
+static void prv_AnalysisErrorBits(uint32_t esr)
+{
+    RTT_LOG("[CAN1_A ERRBITS] ACK=%u CRC=%u FRM=%u STF=%u BIT=%u ERRINT=%u BOFFINT=%u BUSIDLE=%u\\r\\n",
+            (unsigned)((esr&(1UL<<14U))!=0U),(unsigned)((esr&(1UL<<13U))!=0U),
+            (unsigned)((esr&(1UL<<12U))!=0U),(unsigned)((esr&(1UL<<11U))!=0U),
+            (unsigned)((esr&(1UL<<10U))!=0U),(unsigned)((esr&CAN1_ESR_ERRINT_BIT)!=0U),
+            (unsigned)((esr&CAN1_ESR_BOFFINT_BIT)!=0U),(unsigned)((esr&(1UL<<7U))!=0U));
+}
+
 static void prv_AnalysisSnapshot(uint32_t now)
 {
     const uint32_t esr = CAN1->ESR1;
     const uint32_t ecr = CAN1->ECR;
     const uint32_t mcr = CAN1->MCR;
     const uint32_t ctrl1 = CAN1->CTRL1;
+    const uint32_t iflag = CAN1->IFLAG1 & CAN1_RX_MB_MASK;
+    const uint32_t rxpin = (PTA->PDIR >> 12U) & 1UL;
+    const uint32_t qdepth = (g_rx_q_head >= g_rx_q_tail) ? (uint32_t)(g_rx_q_head-g_rx_q_tail) : (uint32_t)CAN1_RX_QUEUE_LEN-(uint32_t)g_rx_q_tail+(uint32_t)g_rx_q_head;
+    if(iflag != 0U) g_analysis_iflag_nonzero_count++;
+    if(iflag != 0U && g_analysis_service_frames == 0U) g_analysis_iflag_persistent_count++;
 
     RTT_LOG("[CAN1_A SNAP] cycle=%lu cand=%lu kbps elapsed=%lums "
             "rx=%lu(+%lu) overrun=%lu(+%lu) qdrop=%lu(+%lu) "
-            "tasks=%lu(+%lu) CTRL1=0x%08lX MCR=0x%08lX "
+            "tasks=%lu(+%lu) gapmax=%lums service=%lu(+%lu) frames=%lu(+%lu) budget=%lu(+%lu) qdepth=%lu CTRL1=0x%08lX MCR=0x%08lX "
             "IFLAG=0x%08lX ESR1=0x%08lX ECR=0x%08lX\r\n",
             (unsigned long)g_analysis_cycle,
             (unsigned long)CAN1_PROFILE(g_analysis_candidate).baud_kbps,
@@ -1275,7 +1317,11 @@ static void prv_AnalysisSnapshot(uint32_t now)
             (unsigned long)(g_rx_q_drop - g_analysis_candidate_qdrop_start),
             (unsigned long)g_task_cnt,
             (unsigned long)(g_task_cnt - g_analysis_candidate_task_start),
-            (unsigned long)ctrl1,
+            (unsigned long)g_analysis_max_task_gap_ms,
+            (unsigned long)g_analysis_service_calls,(unsigned long)(g_analysis_service_calls-g_analysis_service_start),
+            (unsigned long)g_analysis_service_frames,(unsigned long)(g_analysis_service_frames-g_analysis_service_start),
+            (unsigned long)g_analysis_budget_hits,(unsigned long)(g_analysis_budget_hits-g_analysis_budget_start),
+            (unsigned long)qdepth,(unsigned long)ctrl1,
             (unsigned long)mcr,
             (unsigned long)CAN1->IFLAG1,
             (unsigned long)esr,
@@ -1302,6 +1348,8 @@ static void prv_AnalysisSnapshot(uint32_t now)
             (unsigned long)PORTA->PCR[13U],
             (unsigned)((PTB->PDIR >> CAN1_SHDN_PTB_PIN) & 1UL));
 
+    prv_AnalysisTiming(ctrl1);
+    prv_AnalysisErrorBits(esr);
     RTT_LOG("[CAN1_A ERR] FLTCONF=%u RXWRN=%u TXWRN=%u "
             "BUSERR=0x%08lX detect_err=0x%08lX "
             "txdelta=%u rxdelta=%u\r\n",
@@ -1355,6 +1403,10 @@ static void prv_AnalysisStartCandidate(uint8_t idx, uint32_t now)
     g_analysis_candidate_qdrop_start = g_rx_q_drop;
     g_analysis_candidate_task_start = g_task_cnt;
     g_analysis_candidate_frame_prints = 0U;
+    g_analysis_service_start = g_analysis_service_frames;
+    g_analysis_budget_start = g_analysis_budget_hits;
+    g_analysis_iflag_start = g_analysis_iflag_nonzero_count;
+    g_analysis_iflag_persistent_start = g_analysis_iflag_persistent_count;
     g_analysis_first_rx_ms = 0U;
     g_analysis_last_rx_ms = 0U;
     g_analysis_busy_count = 0U;
@@ -1427,7 +1479,12 @@ static void prv_AnalysisFinishCandidate(uint32_t now)
 
 static void prv_AnalysisTask(uint32_t now)
 {
-    (void)prv_ServiceRxPool(CAN1_RX_BUDGET, 0U);
+    g_analysis_service_calls++;
+    {
+        const uint8_t serviced=prv_ServiceRxPool(CAN1_RX_BUDGET,0U);
+        g_analysis_service_frames += serviced;
+        if(serviced >= CAN1_RX_BUDGET) g_analysis_budget_hits++;
+    }
     prv_CaptureDetectEvidence();
 
     if(g_analysis_prev_task_ms != 0U)
@@ -1519,6 +1576,11 @@ void Can1_Init(void)
     g_analysis_iflag_seen_mask = 0U;
     g_analysis_prev_task_ms = 0U;
     g_analysis_max_task_gap_ms = 0U;
+    g_analysis_service_calls = 0U;
+    g_analysis_service_frames = 0U;
+    g_analysis_budget_hits = 0U;
+    g_analysis_iflag_nonzero_count = 0U;
+    g_analysis_iflag_persistent_count = 0U;
 #endif
 
     g_detect_window_start_ms = 0U;
