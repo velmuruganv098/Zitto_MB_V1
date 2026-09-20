@@ -1312,6 +1312,36 @@ static void prv_AnalysisSnapshot(uint32_t now)
             (unsigned long)g_detect_evidence.error_esr,
             (unsigned)g_detect_evidence.txerr_delta,
             (unsigned)g_detect_evidence.rxerr_delta);
+    RTT_LOG("[CAN1_A RATE] first_rx=%lums last_rx=%lums rx_span=%lums max_task_gap=%lums busy=%lu iflag_seen=0x%08lX\\r\\n",
+            (unsigned long)g_analysis_first_rx_ms,
+            (unsigned long)g_analysis_last_rx_ms,
+            (unsigned long)((g_analysis_last_rx_ms != 0U && g_analysis_first_rx_ms != 0U)
+                            ? (g_analysis_last_rx_ms - g_analysis_first_rx_ms) : 0U),
+            (unsigned long)g_analysis_max_task_gap_ms,
+            (unsigned long)g_analysis_busy_count,
+            (unsigned long)g_analysis_iflag_seen_mask);
+    RTT_LOG("[CAN1_A CODE] EMPTY=%lu FULL=%lu BUSY=%lu OVERRUN=%lu code0=%lu code3=%lu code5=%lu code7=%lu\\r\\n",
+            (unsigned long)g_analysis_code_count[CAN1_CODE_RX_EMPTY],
+            (unsigned long)g_analysis_code_count[CAN1_CODE_RX_FULL],
+            (unsigned long)g_analysis_code_count[CAN1_CODE_RX_BUSY],
+            (unsigned long)g_analysis_code_count[CAN1_CODE_RX_OVERRUN],
+            (unsigned long)g_analysis_code_count[0U],
+            (unsigned long)g_analysis_code_count[3U],
+            (unsigned long)g_analysis_code_count[5U],
+            (unsigned long)g_analysis_code_count[7U]);
+    RTT_LOG("[CAN1_A MBHIT] MB4=%lu MB5=%lu MB6=%lu MB7=%lu MB8=%lu MB9=%lu MB10=%lu MB11=%lu MB12=%lu MB13=%lu MB14=%lu MB15=%lu\\r\\n",
+            (unsigned long)g_analysis_mb_count[4U],
+            (unsigned long)g_analysis_mb_count[5U],
+            (unsigned long)g_analysis_mb_count[6U],
+            (unsigned long)g_analysis_mb_count[7U],
+            (unsigned long)g_analysis_mb_count[8U],
+            (unsigned long)g_analysis_mb_count[9U],
+            (unsigned long)g_analysis_mb_count[10U],
+            (unsigned long)g_analysis_mb_count[11U],
+            (unsigned long)g_analysis_mb_count[12U],
+            (unsigned long)g_analysis_mb_count[13U],
+            (unsigned long)g_analysis_mb_count[14U],
+            (unsigned long)g_analysis_mb_count[15U]);
     prv_AnalysisMailboxCodes();
 }
 
