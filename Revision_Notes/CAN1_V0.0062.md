@@ -67,3 +67,7 @@ The existing post-lock mailbox-overrun/UART-latency issue remains a separate fol
 
 Updated branch: dev/can1-v0.0062-detection-boundary-fix
 A source-level structural check was performed after editing. An independent S32DS/GCC build was not available in this environment, so the branch must be rebuilt in S32DS and the resulting ELF flashed for hardware validation.
+
+## Build-fix follow-up
+
+The first V0.0062 source update left two stale V0.0061 symbols: the baud-profile initializers still supplied a sixth field after the profile struct was reduced to five fields, and the task still called `prv_Restore125AfterAliasCheck()` after the restore routine was generalized to `prv_RestoreAfterAliasCheck()`. Both were corrected in the same V0.0062 branch. The alias diagnostics were also generalized so the logged higher/original rates are taken from the active profile rather than hard-coded 125/250 values.
