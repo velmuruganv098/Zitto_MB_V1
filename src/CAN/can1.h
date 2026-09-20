@@ -36,6 +36,12 @@
  *   - uses the full MB4..MB15 receive-service budget;
  *   - validates a 10-TQ / 80% sample-point 1 Mbps timing candidate.
  *
+ * V0.0058 revision note:
+ *   - RX>0 is no longer sufficient for baud lock;
+ *   - requires 4 clean accepted frames and a bounded clean verification window;
+ *   - rejects candidates with growing ECR counters or CAN bus-error evidence;
+ *   - analysis mode prints an explicit CLEAN/SUSPECT/REJECT verdict.
+ *
  * V0.0056 revision note:
  *   - Isolates full-analysis CAN service from application/UART forwarding.
  *   - Analysis frames do not enter the application queue.
