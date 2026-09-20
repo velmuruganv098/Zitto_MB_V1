@@ -72,3 +72,20 @@ Then V0.0060 retains the V0.0059 production architecture:
 - no quiet-bus rescan;
 - Bus-Off / sustained mismatch recovery only;
 - bounded waits.
+
+
+## Diagnostic safety correction
+
+The first-error hardware snapshot was hardened so it cannot interfere with the FlexCAN RX mailbox service. When an RX mailbox still has its IFLAG asserted, the diagnostic code now **does not read that mailbox's CS word**. The normal RX service path remains the sole owner of the CS -> payload -> IFLAG -> TIMER receive sequence.
+
+The snapshot still reports:
+
+- MCR / CTRL1
+- IFLAG1 / IMASK1
+- ESR1 / ECR
+- RX masks
+- PTA12 / PTA13 pin mux and live input states
+- transceiver SHDN state
+- non-flagged mailbox CODE/ID state
+
+This preserves the diagnostic purpose without introducing a diagnostic-induced RX lock/starvation condition.
