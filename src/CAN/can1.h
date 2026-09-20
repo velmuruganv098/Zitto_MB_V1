@@ -21,6 +21,13 @@
  * V0.0045 adds candidate-relative error diagnostics and keeps valid RX
  * stronger than transient protocol-error history from active probing.
  *
+ * V0.0053 revision note:
+ *   - Dedicated full-analysis bench mode. It continuously tests every
+ *     candidate without latching or baud-mismatch recovery.
+ *   - Prints candidate timing/register state, ECR/ESR error evidence,
+ *     IFLAG/mailbox state, RX frames, overruns and per-candidate summary.
+ *   - No firmware CAN TX probe is generated.
+ *
  * V0.0052 revision note:
  *   - Detection now uses NORMAL mode instead of LOM because the PCAN-only
  *     bench needs the MCU to provide the CAN ACK for the transmitted frame.
@@ -75,6 +82,13 @@ extern "C" {
  */
 #define CAN1_ERROR_COUNT_LIMIT      96U
 #define CAN1_RX_BUDGET               8U
+
+/* V0.0053: dedicated CAN1 autobaud bench-analysis mode. */
+#define CAN1_FULL_ANALYSIS_MODE      1U
+#define CAN1_ANALYSIS_WINDOW_MS      2000U
+#define CAN1_ANALYSIS_PRINT_MS        100U
+#define CAN1_ANALYSIS_FRAME_PRINT_MAX 20U
+#define CAN1_ANALYSIS_FRAME_PRINT_EVERY 50U
 
 /* Live baud-change detection while READY. */
 #define CAN1_BAUD_MISMATCH_RXERR_LIMIT   32U
