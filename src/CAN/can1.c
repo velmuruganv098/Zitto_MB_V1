@@ -1593,8 +1593,7 @@ static uint8_t prv_Start125AliasCheck(void)
     g_alias_check_start_ms = g_detect_candidate_start_ms;
     prv_ResetDetectEvidence();
 
-    RTT_LOG("[CAN1] 125 kbps clean candidate -> 250 kbps alias corroboration window=%ums minframes=%u
-",
+    RTT_LOG("[CAN1] 125 kbps clean candidate -> 250 kbps alias corroboration window=%ums minframes=%u\r\n",
             (unsigned)CAN1_DETECT_ALIAS_WINDOW_MS,
             (unsigned)CAN1_PROFILE(idx).min_frames);
     return 1U;
