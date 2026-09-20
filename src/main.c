@@ -421,7 +421,7 @@ int main(void)
         "\r\n================================================\r\n"
         " Zitto MB V1 - VCU Firmware Boot\r\n"
         " Firmware Revision : V0.0061\r\n"
-        " Change            : CAN1 frame-window fix + 125/250 alias corroboration; fixed test OFF\r\n"
+        " Change            : CAN1 candidate-boundary error fix + 125/250 alias corroboration; fixed test OFF\r\n"
         " MCU: S32K144  Clock: 80MHz SPLL  WDOG: OFF\r\n"
         " Modules: IMU=%d CSA=%d CAN1=%d CAN2=%d FLM=%d GPIO=%d\r\n"
         "================================================\r\n\r\n",
