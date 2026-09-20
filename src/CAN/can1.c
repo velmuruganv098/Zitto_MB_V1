@@ -26,13 +26,16 @@
  * V0.0048 revision note
  *   - Keeps DETECTING -> READY -> ERROR and PCAN NORMAL/ACK; no TX probe is added.
  *   - Keeps independent bit-timing profiles and bounded per-candidate detection windows.
- *   - Adds live baud-mismatch recovery: a sustained RX/TX error burst with no valid
- *     RX evidence requests a fresh baud scan. Idle traffic alone can never trigger it.
- *   - This specifically handles changing PCAN baud while the MCU is already READY,
- *     while still avoiding recovery on a quiet but healthy CAN bus.
- *   - Recovery is confirmed by a bounded error/no-RX condition; Bus-Off remains an
- *     immediate recovery trigger.
- *   - RX mailbox servicing remains ahead of application/UART forwarding.
+ *   - Live baud-mismatch recovery handles a PCAN baud change while MCU is READY,
+ *     using sustained error evidence plus bounded no-valid-RX confirmation; quiet
+ *     healthy buses never rescan.
+ *   - The valid frame that proves a detection candidate is now retained in the
+ *     application queue, so a one-frame PCAN test cannot lock 500k and then appear
+ *     to have no CAN message at application level.
+ *   - RX mailbox servicing now checks the FlexCAN BUSY/move-in bit without any
+ *     unbounded wait, then uses IFLAG W1C and TIMER unlock as required.
+ *   - Bus-Off remains an immediate recovery trigger; all waits remain bounded.
+ *   - This V0.0048 implementation is the baseline for upcoming project revisions.
  *
  * RX rules:
  *   - MB4..MB15 are armed as a receive pool.
@@ -655,10 +658,13 @@ static void prv_Dispatch(uint32_t can_id,
     g_status.rx_active = 1U;
     g_last_rx_ms = Uart_GetMs();
 
-    if(g_state == CAN1_STATE_READY)
-    {
-        prv_QueueFrame(can_id, ide, rtr, dlc, data);
-    }
+    /*
+     * Queue every valid frame, including detection frames. The frame that
+     * proves the candidate baud is real application traffic and must not be
+     * silently consumed only by the detector. Detection epochs reset this
+     * queue, so rejected-candidate frames cannot leak into a later baud.
+     */
+    prv_QueueFrame(can_id, ide, rtr, dlc, data);
 
     /*
      * RTT output is intentionally rate-limited. A CAN frame must never wait
@@ -707,6 +713,18 @@ static uint8_t prv_ProcessRxMailbox(uint8_t mb)
      * move into it.
      */
     cs = CAN1->RAMn[base + 0U];
+
+    /*
+     * FlexCAN sets the BUSY bit (bit 0 of CODE) while the move-in operation
+     * is still copying the received frame into the mailbox. Never read an
+     * incoherent mailbox. Do not spin here: leave IFLAG asserted and retry
+     * from the next bounded Can1_Task() call.
+     */
+    if((cs & 0x01UL) != 0U)
+    {
+        return 0U;
+    }
+
     idreg = CAN1->RAMn[base + 1U];
     d0 = CAN1->RAMn[base + 2U];
     d1 = CAN1->RAMn[base + 3U];
