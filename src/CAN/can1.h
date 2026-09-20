@@ -7,7 +7,7 @@
  *   DETECTING -> READY
  *   READY -> ERROR -> DETECTING
  *
- * Detection follows the known-working CAN1 behavior: LOM=1, no TX probe,
+ * Detection uses NORMAL/ACK mode, no TX probe,
  * candidate order 500/250/125/1000 kbps, and a valid hardware RX frame is
  * the primary baud evidence. After bounded verification the driver clears
  * LOM and enters NORMAL mode so the MCU ACKs subsequent PCAN traffic.
@@ -19,6 +19,12 @@
  * All wait paths in the CAN driver are bounded.
  * V0.0045 adds candidate-relative error diagnostics and keeps valid RX
  * stronger than transient protocol-error history from active probing.
+ *
+ * V0.0052 revision note:
+ *   - Detection now uses NORMAL mode instead of LOM because the PCAN-only
+ *     bench needs the MCU to provide the CAN ACK for the transmitted frame.
+ *   - No firmware CAN TX probe is generated; valid external RX remains the
+ *     only baud-lock evidence.
  *
  * V0.0050 revision note:
  *   - Corrects RX BUSY handling to test CS[27:24] CODE=0x1, not CS bit 0.
@@ -56,7 +62,7 @@ extern "C" {
 #define CAN1_ERROR_GUARD_MS       2000U
 #define CAN1_DETECT_WINDOW_MS      250U  /* legacy/common default; V0.0046 uses profile */
 #define CAN1_DETECT_MIN_FRAMES      1U   /* legacy/common default; V0.0046 uses profile */
-#define CAN1_DETECT_LOM             1U  /* LOM during detection; NORMAL after lock */
+#define CAN1_DETECT_LOM             0U  /* NORMAL during detection so MCU can ACK PCAN */
 #define CAN1_LOOPBACK_TIMEOUT    50000U
 #define CAN1_DETECT_VERIFY_MS       20U  /* legacy/common default; V0.0046 uses profile */
 #define CAN1_LIVE_BAUD_LOSS_MS    1500U
