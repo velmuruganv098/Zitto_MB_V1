@@ -1,11 +1,11 @@
 /*
  * main.c  -  Zitto_MB_V1 / S32K144
  *
- * Firmware Revision : V0.0049
- * Change Note       : CAN1 working-behavior auto-baud + RX/mailbox hardening
+ * Firmware Revision : V0.0052
+ * Change Note       : CAN1 PCAN-only auto-baud ACK fix + RX/mailbox hardening
  *
  * V0.0049 PROJECT BASELINE
- *   - CAN1 detection follows the known-working LOM/RX-evidence sequence and never transmits a baud probe.
+ *   - CAN1 detection uses NORMAL/RX-evidence sequence so the MCU ACKs PCAN and never transmits a baud probe.
  *   - The frame that proves the baud is preserved into the application queue and
  *     is therefore visible through [CAN1_APP] and MSG_CAN.
  *   - After a valid RX candidate is verified, CAN1 enters NORMAL mode for PCAN ACK; live PCAN baud changes can recover only from bounded error evidence plus
@@ -420,8 +420,8 @@ int main(void)
     SEGGER_RTT_printf(0,
         "\r\n================================================\r\n"
         " Zitto MB V1 - VCU Firmware Boot\r\n"
-        " Firmware Revision : V0.0048\r\n"
-        " Change            : CAN1 live baud-mismatch recovery + per-baud detection profiles + RX hardening\r\n"
+        " Firmware Revision : V0.0052\r\n"
+        " Change            : CAN1 PCAN-only auto-baud ACK fix + RX/mailbox hardening\r\n"
         " MCU: S32K144  Clock: 80MHz SPLL  WDOG: OFF\r\n"
         " Modules: IMU=%d CSA=%d CAN1=%d CAN2=%d FLM=%d GPIO=%d\r\n"
         "================================================\r\n\r\n",
@@ -469,7 +469,7 @@ int main(void)
 
     /* CAN1 - FlexCAN1 PTA12/PTA13 TCAN334 SHDN=PTB2
      * BUS_CLK=40MHz, known-working 500/250/125/1000kbps candidates.
-     * Detection uses LOM and RX evidence; NORMAL/ACK begins only after lock.
+     * Detection uses NORMAL/ACK and RX evidence; firmware generates no TX probe.
      * RX uses MB4..MB15 and application forwarding is decoupled. */
 #if APP_CAN1_ENABLE
     RTT_LOG("[BOOT] CAN1 init  FlexCAN1  PTA12/PTA13  SHDN=PTB2\r\n");
