@@ -237,6 +237,7 @@ static uint8_t  g_fixed_test_rxerr_baseline;
 static uint8_t  g_fixed_test_txerr_last;
 static uint8_t  g_fixed_test_rxerr_last;
 static uint32_t g_fixed_test_error_esr;
+static uint8_t  g_fixed_test_diag_logged;
 #endif
 
 extern volatile uint32_t g_last_exception_ipsr;
@@ -669,6 +670,7 @@ static void prv_FixedTestResetEvidence(void)
     g_fixed_test_txerr_last = g_fixed_test_txerr_baseline;
     g_fixed_test_rxerr_last = g_fixed_test_rxerr_baseline;
     g_fixed_test_error_esr = 0U;
+    g_fixed_test_diag_logged = 0U;
 }
 
 static void prv_FixedTestCapture(void)
@@ -677,14 +679,25 @@ static void prv_FixedTestCapture(void)
     const uint32_t ecr = CAN1->ECR;
     const uint8_t txerr = (uint8_t)(ecr & 0xFFU);
     const uint8_t rxerr = (uint8_t)((ecr >> 8U) & 0xFFU);
+    const uint32_t error_bits = esr & CAN1_ESR_CANDIDATE_ERROR_MASK;
 
-    g_fixed_test_error_esr |=
-        esr & (CAN1_ESR_ERR_BUS_MASK | CAN1_ESR_BOFFINT_BIT);
+    g_fixed_test_error_esr |= error_bits;
 
     if(txerr > g_fixed_test_txerr_last)
         g_fixed_test_txerr_last = txerr;
     if(rxerr > g_fixed_test_rxerr_last)
         g_fixed_test_rxerr_last = rxerr;
+
+    /* One-shot hardware snapshot at the first real CAN error event. This
+     * distinguishes RX-pin activity, FlexCAN protocol errors, and mailbox
+     * service problems without adding a wait or changing CAN state. */
+    if((g_fixed_test_diag_logged == 0U) &&
+       ((error_bits != 0U) || (txerr != g_fixed_test_txerr_baseline) ||
+        (rxerr != g_fixed_test_rxerr_baseline)))
+    {
+        g_fixed_test_diag_logged = 1U;
+        prv_LogRxPathSnapshot("fixed-first-error");
+    }
 }
 
 static void prv_FixedTestPrint(uint32_t now)
