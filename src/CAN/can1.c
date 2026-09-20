@@ -71,6 +71,13 @@
  *
  * V0.0054 analysis additions decode timing, MCR/RX-pin/error details, and
  * RX-service pressure so baud mismatch can be separated from starvation.
+ *
+ * V0.0056 analysis/fix additions:
+ *   - isolates continuous CAN bench analysis from UART/OTA/application work;
+ *   - prevents analysis frames from filling the application queue;
+ *   - starts candidate timing after baud application completes;
+ *   - adds explicit candidate index/sequence and RX-span evidence;
+ *   - preserves ESR1 error evidence before later diagnostic reads.
  */
 
 #include "can1.h"
@@ -217,6 +224,8 @@ static uint32_t g_analysis_candidate_rx_start;
 static uint32_t g_analysis_candidate_overrun_start;
 static uint32_t g_analysis_candidate_qdrop_start;
 static uint32_t g_analysis_candidate_task_start;
+static uint8_t  g_analysis_candidate_index;
+static uint32_t g_analysis_candidate_sequence;
 static uint32_t g_analysis_candidate_frame_prints;
 static uint32_t g_analysis_first_rx_ms;
 static uint32_t g_analysis_last_rx_ms;
@@ -785,7 +794,14 @@ static void prv_Dispatch(uint32_t can_id,
      * silently consumed only by the detector. Detection epochs reset this
      * queue, so rejected-candidate frames cannot leak into a later baud.
      */
-    prv_QueueFrame(can_id, ide, rtr, dlc, data);
+#if CAN1_FULL_ANALYSIS_MODE
+    /* Bench analysis measures FlexCAN acceptance, not application queue
+     * capacity. Do not enqueue analysis frames. */
+    if(g_analysis_active == 0U)
+#endif
+    {
+        prv_QueueFrame(can_id, ide, rtr, dlc, data);
+    }
 
     /*
      * RTT output is intentionally rate-limited. A CAN frame must never wait
@@ -1308,6 +1324,8 @@ static void prv_AnalysisSnapshot(uint32_t now)
             "tasks=%lu(+%lu) gapmax=%lums service=%lu(+%lu) frames=%lu(+%lu) budget=%lu(+%lu) qdepth=%lu CTRL1=0x%08lX MCR=0x%08lX "
             "IFLAG=0x%08lX ESR1=0x%08lX ECR=0x%08lX\r\n",
             (unsigned long)g_analysis_cycle,
+            (unsigned)g_analysis_candidate_index,
+            (unsigned long)g_analysis_candidate_sequence,
             (unsigned long)CAN1_PROFILE(g_analysis_candidate).baud_kbps,
             (unsigned long)(now - g_analysis_candidate_start_ms),
             (unsigned long)g_rx_total,
@@ -1397,6 +1415,16 @@ static void prv_AnalysisSnapshot(uint32_t now)
 static void prv_AnalysisStartCandidate(uint8_t idx, uint32_t now)
 {
     g_analysis_candidate = idx;
+
+    if(prv_ApplyBaud(idx) == 0U)
+    {
+        RTT_LOG("[CAN1_A ERROR] apply baud %lu failed; candidate skipped\r\n",
+                (unsigned long)CAN1_PROFILE(idx).baud_kbps);
+        return;
+    }
+
+    /* Start the measurement only after the controller and RX pool are ready. */
+    now = Uart_GetMs();
     g_analysis_candidate_start_ms = now;
     g_analysis_last_print_ms = now;
     g_analysis_candidate_rx_start = g_rx_total;
@@ -1423,18 +1451,17 @@ static void prv_AnalysisStartCandidate(uint8_t idx, uint32_t now)
         }
     }
 
-    if(prv_ApplyBaud(idx) == 0U)
-    {
-        RTT_LOG("[CAN1_A ERROR] apply baud %lu failed; candidate skipped\r\n",
-                (unsigned long)CAN1_PROFILE(idx).baud_kbps);
-        return;
-    }
-
     prv_ResetDetectEvidence();
 
-    RTT_LOG("\r\n[CAN1_A START] cycle=%lu candidate=%lu kbps "
+    g_analysis_candidate_index = idx;
+    g_analysis_candidate_sequence =
+        (g_analysis_cycle * CAN1_BAUD_COUNT) + (uint32_t)idx;
+
+    RTT_LOG("\r\n[CAN1_A START] cycle=%lu index=%u sequence=%lu candidate=%lu kbps "
             "window=%ums verify_profile=%ums minframes=%u CTRL1=0x%08lX\r\n",
             (unsigned long)g_analysis_cycle,
+            (unsigned)g_analysis_candidate_index,
+            (unsigned long)g_analysis_candidate_sequence,
             (unsigned long)CAN1_PROFILE(idx).baud_kbps,
             (unsigned)CAN1_ANALYSIS_WINDOW_MS,
             (unsigned)CAN1_PROFILE(idx).verify_ms,
@@ -1450,11 +1477,12 @@ static void prv_AnalysisFinishCandidate(uint32_t now)
 {
     const uint32_t esr = CAN1->ESR1;
     const uint32_t ecr = CAN1->ECR;
+    const uint32_t buserr = esr & CAN1_ESR_ERR_BUS_MASK;
     const uint32_t rx = g_rx_total - g_analysis_candidate_rx_start;
     const uint32_t overrun = g_rx_dropped - g_analysis_candidate_overrun_start;
     const uint32_t qdrop = g_rx_q_drop - g_analysis_candidate_qdrop_start;
 
-    RTT_LOG("[CAN1_A RESULT] cycle=%lu candidate=%lu kbps elapsed=%lums "
+    RTT_LOG("[CAN1_A RESULT] cycle=%lu index=%u sequence=%lu candidate=%lu kbps elapsed=%lums "
             "RX=%lu overrun=%lu qdrop=%lu ECR_TX=%u ECR_RX=%u "
             "TXdelta=%u RXdelta=%u ESR1=0x%08lX BUSERR=0x%08lX "
             "FLTCONF=%u IFLAG=0x%08lX\r\n",
@@ -1469,9 +1497,14 @@ static void prv_AnalysisFinishCandidate(uint32_t now)
             (unsigned)g_detect_evidence.txerr_delta,
             (unsigned)g_detect_evidence.rxerr_delta,
             (unsigned long)esr,
-            (unsigned long)(esr & CAN1_ESR_ERR_BUS_MASK),
+            (unsigned long)buserr,
             (unsigned)((esr & CAN1_ESR_FLTCONF_MASK) >> 4U),
             (unsigned long)CAN1->IFLAG1);
+    RTT_LOG("[CAN1_A RXSPAN] first=%lu last=%lu span=%lu ms\r\n",
+            (unsigned long)g_analysis_first_rx_ms,
+            (unsigned long)g_analysis_last_rx_ms,
+            (g_analysis_first_rx_ms != 0U && g_analysis_last_rx_ms >= g_analysis_first_rx_ms)
+                ? (unsigned long)(g_analysis_last_rx_ms - g_analysis_first_rx_ms) : 0UL);
     RTT_LOG("[CAN1_A RESULT] RX>0 means FlexCAN accepted frame(s) at this "
             "timing. RX=0 must be correlated with ECR/ESR/IFLAG and PCAN "
             "transmit timing; ECR alone is not a baud verdict.\r\n");    RTT_LOG("[CAN1_A RESULT2] service=%lu frames=%lu budget_hits=%lu IFLAG_nonzero=%lu IFLAG_persist=%lu busy=%lu max_task_gap=%lums\r\n",
@@ -1577,6 +1610,8 @@ void Can1_Init(void)
     g_analysis_candidate_overrun_start = 0U;
     g_analysis_candidate_qdrop_start = 0U;
     g_analysis_candidate_task_start = 0U;
+    g_analysis_candidate_index = 0U;
+    g_analysis_candidate_sequence = 0U;
     g_analysis_candidate_frame_prints = 0U;
     g_analysis_first_rx_ms = 0U;
     g_analysis_last_rx_ms = 0U;
