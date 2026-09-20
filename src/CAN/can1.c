@@ -65,12 +65,20 @@
  *   500 kbps : PRESDIV=4, 16 TQ, 87.5% SP
  *   250 kbps : PRESDIV=9, 16 TQ, 87.5% SP
  *   125 kbps : PRESDIV=19,16 TQ, 87.5% SP
- *   1 Mbps   : PRESDIV=4, 8 TQ, 75.0% SP
+ *   1 Mbps   : PRESDIV=3, 10 TQ, 80.0% SP
  *
  * Every software wait in this file is bounded.
  *
  * V0.0054 analysis additions decode timing, MCR/RX-pin/error details, and
  * RX-service pressure so baud mismatch can be separated from starvation.
+ *
+ * V0.0057 analysis/fix additions:
+ *   - fixes candidate RESULT argument/field corruption in RTT output;
+ *   - removes periodic diagnostic snapshots from the 1 ms CAN service path;
+ *   - keeps candidate start/end snapshots while measuring service latency;
+ *   - increases RX service budget to the full MB4..MB15 pool;
+ *   - captures Bus-Off indication in candidate error evidence;
+ *   - changes 1 Mbps to a 10-TQ / 80% sample-point timing for A/B validation.
  *
  * V0.0056 analysis/fix additions:
  *   - isolates continuous CAN bench analysis from UART/OTA/application work;
@@ -143,7 +151,7 @@ static const Can1_BaudProfile_t g_baud_profile[CAN1_BAUD_COUNT] =
     { 500U,  0x045A0007UL, 250U, 20U, 1U, 0U }, /* 500k: 16 TQ, ~81.25% SP */
     { 250U,  0x095A0007UL, 500U, 40U, 1U, 1U }, /* 250k: 16 TQ, ~81.25% SP */
     { 125U,  0x135A0007UL, 1000U, 60U, 1U, 1U },/* 125k: 16 TQ, ~81.25% SP */
-    { 1000U, 0x04490002UL, 200U, 20U, 1U, 0U }  /* 1M: 8 TQ, 75% SP */
+    { 1000U, 0x03510003UL, 200U, 20U, 1U, 0U }  /* 1M: 10 TQ, 80% SP */
 };
 
 #define CAN1_PROFILE(idx) (g_baud_profile[(idx)])
@@ -1058,7 +1066,7 @@ static void prv_CaptureDetectEvidence(void)
     uint8_t txerr = (uint8_t)(ecr & 0xFFU);
     uint8_t rxerr = (uint8_t)((ecr >> 8U) & 0xFFU);
 
-    g_detect_evidence.error_esr |= esr & CAN1_ESR_ERR_BUS_MASK;
+    g_detect_evidence.error_esr |= esr & (CAN1_ESR_ERR_BUS_MASK | CAN1_ESR_BOFFINT_BIT);
 
     if(txerr > g_detect_evidence.txerr_last)
     {
@@ -1487,6 +1495,8 @@ static void prv_AnalysisFinishCandidate(uint32_t now)
             "TXdelta=%u RXdelta=%u ESR1=0x%08lX BUSERR=0x%08lX "
             "FLTCONF=%u IFLAG=0x%08lX\r\n",
             (unsigned long)g_analysis_cycle,
+            (unsigned long)g_analysis_candidate_index,
+            (unsigned long)g_analysis_candidate_sequence,
             (unsigned long)CAN1_PROFILE(g_analysis_candidate).baud_kbps,
             (unsigned long)(now - g_analysis_candidate_start_ms),
             (unsigned long)rx,
@@ -1535,7 +1545,8 @@ static void prv_AnalysisTask(uint32_t now)
     }
     g_analysis_prev_task_ms = now;
 
-    if((now - g_analysis_last_print_ms) >= CAN1_ANALYSIS_PRINT_MS)
+    if((CAN1_ANALYSIS_PRINT_MS != 0U) &&
+       ((now - g_analysis_last_print_ms) >= CAN1_ANALYSIS_PRINT_MS))
     {
         g_analysis_last_print_ms = now;
         prv_AnalysisSnapshot(now);
