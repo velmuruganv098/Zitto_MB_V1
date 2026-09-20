@@ -190,10 +190,10 @@ typedef struct
 static const Can1_BaudProfile_t g_baud_profile[CAN1_BAUD_COUNT] =
 {
     /* These CTRL1 timing values are the known-working V0.004 baseline. */
-    { 500U,  0x045A0007UL, 250U, 100U, 6U, 0U }, /* 500k */
-    { 250U,  0x095A0007UL, 500U, 120U, 6U, 0U }, /* 250k */
-    { 125U, 0x135A0007UL, 1000U, 160U, 6U, 0U },/* 125k */
-    { 1000U, 0x03510003UL, 200U, 100U, 6U, 0U }  /* 1M */
+    { 500U,  0x045A0007UL, 250U, 100U, 6U }, /* 500k */
+    { 250U,  0x095A0007UL, 500U, 120U, 6U }, /* 250k */
+    { 125U, 0x135A0007UL, 1000U, 160U, 6U },/* 125k */
+    { 1000U, 0x03510003UL, 200U, 100U, 6U }  /* 1M */
 };
 
 #define CAN1_PROFILE(idx) (g_baud_profile[(idx)])
@@ -2313,29 +2313,33 @@ void Can1_Task(void){
         {
             if(prv_AliasCandidateClean(g_alias_check_idx) != 0U)
             {
-                RTT_LOG("[CAN1] 250 kbps corroboration CLEAN -> reject 125 harmonic/alias and lock 250 kbps\r\n");
+                RTT_LOG("[CAN1] %lu kbps corroboration CLEAN -> lock %lu kbps\r\n",
+                        (unsigned long)CAN1_PROFILE(g_alias_check_idx).baud_kbps,
+                        (unsigned long)CAN1_PROFILE(g_alias_check_idx).baud_kbps);
                 g_alias_check_active = 0U;
                 prv_LockCandidate(now);
             }
             else
             {
-                RTT_LOG("[CAN1] 250 kbps corroboration rejected: frames=%u txd=%u rxd=%u err=0x%08lX -> restore 125\r\n",
+                RTT_LOG("[CAN1] %lu kbps corroboration rejected: frames=%u txd=%u rxd=%u err=0x%08lX -> restore %lu\r\n",
                         (unsigned)g_detect_frames,
                         (unsigned)g_detect_evidence.txerr_delta,
                         (unsigned)g_detect_evidence.rxerr_delta,
-                        (unsigned long)g_detect_evidence.error_esr);
-                prv_Restore125AfterAliasCheck();
+                        (unsigned long)g_detect_evidence.error_esr,
+                        (unsigned long)CAN1_PROFILE(g_alias_original_idx).baud_kbps);
+                prv_RestoreAfterAliasCheck();
             }
             return;
         }
 
         if((now - g_alias_check_start_ms) >= CAN1_DETECT_ALIAS_WINDOW_MS)
         {
-            RTT_LOG("[CAN1] 250 kbps corroboration timeout: frames=%u txd=%u rxd=%u err=0x%08lX -> restore 125\r\n",
+            RTT_LOG("[CAN1] %lu kbps corroboration timeout: frames=%u txd=%u rxd=%u err=0x%08lX -> restore %lu\r\n",
                     (unsigned)g_detect_frames,
                     (unsigned)g_detect_evidence.txerr_delta,
                     (unsigned)g_detect_evidence.rxerr_delta,
-                    (unsigned long)g_detect_evidence.error_esr);
+                    (unsigned long)g_detect_evidence.error_esr,
+                    (unsigned long)CAN1_PROFILE(g_alias_original_idx).baud_kbps);
             prv_Restore125AfterAliasCheck();
         }
         return;
