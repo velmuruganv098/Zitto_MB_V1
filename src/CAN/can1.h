@@ -21,6 +21,11 @@
  * V0.0045 adds candidate-relative error diagnostics and keeps valid RX
  * stronger than transient protocol-error history from active probing.
  *
+ * V0.0054 revision note:
+ *   - Extends bench analysis with first/last RX timing, RX span, BUSY observations,
+ *     IFLAG-seen mask, mailbox hit distribution, RX CODE distribution and maximum
+ *     CAN task gap per candidate. No production recovery decision is changed.
+ *
  * V0.0053 revision note:
  *   - Dedicated full-analysis bench mode. It continuously tests every
  *     candidate without latching or baud-mismatch recovery.
