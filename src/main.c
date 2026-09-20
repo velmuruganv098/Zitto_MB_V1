@@ -1,7 +1,7 @@
 /*
  * main.c  -  Zitto_MB_V1 / S32K144
  *
- * Firmware Revision : V0.0053
+ * Firmware Revision : V0.0055
  * Change Note       : CAN1 full auto-baud analysis mode
  *
  * V0.0049 PROJECT BASELINE
