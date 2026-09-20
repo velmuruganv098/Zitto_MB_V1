@@ -296,7 +296,6 @@ static void prv_DelayMs(uint32_t ms)
         ms--;
     }
 }
-
 /* --------------------------------------------------------------------------
  * TRANSCEIVER
  * -------------------------------------------------------------------------- */
@@ -696,8 +695,7 @@ static uint8_t prv_HardwareInit(void)
     if(timeout == 0U)
     {
         RTT_LOG("[CAN1_ERR] initial SOFTRST timeout\r\n");
-        return 0U;
-    }
+        return 0U;    }
 
     g_can1_debug_step = 60U;
 
@@ -1196,8 +1194,7 @@ static uint8_t prv_NextBaudIndex(void)
         }
     }
 
-    return next;
-}
+    return next;}
 
 static void prv_NextBaud(void)
 {    uint8_t next;
@@ -1524,8 +1521,8 @@ static void prv_AnalysisFinishCandidate(uint32_t now)
         const uint8_t clean = (uint8_t)((rx >= CAN1_PROFILE(g_analysis_candidate).min_frames) &&
                                          (g_detect_evidence.txerr_delta == 0U) &&
                                          (g_detect_evidence.rxerr_delta == 0U) &&
-                                         ((esr & CAN1_ESR_ERR_BUS_MASK) == 0U) &&
-                                         ((esr & CAN1_ESR_BOFFINT_BIT) == 0U) &&
+                                         ((g_detect_evidence.error_esr & CAN1_ESR_ERR_BUS_MASK) == 0U) &&
+                                         ((g_detect_evidence.error_esr & CAN1_ESR_BOFFINT_BIT) == 0U) &&
                                          (((esr & CAN1_ESR_FLTCONF_MASK) >> 4U) != 2U));
         const uint8_t suspect = (uint8_t)((rx > 0U) && (clean == 0U));
         RTT_LOG("[CAN1_A VERDICT] candidate=%lu %s frames=%lu min=%u TXdelta=%u RXdelta=%u BUSERR=0x%08lX\\r\\n",
@@ -1696,7 +1693,6 @@ void Can1_Init(void)
     }
 
     g_status.hw_ready = 1U;
-
 #if CAN1_FULL_ANALYSIS_MODE
     g_analysis_active = 1U;
     g_analysis_candidate = CAN1_BAUD_500K;
