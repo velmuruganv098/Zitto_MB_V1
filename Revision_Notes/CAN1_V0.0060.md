@@ -89,3 +89,13 @@ The snapshot still reports:
 - non-flagged mailbox CODE/ID state
 
 This preserves the diagnostic purpose without introducing a diagnostic-induced RX lock/starvation condition.
+
+
+### 2026-09-20 diagnostic hardening
+
+- Fixed-baud capture now reads ECR before ESR1.
+- When RXERR/TXERR first changes, the RX-path diagnostic snapshot is taken before the ESR1 read/clear operation, preserving the first error evidence.
+- The fixed-baud periodic line now prints current ESR1/ECR plus decoded SYNCH, BIT0ERR, BIT1ERR, STFERR, FRMERR, CRCERR and ACKERR fields.
+- Added a unique runtime marker: `[CAN1_FIXED] DIAG_BUILD=V0060_RXPATH_V2 ECR-first ESR-decode enabled`.
+- No CAN timing was changed in this patch. The active 125-kbps timing remains `CTRL1=0x135A2007`.
+- Purpose: distinguish CAN bit-level decoding/physical-bus faults from mailbox/application-service faults before changing the 125-kbps bit timing.
