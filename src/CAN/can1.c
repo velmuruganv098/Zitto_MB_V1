@@ -1623,8 +1623,7 @@ static void prv_Restore125AfterAliasCheck(void)
     g_detect_window_start_ms = g_detect_candidate_start_ms;
     prv_ResetDetectEvidence();
 
-    RTT_LOG("[CAN1] 250 kbps corroboration did not qualify -> revalidate original 125 kbps candidate
-");
+    RTT_LOG("[CAN1] 250 kbps corroboration did not qualify -> revalidate original 125 kbps candidate\r\n");
 }
 
 static uint8_t prv_AliasCandidateClean(uint8_t idx)
