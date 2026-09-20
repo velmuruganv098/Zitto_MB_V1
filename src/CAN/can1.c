@@ -172,6 +172,7 @@ typedef struct
 static Can1_DetectEvidence_t g_detect_evidence;
 
 static uint32_t g_fault_seen_ms;
+static uint8_t  g_rx_diag_candidate_logged;
 
 extern volatile uint32_t g_last_exception_ipsr;
 extern volatile uint32_t g_can1_debug_step;
@@ -363,6 +364,46 @@ static uint8_t prv_ExitFreeze(void)
 /* --------------------------------------------------------------------------
  * MAILBOX POOL
  * -------------------------------------------------------------------------- */
+
+static void prv_LogRxPathSnapshot(const char *reason)
+{
+    uint32_t iflag = CAN1->IFLAG1;
+    uint32_t esr = CAN1->ESR1;
+    uint32_t ecr = CAN1->ECR;
+    uint8_t mb;
+
+    RTT_LOG("[CAN1_DIAG] %s MCR=0x%08lX CTRL1=0x%08lX IFLAG1=0x%08lX IMASK1=0x%08lX ESR1=0x%08lX ECR=0x%08lX\\r\\n",
+            reason,
+            (unsigned long)CAN1->MCR,
+            (unsigned long)CAN1->CTRL1,
+            (unsigned long)iflag,
+            (unsigned long)CAN1->IMASK1,
+            (unsigned long)esr,
+            (unsigned long)ecr);
+
+    RTT_LOG("[CAN1_DIAG] RXMGMASK=0x%08lX RX14MASK=0x%08lX RX15MASK=0x%08lX PORTA12=0x%08lX PORTA13=0x%08lX PTB_SHDN=%u\\r\\n",
+            (unsigned long)CAN1->RXMGMASK,
+            (unsigned long)CAN1->RX14MASK,
+            (unsigned long)CAN1->RX15MASK,
+            (unsigned long)PORTA->PCR[12U],
+            (unsigned long)PORTA->PCR[13U],
+            (unsigned)((PTB->PDIR >> CAN1_SHDN_PTB_PIN) & 1UL));
+
+    for(mb = CAN1_RX_MB_FIRST; mb <= CAN1_RX_MB_LAST; mb++)
+    {
+        const uint32_t base = ((uint32_t)mb * 4U);
+        const uint32_t cs = CAN1->RAMn[base + 0U];
+        const uint8_t code = (uint8_t)((cs >> 24U) & 0x0FU);
+        const uint8_t flagged = (uint8_t)((iflag >> mb) & 1UL);
+
+        RTT_LOG("[CAN1_DIAG] MB%u I=%u CS=0x%08lX CODE=%u ID=0x%08lX\\r\\n",
+                (unsigned)mb,
+                (unsigned)flagged,
+                (unsigned long)cs,
+                (unsigned)code,
+                (unsigned long)CAN1->RAMn[base + 1U]);
+    }
+}
 
 static void prv_ArmRxMailbox(uint8_t mb)
 {
@@ -958,6 +999,7 @@ static void prv_StartDetection(uint8_t retry_last)
     g_detect_verify_start_ms = 0U;
     g_scan_pos = 0U;
     g_detect_no_rx_retry = 0U;
+    g_rx_diag_candidate_logged = 0U;
 
     g_detect_evidence.error_esr = 0U;
     g_detect_evidence.txerr_delta = 0U;
@@ -1229,6 +1271,19 @@ void Can1_Task(void)
         rx_budget = CAN1_RX_BUDGET;
         (void)prv_ServiceRxPool(rx_budget, 1U);
         prv_CaptureDetectEvidence();
+
+        /*
+         * One diagnostic snapshot per candidate is emitted only when a
+         * mailbox flag is actually observed. This distinguishes a FlexCAN
+         * RX/IFLAG problem from a mailbox-service problem without flooding
+         * RTT during heavy traffic.
+         */
+        if((g_rx_diag_candidate_logged == 0U) &&
+           (CAN1->IFLAG1 & CAN1_RX_MB_MASK) != 0U)
+        {
+            g_rx_diag_candidate_logged = 1U;
+            prv_LogRxPathSnapshot("rx-iflag-seen");
+        }
 
         if(g_detect_verify_pending != 0U)
         {
