@@ -168,7 +168,6 @@ extern "C" {
 
 /* V0.0059: explicit candidate-boundary diagnostics. */
 #define CAN1_DETECT_MIN_CLEAN_FRAMES  6U  /* minimum error-free accepted frames before lock */
-#define CAN1_DETECT_ALIAS_BAUD_KBPS      0U /* legacy; V0.0062 derives the 2x rate from the baud table */
 #define CAN1_DETECT_ALIAS_WINDOW_MS    500U /* bounded higher-rate corroboration window */
 
 /* Live baud-change detection while READY. */
