@@ -384,3 +384,130 @@ Validation:
 - Hardware validation requires flashing this revision and running continuous
   PCAN traffic at each candidate baud.
 
+
+
+V0.0053
+------
+CAN1 FULL AUTOBAUD ANALYSIS MODE
+
+Purpose
+-------
+V0.0053 is a bench-diagnostic firmware revision. It is not the production
+CAN1 auto-baud state machine. Its purpose is to collect enough raw evidence
+from all four candidate rates to diagnose timing, PCAN configuration, ACK/error
+behavior, FlexCAN receive acceptance, mailbox service and software queue
+capacity from one RTT capture.
+
+Analysis behavior
+-----------------
+1. Candidate order is:
+     500 kbps
+     250 kbps
+     125 kbps
+     1000 kbps
+
+2. Each candidate is held for 2000 ms.
+
+3. The firmware does NOT:
+   - latch a baud rate
+   - perform live-baud mismatch recovery
+   - restart because of inactivity
+   - generate a CAN TX probe
+
+4. Detection remains NORMAL CAN operation so the MCU can ACK valid PCAN
+   traffic.
+
+5. Every 100 ms the firmware prints:
+   - candidate and elapsed time
+   - total and per-candidate RX count
+   - mailbox overrun count
+   - software queue-drop count
+   - scheduler/task count
+   - CTRL1, MCR, IFLAG1, ESR1 and ECR
+   - CLKSRC/LOM/LPB
+   - MAXMB/RFEN/SRXDIS
+   - RX masks
+   - CAN1 RX/TX pin PCR values
+   - transceiver SHDN state
+   - FLTCONF/RXWRN/TXWRN and CAN error bits
+   - every RX mailbox CODE and IFLAG state
+
+6. Received frames are printed in detail for the first 20 frames and then
+   periodically every 50th frame to avoid making RTT output itself the
+   limiting factor.
+
+7. At the end of every candidate a result line reports:
+   - candidate rate
+   - RX frames
+   - mailbox overruns
+   - queue drops
+   - TX/RX error counters
+   - accumulated candidate error evidence
+   - ESR1/BUSERR/FLTCONF
+   - IFLAG1
+
+8. After all four candidates, the firmware immediately starts another complete
+   cycle. This makes the test repeatable without a reset.
+
+Required PCAN bench procedure
+-----------------------------
+Use continuous PCAN transmission with the same CAN frame configuration while
+the firmware cycles candidates.
+
+Recommended first test:
+- Keep the PCAN message periodic and continuous.
+- Use the same CAN ID/DLC/data for all four candidate tests.
+- Change only the PCAN nominal baud rate between complete firmware captures.
+- Record which candidate receives frames and the exact PCAN baud configured.
+- Do not use CAN FD for this test.
+- Do not stop transmission during a candidate window.
+- Keep the PCAN period comfortably below 2 seconds; 10-100 ms is useful for
+  diagnosis.
+- One capture containing at least one complete 500/250/125/1000 cycle is
+  required. Several cycles are better.
+
+Important interpretation
+------------------------
+A candidate with RX > 0 has direct FlexCAN receive evidence at that timing.
+
+A candidate with RX = 0 must be interpreted together with:
+- ECR TX/RX error counters
+- ESR1 CAN error bits
+- FLTCONF
+- IFLAG1
+- mailbox CODE values
+- mailbox overrun count
+- exact PCAN configured baud
+- PCAN frame period
+
+Do not treat a high RXERRCNT alone as proof of the wrong baud.
+
+Why this revision exists
+------------------------
+The V0.0052 bench log showed that 250 kbps and 125 kbps could receive frames,
+while 1 Mbps produced no RX evidence and READY recovery could be triggered by
+error-counter behavior even after valid traffic. V0.0053 removes the production
+recovery decisions from the test path so the hardware evidence can be observed
+without the firmware changing candidates because of its own recovery policy.
+
+The resulting RTT trace is intended to answer:
+- Which candidates actually receive?
+- How quickly does each candidate begin receiving?
+- What happens to TXERR/RXERR at each candidate?
+- Which ESR1 error bits appear?
+- Does the controller become Error Active, Error Passive or Bus-Off?
+- Do RX mailbox IFLAG/CODE transitions occur?
+- Are mailbox overruns occurring?
+- Is the software queue keeping up?
+- Are the pin, mask, MCR and CTRL1 registers exactly as expected?
+- Does 1 Mbps fail before mailbox acceptance, or only in software service?
+
+Validation status
+-----------------
+This revision is source-level bench-analysis preparation. It requires a clean
+S32DS build, ELF generation, flash, RTT capture and PCAN bench test.
+
+Do not use V0.0053 as the production CAN1 firmware. After the RTT evidence is
+collected, the production detector should be changed only from conclusions
+supported by that evidence.
+
