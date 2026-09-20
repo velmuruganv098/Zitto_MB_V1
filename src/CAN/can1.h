@@ -47,7 +47,7 @@
  *     tested without candidate switching or auto-recovery;
  *   - fixed mode classifies the bus as CLEAN_RX, BUS_ACTIVITY_BAD_TIMING,
  *     or NO_BUS_ACTIVITY using bounded RX/ECR/ESR evidence;
- *   - keeps production auto-baud as the default (fixed mode is 0);
+ *   - the current bench build has fixed mode enabled at 125 kbps; restore 0U for production auto-baud;
  *   - keeps all waits bounded and does not generate a CAN TX probe.
  *
  * V0.0059 revision note:
@@ -139,7 +139,7 @@ extern "C" {
 #define CAN1_FULL_ANALYSIS_MODE      0U
 
 /* V0.0060: opt-in fixed-baud hardware-truth test. Keep 0 for production. */
-#define CAN1_FIXED_BAUD_TEST_MODE    1U
+#define CAN1_FIXED_BAUD_TEST_MODE    1U  /* V0.0060 current bench build: fixed-rate diagnostics */
 #define CAN1_FIXED_BAUD_KBPS         125U  /* change to 250/500/1000 for the next fixed test */
 #define CAN1_FIXED_TEST_PRINT_MS     500U
 #define CAN1_FIXED_TEST_MIN_FRAMES   6U
