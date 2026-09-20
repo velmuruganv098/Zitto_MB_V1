@@ -86,7 +86,7 @@
  *   - rejects a candidate when RX/TX error counters grow or bus-error bits are seen;
  *   - adds explicit CLEAN/SUSPECT/REJECT analysis verdicts.
  *
- * V0.0059 boundary/production-hardening additions:
+ * V0.0060 fixed-baud validation additions:\n *   - adds an opt-in fixed-baud hardware-truth mode for 125/250/500/1000 kbps;\n *   - fixed mode never scans or auto-recovers, so PCAN and MCU can be tested at one known rate;\n *   - emits CLEAN_RX / BUS_ACTIVITY_BAD_TIMING / NO_BUS_ACTIVITY verdicts;\n *   - production auto-baud remains the default.\n *\n * V0.0059 boundary/production-hardening additions:
  *   - restores production auto-baud as the default build mode; full bench analysis
  *     remains available only when explicitly enabled in can1.h;
  *   - every candidate has a monotonically increasing generation/epoch and the RX
@@ -225,6 +225,19 @@ static Can1_DetectEvidence_t g_detect_evidence;
 
 static uint32_t g_fault_seen_ms;
 static uint8_t  g_rx_diag_candidate_logged;
+
+#if CAN1_FIXED_BAUD_TEST_MODE
+static uint8_t  g_fixed_test_active;
+static uint8_t  g_fixed_test_idx;
+static uint32_t g_fixed_test_start_ms;
+static uint32_t g_fixed_test_last_print_ms;
+static uint32_t g_fixed_test_rx_start;
+static uint8_t  g_fixed_test_txerr_baseline;
+static uint8_t  g_fixed_test_rxerr_baseline;
+static uint8_t  g_fixed_test_txerr_last;
+static uint8_t  g_fixed_test_rxerr_last;
+static uint32_t g_fixed_test_error_esr;
+#endif
 
 extern volatile uint32_t g_last_exception_ipsr;
 extern volatile uint32_t g_can1_debug_step;
@@ -613,6 +626,115 @@ static uint8_t prv_ApplyBaud(uint8_t idx)
 
     return 1U;
 }
+
+#if CAN1_FIXED_BAUD_TEST_MODE
+/* --------------------------------------------------------------------------
+ * V0.0060 FIXED-BAUD HARDWARE-TRUTH TEST
+ *
+ * This mode deliberately does not scan, retry, recover, or infer a baud.
+ * Build once with CAN1_FIXED_BAUD_TEST_MODE=1 and select
+ * CAN1_FIXED_BAUD_KBPS = 125/250/500/1000. Keep PCAN at the same fixed rate.
+ *
+ * Classification:
+ *   CLEAN_RX               : enough RX frames, no ECR growth, no CAN error evidence
+ *   BUS_ACTIVITY_BAD_TIMING: RX error growth / bus-error evidence with no clean RX
+ *   NO_BUS_ACTIVITY       : no RX and no meaningful error activity
+ *
+ * Every measurement is bounded by the print period; the task itself never waits.
+ * No CAN TX probe is generated.
+ * -------------------------------------------------------------------------- */
+static uint8_t prv_FixedBaudIndex(uint32_t kbps, uint8_t *idx)
+{
+    uint8_t i;
+    if(idx == NULL) return 0U;
+    for(i = 0U; i < CAN1_BAUD_COUNT; i++)
+    {
+        if(CAN1_PROFILE(i).baud_kbps == kbps)
+        {
+            *idx = i;
+            return 1U;
+        }
+    }
+    return 0U;
+}
+
+static void prv_FixedTestResetEvidence(void)
+{
+    const uint32_t ecr = CAN1->ECR;
+    g_fixed_test_start_ms = Uart_GetMs();
+    g_fixed_test_last_print_ms = g_fixed_test_start_ms;
+    g_fixed_test_rx_start = g_rx_total;
+    g_fixed_test_txerr_baseline = (uint8_t)(ecr & 0xFFU);
+    g_fixed_test_rxerr_baseline = (uint8_t)((ecr >> 8U) & 0xFFU);
+    g_fixed_test_txerr_last = g_fixed_test_txerr_baseline;
+    g_fixed_test_rxerr_last = g_fixed_test_rxerr_baseline;
+    g_fixed_test_error_esr = 0U;
+}
+
+static void prv_FixedTestCapture(void)
+{
+    const uint32_t esr = CAN1->ESR1;
+    const uint32_t ecr = CAN1->ECR;
+    const uint8_t txerr = (uint8_t)(ecr & 0xFFU);
+    const uint8_t rxerr = (uint8_t)((ecr >> 8U) & 0xFFU);
+
+    g_fixed_test_error_esr |=
+        esr & (CAN1_ESR_ERR_BUS_MASK | CAN1_ESR_BOFFINT_BIT);
+
+    if(txerr > g_fixed_test_txerr_last)
+        g_fixed_test_txerr_last = txerr;
+    if(rxerr > g_fixed_test_rxerr_last)
+        g_fixed_test_rxerr_last = rxerr;
+}
+
+static void prv_FixedTestPrint(uint32_t now)
+{
+    const uint32_t rx = g_rx_total - g_fixed_test_rx_start;
+    const uint8_t txerr_delta =
+        (uint8_t)(g_fixed_test_txerr_last - g_fixed_test_txerr_baseline);
+    const uint8_t rxerr_delta =
+        (uint8_t)(g_fixed_test_rxerr_last - g_fixed_test_rxerr_baseline);
+    const uint8_t fltconf =
+        (uint8_t)((CAN1->ESR1 & CAN1_ESR_FLTCONF_MASK) >> 4U);
+    const uint8_t boff =
+        (uint8_t)((fltconf & 0x02U) != 0U);
+    const char *verdict;
+
+    if((rx >= CAN1_FIXED_TEST_MIN_FRAMES) &&
+       (txerr_delta == 0U) &&
+       (rxerr_delta == 0U) &&
+       (g_fixed_test_error_esr == 0U) &&
+       (boff == 0U))
+    {
+        verdict = "CLEAN_RX";
+    }
+    else if((rxerr_delta != 0U) ||
+            (txerr_delta != 0U) ||
+            (g_fixed_test_error_esr != 0U) ||
+            (boff != 0U))
+    {
+        verdict = "BUS_ACTIVITY_BAD_TIMING";
+    }
+    else
+    {
+        verdict = "NO_BUS_ACTIVITY";
+    }
+
+    RTT_LOG("[CAN1_FIXED] baud=%lu elapsed=%lums rx=%lu rxdelta=%u txdelta=%u "
+            "ESRERR=0x%08lX FLTCONF=%u verdict=%s CTRL1=0x%08lX\r\n",
+            (unsigned long)CAN1_PROFILE(g_fixed_test_idx).baud_kbps,
+            (unsigned long)(now - g_fixed_test_start_ms),
+            (unsigned long)rx,
+            (unsigned)rxerr_delta,
+            (unsigned)txerr_delta,
+            (unsigned long)g_fixed_test_error_esr,
+            (unsigned)fltconf,
+            verdict,
+            (unsigned long)CAN1->CTRL1);
+
+    g_fixed_test_last_print_ms = now;
+}
+#endif
 
 /* --------------------------------------------------------------------------
  * ENTER NORMAL MODE AFTER BAUD EVIDENCE
@@ -1735,7 +1857,34 @@ void Can1_Init(void)
     }
 
     g_status.hw_ready = 1U;
-#if CAN1_FULL_ANALYSIS_MODE
+#if CAN1_FIXED_BAUD_TEST_MODE
+    g_fixed_test_active = 0U;
+    g_fixed_test_idx = 0U;
+    if(prv_FixedBaudIndex(CAN1_FIXED_BAUD_KBPS, &g_fixed_test_idx) == 0U)
+    {
+        RTT_LOG("[CAN1_ERR] V0.0060 invalid fixed baud=%lu kbps\r\n",
+                (unsigned long)CAN1_FIXED_BAUD_KBPS);
+        g_state = CAN1_STATE_ERROR;
+        return;
+    }
+
+    if(prv_ApplyBaud(g_fixed_test_idx) == 0U)
+    {
+        RTT_LOG("[CAN1_ERR] V0.0060 fixed baud apply failed\r\n");
+        g_state = CAN1_STATE_ERROR;
+        return;
+    }
+
+    g_status.ready = 1U;
+    g_status.detecting = 0U;
+    g_status.detected_baud_kbps = CAN1_PROFILE(g_fixed_test_idx).baud_kbps;
+    g_state = CAN1_STATE_READY;
+    g_fixed_test_active = 1U;
+    prv_FixedTestResetEvidence();
+    RTT_LOG("[CAN1_FIXED] START baud=%lu kbps CTRL1=0x%08lX PCAN must match; no auto-scan/recovery\r\n",
+            (unsigned long)CAN1_PROFILE(g_fixed_test_idx).baud_kbps,
+            (unsigned long)CAN1->CTRL1);
+#elif CAN1_FULL_ANALYSIS_MODE
     g_analysis_active = 1U;
     g_analysis_candidate = CAN1_BAUD_500K;
     g_analysis_cycle = 0U;    g_status.ready = 0U;
@@ -1762,6 +1911,21 @@ void Can1_Task(void){
     uint8_t rx_budget;
 
     g_task_cnt++;
+
+#if CAN1_FIXED_BAUD_TEST_MODE
+    if(g_fixed_test_active != 0U)
+    {
+        (void)prv_ServiceRxPool(CAN1_RX_BUDGET, 0U);
+        prv_FixedTestCapture();
+
+        if((now - g_fixed_test_last_print_ms) >= CAN1_FIXED_TEST_PRINT_MS)
+        {
+            prv_FixedTestPrint(now);
+        }
+        return;
+    }
+#endif
+
 #if CAN1_FULL_ANALYSIS_MODE
     if(g_analysis_active != 0U)
     {
