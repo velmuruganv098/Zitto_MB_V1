@@ -225,6 +225,20 @@ static uint8_t  g_detect_no_rx_retry;
 static uint32_t g_detect_epoch;
 static uint32_t g_detect_candidate_start_ms;
 
+/*
+ * V0.0061 alias guard:
+ * A 250 kbps stream can, for specially structured traffic, produce a small
+ * number of valid-looking frames when FlexCAN is configured at exactly half
+ * the rate (125 kbps). RX/CRC validity alone cannot prove the external
+ * transmitter's nominal rate. When 125 kbps becomes a clean candidate, run
+ * a short bounded 250 kbps corroboration pass before allowing the 125 lock.
+ */
+static uint8_t  g_alias_check_active;
+static uint8_t  g_alias_check_done;
+static uint8_t  g_alias_original_idx;
+static uint8_t  g_alias_check_idx;
+static uint32_t g_alias_check_start_ms;
+
 typedef struct
 {
     uint32_t error_esr;
@@ -1247,7 +1261,16 @@ static uint8_t prv_ServiceRxPool(uint8_t budget,
                          * The verification timer starts only once. It must
                          * not be reset for every subsequent frame.
                          */
-                        if(g_detect_verify_pending == 0U)
+                        /*
+                         * Do not start verification on the first frame.
+                         * The previous V0.0061 path gave a candidate only
+                         * verify_ms (160 ms at 125 kbps) from first RX.
+                         * A real 125-kbps sender could therefore be rejected
+                         * after four clean frames while the full 1000-ms
+                         * candidate window still had valid traffic.
+                         */
+                        if((g_detect_verify_pending == 0U) &&
+                           (g_detect_frames >= CAN1_PROFILE(g_rate_idx).min_frames))
                         {
                             g_detect_verify_pending = 1U;
                             g_detect_verify_start_ms = Uart_GetMs();
@@ -1494,6 +1517,8 @@ static void prv_NextBaud(void){    uint8_t next;
     g_rate_idx = next;
     g_detect_no_rx_retry = 0U;
     g_rx_diag_candidate_logged = 0U;
+    g_alias_check_active = 0U;
+    g_alias_check_done = 0U;
 
     g_detect_frames = 0U;
     g_detect_verify_pending = 0U;
@@ -1527,6 +1552,92 @@ static void prv_NextBaud(void){    uint8_t next;
             (unsigned)CAN1_PROFILE(g_rate_idx).detect_window_ms,
             (unsigned)CAN1_PROFILE(g_rate_idx).verify_ms,
             (unsigned long)CAN1->CTRL1);
+}
+
+/* --------------------------------------------------------------------------
+ * V0.0061 125 -> 250 ALIAS CORROBORATION
+ * -------------------------------------------------------------------------- */
+static uint8_t prv_Start125AliasCheck(void)
+{
+    uint8_t idx = CAN1_BAUD_250K;
+
+    if((g_rate_idx != CAN1_BAUD_125K) ||
+       (g_alias_check_done != 0U) ||
+       (CAN1_PROFILE(idx).baud_kbps != CAN1_DETECT_ALIAS_BAUD_KBPS))
+    {
+        return 0U;
+    }
+
+    g_alias_check_active = 1U;
+    g_alias_original_idx = CAN1_BAUD_125K;
+    g_alias_check_idx = idx;
+    g_alias_check_start_ms = 0U;
+
+    g_rx_q_head = 0U;
+    g_rx_q_tail = 0U;
+
+    if(prv_ApplyBaud(idx) == 0U)
+    {
+        g_alias_check_active = 0U;
+        return 0U;
+    }
+
+    g_rate_idx = idx;
+    g_detect_frames = 0U;
+    g_detect_verify_pending = 0U;
+    g_detect_verify_start_ms = 0U;
+    prv_BeginCandidateEpoch(idx);
+    g_detect_window_start_ms = g_detect_candidate_start_ms;
+    g_alias_check_start_ms = g_detect_candidate_start_ms;
+    prv_ResetDetectEvidence();
+
+    RTT_LOG("[CAN1] 125 kbps clean candidate -> 250 kbps alias corroboration window=%ums minframes=%u
+",
+            (unsigned)CAN1_DETECT_ALIAS_WINDOW_MS,
+            (unsigned)CAN1_PROFILE(idx).min_frames);
+    return 1U;
+}
+
+static void prv_Restore125AfterAliasCheck(void)
+{
+    g_alias_check_active = 0U;
+    g_alias_check_done = 1U;
+
+    g_rx_q_head = 0U;
+    g_rx_q_tail = 0U;
+    g_rate_idx = g_alias_original_idx;
+    g_detect_frames = 0U;
+    g_detect_verify_pending = 0U;
+    g_detect_verify_start_ms = 0U;
+    g_detect_window_start_ms = 0U;
+
+    if(prv_ApplyBaud(g_rate_idx) == 0U)
+    {
+        g_state = CAN1_STATE_ERROR;
+        return;
+    }
+
+    prv_BeginCandidateEpoch(g_rate_idx);
+    g_detect_window_start_ms = g_detect_candidate_start_ms;
+    prv_ResetDetectEvidence();
+
+    RTT_LOG("[CAN1] 250 kbps corroboration did not qualify -> revalidate original 125 kbps candidate
+");
+}
+
+static uint8_t prv_AliasCandidateClean(uint8_t idx)
+{
+    const uint8_t fault =
+        (uint8_t)((CAN1->ESR1 & CAN1_ESR_FLTCONF_MASK) >> 4U);
+
+    return (uint8_t)((g_rate_idx == idx) &&
+                     (g_detect_frames >= CAN1_PROFILE(idx).min_frames) &&
+                     (g_detect_evidence.txerr_delta == 0U) &&
+                     (g_detect_evidence.rxerr_delta == 0U) &&
+                     (g_detect_evidence.error_esr == 0U) &&
+                     (g_detect_evidence.error_seen == 0U) &&
+                     (g_detect_evidence.error_before_rx == 0U) &&
+                     ((fault & 0x02U) == 0U));
 }
 
 /* --------------------------------------------------------------------------
@@ -1965,6 +2076,11 @@ void Can1_Init(void)
     g_detect_no_rx_retry = 0U;
     g_detect_epoch = 0U;
     g_detect_candidate_start_ms = 0U;
+    g_alias_check_active = 0U;
+    g_alias_check_done = 0U;
+    g_alias_original_idx = 0U;
+    g_alias_check_idx = 0U;
+    g_alias_check_start_ms = 0U;
 
     g_detect_evidence.error_esr = 0U;
     g_detect_evidence.txerr_baseline = 0U;
@@ -2076,6 +2192,51 @@ void Can1_Task(void){
     }
 #endif
 
+    /*
+     * V0.0061: bounded 125->250 corroboration. This detector-only phase
+     * prevents a 2:1 harmonic/alias RX result from being promoted to 125.
+     */
+    if(g_alias_check_active != 0U)
+    {
+        (void)prv_ServiceRxPool(CAN1_RX_BUDGET, 1U);
+        prv_CaptureDetectEvidence();
+
+        if((g_detect_verify_pending != 0U) &&
+           ((now - g_detect_verify_start_ms) >= CAN1_PROFILE(g_alias_check_idx).verify_ms))
+        {
+            if(prv_AliasCandidateClean(g_alias_check_idx) != 0U)
+            {
+                RTT_LOG("[CAN1] 250 kbps corroboration CLEAN -> reject 125 harmonic/alias and lock 250 kbps
+");
+                g_alias_check_active = 0U;
+                prv_LockCandidate(now);
+            }
+            else
+            {
+                RTT_LOG("[CAN1] 250 kbps corroboration rejected: frames=%u txd=%u rxd=%u err=0x%08lX -> restore 125
+",
+                        (unsigned)g_detect_frames,
+                        (unsigned)g_detect_evidence.txerr_delta,
+                        (unsigned)g_detect_evidence.rxerr_delta,
+                        (unsigned long)g_detect_evidence.error_esr);
+                prv_Restore125AfterAliasCheck();
+            }
+            return;
+        }
+
+        if((now - g_alias_check_start_ms) >= CAN1_DETECT_ALIAS_WINDOW_MS)
+        {
+            RTT_LOG("[CAN1] 250 kbps corroboration timeout: frames=%u txd=%u rxd=%u err=0x%08lX -> restore 125
+",
+                    (unsigned)g_detect_frames,
+                    (unsigned)g_detect_evidence.txerr_delta,
+                    (unsigned)g_detect_evidence.rxerr_delta,
+                    (unsigned long)g_detect_evidence.error_esr);
+            prv_Restore125AfterAliasCheck();
+        }
+        return;
+    }
+
     if(g_state == CAN1_STATE_DETECTING)
     {
         /*
@@ -2130,6 +2291,15 @@ void Can1_Task(void){
 
                 if(clean_candidate != 0U)
                 {
+                    if((g_rate_idx == CAN1_BAUD_125K) &&
+                       (g_alias_check_done == 0U))
+                    {
+                        if(prv_Start125AliasCheck() != 0U)
+                        {
+                            return;
+                        }
+                    }
+
                     prv_LockCandidate(now);
                 }
                 else
