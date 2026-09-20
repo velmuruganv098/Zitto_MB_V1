@@ -105,3 +105,11 @@ GitHub/static analysis can validate the source structure and diagnostic instrume
 ## V0.0051 decision gate
 
 Do not change the CAN baud algorithm again until the V0.0051 diagnostic output identifies which RX-path stage is failing.
+
+## Static test performed
+
+The uploaded V0.0050 project archive was used as the local source basis. The V0.0051 diagnostic changes were applied to that CAN1 source and checked with a C syntax compilation using Clang. Result: PASS, no CAN1 C syntax errors.
+
+The complete S32DS makefile build could not be executed in the Linux validation environment because the supplied S32DS generated dependency/build files contain Windows-specific paths and Make syntax. This is an environment limitation, not a firmware compile result.
+
+Hardware/RTT CAN validation is still required on the S32K144 + TCAN334 + PCAN setup.
