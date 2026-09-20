@@ -44,10 +44,11 @@
  * V0.0061 revision note:
  *   - production mode is restored as the default; fixed-baud validation is opt-in only;
  *   - candidate RX frames are kept out of APP/UART/Server until a baud candidate is locked;
- *   - candidate error evidence is captured ECR-first and a candidate that shows any
- *     protocol/error-counter activity is never promoted by a later harmonic/alias RX frame;
- *   - wrong-rate candidates with pre-RX errors are rejected/retried without waiting for
- *     the full window when the profile permits a bounded retry;
+ *   - candidate error evidence is captured ECR-first; errors before the first accepted
+ *     RX frame are retained as boundary diagnostics and re-baselined at first RX, while
+ *     post-RX protocol/error-counter activity rejects the candidate;
+ *   - a candidate is not rejected merely because baud switching began mid-frame; no-RX
+ *     candidates still expire through the normal bounded window/retry path;
  *   - verification now starts only after the minimum clean frame count is reached;
  *   - a clean 125 kbps candidate is corroborated at 250 kbps before lock to reject
  *     the known 2:1 harmonic/alias path;
