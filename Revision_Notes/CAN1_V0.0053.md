@@ -108,3 +108,18 @@ All controller waits remain bounded through the existing V0.0052 driver.
 The analysis loop is cooperative and does not intentionally wait for PCAN
 traffic. If PCAN is disconnected, the firmware continues cycling and printing
 diagnostics.
+
+
+## V0.0054 additions
+
+The V0.0053 analysis mode is extended with measurement-only telemetry:
+
+- first RX timestamp and last RX timestamp for each candidate
+- RX span within the candidate window
+- maximum observed gap between CAN1 task calls
+- number of RX BUSY observations
+- mailbox IFLAG-seen mask
+- RX mailbox CODE histogram
+- per-mailbox hit distribution
+
+These additions do not alter candidate selection, baud latching, recovery, or CAN transmission. They are intended to separate timing mismatch from FlexCAN mailbox acceptance/service behavior.
