@@ -2322,6 +2322,7 @@ void Can1_Task(void){
             else
             {
                 RTT_LOG("[CAN1] %lu kbps corroboration rejected: frames=%u txd=%u rxd=%u err=0x%08lX -> restore %lu\r\n",
+                        (unsigned long)CAN1_PROFILE(g_alias_check_idx).baud_kbps,
                         (unsigned)g_detect_frames,
                         (unsigned)g_detect_evidence.txerr_delta,
                         (unsigned)g_detect_evidence.rxerr_delta,
@@ -2335,12 +2336,13 @@ void Can1_Task(void){
         if((now - g_alias_check_start_ms) >= CAN1_DETECT_ALIAS_WINDOW_MS)
         {
             RTT_LOG("[CAN1] %lu kbps corroboration timeout: frames=%u txd=%u rxd=%u err=0x%08lX -> restore %lu\r\n",
+                    (unsigned long)CAN1_PROFILE(g_alias_check_idx).baud_kbps,
                     (unsigned)g_detect_frames,
                     (unsigned)g_detect_evidence.txerr_delta,
                     (unsigned)g_detect_evidence.rxerr_delta,
                     (unsigned long)g_detect_evidence.error_esr,
                     (unsigned long)CAN1_PROFILE(g_alias_original_idx).baud_kbps);
-            prv_Restore125AfterAliasCheck();
+            prv_RestoreAfterAliasCheck();
         }
         return;
     }
