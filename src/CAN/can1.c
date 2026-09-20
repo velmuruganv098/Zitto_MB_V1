@@ -97,9 +97,15 @@
  *   - candidate RX is not delivered to APP/UART/Server until the baud is locked;
  *   - candidate evidence reads ECR before ESR1 and records protocol errors, error peaks
  *     and pre-RX error activity;
- *   - pre-RX errors trigger a bounded candidate retry when the profile allows one;
- *   - any candidate error evidence permanently rejects that candidate for the epoch;
+ *   - pre-RX errors are boundary diagnostics only and never trigger a candidate retry;
+ *   - post-first-RX candidate error evidence rejects that candidate for the epoch;
  *   - application RX queue contents are cleared at every candidate boundary.
+ *
+ * V0.0062 detection-boundary additions:
+ *   - removes the remaining pre-first-RX error retry/reject behavior;
+ *   - generalizes 2:1 corroboration to every configured lower/higher pair;
+ *   - restores and freshly revalidates a lower candidate when its higher-rate
+ *     corroboration does not qualify.
  *
  * V0.0059 boundary/production-hardening additions:
  *   - restores production auto-baud as the default build mode; full bench analysis
@@ -186,8 +192,8 @@ static const Can1_BaudProfile_t g_baud_profile[CAN1_BAUD_COUNT] =
 {
     /* These CTRL1 timing values are the known-working V0.004 baseline. */
     { 500U,  0x045A0007UL, 250U, 100U, 6U, 0U }, /* 500k */
-    { 250U,  0x095A0007UL, 500U, 120U, 6U, 1U }, /* 250k */
-    { 125U,  0x135A0007UL, 1000U, 160U, 6U, 1U },/* 125k */
+    { 250U,  0x095A0007UL, 500U, 120U, 6U, 0U }, /* 250k */
+    { 125U, 0x135A0007UL, 1000U, 160U, 6U, 0U },/* 125k */
     { 1000U, 0x03510003UL, 200U, 100U, 6U, 0U }  /* 1M */
 };
 
@@ -1624,19 +1630,46 @@ static void prv_NextBaud(void){    uint8_t next;
 /* --------------------------------------------------------------------------
  * V0.0061 125 -> 250 ALIAS CORROBORATION
  * -------------------------------------------------------------------------- */
-static uint8_t prv_Start125AliasCheck(void)
+static uint8_t prv_FindDoubleBaudIndex(uint8_t original_idx, uint8_t *higher_idx)
 {
-    uint8_t idx = CAN1_BAUD_250K;
+    uint32_t target;
+    uint8_t i;
 
-    if((g_rate_idx != CAN1_BAUD_125K) ||
-       (g_alias_check_done != 0U) ||
-       (CAN1_PROFILE(idx).baud_kbps != CAN1_DETECT_ALIAS_BAUD_KBPS))
+    if((original_idx >= CAN1_BAUD_COUNT) || (higher_idx == NULL))
+    {
+        return 0U;
+    }
+
+    target = CAN1_PROFILE(original_idx).baud_kbps * 2U;
+
+    for(i = 0U; i < CAN1_BAUD_COUNT; i++)
+    {
+        if(CAN1_PROFILE(i).baud_kbps == target)
+        {
+            *higher_idx = i;
+            return 1U;
+        }
+    }
+
+    return 0U;
+}
+
+static uint8_t prv_StartUpperAliasCheck(void)
+{
+    uint8_t idx;
+
+    if(g_alias_check_done != 0U)
+    {
+        return 0U;
+    }
+
+    if(prv_FindDoubleBaudIndex(g_rate_idx, &idx) == 0U)
     {
         return 0U;
     }
 
     g_alias_check_active = 1U;
-    g_alias_original_idx = CAN1_BAUD_125K;
+    g_alias_original_idx = g_rate_idx;
     g_alias_check_idx = idx;
     g_alias_check_start_ms = 0U;
 
@@ -1654,25 +1687,31 @@ static uint8_t prv_Start125AliasCheck(void)
     g_detect_verify_pending = 0U;
     g_detect_verify_start_ms = 0U;
     g_detect_first_rx_seen = 0U;
+
     prv_BeginCandidateEpoch(idx);
     g_detect_window_start_ms = g_detect_candidate_start_ms;
     g_alias_check_start_ms = g_detect_candidate_start_ms;
     prv_ResetDetectEvidence();
 
-    RTT_LOG("[CAN1] 125 kbps clean candidate -> 250 kbps alias corroboration window=%ums minframes=%u\r\n",
+    RTT_LOG("[CAN1] %lu kbps clean candidate -> %lu kbps 2:1 corroboration window=%ums minframes=%u\r\n",
+            (unsigned long)CAN1_PROFILE(g_alias_original_idx).baud_kbps,
+            (unsigned long)CAN1_PROFILE(idx).baud_kbps,
             (unsigned)CAN1_DETECT_ALIAS_WINDOW_MS,
             (unsigned)CAN1_PROFILE(idx).min_frames);
     return 1U;
 }
 
-static void prv_Restore125AfterAliasCheck(void)
+static void prv_RestoreAfterAliasCheck(void)
 {
+    const uint8_t original_idx = g_alias_original_idx;
+    const uint8_t higher_idx = g_alias_check_idx;
+
     g_alias_check_active = 0U;
     g_alias_check_done = 1U;
 
     g_rx_q_head = 0U;
     g_rx_q_tail = 0U;
-    g_rate_idx = g_alias_original_idx;
+    g_rate_idx = original_idx;
     g_detect_frames = 0U;
     g_detect_verify_pending = 0U;
     g_detect_verify_start_ms = 0U;
@@ -1689,7 +1728,9 @@ static void prv_Restore125AfterAliasCheck(void)
     g_detect_window_start_ms = g_detect_candidate_start_ms;
     prv_ResetDetectEvidence();
 
-    RTT_LOG("[CAN1] 250 kbps corroboration did not qualify -> revalidate original 125 kbps candidate\r\n");
+    RTT_LOG("[CAN1] %lu kbps higher-rate corroboration %lu kbps did not qualify -> revalidate original candidate\r\n",
+            (unsigned long)CAN1_PROFILE(higher_idx).baud_kbps,
+            (unsigned long)CAN1_PROFILE(original_idx).baud_kbps);
 }
 
 static uint8_t prv_AliasCandidateClean(uint8_t idx)
@@ -2260,7 +2301,7 @@ void Can1_Task(void){
 #endif
 
     /*
-     * V0.0061: bounded 125->250 corroboration. This detector-only phase
+     * V0.0062: bounded higher-rate 2:1 corroboration. This detector-only phase
      * prevents a 2:1 harmonic/alias RX result from being promoted to 125.
      */
     if(g_alias_check_active != 0U)
@@ -2356,10 +2397,9 @@ void Can1_Task(void){
 
                 if(clean_candidate != 0U)
                 {
-                    if((g_rate_idx == CAN1_BAUD_125K) &&
-                       (g_alias_check_done == 0U))
+                    if(g_alias_check_done == 0U)
                     {
-                        if(prv_Start125AliasCheck() != 0U)
+                        if(prv_StartUpperAliasCheck() != 0U)
                         {
                             return;
                         }
@@ -2390,65 +2430,21 @@ void Can1_Task(void){
         /*
          * No valid frame yet:
          *   - pre-RX errors are candidate-boundary diagnostics only;
-         *   - the candidate has a bounded no-RX observation window.
-         *
-         * A retry is still allowed for profiles that permit one. This keeps
-         * wrong-rate detection bounded while allowing a correct candidate
-         * entered mid-frame to reach its next clean RX frame.
+         *   - never reject/retry a candidate because of those errors alone;
+         *   - only the bounded no-RX timeout may advance the scan.
          */
         if((g_detect_verify_pending == 0U) &&
            ((now - g_detect_window_start_ms) >= CAN1_PROFILE(g_rate_idx).detect_window_ms))
         {
-            const uint8_t early_error =
-                (uint8_t)((g_detect_frames == 0U) &&
-                          (g_detect_evidence.error_before_rx != 0U));
-
-            if(g_detect_no_rx_retry < CAN1_PROFILE(g_rate_idx).no_rx_retries)
-            {
-                g_detect_no_rx_retry++;
-
-                RTT_LOG("[CAN1] Candidate %lu %s -> retry %u/%u ESR1=0x%08lX ECR=0x%08lX\r\n",
-                        (unsigned long)CAN1_PROFILE(g_rate_idx).baud_kbps,
-                        (early_error != 0U) ? "pre-RX error" : "no RX timeout",
-                        (unsigned)g_detect_no_rx_retry,
-                        (unsigned)CAN1_PROFILE(g_rate_idx).no_rx_retries,
-                        (unsigned long)g_status.last_esr1,
-                        (unsigned long)g_status.last_ecr);
-
-                if(prv_ApplyBaud(g_rate_idx) == 0U)
-                {
-                    g_state = CAN1_STATE_ERROR;
-                    return;
-                }
-
-                g_detect_frames = 0U;
-                g_detect_verify_pending = 0U;
-                g_detect_verify_start_ms = 0U;
-                g_detect_first_rx_seen = 0U;
-
-                /* Retry starts a fresh application-visible candidate epoch. */
-                g_rx_q_head = 0U;
-                g_rx_q_tail = 0U;
-
-                prv_BeginCandidateEpoch(g_rate_idx);
-                g_detect_window_start_ms = g_detect_candidate_start_ms;
-                prv_ResetDetectEvidence();
-
-                RTT_LOG("[CAN1] DETECT retry baud=%lu window=%ums verify=%ums\r\n",
-                        (unsigned long)CAN1_PROFILE(g_rate_idx).baud_kbps,
-                        (unsigned)CAN1_PROFILE(g_rate_idx).detect_window_ms,
-                        (unsigned)CAN1_PROFILE(g_rate_idx).verify_ms);
-            }
-            else
-            {
-                RTT_LOG("[CAN1] Candidate %lu rejected before RX: reason=%s retry=%u ESR1=0x%08lX ECR=0x%08lX -> next\r\n",
-                        (unsigned long)CAN1_PROFILE(g_rate_idx).baud_kbps,
-                        (early_error != 0U) ? "CAN_ERROR" : "NO_RX_TIMEOUT",
-                        (unsigned)g_detect_no_rx_retry,
-                        (unsigned long)g_status.last_esr1,
-                        (unsigned long)g_status.last_ecr);
-                prv_NextBaud();
-            }
+            RTT_LOG("[CAN1] Candidate %lu no valid RX in %ums: boundaryErrors=%u peakT=%u peakR=%u ESR1=0x%08lX ECR=0x%08lX -> next\r\n",
+                    (unsigned long)CAN1_PROFILE(g_rate_idx).baud_kbps,
+                    (unsigned)CAN1_PROFILE(g_rate_idx).detect_window_ms,
+                    (unsigned)g_detect_evidence.error_before_rx,
+                    (unsigned)g_detect_evidence.txerr_peak,
+                    (unsigned)g_detect_evidence.rxerr_peak,
+                    (unsigned long)g_status.last_esr1,
+                    (unsigned long)g_status.last_ecr);
+            prv_NextBaud();
         }
         return;
     }
