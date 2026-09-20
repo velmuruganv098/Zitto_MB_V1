@@ -1097,6 +1097,7 @@ static void prv_NextBaud(void)
     next = prv_NextBaudIndex();
     g_rate_idx = next;
     g_detect_no_rx_retry = 0U;
+    g_rx_diag_candidate_logged = 0U;
 
     g_detect_frames = 0U;
     g_detect_verify_pending = 0U;
