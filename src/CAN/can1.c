@@ -86,6 +86,21 @@
  *   - rejects a candidate when RX/TX error counters grow or bus-error bits are seen;
  *   - adds explicit CLEAN/SUSPECT/REJECT analysis verdicts.
  *
+ * V0.0059 boundary/production-hardening additions:
+ *   - restores production auto-baud as the default build mode; full bench analysis
+ *     remains available only when explicitly enabled in can1.h;
+ *   - every candidate has a monotonically increasing generation/epoch and the RX
+ *     diagnostics print that epoch, so RX evidence is traceable to one candidate;
+ *   - candidate transitions are hard boundaries: FlexCAN is frozen, RX flags and
+ *     mailbox RAM are cleared, ECR is reset, all RX MBs are re-armed, then the
+ *     new candidate epoch starts only after the controller leaves Freeze mode;
+ *   - candidate quality requires multiple accepted frames plus zero RX/TX error
+ *     growth and zero accumulated protocol/Bus-Off evidence;
+ *   - verification is always bounded and is never restarted by later frames;
+ *   - no inactivity-based recovery is introduced; READY recovers only on Bus-Off
+ *     or sustained error evidence with no recent valid RX;
+ *   - all hardware waits remain bounded.
+ *
  * V0.0056 analysis/fix additions:
  *   - isolates continuous CAN bench analysis from UART/OTA/application work;
  *   - prevents analysis frames from filling the application queue;
@@ -117,6 +132,7 @@ extern uint32_t Uart_GetMs(void);
 #define CAN1_CODE_RX_FULL         0x02U
 #define CAN1_CODE_RX_EMPTY        0x04U
 #define CAN1_CODE_RX_OVERRUN      0x06U
+#define CAN1_ESR_CANDIDATE_ERROR_MASK (CAN1_ESR_ERR_BUS_MASK | CAN1_ESR_BOFFINT_BIT)
 #define CAN1_CS_RX_EMPTY          ((uint32_t)CAN1_CODE_RX_EMPTY << 24U)
 
 /* --------------------------------------------------------------------------
@@ -154,10 +170,10 @@ typedef struct
 static const Can1_BaudProfile_t g_baud_profile[CAN1_BAUD_COUNT] =
 {
     /* These CTRL1 timing values are the known-working V0.004 baseline. */
-    { 500U,  0x045A0007UL, 250U, 40U, 4U, 0U }, /* 500k: 16 TQ, ~81.25% SP */
-    { 250U,  0x095A0007UL, 500U, 60U, 4U, 1U }, /* 250k: 16 TQ, ~81.25% SP */
-    { 125U,  0x135A0007UL, 1000U, 60U, 1U, 1U },/* 125k: 16 TQ, ~81.25% SP */
-    { 1000U, 0x03510003UL, 200U, 40U, 4U, 0U }  /* 1M: 10 TQ, 80% SP */
+    { 500U,  0x045A0007UL, 250U, 100U, 6U, 0U }, /* 500k */
+    { 250U,  0x095A0007UL, 500U, 120U, 6U, 1U }, /* 250k */
+    { 125U,  0x135A0007UL, 1000U, 160U, 6U, 1U },/* 125k */
+    { 1000U, 0x03510003UL, 200U, 100U, 6U, 0U }  /* 1M */
 };
 
 #define CAN1_PROFILE(idx) (g_baud_profile[(idx)])
@@ -191,6 +207,8 @@ static uint32_t g_detect_verify_start_ms;
 static uint8_t  g_detect_frames;
 static uint8_t  g_detect_verify_pending;
 static uint8_t  g_detect_no_rx_retry;
+static uint32_t g_detect_epoch;
+static uint32_t g_detect_candidate_start_ms;
 
 typedef struct
 {
@@ -493,6 +511,23 @@ static void prv_ArmRxPool(void)
     }
 
     CAN1->IFLAG1 = CAN1_RX_MB_MASK;
+}
+
+static void prv_BeginCandidateEpoch(uint8_t idx)
+{
+    /*
+     * prv_ApplyBaud() completes the safe Freeze/clear/re-arm sequence.
+     * Increment the epoch only after the new timing and RX pool are live.
+     */
+    g_detect_epoch++;
+    g_detect_candidate_start_ms = Uart_GetMs();
+
+    RTT_LOG("[CAN1_EPOCH] epoch=%lu candidate=%lu kbps CTRL1=0x%08lX RXPOOL=MB%u..MB%u\\r\\n",
+            (unsigned long)g_detect_epoch,
+            (unsigned long)CAN1_PROFILE(idx).baud_kbps,
+            (unsigned long)CAN1->CTRL1,
+            (unsigned)CAN1_RX_MB_FIRST,
+            (unsigned)CAN1_RX_MB_LAST);
 }
 
 static void prv_ClearCanStatus(void)
@@ -946,9 +981,11 @@ static uint8_t prv_ProcessRxMailbox(uint8_t mb)
            ((g_analysis_candidate_frame_prints < CAN1_ANALYSIS_FRAME_PRINT_MAX) ||
             ((g_rx_total % CAN1_ANALYSIS_FRAME_PRINT_EVERY) == 0U)))
         {
-            RTT_LOG("[CAN1_A RX] cand=%lu frame=%lu MB%u ID=0x%08lX IDE=%u "
+            RTT_LOG("[CAN1_A RX] epoch=%lu age=%lums cand=%lu frame=%lu MB%u ID=0x%08lX IDE=%u "
                     "RTR=%u DLC=%u DATA=%02X %02X %02X %02X %02X %02X %02X %02X "
                     "CS=0x%08lX ECR=0x%08lX ESR1=0x%08lX\r\n",
+                    (unsigned long)g_detect_epoch,
+                    (unsigned long)(rx_now - g_detect_candidate_start_ms),
                     (unsigned long)CAN1_PROFILE(g_analysis_candidate).baud_kbps,
                     (unsigned long)g_rx_total, (unsigned)mb,
                     (unsigned long)can_id, (unsigned)ide, (unsigned)rtr,
@@ -1148,7 +1185,8 @@ static void prv_StartDetection(uint8_t retry_last)
         return;
     }
 
-    g_detect_window_start_ms = Uart_GetMs();
+    prv_BeginCandidateEpoch(g_rate_idx);
+    g_detect_window_start_ms = g_detect_candidate_start_ms;
     prv_ResetDetectEvidence();
 
     g_state = CAN1_STATE_DETECTING;
@@ -1217,7 +1255,8 @@ static void prv_NextBaud(void){    uint8_t next;
         return;
     }
 
-    g_detect_window_start_ms = Uart_GetMs();
+    prv_BeginCandidateEpoch(g_rate_idx);
+    g_detect_window_start_ms = g_detect_candidate_start_ms;
     prv_ResetDetectEvidence();
 
     RTT_LOG("[CAN1] Next baud: %lu kbps NORMAL/RX window=%ums verify=%ums CTRL1=0x%08lX\r\n",
@@ -1259,8 +1298,9 @@ static void prv_LockCandidate(uint32_t now)
     g_detect_verify_pending = 0U;
     g_state = CAN1_STATE_READY;
 
-    RTT_LOG("[CAN1] *** BAUD LOCKED %lu kbps *** frames=%u err=0x%08lX txd=%u rxd=%u CTRL1=0x%08lX\r\n",
+    RTT_LOG("[CAN1] *** BAUD LOCKED %lu kbps *** epoch=%lu frames=%u err=0x%08lX txd=%u rxd=%u CTRL1=0x%08lX\r\n",
             (unsigned long)g_status.detected_baud_kbps,
+            (unsigned long)g_detect_epoch,
             (unsigned)g_detect_frames,
             (unsigned long)g_detect_evidence.error_esr,
             (unsigned)g_detect_evidence.txerr_delta,
@@ -1331,6 +1371,7 @@ static void prv_AnalysisSnapshot(uint32_t now)
             (unsigned long)g_analysis_cycle,
             (unsigned)g_analysis_candidate_index,
             (unsigned long)g_analysis_candidate_sequence,
+            (unsigned long)g_detect_epoch,
             (unsigned long)CAN1_PROFILE(g_analysis_candidate).baud_kbps,
             (unsigned long)(now - g_analysis_candidate_start_ms),
             (unsigned long)g_rx_total,
@@ -1429,7 +1470,8 @@ static void prv_AnalysisStartCandidate(uint8_t idx, uint32_t now)
     }
 
     /* Start the measurement only after the controller and RX pool are ready. */
-    now = Uart_GetMs();
+    prv_BeginCandidateEpoch(idx);
+    now = g_detect_candidate_start_ms;
     g_analysis_candidate_start_ms = now;
     g_analysis_last_print_ms = now;
     g_analysis_candidate_rx_start = g_rx_total;
@@ -1487,13 +1529,14 @@ static void prv_AnalysisFinishCandidate(uint32_t now)
     const uint32_t overrun = g_rx_dropped - g_analysis_candidate_overrun_start;
     const uint32_t qdrop = g_rx_q_drop - g_analysis_candidate_qdrop_start;
 
-    RTT_LOG("[CAN1_A RESULT] cycle=%lu index=%u sequence=%lu candidate=%lu kbps elapsed=%lums "
+    RTT_LOG("[CAN1_A RESULT] cycle=%lu index=%u sequence=%lu epoch=%lu candidate=%lu kbps elapsed=%lums "
             "RX=%lu overrun=%lu qdrop=%lu ECR_TX=%u ECR_RX=%u "
             "TXdelta=%u RXdelta=%u ESR1=0x%08lX BUSERR=0x%08lX "
             "FLTCONF=%u IFLAG=0x%08lX\r\n",
             (unsigned long)g_analysis_cycle,
             (unsigned long)g_analysis_candidate_index,
             (unsigned long)g_analysis_candidate_sequence,
+            (unsigned long)g_detect_epoch,
             (unsigned long)CAN1_PROFILE(g_analysis_candidate).baud_kbps,
             (unsigned long)(now - g_analysis_candidate_start_ms),
             (unsigned long)rx,
@@ -1518,7 +1561,7 @@ static void prv_AnalysisFinishCandidate(uint32_t now)
         const uint8_t clean = (uint8_t)((rx >= CAN1_PROFILE(g_analysis_candidate).min_frames) &&
                                          (g_detect_evidence.txerr_delta == 0U) &&
                                          (g_detect_evidence.rxerr_delta == 0U) &&
-                                         ((g_detect_evidence.error_esr & CAN1_ESR_ERR_BUS_MASK) == 0U) &&
+                                         ((g_detect_evidence.error_esr & CAN1_ESR_CANDIDATE_ERROR_MASK) == 0U) &&
                                          ((g_detect_evidence.error_esr & CAN1_ESR_BOFFINT_BIT) == 0U) &&
                                          (((esr & CAN1_ESR_FLTCONF_MASK) >> 4U) != 2U));
         const uint8_t suspect = (uint8_t)((rx > 0U) && (clean == 0U));
@@ -1657,6 +1700,8 @@ void Can1_Init(void)
     g_detect_frames = 0U;
     g_detect_verify_pending = 0U;
     g_detect_no_rx_retry = 0U;
+    g_detect_epoch = 0U;
+    g_detect_candidate_start_ms = 0U;
 
     g_detect_evidence.error_esr = 0U;
     g_detect_evidence.txerr_baseline = 0U;
@@ -1821,7 +1866,8 @@ void Can1_Task(void){
                 g_detect_frames = 0U;
                 g_detect_verify_pending = 0U;
                 g_detect_verify_start_ms = 0U;
-                g_detect_window_start_ms = Uart_GetMs();
+                prv_BeginCandidateEpoch(g_rate_idx);
+                g_detect_window_start_ms = g_detect_candidate_start_ms;
                 prv_ResetDetectEvidence();
 
                 RTT_LOG("[CAN1] DETECT retry baud=%lu window=%ums verify=%ums\r\n",
