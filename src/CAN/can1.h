@@ -22,10 +22,12 @@
  * V0.0048 revision note:
  *   - Same DETECTING -> READY -> ERROR architecture and NORMAL/ACK topology.
  *   - 250k/125k keep bounded no-RX retry profiles.
- *   - READY now detects a live PCAN baud change from a sustained error burst
- *     plus a bounded no-valid-RX interval; idle traffic alone never rescans.
+ *   - READY detects a live PCAN baud change from sustained error evidence plus
+ *     a bounded no-valid-RX interval; idle traffic alone never rescans.
+ *   - The frame used as baud-detection evidence is retained for application delivery.
+ *   - RX service protects the FlexCAN BUSY/move-in window without blocking.
  *   - Bus-Off remains an immediate recovery trigger.
- *   - All CAN waits remain bounded.
+ *   - All CAN waits remain bounded; this is the baseline for upcoming revisions.
  */
 
 #ifndef CAN1_H
