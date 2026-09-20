@@ -4,7 +4,7 @@
 
 V0.0060 adds an **opt-in fixed-baud hardware-truth mode** to isolate the remaining PCAN/125/500/1000 uncertainty seen in V0.0059.
 
-Production auto-baud remains the default.
+For the current V0.0060 bench build, fixed-baud mode is enabled at 125 kbps so the 125 kbps hardware path can be validated directly. After this validation, restore `CAN1_FIXED_BAUD_TEST_MODE` to `0U` before using production auto-baud.
 
 ## Configuration
 
