@@ -14,12 +14,12 @@
  *   1. No CAN TX probe is generated.
  *   2. Detection uses NORMAL mode so a correctly received external frame is
  *      ACKed by the MCU. This is required for the PCAN-only bench topology.
- *   3. A valid hardware RX frame is the primary baud confirmation.
+ *   3. A valid hardware RX frame is candidate evidence; lock requires a clean,
+ *      error-free candidate history and bounded verification.
  *   4. The verification timer starts ONCE at the first valid frame. It is
  *      never restarted by subsequent traffic.
- *   5. Protocol-error flags on a candidate are diagnostic only. A candidate
- *      is rejected only for no valid RX before the bounded deadline or a
- *      confirmed Bus-Off state.
+ *   5. Any candidate protocol/error-counter evidence invalidates that candidate;
+ *      a later harmonic/alias RX frame cannot promote it to a baud lock.
  *   6. After lock, inactivity alone never starts another baud scan.
  *   7. Recovery retries the last confirmed baud first, then scans all rates.
  *
@@ -62,9 +62,9 @@
  *   CTRL1.CLKSRC=1 selects that peripheral/bus clock.
  *
  * Candidate timing:
- *   500 kbps : PRESDIV=4, 16 TQ, 87.5% SP
- *   250 kbps : PRESDIV=9, 16 TQ, 87.5% SP
- *   125 kbps : PRESDIV=19,16 TQ, 87.5% SP
+ *   500 kbps : PRESDIV=4, 16 TQ, 81.25% SP
+ *   250 kbps : PRESDIV=9, 16 TQ, 81.25% SP
+ *   125 kbps : PRESDIV=19,16 TQ, 81.25% SP
  *   1 Mbps   : PRESDIV=3, 10 TQ, 80.0% SP
  *
  * Every software wait in this file is bounded.
@@ -86,7 +86,22 @@
  *   - rejects a candidate when RX/TX error counters grow or bus-error bits are seen;
  *   - adds explicit CLEAN/SUSPECT/REJECT analysis verdicts.
  *
- * V0.0060 fixed-baud validation additions:\n *   - adds an opt-in fixed-baud hardware-truth mode for 125/250/500/1000 kbps;\n *   - fixed mode never scans or auto-recovers, so PCAN and MCU can be tested at one known rate;\n *   - emits CLEAN_RX / BUS_ACTIVITY_BAD_TIMING / NO_BUS_ACTIVITY verdicts;\n *   - production auto-baud remains the default.\n *\n * V0.0059 boundary/production-hardening additions:
+ * V0.0060 fixed-baud validation additions:
+ *   - adds an opt-in fixed-baud hardware-truth mode for 125/250/500/1000 kbps;
+ *   - fixed mode never scans or auto-recovers, so PCAN and MCU can be tested at one known rate;
+ *   - emits CLEAN_RX / BUS_ACTIVITY_BAD_TIMING / NO_BUS_ACTIVITY verdicts;
+ *   - production auto-baud remains the default.
+ *
+ * V0.0061 harmonic-rejection additions:
+ *   - fixed-baud test mode is OFF by default again;
+ *   - candidate RX is not delivered to APP/UART/Server until the baud is locked;
+ *   - candidate evidence reads ECR before ESR1 and records protocol errors, error peaks
+ *     and pre-RX error activity;
+ *   - pre-RX errors trigger a bounded candidate retry when the profile allows one;
+ *   - any candidate error evidence permanently rejects that candidate for the epoch;
+ *   - application RX queue contents are cleared at every candidate boundary.
+ *
+ * V0.0059 boundary/production-hardening additions:
  *   - restores production auto-baud as the default build mode; full bench analysis
  *     remains available only when explicitly enabled in can1.h;
  *   - every candidate has a monotonically increasing generation/epoch and the RX
