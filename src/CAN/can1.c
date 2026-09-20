@@ -475,13 +475,14 @@ static void prv_LogRxPathSnapshot(const char *reason)
             (unsigned long)esr,
             (unsigned long)ecr);
 
-    RTT_LOG("[CAN1_DIAG] RXMGMASK=0x%08lX RX14MASK=0x%08lX RX15MASK=0x%08lX PORTA12=0x%08lX PORTA13=0x%08lX PTB_SHDN=%u\r\n",
+    RTT_LOG("[CAN1_DIAG] RXMGMASK=0x%08lX RX14MASK=0x%08lX RX15MASK=0x%08lX PCR12=0x%08lX PCR13=0x%08lX RXPIN=%u TXPIN=%u SHDN=%u\r\n",
             (unsigned long)CAN1->RXMGMASK,
             (unsigned long)CAN1->RX14MASK,
             (unsigned long)CAN1->RX15MASK,
             (unsigned long)PORTA->PCR[12U],
             (unsigned long)PORTA->PCR[13U],
             (unsigned)((PTA->PDIR >> 12U) & 1UL),
+            (unsigned)((PTA->PDIR >> 13U) & 1UL),
             (unsigned)((PTB->PDIR >> CAN1_SHDN_PTB_PIN) & 1UL));
 
     for(mb = CAN1_RX_MB_FIRST; mb <= CAN1_RX_MB_LAST; mb++)
@@ -513,7 +514,6 @@ static void prv_LogRxPathSnapshot(const char *reason)
                     (unsigned)mb);
         }
     }
-}
 }
 
 static void prv_ArmRxMailbox(uint8_t mb)
