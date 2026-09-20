@@ -39,8 +39,9 @@
  *     MB4..MB15 pool, queue, and READY/recovery architecture unchanged.
  *
  * V0.0049 revision note
- *   - Detection behavior is restored to the known-working baseline: LOM=1,
- *     no TX probe, candidate order 500/250/125/1000 kbps, bounded RX evidence.
+ *   - Historical baseline used LOM=1, no TX probe, candidate order
+ *     500/250/125/1000 kbps, bounded RX evidence. V0.0052 changes detection
+ *     to NORMAL mode because the current PCAN-only topology requires MCU ACK.
  *   - The known-working 40 MHz CAN timing values are retained exactly.
  *   - A valid external RX frame is the baud evidence; after bounded verification
  *     the controller changes to NORMAL mode and becomes READY.
