@@ -420,7 +420,7 @@ int main(void)
     SEGGER_RTT_printf(0,
         "\r\n================================================\r\n"
         " Zitto MB V1 - VCU Firmware Boot\r\n"
-        " Firmware Revision : V0.0061\r\n"
+        " Firmware Revision : V0.0063\r\n"
         " Change            : CAN1 pre-RX error immunity + symmetric 2:1 baud corroboration; fixed test OFF\r\n"
         " MCU: S32K144  Clock: 80MHz SPLL  WDOG: OFF\r\n"
         " Modules: IMU=%d CSA=%d CAN1=%d CAN2=%d FLM=%d GPIO=%d\r\n"
@@ -514,10 +514,9 @@ int main(void)
 #if APP_CAN1_ENABLE
         if(g_can1_en != 0U)
         {
+            /* V0.0063: Can1_Task() dispatches RX synchronously via the
+             * RX callback now, no separate queue to drain. */
             Can1_Task();
-#if !CAN1_FULL_ANALYSIS_MODE
-            Can1_ProcessRxQueue(2U);
-#endif
         }
 #endif
 
