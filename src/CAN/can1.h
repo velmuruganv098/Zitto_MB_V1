@@ -4,29 +4,35 @@
  * FlexCAN1 driver header.
  *
  * AUTO-BAUD ARCHITECTURE:
- *   Phase 1: DETECTING  (LOM=1, Listen-Only, no bus impact)
+ *   Phase 1: DETECTING  (NORMAL mode, LOM=0)
  *     - Try 500 / 250 / 125 / 1000 kbps
  *     - Non-blocking: IFLAG1 + ESR1 polled each Can1_Task() call
- *     - ANY protocol error (stuff/form/CRC/bit) at this candidate →
- *       wrong baud, hop to next candidate immediately
+ *     - A protocol error (stuff/form/CRC/bit) AFTER at least one clean
+ *       frame at this candidate → wrong baud, hop to next immediately
  *     - CAN1_CONFIRM_FRAMES consecutive error-free frames at the SAME
  *       candidate → Phase 2
  *     - No frame after 200ms of silence → next candidate
- *     - No candidate confirmed after all 4 → restart cycle (never exit
- *       LOM untested)
+ *     - No candidate confirmed after all 4 → restart cycle
  *
- *   NOTE: an internal FlexCAN loopback (LPB=1) test was previously used
- *   here as a "confirm" step, but it cannot detect an external baud
- *   mismatch - TX and the looped-back RX share the same clock config, so
- *   it always passes regardless of candidate. It has been replaced by the
- *   multi-frame/error-gated check above, which is what actually catches a
- *   wrong candidate (this is what let 250 kbps traffic alias to a false
- *   "125 kbps detected" lock).
+ *   NOTE: detection must run in NORMAL mode, not Listen-Only. In LOM,
+ *   FlexCAN never drives the CAN ACK bit; on a bench where this MCU is
+ *   the only OTHER node besides the tool sending test traffic, nobody
+ *   acks the frame, the sender's missing-ACK error corrupts the EOF
+ *   field, and the receiver discards the frame as a form violation even
+ *   though CRC already passed - IFLAG1 then never sets, at ANY candidate,
+ *   no matter how correct the timing table is. This project's own history
+ *   (README.md V0.0052) already root-caused and fixed this; do not
+ *   reintroduce LOM here. An internal FlexCAN loopback (LPB=1) "confirm"
+ *   step was also previously tried and removed - it cannot detect an
+ *   external baud mismatch since TX and the looped-back RX share the same
+ *   clock config and always pass regardless of candidate. The real guard
+ *   against a false lock (e.g. 250 kbps aliasing to "125 kbps detected")
+ *   is the multi-frame/error-gated check above.
  *
- *   Phase 2 (commit): re-apply the confirmed candidate with LOM cleared
- *     -> real external (ACK-capable) mode, then go READY.
+ *   Phase 2 (commit): re-apply the confirmed candidate for a clean re-arm,
+ *     then go READY.
  *
- *   Phase 3: READY  (LOM=0, normal CAN operation)
+ *   Phase 3: READY  (NORMAL mode, unchanged)
  *     - Receive and forward frames
  *     - Bus-off or RX error burst → back to Phase 1
  *     - No frames for 10s → back to Phase 1
@@ -100,7 +106,7 @@ extern "C" {
 
 typedef enum
 {
-    CAN1_STATE_DETECTING = 0,  /* LOM active, scanning for frames */
+    CAN1_STATE_DETECTING = 0,  /* NORMAL mode, scanning for frames */
     CAN1_STATE_READY,          /* Baud confirmed, normal reception */
     CAN1_STATE_ERROR           /* Unrecoverable - re-detecting     */
 } Can1_State_t;

@@ -152,8 +152,9 @@ static const uint32_t g_can2_baud_kbps[
 
 /*
  * Real CAN protocol errors (not counter-overflow warnings) that
- * prove the current candidate baud does NOT match the bus. LOM
- * never transmits, so ACKERR is not meaningful here.
+ * prove the current candidate baud does NOT match the bus. ACKERR is
+ * excluded: this driver never activates a TX mailbox during detection,
+ * so it can never see its own transmitted frame go unacknowledged.
  */
 
 #define CAN2_ERR_FLAGS_MASK \
@@ -242,20 +243,6 @@ static const uint32_t g_can2_ctrl1_normal[
     CAN_CTRL1_RJW(1U) |
     CAN_CTRL1_PRESDIV(4U)
 };
-
-
-/*
- * Listen-only versions.
- */
-
-static uint32_t Can2_GetListenOnlyCtrl1(
-    uint8_t index
-)
-{
-    return
-        g_can2_ctrl1_normal[index] |
-        CAN_CTRL1_LOM_MASK;
-}
 
 
 /* ========================================================================== */
@@ -519,8 +506,7 @@ static void Can2_SetRxMailbox(void)
 
 
 static uint8_t Can2_SetBaud(
-    uint8_t index,
-    uint8_t listen_only
+    uint8_t index
 )
 {
     uint32_t ctrl1;
@@ -539,20 +525,12 @@ static uint8_t Can2_SetBaud(
     }
 
 
-    if(listen_only != 0U)
-    {
-        ctrl1 =
-            Can2_GetListenOnlyCtrl1(
-                index
-            );
-    }
-    else
-    {
-        ctrl1 =
-            g_can2_ctrl1_normal[
-                index
-            ];
-    }
+    /* Always NORMAL mode (LOM never set) - see the NORMAL mode note in
+     * Can2_StartDetection(). */
+    ctrl1 =
+        g_can2_ctrl1_normal[
+            index
+        ];
 
 
     CAN0->CTRL1 =
@@ -1028,10 +1006,20 @@ void Can2_StartDetection(void)
     );
 
 
+    /*
+     * NORMAL mode, not Listen-Only (V0.0063): in LOM, FlexCAN never
+     * drives the CAN ACK bit. On a bench where this MCU is the only
+     * OTHER node besides the tool sending test traffic, nobody acks the
+     * frame, the sender's missing-ACK error corrupts the EOF field, and
+     * the receiver discards the frame as a form violation even though
+     * CRC already passed - IFLAG1 then never sets, at ANY candidate.
+     * See can1.c's file header for the full explanation (this project's
+     * own history in README.md V0.0052 already root-caused this for
+     * CAN1; CAN2 has the identical failure mode).
+     */
     if(
         Can2_SetBaud(
-            g_can2_baud_index,
-            1U
+            g_can2_baud_index
         )
         == 0U
     )
@@ -1049,7 +1037,7 @@ void Can2_StartDetection(void)
 
 
     RTT_LOG(
-        "[CAN2] Detecting %lu kbps LOM\r\n",
+        "[CAN2] Detecting %lu kbps NORMAL\r\n",
         (unsigned long)
         g_can2_baud_kbps[
             g_can2_baud_index
@@ -1079,8 +1067,7 @@ static void Can2_NextBaud(void)
 
     if(
         Can2_SetBaud(
-            g_can2_baud_index,
-            1U
+            g_can2_baud_index
         )
         == 0U
     )
@@ -1093,7 +1080,7 @@ static void Can2_NextBaud(void)
 
 
     RTT_LOG(
-        "[CAN2] Detecting %lu kbps LOM\r\n",
+        "[CAN2] Detecting %lu kbps NORMAL\r\n",
         (unsigned long)
         g_can2_baud_kbps[
             g_can2_baud_index
@@ -1121,13 +1108,13 @@ static void Can2_LockBaud(void)
 
 
     /*
-     * Exit Listen Only Mode.
+     * Re-apply for a clean re-arm before RUNNING (already NORMAL mode
+     * throughout detection).
      */
 
     if(
         Can2_SetBaud(
-            index,
-            0U
+            index
         )
         == 0U
     )
