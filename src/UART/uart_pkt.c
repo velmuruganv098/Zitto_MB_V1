@@ -83,6 +83,17 @@ static volatile uint16_t g_rx_tail = 0U;
 
 static uint8_t g_tx_buffer[UART_TX_BUFFER_SIZE];
 
+/*
+ * TX queue state is kept here as a compatibility-safe software ring.
+ * Some S32DS workspace copies of this module contain the bounded
+ * uart_tx_free()/uart_tx_enqueue() helpers and require these symbols.
+ * Keeping the storage in the module avoids undefined identifiers while
+ * preserving the existing packet TX path in this revision.
+ */
+static uint8_t g_tx_queue[UART_TX_BUFFER_SIZE];
+static volatile uint16_t g_tx_head = 0U;
+static volatile uint16_t g_tx_tail = 0U;
+
 static uint8_t g_tx_seq = 0U;
 
 static UartRxState_t g_rx_state = RX_WAIT_SOF0;
@@ -288,6 +299,9 @@ static void uart_hw_init(void)
 
     g_rx_head = 0U;
     g_rx_tail = 0U;
+
+    g_tx_head = 0U;
+    g_tx_tail = 0U;
 
     g_tx_seq = 0U;
 }
@@ -995,18 +1009,23 @@ uint8_t Uart_Pkt_Send(
      * Frame complete
      * ------------------------------------------------------------ */
 
-    RTT_LOG(
-        "[UART_TX] Frame ready "
-        "type=0x%02X "
-        "payload=%u "
-        "total=%u\r\n",
+    /*
+     * CAN frames can arrive much faster than RTT can display them.
+     * Keep the packet path bounded without one debug line per CAN frame.
+     */
+    if(type != MSG_CAN)
+    {
+        RTT_LOG(
+            "[UART_TX] Frame ready "
+            "type=0x%02X "
+            "payload=%u "
+            "total=%u\\r\\n",
 
-        (unsigned)type,
-
-        (unsigned)len,
-
-        (unsigned)index
-    );
+            (unsigned)type,
+            (unsigned)len,
+            (unsigned)index
+        );
+    }
 
 
     /* ------------------------------------------------------------

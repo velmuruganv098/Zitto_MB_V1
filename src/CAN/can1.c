@@ -3,23 +3,71 @@
  *
  * FlexCAN1 driver with full auto-baud architecture:
  *
- *   DETECTING → loopback CONFIRMING → READY → (error) → DETECTING
+ *   DETECTING (NORMAL) → CONFIRMING (N clean frames, error-gated) → READY → (error) → DETECTING
  *
- * CLOCK SOURCE: CLKSRC=1  (bus clock = 40MHz)
+ * CLOCK SOURCE: CLKSRC=1  ("peripheral clock")
  *   - Always running after clock_init_80mhz() in main()
  *   - More reliable than SOSC for LPMACK sequence
  *
- * BAUD TIMING TABLE (40MHz bus clock, 16 TQ per bit):
- *   Index 0:  500 kbps  PRESDIV=4   SP=81.25%
- *   Index 1:  250 kbps  PRESDIV=9   SP=81.25%
- *   Index 2:  125 kbps  PRESDIV=19  SP=81.25%
- *   Index 3: 1000 kbps  PRESDIV=4   SP=75.00%  (8 TQ total)
+ * BAUD MISDETECTION FIX (V0.0063, clock correction):
+ *   PCC->PCCn[PCC_FlexCAN1_INDEX] only ever has its CGC (clock gate)
+ *   bit set - its peripheral-clock-source field is never explicitly
+ *   configured, so FlexCAN1's actual protocol-engine clock when
+ *   CLKSRC=1 is whatever that defaults to. The timing table below used
+ *   to assume that equals the 40MHz AHB bus clock (Core/DIVBUS), but
+ *   bench evidence (a candidate labeled "125 kbps" received 300+
+ *   consecutive error-free frames from a confirmed 250 kbps PCAN
+ *   source, and "250"/"500"/"1000" never matched anything real) proves
+ *   every candidate was actually running at exactly 2x its label - i.e.
+ *   the real protocol-engine clock is 80MHz (the CORE clock), not
+ *   40MHz. PRESDIV below is corrected accordingly (doubled) rather than
+ *   re-deriving the exact PCC clock-mux answer from the reference
+ *   manual, since the bench result is the more reliable source of
+ *   truth here.
  *
- * BUS HEAVY FIX:
- *   - Detection phase ALWAYS uses LOM=1  (no ACK, no error frames)
- *   - Loopback confirm with LPB=1  (TX disconnected from external bus)
- *   - Normal mode ONLY entered AFTER loopback confirms baud
- *   - No "fallback" to normal mode on silent bus (infinite LOM scan)
+ * BAUD TIMING TABLE (80MHz protocol-engine clock, 16 TQ per bit):
+ *   Index 0:  500 kbps  PRESDIV=9   SP=81.25%
+ *   Index 1:  250 kbps  PRESDIV=19  SP=81.25%
+ *   Index 2:  125 kbps  PRESDIV=39  SP=81.25%
+ *   Index 3: 1000 kbps  PRESDIV=9   SP=75.00%  (8 TQ total)
+ *
+ * BAUD MISDETECTION FIX (V0.0063):
+ *   The previous "confirm" step used FlexCAN internal loopback (LPB=1),
+ *   which only proves the module can talk to itself using whatever
+ *   PRESDIV/PSEG it is currently configured with - TX and the looped-back
+ *   RX share the exact same (possibly wrong) clock config, so it ALWAYS
+ *   passes and can never detect an external bit-rate mismatch. Worse, the
+ *   DETECTING state actually never called it at all: any single frame that
+ *   happened to pass CRC while listening at the WRONG candidate baud was
+ *   enough to lock in. Because the candidate table (1000/500/250/125) is
+ *   a chain of exact 2x multiples, a receiver listening at half the real
+ *   bus rate can occasionally reconstruct what looks like a short,
+ *   CRC-valid frame out of real traffic - this is what caused 250 kbps
+ *   traffic to intermittently latch as "125 kbps detected".
+ *
+ *   Fix: every tick in DETECTING, ESR1 is checked for real protocol
+ *   errors (STFERR/FRMERR/CRCERR/BIT0ERR/BIT1ERR). A post-confirmation
+ *   error (after at least one clean frame at this candidate) means the
+ *   candidate is wrong and we hop to the next one immediately instead of
+ *   waiting out the dwell timer. Only after CAN1_CONFIRM_FRAMES
+ *   consecutive frames arrive at the SAME candidate with zero protocol
+ *   errors do we commit and go READY. A stray aliased frame no longer
+ *   locks the baud by itself.
+ *
+ * NORMAL MODE, NOT LOM (V0.0063):
+ *   Detection runs in NORMAL mode (LOM=0), not Listen-Only. In LOM,
+ *   FlexCAN never drives the CAN ACK bit; if this MCU is the only OTHER
+ *   node on the bus besides the tool generating the test traffic (a
+ *   typical single-node bench), NOBODY acks the frame, the sender's
+ *   missing-ACK error corrupts what would be the EOF field, and the
+ *   receiver discards the frame as a form violation - even though CRC
+ *   already passed. IFLAG1 then never sets, at ANY candidate baud, and
+ *   detection can never succeed no matter how correct the timing table
+ *   is. This project's own history (README.md V0.0052) already
+ *   root-caused and fixed this exact failure mode; an earlier revision
+ *   of this file regressed it back to LOM. The tradeoff: a wrong
+ *   candidate is no longer bus-silent (real ACK/error bits go out), but
+ *   this is required for detection to work at all on that topology.
  */
 
 #include "can1.h"
@@ -46,28 +94,31 @@ extern volatile uint32_t g_can1_debug_step;
 /* Mailbox CODE values */
 #define CAN1_CODE_RX_EMPTY      0x04U
 #define CAN1_CS_RX_EMPTY        ((uint32_t)CAN1_CODE_RX_EMPTY << 24U)
-#define CAN1_CODE_TX_DATA       0x0CU
-
-/* TX mailbox for loopback test */
-#define CAN1_MB_TX              0U
-#define CAN1_TX_MB_BASE         (CAN1_MB_TX * 4U)
-#define CAN1_TX_MB_FLAG         (1UL << CAN1_MB_TX)
-
-/* Test frame */
-#define CAN1_TEST_ID            0x123U
-#define CAN1_TEST_DLC           8U
 
 /* Error burst threshold before re-detection */
 #define CAN1_RXERR_BURST        32U
 
+/* Real CAN protocol errors (not counter-overflow warnings) that prove the
+ * currently-selected candidate baud does NOT match the bus. Checked every
+ * tick during DETECTING so a wrong candidate is abandoned immediately
+ * instead of waiting out the dwell timer. ACKERR is excluded: this driver
+ * never activates a TX mailbox during detection (it only lets FlexCAN
+ * auto-ACK received frames in NORMAL mode), so it can never see its own
+ * transmitted frame go unacknowledged. */
+#define CAN1_ERR_FLAGS_MASK   (CAN_ESR1_STFERR_MASK | CAN_ESR1_FRMERR_MASK | \
+                                CAN_ESR1_CRCERR_MASK | CAN_ESR1_BIT0ERR_MASK | \
+                                CAN_ESR1_BIT1ERR_MASK)
+
 /* --------------------------------------------------------------------------
- * BAUD RATE TABLES  (40MHz bus clock, CLKSRC=1 is OR'd in at runtime)
+ * BAUD RATE TABLES  (80MHz protocol-engine clock, CLKSRC=1 is OR'd in at
+ * runtime - see the BAUD MISDETECTION FIX note at the top of this file)
  *
  * CTRL1 format: [31:24]=PRESDIV [23:22]=RJW [21:19]=PSEG1
  *               [18:16]=PSEG2   [2:0]=PROPSEG
  *
- * All values have CLKSRC=0 here; CAN_CTRL1_CLKSRC_MASK is OR'd in ApplyBaud.
- * LOM and LPB bits are also added at runtime.
+ * All values have CLKSRC=0 here; CAN_CTRL1_CLKSRC_MASK is OR'd in at
+ * runtime by prv_ApplyBaud()/prv_NextBaud(). LOM/LPB are never set -
+ * detection runs in NORMAL mode (see file header).
  * -------------------------------------------------------------------------- */
 
 static const uint32_t g_baud_kbps[CAN1_BAUD_COUNT] =
@@ -77,17 +128,21 @@ static const uint32_t g_baud_kbps[CAN1_BAUD_COUNT] =
 
 static const uint32_t g_ctrl1_base[CAN1_BAUD_COUNT] =
 {
-    0x045A0007UL,   /* 500  kbps: PRESDIV=4  16TQ SP=81.3% */
-    0x095A0007UL,   /* 250  kbps: PRESDIV=9  16TQ SP=81.3% */
-    0x135A0007UL,   /* 125  kbps: PRESDIV=19 16TQ SP=81.3% */
-    0x04490002UL    /* 1000 kbps: PRESDIV=4   8TQ SP=75.0% */
+    0x095A0007UL,   /* 500  kbps: PRESDIV=9  16TQ SP=81.3% (80MHz PE clock) */
+    0x135A0007UL,   /* 250  kbps: PRESDIV=19 16TQ SP=81.3% (80MHz PE clock) */
+    0x275A0007UL,   /* 125  kbps: PRESDIV=39 16TQ SP=81.3% (80MHz PE clock) */
+    0x09490002UL    /* 1000 kbps: PRESDIV=9   8TQ SP=75.0% (80MHz PE clock) */
 };
 
-static const uint8_t k_test_pat[8] =
-{
-    0xCAU, 0xFEU, 0xBAU, 0xBEU,
-    0xDEU, 0xADU, 0xBEU, 0xEFU
-};
+/* Index of the candidate at 2x this candidate's rate, or 0xFF if this is
+ * already the fastest candidate. Table is 500/250/125/1000 kbps, so
+ * 125->250(idx1), 250->500(idx0), 500->1000(idx3), 1000->none. Used to
+ * corroborate a candidate that just went clean against its harmonic
+ * double before trusting it, since a receiver listening at exactly half
+ * the real bus rate can repeatably (not just by rare chance) decode
+ * what looks like a valid half-rate frame out of real traffic when the
+ * actual IDs/data are simple/low-entropy. */
+static const uint8_t g_higher_idx[CAN1_BAUD_COUNT] = { 3U, 0U, 1U, 0xFFU };
 
 /* --------------------------------------------------------------------------
  * MODULE STATE
@@ -98,7 +153,12 @@ static Can1_Status_t      g_status;
 static Can1_State_t       g_state            = CAN1_STATE_DETECTING;
 static uint8_t            g_rate_idx         = 0U;
 static uint8_t            g_detect_ticks     = 0U;
+static uint8_t            g_confirm_count    = 0U;
+static uint8_t            g_corrob_active    = 0U;  /* 1 = testing the 2x-higher candidate */
+static uint8_t            g_corrob_attempted = 0U;  /* 1 = already tried corroborating this base candidate once */
+static uint8_t            g_corrob_base_idx  = 0U;  /* candidate being corroborated, valid only while g_corrob_active */
 static uint32_t           g_no_frame_ticks   = 0U;
+static uint8_t            g_ready_rxerr_base = 0U;  /* REC snapshot at lock time - see prv_CommitLock() */
 static uint32_t           g_task_cnt         = 0U;
 static uint32_t           g_rx_total         = 0U;
 static uint32_t           g_rx_dropped       = 0U;
@@ -233,10 +293,11 @@ static void prv_SetRxMailbox(void)
 /* ============================================================
  * APPLY BAUD RATE
  *
- * listen_only=1: LOM=1  (no ACK/error on bus, detection phase)
- * listen_only=0: LOM=0  (normal mode, after baud confirmed)
+ * Always NORMAL mode (LOM=0) - see the NORMAL MODE, NOT LOM note at the
+ * top of this file for why LOM can't be used on a single-external-node
+ * bench topology.
  * ============================================================ */
-static uint8_t prv_ApplyBaud(uint8_t idx, uint8_t listen_only)
+static uint8_t prv_ApplyBaud(uint8_t idx)
 {
     uint32_t ctrl1;
     uint8_t  i;
@@ -244,10 +305,10 @@ static uint8_t prv_ApplyBaud(uint8_t idx, uint8_t listen_only)
     if(idx >= CAN1_BAUD_COUNT) { return 0U; }
     if(prv_EnterFreeze() == 0U) { return 0U; }
 
-    /* CTRL1: timing base | bus clock | optional LOM
-     * LPB is NOT set here - only in the loopback test */
+    /* CTRL1: timing base | bus clock
+     * LPB is NOT set here - internal loopback cannot validate an
+     * external baud mismatch (see file header). */
     ctrl1 = g_ctrl1_base[idx] | CAN_CTRL1_CLKSRC_MASK;
-    if(listen_only != 0U) { ctrl1 |= CAN_CTRL1_LOM_MASK; }
 
     CAN1->CTRL1    = ctrl1;
     CAN1->RXMGMASK = 0U;       /* accept all IDs */
@@ -264,9 +325,8 @@ static uint8_t prv_ApplyBaud(uint8_t idx, uint8_t listen_only)
 
     if(prv_ExitFreeze() == 0U) { return 0U; }
 
-    RTT_LOG("[CAN1] Baud %lu kbps  %s  CTRL1=0x%08lX\r\n",
+    RTT_LOG("[CAN1] Baud %lu kbps  NORMAL  CTRL1=0x%08lX\r\n",
             (unsigned long)g_baud_kbps[idx],
-            (listen_only != 0U) ? "LOM" : "NORMAL",
             (unsigned long)ctrl1);
     return 1U;
 }
@@ -438,109 +498,6 @@ static uint8_t prv_HardwareInit(void)
 }
 
 /* ============================================================
- * LOOPBACK CONFIRMATION TEST
- *
- * WHY: Prevents "bus heavy" by ensuring baud is correct BEFORE
- * exiting Listen-Only mode.  In LPB=1 mode the TX pin is
- * HARDWARE-DISCONNECTED from the external CAN bus - zero impact.
- *
- * Flow:
- *   1. Enter freeze
- *   2. Set LPB=1, clear LOM, allow self-reception (SRXDIS=0)
- *   3. Exit freeze → CAN controller starts
- *   4. Transmit test frame into MB0
- *   5. Poll MB4 (RX) for echo  (max ~1ms at 125kbps)
- *   6. Re-enter freeze
- *   7. If pass: clear LPB, clear LOM → normal external mode
- *      If fail: clear LPB, set LOM  → back to listen-only
- *   8. Exit freeze
- *
- * Returns 1=baud confirmed, 0=no echo (wrong baud)
- * ============================================================ */
-static uint8_t prv_LoopbackConfirm(void)
-{
-    volatile uint32_t timeout;
-    uint8_t           ok = 0U;
-
-    RTT_LOG("[CAN1] Loopback test at %lu kbps\r\n",
-            (unsigned long)g_baud_kbps[g_rate_idx]);
-
-    /* Enter freeze */
-    if(prv_EnterFreeze() == 0U) { return 0U; }
-
-    /* Set LPB=1 (internal loopback, TX disconnected from bus)
-     * Clear LOM (loopback needs TX active internally)
-     * Allow self-reception: SRXDIS=0 */
-    CAN1->CTRL1 = (CAN1->CTRL1 & ~CAN_CTRL1_LOM_MASK) | CAN_CTRL1_LPB_MASK;
-    CAN1->MCR  &= ~CAN_MCR_SRXDIS_MASK;
-
-    /* Clear flags and re-arm RX mailbox */
-    CAN1->IFLAG1 = 0xFFFFFFFFUL;
-    prv_SetRxMailbox();
-
-    /* Setup TX mailbox (MB0) */
-    CAN1->RAMn[CAN1_TX_MB_BASE + 0U] = 0U;
-    CAN1->RAMn[CAN1_TX_MB_BASE + 1U] = (CAN1_TEST_ID << 18U);   /* Std ID */
-    CAN1->RAMn[CAN1_TX_MB_BASE + 2U] =
-        ((uint32_t)k_test_pat[0] << 24U) | ((uint32_t)k_test_pat[1] << 16U) |
-        ((uint32_t)k_test_pat[2] <<  8U) | (uint32_t)k_test_pat[3];
-    CAN1->RAMn[CAN1_TX_MB_BASE + 3U] =
-        ((uint32_t)k_test_pat[4] << 24U) | ((uint32_t)k_test_pat[5] << 16U) |
-        ((uint32_t)k_test_pat[6] <<  8U) | (uint32_t)k_test_pat[7];
-
-    /* Activate TX: CODE=0x0C (data frame), DLC=8 */
-    CAN1->RAMn[CAN1_TX_MB_BASE + 0U] =
-        (uint32_t)(CAN1_CODE_TX_DATA << 24U) |
-        ((uint32_t)CAN1_TEST_DLC << 16U);
-
-    /* Exit freeze → controller starts, will transmit MB0 */
-    if(prv_ExitFreeze() == 0U) { goto cleanup; }
-
-    /* Wait for echo in RX mailbox (MB4) */
-    timeout = 500000U;
-    while(((CAN1->IFLAG1 & CAN1_RX_MB_FLAG) == 0U) && (--timeout != 0U)) {}
-
-    if(timeout != 0U)
-    {
-        ok = 1U;
-        RTT_LOG("[CAN1] Loopback echo received OK\r\n");
-    }
-    else
-    {
-        RTT_LOG("[CAN1_ERR] Loopback no echo  ESR1=0x%08lX\r\n",
-                (unsigned long)CAN1->ESR1);
-    }
-
-    /* Clear RX flag */
-    CAN1->IFLAG1 = CAN1_RX_MB_FLAG | CAN1_TX_MB_FLAG;
-
-cleanup:
-    /* Return to appropriate mode */
-    if(prv_EnterFreeze() == 0U) { return 0U; }
-
-    if(ok != 0U)
-    {
-        /* CONFIRMED: clear LPB, clear LOM → normal external mode */
-        CAN1->CTRL1 &= ~(CAN_CTRL1_LPB_MASK | CAN_CTRL1_LOM_MASK);
-        CAN1->MCR   |= CAN_MCR_SRXDIS_MASK;   /* disable self-reception */
-        RTT_LOG("[CAN1] Entering NORMAL mode (LOM=0 LPB=0)\r\n");
-    }
-    else
-    {
-        /* NOT CONFIRMED: clear LPB, set LOM → stay listen-only */
-        CAN1->CTRL1 = (CAN1->CTRL1 & ~CAN_CTRL1_LPB_MASK) | CAN_CTRL1_LOM_MASK;
-        CAN1->MCR   |= CAN_MCR_SRXDIS_MASK;
-        RTT_LOG("[CAN1] Back to LOM (loopback failed)\r\n");
-    }
-
-    CAN1->IFLAG1 = 0xFFFFFFFFUL;
-    CAN1->ESR1   = 0xFFFFFFFFUL;
-    prv_ExitFreeze();
-
-    return ok;
-}
-
-/* ============================================================
  * RX FRAME AVAILABLE (polling)
  * ============================================================ */
 static uint8_t prv_RxAvailable(void)
@@ -611,14 +568,35 @@ static void prv_ProcessRx(void)
 /* ============================================================
  * START / RESTART DETECTION
  *
- * Always starts in LOM at 500kbps.
+ * Starts in NORMAL mode at 500kbps.
+ *
+ * WHY NORMAL AND NOT LOM (V0.0063):
+ *   In Listen-Only Mode FlexCAN never drives the CAN ACK bit. NXP
+ *   documents that a frame not acknowledged by ANY node on the bus is
+ *   not delivered to the receiving controller's mailbox - the sender's
+ *   missing-ACK error flag corrupts what would otherwise be the EOF
+ *   field, and the receiver discards the frame as a form violation even
+ *   though it already passed CRC. On a bench topology where this MCU is
+ *   the only OTHER node besides the CAN tool sending the traffic (no
+ *   third node to ACK), LOM means NO frame can ever be received,
+ *   regardless of candidate baud - IFLAG1 never sets, at any rate. This
+ *   project's own history (README.md V0.0052) already root-caused and
+ *   fixed exactly this; detection here uses active/normal mode so the
+ *   MCU provides the ACK. The tradeoff is that a wrong candidate is no
+ *   longer bus-silent (it will emit real ACK/error bits), but on a
+ *   test bench this is required for detection to work at all.
+ *
  * Called from: Init, bus-off recovery, idle timeout.
  * ============================================================ */
 static void prv_StartDetection(void)
 {
-    g_rate_idx       = 0U;
-    g_detect_ticks   = 0U;
-    g_no_frame_ticks = 0U;
+    g_rate_idx         = 0U;
+    g_detect_ticks     = 0U;
+    g_no_frame_ticks   = 0U;
+    g_confirm_count    = 0U;
+    g_corrob_active    = 0U;
+    g_corrob_attempted = 0U;
+    g_ready_rxerr_base = 0U;
 
     g_status.ready              = 0U;
     g_status.hw_ready           = 0U;
@@ -627,22 +605,22 @@ static void prv_StartDetection(void)
     g_status.bus_off            = 0U;
     g_status.error_passive      = 0U;
 
-    if(prv_ApplyBaud(0U, 1U) == 0U)
+    if(prv_ApplyBaud(0U) == 0U)
     {
         g_state = CAN1_STATE_DETECTING;
         return;
     }
 
     g_state = CAN1_STATE_DETECTING;
-    RTT_LOG("[CAN1] Detection start: 500kbps LOM (non-blocking)\r\n");
+    RTT_LOG("[CAN1] Detection start: 500kbps NORMAL (non-blocking)\r\n");
 }
 
 /* ============================================================
  * MOVE TO NEXT BAUD CANDIDATE
  *
  * Cycles 0→1→2→3→0→...
- * All in LOM.
- * NEVER exits to normal mode without loopback confirmation.
+ * All in NORMAL mode (see prv_StartDetection for why LOM can't be used
+ * on a single-external-node bench topology).
  * ============================================================ */
 static void prv_NextBaud(void)
 {
@@ -653,14 +631,17 @@ static void prv_NextBaud(void)
         g_rate_idx = 0U;
     }
 
-    g_detect_ticks = 0U;
+    g_detect_ticks     = 0U;
+    g_confirm_count    = 0U;
+    g_corrob_active    = 0U;
+    g_corrob_attempted = 0U;
 
     /*
      * Reconfigure CAN1 timing while in freeze mode.
      *
      * Detection mode must always use:
      *   - CLKSRC = 1
-     *   - LOM    = 1
+     *   - LOM    = 0  (NORMAL - see prv_StartDetection)
      *   - LPB    = 0
      */
     if(prv_EnterFreeze() == 0U)
@@ -671,8 +652,7 @@ static void prv_NextBaud(void)
 
     CAN1->CTRL1 =
         g_ctrl1_base[g_rate_idx] |
-        CAN_CTRL1_CLKSRC_MASK |
-        CAN_CTRL1_LOM_MASK;
+        CAN_CTRL1_CLKSRC_MASK;
 
     CAN1->RXMGMASK = 0U;
     CAN1->RX14MASK = 0U;
@@ -703,11 +683,85 @@ static void prv_NextBaud(void)
     }
 
     RTT_LOG(
-        "[CAN1] Next baud: %lu kbps  LOM  CTRL1=0x%08lX\r\n",
+        "[CAN1] Next baud: %lu kbps  NORMAL  CTRL1=0x%08lX\r\n",
         (unsigned long)g_baud_kbps[g_rate_idx],
         (unsigned long)CAN1->CTRL1
     );
 }
+
+/* ============================================================
+ * COMMIT: lock g_rate_idx as the detected baud and go READY.
+ *
+ * REC/TEC (CAN1->ECR) are hardware error counters that are NOT reset by
+ * freeze/CTRL1 changes - they simply keep accumulating from whatever
+ * happened during the whole scan (wrong candidates before this one,
+ * a failed corroboration attempt, etc). Snapshot REC here as a baseline
+ * so the READY RxErr-burst check (Can1_Task) judges NEW errors that
+ * happen after lock, not stale history from scanning. Without this, a
+ * scan that visited a few wrong candidates before locking can leave REC
+ * already near CAN1_RXERR_BURST, tripping an immediate false re-detect
+ * on the very first READY tick regardless of whether the locked baud is
+ * actually correct.
+ * ============================================================ */
+static void prv_CommitLock(void)
+{
+    if(prv_ApplyBaud(g_rate_idx) == 0U)
+    {
+        g_state = CAN1_STATE_ERROR;
+        return;
+    }
+
+    g_ready_rxerr_base = (uint8_t)((CAN1->ECR >> 8U) & 0xFFU);
+
+    g_status.detected_baud_kbps = g_baud_kbps[g_rate_idx];
+    g_status.ready              = 1U;
+    g_status.hw_ready           = 1U;
+    g_status.detecting          = 0U;
+
+    g_no_frame_ticks   = 0U;
+    g_confirm_count    = 0U;
+    g_corrob_active    = 0U;
+    g_corrob_attempted = 0U;
+
+    g_state = CAN1_STATE_READY;
+
+    RTT_LOG(
+        "[CAN1] BAUD LOCKED: %lu kbps (confirmed over %u clean frames, REC baseline=%u)\r\n",
+        (unsigned long)g_status.detected_baud_kbps,
+        (unsigned)CAN1_CONFIRM_FRAMES,
+        (unsigned)g_ready_rxerr_base
+    );
+}
+
+/* ============================================================
+ * CORROBORATION FAILED: the 2x-higher candidate produced no clean run
+ * (error, or silence for the whole window). Revert to the original
+ * lower candidate and require a FRESH clean run before locking it -
+ * per this project's own V0.0062 findings, the old pre-corroboration
+ * frames are not reused as-is. g_corrob_attempted stays set so this
+ * candidate is locked directly on its next clean run instead of
+ * corroborating a second time (bounds the DETECTING <-> corroborate
+ * cycle to one attempt).
+ * ============================================================ */
+static void prv_RevertCorroboration(void)
+{
+    RTT_LOG(
+        "[CAN1] %lu kbps did not corroborate - reverting to revalidate %lu kbps\r\n",
+        (unsigned long)g_baud_kbps[g_rate_idx],
+        (unsigned long)g_baud_kbps[g_corrob_base_idx]
+    );
+
+    g_rate_idx      = g_corrob_base_idx;
+    g_corrob_active = 0U;
+    g_confirm_count = 0U;
+    g_detect_ticks  = 0U;
+
+    if(prv_ApplyBaud(g_rate_idx) == 0U)
+    {
+        g_state = CAN1_STATE_ERROR;
+    }
+}
+
 /* ============================================================
  * PUBLIC: Can1_Init
  * ============================================================ */
@@ -717,7 +771,8 @@ void Can1_Init(void)
     RTT_LOG("[CAN1]  INIT  FlexCAN1  PTA12/PTA13  SHDN=PTB%u\r\n",
             (unsigned)CAN1_SHDN_PTB_PIN);
     RTT_LOG("[CAN1]  Auto-baud: 500/250/125/1000 kbps  (non-blocking)\r\n");
-    RTT_LOG("[CAN1]  LOM during detect, loopback confirm, then NORMAL\r\n");
+    RTT_LOG("[CAN1]  NORMAL mode throughout (ACK-capable) - required to receive"
+            " on a single-node bench\r\n");
     RTT_LOG("[CAN1] ============================================\r\n");
 
     g_can1_debug_step = 1U;
@@ -768,11 +823,11 @@ void Can1_Init(void)
  *
  * STATE MACHINE:
  *
- *   DETECTING: poll IFLAG1 each tick (non-blocking)
- *     Frame detected → prv_LoopbackConfirm() (brief ~1ms)
- *       Confirm OK  → READY state
- *       Confirm fail→ prv_NextBaud(), stay DETECTING
- *     No frame after CAN1_DETECT_TICKS → prv_NextBaud()
+ *   DETECTING: poll ESR1 + IFLAG1 each tick (non-blocking), NORMAL mode
+ *     Post-confirmation protocol error → prv_NextBaud() immediately
+ *     Clean frame → g_confirm_count++, extend dwell
+ *       g_confirm_count >= CAN1_CONFIRM_FRAMES → commit, READY
+ *     No frame after CAN1_DETECT_TICKS of silence → prv_NextBaud()
  *
  *   READY: process RX, monitor errors
  *     Bus-off or RxErr burst → prv_StartDetection()
@@ -792,34 +847,182 @@ void Can1_Task(void)
     /* ------------------------------------------------------------------ */
     if(g_state == CAN1_STATE_DETECTING)
     {
-        if(prv_RxAvailable())
+        uint32_t esr1      = CAN1->ESR1;
+        uint32_t ecr       = CAN1->ECR;
+        uint8_t  had_error = ((esr1 & CAN1_ERR_FLAGS_MASK) != 0U) ? 1U : 0U;
+
+        if(had_error)
+        {
+            CAN1->ESR1 = CAN1_ERR_FLAGS_MASK;
+        }
+
+        /* A protocol error AFTER we already have at least one clean frame
+         * at this candidate is real evidence the candidate is wrong (or an
+         * aliasing lock falling apart) - abandon immediately. A protocol
+         * error BEFORE any clean frame is normal boundary noise: NXP
+         * documents that switching bit-timing while the external
+         * transmitter may already be mid-frame produces transient
+         * BIT/FRM/STF errors that say nothing about whether this
+         * candidate's baud is correct. Ignoring those and relying on the
+         * existing silence timeout to reject a truly wrong candidate is
+         * what lets a candidate actually get a fair chance to receive a
+         * frame in the first place. */
+        if(had_error && (g_confirm_count > 0U))
         {
             CAN1->IFLAG1 = CAN1_RX_MB_FLAG;
 
-            g_status.detected_baud_kbps =
-                g_baud_kbps[g_rate_idx];
-
-            g_status.ready = 1U;
-            g_status.hw_ready = 1U;
-            g_status.detecting = 0U;
-
-            g_no_frame_ticks = 0U;
-
-            g_state = CAN1_STATE_READY;
-
             RTT_LOG(
-                "[CAN1] BAUD LOCKED: %lu kbps\r\n",
-                (unsigned long)g_status.detected_baud_kbps
+                "[CAN1] Bit error at %lu kbps after %u clean frame(s)"
+                " (ESR1=0x%08lX TxErr=%u RxErr=%u) - %s\r\n",
+                (unsigned long)g_baud_kbps[g_rate_idx],
+                (unsigned)g_confirm_count,
+                (unsigned long)esr1,
+                (unsigned)(ecr & 0xFFU), (unsigned)((ecr >> 8U) & 0xFFU),
+                g_corrob_active ? "corroboration failed" : "wrong baud, next candidate"
             );
 
+            if(g_corrob_active)
+            {
+                prv_RevertCorroboration();
+            }
+            else
+            {
+                prv_NextBaud();
+            }
             return;
+        }
+
+        if(prv_RxAvailable())
+        {
+            /* Capture CS/ID/data BEFORE re-arming (re-arm overwrites the CS
+             * word only, but read everything up front for a consistent
+             * snapshot). */
+            uint32_t base   = CAN1_RX_MB_WORD_BASE;
+            uint32_t cs     = CAN1->RAMn[base + 0U];
+            uint32_t idreg  = CAN1->RAMn[base + 1U];
+            uint32_t d0     = CAN1->RAMn[base + 2U];
+            uint32_t d1     = CAN1->RAMn[base + 3U];
+            uint8_t  dlc    = (uint8_t)((cs >> 16U) & 0x0FU);
+            uint8_t  ide    = (uint8_t)((cs >> 21U) & 1U);
+            uint32_t can_id = (ide != 0U) ? (idreg & 0x1FFFFFFFUL)
+                                           : ((idreg >> 18U) & 0x7FFUL);
+
+            if(dlc > 8U) { dlc = 8U; }
+
+            CAN1->IFLAG1 = CAN1_RX_MB_FLAG;
+            CAN1->RAMn[base + 0U] = CAN1_CS_RX_EMPTY;  /* re-arm */
+
+            RTT_LOG(
+                "[CAN1] Candidate %lu kbps RX: %s ID=0x%08lX DLC=%u"
+                "  %02X %02X %02X %02X %02X %02X %02X %02X\r\n",
+                (unsigned long)g_baud_kbps[g_rate_idx],
+                (ide != 0U) ? "EXT" : "STD",
+                (unsigned long)can_id, (unsigned)dlc,
+                (unsigned)(uint8_t)(d0 >> 24U), (unsigned)(uint8_t)(d0 >> 16U),
+                (unsigned)(uint8_t)(d0 >>  8U), (unsigned)(uint8_t)d0,
+                (unsigned)(uint8_t)(d1 >> 24U), (unsigned)(uint8_t)(d1 >> 16U),
+                (unsigned)(uint8_t)(d1 >>  8U), (unsigned)(uint8_t)d1
+            );
+
+            if(had_error)
+            {
+                /* Boundary noise raced with this frame before we have any
+                 * confirmation yet - don't count it, but don't penalize the
+                 * candidate either. Fall through to normal dwell timing. */
+                RTT_LOG(
+                    "[CAN1] Candidate %lu kbps: frame raced with boundary error"
+                    " (ESR1=0x%08lX) - ignored, not yet confirming\r\n",
+                    (unsigned long)g_baud_kbps[g_rate_idx],
+                    (unsigned long)esr1
+                );
+            }
+            else
+            {
+                g_confirm_count++;
+                g_detect_ticks = 0U;   /* traffic present - extend the dwell */
+
+                RTT_LOG(
+                    "[CAN1] Candidate %lu kbps: clean frame %u/%u\r\n",
+                    (unsigned long)g_baud_kbps[g_rate_idx],
+                    (unsigned)g_confirm_count, (unsigned)CAN1_CONFIRM_FRAMES
+                );
+
+                if(g_confirm_count < CAN1_CONFIRM_FRAMES)
+                {
+                    return;
+                }
+
+                if(g_corrob_active)
+                {
+                    /* The 2x-higher candidate ALSO went clean: it is the
+                     * real rate, and the lower candidate was a harmonic
+                     * alias of it. Lock the higher one. */
+                    RTT_LOG(
+                        "[CAN1] Corroboration CONFIRMED %lu kbps over the"
+                        " aliased %lu kbps candidate\r\n",
+                        (unsigned long)g_baud_kbps[g_rate_idx],
+                        (unsigned long)g_baud_kbps[g_corrob_base_idx]
+                    );
+                    prv_CommitLock();
+                    return;
+                }
+
+                if(g_corrob_attempted == 0U)
+                {
+                    uint8_t higher = g_higher_idx[g_rate_idx];
+
+                    if(higher != 0xFFU)
+                    {
+                        /* Don't lock yet - a candidate at exactly half the
+                         * real bus rate can repeatably (not just by rare
+                         * chance) decode simple/low-entropy real traffic as
+                         * a valid clean frame. Briefly test the 2x-higher
+                         * candidate before trusting this one. */
+                        g_corrob_active    = 1U;
+                        g_corrob_attempted = 1U;
+                        g_corrob_base_idx  = g_rate_idx;
+                        g_rate_idx         = higher;
+                        g_confirm_count    = 0U;
+                        g_detect_ticks     = 0U;
+
+                        if(prv_ApplyBaud(g_rate_idx) == 0U)
+                        {
+                            g_state = CAN1_STATE_ERROR;
+                            return;
+                        }
+
+                        RTT_LOG(
+                            "[CAN1] %lu kbps clean x%u - corroborating against"
+                            " %lu kbps before lock\r\n",
+                            (unsigned long)g_baud_kbps[g_corrob_base_idx],
+                            (unsigned)CAN1_CONFIRM_FRAMES,
+                            (unsigned long)g_baud_kbps[g_rate_idx]
+                        );
+                        return;
+                    }
+                }
+
+                /* Fastest candidate, or already corroborated once for this
+                 * candidate: commit directly. */
+                prv_CommitLock();
+                return;
+            }
         }
 
         g_detect_ticks++;
 
         if(g_detect_ticks >= CAN1_DETECT_TICKS)
         {
-            prv_NextBaud();
+            if(g_corrob_active)
+            {
+                /* Higher candidate produced no traffic within the window -
+                 * genuinely not the real rate. */
+                prv_RevertCorroboration();
+            }
+            else
+            {
+                prv_NextBaud();
+            }
         }
 
         return;
@@ -874,12 +1077,24 @@ void Can1_Task(void)
         return;
     }
 
-    if(g_status.rx_err_cnt > (uint32_t)CAN1_RXERR_BURST)
+    /* REC only ever increments on a genuine hardware-detected receive
+     * error and decrements by 1 per good frame - it is never reset by
+     * this driver between candidates, so judge NEW errors since lock
+     * (delta against the baseline captured in prv_CommitLock()), not the
+     * raw counter, which still carries scan-phase history. */
     {
-        RTT_LOG("[CAN1] RxErr burst (%u) - bus speed changed? Re-detecting\r\n",
-                (unsigned)g_status.rx_err_cnt);
-        prv_StartDetection();
-        return;
+        uint8_t rxerr_delta = (g_status.rx_err_cnt > g_ready_rxerr_base)
+                             ? (uint8_t)(g_status.rx_err_cnt - g_ready_rxerr_base)
+                             : 0U;
+
+        if(rxerr_delta > (uint8_t)CAN1_RXERR_BURST)
+        {
+            RTT_LOG("[CAN1] RxErr burst (+%u since lock, now %u) - bus speed"
+                    " changed? Re-detecting\r\n",
+                    (unsigned)rxerr_delta, (unsigned)g_status.rx_err_cnt);
+            prv_StartDetection();
+            return;
+        }
     }
 
     /* Periodic status */

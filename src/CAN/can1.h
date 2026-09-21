@@ -4,19 +4,35 @@
  * FlexCAN1 driver header.
  *
  * AUTO-BAUD ARCHITECTURE:
- *   Phase 1: DETECTING  (LOM=1, Listen-Only, no bus impact)
- *     - Try 500 / 250 / 125 / 1000 kbps, 200ms each
- *     - Non-blocking: IFLAG1 polled each Can1_Task() call
- *     - On frame detected → Phase 2
- *     - No frame after all 4 → restart cycle (never exit LOM untested)
+ *   Phase 1: DETECTING  (NORMAL mode, LOM=0)
+ *     - Try 500 / 250 / 125 / 1000 kbps
+ *     - Non-blocking: IFLAG1 + ESR1 polled each Can1_Task() call
+ *     - A protocol error (stuff/form/CRC/bit) AFTER at least one clean
+ *       frame at this candidate → wrong baud, hop to next immediately
+ *     - CAN1_CONFIRM_FRAMES consecutive error-free frames at the SAME
+ *       candidate → Phase 2
+ *     - No frame after 200ms of silence → next candidate
+ *     - No candidate confirmed after all 4 → restart cycle
  *
- *   Phase 2: CONFIRMING  (LPB=1 internal loopback, bus completely isolated)
- *     - TX disconnected from external bus (hardware guarantee, no bus impact)
- *     - Send test pattern, verify echo in RX mailbox
- *     - Pass → Phase 3 (normal mode)
- *     - Fail → next baud candidate, back to Phase 1
+ *   NOTE: detection must run in NORMAL mode, not Listen-Only. In LOM,
+ *   FlexCAN never drives the CAN ACK bit; on a bench where this MCU is
+ *   the only OTHER node besides the tool sending test traffic, nobody
+ *   acks the frame, the sender's missing-ACK error corrupts the EOF
+ *   field, and the receiver discards the frame as a form violation even
+ *   though CRC already passed - IFLAG1 then never sets, at ANY candidate,
+ *   no matter how correct the timing table is. This project's own history
+ *   (README.md V0.0052) already root-caused and fixed this; do not
+ *   reintroduce LOM here. An internal FlexCAN loopback (LPB=1) "confirm"
+ *   step was also previously tried and removed - it cannot detect an
+ *   external baud mismatch since TX and the looped-back RX share the same
+ *   clock config and always pass regardless of candidate. The real guard
+ *   against a false lock (e.g. 250 kbps aliasing to "125 kbps detected")
+ *   is the multi-frame/error-gated check above.
  *
- *   Phase 3: READY  (LOM=0, LPB=0, normal CAN operation)
+ *   Phase 2 (commit): re-apply the confirmed candidate for a clean re-arm,
+ *     then go READY.
+ *
+ *   Phase 3: READY  (NORMAL mode, unchanged)
  *     - Receive and forward frames
  *     - Bus-off or RX error burst → back to Phase 1
  *     - No frames for 10s → back to Phase 1
@@ -47,8 +63,13 @@ extern "C" {
 
 /* Auto-baud timing: task period × ticks = time per candidate */
 #define CAN1_TASK_PERIOD_MS         50U
-#define CAN1_DETECT_TICKS           4U    /* 4 × 50ms = 200ms per baud */
+#define CAN1_DETECT_TICKS           4U    /* 4 × 50ms = 200ms of silence → next candidate */
 #define CAN1_NO_FRAME_LIMIT         200U  /* 200 × 50ms = 10s idle → re-detect */
+#define CAN1_CONFIRM_FRAMES         3U    /* consecutive error-free frames required to lock a candidate */
+
+/* Kept for compatibility with main.c's bench-analysis preprocessor
+ * conditionals from the V0.0062 lineage; this driver has no analysis mode. */
+#define CAN1_FULL_ANALYSIS_MODE     0U
 
 /* Baud rate candidates */
 #define CAN1_BAUD_500K              0U
@@ -75,13 +96,17 @@ extern "C" {
 #define CAN1_NVIC_IRQ_MASK          (CAN1_OR_IRQ_MASK | CAN1_ERROR_IRQ_MASK | CAN1_MB_IRQ_MASK)
 /* = 0x01600000 */
 
+/* ESR1 W1C bits used by the safety-net handlers in can1_irq.c */
+#define CAN1_ESR_ERRINT_BIT         (1UL << 1U)
+#define CAN1_ESR_BOFFINT_BIT        (1UL << 2U)
+
 /* --------------------------------------------------------------------------
  * STATE MACHINE
  * -------------------------------------------------------------------------- */
 
 typedef enum
 {
-    CAN1_STATE_DETECTING = 0,  /* LOM active, scanning for frames */
+    CAN1_STATE_DETECTING = 0,  /* NORMAL mode, scanning for frames */
     CAN1_STATE_READY,          /* Baud confirmed, normal reception */
     CAN1_STATE_ERROR           /* Unrecoverable - re-detecting     */
 } Can1_State_t;
