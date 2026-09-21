@@ -1347,43 +1347,53 @@ void Can2_Task(void)
     )
     {
         uint32_t esr1;
+        uint8_t  had_error;
 
 
         /*
-         * A real protocol error proves this candidate baud is
-         * wrong - candidates 1000/500/250/125 are exact 2x
-         * multiples of each other, so a receiver listening at
-         * half the real bus rate can occasionally build what
-         * looks like one short, CRC-valid frame out of real
-         * traffic. Bail out immediately instead of trusting a
-         * single lucky frame.
+         * A protocol error AFTER we already have at least one clean
+         * frame at this candidate is real evidence the candidate is
+         * wrong (or an aliasing lock falling apart) - candidates
+         * 1000/500/250/125 are exact 2x multiples of each other, so a
+         * receiver listening at half the real bus rate can
+         * occasionally build what looks like one short, CRC-valid
+         * frame out of real traffic.
+         *
+         * A protocol error BEFORE any clean frame is normal boundary
+         * noise: switching bit-timing while the external transmitter
+         * may already be mid-frame produces transient BIT/FRM/STF
+         * errors that say nothing about whether this candidate's baud
+         * is correct. Ignoring those and relying on the existing
+         * silence timeout to reject a truly wrong candidate is what
+         * lets a candidate actually get a fair chance to receive a
+         * frame in the first place.
          */
 
         esr1 =
             CAN0->ESR1;
 
+        had_error =
+            ((esr1 & CAN2_ERR_FLAGS_MASK) != 0U) ? 1U : 0U;
 
-        if(
-            (esr1 &
-             CAN2_ERR_FLAGS_MASK)
-            != 0U
-        )
+        if(had_error)
         {
             CAN0->ESR1 =
                 CAN2_ERR_FLAGS_MASK;
+        }
 
+        if(had_error && (g_can2_confirm_count > 0U))
+        {
             CAN0->IFLAG1 =
                 CAN2_RX_MB_FLAG;
 
-            g_can2_confirm_count =
-                0U;
-
             RTT_LOG(
-                "[CAN2] Bit error at %lu kbps (ESR1=0x%08lX) - wrong baud, next candidate\r\n",
+                "[CAN2] Bit error at %lu kbps after %u clean frame(s) (ESR1=0x%08lX)"
+                " - wrong baud, next candidate\r\n",
                 (unsigned long)
                 g_can2_baud_kbps[
                     g_can2_baud_index
                 ],
+                (unsigned)g_can2_confirm_count,
                 (unsigned long)esr1
             );
 
@@ -1405,6 +1415,24 @@ void Can2_Task(void)
         )
         {
             g_can2_status.rx_count++;
+
+            if(had_error)
+            {
+                /* Boundary noise raced with this frame before we have
+                 * any confirmation yet - don't count it, but don't
+                 * penalize the candidate either. */
+                RTT_LOG(
+                    "[CAN2] Candidate %lu kbps: frame raced with boundary error"
+                    " (ESR1=0x%08lX) - ignored, not yet confirming\r\n",
+                    (unsigned long)
+                    g_can2_baud_kbps[
+                        g_can2_baud_index
+                    ],
+                    (unsigned long)esr1
+                );
+
+                return;
+            }
 
             g_can2_confirm_count++;
 

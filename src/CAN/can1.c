@@ -707,21 +707,34 @@ void Can1_Task(void)
     /* ------------------------------------------------------------------ */
     if(g_state == CAN1_STATE_DETECTING)
     {
-        uint32_t esr1 = CAN1->ESR1;
+        uint32_t esr1      = CAN1->ESR1;
+        uint8_t  had_error = ((esr1 & CAN1_ERR_FLAGS_MASK) != 0U) ? 1U : 0U;
 
-        /* A real protocol error proves this candidate baud is wrong -
-         * abandon it immediately instead of waiting out the dwell timer,
-         * and distrust any frame that may have raced in during the same
-         * tick. This is what actually distinguishes a true baud match
-         * from a half-rate aliasing false-positive. */
-        if((esr1 & CAN1_ERR_FLAGS_MASK) != 0U)
+        if(had_error)
         {
-            CAN1->ESR1   = CAN1_ERR_FLAGS_MASK;
+            CAN1->ESR1 = CAN1_ERR_FLAGS_MASK;
+        }
+
+        /* A protocol error AFTER we already have at least one clean frame
+         * at this candidate is real evidence the candidate is wrong (or an
+         * aliasing lock falling apart) - abandon immediately. A protocol
+         * error BEFORE any clean frame is normal boundary noise: NXP
+         * documents that switching bit-timing while the external
+         * transmitter may already be mid-frame produces transient
+         * BIT/FRM/STF errors that say nothing about whether this
+         * candidate's baud is correct. Ignoring those and relying on the
+         * existing silence timeout to reject a truly wrong candidate is
+         * what lets a candidate actually get a fair chance to receive a
+         * frame in the first place. */
+        if(had_error && (g_confirm_count > 0U))
+        {
             CAN1->IFLAG1 = CAN1_RX_MB_FLAG;
 
             RTT_LOG(
-                "[CAN1] Bit error at %lu kbps (ESR1=0x%08lX) - wrong baud, next candidate\r\n",
+                "[CAN1] Bit error at %lu kbps after %u clean frame(s) (ESR1=0x%08lX)"
+                " - wrong baud, next candidate\r\n",
                 (unsigned long)g_baud_kbps[g_rate_idx],
+                (unsigned)g_confirm_count,
                 (unsigned long)esr1
             );
 
@@ -734,46 +747,61 @@ void Can1_Task(void)
             CAN1->IFLAG1 = CAN1_RX_MB_FLAG;
             CAN1->RAMn[CAN1_RX_MB_WORD_BASE + 0U] = CAN1_CS_RX_EMPTY;  /* re-arm */
 
-            g_confirm_count++;
-            g_detect_ticks = 0U;   /* traffic present - extend the dwell */
-
-            RTT_LOG(
-                "[CAN1] Candidate %lu kbps: clean frame %u/%u\r\n",
-                (unsigned long)g_baud_kbps[g_rate_idx],
-                (unsigned)g_confirm_count, (unsigned)CAN1_CONFIRM_FRAMES
-            );
-
-            if(g_confirm_count < CAN1_CONFIRM_FRAMES)
+            if(had_error)
             {
+                /* Boundary noise raced with this frame before we have any
+                 * confirmation yet - don't count it, but don't penalize the
+                 * candidate either. Fall through to normal dwell timing. */
+                RTT_LOG(
+                    "[CAN1] Candidate %lu kbps: frame raced with boundary error"
+                    " (ESR1=0x%08lX) - ignored, not yet confirming\r\n",
+                    (unsigned long)g_baud_kbps[g_rate_idx],
+                    (unsigned long)esr1
+                );
+            }
+            else
+            {
+                g_confirm_count++;
+                g_detect_ticks = 0U;   /* traffic present - extend the dwell */
+
+                RTT_LOG(
+                    "[CAN1] Candidate %lu kbps: clean frame %u/%u\r\n",
+                    (unsigned long)g_baud_kbps[g_rate_idx],
+                    (unsigned)g_confirm_count, (unsigned)CAN1_CONFIRM_FRAMES
+                );
+
+                if(g_confirm_count < CAN1_CONFIRM_FRAMES)
+                {
+                    return;
+                }
+
+                /* N consecutive error-free frames at this candidate: commit.
+                 * Re-apply the same baud with LOM cleared -> real external
+                 * (ACK-capable) mode. */
+                if(prv_ApplyBaud(g_rate_idx, 0U) == 0U)
+                {
+                    g_state = CAN1_STATE_ERROR;
+                    return;
+                }
+
+                g_status.detected_baud_kbps = g_baud_kbps[g_rate_idx];
+                g_status.ready              = 1U;
+                g_status.hw_ready           = 1U;
+                g_status.detecting          = 0U;
+
+                g_no_frame_ticks = 0U;
+                g_confirm_count  = 0U;
+
+                g_state = CAN1_STATE_READY;
+
+                RTT_LOG(
+                    "[CAN1] BAUD LOCKED: %lu kbps (confirmed over %u clean frames)\r\n",
+                    (unsigned long)g_status.detected_baud_kbps,
+                    (unsigned)CAN1_CONFIRM_FRAMES
+                );
+
                 return;
             }
-
-            /* N consecutive error-free frames at this candidate: commit.
-             * Re-apply the same baud with LOM cleared -> real external
-             * (ACK-capable) mode. */
-            if(prv_ApplyBaud(g_rate_idx, 0U) == 0U)
-            {
-                g_state = CAN1_STATE_ERROR;
-                return;
-            }
-
-            g_status.detected_baud_kbps = g_baud_kbps[g_rate_idx];
-            g_status.ready              = 1U;
-            g_status.hw_ready           = 1U;
-            g_status.detecting          = 0U;
-
-            g_no_frame_ticks = 0U;
-            g_confirm_count  = 0U;
-
-            g_state = CAN1_STATE_READY;
-
-            RTT_LOG(
-                "[CAN1] BAUD LOCKED: %lu kbps (confirmed over %u clean frames)\r\n",
-                (unsigned long)g_status.detected_baud_kbps,
-                (unsigned)CAN1_CONFIRM_FRAMES
-            );
-
-            return;
         }
 
         g_detect_ticks++;

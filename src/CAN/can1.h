@@ -61,6 +61,10 @@ extern "C" {
 #define CAN1_NO_FRAME_LIMIT         200U  /* 200 × 50ms = 10s idle → re-detect */
 #define CAN1_CONFIRM_FRAMES         3U    /* consecutive error-free frames required to lock a candidate */
 
+/* Kept for compatibility with main.c's bench-analysis preprocessor
+ * conditionals from the V0.0062 lineage; this driver has no analysis mode. */
+#define CAN1_FULL_ANALYSIS_MODE     0U
+
 /* Baud rate candidates */
 #define CAN1_BAUD_500K              0U
 #define CAN1_BAUD_250K              1U
@@ -85,6 +89,10 @@ extern "C" {
 #define CAN1_MB_IRQ_MASK            (1UL << (CAN1_MB_IRQn   % 32U))  /* bit 24 */
 #define CAN1_NVIC_IRQ_MASK          (CAN1_OR_IRQ_MASK | CAN1_ERROR_IRQ_MASK | CAN1_MB_IRQ_MASK)
 /* = 0x01600000 */
+
+/* ESR1 W1C bits used by the safety-net handlers in can1_irq.c */
+#define CAN1_ESR_ERRINT_BIT         (1UL << 1U)
+#define CAN1_ESR_BOFFINT_BIT        (1UL << 2U)
 
 /* --------------------------------------------------------------------------
  * STATE MACHINE
