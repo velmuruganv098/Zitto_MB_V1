@@ -1,8 +1,11 @@
 # ---- S32 Design Studio / Eclipse CDT build output ----
-Debug_*/
-Release_*/
-Debug/
-Release/
+# Anchored to repo root: an unanchored "Debug/" also matches src/DEBUG/
+# case-insensitively on Windows, which was silently hiding the
+# DEBUG/debug_rtt.* logging sources from git.
+/Debug_*/
+/Release_*/
+/Debug/
+/Release/
 *.o
 *.d
 *.su

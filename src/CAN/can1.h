@@ -5,18 +5,28 @@
  *
  * AUTO-BAUD ARCHITECTURE:
  *   Phase 1: DETECTING  (LOM=1, Listen-Only, no bus impact)
- *     - Try 500 / 250 / 125 / 1000 kbps, 200ms each
- *     - Non-blocking: IFLAG1 polled each Can1_Task() call
- *     - On frame detected → Phase 2
- *     - No frame after all 4 → restart cycle (never exit LOM untested)
+ *     - Try 500 / 250 / 125 / 1000 kbps
+ *     - Non-blocking: IFLAG1 + ESR1 polled each Can1_Task() call
+ *     - ANY protocol error (stuff/form/CRC/bit) at this candidate →
+ *       wrong baud, hop to next candidate immediately
+ *     - CAN1_CONFIRM_FRAMES consecutive error-free frames at the SAME
+ *       candidate → Phase 2
+ *     - No frame after 200ms of silence → next candidate
+ *     - No candidate confirmed after all 4 → restart cycle (never exit
+ *       LOM untested)
  *
- *   Phase 2: CONFIRMING  (LPB=1 internal loopback, bus completely isolated)
- *     - TX disconnected from external bus (hardware guarantee, no bus impact)
- *     - Send test pattern, verify echo in RX mailbox
- *     - Pass → Phase 3 (normal mode)
- *     - Fail → next baud candidate, back to Phase 1
+ *   NOTE: an internal FlexCAN loopback (LPB=1) test was previously used
+ *   here as a "confirm" step, but it cannot detect an external baud
+ *   mismatch - TX and the looped-back RX share the same clock config, so
+ *   it always passes regardless of candidate. It has been replaced by the
+ *   multi-frame/error-gated check above, which is what actually catches a
+ *   wrong candidate (this is what let 250 kbps traffic alias to a false
+ *   "125 kbps detected" lock).
  *
- *   Phase 3: READY  (LOM=0, LPB=0, normal CAN operation)
+ *   Phase 2 (commit): re-apply the confirmed candidate with LOM cleared
+ *     -> real external (ACK-capable) mode, then go READY.
+ *
+ *   Phase 3: READY  (LOM=0, normal CAN operation)
  *     - Receive and forward frames
  *     - Bus-off or RX error burst → back to Phase 1
  *     - No frames for 10s → back to Phase 1
@@ -47,8 +57,9 @@ extern "C" {
 
 /* Auto-baud timing: task period × ticks = time per candidate */
 #define CAN1_TASK_PERIOD_MS         50U
-#define CAN1_DETECT_TICKS           4U    /* 4 × 50ms = 200ms per baud */
+#define CAN1_DETECT_TICKS           4U    /* 4 × 50ms = 200ms of silence → next candidate */
 #define CAN1_NO_FRAME_LIMIT         200U  /* 200 × 50ms = 10s idle → re-detect */
+#define CAN1_CONFIRM_FRAMES         3U    /* consecutive error-free frames required to lock a candidate */
 
 /* Baud rate candidates */
 #define CAN1_BAUD_500K              0U

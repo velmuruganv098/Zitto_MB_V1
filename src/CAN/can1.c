@@ -3,7 +3,7 @@
  *
  * FlexCAN1 driver with full auto-baud architecture:
  *
- *   DETECTING → loopback CONFIRMING → READY → (error) → DETECTING
+ *   DETECTING (LOM) → CONFIRMING (N clean frames, error-gated) → READY → (error) → DETECTING
  *
  * CLOCK SOURCE: CLKSRC=1  (bus clock = 40MHz)
  *   - Always running after clock_init_80mhz() in main()
@@ -15,10 +15,32 @@
  *   Index 2:  125 kbps  PRESDIV=19  SP=81.25%
  *   Index 3: 1000 kbps  PRESDIV=4   SP=75.00%  (8 TQ total)
  *
+ * BAUD MISDETECTION FIX (V0.0063):
+ *   The previous "confirm" step used FlexCAN internal loopback (LPB=1),
+ *   which only proves the module can talk to itself using whatever
+ *   PRESDIV/PSEG it is currently configured with - TX and the looped-back
+ *   RX share the exact same (possibly wrong) clock config, so it ALWAYS
+ *   passes and can never detect an external bit-rate mismatch. Worse, the
+ *   DETECTING state actually never called it at all: any single frame that
+ *   happened to pass CRC while listening at the WRONG candidate baud was
+ *   enough to lock in. Because the candidate table (1000/500/250/125) is
+ *   a chain of exact 2x multiples, a receiver listening at half the real
+ *   bus rate can occasionally reconstruct what looks like a short,
+ *   CRC-valid frame out of real traffic - this is what caused 250 kbps
+ *   traffic to intermittently latch as "125 kbps detected".
+ *
+ *   Fix: every tick in DETECTING, ESR1 is checked for real protocol
+ *   errors (STFERR/FRMERR/CRCERR/BIT0ERR/BIT1ERR) FIRST. Any such error
+ *   means this candidate is wrong and we hop to the next one immediately
+ *   instead of waiting out the dwell timer. Only after CAN1_CONFIRM_FRAMES
+ *   consecutive frames arrive at the SAME candidate with zero protocol
+ *   errors do we commit: re-apply the same baud with LOM cleared (real
+ *   external ACK-capable mode) and go READY. A stray aliased frame no
+ *   longer locks the baud by itself.
+ *
  * BUS HEAVY FIX:
  *   - Detection phase ALWAYS uses LOM=1  (no ACK, no error frames)
- *   - Loopback confirm with LPB=1  (TX disconnected from external bus)
- *   - Normal mode ONLY entered AFTER loopback confirms baud
+ *   - Normal mode ONLY entered AFTER N consecutive error-free frames
  *   - No "fallback" to normal mode on silent bus (infinite LOM scan)
  */
 
@@ -46,19 +68,18 @@ extern volatile uint32_t g_can1_debug_step;
 /* Mailbox CODE values */
 #define CAN1_CODE_RX_EMPTY      0x04U
 #define CAN1_CS_RX_EMPTY        ((uint32_t)CAN1_CODE_RX_EMPTY << 24U)
-#define CAN1_CODE_TX_DATA       0x0CU
-
-/* TX mailbox for loopback test */
-#define CAN1_MB_TX              0U
-#define CAN1_TX_MB_BASE         (CAN1_MB_TX * 4U)
-#define CAN1_TX_MB_FLAG         (1UL << CAN1_MB_TX)
-
-/* Test frame */
-#define CAN1_TEST_ID            0x123U
-#define CAN1_TEST_DLC           8U
 
 /* Error burst threshold before re-detection */
 #define CAN1_RXERR_BURST        32U
+
+/* Real CAN protocol errors (not counter-overflow warnings) that prove the
+ * currently-selected candidate baud does NOT match the bus. Checked every
+ * tick during DETECTING so a wrong candidate is abandoned immediately
+ * instead of waiting out the dwell timer. ACKERR is excluded: in LOM the
+ * node never transmits, so it can never see its own ACK fail. */
+#define CAN1_ERR_FLAGS_MASK   (CAN_ESR1_STFERR_MASK | CAN_ESR1_FRMERR_MASK | \
+                                CAN_ESR1_CRCERR_MASK | CAN_ESR1_BIT0ERR_MASK | \
+                                CAN_ESR1_BIT1ERR_MASK)
 
 /* --------------------------------------------------------------------------
  * BAUD RATE TABLES  (40MHz bus clock, CLKSRC=1 is OR'd in at runtime)
@@ -83,12 +104,6 @@ static const uint32_t g_ctrl1_base[CAN1_BAUD_COUNT] =
     0x04490002UL    /* 1000 kbps: PRESDIV=4   8TQ SP=75.0% */
 };
 
-static const uint8_t k_test_pat[8] =
-{
-    0xCAU, 0xFEU, 0xBAU, 0xBEU,
-    0xDEU, 0xADU, 0xBEU, 0xEFU
-};
-
 /* --------------------------------------------------------------------------
  * MODULE STATE
  * -------------------------------------------------------------------------- */
@@ -98,6 +113,7 @@ static Can1_Status_t      g_status;
 static Can1_State_t       g_state            = CAN1_STATE_DETECTING;
 static uint8_t            g_rate_idx         = 0U;
 static uint8_t            g_detect_ticks     = 0U;
+static uint8_t            g_confirm_count    = 0U;
 static uint32_t           g_no_frame_ticks   = 0U;
 static uint32_t           g_task_cnt         = 0U;
 static uint32_t           g_rx_total         = 0U;
@@ -438,109 +454,6 @@ static uint8_t prv_HardwareInit(void)
 }
 
 /* ============================================================
- * LOOPBACK CONFIRMATION TEST
- *
- * WHY: Prevents "bus heavy" by ensuring baud is correct BEFORE
- * exiting Listen-Only mode.  In LPB=1 mode the TX pin is
- * HARDWARE-DISCONNECTED from the external CAN bus - zero impact.
- *
- * Flow:
- *   1. Enter freeze
- *   2. Set LPB=1, clear LOM, allow self-reception (SRXDIS=0)
- *   3. Exit freeze → CAN controller starts
- *   4. Transmit test frame into MB0
- *   5. Poll MB4 (RX) for echo  (max ~1ms at 125kbps)
- *   6. Re-enter freeze
- *   7. If pass: clear LPB, clear LOM → normal external mode
- *      If fail: clear LPB, set LOM  → back to listen-only
- *   8. Exit freeze
- *
- * Returns 1=baud confirmed, 0=no echo (wrong baud)
- * ============================================================ */
-static uint8_t prv_LoopbackConfirm(void)
-{
-    volatile uint32_t timeout;
-    uint8_t           ok = 0U;
-
-    RTT_LOG("[CAN1] Loopback test at %lu kbps\r\n",
-            (unsigned long)g_baud_kbps[g_rate_idx]);
-
-    /* Enter freeze */
-    if(prv_EnterFreeze() == 0U) { return 0U; }
-
-    /* Set LPB=1 (internal loopback, TX disconnected from bus)
-     * Clear LOM (loopback needs TX active internally)
-     * Allow self-reception: SRXDIS=0 */
-    CAN1->CTRL1 = (CAN1->CTRL1 & ~CAN_CTRL1_LOM_MASK) | CAN_CTRL1_LPB_MASK;
-    CAN1->MCR  &= ~CAN_MCR_SRXDIS_MASK;
-
-    /* Clear flags and re-arm RX mailbox */
-    CAN1->IFLAG1 = 0xFFFFFFFFUL;
-    prv_SetRxMailbox();
-
-    /* Setup TX mailbox (MB0) */
-    CAN1->RAMn[CAN1_TX_MB_BASE + 0U] = 0U;
-    CAN1->RAMn[CAN1_TX_MB_BASE + 1U] = (CAN1_TEST_ID << 18U);   /* Std ID */
-    CAN1->RAMn[CAN1_TX_MB_BASE + 2U] =
-        ((uint32_t)k_test_pat[0] << 24U) | ((uint32_t)k_test_pat[1] << 16U) |
-        ((uint32_t)k_test_pat[2] <<  8U) | (uint32_t)k_test_pat[3];
-    CAN1->RAMn[CAN1_TX_MB_BASE + 3U] =
-        ((uint32_t)k_test_pat[4] << 24U) | ((uint32_t)k_test_pat[5] << 16U) |
-        ((uint32_t)k_test_pat[6] <<  8U) | (uint32_t)k_test_pat[7];
-
-    /* Activate TX: CODE=0x0C (data frame), DLC=8 */
-    CAN1->RAMn[CAN1_TX_MB_BASE + 0U] =
-        (uint32_t)(CAN1_CODE_TX_DATA << 24U) |
-        ((uint32_t)CAN1_TEST_DLC << 16U);
-
-    /* Exit freeze → controller starts, will transmit MB0 */
-    if(prv_ExitFreeze() == 0U) { goto cleanup; }
-
-    /* Wait for echo in RX mailbox (MB4) */
-    timeout = 500000U;
-    while(((CAN1->IFLAG1 & CAN1_RX_MB_FLAG) == 0U) && (--timeout != 0U)) {}
-
-    if(timeout != 0U)
-    {
-        ok = 1U;
-        RTT_LOG("[CAN1] Loopback echo received OK\r\n");
-    }
-    else
-    {
-        RTT_LOG("[CAN1_ERR] Loopback no echo  ESR1=0x%08lX\r\n",
-                (unsigned long)CAN1->ESR1);
-    }
-
-    /* Clear RX flag */
-    CAN1->IFLAG1 = CAN1_RX_MB_FLAG | CAN1_TX_MB_FLAG;
-
-cleanup:
-    /* Return to appropriate mode */
-    if(prv_EnterFreeze() == 0U) { return 0U; }
-
-    if(ok != 0U)
-    {
-        /* CONFIRMED: clear LPB, clear LOM → normal external mode */
-        CAN1->CTRL1 &= ~(CAN_CTRL1_LPB_MASK | CAN_CTRL1_LOM_MASK);
-        CAN1->MCR   |= CAN_MCR_SRXDIS_MASK;   /* disable self-reception */
-        RTT_LOG("[CAN1] Entering NORMAL mode (LOM=0 LPB=0)\r\n");
-    }
-    else
-    {
-        /* NOT CONFIRMED: clear LPB, set LOM → stay listen-only */
-        CAN1->CTRL1 = (CAN1->CTRL1 & ~CAN_CTRL1_LPB_MASK) | CAN_CTRL1_LOM_MASK;
-        CAN1->MCR   |= CAN_MCR_SRXDIS_MASK;
-        RTT_LOG("[CAN1] Back to LOM (loopback failed)\r\n");
-    }
-
-    CAN1->IFLAG1 = 0xFFFFFFFFUL;
-    CAN1->ESR1   = 0xFFFFFFFFUL;
-    prv_ExitFreeze();
-
-    return ok;
-}
-
-/* ============================================================
  * RX FRAME AVAILABLE (polling)
  * ============================================================ */
 static uint8_t prv_RxAvailable(void)
@@ -619,6 +532,7 @@ static void prv_StartDetection(void)
     g_rate_idx       = 0U;
     g_detect_ticks   = 0U;
     g_no_frame_ticks = 0U;
+    g_confirm_count  = 0U;
 
     g_status.ready              = 0U;
     g_status.hw_ready           = 0U;
@@ -653,7 +567,8 @@ static void prv_NextBaud(void)
         g_rate_idx = 0U;
     }
 
-    g_detect_ticks = 0U;
+    g_detect_ticks  = 0U;
+    g_confirm_count = 0U;
 
     /*
      * Reconfigure CAN1 timing while in freeze mode.
@@ -768,11 +683,11 @@ void Can1_Init(void)
  *
  * STATE MACHINE:
  *
- *   DETECTING: poll IFLAG1 each tick (non-blocking)
- *     Frame detected → prv_LoopbackConfirm() (brief ~1ms)
- *       Confirm OK  → READY state
- *       Confirm fail→ prv_NextBaud(), stay DETECTING
- *     No frame after CAN1_DETECT_TICKS → prv_NextBaud()
+ *   DETECTING: poll ESR1 + IFLAG1 each tick (non-blocking)
+ *     Protocol error at this candidate → prv_NextBaud() immediately
+ *     Clean frame → g_confirm_count++, extend dwell
+ *       g_confirm_count >= CAN1_CONFIRM_FRAMES → commit (LOM cleared), READY
+ *     No frame after CAN1_DETECT_TICKS of silence → prv_NextBaud()
  *
  *   READY: process RX, monitor errors
  *     Bus-off or RxErr burst → prv_StartDetection()
@@ -792,24 +707,70 @@ void Can1_Task(void)
     /* ------------------------------------------------------------------ */
     if(g_state == CAN1_STATE_DETECTING)
     {
+        uint32_t esr1 = CAN1->ESR1;
+
+        /* A real protocol error proves this candidate baud is wrong -
+         * abandon it immediately instead of waiting out the dwell timer,
+         * and distrust any frame that may have raced in during the same
+         * tick. This is what actually distinguishes a true baud match
+         * from a half-rate aliasing false-positive. */
+        if((esr1 & CAN1_ERR_FLAGS_MASK) != 0U)
+        {
+            CAN1->ESR1   = CAN1_ERR_FLAGS_MASK;
+            CAN1->IFLAG1 = CAN1_RX_MB_FLAG;
+
+            RTT_LOG(
+                "[CAN1] Bit error at %lu kbps (ESR1=0x%08lX) - wrong baud, next candidate\r\n",
+                (unsigned long)g_baud_kbps[g_rate_idx],
+                (unsigned long)esr1
+            );
+
+            prv_NextBaud();
+            return;
+        }
+
         if(prv_RxAvailable())
         {
             CAN1->IFLAG1 = CAN1_RX_MB_FLAG;
+            CAN1->RAMn[CAN1_RX_MB_WORD_BASE + 0U] = CAN1_CS_RX_EMPTY;  /* re-arm */
 
-            g_status.detected_baud_kbps =
-                g_baud_kbps[g_rate_idx];
+            g_confirm_count++;
+            g_detect_ticks = 0U;   /* traffic present - extend the dwell */
 
-            g_status.ready = 1U;
-            g_status.hw_ready = 1U;
-            g_status.detecting = 0U;
+            RTT_LOG(
+                "[CAN1] Candidate %lu kbps: clean frame %u/%u\r\n",
+                (unsigned long)g_baud_kbps[g_rate_idx],
+                (unsigned)g_confirm_count, (unsigned)CAN1_CONFIRM_FRAMES
+            );
+
+            if(g_confirm_count < CAN1_CONFIRM_FRAMES)
+            {
+                return;
+            }
+
+            /* N consecutive error-free frames at this candidate: commit.
+             * Re-apply the same baud with LOM cleared -> real external
+             * (ACK-capable) mode. */
+            if(prv_ApplyBaud(g_rate_idx, 0U) == 0U)
+            {
+                g_state = CAN1_STATE_ERROR;
+                return;
+            }
+
+            g_status.detected_baud_kbps = g_baud_kbps[g_rate_idx];
+            g_status.ready              = 1U;
+            g_status.hw_ready           = 1U;
+            g_status.detecting          = 0U;
 
             g_no_frame_ticks = 0U;
+            g_confirm_count  = 0U;
 
             g_state = CAN1_STATE_READY;
 
             RTT_LOG(
-                "[CAN1] BAUD LOCKED: %lu kbps\r\n",
-                (unsigned long)g_status.detected_baud_kbps
+                "[CAN1] BAUD LOCKED: %lu kbps (confirmed over %u clean frames)\r\n",
+                (unsigned long)g_status.detected_baud_kbps,
+                (unsigned)CAN1_CONFIRM_FRAMES
             );
 
             return;

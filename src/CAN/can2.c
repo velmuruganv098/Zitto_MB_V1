@@ -138,6 +138,31 @@ static const uint32_t g_can2_baud_kbps[
 
 
 /*
+ * Consecutive error-free frames required at a candidate baud
+ * before it is trusted and locked in. A single frame is not
+ * enough: candidates in this table are exact 2x multiples of
+ * each other (1000/500/250/125), and a receiver listening at
+ * half the real bus rate can occasionally reconstruct what
+ * looks like one short, CRC-valid frame out of real traffic.
+ * See CAN2_ERR_FLAGS_MASK below.
+ */
+
+#define CAN2_CONFIRM_FRAMES         3U
+
+
+/*
+ * Real CAN protocol errors (not counter-overflow warnings) that
+ * prove the current candidate baud does NOT match the bus. LOM
+ * never transmits, so ACKERR is not meaningful here.
+ */
+
+#define CAN2_ERR_FLAGS_MASK \
+    (CAN_ESR1_STFERR_MASK | CAN_ESR1_FRMERR_MASK | \
+     CAN_ESR1_CRCERR_MASK | CAN_ESR1_BIT0ERR_MASK | \
+     CAN_ESR1_BIT1ERR_MASK)
+
+
+/*
  * Number of consecutive detection cycles
  * before we simply keep cycling.
  *
@@ -164,8 +189,16 @@ static const uint32_t g_can2_baud_kbps[
  *
  * They are kept in one table so they can easily be adjusted.
  *
- * Values below assume the same clock assumptions used in the
- * original CAN driver architecture.
+ * FIX (V0.0063): the previous entries here assumed a TQ/PRESDIV
+ * combination that did not match ANY clock this module is actually
+ * fed with (8MHz SOSC or 40MHz bus clock) - none of the four labeled
+ * rates were the real bit rate produced. On top of that,
+ * Can2_HardwareInit() cleared CLKSRC (selecting the 8MHz oscillator)
+ * while its own comment said "keep same approach as CAN1", which
+ * selects the 40MHz bus clock (CLKSRC=1). Both are fixed together:
+ * CLKSRC is now set to the bus clock in Can2_HardwareInit(), and the
+ * values below are the same, independently-verified 40MHz/16TQ
+ * (SP=81.25%) and 40MHz/8TQ (SP=75%) timing used by CAN1.
  */
 
 
@@ -174,40 +207,40 @@ static const uint32_t g_can2_ctrl1_normal[
 ] =
 {
     /*
-     * 500 kbps
+     * 500 kbps  (40MHz / 5 / 16TQ)
      */
-    CAN_CTRL1_PROPSEG(6U) |
-    CAN_CTRL1_PSEG1(7U) |
+    CAN_CTRL1_PROPSEG(7U) |
+    CAN_CTRL1_PSEG1(3U) |
     CAN_CTRL1_PSEG2(2U) |
-    CAN_CTRL1_RJW(2U) |
-    CAN_CTRL1_PRESDIV(1U),
+    CAN_CTRL1_RJW(1U) |
+    CAN_CTRL1_PRESDIV(4U),
 
     /*
-     * 250 kbps
+     * 250 kbps  (40MHz / 10 / 16TQ)
      */
-    CAN_CTRL1_PROPSEG(6U) |
-    CAN_CTRL1_PSEG1(7U) |
+    CAN_CTRL1_PROPSEG(7U) |
+    CAN_CTRL1_PSEG1(3U) |
     CAN_CTRL1_PSEG2(2U) |
-    CAN_CTRL1_RJW(2U) |
-    CAN_CTRL1_PRESDIV(3U),
+    CAN_CTRL1_RJW(1U) |
+    CAN_CTRL1_PRESDIV(9U),
 
     /*
-     * 125 kbps
+     * 125 kbps  (40MHz / 20 / 16TQ)
      */
-    CAN_CTRL1_PROPSEG(6U) |
-    CAN_CTRL1_PSEG1(7U) |
+    CAN_CTRL1_PROPSEG(7U) |
+    CAN_CTRL1_PSEG1(3U) |
     CAN_CTRL1_PSEG2(2U) |
-    CAN_CTRL1_RJW(2U) |
-    CAN_CTRL1_PRESDIV(7U),
+    CAN_CTRL1_RJW(1U) |
+    CAN_CTRL1_PRESDIV(19U),
 
     /*
-     * 1000 kbps
+     * 1000 kbps  (40MHz / 5 / 8TQ)
      */
-    CAN_CTRL1_PROPSEG(6U) |
-    CAN_CTRL1_PSEG1(7U) |
-    CAN_CTRL1_PSEG2(2U) |
-    CAN_CTRL1_RJW(2U) |
-    CAN_CTRL1_PRESDIV(0U)
+    CAN_CTRL1_PROPSEG(2U) |
+    CAN_CTRL1_PSEG1(1U) |
+    CAN_CTRL1_PSEG2(1U) |
+    CAN_CTRL1_RJW(1U) |
+    CAN_CTRL1_PRESDIV(4U)
 };
 
 
@@ -248,6 +281,10 @@ static uint32_t
 
 static uint32_t
     g_can2_no_frame_counter;
+
+
+static uint8_t
+    g_can2_confirm_count;
 
 
 /* ========================================================================== */
@@ -615,13 +652,16 @@ static uint8_t Can2_HardwareInit(void)
 
 
     /*
-     * Select peripheral clock.
+     * Select peripheral (bus) clock, CLKSRC=1 - 40MHz.
      *
-     * Keep same approach as CAN1.
+     * Same approach as CAN1. FIX (V0.0063): this used to clear
+     * CLKSRC instead of setting it, leaving FlexCAN0 clocked from
+     * the 8MHz SOSC while the bit-timing table assumed 40MHz - none
+     * of the configured baud rates were actually correct.
      */
 
-    CAN0->CTRL1 &=
-        ~CAN_CTRL1_CLKSRC_MASK;
+    CAN0->CTRL1 |=
+        CAN_CTRL1_CLKSRC_MASK;
 
 
     /*
@@ -979,6 +1019,10 @@ void Can2_StartDetection(void)
         0U;
 
 
+    g_can2_confirm_count =
+        0U;
+
+
     RTT_LOG(
         "[CAN2] Start auto baud\r\n"
     );
@@ -1027,6 +1071,10 @@ static void Can2_NextBaud(void)
         g_can2_baud_index =
             0U;
     }
+
+
+    g_can2_confirm_count =
+        0U;
 
 
     if(
@@ -1110,10 +1158,15 @@ static void Can2_LockBaud(void)
         CAN2_STATE_RUNNING;
 
 
+    g_can2_confirm_count =
+        0U;
+
+
     RTT_LOG(
-        "[CAN2] BAUD LOCKED %lu kbps\r\n",
+        "[CAN2] BAUD LOCKED %lu kbps (confirmed over %u clean frames)\r\n",
         (unsigned long)
-        g_can2_status.detected_baud_kbps
+        g_can2_status.detected_baud_kbps,
+        (unsigned)CAN2_CONFIRM_FRAMES
     );
 }
 
@@ -1293,6 +1346,53 @@ void Can2_Task(void)
         CAN2_STATE_DETECTING
     )
     {
+        uint32_t esr1;
+
+
+        /*
+         * A real protocol error proves this candidate baud is
+         * wrong - candidates 1000/500/250/125 are exact 2x
+         * multiples of each other, so a receiver listening at
+         * half the real bus rate can occasionally build what
+         * looks like one short, CRC-valid frame out of real
+         * traffic. Bail out immediately instead of trusting a
+         * single lucky frame.
+         */
+
+        esr1 =
+            CAN0->ESR1;
+
+
+        if(
+            (esr1 &
+             CAN2_ERR_FLAGS_MASK)
+            != 0U
+        )
+        {
+            CAN0->ESR1 =
+                CAN2_ERR_FLAGS_MASK;
+
+            CAN0->IFLAG1 =
+                CAN2_RX_MB_FLAG;
+
+            g_can2_confirm_count =
+                0U;
+
+            RTT_LOG(
+                "[CAN2] Bit error at %lu kbps (ESR1=0x%08lX) - wrong baud, next candidate\r\n",
+                (unsigned long)
+                g_can2_baud_kbps[
+                    g_can2_baud_index
+                ],
+                (unsigned long)esr1
+            );
+
+            Can2_NextBaud();
+
+            return;
+        }
+
+
         /*
          * Frame detected at current baud.
          */
@@ -1306,9 +1406,28 @@ void Can2_Task(void)
         {
             g_can2_status.rx_count++;
 
+            g_can2_confirm_count++;
 
-            Can2_LockBaud();
+            g_can2_detect_tick =
+                0U;   /* traffic present - extend the dwell */
 
+            RTT_LOG(
+                "[CAN2] Candidate %lu kbps: clean frame %u/%u\r\n",
+                (unsigned long)
+                g_can2_baud_kbps[
+                    g_can2_baud_index
+                ],
+                (unsigned)g_can2_confirm_count,
+                (unsigned)CAN2_CONFIRM_FRAMES
+            );
+
+            if(
+                g_can2_confirm_count >=
+                CAN2_CONFIRM_FRAMES
+            )
+            {
+                Can2_LockBaud();
+            }
 
             return;
         }
