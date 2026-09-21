@@ -141,6 +141,7 @@ static uint8_t            g_corrob_active    = 0U;  /* 1 = testing the 2x-higher
 static uint8_t            g_corrob_attempted = 0U;  /* 1 = already tried corroborating this base candidate once */
 static uint8_t            g_corrob_base_idx  = 0U;  /* candidate being corroborated, valid only while g_corrob_active */
 static uint32_t           g_no_frame_ticks   = 0U;
+static uint8_t            g_ready_rxerr_base = 0U;  /* REC snapshot at lock time - see prv_CommitLock() */
 static uint32_t           g_task_cnt         = 0U;
 static uint32_t           g_rx_total         = 0U;
 static uint32_t           g_rx_dropped       = 0U;
@@ -578,6 +579,7 @@ static void prv_StartDetection(void)
     g_confirm_count    = 0U;
     g_corrob_active    = 0U;
     g_corrob_attempted = 0U;
+    g_ready_rxerr_base = 0U;
 
     g_status.ready              = 0U;
     g_status.hw_ready           = 0U;
@@ -672,6 +674,17 @@ static void prv_NextBaud(void)
 
 /* ============================================================
  * COMMIT: lock g_rate_idx as the detected baud and go READY.
+ *
+ * REC/TEC (CAN1->ECR) are hardware error counters that are NOT reset by
+ * freeze/CTRL1 changes - they simply keep accumulating from whatever
+ * happened during the whole scan (wrong candidates before this one,
+ * a failed corroboration attempt, etc). Snapshot REC here as a baseline
+ * so the READY RxErr-burst check (Can1_Task) judges NEW errors that
+ * happen after lock, not stale history from scanning. Without this, a
+ * scan that visited a few wrong candidates before locking can leave REC
+ * already near CAN1_RXERR_BURST, tripping an immediate false re-detect
+ * on the very first READY tick regardless of whether the locked baud is
+ * actually correct.
  * ============================================================ */
 static void prv_CommitLock(void)
 {
@@ -680,6 +693,8 @@ static void prv_CommitLock(void)
         g_state = CAN1_STATE_ERROR;
         return;
     }
+
+    g_ready_rxerr_base = (uint8_t)((CAN1->ECR >> 8U) & 0xFFU);
 
     g_status.detected_baud_kbps = g_baud_kbps[g_rate_idx];
     g_status.ready              = 1U;
@@ -694,9 +709,10 @@ static void prv_CommitLock(void)
     g_state = CAN1_STATE_READY;
 
     RTT_LOG(
-        "[CAN1] BAUD LOCKED: %lu kbps (confirmed over %u clean frames)\r\n",
+        "[CAN1] BAUD LOCKED: %lu kbps (confirmed over %u clean frames, REC baseline=%u)\r\n",
         (unsigned long)g_status.detected_baud_kbps,
-        (unsigned)CAN1_CONFIRM_FRAMES
+        (unsigned)CAN1_CONFIRM_FRAMES,
+        (unsigned)g_ready_rxerr_base
     );
 }
 
@@ -1044,12 +1060,24 @@ void Can1_Task(void)
         return;
     }
 
-    if(g_status.rx_err_cnt > (uint32_t)CAN1_RXERR_BURST)
+    /* REC only ever increments on a genuine hardware-detected receive
+     * error and decrements by 1 per good frame - it is never reset by
+     * this driver between candidates, so judge NEW errors since lock
+     * (delta against the baseline captured in prv_CommitLock()), not the
+     * raw counter, which still carries scan-phase history. */
     {
-        RTT_LOG("[CAN1] RxErr burst (%u) - bus speed changed? Re-detecting\r\n",
-                (unsigned)g_status.rx_err_cnt);
-        prv_StartDetection();
-        return;
+        uint8_t rxerr_delta = (g_status.rx_err_cnt > g_ready_rxerr_base)
+                             ? (uint8_t)(g_status.rx_err_cnt - g_ready_rxerr_base)
+                             : 0U;
+
+        if(rxerr_delta > (uint8_t)CAN1_RXERR_BURST)
+        {
+            RTT_LOG("[CAN1] RxErr burst (+%u since lock, now %u) - bus speed"
+                    " changed? Re-detecting\r\n",
+                    (unsigned)rxerr_delta, (unsigned)g_status.rx_err_cnt);
+            prv_StartDetection();
+            return;
+        }
     }
 
     /* Periodic status */
