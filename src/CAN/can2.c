@@ -11,50 +11,59 @@
 
 
 /*
- * CAN2 = FlexCAN0
+ * CAN2 = FlexCAN2 (register base CAN2_BASE 0x4002B000)
  *
- * IMPORTANT:
+ * NOT FlexCAN0 - this was the second, deeper bug behind CAN2's
+ * "hardware init succeeds, cycles candidates, but zero frames/errors
+ * forever" symptom. S32K144 has THREE physical FlexCAN instances
+ * (CAN0/CAN1/CAN2 - see S32K144.h: CAN0_BASE/CAN1_BASE/CAN2_BASE,
+ * PCC_FlexCAN0/1/2_INDEX, CAN0/1/2_ORed/Error/..._MB_IRQn all
+ * distinct). NXP's own S32K144_LQFP48/signal_configuration.xml pin-mux
+ * database lists PTC16 alt3 and PTB13 alt4 as belonging to
+ * peripheral="CAN2" - i.e. the THIRD physical FlexCAN module - not
+ * CAN0. The driver previously read/wrote CAN0->... registers (a real,
+ * self-consistent, working CAN controller, just electrically
+ * unconnected to these two pins), so every register readback looked
+ * correct while the actual wired-up peripheral (physical FlexCAN2)
+ * sat completely uninitialized the whole time. Fixed by switching
+ * every register access, the PCC clock gate index, and the IRQ vector
+ * numbers (can2.h) / handler names (can2_irq.c) from CAN0 to CAN2.
  *
- * Verify these pins against your schematic.
+ * Confirmed from the Zitto_MB_V1 schematic (net names CAN_CAN2_RX_MCU /
+ * MCU_CAN2_TX_CAN, driving the transceiver silkscreened "CAN3" on the
+ * board - the schematic's connector numbering doesn't match the
+ * firmware's CAN1/CAN2 numbering, but the net names tie unambiguously
+ * to this module):
+ *   RX: PTC16  (pin 20 on U5)
+ *   TX: PTB13  (pin 32 on U5)
  *
- * Change only these definitions if necessary.
+ * This transceiver has NO MCU-controlled SHDN/enable pin (schematic
+ * shows pin 5 not connected) - it relies on its own board-level
+ * pull-down to stay in normal operating mode as soon as VCC is
+ * present. Can2_ShutdownPinInit()/Can2_WakeNormal()/Can2_Shutdown()
+ * below do not drive any GPIO for this reason (see those functions).
  */
 
-
-/*
- * Example FlexCAN0 pin mapping.
- *
- * Replace with your actual CAN2 pins.
- */
-
-#define CAN2_RX_PORT                PORTB
+#define CAN2_RX_PORT                PORTC
 #define CAN2_TX_PORT                PORTB
 
-#define CAN2_RX_PIN                 0U
-#define CAN2_TX_PIN                 1U
+#define CAN2_RX_PIN                 16U
+#define CAN2_TX_PIN                 13U
 
 
 /*
- * FlexCAN alternate function.
- *
- * Verify against S32K144 pin mux.
+ * FlexCAN2 alternate function, per pin - verified against NXP's
+ * S32K144_LQFP48 signal_configuration.xml (S32SDK_S32K1XX_RTM 4.0.1
+ * pin-mux database; LQFP48 confirmed by package pin numbers 20
+ * (PTC16) / 32 (PTB13) matching the schematic exactly):
+ *   PTC16 alt3 -> CAN2_RX (rxd)  - same ALT3 as previously assumed.
+ *   PTB13 alt4 -> CAN2_TX (txd)  - NOT alt3. At alt3, PTB13 is
+ *     FTM3_FLT1 (a timer fault input), so the TX pin was never
+ *     actually connected to FlexCAN2's transmitter.
  */
 
-#define CAN2_PIN_MUX                3U
-
-
-/*
- * Transceiver shutdown pin.
- *
- * CHANGE according to schematic.
- *
- * If CAN2 transceiver does not have shutdown control,
- * this can be adapted.
- */
-
-#define CAN2_SHDN_PORT              PTB
-#define CAN2_SHDN_PCR_PORT          PORTB
-#define CAN2_SHDN_PIN               5U
+#define CAN2_RX_PIN_MUX              3U
+#define CAN2_TX_PIN_MUX              4U
 
 
 /* ========================================================================== */
@@ -129,12 +138,57 @@ static const uint32_t g_can2_baud_kbps[
 /*
  * Detection timing.
  *
- * Can2_Task() is expected every 10ms.
- *
- * 20 ticks = approximately 200ms.
+ * FIX: Can2_Task() and Can1_Task() are both called once per iteration
+ * of the SAME main loop (main.c), not at independently-assumed rates -
+ * this constant was previously 20 (assuming a stale "every 10ms" call
+ * rate that was never actually true once both were folded into one
+ * loop), giving CAN2 a 5x longer per-candidate dwell than CAN1
+ * (CAN1_DETECT_TICKS=4) despite ticking at the identical real rate.
+ * Matched to CAN1_DETECT_TICKS so both scan at the same real-time
+ * cadence - this is what "mirror CAN1" means for the dwell timer;
+ * each module still runs fully independently (separate state, no
+ * cross-dependency, no shared blocking wait).
  */
 
-#define CAN2_AUTO_BAUD_TICKS        20U
+#define CAN2_AUTO_BAUD_TICKS        4U
+
+
+/*
+ * Consecutive error-free frames required at a candidate baud
+ * before it is trusted and locked in. A single frame is not
+ * enough: candidates in this table are exact 2x multiples of
+ * each other (1000/500/250/125), and a receiver listening at
+ * half the real bus rate can occasionally reconstruct what
+ * looks like one short, CRC-valid frame out of real traffic.
+ * See CAN2_ERR_FLAGS_MASK below.
+ */
+
+#define CAN2_CONFIRM_FRAMES         3U
+
+
+/*
+ * REC (RX error counter, CAN2->ECR) is hardware-managed and never
+ * reset between candidates - it keeps accumulating from whatever
+ * happened during the whole scan. RUNNING baselines REC against this
+ * threshold (delta since lock, not the raw counter) to detect the
+ * locked baud going bad later without false-triggering on scan
+ * history. See Can2_LockBaud()/Can2_Task() RUNNING.
+ */
+
+#define CAN2_RXERR_BURST            32U
+
+
+/*
+ * Real CAN protocol errors (not counter-overflow warnings) that
+ * prove the current candidate baud does NOT match the bus. ACKERR is
+ * excluded: this driver never activates a TX mailbox during detection,
+ * so it can never see its own transmitted frame go unacknowledged.
+ */
+
+#define CAN2_ERR_FLAGS_MASK \
+    (CAN_ESR1_STFERR_MASK | CAN_ESR1_FRMERR_MASK | \
+     CAN_ESR1_CRCERR_MASK | CAN_ESR1_BIT0ERR_MASK | \
+     CAN_ESR1_BIT1ERR_MASK)
 
 
 /*
@@ -164,8 +218,16 @@ static const uint32_t g_can2_baud_kbps[
  *
  * They are kept in one table so they can easily be adjusted.
  *
- * Values below assume the same clock assumptions used in the
- * original CAN driver architecture.
+ * FIX (V0.0063, clock correction): CAN1 bench testing proved that
+ * PCC->PCCn[PCC_FlexCAN1_INDEX] never configures a clock-source field
+ * (only the CGC gate bit), so CLKSRC=1 ("peripheral clock") is NOT the
+ * 40MHz AHB bus clock as previously assumed - it is the 80MHz core
+ * clock. CAN2 (FlexCAN2) goes through the identical
+ * PCC->PCCn[PCC_FlexCAN2_INDEX] |= PCC_PCCn_CGC_MASK pattern (see
+ * Can2_HardwareInit() below - no PCS field set there either), so the
+ * same correction applies here: PRESDIV is doubled from the original
+ * 40MHz-assumed table to match the real 80MHz protocol-engine clock.
+ * TQ/RJW/PSEG1/PSEG2/PROPSEG (sample point) are unchanged.
  */
 
 
@@ -174,55 +236,53 @@ static const uint32_t g_can2_ctrl1_normal[
 ] =
 {
     /*
-     * 500 kbps
+     * 500 kbps  (80MHz / 10 / 16TQ)
      */
-    CAN_CTRL1_PROPSEG(6U) |
-    CAN_CTRL1_PSEG1(7U) |
+    CAN_CTRL1_PROPSEG(7U) |
+    CAN_CTRL1_PSEG1(3U) |
     CAN_CTRL1_PSEG2(2U) |
-    CAN_CTRL1_RJW(2U) |
-    CAN_CTRL1_PRESDIV(1U),
+    CAN_CTRL1_RJW(1U) |
+    CAN_CTRL1_PRESDIV(9U),
 
     /*
-     * 250 kbps
+     * 250 kbps  (80MHz / 20 / 16TQ)
      */
-    CAN_CTRL1_PROPSEG(6U) |
-    CAN_CTRL1_PSEG1(7U) |
+    CAN_CTRL1_PROPSEG(7U) |
+    CAN_CTRL1_PSEG1(3U) |
     CAN_CTRL1_PSEG2(2U) |
-    CAN_CTRL1_RJW(2U) |
-    CAN_CTRL1_PRESDIV(3U),
+    CAN_CTRL1_RJW(1U) |
+    CAN_CTRL1_PRESDIV(19U),
 
     /*
-     * 125 kbps
+     * 125 kbps  (80MHz / 40 / 16TQ)
      */
-    CAN_CTRL1_PROPSEG(6U) |
-    CAN_CTRL1_PSEG1(7U) |
+    CAN_CTRL1_PROPSEG(7U) |
+    CAN_CTRL1_PSEG1(3U) |
     CAN_CTRL1_PSEG2(2U) |
-    CAN_CTRL1_RJW(2U) |
-    CAN_CTRL1_PRESDIV(7U),
+    CAN_CTRL1_RJW(1U) |
+    CAN_CTRL1_PRESDIV(39U),
 
     /*
-     * 1000 kbps
+     * 1000 kbps  (80MHz / 10 / 8TQ)
      */
-    CAN_CTRL1_PROPSEG(6U) |
-    CAN_CTRL1_PSEG1(7U) |
-    CAN_CTRL1_PSEG2(2U) |
-    CAN_CTRL1_RJW(2U) |
-    CAN_CTRL1_PRESDIV(0U)
+    CAN_CTRL1_PROPSEG(2U) |
+    CAN_CTRL1_PSEG1(1U) |
+    CAN_CTRL1_PSEG2(1U) |
+    CAN_CTRL1_RJW(1U) |
+    CAN_CTRL1_PRESDIV(9U)
 };
 
-
-/*
- * Listen-only versions.
- */
-
-static uint32_t Can2_GetListenOnlyCtrl1(
-    uint8_t index
-)
+/* Index of the candidate at 2x this candidate's rate, or 0xFF if this is
+ * already the fastest candidate. See CAN1's g_higher_idx for the full
+ * rationale: a candidate at exactly half the real bus rate can
+ * repeatably decode simple/low-entropy real traffic as a valid clean
+ * frame, so a clean run is corroborated against its 2x rate before
+ * being trusted. Table is 500/250/125/1000 kbps: 125->250(idx1),
+ * 250->500(idx0), 500->1000(idx3), 1000->none. */
+static const uint8_t g_can2_higher_idx[CAN2_AUTO_BAUD_COUNT] =
 {
-    return
-        g_can2_ctrl1_normal[index] |
-        CAN_CTRL1_LOM_MASK;
-}
+    3U, 0U, 1U, 0xFFU
+};
 
 
 /* ========================================================================== */
@@ -248,6 +308,26 @@ static uint32_t
 
 static uint32_t
     g_can2_no_frame_counter;
+
+
+static uint8_t
+    g_can2_confirm_count;
+
+
+static uint8_t
+    g_can2_corrob_active;      /* 1 = testing the 2x-higher candidate */
+
+
+static uint8_t
+    g_can2_corrob_attempted;   /* 1 = already tried corroborating this base candidate once */
+
+
+static uint8_t
+    g_can2_corrob_base_idx;    /* candidate being corroborated, valid only while g_can2_corrob_active */
+
+
+static uint8_t
+    g_can2_ready_rxerr_base;   /* REC snapshot at lock time - see Can2_LockBaud() */
 
 
 /* ========================================================================== */
@@ -286,61 +366,53 @@ static void Can2_DelayMs(
 /* ========================================================================== */
 
 
+/*
+ * No shutdown pin init: this transceiver has no MCU-controlled SHDN
+ * (see the CAN2 = FlexCAN2 comment at the top of this file). Kept as
+ * a function (rather than removing the call site in Can2_Init()) so
+ * a future board revision that does add SHDN control only needs to
+ * fill this back in.
+ */
+
 static void Can2_ShutdownPinInit(void)
 {
-    PCC->PCCn[
-        PCC_PORTB_INDEX
-    ] |= PCC_PCCn_CGC_MASK;
-
-
-    CAN2_SHDN_PCR_PORT->PCR[
-        CAN2_SHDN_PIN
-    ] =
-        PORT_PCR_MUX(1U);
-
-
-    CAN2_SHDN_PORT->PDDR |=
-        (1UL << CAN2_SHDN_PIN);
-
-
-    /*
-     * Default transceiver enabled.
-     */
-
-    CAN2_SHDN_PORT->PCOR =
-        (1UL << CAN2_SHDN_PIN);
+    RTT_LOG(
+        "[CAN2] No SHDN pin - transceiver enabled by its own"
+        " board-level pull-down\r\n"
+    );
 }
 
 
 /*
  * Normal mode.
+ *
+ * No GPIO to drive - the transceiver is already in normal operation
+ * as soon as VCC is present (see the CAN2 = FlexCAN2 comment at the
+ * top of this file).
  */
 
 void Can2_WakeNormal(void)
 {
-    CAN2_SHDN_PORT->PCOR =
-        (1UL << CAN2_SHDN_PIN);
-
-
     Can2_DelayMs(1U);
 
 
     RTT_LOG(
-        "[CAN2] Transceiver normal\r\n"
+        "[CAN2] Transceiver normal (no SHDN control)\r\n"
     );
 }
 
 
 /*
  * Shutdown.
+ *
+ * No GPIO to drive - this transceiver cannot be commanded into
+ * shutdown by the MCU. Still updates driver state so callers get
+ * consistent status/behavior (Can2_Task() already returns immediately
+ * in CAN2_STATE_OFF).
  */
 
 void Can2_Shutdown(void)
 {
-    CAN2_SHDN_PORT->PSOR =
-        (1UL << CAN2_SHDN_PIN);
-
-
     g_can2_status.ready =
         0U;
 
@@ -350,7 +422,8 @@ void Can2_Shutdown(void)
 
 
     RTT_LOG(
-        "[CAN2] Transceiver shutdown\r\n"
+        "[CAN2] Driver stopped (transceiver itself cannot be shut down"
+        " - no SHDN pin)\r\n"
     );
 }
 
@@ -366,13 +439,13 @@ static uint8_t Can2_EnterFreeze(void)
         CAN2_HW_TIMEOUT;
 
 
-    CAN0->MCR |=
+    CAN2->MCR |=
         CAN_MCR_FRZ_MASK |
         CAN_MCR_HALT_MASK;
 
 
     while(
-        ((CAN0->MCR &
+        ((CAN2->MCR &
           CAN_MCR_FRZACK_MASK) == 0U)
         &&
         (timeout-- != 0U)
@@ -385,7 +458,7 @@ static uint8_t Can2_EnterFreeze(void)
     {
         RTT_LOG(
             "[CAN2_ERR] Freeze timeout MCR=0x%08lX\r\n",
-            (unsigned long)CAN0->MCR
+            (unsigned long)CAN2->MCR
         );
 
         return 0U;
@@ -396,18 +469,24 @@ static uint8_t Can2_EnterFreeze(void)
 }
 
 
+/*
+ * FIX: clear BOTH HALT and FRZ (this previously only cleared HALT,
+ * the exact same historical bug CAN1's prv_ExitFreeze() documents
+ * fixing - without clearing FRZ the module stays in freeze even
+ * though FRZACK clears, and never becomes bus-operational).
+ */
 static uint8_t Can2_ExitFreeze(void)
 {
     volatile uint32_t timeout =
         CAN2_HW_TIMEOUT;
 
 
-    CAN0->MCR &=
-        ~CAN_MCR_HALT_MASK;
+    CAN2->MCR &=
+        ~(CAN_MCR_HALT_MASK | CAN_MCR_FRZ_MASK);
 
 
     while(
-        ((CAN0->MCR &
+        ((CAN2->MCR &
           CAN_MCR_FRZACK_MASK) != 0U)
         &&
         (timeout-- != 0U)
@@ -420,7 +499,7 @@ static uint8_t Can2_ExitFreeze(void)
     {
         RTT_LOG(
             "[CAN2_ERR] Exit freeze timeout MCR=0x%08lX\r\n",
-            (unsigned long)CAN0->MCR
+            (unsigned long)CAN2->MCR
         );
 
         return 0U;
@@ -445,31 +524,31 @@ static void Can2_SetRxMailbox(void)
         CAN2_MB_RX * 4U;
 
 
-    CAN0->RAMn[
+    CAN2->RAMn[
         base + 0U
     ] =
         0U;
 
 
-    CAN0->RAMn[
+    CAN2->RAMn[
         base + 1U
     ] =
         0U;
 
 
-    CAN0->RAMn[
+    CAN2->RAMn[
         base + 2U
     ] =
         0U;
 
 
-    CAN0->RAMn[
+    CAN2->RAMn[
         base + 3U
     ] =
         0U;
 
 
-    CAN0->RAMn[
+    CAN2->RAMn[
         base + 0U
     ] =
         CAN2_CS_RX_EMPTY;
@@ -482,8 +561,7 @@ static void Can2_SetRxMailbox(void)
 
 
 static uint8_t Can2_SetBaud(
-    uint8_t index,
-    uint8_t listen_only
+    uint8_t index
 )
 {
     uint32_t ctrl1;
@@ -502,23 +580,15 @@ static uint8_t Can2_SetBaud(
     }
 
 
-    if(listen_only != 0U)
-    {
-        ctrl1 =
-            Can2_GetListenOnlyCtrl1(
-                index
-            );
-    }
-    else
-    {
-        ctrl1 =
-            g_can2_ctrl1_normal[
-                index
-            ];
-    }
+    /* Always NORMAL mode (LOM never set) - see the NORMAL mode note in
+     * Can2_StartDetection(). */
+    ctrl1 =
+        g_can2_ctrl1_normal[
+            index
+        ];
 
 
-    CAN0->CTRL1 =
+    CAN2->CTRL1 =
         ctrl1;
 
 
@@ -530,11 +600,18 @@ static uint8_t Can2_SetBaud(
 
 
     /*
-     * Clear RX mailbox flag.
+     * Clear ALL status flags (not just the RX mailbox bit) - matches
+     * CAN1's prv_ApplyBaud() exactly. Without clearing ESR1 here,
+     * stale protocol-error flags from the PREVIOUS candidate survive
+     * into this one and can immediately look like a fresh error on
+     * the very next Can2_Task() tick.
      */
 
-    CAN0->IFLAG1 =
-        CAN2_RX_MB_FLAG;
+    CAN2->IFLAG1 =
+        0xFFFFFFFFUL;
+
+    CAN2->ESR1 =
+        0xFFFFFFFFUL;
 
 
     if(Can2_ExitFreeze() == 0U)
@@ -552,9 +629,66 @@ static uint8_t Can2_SetBaud(
 /* ========================================================================== */
 
 
+/* ============================================================
+ * NVIC: DISABLE ALL CAN2 (FlexCAN2) INTERRUPTS
+ *
+ * Mirrors prv_NvicDisable() in can1.c exactly, including the reason:
+ * must run BEFORE the CAN2 PCC clock is enabled, so a stale pending
+ * interrupt from a previous run cannot fire into DefaultISR before
+ * this driver's own IMASK1=0 write takes effect.
+ * ============================================================ */
+static void Can2_NvicDisable(void)
+{
+    volatile uint32_t * const icer = (volatile uint32_t *)0xE000E180UL;
+    volatile uint32_t * const icpr = (volatile uint32_t *)0xE000E280UL;
+
+    icer[CAN2_NVIC_REG] = CAN2_NVIC_IRQ_MASK;
+    icpr[CAN2_NVIC_REG] = CAN2_NVIC_IRQ_MASK;
+}
+
+
+/*
+ * Mirrors prv_HardwareInit() in can1.c step-for-step (steps A-H) so
+ * both CAN modules bring their FlexCAN instance up identically. Three
+ * real bugs relative to that mirror, found by this comparison and
+ * fixed here:
+ *
+ * 1. CLKSRC was being changed WHILE the module was still mid-transition
+ *    into low-power mode (no wait for LPMACK=1 after asserting MDIS,
+ *    unlike CAN1's documented MDIS->LPMACK=1->CLKSRC->~MDIS sequence
+ *    from the reference manual). Changing the clock source before the
+ *    module has confirmed it is actually disabled is not the
+ *    documented procedure and could leave the protocol engine
+ *    unclocked or clocked from the wrong source - i.e. never able to
+ *    validly sample bus levels at all, matching the observed "zero
+ *    frames AND zero protocol errors on every candidate" symptom
+ *    regardless of pin/timing correctness.
+ *
+ * 2. MCR set CAN_MCR_IRMQ_MASK (per-mailbox individual ID masking)
+ *    but never configured RXIMR[CAN2_MB_RX] for the RX mailbox. Per
+ *    S32K1xx FlexCAN, RXIMR resets to 0xFFFFFFFF (exact-match) when
+ *    IRMQ=1; combined with the RX mailbox's ID field being left at 0
+ *    (Can2_SetRxMailbox() zeroes it), this filters out every frame
+ *    whose ID is not exactly 0x000 - silently, with no error raised,
+ *    exactly matching zero frames ever reaching IFLAG1 on real
+ *    traffic. CAN1 never sets IRMQ; it uses the legacy global mask
+ *    registers (RXMGMASK/RX14MASK/RX15MASK) explicitly zeroed to
+ *    accept all IDs. Mirrored that here instead of configuring RXIMR,
+ *    since CAN1's approach is the one already proven working.
+ *
+ * 3. Freeze entry for MCR/mailbox configuration was a blind MCR write
+ *    with no FRZACK poll (unlike CAN1's prv_EnterFreeze()/
+ *    prv_ExitFreeze() calls), and the function never exited freeze
+ *    before returning - it left that to whatever called Can2_SetBaud()
+ *    next. Now uses Can2_EnterFreeze()/Can2_ExitFreeze() exactly like
+ *    CAN1, so HardwareInit() always returns with freeze verified
+ *    entered and then verified exited.
+ * ============================================================
+ */
 static uint8_t Can2_HardwareInit(void)
 {
     volatile uint32_t timeout;
+    uint32_t          i;
 
 
     RTT_LOG(
@@ -562,170 +696,190 @@ static uint8_t Can2_HardwareInit(void)
     );
 
 
-    /*
-     * Enable PORTB clock.
-     */
+    /* ------------------------------------------------------------------ */
+    /* A. NVIC disable FIRST - before any clock enable                    */
+    /* ------------------------------------------------------------------ */
+    RTT_LOG(
+        "[CAN2_HW] A: NVIC disable  mask=0x%08lX\r\n",
+        (unsigned long)CAN2_NVIC_IRQ_MASK
+    );
+    Can2_NvicDisable();
+
+
+    /* ------------------------------------------------------------------ */
+    /* B. Port clocks + pin mux. TX is PORTB (PTB13), RX is PORTC        */
+    /* (PTC16) - different ports, both needed.                           */
+    /* ------------------------------------------------------------------ */
+    RTT_LOG(
+        "[CAN2_HW] B: Port init  PTC16=RX  PTB13=TX\r\n"
+    );
 
     PCC->PCCn[
         PCC_PORTB_INDEX
     ] |=
         PCC_PCCn_CGC_MASK;
 
-
-    /*
-     * CAN RX pin.
-     */
+    PCC->PCCn[
+        PCC_PORTC_INDEX
+    ] |=
+        PCC_PCCn_CGC_MASK;
 
     CAN2_RX_PORT->PCR[
         CAN2_RX_PIN
     ] =
         PORT_PCR_MUX(
-            CAN2_PIN_MUX
+            CAN2_RX_PIN_MUX
         );
-
-
-    /*
-     * CAN TX pin.
-     */
 
     CAN2_TX_PORT->PCR[
         CAN2_TX_PIN
     ] =
         PORT_PCR_MUX(
-            CAN2_PIN_MUX
+            CAN2_TX_PIN_MUX
         );
 
+    RTT_LOG(
+        "[CAN2_HW]   PTC16 PCR=0x%08lX  PTB13 PCR=0x%08lX\r\n",
+        (unsigned long)CAN2_RX_PORT->PCR[CAN2_RX_PIN],
+        (unsigned long)CAN2_TX_PORT->PCR[CAN2_TX_PIN]
+    );
 
-    /*
-     * Enable FlexCAN0 clock.
-     */
+
+    /* ------------------------------------------------------------------ */
+    /* C. Enable CAN2 (FlexCAN2) PCC clock                                */
+    /* ------------------------------------------------------------------ */
+    RTT_LOG(
+        "[CAN2_HW] C: PCC FlexCAN2 enable\r\n"
+    );
 
     PCC->PCCn[
-        PCC_FlexCAN0_INDEX
+        PCC_FlexCAN2_INDEX
     ] |=
         PCC_PCCn_CGC_MASK;
 
-
-    /*
-     * Disable module.
-     */
-
-    CAN0->MCR =
-        CAN_MCR_MDIS_MASK;
-
-
-    /*
-     * Select peripheral clock.
-     *
-     * Keep same approach as CAN1.
-     */
-
-    CAN0->CTRL1 &=
-        ~CAN_CTRL1_CLKSRC_MASK;
-
-
-    /*
-     * Enable module.
-     */
-
-    CAN0->MCR &=
-        ~CAN_MCR_MDIS_MASK;
-
-
-    timeout =
-        CAN2_HW_TIMEOUT;
-
-
-    while(
-        ((CAN0->MCR &
-          CAN_MCR_LPMACK_MASK) != 0U)
-        &&
-        (timeout-- != 0U)
-    )
-    {
-    }
-
-
-    if(timeout == 0U)
-    {
-        RTT_LOG(
-            "[CAN2_ERR] LPMACK timeout MCR=0x%08lX\r\n",
-            (unsigned long)CAN0->MCR
-        );
-
-        return 0U;
-    }
-
-
-    /*
-     * Software reset.
-     */
-
-    CAN0->MCR |=
-        CAN_MCR_SOFTRST_MASK;
-
-
-    timeout =
-        CAN2_HW_TIMEOUT;
-
-
-    while(
-        ((CAN0->MCR &
-          CAN_MCR_SOFTRST_MASK) != 0U)
-        &&
-        (timeout-- != 0U)
-    )
-    {
-    }
-
-
-    if(timeout == 0U)
-    {
-        RTT_LOG(
-            "[CAN2_ERR] Soft reset timeout\r\n"
-        );
-
-        return 0U;
-    }
-
-
-    /*
-     * Configure FlexCAN.
-     *
-     * IRMQ = individual masking
-     * FRZ/HALT = configuration allowed
-     */
-
-    CAN0->MCR =
-        CAN_MCR_FRZ_MASK |
-        CAN_MCR_HALT_MASK |
-        CAN_MCR_IRMQ_MASK |
-        CAN2_MCR_MAXMB;
-
-
-    /*
-     * Disable all interrupts.
-     *
-     * Driver is polling-based.
-     */
-
-    CAN0->IMASK1 =
-        0U;
-
-    /*
-     * Clear pending flags.
-     */
-
-    CAN0->IFLAG1 =
-        0xFFFFFFFFUL;
-
-
+    /* Clear leftover flags NOW - deasserts interrupt lines before module enable */
+    CAN2->IMASK1 = 0U;
+    CAN2->IFLAG1 = 0xFFFFFFFFUL;
+    CAN2->ESR1   = 0xFFFFFFFFUL;
     RTT_LOG(
-        "[CAN2_HW] MCR=0x%08lX CTRL1=0x%08lX\r\n",
-        (unsigned long)CAN0->MCR,
-        (unsigned long)CAN0->CTRL1
+        "[CAN2_HW]   ESR1+IFLAG1 cleared  interrupt lines deasserted\r\n"
     );
 
+
+    /* ------------------------------------------------------------------ */
+    /* D. Select peripheral clock (CLKSRC=1) per RM:                      */
+    /*    MDIS -> LPMACK=1 -> CLKSRC -> ~MDIS -> LPMACK=0                 */
+    /* ------------------------------------------------------------------ */
+    RTT_LOG(
+        "[CAN2_HW] D: Select peripheral clock  MDIS=1 -> LPMACK=1 ->"
+        " CLKSRC=1 -> MDIS=0\r\n"
+    );
+
+    /* Step 1: Assert MDIS */
+    CAN2->MCR |= CAN_MCR_MDIS_MASK;
+
+    /* Step 2: Wait for LPMACK=1 (module in low-power state) */
+    timeout = CAN2_HW_TIMEOUT;
+    while(((CAN2->MCR & CAN_MCR_LPMACK_MASK) == 0U) && (--timeout != 0U)) {}
+    if(timeout == 0U)
+    {
+        RTT_LOG(
+            "[CAN2_ERR] LPMACK=1 timeout  MCR=0x%08lX\r\n",
+            (unsigned long)CAN2->MCR
+        );
+        return 0U;
+    }
+    RTT_LOG("[CAN2_HW]   LPMACK=1 confirmed\r\n");
+
+    /* Step 3: Change CLKSRC (only now that LPMACK=1 is confirmed) */
+    CAN2->CTRL1 |= CAN_CTRL1_CLKSRC_MASK;
+
+    /* Step 4: Deassert MDIS */
+    CAN2->MCR &= ~CAN_MCR_MDIS_MASK;
+
+    /* Step 5: Wait for LPMACK=0 (module enabled) */
+    timeout = CAN2_HW_TIMEOUT;
+    while(((CAN2->MCR & CAN_MCR_LPMACK_MASK) != 0U) && (--timeout != 0U)) {}
+    if(timeout == 0U)
+    {
+        RTT_LOG(
+            "[CAN2_ERR] LPMACK=0 timeout  MCR=0x%08lX  CTRL1=0x%08lX\r\n",
+            (unsigned long)CAN2->MCR, (unsigned long)CAN2->CTRL1
+        );
+        return 0U;
+    }
+    RTT_LOG(
+        "[CAN2_HW]   LPMACK=0  module enabled  MCR=0x%08lX\r\n",
+        (unsigned long)CAN2->MCR
+    );
+
+
+    /* ------------------------------------------------------------------ */
+    /* E. Soft reset for completely clean state                           */
+    /* ------------------------------------------------------------------ */
+    RTT_LOG("[CAN2_HW] E: SOFTRST\r\n");
+
+    CAN2->MCR |= CAN_MCR_SOFTRST_MASK;
+    timeout = CAN2_HW_TIMEOUT;
+    while(((CAN2->MCR & CAN_MCR_SOFTRST_MASK) != 0U) && (--timeout != 0U)) {}
+    if(timeout == 0U)
+    {
+        RTT_LOG(
+            "[CAN2_ERR] SOFTRST timeout  MCR=0x%08lX\r\n",
+            (unsigned long)CAN2->MCR
+        );
+        return 0U;
+    }
+    RTT_LOG(
+        "[CAN2_HW]   SOFTRST complete  MCR=0x%08lX\r\n",
+        (unsigned long)CAN2->MCR
+    );
+
+
+    /* ------------------------------------------------------------------ */
+    /* F. Enter freeze mode for configuration (FRZACK-verified)           */
+    /* ------------------------------------------------------------------ */
+    RTT_LOG("[CAN2_HW] F: Enter freeze\r\n");
+
+    if(Can2_EnterFreeze() == 0U) { return 0U; }
+
+
+    /* ------------------------------------------------------------------ */
+    /* G. Configure MCR - MAXMB, self-reception disabled, NO individual   */
+    /* masking (IRMQ) so the legacy global mask registers below apply -   */
+    /* see root cause 2 in this function's header comment.                */
+    /* ------------------------------------------------------------------ */
+    CAN2->MCR = (CAN2->MCR & ~(uint32_t)CAN_MCR_MAXMB_MASK)
+              | CAN2_MCR_MAXMB
+              | CAN_MCR_SRXDIS_MASK;
+
+    /* Clear mailbox RAM */
+    for(i = 0U; i < 64U; i++) { CAN2->RAMn[i] = 0U; }
+
+    /* Accept all IDs (global mask registers - IRMQ is NOT set) */
+    CAN2->RXMGMASK = 0U;
+    CAN2->RX14MASK = 0U;
+    CAN2->RX15MASK = 0U;
+
+    /* Clear flags */
+    CAN2->IFLAG1 = 0xFFFFFFFFUL;
+    CAN2->ESR1   = 0xFFFFFFFFUL;
+
+    /* CTRL1 must keep CLKSRC=1; timing is set later by Can2_SetBaud() */
+    CAN2->CTRL1 |= CAN_CTRL1_CLKSRC_MASK;
+
+
+    /* ------------------------------------------------------------------ */
+    /* H. Exit freeze (FRZACK-verified)                                   */
+    /* ------------------------------------------------------------------ */
+    if(Can2_ExitFreeze() == 0U) { return 0U; }
+
+    RTT_LOG(
+        "[CAN2_HW] Hardware init OK  MCR=0x%08lX  CTRL1=0x%08lX  ESR1=0x%08lX\r\n",
+        (unsigned long)CAN2->MCR,
+        (unsigned long)CAN2->CTRL1,
+        (unsigned long)CAN2->ESR1
+    );
 
     return 1U;
 }
@@ -754,7 +908,7 @@ static uint8_t Can2_ReadFrame(
 
 
     if(
-        (CAN0->IFLAG1 &
+        (CAN2->IFLAG1 &
          CAN2_RX_MB_FLAG) == 0U
     )
     {
@@ -767,25 +921,25 @@ static uint8_t Can2_ReadFrame(
 
 
     cs =
-        CAN0->RAMn[
+        CAN2->RAMn[
             base + 0U
         ];
 
 
     id_word =
-        CAN0->RAMn[
+        CAN2->RAMn[
             base + 1U
         ];
 
 
     data0 =
-        CAN0->RAMn[
+        CAN2->RAMn[
             base + 2U
         ];
 
 
     data1 =
-        CAN0->RAMn[
+        CAN2->RAMn[
             base + 3U
         ];
 
@@ -880,17 +1034,14 @@ static uint8_t Can2_ReadFrame(
 
 
     /*
-     * Unlock mailbox.
+     * Clear flag. (No CAN2->TIMER "unlock" read here - CAN1's
+     * equivalent RX path doesn't do this either, and CAN1's
+     * single-mailbox polling design has proven reliable across
+     * thousands of frames without it; kept identical to CAN1 per
+     * "duplicate the code entirely" other than pins/SHDN.)
      */
 
-    (void)CAN0->TIMER;
-
-
-    /*
-     * Clear flag.
-     */
-
-    CAN0->IFLAG1 =
+    CAN2->IFLAG1 =
         CAN2_RX_MB_FLAG;
 
 
@@ -910,13 +1061,35 @@ static uint8_t Can2_ReadFrame(
 /* ========================================================================== */
 
 
+/*
+ * FIX: was checking BOFFINT (a one-shot, write-1-to-clear latched
+ * interrupt flag) instead of FLTCONF (bits 4:5 of ESR1, a live status
+ * field derived from TEC/REC that reads 2 for as long as the module
+ * is actually in bus-off). BOFFINT catches the transition into
+ * bus-off exactly once and is cleared by this very check, so if the
+ * module was still genuinely bus-off on the next tick (TEC/REC not
+ * yet recovered - no SOFTRST happens here, only freeze/CTRL1/ESR1
+ * reset, same as CAN1's prv_ApplyBaud()), this function would report
+ * "not bus-off" and DETECTING would spin forever against a module
+ * still internally confined to bus-off, with no further recovery
+ * attempt - exactly the "goes to bus-off and gets stuck" symptom
+ * (CAN1 doesn't have this problem because its equivalent check in
+ * prv_Task() reads FLTCONF directly, every tick, so it keeps retrying
+ * prv_StartDetection() - harmlessly idempotent - until the hardware's
+ * automatic bus-off recovery sequence actually clears FLTCONF).
+ * Mirrors CAN1 exactly now: level-checked every tick, self-healing.
+ */
 static uint8_t Can2_CheckBusOff(void)
 {
     uint32_t esr;
+    uint8_t  fault;
 
 
     esr =
-        CAN0->ESR1;
+        CAN2->ESR1;
+
+    fault =
+        (uint8_t)((esr >> 4U) & 0x03U);
 
 
     if(
@@ -925,10 +1098,13 @@ static uint8_t Can2_CheckBusOff(void)
         != 0U
     )
     {
-        CAN0->ESR1 =
+        CAN2->ESR1 =
             CAN_ESR1_BOFFINT_MASK;
+    }
 
 
+    if(fault == 2U)
+    {
         g_can2_status.bus_off_count++;
 
 
@@ -936,7 +1112,9 @@ static uint8_t Can2_CheckBusOff(void)
 
 
         RTT_LOG(
-            "[CAN2_ERR] BUS OFF\r\n"
+            "[CAN2_ERR] BUS OFF  TxErr=%u RxErr=%u\r\n",
+            (unsigned)(CAN2->ECR & 0xFFU),
+            (unsigned)((CAN2->ECR >> 8U) & 0xFFU)
         );
 
 
@@ -979,15 +1157,41 @@ void Can2_StartDetection(void)
         0U;
 
 
+    g_can2_confirm_count =
+        0U;
+
+
+    g_can2_corrob_active =
+        0U;
+
+
+    g_can2_corrob_attempted =
+        0U;
+
+
+    g_can2_ready_rxerr_base =
+        0U;
+
+
     RTT_LOG(
         "[CAN2] Start auto baud\r\n"
     );
 
 
+    /*
+     * NORMAL mode, not Listen-Only (V0.0063): in LOM, FlexCAN never
+     * drives the CAN ACK bit. On a bench where this MCU is the only
+     * OTHER node besides the tool sending test traffic, nobody acks the
+     * frame, the sender's missing-ACK error corrupts the EOF field, and
+     * the receiver discards the frame as a form violation even though
+     * CRC already passed - IFLAG1 then never sets, at ANY candidate.
+     * See can1.c's file header for the full explanation (this project's
+     * own history in README.md V0.0052 already root-caused this for
+     * CAN1; CAN2 has the identical failure mode).
+     */
     if(
         Can2_SetBaud(
-            g_can2_baud_index,
-            1U
+            g_can2_baud_index
         )
         == 0U
     )
@@ -1005,7 +1209,7 @@ void Can2_StartDetection(void)
 
 
     RTT_LOG(
-        "[CAN2] Detecting %lu kbps LOM\r\n",
+        "[CAN2] Detection start: %lukbps NORMAL (non-blocking)\r\n",
         (unsigned long)
         g_can2_baud_kbps[
             g_can2_baud_index
@@ -1029,10 +1233,21 @@ static void Can2_NextBaud(void)
     }
 
 
+    g_can2_confirm_count =
+        0U;
+
+
+    g_can2_corrob_active =
+        0U;
+
+
+    g_can2_corrob_attempted =
+        0U;
+
+
     if(
         Can2_SetBaud(
-            g_can2_baud_index,
-            1U
+            g_can2_baud_index
         )
         == 0U
     )
@@ -1045,14 +1260,26 @@ static void Can2_NextBaud(void)
 
 
     RTT_LOG(
-        "[CAN2] Detecting %lu kbps LOM\r\n",
+        "[CAN2] Next baud: %lu kbps  NORMAL  CTRL1=0x%08lX\r\n",
         (unsigned long)
         g_can2_baud_kbps[
             g_can2_baud_index
-        ]
+        ],
+        (unsigned long)CAN2->CTRL1
     );
 }
 
+
+/*
+ * COMMIT: lock g_can2_baud_index as the detected baud and go RUNNING.
+ *
+ * REC (CAN2->ECR) is hardware-managed and NOT reset by freeze/CTRL1
+ * changes - it keeps accumulating from whatever happened during the
+ * whole scan (wrong candidates before this one, a failed corroboration
+ * attempt, etc). Snapshot it here as a baseline so RUNNING's error
+ * check (Can2_Task()) judges NEW errors after lock, not stale scan
+ * history - see CAN1's identical fix for the full rationale.
+ */
 
 static void Can2_LockBaud(void)
 {
@@ -1063,23 +1290,14 @@ static void Can2_LockBaud(void)
         g_can2_baud_index;
 
 
-    RTT_LOG(
-        "[CAN2] Frame detected at %lu kbps\r\n",
-        (unsigned long)
-        g_can2_baud_kbps[
-            index
-        ]
-    );
-
-
     /*
-     * Exit Listen Only Mode.
+     * Re-apply for a clean re-arm before RUNNING (already NORMAL mode
+     * throughout detection).
      */
 
     if(
         Can2_SetBaud(
-            index,
-            0U
+            index
         )
         == 0U
     )
@@ -1090,6 +1308,10 @@ static void Can2_LockBaud(void)
 
         return;
     }
+
+
+    g_can2_ready_rxerr_base =
+        (uint8_t)((CAN2->ECR >> 8U) & 0xFFU);
 
 
     g_can2_status.detected =
@@ -1110,11 +1332,77 @@ static void Can2_LockBaud(void)
         CAN2_STATE_RUNNING;
 
 
+    g_can2_confirm_count =
+        0U;
+
+
+    g_can2_corrob_active =
+        0U;
+
+
+    g_can2_corrob_attempted =
+        0U;
+
+
     RTT_LOG(
-        "[CAN2] BAUD LOCKED %lu kbps\r\n",
+        "[CAN2] BAUD LOCKED %lu kbps (confirmed over %u clean frames, REC baseline=%u)\r\n",
         (unsigned long)
-        g_can2_status.detected_baud_kbps
+        g_can2_status.detected_baud_kbps,
+        (unsigned)CAN2_CONFIRM_FRAMES,
+        (unsigned)g_can2_ready_rxerr_base
     );
+}
+
+
+/*
+ * CORROBORATION FAILED: the 2x-higher candidate produced no clean run
+ * (error, or silence for the whole window). Revert to the original
+ * lower candidate and require a FRESH clean run before locking it.
+ * g_can2_corrob_attempted stays set so this candidate is locked
+ * directly on its next clean run instead of corroborating a second
+ * time (bounds the DETECTING <-> corroborate cycle to one attempt).
+ */
+
+static void Can2_RevertCorroboration(void)
+{
+    RTT_LOG(
+        "[CAN2] %lu kbps did not corroborate - reverting to revalidate %lu kbps\r\n",
+        (unsigned long)
+        g_can2_baud_kbps[
+            g_can2_baud_index
+        ],
+        (unsigned long)
+        g_can2_baud_kbps[
+            g_can2_corrob_base_idx
+        ]
+    );
+
+
+    g_can2_baud_index =
+        g_can2_corrob_base_idx;
+
+
+    g_can2_corrob_active =
+        0U;
+
+
+    g_can2_confirm_count =
+        0U;
+
+
+    g_can2_detect_tick =
+        0U;
+
+
+    if(
+        Can2_SetBaud(
+            g_can2_baud_index
+        )
+        == 0U
+    )
+    {
+        g_can2_status.error_count++;
+    }
 }
 
 
@@ -1234,6 +1522,18 @@ void Can2_GetStatus(
 }
 
 
+uint32_t Can2_GetBaudrate(void)
+{
+    return g_can2_status.detected_baud_kbps;
+}
+
+
+Can2_State_t Can2_GetState(void)
+{
+    return g_can2_status.state;
+}
+
+
 /* ========================================================================== */
 /* TASK                                                                       */
 /* ========================================================================== */
@@ -1259,11 +1559,24 @@ void Can2_Task(void)
     )
     {
         /*
-         * Do not block.
-         *
-         * Recovery can be requested
-         * externally.
+         * FIX: was a dead end - nothing in this codebase ever calls
+         * Can2_StartDetection() "externally" as the old comment here
+         * assumed, so once ERROR was entered (Can2_SetBaud() failing
+         * inside Can2_StartDetection()/Can2_NextBaud()/Can2_LockBaud()
+         * - EnterFreeze/ExitFreeze timing out, which is exactly what
+         * can happen right after a genuine bus-off while the module is
+         * still settling) CAN2 was stuck in ERROR permanently. Mirrors
+         * CAN1's equivalent check in Can1_Task() exactly: retry
+         * detection every tick (harmlessly idempotent if it fails
+         * again) until it succeeds - this is what CAN1's automatic
+         * recovery after a real bus-off actually relies on.
          */
+
+        RTT_LOG(
+            "[CAN2] ERROR state - restarting detection\r\n"
+        );
+
+        Can2_StartDetection();
 
         return;
     }
@@ -1293,6 +1606,73 @@ void Can2_Task(void)
         CAN2_STATE_DETECTING
     )
     {
+        uint32_t esr1;
+        uint8_t  had_error;
+
+
+        /*
+         * A protocol error AFTER we already have at least one clean
+         * frame at this candidate is real evidence the candidate is
+         * wrong (or an aliasing lock falling apart) - candidates
+         * 1000/500/250/125 are exact 2x multiples of each other, so a
+         * receiver listening at half the real bus rate can
+         * occasionally build what looks like one short, CRC-valid
+         * frame out of real traffic.
+         *
+         * A protocol error BEFORE any clean frame is normal boundary
+         * noise: switching bit-timing while the external transmitter
+         * may already be mid-frame produces transient BIT/FRM/STF
+         * errors that say nothing about whether this candidate's baud
+         * is correct. Ignoring those and relying on the existing
+         * silence timeout to reject a truly wrong candidate is what
+         * lets a candidate actually get a fair chance to receive a
+         * frame in the first place.
+         */
+
+        esr1 =
+            CAN2->ESR1;
+
+        had_error =
+            ((esr1 & CAN2_ERR_FLAGS_MASK) != 0U) ? 1U : 0U;
+
+        if(had_error)
+        {
+            CAN2->ESR1 =
+                CAN2_ERR_FLAGS_MASK;
+        }
+
+        if(had_error && (g_can2_confirm_count > 0U))
+        {
+            CAN2->IFLAG1 =
+                CAN2_RX_MB_FLAG;
+
+            RTT_LOG(
+                "[CAN2] Bit error at %lu kbps after %u clean frame(s) (ESR1=0x%08lX)"
+                " - %s\r\n",
+                (unsigned long)
+                g_can2_baud_kbps[
+                    g_can2_baud_index
+                ],
+                (unsigned)g_can2_confirm_count,
+                (unsigned long)esr1,
+                g_can2_corrob_active ?
+                    "corroboration failed" :
+                    "wrong baud, next candidate"
+            );
+
+            if(g_can2_corrob_active)
+            {
+                Can2_RevertCorroboration();
+            }
+            else
+            {
+                Can2_NextBaud();
+            }
+
+            return;
+        }
+
+
         /*
          * Frame detected at current baud.
          */
@@ -1306,9 +1686,135 @@ void Can2_Task(void)
         {
             g_can2_status.rx_count++;
 
+            if(had_error)
+            {
+                /* Boundary noise raced with this frame before we have
+                 * any confirmation yet - don't count it, but don't
+                 * penalize the candidate either. */
+                RTT_LOG(
+                    "[CAN2] Candidate %lu kbps: frame raced with boundary error"
+                    " (ESR1=0x%08lX) - ignored, not yet confirming\r\n",
+                    (unsigned long)
+                    g_can2_baud_kbps[
+                        g_can2_baud_index
+                    ],
+                    (unsigned long)esr1
+                );
 
+                return;
+            }
+
+            g_can2_confirm_count++;
+
+            g_can2_detect_tick =
+                0U;   /* traffic present - extend the dwell */
+
+            RTT_LOG(
+                "[CAN2] Candidate %lu kbps: clean frame %u/%u\r\n",
+                (unsigned long)
+                g_can2_baud_kbps[
+                    g_can2_baud_index
+                ],
+                (unsigned)g_can2_confirm_count,
+                (unsigned)CAN2_CONFIRM_FRAMES
+            );
+
+            if(
+                g_can2_confirm_count <
+                CAN2_CONFIRM_FRAMES
+            )
+            {
+                return;
+            }
+
+            if(g_can2_corrob_active)
+            {
+                /* The 2x-higher candidate ALSO went clean: it is the
+                 * real rate, and the lower candidate was a harmonic
+                 * alias of it. Lock the higher one. */
+                RTT_LOG(
+                    "[CAN2] Corroboration CONFIRMED %lu kbps over the"
+                    " aliased %lu kbps candidate\r\n",
+                    (unsigned long)
+                    g_can2_baud_kbps[
+                        g_can2_baud_index
+                    ],
+                    (unsigned long)
+                    g_can2_baud_kbps[
+                        g_can2_corrob_base_idx
+                    ]
+                );
+
+                Can2_LockBaud();
+
+                return;
+            }
+
+            if(g_can2_corrob_attempted == 0U)
+            {
+                uint8_t higher =
+                    g_can2_higher_idx[
+                        g_can2_baud_index
+                    ];
+
+                if(higher != 0xFFU)
+                {
+                    /* Don't lock yet - a candidate at exactly half the
+                     * real bus rate can repeatably (not just by rare
+                     * chance) decode simple/low-entropy real traffic as
+                     * a valid clean frame. Briefly test the 2x-higher
+                     * candidate before trusting this one. */
+                    g_can2_corrob_active =
+                        1U;
+
+                    g_can2_corrob_attempted =
+                        1U;
+
+                    g_can2_corrob_base_idx =
+                        g_can2_baud_index;
+
+                    g_can2_baud_index =
+                        higher;
+
+                    g_can2_confirm_count =
+                        0U;
+
+                    g_can2_detect_tick =
+                        0U;
+
+                    if(
+                        Can2_SetBaud(
+                            g_can2_baud_index
+                        )
+                        == 0U
+                    )
+                    {
+                        g_can2_status.error_count++;
+
+                        return;
+                    }
+
+                    RTT_LOG(
+                        "[CAN2] %lu kbps clean x%u - corroborating against"
+                        " %lu kbps before lock\r\n",
+                        (unsigned long)
+                        g_can2_baud_kbps[
+                            g_can2_corrob_base_idx
+                        ],
+                        (unsigned)CAN2_CONFIRM_FRAMES,
+                        (unsigned long)
+                        g_can2_baud_kbps[
+                            g_can2_baud_index
+                        ]
+                    );
+
+                    return;
+                }
+            }
+
+            /* Fastest candidate, or already corroborated once for this
+             * candidate: commit directly. */
             Can2_LockBaud();
-
 
             return;
         }
@@ -1337,7 +1843,16 @@ void Can2_Task(void)
                 0U;
 
 
-            Can2_NextBaud();
+            if(g_can2_corrob_active)
+            {
+                /* Higher candidate produced no traffic within the
+                 * window - genuinely not the real rate. */
+                Can2_RevertCorroboration();
+            }
+            else
+            {
+                Can2_NextBaud();
+            }
         }
 
 
@@ -1375,6 +1890,11 @@ void Can2_Task(void)
         CAN2_STATE_RUNNING
     )
     {
+        uint8_t rxerr_now;
+
+        uint8_t rxerr_delta;
+
+
         if(
             Can2_ReadFrame(
                 &frame
@@ -1394,6 +1914,38 @@ void Can2_Task(void)
                     &frame
                 );
             }
+        }
+
+
+        /*
+         * REC only ever increments on a genuine hardware-detected
+         * receive error and decrements by 1 per good frame - judge NEW
+         * errors since lock (delta against the baseline captured in
+         * Can2_LockBaud()), not the raw counter, which still carries
+         * scan-phase history. A sustained new burst means the bus
+         * speed genuinely changed after lock; re-detect.
+         */
+
+        rxerr_now =
+            (uint8_t)((CAN2->ECR >> 8U) & 0xFFU);
+
+        rxerr_delta =
+            (rxerr_now > g_can2_ready_rxerr_base) ?
+                (uint8_t)(rxerr_now - g_can2_ready_rxerr_base) :
+                0U;
+
+        if(rxerr_delta > (uint8_t)CAN2_RXERR_BURST)
+        {
+            RTT_LOG(
+                "[CAN2] RxErr burst (+%u since lock, now %u) - bus speed"
+                " changed? Re-detecting\r\n",
+                (unsigned)rxerr_delta,
+                (unsigned)rxerr_now
+            );
+
+            Can2_StartDetection();
+
+            return;
         }
 
 

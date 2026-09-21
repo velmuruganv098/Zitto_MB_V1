@@ -1,0 +1,3473 @@
+============================================================
+PROJECT REVISION DIFFERENCE
+============================================================
+
+PROJECT:
+Zitto_MB_V1
+
+FROM:
+dev/can1-v0.0043
+
+TO:
+dev/can1-v0.0044
+
+DATE:
+19-09-2026 17:39:17
+
+BRANCH:
+dev/can1-v0.0044
+
+DIRECTION:
+GITHUB -> LOCAL
+
+SOURCE:
+velmuruganv098/Zitto_MB_V1 (branch: dev/can1-v0.0044)
+
+DESTINATION:
+C:\Projects\Zitto_MB_V1
+
+============================================================
+REVISION NOTES (author-entered - what was intended/done)
+============================================================
+Zitto_MB_V1 Firmware development
+
+============================================================
+SUMMARY (automatically detected - what actually changed)
+============================================================
+
+Files Checked     : 197
+Unchanged         : 94
+Modified          : 3
+Added             : 0
+Deleted           : 100
+
+Lines Added       : 469
+Lines Deleted     : 5305
+
+============================================================
+FILE DIFFERENCES
+============================================================
+
+[1] DEBUG/debug_rtt.args
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,894 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+38
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+088005f7c564a59be8d36e5d6ccf7195b4812dae9fa80450fc3982aebb785d9a
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[2] DEBUG/debug_rtt.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+535 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+12
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+2c8c89c77d7c065acc4c0e11de778dd203c0b7cae206c18e3b5bd6292c60836c
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[3] DEBUG/debug_rtt.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+62,308 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+8f4105f91644e2dbeb0957641b9f22e5ec6681753446cdc03931098c09fc2768
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[4] DEBUG/desktop.ini
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+106 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+2
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+a46e137e1ee605e28313f20381fceea857889d26f8fc6e5f29e552811997ad30
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[5] DEBUG/exception_debug.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+61 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+1
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+fc7184e156d8a99c15f728f13a0912b17aadf41a91dd97a6b42721cebb6599f8
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[6] DEBUG/exception_debug.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+28,544 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+92237f7ad7e072a9c86068205f1c06289dbc4b55108bb087e8254eac07483d7a
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[7] DEBUG/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+836 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+27
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+40aa5f017cbabe1c622e3b90eacbda4746ad051c5caf308c96087348d632bb52
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[8] Debug_FLASH/DEBUG/debug_rtt.args
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,520 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+39
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[9] Debug_FLASH/DEBUG/debug_rtt.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+393 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+12
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+da264ed578ed5549ecb83d964965c2b96b055661666d8fcf9d17f87c28ea9587
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[10] Debug_FLASH/DEBUG/debug_rtt.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+60,420 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+3913a6aab5e924a95bfda22cc8bc89456f81303b73d7405f3ce6e6564cb38f30
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[11] Debug_FLASH/DEBUG/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+781 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+28
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+03d15ec7c5552f6998967d015b4a667f6afcc5c276e68d12b1b0c3d442333a40
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[12] Debug_FLASH/Project_Settings/Startup_Code/startup_S32K144.args
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+94 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+7
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+0b881e879e4d87c7d6cfb603330b27de6c42f68f75ef4232fa61d2d4c773b79c
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[13] Debug_FLASH/Project_Settings/Startup_Code/startup_S32K144.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+10,112 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+f216d8a1efd8214799db36846c451aefd6307d6ad4f5dcca0eb8e4f4fc9119ed
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[14] Debug_FLASH/Project_Settings/Startup_Code/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+785 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+21
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+802d254aa3cf3a0dd5097f1aec00195677486844e7edfdc6ac6e0645246c81c9
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[15] Debug_FLASH/RTT/SEGGER_RTT.args
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,520 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+39
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[16] Debug_FLASH/RTT/SEGGER_RTT.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+211 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+8
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+5a8466cb6fb5082c3287cf2a4e57c8f38cc564e990598fef464a5b38a6d79824
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[17] Debug_FLASH/RTT/SEGGER_RTT.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+89,120 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+f7f755e944acac163598abef22a719e9e9d12cda196857045ff6c8ffc32192ae
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[18] Debug_FLASH/RTT/SEGGER_RTT_ASM_ARMv7M.args
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+94 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+7
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+0b881e879e4d87c7d6cfb603330b27de6c42f68f75ef4232fa61d2d4c773b79c
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[19] Debug_FLASH/RTT/SEGGER_RTT_ASM_ARMv7M.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+2,004 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+f0f2a299ffcb1901d8f7bb740164005fa3d1a1d430d34d36cb619cf774ce377f
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[20] Debug_FLASH/RTT/SEGGER_RTT_printf.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+225 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+8
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+eec894af587995e7a0e915dd4e26550c1cd9b0be2ebf88a18bdfa10988d318d1
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[21] Debug_FLASH/RTT/SEGGER_RTT_printf.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+66,392 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+ef5586758840020a4a7d7152c0919f6e6536e81bcc322adaae47416a26d2c783
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[22] Debug_FLASH/RTT/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,084 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+38
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+6a322f4f8fb7c84c5324b31e0a90d58ff6c4adbfbffe79745f7749af21348dc9
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[23] Debug_FLASH/SDK/platform/devices/S32K144/startup/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+921 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+24
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+63d2edb3450170233cdca8b7bbc530f5155c1f58438e3946284b980387766c9f
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[24] Debug_FLASH/SDK/platform/devices/S32K144/startup/system_S32K144.args
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,520 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+39
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[25] Debug_FLASH/SDK/platform/devices/S32K144/startup/system_S32K144.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,057 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+20
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+70a9e05d8026d68128e3ab14064f22f23b0cde8b986d724f3295ba6a99bf789c
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[26] Debug_FLASH/SDK/platform/devices/S32K144/startup/system_S32K144.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+586,660 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+be25ffdaf3f9a92a98da228f39f43a40ceabdb98949eb392151d69fca966cd25
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[27] Debug_FLASH/SDK/platform/devices/startup.args
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,520 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+39
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[28] Debug_FLASH/SDK/platform/devices/startup.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+651 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+19
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+5cc8904528b4930b61c5b8cb232fbfd3e2c768762251dc642c3cc70437cfcf04
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[29] Debug_FLASH/SDK/platform/devices/startup.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+586,208 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+533f01b47219f8a15b577b58a8a15a1b2fee1150ba64a23e4b28af5505b0f692
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[30] Debug_FLASH/SDK/platform/devices/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+797 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+24
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+870deebcfeacc01c6c5de64c2cfb762583173e632ae252364b95c0e72ddac940
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[31] Debug_FLASH/SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.args
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,520 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+39
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[32] Debug_FLASH/SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+2,007 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+44
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+aa29ac83ff0221b4beb8070049b6b852b73cc585d57f525a86ac12dcf982979b
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[33] Debug_FLASH/SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+700,208 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+919060881595f2f467dc197e0b068417d48010f5cca7a24fbc41326804e004ad
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[34] Debug_FLASH/SDK/platform/drivers/src/clock/S32K1xx/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+929 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+24
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+67d188658d5f862a2f64cbda6a9e86a32ac299a516f54f27dd92526dd749a39c
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[35] Debug_FLASH/SDK/platform/drivers/src/interrupt/interrupt_manager.args
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,520 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+39
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[36] Debug_FLASH/SDK/platform/drivers/src/interrupt/interrupt_manager.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,237 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+26
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+0621c16c8c7a321c97145656b0b99683cc5a78a233455bf6d45c53a3c8d59f81
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[37] Debug_FLASH/SDK/platform/drivers/src/interrupt/interrupt_manager.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+594,396 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+7cd914bfda0373571453bb8fba4d64f9207995123376889c73869a5f266e091c
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[38] Debug_FLASH/SDK/platform/drivers/src/interrupt/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+921 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+24
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+36f799d6642294b6135a126947553d306455a428ab65e7f529c4e9b54c4b4f29
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[39] Debug_FLASH/SDK/platform/drivers/src/pins/pins_driver.args
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,520 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+39
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[40] Debug_FLASH/SDK/platform/drivers/src/pins/pins_driver.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,301 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+29
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+6c432813a23561b7f7af9fb9fb80f2e63a5b92f136404ca0d373d95b2b204983
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[41] Debug_FLASH/SDK/platform/drivers/src/pins/pins_driver.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+611,868 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+0c561de602d608f95914f2cf2b82a766c78a460a2dd1646b28c6501096fca246
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[42] Debug_FLASH/SDK/platform/drivers/src/pins/pins_port_hw_access.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,317 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+29
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+8c562c6f9969cbe6a8ed693614e97fef767f3ffc9ae11eb0947123c8ebc460bd
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[43] Debug_FLASH/SDK/platform/drivers/src/pins/pins_port_hw_access.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+592,968 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+2f7f9f28a8b9560129be137b8b2affa9f1224a12bec8c4d59a377742d9a3cf8c
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[44] Debug_FLASH/SDK/platform/drivers/src/pins/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,036 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+27
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+d0a611e886356d0c1e24f153cfa3995cb771ec794530addc367b40efc8330e21
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[45] Debug_FLASH/Zitto_MB_V1.args
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,002 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+35
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+fae2289205ac0672062ab8899c7c899c7681bae52f34d741c4fb0eadb32a2354
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[46] Debug_FLASH/Zitto_MB_V1.elf
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+740,120 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+8037c59020572eeca88022eb1f8a9ca6323b4cad3e6e20e6ce1210b7288656cb
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[47] Debug_FLASH/Zitto_MB_V1.map
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+177,466 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+3,156
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+91376ffb5ee15821f6bc57ad4a133ec3441b5ea1fa8a8718e75afa9a5f724fb1
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[48] Debug_FLASH/makefile
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+2,325 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+84
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+a2dfcb75ba966b3d1999d06a98305ed74393125ede5181be66ab31144b3c8e2d
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[49] Debug_FLASH/objects.mk
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+239 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+8
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+641505e28f50833dbb9650655eb96c094d4c163bbfe7a48e0dd6515183dba8c2
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[50] Debug_FLASH/sources.mk
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+833 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+40
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+af243f7e53d38137d441ad7165f2d174de75947193ad09ff9b6c1ebdc3d6acfd
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[51] Debug_FLASH/src/APP/app_main.args
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,520 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+39
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[52] Debug_FLASH/src/APP/app_main.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+2,445 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+74
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+ca4e93d2d12f09cb6e2918dbbdeb2bf14a93bbade1d4cffef896ec04a6ca4403
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[53] Debug_FLASH/src/APP/app_main.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+626,588 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+ab26f9a47c8618b473a165124b9574dc2f9a42999cf1bced273bfcb3f1b1c794
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[54] Debug_FLASH/src/APP/app_modules.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+201 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+6
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+f22d37f53d73c16f1c4cbfef5696c15ec2258fcc7b41623d4be81eec3b0ed3ed
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[55] Debug_FLASH/src/APP/app_modules.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+34,644 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+39cea9e0c518951d1a83b36f4503aa24a6aad2fe42e68400476c8c2fb64d1aec
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[56] Debug_FLASH/src/APP/app_status.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+157 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+6
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+2a50e8edc4092b249b515caa928afc4d846e8ca65b114a3bb1388a08af6e530e
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[57] Debug_FLASH/src/APP/app_status.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+34,760 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+c7e1cebd6ae01bd562651d7d098da21d66715294cfe19bd54396ce9a30f80ba0
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[58] Debug_FLASH/src/APP/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+878 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+30
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+676d0559aa348b8212b90e4b2fc3d6a39c4e73c4147162d797324c1e0f315567
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[59] Debug_FLASH/src/CAN/can1.args
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,520 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+39
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[60] Debug_FLASH/src/CAN/can1.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+827 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+24
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+246a69aa637d331e871cd51f7067b6e0b3ba3b7c7831bd25f83c1a562ac0c4f3
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[61] Debug_FLASH/src/CAN/can1.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+610,936 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+6bc8cd35db2562518c32ad0c419aecb8a79a9468a5049f05c3dd269b17441a6d
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[62] Debug_FLASH/src/CAN/can1_irq.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+631 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+18
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+c877a92c4dccb6abdc1a6481afcad11a508a98b216a3dd630ffa2a117363d544
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[63] Debug_FLASH/src/CAN/can1_irq.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+587,592 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+30e8f6b9a39b5a64a2067ce77a1cb06dabf6787c269dda7e2029934c9aef2ca9
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[64] Debug_FLASH/src/CAN/can2.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+623 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+18
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+6a9e5485312e553823ed30c3a7f00ae97a64016413d93244eea0d90e87f4a9fe
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[65] Debug_FLASH/src/CAN/can2.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+598,364 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+0e0824de2555ba3eca42bea75a77cd81d2feadf093bf05f0d2ec23e274109e36
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[66] Debug_FLASH/src/CAN/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+835 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+30
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+ebe9ce587dd6f52406e9ad3f3c6685eb013738564c7d51da9dbf7b817646738d
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[67] Debug_FLASH/src/CSA/csa.args
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,520 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+39
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[68] Debug_FLASH/src/CSA/csa.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+763 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+23
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+5e90609e31269daf790653aed3fc266dba2947832ddc60c9796470bf2a9092c3
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[69] Debug_FLASH/src/CSA/csa.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+600,288 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+030f7fdfd57251dd05cf8453d82b6436faae236373dd76c1acdca3e4bb186814
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[70] Debug_FLASH/src/CSA/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+703 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+24
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+3f5e88eba43e07d011245b6332bd2f2652cdd2a91ddd743db38fe2fa6a861dbc
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[71] Debug_FLASH/src/FLM/flm.args
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,520 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+39
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[72] Debug_FLASH/src/FLM/flm.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+553 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+18
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+74c7c3e1ab179b204ec0bf6c5d2afb888915e78cb52d1d5f633437202f1dc498
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[73] Debug_FLASH/src/FLM/flm.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+74,732 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+300dd3b2f3a13036c77854c6618e2a87907262a93b72ff098b1f2c95483c095d
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[74] Debug_FLASH/src/FLM/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+703 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+24
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+291f33fe75bcc7080f6c6f0ea3c706871dd461baeb5c08d6a1a7806311fb8ee5
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[75] Debug_FLASH/src/GPIO/gpio_control.args
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,520 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+39
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[76] Debug_FLASH/src/GPIO/gpio_control.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+907 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+27
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+ca39c6f7d8da7c56ebe65bdbce9e702d67b0e65b69f144681d0bde59c234f1a0
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[77] Debug_FLASH/src/GPIO/gpio_control.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+595,808 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+c1b0161d415fca3f2b85dd09619de1a7687bcf2f54129ff6239bb7a102b29204
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[78] Debug_FLASH/src/GPIO/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+745 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+24
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+a5d137ca6eed66ae56b676f421c3cc0f5b2801b9b5704b3823faac4ffa57b301
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[79] Debug_FLASH/src/IMU/imu.args
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,520 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+39
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[80] Debug_FLASH/src/IMU/imu.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+843 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+26
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+6bce83aeb634c4cc7c3e4dae93b804586ffe7ab84ea90902852af35eda1b4faf
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[81] Debug_FLASH/src/IMU/imu.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+605,156 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+caefd9eebce126aca7bf921b28a77e2688b08df3d70ae3f3dfb2c6cf31064a72
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[82] Debug_FLASH/src/IMU/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+703 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+24
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+db1d98b0242749cbc256a374de93bc5491b6435fdc9005e29aaf20e1199ef4dc
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[83] Debug_FLASH/src/OTA/ota.args
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,520 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+39
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[84] Debug_FLASH/src/OTA/ota.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+699 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+22
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+42cb9e4bdf11d8d650c7807e8406bc452860f234a00a3631ddd6d2883d9eab71
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[85] Debug_FLASH/src/OTA/ota.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+76,744 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+19168a6afb8f9a2f1f1c43ddde4c68cbdbfceb843e0801690b1ddf84e9263441
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[86] Debug_FLASH/src/OTA/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+703 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+24
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+9b46963eb05cbdee2b1ebb3392d5d37d43781aa8bacd9efa84d308023b3e07a0
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[87] Debug_FLASH/src/UART/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+729 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+24
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+cea343828cf1c42a79ad6bb550d4e17855de2accb5955c85ddcf05d9f3e20a2f
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[88] Debug_FLASH/src/UART/uart_pkt.args
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,520 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+39
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[89] Debug_FLASH/src/UART/uart_pkt.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+709 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+21
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+1e176ebe9f1591d0200eff6a0797a1443386a33c202886b133b15bcef13d72b9
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[90] Debug_FLASH/src/UART/uart_pkt.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+604,448 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+a365c69aed580274aaacde9b5ac4a781f49c3f4c7a3fff955989cec039724fed
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[91] Debug_FLASH/src/boot_main.args
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,520 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+39
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[92] Debug_FLASH/src/boot_main.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+477 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+15
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+ec21fd50c677b7fb527e3dd408f9f76e7e7b862fa7537bd7cbd0756076b8f134
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[93] Debug_FLASH/src/boot_main.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+61,436 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+406fb8637ad1de5daabd4855b2ce6dc28f18db4618944bf3dc0a53037bcee9ad
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[94] Debug_FLASH/src/libc_compat.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+41 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+1
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+0b31e3258db1bcbd295196240bf0a501e19ff6514d7213295c4433090abb85e8
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[95] Debug_FLASH/src/libc_compat.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+24,448 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+1975baca8cae750e848b326fdac0ce91d697db793a1dda53130fc88c59b6df86
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[96] Debug_FLASH/src/main.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+1,245 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+46
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+c8291166f6c4e8ed8a9275e671992fcc16d75c6cf26792dabcb324430c2bf6da
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[97] Debug_FLASH/src/main.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+604,096 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+cb32f2d2cee866c3c3922ac310aa93556d39426f7d4419ff449683bada783a1b
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[98] Debug_FLASH/src/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+883 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+33
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+da8ee92e368325d59e8792d087aa1b519724125ff36767b566127b24695ab25e
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[99] Debug_FLASH/src/system_init.d
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+OLD SIZE:
+241 bytes
+
+NEW SIZE:
+N/A
+
+OLD LINES:
+7
+
+NEW LINES:
+N/A
+
+OLD SHA-256:
+83aeb7ce29322c1c7c2c2cee5510f20afc142ab034f8f5863836d952515e747a
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[100] Debug_FLASH/src/system_init.o
+------------------------------------------------------------
+
+STATUS:
+DELETED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+552,692 bytes
+
+NEW SIZE:
+N/A
+
+OLD SHA-256:
+1a5b64daebc964237193172e371a94bdf7b1ef9edb9a38a95efc515f58421a8d
+
+NEW SHA-256:
+FILE DOES NOT EXIST
+
+============================================================
+
+[101] src/CAN/can1.c
+------------------------------------------------------------
+
+STATUS:
+MODIFIED
+
+OLD SIZE:
+29,671 bytes
+
+NEW SIZE:
+37,388 bytes
+
+OLD LINES:
+792
+
+NEW LINES:
+1,015
+
+OLD SHA-256:
+cad6c28e4eeceec92e7499d435794cae3a7c5473218eac39ba1539fc8221af44
+
+NEW SHA-256:
+01d7bd92d5eea57833da2c5a93ab6085d692b5c03c66644de90f4e8748b52f10
+
+------------------------------------------------------------
+LINE DIFFERENCE
+------------------------------------------------------------
+
+STATUS: DELETED
+OLD (from line 3):
+   * Revision : V0.0044
+
+STATUS: MODIFIED
+OLD (from line 5):
+   * ==========================================================================
+   * DELTA vs dev/can1-v0.0043 (decoded from RTT log CTRL1 values)
+   * ==========================================================================
+NEW (from line 4):
+   * FlexCAN1 driver with external-bus auto-baud architecture:
+
+STATUS: MODIFIED
+OLD (from line 9):
+   * dev/can1-v0.0043 uses:
+   *   CTRL1=0x04692006 for 500kbps  → bit3=0 → LOM=OFF → NORMAL mode
+   *   CTRL1=0x09692006 for 250kbps  → bit3=0 → LOM=OFF → NORMAL mode
+   *   CTRL1=0x13692006 for 125kbps  → bit3=0 → LOM=OFF → NORMAL mode
+   *   CTRL1=0x04492002 for 1000kbps → bit3=0 → LOM=OFF → NORMAL mode
+NEW (from line 6):
+   *   DETECTING → READY → RECOVERY → DETECTING
+
+STATUS: MODIFIED
+OLD (from line 15):
+   *   Detection in NORMAL mode = MCU drives error frames at wrong baud
+   *   = BUS HEAVY.  This is the confirmed root cause.
+NEW (from line 8):
+   * A validated external frame received in NORMAL/ACTIVE mode confirms the
+   * candidate timing. Detection is performed only at startup or explicit
+   * recovery; normal inactivity never starts a scan.
+
+STATUS: MODIFIED
+OLD (from line 18):
+   *   dev/can1-v0.0043 also has SP=87.5% (on the edge of allowed range).
+NEW (from line 12):
+   * CLOCK SOURCE: CLKSRC=1  (bus clock = 40MHz)
+   *   - Always running after clock_init_80mhz() in main()
+   *   - More reliable than SOSC for LPMACK sequence
+
+STATUS: MODIFIED
+OLD (from line 20):
+   * V0.0044 changes vs dev/can1-v0.0043:
+NEW (from line 16):
+   * BAUD TIMING TABLE (40MHz bus clock, 16 TQ per bit):
+   *   Index 0:  500 kbps  PRESDIV=4   SP=87.50%
+   *   Index 1:  250 kbps  PRESDIV=9   SP=87.50%
+   *   Index 2:  125 kbps  PRESDIV=19  SP=87.50%
+   *   Index 3: 1000 kbps  PRESDIV=4   SP=75.00%  (8 TQ total)
+
+STATUS: MODIFIED
+OLD (from line 22):
+   *   [1] LOM=1 in ALL detection phases  (bit3 always set during scan)
+   *       CTRL1 for 500kbps LOM = 0x045A200F (bit3=LOM, bit13=CLKSRC)
+   *       Zero bus impact at any wrong baud.
+NEW (from line 22):
+   * 125/250/500 kbps use 16 TQ with an 87.5% sample point. This matches
+   * common PCAN predefined nominal timing and gives more propagation margin
+   * than the previous 81.25% timing. 1 Mbps retains the 8 TQ / 75% timing.
+
+STATUS: MODIFIED
+OLD (from line 26):
+   *   [2] Sample point moved to 81.25% (from 87.5%)
+   *       Industry recommendation: 75-87.5%.  81.25% is more centred
+   *       and tolerates longer cable lengths and higher node counts.
+   *
+   *   [3] Loopback confirmation (Phase 2) before exiting LOM
+   *       Eliminates false positives from noise or harmonic frames.
+   *
+   *   [4] Detection window: 600ms per candidate (12 × 50ms)
+   *       Previously ~200ms — missed slow (500ms/msg) buses.
+   *
+   *   [5] ONE-TIME baud lock message per detection cycle
+   *       g_lock_logged cleared on prv_StartDetection(), set on confirm.
+   *
+   *   [6] Last-known-good baud tried first on re-detection
+   *       On bus-off recovery, avoids full 4-candidate scan when only
+   *       a brief disturbance occurred (cable noise, power glitch).
+   *
+   *   [7] BOFFREC=1 in READY CTRL1 (auto bus-off recovery enabled)
+   *       Allows FlexCAN to recover from bus-off automatically.
+   *
+NEW (from line 26):
+   * V0.0044 CAN1 DETECTION / BUS-HEAVY CORRECTION:
+   *   - Detection uses FlexCAN Listen-Only Mode (LOM=1) for every candidate,
+   *     so the MCU does not transmit ACK/error frames while scanning.
+   *   - Each candidate gets a 600ms observation window for slow PCAN traffic.
+   *   - A received external frame starts a bounded internal loopback/data check.
+   *   - Only after loopback data verification does the controller enter NORMAL.
+   *   - The confirmed baud is latched once per detection cycle.
+   *   - Recovery retries the last confirmed baud first, then scans all rates.
+   *   - READY uses BOFFREC=0: FlexCAN automatic bus-off recovery is enabled.
+   *   - CAN RX remains higher priority than diagnostics with a bounded budget.
+
+STATUS: MODIFIED
+OLD (from line 92):
+  
+NEW (from line 43):
+  #include <stddef.h>
+  static uint32_t g_fault_start_ms;
+  static uint32_t g_ready_since_ms;
+  static uint32_t g_detect_start_ms;
+  static uint32_t g_fault_seen_ms;
+  static uint8_t  g_fault_active;
+  static uint8_t  g_detect_frames;
+  static uint32_t g_detect_verify_start_ms;
+  static uint32_t g_last_rx_ms;
+  static uint8_t  g_detect_verify_pending;
+  static uint8_t  g_last_ok_idx;
+  static uint8_t  g_last_ok_valid;
+  static uint8_t  g_lock_logged;
+  static uint8_t  g_scan_pos;
+  /* --------------------------------------------------------------------------
+   * EXCEPTION DIAGNOSTIC (written by DefaultISR in startup assembly)
+   * -------------------------------------------------------------------------- */
+
+STATUS: MODIFIED
+OLD (from line 96):
+  /* ==========================================================================
+   * MAILBOXES
+   * ========================================================================== */
+  #define MB_RX             4U
+  #define MB_RX_BASE        (MB_RX * 4U)
+  #define MB_RX_FLAG        (1UL << MB_RX)
+  #define MB_TX             0U
+  #define MB_TX_BASE        (MB_TX * 4U)
+  #define MB_TX_FLAG        (1UL << MB_TX)
+NEW (from line 63):
+  /* --------------------------------------------------------------------------
+   * CONSTANTS
+   * -------------------------------------------------------------------------- */
+
+STATUS: MODIFIED
+OLD (from line 106):
+  #define CODE_RX_EMPTY     0x04UL
+  #define CODE_TX_DATA      0x0CUL
+  #define CODE_TX_INACTIVE  0x08UL
+  #define ACCEPT_ALL        0x00000000UL
+NEW (from line 67):
+  /* MB word base: 4 words per mailbox */
+  #define CAN1_RX_MB_WORD_BASE    (CAN1_MB_RX * 4U)
+  #define CAN1_RX_MB_FLAG         (1UL << CAN1_MB_RX)
+
+STATUS: MODIFIED
+OLD (from line 111):
+  /* Loopback test frame */
+  #define LPB_ID            0x7FFUL
+  #define LPB_DLC           8U
+  #define LPB_TIMEOUT       500000UL
+NEW (from line 71):
+  /* Mailbox CODE values */
+  #define CAN1_CODE_RX_EMPTY      0x04U
+  #define CAN1_CS_RX_EMPTY        ((uint32_t)CAN1_CODE_RX_EMPTY << 24U)
+  #define CAN1_CODE_TX_DATA       0x0CU
+
+STATUS: MODIFIED
+OLD (from line 116):
+  /* Error thresholds */
+  #define RXERR_BURST       32U
+NEW (from line 76):
+  /* TX mailbox for loopback test */
+
+STATUS: MODIFIED
+OLD (from line 119):
+  /* ==========================================================================
+   * BAUD TABLES  (40MHz bus clock, SP=81.25% for 16TQ bauds)
+NEW (from line 78):
+  
+  /* --------------------------------------------------------------------------
+   * BAUD RATE TABLES  (40MHz bus clock, CLKSRC=1 is OR'd in at runtime)
+
+STATUS: MODIFIED
+OLD (from line 122):
+   * Base CTRL1: CLKSRC=0, LOM=0, LPB=0  — all three added at runtime.
+   * BOFFREC=1 is added for READY-mode CTRL1 only (auto bus-off recovery).
+NEW (from line 82):
+   * CTRL1 format: [31:24]=PRESDIV [23:22]=RJW [21:19]=PSEG1
+   *               [18:16]=PSEG2   [2:0]=PROPSEG
+
+STATUS: MODIFIED
+OLD (from line 125):
+   * delta vs dev/can1-v0.0043:
+   *   They used PROP=7,PSEG1=6,PSEG2=2 → SP=87.5%.
+   *   We use  PROP=8,PSEG1=4,PSEG2=3 → SP=81.25% (more robust).
+   * ========================================================================== */
+  #define NBAUD    CAN1_BAUD_COUNT
+NEW (from line 85):
+   * All values have CLKSRC=0 here; CAN_CTRL1_CLKSRC_MASK is OR'd in ApplyBaud.
+   * LOM and LPB bits are also added at runtime.
+   * -------------------------------------------------------------------------- */
+
+STATUS: MODIFIED
+OLD (from line 131):
+  static const uint32_t k_kbps[NBAUD]  = { 500U, 250U, 125U, 1000U };
+  
+  /* Base timing only */
+  static const uint32_t k_ctrl1[NBAUD] =
+NEW (from line 89):
+  static const uint32_t g_baud_kbps[CAN1_BAUD_COUNT] =
+
+STATUS: MODIFIED
+OLD (from line 136):
+      0x045A0007UL,   /* 500  kbps  PRESDIV=4  PROP=8 PSEG1=4 PSEG2=3  16TQ */
+      0x095A0007UL,   /* 250  kbps  PRESDIV=9  same segments             16TQ */
+      0x135A0007UL,   /* 125  kbps  PRESDIV=19 same segments             16TQ */
+      0x04490002UL    /* 1000 kbps  PRESDIV=4  PROP=3 PSEG1=2 PSEG2=2    8TQ */
+NEW (from line 91):
+      500U, 250U, 125U, 1000U
+
+STATUS: MODIFIED
+OLD (from line 142):
+  /* BOFFREC mask for READY mode (auto bus-off recovery, bit 6) */
+  #define CTRL1_BOFFREC    0x00000040UL
+NEW (from line 94):
+  static const uint32_t g_ctrl1_base[CAN1_BAUD_COUNT] =
+  {
+      0x04690006UL,   /* 500  kbps: PRESDIV=4  16TQ SP=87.5% */
+      0x09690006UL,   /* 250  kbps: PRESDIV=9  16TQ SP=87.5% */
+      0x13690006UL,   /* 125  kbps: PRESDIV=19 16TQ SP=87.5% */
+      0x04490002UL    /* 1000 kbps: PRESDIV=4   8TQ SP=75.0% */
+  };
+
+STATUS: MODIFIED
+OLD (from line 145):
+  /* Loopback test pattern */
+  static const uint8_t k_pat[8] =
+  { 0xCAU,0xFEU,0xBAU,0xBEU,0xDEU,0xADU,0xBEU,0xEFU };
+NEW (from line 102):
+  /* --------------------------------------------------------------------------
+   * MODULE STATE
+   * -------------------------------------------------------------------------- */
+
+STATUS: MODIFIED
+OLD (from line 149):
+  /* ==========================================================================
+   * STATE
+   * ========================================================================== */
+  static Can1_RxCallback_t g_rx_cb        = NULL;
+  static Can1_Status_t     g_st;
+  static Can1_State_t      g_state        = CAN1_STATE_DETECTING;
+  static uint8_t           g_rate_idx     = 0U;
+  static uint8_t           g_last_ok_idx  = 0U;   /* last confirmed baud index */
+  static uint8_t           g_det_ticks    = 0U;
+  static uint32_t          g_no_rx_ticks  = 0U;
+  static uint32_t          g_task_cnt     = 0U;
+  static uint32_t          g_rx_total     = 0U;
+  static uint32_t          g_rx_drop      = 0U;
+  static uint32_t          g_last_stat_ms = 0U;
+  static uint8_t           g_lock_logged  = 0U;   /* one-time lock message */
+  static uint8_t           g_retry_last   = 0U;   /* flag: retry last-known baud */
+NEW (from line 106):
+  static Can1_RxCallback_t  g_rx_cb            = NULL;
+  static Can1_Status_t      g_status;
+  static Can1_State_t       g_state            = CAN1_STATE_DETECTING;
+  static uint8_t            g_rate_idx         = 0U;
+  static uint32_t           g_task_cnt         = 0U;
+  static uint32_t           g_rx_total         = 0U;
+  static uint32_t           g_rx_dropped       = 0U;
+  static uint32_t           g_last_stat_ms     = 0U;
+
+STATUS: MODIFIED
+OLD (from line 166):
+  /* ==========================================================================
+   * NVIC  —  SCS registers ONLY (0xE000E000), no peripheral clock needed
+NEW (from line 115):
+  /* ============================================================
+   * NVIC: DISABLE ALL CAN1 INTERRUPTS
+
+STATUS: MODIFIED
+OLD (from line 169):
+   * delta vs dev/can1-v0.0043:
+   *   Their code may have accessed CAN1->IMASK1 here before PCC enable.
+   *   That causes BusFault (gated peripheral with no clock) → reset loop.
+   *   This function is strictly SCS-only.
+   * ========================================================================== */
+NEW (from line 118):
+   * Direct register access - S32_NVIC base at 0xE000E000.
+   * ICER = 0xE000E180  ICPR = 0xE000E280  (Disable-Enable / Clear-Pending)
+   *
+   * Must be called BEFORE enabling the CAN1 PCC clock.
+   * ============================================================ */
+
+STATUS: MODIFIED
+OLD (from line 178):
+      icer[CAN1_NVIC_REG] = CAN1_NVIC_IRQ_MASK;   /* SCS always accessible */
+      icpr[CAN1_NVIC_REG] = CAN1_NVIC_IRQ_MASK;   /* SCS always accessible */
+      /* CAN1->IMASK1 cleared in step C, AFTER PCC_FlexCAN1 is enabled */
+NEW (from line 127):
+  
+      /* NVIC SCS registers (0xE000E000+) are ALWAYS accessible.
+       * They are Cortex-M4 core registers - no peripheral clock needed.
+       *
+       * DO NOT access CAN1->IMASK1 here.
+       * CAN1 peripheral address (0x40025000) requires PCC_FlexCAN1
+       * clock gate open.  Without it: BusFault -> HardFault -> reset loop.
+       * IMASK1 is cleared in prv_HardwareInit() AFTER PCC is enabled. */
+      icer[CAN1_NVIC_REG] = CAN1_NVIC_IRQ_MASK;   /* SCS - no clock dependency */
+      icpr[CAN1_NVIC_REG] = CAN1_NVIC_IRQ_MASK;   /* SCS - no clock dependency */
+
+STATUS: MODIFIED
+OLD (from line 183):
+  /* ==========================================================================
+   * FREEZE CONTROL
+   * ========================================================================== */
+  static uint8_t prv_EnterFreeze(void)
+NEW (from line 139):
+  /* ============================================================
+   * SMALL DELAY
+   * ============================================================ */
+  static void prv_Delay(volatile uint32_t ms)
+
+STATUS: MODIFIED
+OLD (from line 188):
+      volatile uint32_t t = 200000UL;
+      CAN1->MCR |= (CAN_MCR_FRZ_MASK | CAN_MCR_HALT_MASK);
+      while(((CAN1->MCR & CAN_MCR_FRZACK_MASK)==0U)&&(--t!=0U)){}
+      if(t==0U){RTT_LOG("[CAN1_ERR] EnterFreeze TO MCR=0x%08lX\r\n",(unsigned long)CAN1->MCR);return 0U;}
+      return 1U;
+NEW (from line 144):
+      while(ms-- != 0U)
+      {
+          volatile uint32_t n = 80000U;
+          while(n-- != 0U) { __asm volatile("nop"); }
+      }
+
+STATUS: MODIFIED
+OLD (from line 195):
+  static uint8_t prv_ExitFreeze(void)
+  {
+      volatile uint32_t t = 200000UL;
+      CAN1->MCR &= ~(CAN_MCR_HALT_MASK | CAN_MCR_FRZ_MASK);  /* clear BOTH */
+      while(((CAN1->MCR & CAN_MCR_FRZACK_MASK)!=0U)&&(--t!=0U)){}
+      if(t==0U){RTT_LOG("[CAN1_ERR] ExitFreeze TO MCR=0x%08lX\r\n",(unsigned long)CAN1->MCR);return 0U;}
+      return 1U;
+  }
+  
+  /* ==========================================================================
+   * CTRL1 VALUE BUILDER
+NEW (from line 151):
+  /* ============================================================
+   * TRANSCEIVER CONTROL  (SHDN = PTB2)
+
+STATUS: MODIFIED
+OLD (from line 207):
+   * delta vs dev/can1-v0.0043:
+   *   Their code set LOM=0 always (NORMAL mode) during detection.
+   *   This function always adds LOM=1 when lom!=0 (detection phase).
+   *   BOFFREC added for READY mode only (auto recovery).
+   * ========================================================================== */
+  static uint32_t prv_Ctrl1(uint8_t idx, uint8_t lom, uint8_t boffrec)
+  {
+      uint32_t v;
+      if(idx >= NBAUD) { return 0U; }
+      v = k_ctrl1[idx] | CAN_CTRL1_CLKSRC_MASK;   /* bus clock always */
+      if(lom     != 0U) { v |= CAN_CTRL1_LOM_MASK; }
+      if(boffrec != 0U) { v |= CTRL1_BOFFREC; }
+      return v;
+  }
+  
+  /* ==========================================================================
+   * ARM RX MAILBOX  (must be in freeze)
+   * ========================================================================== */
+  static void prv_ArmRx(void)
+  {
+NEW (from line 154):
+   * LOW  = normal operation
+   * HIGH = shutdown
+   * ============================================================ */
+  static void prv_ShdnPinInit(void)
+
+STATUS: MODIFIED
+OLD (from line 243):
+      PTB->PCOR  = (1UL << CAN1_SHDN_PTB_PIN);
+      g_st.shdn_state = 0U;
+      RTT_LOG("[CAN1] SHDN=PTB%u  LOW=normal\r\n",(unsigned)CAN1_SHDN_PTB_PIN);
+NEW (from line 162):
+      PTB->PCOR  = (1UL << CAN1_SHDN_PTB_PIN);   /* LOW = normal */
+      g_status.shdn_state = 0U;
+      RTT_LOG("[CAN1] SHDN=PTB%u  LOW=normal\r\n", (unsigned)CAN1_SHDN_PTB_PIN);
+
+STATUS: MODIFIED
+OLD (from line 251):
+      g_st.shdn_state = 1U;
+NEW (from line 170):
+      g_status.shdn_state = 1U;
+
+STATUS: MODIFIED
+OLD (from line 258):
+      g_st.shdn_state = 0U;
+      { volatile uint32_t n=80000U; while(n--){__asm volatile("nop");} }
+NEW (from line 177):
+      g_status.shdn_state = 0U;
+      prv_Delay(1U);
+
+STATUS: MODIFIED
+OLD (from line 263):
+  /* ==========================================================================
+   * HARDWARE INIT
+NEW (from line 182):
+  /* ============================================================
+   * ENTER FREEZE MODE
+
+STATUS: MODIFIED
+OLD (from line 266):
+   * Self-contained. Every peripheral accessed AFTER its own PCC clock is open.
+   * Steps A-H with g_can1_debug_step for crash-point visibility in debugger.
+NEW (from line 185):
+   * FIX: do NOT touch MDIS here. Module must already be enabled.
+   * Just set FRZ+HALT and wait for FRZACK=1.
+   * ============================================================ */
+  static uint8_t prv_EnterFreeze(void)
+  {
+      volatile uint32_t timeout = 200000U;
+  
+      /* Normal path: request Freeze + Halt. */
+      CAN1->MCR |= (CAN_MCR_FRZ_MASK | CAN_MCR_HALT_MASK);
+  
+      while(((CAN1->MCR & CAN_MCR_FRZACK_MASK) == 0U) && (timeout-- != 0U)) {}
+  
+      if(timeout != 0U)
+      {
+          return 1U;
+      }
+  
+      /*
+       * Bus-Off recovery path:
+       * FlexCAN can remain busy while entering Freeze during Bus-Off.
+
+STATUS: MODIFIED
+OLD (from line 269):
+   * delta vs dev/can1-v0.0043:
+   *   [A] NvicDisable uses SCS-only (no CAN1->IMASK1 before PCC enable)
+   *   [C] ESR1/IFLAG1/IMASK1 cleared immediately after PCC open
+   *   [D] LPMACK=1 wait before CLKSRC change (per S32K144 RM requirement)
+   *   [E] SOFTRST for clean state after any previous crashed run
+   * ========================================================================== */
+NEW (from line 239):
+   * FIX: clear BOTH HALT and FRZ (original only cleared HALT).
+   * Without clearing FRZ the module stays in freeze.
+   * ============================================================ */
+  static uint8_t prv_ExitFreeze(void)
+  {
+      volatile uint32_t timeout = 200000U;
+  
+      CAN1->MCR &= ~(CAN_MCR_HALT_MASK | CAN_MCR_FRZ_MASK);
+  
+      while(((CAN1->MCR & CAN_MCR_FRZACK_MASK) != 0U) && (timeout-- != 0U)) {}
+  
+      if(timeout == 0U)
+      {
+          RTT_LOG("[CAN1_ERR] ExitFreeze timeout MCR=0x%08lX\r\n",
+                  (unsigned long)CAN1->MCR);
+          return 0U;
+      }
+      return 1U;
+  }
+  
+
+STATUS: MODIFIED
+OLD (from line 277):
+      volatile uint32_t t;
+      uint8_t i;
+NEW (from line 416):
+      volatile uint32_t timeout;
+      uint8_t           i;
+
+STATUS: MODIFIED
+OLD (from line 280):
+      RTT_LOG("[CAN1_HW] exception=%lu step=%lu\r\n",
+NEW (from line 419):
+      RTT_LOG("[CAN1_HW] exception=%lu  step=%lu\r\n",
+
+STATUS: MODIFIED
+OLD (from line 284):
+      /* A: NVIC disable — SCS core registers, no clock dependency */
+NEW (from line 423):
+      /* ------------------------------------------------------------------ */
+      /* A. NVIC disable FIRST - before any clock enable                    */
+      /* Prevents stale ESR1 flags from previous run triggering DefaultISR  */
+      /* ------------------------------------------------------------------ */
+
+STATUS: MODIFIED
+OLD (from line 286):
+      RTT_LOG("[CAN1_HW] A: NVIC disable (SCS-only, no peripheral access)\r\n");
+NEW (from line 428):
+      RTT_LOG("[CAN1_HW] A: NVIC disable  mask=0x%08lX\r\n",
+              (unsigned long)CAN1_NVIC_IRQ_MASK);
+
+STATUS: MODIFIED
+OLD (from line 289):
+      /* B: Pin mux PTA12=CAN1_RX(ALT3)  PTA13=CAN1_TX(ALT3) */
+NEW (from line 432):
+      /* ------------------------------------------------------------------ */
+      /* B. Port clocks + pin mux                                           */
+      /* ------------------------------------------------------------------ */
+
+STATUS: MODIFIED
+OLD (from line 291):
+      RTT_LOG("[CAN1_HW] B: PTA12/13 ALT3\r\n");
+NEW (from line 436):
+      RTT_LOG("[CAN1_HW] B: Port init  PTA12=RX(ALT3)  PTA13=TX(ALT3)\r\n");
+  
+
+... (further differences in this file omitted for length) ...
+
+============================================================
+
+[102] src/CAN/can1.h
+------------------------------------------------------------
+
+STATUS:
+MODIFIED
+
+OLD SIZE:
+4,398 bytes
+
+NEW SIZE:
+6,279 bytes
+
+OLD LINES:
+122
+
+NEW LINES:
+175
+
+OLD SHA-256:
+c81ce5e1aef6255c38c545fa68646b6416dd60bb0deb70e2ca88bc27dcecbf35
+
+NEW SHA-256:
+a86e984918cae4fcd3095e57d4c27c1de5b1a5214260d31c7f1aec9ebafbea3e
+
+------------------------------------------------------------
+LINE DIFFERENCE
+------------------------------------------------------------
+
+STATUS: DELETED
+OLD (from line 3):
+   * Revision : V0.0044
+
+STATUS: MODIFIED
+OLD (from line 5):
+   * Changes vs dev/can1-v0.0043:
+   *   [1] CAN1_DETECT_TICKS 12 (600ms window, was ~4/200ms - missed 500ms buses)
+   *   [2] CTRL1 timing: SP=81.25% (was 87.5% - more robust for long cables)
+   *   [3] LOM=1 enforced in all detection phases (was LOM=0 = bus heavy)
+   *   [4] Loopback confirmation with DATA VERIFICATION (was no loopback at all)
+   *   [5] One-time BAUD LOCKED message per cycle (was repeated)
+   *   [6] Last-known-good baud tried first on re-detection
+   *   [7] BOFFREC=1 in READY mode (auto bus-off recovery)
+   *   [8] prv_NvicDisable: SCS-only, no CAN1 register access before PCC
+NEW (from line 4):
+   * FlexCAN1 driver header.
+   *
+   * V0.0044: detection is LOM-based; READY is normal mode with automatic
+   * bus-off recovery enabled (CTRL1[BOFFREC]=0).
+   *
+   * AUTO-BAUD ARCHITECTURE:
+   *   Phase 1: DETECTING  (LOM / listen-only external-bus detection)
+   *     - Try 500 / 250 / 125 / 1000 kbps, 600ms candidate window
+   *     - 125/250/500 kbps use 16TQ / 87.5% sample point; 1Mbps uses
+   *       8TQ / 75% sample point to match common PCAN nominal timing
+   *     - Require 1 valid received frame before baud lock
+   *     - A 600ms window covers slow external traffic (e.g. 500ms/frame)
+   *       while wrong candidates still advance immediately on fault
+   *     - Bad candidate with protocol errors/Error Passive/Bus-Off is abandoned early
+   *     - Non-blocking RX polling; candidate confirmation uses a bounded
+   *       internal loopback self-test before entering normal mode
+   *
+   *   Phase 2: READY  (LOM=0, LPB=0, BOFFREC=0, normal CAN operation)
+   *     - Receive and forward frames with RX priority
+   *     - Hold the confirmed baud for 2s before fault-triggered recovery
+
+STATUS: MODIFIED
+OLD (from line 27):
+   * TIMING
+NEW (from line 45):
+   * CONFIGURATION
+
+STATUS: DELETED
+OLD (from line 29):
+  #define CAN1_SHDN_PTB_PIN       2U
+  #define CAN1_TASK_PERIOD_MS     50U
+
+STATUS: MODIFIED
+OLD (from line 32):
+  /*
+   * Detection window = CAN1_DETECT_TICKS x 50ms = 600ms per candidate.
+   * Handles up to 500ms message intervals on any bus.
+   * In LOM mode: zero bus disturbance during the wait.
+   *
+   * dev/can1-v0.0043 used ~4 ticks (200ms) - missed slow buses.
+   */
+  #define CAN1_DETECT_TICKS       12U   /* 600ms per baud candidate */
+  #define CAN1_NO_FRAME_LIMIT     200U  /* 10s idle → re-detect     */
+NEW (from line 48):
+  /* Transceiver SHDN pin (PTB2: LOW=normal, HIGH=shutdown) */
+  #define CAN1_SHDN_PTB_PIN           2U
+  
+  /* Auto-baud timing: task period × ticks = time per candidate */
+  #define CAN1_ERROR_GUARD_MS       2000U
+  #define CAN1_DETECT_WINDOW_MS       600U
+  #define CAN1_DETECT_MIN_FRAMES        1U
+  #define CAN1_DETECT_LOM                 1U
+  #define CAN1_LOOPBACK_TIMEOUT           50000U
+  #define CAN1_DETECT_VERIFY_MS        20U
+  #define CAN1_LIVE_BAUD_LOSS_MS     1500U
+  #define CAN1_FAULT_CONFIRM_MS        100U
+  #define CAN1_ERROR_COUNT_LIMIT        96U
+  #define CAN1_RX_BUDGET                 8U    /* bounded RX service per task */
+  
+  /* Bus-off recovery: 0 = automatic, 1 = manual. */
+  #define CAN1_CTRL1_BOFFREC_MASK        (1UL << 6U)
+  
+  /* Baud rate candidates */
+  #define CAN1_BAUD_500K              0U
+
+STATUS: MODIFIED
+OLD (from line 43):
+   * BAUD INDEX
+NEW (from line 77):
+   * IRQ NUMBERS + NVIC MASK (S32K144.h confirmed)
+
+STATUS: DELETED
+OLD (from line 45):
+  #define CAN1_BAUD_500K          0U
+  #define CAN1_BAUD_250K          1U
+  #define CAN1_BAUD_125K          2U
+  #define CAN1_BAUD_1000K         3U
+  #define CAN1_BAUD_COUNT         4U
+
+STATUS: MODIFIED
+OLD (from line 51):
+  /* --------------------------------------------------------------------------
+   * NVIC  (confirmed from SDK S32K144.h + startup_S32K144.S)
+   * -------------------------------------------------------------------------- */
+  #define CAN1_OR_IRQn            85U
+  #define CAN1_ERROR_IRQn         86U
+  #define CAN1_MB_IRQn            88U
+  #define CAN1_NVIC_REG           2U
+  #define CAN1_OR_IRQ_MASK        (1UL << (CAN1_OR_IRQn    % 32U))  /* bit 21 */
+  #define CAN1_ERROR_IRQ_MASK     (1UL << (CAN1_ERROR_IRQn % 32U))  /* bit 22 */
+  #define CAN1_MB_IRQ_MASK        (1UL << (CAN1_MB_IRQn    % 32U))  /* bit 24 */
+  #define CAN1_NVIC_IRQ_MASK      (CAN1_OR_IRQ_MASK|CAN1_ERROR_IRQ_MASK|CAN1_MB_IRQ_MASK)
+NEW (from line 80):
+  #define CAN1_OR_IRQn                85U
+  #define CAN1_ERROR_IRQn             86U
+  #define CAN1_MB_IRQn                88U
+  #define CAN1_NVIC_REG               2U
+  
+  #define CAN1_OR_IRQ_MASK            (1UL << (CAN1_OR_IRQn   % 32U))  /* bit 21 */
+  #define CAN1_ERROR_IRQ_MASK         (1UL << (CAN1_ERROR_IRQn % 32U)) /* bit 22 */
+  #define CAN1_MB_IRQ_MASK            (1UL << (CAN1_MB_IRQn   % 32U))  /* bit 24 */
+  #define CAN1_NVIC_IRQ_MASK          (CAN1_OR_IRQ_MASK | CAN1_ERROR_IRQ_MASK | CAN1_MB_IRQ_MASK)
+
+STATUS: MODIFIED
+OLD (from line 65):
+   * STATE
+NEW (from line 92):
+   * STATE MACHINE
+
+STATUS: ADDED
+NEW (from line 94):
+  
+
+STATUS: MODIFIED
+OLD (from line 69):
+      CAN1_STATE_DETECTING = 0,   /* Phase 1: LOM, scanning      */
+      CAN1_STATE_READY,           /* Phase 3: normal CAN         */
+      CAN1_STATE_ERROR            /* immediate re-detect         */
+NEW (from line 97):
+      CAN1_STATE_DETECTING = 0,  /* LOM external-bus baud scan */
+      CAN1_STATE_READY,          /* Candidate accepted, normal reception */
+      CAN1_STATE_ERROR           /* Unrecoverable - re-detecting     */
+
+STATUS: ADDED
+NEW (from line 105):
+  
+
+STATUS: ADDED
+NEW (from line 127):
+  
+
+STATUS: MODIFIED
+OLD (from line 99):
+      uint32_t can_id, uint8_t ide, uint8_t rtr,
+      uint8_t dlc, const uint8_t *data, uint32_t baud_kbps
+NEW (from line 129):
+      uint32_t       can_id,
+      uint8_t        ide,
+      uint8_t        rtr,
+      uint8_t        dlc,
+      const uint8_t *data,
+      uint32_t       baud_kbps
+
+STATUS: ADDED
+NEW (from line 136):
+  
+  /* --------------------------------------------------------------------------
+   * FRAME TYPE (convenience struct for TX, not used internally by driver)
+   * -------------------------------------------------------------------------- */
+  
+  typedef struct
+  {
+      uint32_t id;
+      uint8_t  data[8];
+      uint8_t  dlc;
+      uint8_t  extended;
+      uint8_t  rtr;
+  } Can1_Frame_t;
+
+STATUS: ADDED
+NEW (from line 153):
+  
+
+STATUS: MODIFIED
+OLD (from line 108):
+  void         Can1_SetRxCallback(Can1_RxCallback_t cb);
+NEW (from line 156):
+  void         Can1_SetRxCallback(Can1_RxCallback_t callback);
+  
+
+STATUS: MODIFIED
+OLD (from line 113):
+  void         Can1_Shutdown(void);
+  void         Can1_WakeNormal(void);
+NEW (from line 162):
+  
+  void         Can1_Shutdown(void);    /* SHDN pin HIGH - transceiver off */
+  void         Can1_WakeNormal(void);  /* SHDN pin LOW  - transceiver on  */
+  
+  /* IRQ diagnostic counters (can1_irq.c) */
+
+STATUS: ADDED
+NEW (from line 174):
+  
+
+============================================================
+
+[103] src/main.c
+------------------------------------------------------------
+
+STATUS:
+MODIFIED
+
+OLD SIZE:
+18,622 bytes
+
+NEW SIZE:
+18,659 bytes
+
+OLD LINES:
+568
+
+NEW LINES:
+568
+
+OLD SHA-256:
+1c7509df86f51eb005a4793bff951cc9bd7d4fa5c057dc2b0053b0fd75ad48de
+
+NEW SHA-256:
+43df9c438c4d822802a817d892343638967c76cbf47934c52c6440f60b9e3672
+
+------------------------------------------------------------
+LINE DIFFERENCE
+------------------------------------------------------------
+
+STATUS: MODIFIED
+OLD (from line 4):
+   * Firmware Revision : V0.0043
+NEW (from line 4):
+   * Firmware Revision : V0.0044
+
+STATUS: MODIFIED
+OLD (from line 393):
+          " Change            : CAN1 slow-traffic detection + bus-heavy correction\r\n"
+NEW (from line 393):
+          " Change            : CAN1 LOM detection + loopback verification + recovery hardening\r\n"
+
+STATUS: MODIFIED
+OLD (from line 441):
+       * Auto-baud: 500→250→125→1000 kbps, non-blocking; 700ms candidate window for slow PCAN traffic.
+       * Active external-bus detection; no loopback confirmation step. */
+NEW (from line 441):
+       * Auto-baud: 500→250→125→1000 kbps, non-blocking; 600ms LOM candidate window for slow PCAN traffic.
+       * LOM detection + data-verified loopback confirmation; normal mode only after lock. */
+
+============================================================
+
+UNCHANGED FILES (verified, content identical)
+------------------------------------------------------------
+.cproject  -  SIZE: SAME  -  SHA256: SAME
+.gitignore  -  SIZE: SAME  -  SHA256: SAME
+.project  -  SIZE: SAME  -  SHA256: SAME
+.settings/com.freescale.s32ds.cross.sdk.support.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/com.freescale.s32ds.cross.wizard.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/com.nxp.s32ds.cle.ide.sdk.attached.sdks.data.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/com.nxp.s32ds.cle.runtime.component.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/language.settings.xml  -  SIZE: SAME  -  SHA256: SAME
+.settings/org.eclipse.cdt.codan.core.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/org.eclipse.cdt.core.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/org.eclipse.core.resources.prefs  -  SIZE: SAME  -  SHA256: SAME
+BASELINE_STATUS.md  -  SIZE: SAME  -  SHA256: SAME
+DEBUG/debug_rtt.c  -  SIZE: SAME  -  SHA256: SAME
+DEBUG/debug_rtt.h  -  SIZE: SAME  -  SHA256: SAME
+IMU_Test.mex  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Debugger/Zitto_MB_V1_Debug_FLASH_PNE.launch  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Debugger/Zitto_MB_V1_Debug_RAM_PNE.launch  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Debugger/Zitto_MB_V1_Release_FLASH_PNE.launch  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Debugger/Zitto_MB_V1_Release_RAM_PNE.launch  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Linker_Files/S32K144_64_flash.ld  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Linker_Files/S32K144_64_ram.ld  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Startup_Code/startup_S32K144.S  -  SIZE: SAME  -  SHA256: SAME
+README.md  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT.c  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT.h  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT_ASM_ARMv7M.S  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT_Conf.h  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT_ConfDefaults.h  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT_printf.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/S32K144/include/S32K144.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/S32K144/include/S32K144_features.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/S32K144/startup/system_S32K144.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/callbacks.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/common/s32_core_cm4.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/devassert.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/device_registers.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/startup.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/startup.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/status.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/inc/clock.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/inc/interrupt_manager.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/inc/pins_driver.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/pcc_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/pmc_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/scg_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/sim_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/smc_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/interrupt/interrupt_manager.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/pins/pins_driver.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/pins/pins_gpio_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/pins/pins_port_hw_access.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/pins/pins_port_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+board/sdk_project_config.h  -  SIZE: SAME  -  SHA256: SAME
+fix_startup.bat  -  SIZE: SAME  -  SHA256: SAME
+flash.bat  -  SIZE: SAME  -  SHA256: SAME
+flash.jlink  -  SIZE: SAME  -  SHA256: SAME
+includes/system_init.h  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_config.h  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_main.c  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_main.h  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_modules.c  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_modules.h  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_status.c  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_status.h  -  SIZE: SAME  -  SHA256: SAME
+src/CAN/can1_irq.c  -  SIZE: SAME  -  SHA256: SAME
+src/CAN/can2.c  -  SIZE: SAME  -  SHA256: SAME
+src/CAN/can2.h  -  SIZE: SAME  -  SHA256: SAME
+src/CMD/cmd.c  -  SIZE: SAME  -  SHA256: SAME
+src/CMD/cmd.h  -  SIZE: SAME  -  SHA256: SAME
+src/CSA/csa.c  -  SIZE: SAME  -  SHA256: SAME
+src/CSA/csa.h  -  SIZE: SAME  -  SHA256: SAME
+src/FLM/flm.c  -  SIZE: SAME  -  SHA256: SAME
+src/FLM/flm.h  -  SIZE: SAME  -  SHA256: SAME
+src/GPIO/gpio_control.c  -  SIZE: SAME  -  SHA256: SAME
+src/GPIO/gpio_control.h  -  SIZE: SAME  -  SHA256: SAME
+src/IMU/imu.c  -  SIZE: SAME  -  SHA256: SAME
+src/IMU/imu.h  -  SIZE: SAME  -  SHA256: SAME
+src/OTA/ota.c  -  SIZE: SAME  -  SHA256: SAME
+src/OTA/ota.h  -  SIZE: SAME  -  SHA256: SAME
+src/UART/uart_pkt.c  -  SIZE: SAME  -  SHA256: SAME
+src/UART/uart_pkt.h  -  SIZE: SAME  -  SHA256: SAME
+src/UART/uart_pkt_types.h  -  SIZE: SAME  -  SHA256: SAME
+src/boot_main.c  -  SIZE: SAME  -  SHA256: SAME
+src/boot_main.h  -  SIZE: SAME  -  SHA256: SAME
+src/common/common_config.h  -  SIZE: SAME  -  SHA256: SAME
+src/common/common_types.h  -  SIZE: SAME  -  SHA256: SAME
+src/hal/hal_imu.h  -  SIZE: SAME  -  SHA256: SAME
+src/hal/hal_led.h  -  SIZE: SAME  -  SHA256: SAME
+src/libc_compat.c  -  SIZE: SAME  -  SHA256: SAME
+src/mcal/mcal_i2c.h  -  SIZE: SAME  -  SHA256: SAME
+src/system_init.c  -  SIZE: SAME  -  SHA256: SAME
+src/system_init.h  -  SIZE: SAME  -  SHA256: SAME
+
+============================================================

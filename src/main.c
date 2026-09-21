@@ -32,7 +32,7 @@
 #define APP_IMU_ENABLE     0
 #define APP_CSA_ENABLE     0
 #define APP_CAN1_ENABLE    1
-#define APP_CAN2_ENABLE    0
+#define APP_CAN2_ENABLE    1
 #define APP_FLM_ENABLE     1
 #define APP_GPIO_ENABLE    1
 
@@ -237,15 +237,25 @@ static void can1_rx(uint32_t id, uint8_t ide, uint8_t rtr,
  * CAN2 RX CALLBACK
  * -------------------------------------------------------------------------- */
 #if APP_CAN2_ENABLE
-static void can2_rx(uint32_t id, uint8_t ide, uint8_t rtr,
-                    uint8_t dlc, const uint8_t *data, uint32_t baud)
+static void can2_rx(const Can2_Frame_t *frame)
 {
     CanFramePkt_t f;
     uint8_t i;
-    (void)baud;
+    if(frame == NULL) { return; }
     memset(&f, 0, sizeof(f));
-    f.bus=2U; f.ide=ide; f.rtr=rtr; f.dlc=dlc; f.can_id=id; f.ts_ms=Uart_GetMs();
-    if(data) { for(i=0U;i<8U;i++) f.data[i]=(i<dlc)?data[i]:0U; }
+    f.bus=2U; f.ide=frame->extended; f.rtr=frame->rtr; f.dlc=frame->dlc;
+    f.can_id=frame->id; f.ts_ms=Uart_GetMs();
+    for(i=0U;i<8U;i++) { f.data[i]=(i<frame->dlc)?frame->data[i]:0U; }
+
+    RTT_LOG("[CAN2_APP] baud=%lu ID=0x%08lX DLC=%u DATA=%02X %02X %02X %02X %02X %02X %02X %02X\r\n",
+            (unsigned long)Can2_GetBaudrate(),
+            (unsigned long)frame->id,
+            (unsigned)frame->dlc,
+            (unsigned)f.data[0], (unsigned)f.data[1],
+            (unsigned)f.data[2], (unsigned)f.data[3],
+            (unsigned)f.data[4], (unsigned)f.data[5],
+            (unsigned)f.data[6], (unsigned)f.data[7]);
+
     (void)Uart_Pkt_SendCan(&f);
 }
 #endif
@@ -420,7 +430,7 @@ int main(void)
     SEGGER_RTT_printf(0,
         "\r\n================================================\r\n"
         " Zitto MB V1 - VCU Firmware Boot\r\n"
-        " Firmware Revision : V0.0061\r\n"
+        " Firmware Revision : V0.006300\r\n"
         " Change            : CAN1 pre-RX error immunity + symmetric 2:1 baud corroboration; fixed test OFF\r\n"
         " MCU: S32K144  Clock: 80MHz SPLL  WDOG: OFF\r\n"
         " Modules: IMU=%d CSA=%d CAN1=%d CAN2=%d FLM=%d GPIO=%d\r\n"
@@ -478,12 +488,12 @@ int main(void)
     RTT_LOG("[BOOT] CAN1 ok  state=%u\r\n", (unsigned)Can1_GetState());
 #endif
 
-    /* CAN2 - FlexCAN0  PTB0/PTB1 */
+    /* CAN2 - FlexCAN2 (physical instance 2, NOT FlexCAN0)  PTC16=RX  PTB13=TX  (no SHDN pin) */
 #if APP_CAN2_ENABLE
-    RTT_LOG("[BOOT] CAN2 init\r\n");
+    RTT_LOG("[BOOT] CAN2 init  FlexCAN2  PTC16/PTB13\r\n");
     Can2_Init();
     Can2_SetRxCallback(can2_rx);
-    RTT_LOG("[BOOT] CAN2 ok\r\n");
+    RTT_LOG("[BOOT] CAN2 ok  state=%u\r\n", (unsigned)Can2_GetState());
 #endif
 
     /* FLM - W25N01GV  64 pages/block */
@@ -514,10 +524,9 @@ int main(void)
 #if APP_CAN1_ENABLE
         if(g_can1_en != 0U)
         {
+            /* V0.0063: Can1_Task() dispatches RX synchronously via the
+             * RX callback now, no separate queue to drain. */
             Can1_Task();
-#if !CAN1_FULL_ANALYSIS_MODE
-            Can1_ProcessRxQueue(2U);
-#endif
         }
 #endif
 
@@ -543,6 +552,17 @@ int main(void)
                     (unsigned long)Can1_GetIrqCount(),
                     (unsigned long)Can1_GetErrorIrqCount(),
                     (unsigned long)Can1_GetMbIrqCount());
+
+#if APP_CAN2_ENABLE
+            RTT_LOG("[MAIN] tick=%lu uptime=%lums  CAN2=%lukbps  state=%u  IRQs: or=%lu err=%lu mb=%lu\r\n",
+                    (unsigned long)g_tick,
+                    (unsigned long)now_ms,
+                    (unsigned long)Can2_GetBaudrate(),
+                    (unsigned)Can2_GetState(),
+                    (unsigned long)Can2_GetIrqCount(),
+                    (unsigned long)Can2_GetErrorIrqCount(),
+                    (unsigned long)Can2_GetMbIrqCount());
+#endif
         }
 
         /* Software reset */
