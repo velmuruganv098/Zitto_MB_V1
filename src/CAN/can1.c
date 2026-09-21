@@ -5,15 +5,31 @@
  *
  *   DETECTING (NORMAL) → CONFIRMING (N clean frames, error-gated) → READY → (error) → DETECTING
  *
- * CLOCK SOURCE: CLKSRC=1  (bus clock = 40MHz)
+ * CLOCK SOURCE: CLKSRC=1  ("peripheral clock")
  *   - Always running after clock_init_80mhz() in main()
  *   - More reliable than SOSC for LPMACK sequence
  *
- * BAUD TIMING TABLE (40MHz bus clock, 16 TQ per bit):
- *   Index 0:  500 kbps  PRESDIV=4   SP=81.25%
- *   Index 1:  250 kbps  PRESDIV=9   SP=81.25%
- *   Index 2:  125 kbps  PRESDIV=19  SP=81.25%
- *   Index 3: 1000 kbps  PRESDIV=4   SP=75.00%  (8 TQ total)
+ * BAUD MISDETECTION FIX (V0.0063, clock correction):
+ *   PCC->PCCn[PCC_FlexCAN1_INDEX] only ever has its CGC (clock gate)
+ *   bit set - its peripheral-clock-source field is never explicitly
+ *   configured, so FlexCAN1's actual protocol-engine clock when
+ *   CLKSRC=1 is whatever that defaults to. The timing table below used
+ *   to assume that equals the 40MHz AHB bus clock (Core/DIVBUS), but
+ *   bench evidence (a candidate labeled "125 kbps" received 300+
+ *   consecutive error-free frames from a confirmed 250 kbps PCAN
+ *   source, and "250"/"500"/"1000" never matched anything real) proves
+ *   every candidate was actually running at exactly 2x its label - i.e.
+ *   the real protocol-engine clock is 80MHz (the CORE clock), not
+ *   40MHz. PRESDIV below is corrected accordingly (doubled) rather than
+ *   re-deriving the exact PCC clock-mux answer from the reference
+ *   manual, since the bench result is the more reliable source of
+ *   truth here.
+ *
+ * BAUD TIMING TABLE (80MHz protocol-engine clock, 16 TQ per bit):
+ *   Index 0:  500 kbps  PRESDIV=9   SP=81.25%
+ *   Index 1:  250 kbps  PRESDIV=19  SP=81.25%
+ *   Index 2:  125 kbps  PRESDIV=39  SP=81.25%
+ *   Index 3: 1000 kbps  PRESDIV=9   SP=75.00%  (8 TQ total)
  *
  * BAUD MISDETECTION FIX (V0.0063):
  *   The previous "confirm" step used FlexCAN internal loopback (LPB=1),
@@ -94,7 +110,8 @@ extern volatile uint32_t g_can1_debug_step;
                                 CAN_ESR1_BIT1ERR_MASK)
 
 /* --------------------------------------------------------------------------
- * BAUD RATE TABLES  (40MHz bus clock, CLKSRC=1 is OR'd in at runtime)
+ * BAUD RATE TABLES  (80MHz protocol-engine clock, CLKSRC=1 is OR'd in at
+ * runtime - see the BAUD MISDETECTION FIX note at the top of this file)
  *
  * CTRL1 format: [31:24]=PRESDIV [23:22]=RJW [21:19]=PSEG1
  *               [18:16]=PSEG2   [2:0]=PROPSEG
@@ -111,10 +128,10 @@ static const uint32_t g_baud_kbps[CAN1_BAUD_COUNT] =
 
 static const uint32_t g_ctrl1_base[CAN1_BAUD_COUNT] =
 {
-    0x045A0007UL,   /* 500  kbps: PRESDIV=4  16TQ SP=81.3% */
-    0x095A0007UL,   /* 250  kbps: PRESDIV=9  16TQ SP=81.3% */
-    0x135A0007UL,   /* 125  kbps: PRESDIV=19 16TQ SP=81.3% */
-    0x04490002UL    /* 1000 kbps: PRESDIV=4   8TQ SP=75.0% */
+    0x095A0007UL,   /* 500  kbps: PRESDIV=9  16TQ SP=81.3% (80MHz PE clock) */
+    0x135A0007UL,   /* 250  kbps: PRESDIV=19 16TQ SP=81.3% (80MHz PE clock) */
+    0x275A0007UL,   /* 125  kbps: PRESDIV=39 16TQ SP=81.3% (80MHz PE clock) */
+    0x09490002UL    /* 1000 kbps: PRESDIV=9   8TQ SP=75.0% (80MHz PE clock) */
 };
 
 /* Index of the candidate at 2x this candidate's rate, or 0xFF if this is
