@@ -3,7 +3,7 @@
  *
  * FlexCAN1 driver with full auto-baud architecture:
  *
- *   DETECTING (LOM) → CONFIRMING (N clean frames, error-gated) → READY → (error) → DETECTING
+ *   DETECTING (NORMAL) → CONFIRMING (N clean frames, error-gated) → READY → (error) → DETECTING
  *
  * CLOCK SOURCE: CLKSRC=1  (bus clock = 40MHz)
  *   - Always running after clock_init_80mhz() in main()
@@ -30,18 +30,28 @@
  *   traffic to intermittently latch as "125 kbps detected".
  *
  *   Fix: every tick in DETECTING, ESR1 is checked for real protocol
- *   errors (STFERR/FRMERR/CRCERR/BIT0ERR/BIT1ERR) FIRST. Any such error
- *   means this candidate is wrong and we hop to the next one immediately
- *   instead of waiting out the dwell timer. Only after CAN1_CONFIRM_FRAMES
+ *   errors (STFERR/FRMERR/CRCERR/BIT0ERR/BIT1ERR). A post-confirmation
+ *   error (after at least one clean frame at this candidate) means the
+ *   candidate is wrong and we hop to the next one immediately instead of
+ *   waiting out the dwell timer. Only after CAN1_CONFIRM_FRAMES
  *   consecutive frames arrive at the SAME candidate with zero protocol
- *   errors do we commit: re-apply the same baud with LOM cleared (real
- *   external ACK-capable mode) and go READY. A stray aliased frame no
- *   longer locks the baud by itself.
+ *   errors do we commit and go READY. A stray aliased frame no longer
+ *   locks the baud by itself.
  *
- * BUS HEAVY FIX:
- *   - Detection phase ALWAYS uses LOM=1  (no ACK, no error frames)
- *   - Normal mode ONLY entered AFTER N consecutive error-free frames
- *   - No "fallback" to normal mode on silent bus (infinite LOM scan)
+ * NORMAL MODE, NOT LOM (V0.0063):
+ *   Detection runs in NORMAL mode (LOM=0), not Listen-Only. In LOM,
+ *   FlexCAN never drives the CAN ACK bit; if this MCU is the only OTHER
+ *   node on the bus besides the tool generating the test traffic (a
+ *   typical single-node bench), NOBODY acks the frame, the sender's
+ *   missing-ACK error corrupts what would be the EOF field, and the
+ *   receiver discards the frame as a form violation - even though CRC
+ *   already passed. IFLAG1 then never sets, at ANY candidate baud, and
+ *   detection can never succeed no matter how correct the timing table
+ *   is. This project's own history (README.md V0.0052) already
+ *   root-caused and fixed this exact failure mode; an earlier revision
+ *   of this file regressed it back to LOM. The tradeoff: a wrong
+ *   candidate is no longer bus-silent (real ACK/error bits go out), but
+ *   this is required for detection to work at all on that topology.
  */
 
 #include "can1.h"
@@ -75,8 +85,10 @@ extern volatile uint32_t g_can1_debug_step;
 /* Real CAN protocol errors (not counter-overflow warnings) that prove the
  * currently-selected candidate baud does NOT match the bus. Checked every
  * tick during DETECTING so a wrong candidate is abandoned immediately
- * instead of waiting out the dwell timer. ACKERR is excluded: in LOM the
- * node never transmits, so it can never see its own ACK fail. */
+ * instead of waiting out the dwell timer. ACKERR is excluded: this driver
+ * never activates a TX mailbox during detection (it only lets FlexCAN
+ * auto-ACK received frames in NORMAL mode), so it can never see its own
+ * transmitted frame go unacknowledged. */
 #define CAN1_ERR_FLAGS_MASK   (CAN_ESR1_STFERR_MASK | CAN_ESR1_FRMERR_MASK | \
                                 CAN_ESR1_CRCERR_MASK | CAN_ESR1_BIT0ERR_MASK | \
                                 CAN_ESR1_BIT1ERR_MASK)
@@ -87,8 +99,9 @@ extern volatile uint32_t g_can1_debug_step;
  * CTRL1 format: [31:24]=PRESDIV [23:22]=RJW [21:19]=PSEG1
  *               [18:16]=PSEG2   [2:0]=PROPSEG
  *
- * All values have CLKSRC=0 here; CAN_CTRL1_CLKSRC_MASK is OR'd in ApplyBaud.
- * LOM and LPB bits are also added at runtime.
+ * All values have CLKSRC=0 here; CAN_CTRL1_CLKSRC_MASK is OR'd in at
+ * runtime by prv_ApplyBaud()/prv_NextBaud(). LOM/LPB are never set -
+ * detection runs in NORMAL mode (see file header).
  * -------------------------------------------------------------------------- */
 
 static const uint32_t g_baud_kbps[CAN1_BAUD_COUNT] =
@@ -249,10 +262,11 @@ static void prv_SetRxMailbox(void)
 /* ============================================================
  * APPLY BAUD RATE
  *
- * listen_only=1: LOM=1  (no ACK/error on bus, detection phase)
- * listen_only=0: LOM=0  (normal mode, after baud confirmed)
+ * Always NORMAL mode (LOM=0) - see the NORMAL MODE, NOT LOM note at the
+ * top of this file for why LOM can't be used on a single-external-node
+ * bench topology.
  * ============================================================ */
-static uint8_t prv_ApplyBaud(uint8_t idx, uint8_t listen_only)
+static uint8_t prv_ApplyBaud(uint8_t idx)
 {
     uint32_t ctrl1;
     uint8_t  i;
@@ -260,10 +274,10 @@ static uint8_t prv_ApplyBaud(uint8_t idx, uint8_t listen_only)
     if(idx >= CAN1_BAUD_COUNT) { return 0U; }
     if(prv_EnterFreeze() == 0U) { return 0U; }
 
-    /* CTRL1: timing base | bus clock | optional LOM
-     * LPB is NOT set here - only in the loopback test */
+    /* CTRL1: timing base | bus clock
+     * LPB is NOT set here - internal loopback cannot validate an
+     * external baud mismatch (see file header). */
     ctrl1 = g_ctrl1_base[idx] | CAN_CTRL1_CLKSRC_MASK;
-    if(listen_only != 0U) { ctrl1 |= CAN_CTRL1_LOM_MASK; }
 
     CAN1->CTRL1    = ctrl1;
     CAN1->RXMGMASK = 0U;       /* accept all IDs */
@@ -280,9 +294,8 @@ static uint8_t prv_ApplyBaud(uint8_t idx, uint8_t listen_only)
 
     if(prv_ExitFreeze() == 0U) { return 0U; }
 
-    RTT_LOG("[CAN1] Baud %lu kbps  %s  CTRL1=0x%08lX\r\n",
+    RTT_LOG("[CAN1] Baud %lu kbps  NORMAL  CTRL1=0x%08lX\r\n",
             (unsigned long)g_baud_kbps[idx],
-            (listen_only != 0U) ? "LOM" : "NORMAL",
             (unsigned long)ctrl1);
     return 1U;
 }
@@ -524,7 +537,24 @@ static void prv_ProcessRx(void)
 /* ============================================================
  * START / RESTART DETECTION
  *
- * Always starts in LOM at 500kbps.
+ * Starts in NORMAL mode at 500kbps.
+ *
+ * WHY NORMAL AND NOT LOM (V0.0063):
+ *   In Listen-Only Mode FlexCAN never drives the CAN ACK bit. NXP
+ *   documents that a frame not acknowledged by ANY node on the bus is
+ *   not delivered to the receiving controller's mailbox - the sender's
+ *   missing-ACK error flag corrupts what would otherwise be the EOF
+ *   field, and the receiver discards the frame as a form violation even
+ *   though it already passed CRC. On a bench topology where this MCU is
+ *   the only OTHER node besides the CAN tool sending the traffic (no
+ *   third node to ACK), LOM means NO frame can ever be received,
+ *   regardless of candidate baud - IFLAG1 never sets, at any rate. This
+ *   project's own history (README.md V0.0052) already root-caused and
+ *   fixed exactly this; detection here uses active/normal mode so the
+ *   MCU provides the ACK. The tradeoff is that a wrong candidate is no
+ *   longer bus-silent (it will emit real ACK/error bits), but on a
+ *   test bench this is required for detection to work at all.
+ *
  * Called from: Init, bus-off recovery, idle timeout.
  * ============================================================ */
 static void prv_StartDetection(void)
@@ -541,22 +571,22 @@ static void prv_StartDetection(void)
     g_status.bus_off            = 0U;
     g_status.error_passive      = 0U;
 
-    if(prv_ApplyBaud(0U, 1U) == 0U)
+    if(prv_ApplyBaud(0U) == 0U)
     {
         g_state = CAN1_STATE_DETECTING;
         return;
     }
 
     g_state = CAN1_STATE_DETECTING;
-    RTT_LOG("[CAN1] Detection start: 500kbps LOM (non-blocking)\r\n");
+    RTT_LOG("[CAN1] Detection start: 500kbps NORMAL (non-blocking)\r\n");
 }
 
 /* ============================================================
  * MOVE TO NEXT BAUD CANDIDATE
  *
  * Cycles 0→1→2→3→0→...
- * All in LOM.
- * NEVER exits to normal mode without loopback confirmation.
+ * All in NORMAL mode (see prv_StartDetection for why LOM can't be used
+ * on a single-external-node bench topology).
  * ============================================================ */
 static void prv_NextBaud(void)
 {
@@ -575,7 +605,7 @@ static void prv_NextBaud(void)
      *
      * Detection mode must always use:
      *   - CLKSRC = 1
-     *   - LOM    = 1
+     *   - LOM    = 0  (NORMAL - see prv_StartDetection)
      *   - LPB    = 0
      */
     if(prv_EnterFreeze() == 0U)
@@ -586,8 +616,7 @@ static void prv_NextBaud(void)
 
     CAN1->CTRL1 =
         g_ctrl1_base[g_rate_idx] |
-        CAN_CTRL1_CLKSRC_MASK |
-        CAN_CTRL1_LOM_MASK;
+        CAN_CTRL1_CLKSRC_MASK;
 
     CAN1->RXMGMASK = 0U;
     CAN1->RX14MASK = 0U;
@@ -618,7 +647,7 @@ static void prv_NextBaud(void)
     }
 
     RTT_LOG(
-        "[CAN1] Next baud: %lu kbps  LOM  CTRL1=0x%08lX\r\n",
+        "[CAN1] Next baud: %lu kbps  NORMAL  CTRL1=0x%08lX\r\n",
         (unsigned long)g_baud_kbps[g_rate_idx],
         (unsigned long)CAN1->CTRL1
     );
@@ -632,7 +661,8 @@ void Can1_Init(void)
     RTT_LOG("[CAN1]  INIT  FlexCAN1  PTA12/PTA13  SHDN=PTB%u\r\n",
             (unsigned)CAN1_SHDN_PTB_PIN);
     RTT_LOG("[CAN1]  Auto-baud: 500/250/125/1000 kbps  (non-blocking)\r\n");
-    RTT_LOG("[CAN1]  LOM during detect, loopback confirm, then NORMAL\r\n");
+    RTT_LOG("[CAN1]  NORMAL mode throughout (ACK-capable) - required to receive"
+            " on a single-node bench\r\n");
     RTT_LOG("[CAN1] ============================================\r\n");
 
     g_can1_debug_step = 1U;
@@ -683,10 +713,10 @@ void Can1_Init(void)
  *
  * STATE MACHINE:
  *
- *   DETECTING: poll ESR1 + IFLAG1 each tick (non-blocking)
- *     Protocol error at this candidate → prv_NextBaud() immediately
+ *   DETECTING: poll ESR1 + IFLAG1 each tick (non-blocking), NORMAL mode
+ *     Post-confirmation protocol error → prv_NextBaud() immediately
  *     Clean frame → g_confirm_count++, extend dwell
- *       g_confirm_count >= CAN1_CONFIRM_FRAMES → commit (LOM cleared), READY
+ *       g_confirm_count >= CAN1_CONFIRM_FRAMES → commit, READY
  *     No frame after CAN1_DETECT_TICKS of silence → prv_NextBaud()
  *
  *   READY: process RX, monitor errors
@@ -776,9 +806,9 @@ void Can1_Task(void)
                 }
 
                 /* N consecutive error-free frames at this candidate: commit.
-                 * Re-apply the same baud with LOM cleared -> real external
-                 * (ACK-capable) mode. */
-                if(prv_ApplyBaud(g_rate_idx, 0U) == 0U)
+                 * Re-apply the same baud for a clean re-arm before READY
+                 * (already NORMAL mode throughout detection). */
+                if(prv_ApplyBaud(g_rate_idx) == 0U)
                 {
                     g_state = CAN1_STATE_ERROR;
                     return;
