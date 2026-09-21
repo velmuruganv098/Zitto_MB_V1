@@ -1062,24 +1062,29 @@ static uint8_t Can2_ReadFrame(
 
 
 /*
- * FIX: was checking BOFFINT (a one-shot, write-1-to-clear latched
- * interrupt flag) instead of FLTCONF (bits 4:5 of ESR1, a live status
- * field derived from TEC/REC that reads 2 for as long as the module
- * is actually in bus-off). BOFFINT catches the transition into
- * bus-off exactly once and is cleared by this very check, so if the
- * module was still genuinely bus-off on the next tick (TEC/REC not
- * yet recovered - no SOFTRST happens here, only freeze/CTRL1/ESR1
- * reset, same as CAN1's prv_ApplyBaud()), this function would report
- * "not bus-off" and DETECTING would spin forever against a module
- * still internally confined to bus-off, with no further recovery
- * attempt - exactly the "goes to bus-off and gets stuck" symptom
- * (CAN1 doesn't have this problem because its equivalent check in
- * prv_Task() reads FLTCONF directly, every tick, so it keeps retrying
- * prv_StartDetection() - harmlessly idempotent - until the hardware's
- * automatic bus-off recovery sequence actually clears FLTCONF).
- * Mirrors CAN1 exactly now: level-checked every tick, self-healing.
+ * Checks live fault-confinement status (FLTCONF, bits 4:5 of ESR1) -
+ * NOT BOFFINT. BOFFINT is a one-shot, write-1-to-clear latched
+ * interrupt flag that only asserts on the transition into bus-off and
+ * is cleared by the very act of checking it; FLTCONF instead reads
+ * back the CURRENT confinement state for as long as it holds, derived
+ * live from TEC/REC. Checking BOFFINT alone let detection miss a
+ * module that was still genuinely bus-off on a later tick (recovery
+ * takes a little time - no SOFTRST happens on a candidate switch,
+ * only freeze/CTRL1/ESR1 reset, same as CAN1's prv_ApplyBaud()),
+ * which was the original "goes to bus-off and gets stuck" symptom.
+ *
+ * Triggers on fault!=0, i.e. BOTH bus-heavy/error-passive (FLTCONF==1
+ * - REC/TEC past 127, the warning stage reached BEFORE full bus-off)
+ * AND bus-off (FLTCONF==2), per explicit requirement: changing the
+ * external bus baud while RUNNING can land CAN2 in error-passive
+ * without necessarily climbing all the way to bus-off, so a
+ * bus-off-only check can miss a genuinely wrong/stale locked baud.
+ * fault==0 is normal error-active operation.
+ *
+ * RUNNING-only - see the FIX note above the DETECTING block in
+ * Can2_Task() for why this must never run during an active scan.
  */
-static uint8_t Can2_CheckBusOff(void)
+static uint8_t Can2_CheckFault(void)
 {
     uint32_t esr;
     uint8_t  fault;
@@ -1103,16 +1108,20 @@ static uint8_t Can2_CheckBusOff(void)
     }
 
 
-    if(fault == 2U)
+    if(fault != 0U)
     {
-        g_can2_status.bus_off_count++;
+        if(fault == 2U)
+        {
+            g_can2_status.bus_off_count++;
+        }
 
 
         g_can2_status.error_count++;
 
 
         RTT_LOG(
-            "[CAN2_ERR] BUS OFF  TxErr=%u RxErr=%u\r\n",
+            "[CAN2_ERR] %s  TxErr=%u RxErr=%u - re-detecting\r\n",
+            (fault == 2U) ? "BUS OFF" : "BUS HEAVY (error-passive)",
             (unsigned)(CAN2->ECR & 0xFFU),
             (unsigned)((CAN2->ECR >> 8U) & 0xFFU)
         );
@@ -1215,6 +1224,55 @@ void Can2_StartDetection(void)
             g_can2_baud_index
         ]
     );
+}
+
+
+/*
+ * FIX: bus-off does not reliably self-clear on its own timeline.
+ * Can2_StartDetection() alone only cycles freeze/CTRL1/ESR1 (no
+ * SOFTRST) - TEC/REC (and so FLTCONF) are NOT reset by that, so they
+ * only return to 0 via the ISO 11898 hardware auto-recovery sequence
+ * (128 occurrences of 11 consecutive recessive bits with NO
+ * transmission attempt in between). While DETECTING is actively
+ * cycling candidates in NORMAL mode, it keeps trying to
+ * receive/ACK - any transmission attempt restarts that 128x11 count
+ * from zero - so at some baud/traffic combinations (1 Mbps observed)
+ * recovery could stall indefinitely: exactly "goes to bus-off, not
+ * clear until MCU reset". A full MCU reset works because
+ * Can2_HardwareInit() performs a SOFTRST, which resets TEC/REC to 0
+ * immediately and unconditionally, with no dependency on bus quiet
+ * time. Can2_Restart() reproduces that same guaranteed-deterministic
+ * recovery from software - same sequence Can2_Init() runs at boot
+ * (HardwareInit -> WakeNormal -> StartDetection) - so bus-heavy/
+ * bus-off recovery is exactly as reliable as an MCU reset, per
+ * requirement.
+ */
+static void Can2_Restart(void)
+{
+    RTT_LOG(
+        "[CAN2] Restarting (full re-init, same as MCU reset)\r\n"
+    );
+
+
+    if(
+        Can2_HardwareInit()
+        == 0U
+    )
+    {
+        RTT_LOG(
+            "[CAN2_ERR] Restart HW INIT FAIL\r\n"
+        );
+
+        g_can2_status.state =
+            CAN2_STATE_ERROR;
+
+        return;
+    }
+
+
+    Can2_WakeNormal();
+
+    Can2_StartDetection();
 }
 
 
@@ -1573,25 +1631,10 @@ void Can2_Task(void)
          */
 
         RTT_LOG(
-            "[CAN2] ERROR state - restarting detection\r\n"
+            "[CAN2] ERROR state - restarting (full re-init)\r\n"
         );
 
-        Can2_StartDetection();
-
-        return;
-    }
-
-
-    /*
-     * Monitor bus-off.
-     */
-
-    if(
-        Can2_CheckBusOff()
-        != 0U
-    )
-    {
-        Can2_StartDetection();
+        Can2_Restart();
 
         return;
     }
@@ -1600,6 +1643,24 @@ void Can2_Task(void)
     /* ---------------------------------------------------------------------- */
     /* DETECTION                                                              */
     /* ---------------------------------------------------------------------- */
+
+    /*
+     * FIX: bus-off (FLTCONF) must NOT be checked while DETECTING, only
+     * while RUNNING - mirrors CAN1's Can1_Task() exactly, where the
+     * fault==2 check lives after the DETECTING block's unconditional
+     * return and so never runs during a scan. FLTCONF does not clear
+     * the instant Can2_StartDetection()/Can2_SetBaud() cycles freeze
+     * (no SOFTRST happens there) - real recovery takes a little time.
+     * With the bus-off check running unconditionally (as it did
+     * before this fix), CheckBusOff() would still see FLTCONF==2 on
+     * the very next tick after a restart and call
+     * Can2_StartDetection() again before candidate 0 ever got a
+     * single tick's chance to receive anything - an infinite restart
+     * loop that never progresses, which is exactly the reported "goes
+     * to bus-off and is never recovered" symptom. DETECTING already
+     * has its own protocol-error bail-out (CAN2_ERR_FLAGS_MASK below)
+     * to abandon a bad candidate quickly, same as CAN1.
+     */
 
     if(
         g_can2_status.state ==
@@ -1914,6 +1975,26 @@ void Can2_Task(void)
                     &frame
                 );
             }
+        }
+
+
+        /*
+         * Bus-off check belongs here, RUNNING-only (see the FIX note
+         * above the DETECTING block for why it must not run while
+         * scanning). Can2_Restart() (full re-init, not just
+         * Can2_StartDetection()) - see its own FIX note for why a
+         * plain restart alone is not a reliable enough recovery from
+         * a genuine bus-off.
+         */
+
+        if(
+            Can2_CheckFault()
+            != 0U
+        )
+        {
+            Can2_Restart();
+
+            return;
         }
 
 
