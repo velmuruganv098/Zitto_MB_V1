@@ -117,6 +117,16 @@ static const uint32_t g_ctrl1_base[CAN1_BAUD_COUNT] =
     0x04490002UL    /* 1000 kbps: PRESDIV=4   8TQ SP=75.0% */
 };
 
+/* Index of the candidate at 2x this candidate's rate, or 0xFF if this is
+ * already the fastest candidate. Table is 500/250/125/1000 kbps, so
+ * 125->250(idx1), 250->500(idx0), 500->1000(idx3), 1000->none. Used to
+ * corroborate a candidate that just went clean against its harmonic
+ * double before trusting it, since a receiver listening at exactly half
+ * the real bus rate can repeatably (not just by rare chance) decode
+ * what looks like a valid half-rate frame out of real traffic when the
+ * actual IDs/data are simple/low-entropy. */
+static const uint8_t g_higher_idx[CAN1_BAUD_COUNT] = { 3U, 0U, 1U, 0xFFU };
+
 /* --------------------------------------------------------------------------
  * MODULE STATE
  * -------------------------------------------------------------------------- */
@@ -127,6 +137,9 @@ static Can1_State_t       g_state            = CAN1_STATE_DETECTING;
 static uint8_t            g_rate_idx         = 0U;
 static uint8_t            g_detect_ticks     = 0U;
 static uint8_t            g_confirm_count    = 0U;
+static uint8_t            g_corrob_active    = 0U;  /* 1 = testing the 2x-higher candidate */
+static uint8_t            g_corrob_attempted = 0U;  /* 1 = already tried corroborating this base candidate once */
+static uint8_t            g_corrob_base_idx  = 0U;  /* candidate being corroborated, valid only while g_corrob_active */
 static uint32_t           g_no_frame_ticks   = 0U;
 static uint32_t           g_task_cnt         = 0U;
 static uint32_t           g_rx_total         = 0U;
@@ -559,10 +572,12 @@ static void prv_ProcessRx(void)
  * ============================================================ */
 static void prv_StartDetection(void)
 {
-    g_rate_idx       = 0U;
-    g_detect_ticks   = 0U;
-    g_no_frame_ticks = 0U;
-    g_confirm_count  = 0U;
+    g_rate_idx         = 0U;
+    g_detect_ticks     = 0U;
+    g_no_frame_ticks   = 0U;
+    g_confirm_count    = 0U;
+    g_corrob_active    = 0U;
+    g_corrob_attempted = 0U;
 
     g_status.ready              = 0U;
     g_status.hw_ready           = 0U;
@@ -597,8 +612,10 @@ static void prv_NextBaud(void)
         g_rate_idx = 0U;
     }
 
-    g_detect_ticks  = 0U;
-    g_confirm_count = 0U;
+    g_detect_ticks     = 0U;
+    g_confirm_count    = 0U;
+    g_corrob_active    = 0U;
+    g_corrob_attempted = 0U;
 
     /*
      * Reconfigure CAN1 timing while in freeze mode.
@@ -652,6 +669,66 @@ static void prv_NextBaud(void)
         (unsigned long)CAN1->CTRL1
     );
 }
+
+/* ============================================================
+ * COMMIT: lock g_rate_idx as the detected baud and go READY.
+ * ============================================================ */
+static void prv_CommitLock(void)
+{
+    if(prv_ApplyBaud(g_rate_idx) == 0U)
+    {
+        g_state = CAN1_STATE_ERROR;
+        return;
+    }
+
+    g_status.detected_baud_kbps = g_baud_kbps[g_rate_idx];
+    g_status.ready              = 1U;
+    g_status.hw_ready           = 1U;
+    g_status.detecting          = 0U;
+
+    g_no_frame_ticks   = 0U;
+    g_confirm_count    = 0U;
+    g_corrob_active    = 0U;
+    g_corrob_attempted = 0U;
+
+    g_state = CAN1_STATE_READY;
+
+    RTT_LOG(
+        "[CAN1] BAUD LOCKED: %lu kbps (confirmed over %u clean frames)\r\n",
+        (unsigned long)g_status.detected_baud_kbps,
+        (unsigned)CAN1_CONFIRM_FRAMES
+    );
+}
+
+/* ============================================================
+ * CORROBORATION FAILED: the 2x-higher candidate produced no clean run
+ * (error, or silence for the whole window). Revert to the original
+ * lower candidate and require a FRESH clean run before locking it -
+ * per this project's own V0.0062 findings, the old pre-corroboration
+ * frames are not reused as-is. g_corrob_attempted stays set so this
+ * candidate is locked directly on its next clean run instead of
+ * corroborating a second time (bounds the DETECTING <-> corroborate
+ * cycle to one attempt).
+ * ============================================================ */
+static void prv_RevertCorroboration(void)
+{
+    RTT_LOG(
+        "[CAN1] %lu kbps did not corroborate - reverting to revalidate %lu kbps\r\n",
+        (unsigned long)g_baud_kbps[g_rate_idx],
+        (unsigned long)g_baud_kbps[g_corrob_base_idx]
+    );
+
+    g_rate_idx      = g_corrob_base_idx;
+    g_corrob_active = 0U;
+    g_confirm_count = 0U;
+    g_detect_ticks  = 0U;
+
+    if(prv_ApplyBaud(g_rate_idx) == 0U)
+    {
+        g_state = CAN1_STATE_ERROR;
+    }
+}
+
 /* ============================================================
  * PUBLIC: Can1_Init
  * ============================================================ */
@@ -738,6 +815,7 @@ void Can1_Task(void)
     if(g_state == CAN1_STATE_DETECTING)
     {
         uint32_t esr1      = CAN1->ESR1;
+        uint32_t ecr       = CAN1->ECR;
         uint8_t  had_error = ((esr1 & CAN1_ERR_FLAGS_MASK) != 0U) ? 1U : 0U;
 
         if(had_error)
@@ -761,21 +839,57 @@ void Can1_Task(void)
             CAN1->IFLAG1 = CAN1_RX_MB_FLAG;
 
             RTT_LOG(
-                "[CAN1] Bit error at %lu kbps after %u clean frame(s) (ESR1=0x%08lX)"
-                " - wrong baud, next candidate\r\n",
+                "[CAN1] Bit error at %lu kbps after %u clean frame(s)"
+                " (ESR1=0x%08lX TxErr=%u RxErr=%u) - %s\r\n",
                 (unsigned long)g_baud_kbps[g_rate_idx],
                 (unsigned)g_confirm_count,
-                (unsigned long)esr1
+                (unsigned long)esr1,
+                (unsigned)(ecr & 0xFFU), (unsigned)((ecr >> 8U) & 0xFFU),
+                g_corrob_active ? "corroboration failed" : "wrong baud, next candidate"
             );
 
-            prv_NextBaud();
+            if(g_corrob_active)
+            {
+                prv_RevertCorroboration();
+            }
+            else
+            {
+                prv_NextBaud();
+            }
             return;
         }
 
         if(prv_RxAvailable())
         {
+            /* Capture CS/ID/data BEFORE re-arming (re-arm overwrites the CS
+             * word only, but read everything up front for a consistent
+             * snapshot). */
+            uint32_t base   = CAN1_RX_MB_WORD_BASE;
+            uint32_t cs     = CAN1->RAMn[base + 0U];
+            uint32_t idreg  = CAN1->RAMn[base + 1U];
+            uint32_t d0     = CAN1->RAMn[base + 2U];
+            uint32_t d1     = CAN1->RAMn[base + 3U];
+            uint8_t  dlc    = (uint8_t)((cs >> 16U) & 0x0FU);
+            uint8_t  ide    = (uint8_t)((cs >> 21U) & 1U);
+            uint32_t can_id = (ide != 0U) ? (idreg & 0x1FFFFFFFUL)
+                                           : ((idreg >> 18U) & 0x7FFUL);
+
+            if(dlc > 8U) { dlc = 8U; }
+
             CAN1->IFLAG1 = CAN1_RX_MB_FLAG;
-            CAN1->RAMn[CAN1_RX_MB_WORD_BASE + 0U] = CAN1_CS_RX_EMPTY;  /* re-arm */
+            CAN1->RAMn[base + 0U] = CAN1_CS_RX_EMPTY;  /* re-arm */
+
+            RTT_LOG(
+                "[CAN1] Candidate %lu kbps RX: %s ID=0x%08lX DLC=%u"
+                "  %02X %02X %02X %02X %02X %02X %02X %02X\r\n",
+                (unsigned long)g_baud_kbps[g_rate_idx],
+                (ide != 0U) ? "EXT" : "STD",
+                (unsigned long)can_id, (unsigned)dlc,
+                (unsigned)(uint8_t)(d0 >> 24U), (unsigned)(uint8_t)(d0 >> 16U),
+                (unsigned)(uint8_t)(d0 >>  8U), (unsigned)(uint8_t)d0,
+                (unsigned)(uint8_t)(d1 >> 24U), (unsigned)(uint8_t)(d1 >> 16U),
+                (unsigned)(uint8_t)(d1 >>  8U), (unsigned)(uint8_t)d1
+            );
 
             if(had_error)
             {
@@ -805,31 +919,59 @@ void Can1_Task(void)
                     return;
                 }
 
-                /* N consecutive error-free frames at this candidate: commit.
-                 * Re-apply the same baud for a clean re-arm before READY
-                 * (already NORMAL mode throughout detection). */
-                if(prv_ApplyBaud(g_rate_idx) == 0U)
+                if(g_corrob_active)
                 {
-                    g_state = CAN1_STATE_ERROR;
+                    /* The 2x-higher candidate ALSO went clean: it is the
+                     * real rate, and the lower candidate was a harmonic
+                     * alias of it. Lock the higher one. */
+                    RTT_LOG(
+                        "[CAN1] Corroboration CONFIRMED %lu kbps over the"
+                        " aliased %lu kbps candidate\r\n",
+                        (unsigned long)g_baud_kbps[g_rate_idx],
+                        (unsigned long)g_baud_kbps[g_corrob_base_idx]
+                    );
+                    prv_CommitLock();
                     return;
                 }
 
-                g_status.detected_baud_kbps = g_baud_kbps[g_rate_idx];
-                g_status.ready              = 1U;
-                g_status.hw_ready           = 1U;
-                g_status.detecting          = 0U;
+                if(g_corrob_attempted == 0U)
+                {
+                    uint8_t higher = g_higher_idx[g_rate_idx];
 
-                g_no_frame_ticks = 0U;
-                g_confirm_count  = 0U;
+                    if(higher != 0xFFU)
+                    {
+                        /* Don't lock yet - a candidate at exactly half the
+                         * real bus rate can repeatably (not just by rare
+                         * chance) decode simple/low-entropy real traffic as
+                         * a valid clean frame. Briefly test the 2x-higher
+                         * candidate before trusting this one. */
+                        g_corrob_active    = 1U;
+                        g_corrob_attempted = 1U;
+                        g_corrob_base_idx  = g_rate_idx;
+                        g_rate_idx         = higher;
+                        g_confirm_count    = 0U;
+                        g_detect_ticks     = 0U;
 
-                g_state = CAN1_STATE_READY;
+                        if(prv_ApplyBaud(g_rate_idx) == 0U)
+                        {
+                            g_state = CAN1_STATE_ERROR;
+                            return;
+                        }
 
-                RTT_LOG(
-                    "[CAN1] BAUD LOCKED: %lu kbps (confirmed over %u clean frames)\r\n",
-                    (unsigned long)g_status.detected_baud_kbps,
-                    (unsigned)CAN1_CONFIRM_FRAMES
-                );
+                        RTT_LOG(
+                            "[CAN1] %lu kbps clean x%u - corroborating against"
+                            " %lu kbps before lock\r\n",
+                            (unsigned long)g_baud_kbps[g_corrob_base_idx],
+                            (unsigned)CAN1_CONFIRM_FRAMES,
+                            (unsigned long)g_baud_kbps[g_rate_idx]
+                        );
+                        return;
+                    }
+                }
 
+                /* Fastest candidate, or already corroborated once for this
+                 * candidate: commit directly. */
+                prv_CommitLock();
                 return;
             }
         }
@@ -838,7 +980,16 @@ void Can1_Task(void)
 
         if(g_detect_ticks >= CAN1_DETECT_TICKS)
         {
-            prv_NextBaud();
+            if(g_corrob_active)
+            {
+                /* Higher candidate produced no traffic within the window -
+                 * genuinely not the real rate. */
+                prv_RevertCorroboration();
+            }
+            else
+            {
+                prv_NextBaud();
+            }
         }
 
         return;
