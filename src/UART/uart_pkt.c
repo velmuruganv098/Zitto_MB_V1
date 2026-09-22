@@ -1463,6 +1463,7 @@ uint8_t Uart_Pkt_Send(
     uint16_t crc;
     uint8_t seq;
     uint16_t i;
+    uint8_t result;
 
 
     /* ------------------------------------------------------------
@@ -1638,8 +1639,38 @@ uint8_t Uart_Pkt_Send(
 
 
     /* ------------------------------------------------------------
-     * Frame complete
+     * Queue frame
+     *
+     * IMPORTANT: this MUST happen before the "[UART_TX] Frame ready"
+     * RTT_LOG() below, not after it.
+     *
+     * g_tx_buffer is a single shared static buffer. RTT_LOG() mirrors
+     * onto the UART link (debug_rtt.c), which calls Uart_Pkt_SendLog()
+     * -> Uart_Pkt_Send(MSG_LOG, ...) - i.e. THIS SAME FUNCTION,
+     * re-entrantly, before the outer call has queued its own frame.
+     * That nested call rebuilds its own (different, shorter/longer)
+     * frame into g_tx_buffer, clobbering the bytes just built above.
+     * If the queue-push ran after the log line, it would push whatever
+     * the nested call left behind in g_tx_buffer instead of this
+     * frame's real payload - bytes that don't match `index` in length
+     * and fail CRC on the receiving end. That silently dropped every
+     * IMU/CSA/CAN_STATUS/FLM/heartbeat frame immediately following its
+     * own diagnostic log line (CAN frames were unaffected only because
+     * they are excluded from this log below).
+     *
+     * Pushing first copies the frame out of g_tx_buffer into the ring
+     * buffer immediately, so a later reentrant rebuild of g_tx_buffer
+     * can no longer corrupt it.
+     *
+     * ESP does NOT need to be connected.
+     *
+     * UART failure must never stop the MCU - enqueue is bounded and
+     * non-blocking; uart_tx_service() (called every Uart_Poll()) drains
+     * it to hardware in bounded batches instead of blocking this caller.
      * ------------------------------------------------------------ */
+
+    result = uart_tx_push_frame(g_tx_buffer, index);
+
 
     /*
      * CAN frames can arrive much faster than RTT can display them.
@@ -1659,20 +1690,7 @@ uint8_t Uart_Pkt_Send(
         );
     }
 
-
-    /* ------------------------------------------------------------
-     * Queue frame
-     *
-     * IMPORTANT:
-     *
-     * ESP does NOT need to be connected.
-     *
-     * UART failure must never stop the MCU - enqueue is bounded and
-     * non-blocking; uart_tx_service() (called every Uart_Poll()) drains
-     * it to hardware in bounded batches instead of blocking this caller.
-     * ------------------------------------------------------------ */
-
-    return uart_tx_push_frame(g_tx_buffer, index);
+    return result;
 }
 uint8_t Uart_Pkt_SendLog(
     const char *text

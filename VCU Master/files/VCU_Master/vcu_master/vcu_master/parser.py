@@ -193,6 +193,17 @@ def parse_line(line: str) -> Dict[str, Any]:
                 f[k] = _num(v) if k != "hex" else v
             rec["tags"] = ["RAW"]
 
+        elif mtype == "FLASH_DATA":
+            # CMD_FLASH_RD response (src/UART/uart_pkt.h MSG_FLASH_DATA,
+            # 0x8A): "len=N empty" or "len=N hex=<record bytes as hex>".
+            # Previously this arrived disguised as a MSG_LOG/"LOG" line
+            # with the raw record bytes mashed into text - no structured
+            # decode existed for it at all.
+            for k, v in _KV_RE.findall(body):
+                f[k] = _num(v) if k != "hex" else v
+            f["empty"] = "empty" in body.split()
+            rec["tags"] = ["FLASH"]
+
         elif mtype in ("BRIDGE_STATUS", "STATS"):
             for k, v in _KV_RE.findall(body):
                 f[k] = _num(v)

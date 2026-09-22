@@ -172,10 +172,19 @@ class BleLink(_LinkBase):
 
     def _on_notify(self, _handle, data: bytearray) -> None:
         text = data.decode("utf-8", errors="replace")
-        # the bridge sends one line per notification; also tolerate '\n'
-        text = self._partial + text
-        parts = text.replace("\r", "").split("\n")
-        self._partial = ""
+        # The bridge sends one line per notification with no trailing
+        # newline, so normally this never splits anything. It's kept as
+        # a safety net in case a GATT stack ever delivers a payload
+        # split across callbacks (e.g. before MTU negotiation raises
+        # the usable payload size). Previously self._partial was always
+        # reset to "" here instead of holding the trailing incomplete
+        # fragment, so any such split line would silently lose its tail.
+        text = self._partial + text.replace("\r", "")
+        parts = text.split("\n")
+        if text.endswith("\n"):
+            self._partial = ""
+        else:
+            self._partial = parts.pop()
         for p in parts:
             if p.strip():
                 self._emit_line(p)

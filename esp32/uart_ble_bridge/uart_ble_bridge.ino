@@ -26,21 +26,22 @@
  * ---------
  * GPIO4 and GPIO5 are reserved for S32K UART.
  *
- * S32K GPIO IDs follow Zitto architecture:
+ * S32K GPIO IDs match src/GPIO/gpio_control.c exactly (1..13, not 0..12 -
+ * there is no ID 0, and ID 13/PTB0 is a real, reachable pin):
  *
- * ID 0  = PTE9
- * ID 1  = PTE8
- * ID 2  = PTD5
- * ID 3  = PTC1
- * ID 4  = PTC15
- * ID 5  = PTC14
- * ID 6  = PTB3
- * ID 7  = PTB1
- * ID 8  = PTB0
- * ID 9  = PTC9
- * ID 10 = PTC8
- * ID 11 = PTA1
- * ID 12 = PTA0
+ * ID 1  = PTD1
+ * ID 2  = PTD0
+ * ID 3  = PTE5
+ * ID 4  = PTE4
+ * ID 5  = PTE9
+ * ID 6  = PTE8
+ * ID 7  = PTD5
+ * ID 8  = PTC1
+ * ID 9  = PTC15
+ * ID 10 = PTC14
+ * ID 11 = PTB3
+ * ID 12 = PTB1
+ * ID 13 = PTB0
  *
  * BLE DEVICE
  * ----------
@@ -54,16 +55,22 @@
  * Server commands:
  *
  * ESP:<pin>:<0|1>
- * ESP:<pin>:<IN|OUT>:<0|1>
+ * S32:<gpio_id 1..13>:<dir>:<state>
+ * MODULE:<imu|csa|can1|can2|flm>:<0|1>
+ * RESET
+ * LED:<period_ms>:<duty_pct>
+ * FLASH:RD
+ * FLASH:WR:<hex bytes>
+ * FLASH:DEL
+ * RAW:<TT hex><payload hex>   (generic escape hatch - any packet type)
  *
- * S32:<gpio_id>:<dir>:<state>
- *
- * S32:0:1:1
- * S32:12:1:0
+ * S32:1:1:1
+ * S32:13:1:0
  *
  * INFO
  * GPIO
  * PING
+ * STATS
  */
 
 #include <Arduino.h>
@@ -103,11 +110,20 @@
 
 #define PROTOCOL_VERSION        0x01
 
+/*
+ * These MUST match src/UART/uart_pkt.h exactly. An earlier revision of
+ * this file had MCU_RESET/LED_CTRL/STATUS_REQ swapped relative to the
+ * firmware (0x05/0x03/0x04 instead of 0x03/0x04/0x05) - harmless while
+ * nothing built those commands, but wrong the moment they were used.
+ */
 #define CMD_MODULE_EN           0x01
 #define CMD_GPIO_SET            0x02
-#define CMD_MCU_RESET           0x03
-#define CMD_LED_CTRL            0x04
-#define CMD_STATUS_REQ          0x05
+#define CMD_STATUS_REQ          0x03
+#define CMD_MCU_RESET           0x04
+#define CMD_LED_CTRL            0x05
+#define CMD_FLASH_RD            0x06
+#define CMD_FLASH_WR            0x07
+#define CMD_FLASH_DEL           0x08
 
 #define MSG_LOG                 0x80
 #define MSG_STATUS              0x81
@@ -118,6 +134,7 @@
 #define MSG_GPIO_STATUS         0x86
 #define MSG_CMD_ACK             0x87
 #define MSG_CAN_STATUS          0x88
+#define MSG_FLASH_DATA          0x8A
 #define MSG_FLM                 0x89
 
 #define MAX_PAYLOAD             256
@@ -351,11 +368,13 @@ static bool sendFrame(
  * ================================================================ */
 
 static void publish(
-    const String &line)
+    const String &line,
+    bool viaBle = true)
 {
     Serial.println(line);
 
-    if (!g_bleConnected ||
+    if (!viaBle ||
+        !g_bleConnected ||
         g_txChar == nullptr)
     {
         return;
@@ -876,6 +895,38 @@ static String decodeFrame(
             break;
         }
 
+        case MSG_FLASH_DATA:
+        {
+            /*
+             * Was previously piggybacked on MSG_LOG (raw record bytes
+             * mashed into a text log line, no structured decode). Now
+             * a dedicated type: len==0 means "no record", otherwise
+             * emit the record as hex so it survives BLE/text transport
+             * intact regardless of byte content.
+             */
+            s += "FLASH_DATA len=";
+            s += String(len);
+
+            if (len == 0)
+            {
+                s += " empty";
+            }
+            else
+            {
+                s += " hex=";
+                for (uint16_t i = 0; i < len; i++)
+                {
+                    if (p[i] < 0x10)
+                    {
+                        s += "0";
+                    }
+                    s += String(p[i], HEX);
+                }
+            }
+
+            break;
+        }
+
         default:
         {
             s += "UNKNOWN_TYPE=0x";
@@ -1105,12 +1156,29 @@ static void feedByte(
             {
                 g_uartFramesRx++;
 
+                /*
+                 * MSG_LOG frames (boot/debug text - "[UART_TX] Frame
+                 * ready...", "[CAN1]...", "[MAIN] tick=...") arrive at
+                 * roughly the same rate as the real structured frames,
+                 * since the S32K firmware mirrors every RTT_LOG() call
+                 * onto this same link. Notifying BLE for all of it on
+                 * top of the real data roughly doubled the notify()
+                 * rate - measured (via a standalone bleak script, not
+                 * this Arduino sketch) at far below what the ESP32 was
+                 * actually calling notify() at, meaning the BLE stack
+                 * silently drops/coalesces notifications sent faster
+                 * than the negotiated connection interval can drain.
+                 * LOG text is diagnostic only and not needed by a BLE
+                 * central - keep it on Serial, stop competing with
+                 * IMU/CSA/CAN/STATUS/etc. for the same limited link.
+                 */
                 publish(
                     decodeFrame(
                         g_type,
                         g_seq,
                         g_payload,
-                        g_len));
+                        g_len),
+                    g_type != MSG_LOG);
             }
             else
             {
@@ -1147,14 +1215,15 @@ static bool sendS32GpioCommand(
     int state)
 {
     /*
-     * Architecture defines GPIO IDs 0..12.
+     * src/GPIO/gpio_control.c defines GPIO IDs 1..13 - there is no ID 0,
+     * and ID 13 (PTB0) is a real, reachable pin.
      */
 
-    if (gpioId < 0 ||
-        gpioId > 12)
+    if (gpioId < 1 ||
+        gpioId > 13)
     {
         publish(
-            "CMD_ERR S32 GPIO ID must be 0..12");
+            "CMD_ERR S32 GPIO ID must be 1..13");
 
         return false;
     }
@@ -1249,6 +1318,51 @@ static bool setEspGpio(
  * STRING INTEGER PARSER
  * ================================================================ */
 
+static int hexNibble(char c)
+{
+    if (c >= '0' && c <= '9') return c - '0';
+    if (c >= 'a' && c <= 'f') return 10 + (c - 'a');
+    if (c >= 'A' && c <= 'F') return 10 + (c - 'A');
+    return -1;
+}
+
+/*
+ * Decodes a hex string (e.g. "0A1B2C") into raw bytes. Returns the
+ * byte count, or -1 on a malformed (odd-length / non-hex) string, or
+ * -2 if it would not fit in outMax bytes.
+ */
+static int hexDecode(const String &hex, uint8_t *out, int outMax)
+{
+    int hexLen = hex.length();
+
+    if ((hexLen % 2) != 0)
+    {
+        return -1;
+    }
+
+    int byteLen = hexLen / 2;
+
+    if (byteLen > outMax)
+    {
+        return -2;
+    }
+
+    for (int i = 0; i < byteLen; i++)
+    {
+        int hi = hexNibble(hex[i * 2]);
+        int lo = hexNibble(hex[i * 2 + 1]);
+
+        if (hi < 0 || lo < 0)
+        {
+            return -1;
+        }
+
+        out[i] = (uint8_t)((hi << 4) | lo);
+    }
+
+    return byteLen;
+}
+
 static bool parseIntField(
     const String &s,
     int &value)
@@ -1291,16 +1405,16 @@ static void printInfo()
 static void printGpioMap()
 {
     publish(
-        "S32_GPIO_IDS=0..12");
+        "S32_GPIO_IDS=1..13");
 
     publish(
-        "0=PTE9 1=PTE8 2=PTD5 3=PTC1");
+        "1=PTD1 2=PTD0 3=PTE5 4=PTE4");
 
     publish(
-        "4=PTC15 5=PTC14 6=PTB3 7=PTB1");
+        "5=PTE9 6=PTE8 7=PTD5 8=PTC1");
 
     publish(
-        "8=PTB0 9=PTC9 10=PTC8 11=PTA1 12=PTA0");
+        "9=PTC15 10=PTC14 11=PTB3 12=PTB1 13=PTB0");
 }
 
 static void printStats()
@@ -1538,6 +1652,224 @@ static void handleCommand(
             dir,
             state);
 
+        return;
+    }
+
+    /* ------------------------------------------------------------
+     * RESET - reboot the S32K144
+     * ------------------------------------------------------------ */
+
+    if (cmd.equalsIgnoreCase("RESET"))
+    {
+        if (sendFrame(CMD_MCU_RESET, nullptr, 0))
+        {
+            publish("CMD_SENT RESET");
+        }
+        else
+        {
+            publish("CMD_ERR failed to send RESET");
+        }
+        return;
+    }
+
+    /* ------------------------------------------------------------
+     * LED:<period_ms>:<duty_pct>
+     * ------------------------------------------------------------ */
+
+    if (cmd.startsWith("LED:"))
+    {
+        String rest = cmd.substring(4);
+        int c1 = rest.indexOf(':');
+
+        int period;
+        int duty;
+
+        if (c1 < 0 ||
+            !parseIntField(rest.substring(0, c1), period) ||
+            !parseIntField(rest.substring(c1 + 1), duty))
+        {
+            publish("CMD_ERR format LED:<period_ms>:<duty_pct>");
+            return;
+        }
+
+        uint8_t payload[4] = {
+            (uint8_t)(period & 0xFF),
+            (uint8_t)((period >> 8) & 0xFF),
+            (uint8_t)duty,
+            0
+        };
+
+        if (sendFrame(CMD_LED_CTRL, payload, 4))
+        {
+            publish("CMD_SENT LED period=" + String(period) + " duty=" + String(duty));
+        }
+        else
+        {
+            publish("CMD_ERR failed to send LED_CTRL");
+        }
+        return;
+    }
+
+    /* ------------------------------------------------------------
+     * MODULE:<imu|csa|can1|can2|flm>:<0|1>
+     * ------------------------------------------------------------ */
+
+    if (cmd.startsWith("MODULE:"))
+    {
+        String rest = cmd.substring(7);
+        int c1 = rest.indexOf(':');
+
+        if (c1 < 0)
+        {
+            publish("CMD_ERR format MODULE:<imu|csa|can1|can2|flm>:<0|1>");
+            return;
+        }
+
+        String name = rest.substring(0, c1);
+        int state;
+
+        if (!parseIntField(rest.substring(c1 + 1), state) ||
+            (state != 0 && state != 1))
+        {
+            publish("CMD_ERR MODULE state must be 0 or 1");
+            return;
+        }
+
+        int moduleId;
+        if (name.equalsIgnoreCase("imu"))       moduleId = 0;
+        else if (name.equalsIgnoreCase("csa"))  moduleId = 1;
+        else if (name.equalsIgnoreCase("can1")) moduleId = 2;
+        else if (name.equalsIgnoreCase("can2")) moduleId = 3;
+        else if (name.equalsIgnoreCase("flm"))  moduleId = 4;
+        else
+        {
+            publish("CMD_ERR unknown module: " + name);
+            return;
+        }
+
+        uint8_t payload[2] = { (uint8_t)moduleId, (uint8_t)state };
+
+        if (sendFrame(CMD_MODULE_EN, payload, 2))
+        {
+            publish("CMD_SENT MODULE " + name + "=" + String(state));
+        }
+        else
+        {
+            publish("CMD_ERR failed to send MODULE_EN");
+        }
+        return;
+    }
+
+    /* ------------------------------------------------------------
+     * FLASH:RD | FLASH:WR:<hex bytes> | FLASH:DEL
+     * ------------------------------------------------------------ */
+
+    if (cmd.startsWith("FLASH:"))
+    {
+        String rest = cmd.substring(6);
+
+        if (rest.equalsIgnoreCase("RD"))
+        {
+            if (sendFrame(CMD_FLASH_RD, nullptr, 0))
+            {
+                publish("CMD_SENT FLASH:RD");
+            }
+            else
+            {
+                publish("CMD_ERR failed to send FLASH_RD");
+            }
+            return;
+        }
+
+        if (rest.equalsIgnoreCase("DEL"))
+        {
+            if (sendFrame(CMD_FLASH_DEL, nullptr, 0))
+            {
+                publish("CMD_SENT FLASH:DEL");
+            }
+            else
+            {
+                publish("CMD_ERR failed to send FLASH_DEL");
+            }
+            return;
+        }
+
+        if (rest.startsWith("WR:"))
+        {
+            String hex = rest.substring(3);
+            uint8_t buf[MAX_PAYLOAD];
+            int n = hexDecode(hex, buf, sizeof(buf));
+
+            if (n < 0)
+            {
+                publish("CMD_ERR FLASH:WR hex payload invalid or too long");
+                return;
+            }
+
+            if (sendFrame(CMD_FLASH_WR, buf, (uint16_t)n))
+            {
+                publish("CMD_SENT FLASH:WR len=" + String(n));
+            }
+            else
+            {
+                publish("CMD_ERR failed to send FLASH_WR");
+            }
+            return;
+        }
+
+        publish("CMD_ERR format FLASH:RD | FLASH:WR:<hex> | FLASH:DEL");
+        return;
+    }
+
+    /* ------------------------------------------------------------
+     * RAW:<TT hex><payload hex> - generic escape hatch, any packet
+     * type. TT is the 2-hex-digit message/command type byte; the
+     * remaining hex decodes to the payload bytes.
+     *
+     * Example: RAW:0A  (type 0x0A, no payload)
+     *          RAW:02010101  (type 0x02 = CMD_GPIO_SET, payload 01 01 01)
+     * ------------------------------------------------------------ */
+
+    if (cmd.startsWith("RAW:"))
+    {
+        String rest = cmd.substring(4);
+
+        if (rest.length() < 2)
+        {
+            publish("CMD_ERR format RAW:<TT hex><payload hex>");
+            return;
+        }
+
+        String typeHex = rest.substring(0, 2);
+        String payloadHex = rest.substring(2);
+
+        int hi = hexNibble(typeHex[0]);
+        int lo = hexNibble(typeHex[1]);
+
+        if (hi < 0 || lo < 0)
+        {
+            publish("CMD_ERR RAW type must be 2 hex digits");
+            return;
+        }
+
+        uint8_t type = (uint8_t)((hi << 4) | lo);
+        uint8_t buf[MAX_PAYLOAD];
+        int n = hexDecode(payloadHex, buf, sizeof(buf));
+
+        if (n < 0)
+        {
+            publish("CMD_ERR RAW payload hex invalid or too long");
+            return;
+        }
+
+        if (sendFrame(type, (n > 0) ? buf : nullptr, (uint16_t)n))
+        {
+            publish("CMD_SENT RAW type=0x" + String(type, HEX) + " len=" + String(n));
+        }
+        else
+        {
+            publish("CMD_ERR failed to send RAW frame");
+        }
         return;
     }
 

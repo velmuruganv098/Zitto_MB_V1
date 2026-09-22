@@ -145,6 +145,14 @@
 /* Flash log (FLM) status (see FlmStatusPkt_t) */
 #define MSG_FLM                      0x89U
 
+/*
+ * CMD_FLASH_RD response: raw record bytes (payload is the record data
+ * itself, len 0 means "no record"). Previously piggybacked on MSG_LOG,
+ * which mashed arbitrary/binary flash bytes into a text log line with
+ * no structured decode path on the ESP32/server side.
+ */
+#define MSG_FLASH_DATA               0x8AU
+
 /* ========================================================================
  * Generic command result
  * ======================================================================== */

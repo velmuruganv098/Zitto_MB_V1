@@ -416,6 +416,19 @@ gdy=(dgy*10L)/131L;
 gdz=(dgz*10L)/131L;
 tc=((int32_t)tp*100L)/128L+2500L;
 
+/*
+ * This table used to print unconditionally every Imu_Task() call
+ * (~20 Hz once running) - pure debug console spam with no consumer,
+ * that both stole cooperative-loop time and could overflow the RTT
+ * no-block-skip up-buffer under load. Bounded to ~1 Hz like the
+ * other periodic RTT status lines.
+ */
+{
+static uint32_t s_last_print_ms=0U;
+uint32_t now_print=Uart_GetMs();
+if((now_print-s_last_print_ms)>=1000U)
+{
+s_last_print_ms=now_print;
 SEGGER_RTT_printf(0,"%4lu",(unsigned long)s_n);
 #if IMU_FEAT_DISPLACEMENT
 SEGGER_RTT_printf(0," %ld.%02ld %ld.%02ld %ld.%02ld",
@@ -443,6 +456,8 @@ SEGGER_RTT_printf(0," %ld.%02ld",
 (long)(tc/100L),(long)(prv_Abs(tc)%100L));
 #endif
 SEGGER_RTT_printf(0,"\r\n");
+}
+}
 }
 
 void Imu_GetLastPkt(ImuPkt_t *out)

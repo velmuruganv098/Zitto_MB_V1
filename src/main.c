@@ -421,8 +421,8 @@ static void cmd_handler(uint8_t type, const uint8_t *pl, uint16_t len)
             static uint8_t fb[FLM_MAX_RECORD_DATA];
             uint16_t fl = 0U;
             if(Flm_Read(fb,(uint16_t)sizeof(fb),&fl)==0)
-            { (void)Uart_Pkt_Send(MSG_LOG,fb,fl); }
-            else { Uart_Pkt_SendLog("FLASH:empty"); }
+            { (void)Uart_Pkt_Send(MSG_FLASH_DATA,fb,fl); }
+            else { (void)Uart_Pkt_Send(MSG_FLASH_DATA,NULL,0U); }
         }
 #else
             Uart_Pkt_SendLog("FLASH:off");
