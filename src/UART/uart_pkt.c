@@ -231,13 +231,27 @@ static void uart_hw_init(void)
     PCC->PCCn[PCC_LPUART0_INDEX] = 0U;
 
     /*
-     * PCS = SPLL / 2
+     * PCS = SPLLDIV2
      *
-     * At 80MHz SPLL:
+     * BUG FIX (was wrong since this driver was first written): the
+     * comment here previously said "80MHz SPLL / DIV2=4 = 20MHz", but
+     * system_init.c's own clock comment shows SPLLDIV2 is derived
+     * directly from the 160MHz SPLL_CLK (VCO 320MHz / DIV1=2 = 160MHz),
+     * not from the 80MHz CORE_CLK - SPLLDIV2=/4 therefore gives
+     * 160MHz/4 = 40MHz, exactly double what this driver assumed.
      *
-     *      SPLLDIV2 = /4 according to system_init.c
+     * With the old SBR=11/OSR=15 divisors against a REAL 40MHz clock,
+     * the MCU was actually transmitting at ~227,273 baud - essentially
+     * double 115200. LPUART0's internal loopback self-test still
+     * passed (TX and RX share the same, self-consistent, baud
+     * generator) which is exactly why that test alone couldn't catch
+     * this: it only proves TX/RX agree with each other, never that the
+     * absolute rate matches a fixed-115200 external device. Confirmed
+     * on hardware: a receiving terminal saw continuous garbage
+     * dominated by near-all-1s bytes (0xFF/0xEF/0xDF) - the classic
+     * signature of sampling a bitstream toggling ~2x too fast.
      *
-     *      UART clock = 20MHz
+     * UART clock = 40MHz.
      */
 
     PCC->PCCn[PCC_LPUART0_INDEX] =
@@ -261,18 +275,19 @@ static void uart_hw_init(void)
      *
      *      OSR = 15
      *
-     *      clock = 20MHz
+     *      clock = 40MHz
      *      baud  = 115200
      *
      * SBR approximately:
      *
-     *      20,000,000 / (16 * 115200)
-     *      = 10.85
+     *      40,000,000 / (16 * 115200)
+     *      = 21.70
      *
-     * SBR = 11
+     * SBR = 22  (actual baud = 40,000,000/(16*22) = 113,636 -> -1.36%,
+     * well within standard UART tolerance)
      */
 
-    baud_div = 11U;
+    baud_div = 22U;
 
     LPUART0->BAUD =
         LPUART_BAUD_OSR(15U) |

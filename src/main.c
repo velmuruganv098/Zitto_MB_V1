@@ -544,26 +544,24 @@ int main(void)
     RTT_LOG("[BOOT] LED ok\r\n");
 
     /* UART - LPUART0  PTC3=TX  PTC2=RX  115200 8N1
-     * Clock: SPLLDIV2 = 20MHz (running now because clock_init_80mhz was called) */
+     * Clock: SPLLDIV2 = 40MHz (see uart_hw_init() - was wrongly assumed
+     * 20MHz until the ~2x baud mismatch was found and fixed). */
     RTT_LOG("[BOOT] UART init\r\n");
     Uart_Init(cmd_handler);
     RTT_LOG("[BOOT] UART ok  uptime=%lums\r\n", (unsigned long)Uart_GetMs());
     (void)Uart_SelfTestLoopback();
-    /* Sweep/GPIO-continuity tests disabled for this pass - they churn
-     * through GPIO toggling and every ALT value, which can look like
-     * noise to a UART receiver mid-test and was muddying a clean
-     * send/receive correlation. Re-enable if needed for further
-     * hardware debugging. */
+    /* All other diagnostic self-tests (external jumper, ALT-value
+     * sweep, GPIO continuity, ALT-cycle pattern) disabled now that the
+     * actual bug - a ~2x baud rate mismatch from an incorrect LPUART0
+     * clock assumption in uart_hw_init() - has been found and fixed.
+     * ALT2/PTC2/PTC3 were correct the whole time; ALT0-7 sweep and the
+     * jumper-based external test both failed because EVERY byte sent
+     * was garbled by the same wrong baud rate, not because the pin
+     * mux was wrong. Re-enable any of these if needed again. */
     /* (void)Uart_SelfTestExternalPins(); */
     /* (void)Uart_SelfTestPinMuxSweep(); */
     /* (void)Uart_SelfTestGpioContinuity(); */
-
-    /* CONFIRMED on hardware via logic analyzer: PTC3 (pin 16) toggles
-     * correctly as a plain GPIO output - rules out the physical pin/
-     * solder/trace and firmware's ability to drive it at all. Next
-     * question: which ALT value actually routes LPUART0 TX logic to
-     * this same pin. Blocking, ~24s total (8 ALT values x 3s each). */
-    Uart_SelfTestAltCyclePattern();
+    /* Uart_SelfTestAltCyclePattern(); */
 
     /* GPIO */
 #if APP_GPIO_ENABLE
