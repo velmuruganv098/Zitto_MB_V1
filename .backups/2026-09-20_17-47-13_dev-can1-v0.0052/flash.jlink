@@ -1,9 +1,0 @@
-si SWD
-speed 1000
-device S32K144
-connect
-h
-loadfile "C:\Projects\Zitto_MB_V1\Debug_FLASH\Zitto_MB_V1.elf"
-r
-g
-exit

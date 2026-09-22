@@ -1,9 +1,0 @@
-si SWD
-speed 1000
-device S32K144
-connect
-h
-loadfile "C:/Users/Velu/workspaceS32DS.3.4/Zitto_MB_V1/Debug_FLASH/Zitto_MB_V1.elf"
-r
-g
-exit
