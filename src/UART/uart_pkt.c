@@ -1309,6 +1309,68 @@ uint8_t Uart_SelfTestGpioContinuity(void)
     return (pass_count == 8U) ? 1U : 0U;
 }
 
+/*
+ * Cycles PTC3 (TX pin only - pin 16) through every ALT0-7 value,
+ * sending a continuous 0x55 (01010101) byte stream through the real
+ * LPUART0 peripheral for 3 seconds at each one. 0x55 is deliberately
+ * chosen: framed at 115200 8N1 it produces START(0) DATA(1,0,1,0,1,0,
+ * 1,0 - LSB first) STOP(1), i.e. a clean, almost perfectly alternating
+ * bit pattern - trivial to recognize by eye on a scope and reliably
+ * decodable by any logic analyzer's UART protocol decoder.
+ *
+ * This needs NO working RX side, no jumper wire, and no PTC2 at all -
+ * confirmed PTC3 already toggles correctly as plain GPIO, so this
+ * isolates purely "which ALT value makes the LPUART0 peripheral's TX
+ * logic actually drive this pin with real UART framing", independent
+ * of everything tested so far. Probe pin 16 directly during each
+ * window and note which one (if any) decodes as valid 0x55 @ 115200
+ * 8N1.
+ *
+ * Blocking by design (busy-sends 0x55 back to back for the whole 3s
+ * window) - fine here since every other module is disabled for this
+ * diagnostic build and nothing else needs to run concurrently.
+ */
+void Uart_SelfTestAltCyclePattern(void)
+{
+    uint8_t  alt;
+    uint32_t phase_start;
+
+    RTT_LOG(
+        "[UART_SELFTEST] Running ALT CYCLE PATTERN test - cycling "
+        "PTC3 (TX only, pin 16) through every ALT0-7 value, sending "
+        "continuous 0x55 for 3s at each one. Probe pin 16 directly "
+        "with a logic analyzer/scope (115200 8N1 UART decode) and "
+        "note which ALT window, if any, shows valid framing.\r\n"
+    );
+
+    for(alt = 0U; alt <= 7U; alt++)
+    {
+        PORTC->PCR[3U] = PORT_PCR_MUX((uint32_t)alt);
+
+        RTT_LOG(
+            "[UART_SELFTEST][ALTCYCLE] ALT%u starting now "
+            "(uptime=%lums), sending 0x55 continuously for 3s...\r\n",
+            (unsigned)alt,
+            (unsigned long)Uart_GetMs()
+        );
+
+        phase_start = Uart_GetMs();
+
+        while((Uart_GetMs() - phase_start) < 3000U)
+        {
+            (void)uart_hw_send_byte(0x55U);
+        }
+    }
+
+    /* Restore ALT2 for normal LPUART0 TX operation afterward. */
+    PORTC->PCR[3U] = PORT_PCR_MUX(2U);
+
+    RTT_LOG(
+        "[UART_SELFTEST][ALTCYCLE] DONE - all 8 ALT values tried over "
+        "24s. Restored ALT2.\r\n"
+    );
+}
+
 /* ========================================================================
  * UART poll
  * ======================================================================== */

@@ -378,6 +378,14 @@ uint8_t Uart_SelfTestPinMuxSweep(void);
  */
 uint8_t Uart_SelfTestGpioContinuity(void);
 
+/*
+ * Cycles PTC3 (TX only) through ALT0-7, sending continuous 0x55 for
+ * 3s at each value through the real LPUART0 peripheral - for a logic
+ * analyzer/scope probing pin 16 directly, no RX/jumper needed. See
+ * uart_pkt.c for details.
+ */
+void Uart_SelfTestAltCyclePattern(void);
+
 void Uart_Poll(void);
 
 /* ========================================================================
