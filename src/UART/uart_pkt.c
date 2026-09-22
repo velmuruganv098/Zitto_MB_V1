@@ -1031,37 +1031,10 @@ static uint8_t uart_selftest_run(
         );
     }
 
-    /*
-     * Also echo the result out the raw (unframed) UART path, same as
-     * Uart_RawSend()'s "123" heartbeat - RTT needs a debugger attached,
-     * but this is meant to be visible directly on a plain terminal.
-     */
-    {
-        uint8_t  msg[32];
-        uint16_t mlen = 0U;
-        const char *p;
-
-        for(p = "SELFTEST "; *p != '\0'; p++)      { msg[mlen++] = (uint8_t)*p; }
-        for(p = label;       *p != '\0'; p++)      { msg[mlen++] = (uint8_t)*p; }
-        msg[mlen++] = (uint8_t)':';
-        msg[mlen++] = (uint8_t)' ';
-
-        if(pass_count == 4U)
-        {
-            for(p = "PASS\r\n"; *p != '\0'; p++)    { msg[mlen++] = (uint8_t)*p; }
-        }
-        else
-        {
-            for(p = "FAIL "; *p != '\0'; p++)       { msg[mlen++] = (uint8_t)*p; }
-            msg[mlen++] = (uint8_t)('0' + pass_count);
-            msg[mlen++] = (uint8_t)'/';
-            msg[mlen++] = (uint8_t)'4';
-            msg[mlen++] = (uint8_t)'\r';
-            msg[mlen++] = (uint8_t)'\n';
-        }
-
-        (void)Uart_RawSend(msg, mlen);
-    }
+    /* No separate raw UART echo needed anymore - RTT_LOG() itself now
+     * mirrors every message onto the real UART (framed as MSG_LOG),
+     * so the PASS/FAIL lines just logged above already went out both
+     * channels. */
 
     return (pass_count == 4U) ? 1U : 0U;
 }

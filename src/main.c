@@ -29,12 +29,12 @@
  * MODULE ENABLE FLAGS
  * -------------------------------------------------------------------------- */
 
-#define APP_IMU_ENABLE     0
-#define APP_CSA_ENABLE     0
-#define APP_CAN1_ENABLE    0
-#define APP_CAN2_ENABLE    0
-#define APP_FLM_ENABLE     0
-#define APP_GPIO_ENABLE    0
+#define APP_IMU_ENABLE     1
+#define APP_CSA_ENABLE     1
+#define APP_CAN1_ENABLE    1
+#define APP_CAN2_ENABLE    1
+#define APP_FLM_ENABLE     1
+#define APP_GPIO_ENABLE    1
 
 /* --------------------------------------------------------------------------
  * INCLUDES
@@ -473,8 +473,6 @@ int main(void)
     uint32_t last_imu_tx_ms = 0U;
     uint32_t last_csa_tx_ms = 0U;
     uint32_t last_flm_tx_ms = 0U;
-    uint32_t last_raw_test_ms = 0U;
-    uint32_t raw_test_count = 0U;
 
 
     /*
@@ -549,19 +547,16 @@ int main(void)
     RTT_LOG("[BOOT] UART init\r\n");
     Uart_Init(cmd_handler);
     RTT_LOG("[BOOT] UART ok  uptime=%lums\r\n", (unsigned long)Uart_GetMs());
+    /* Kept as a permanent boot-time sanity check - cheap (a handful of
+     * internally-looped-back bytes) and confirms the LPUART0
+     * peripheral itself before any real data starts flowing. The
+     * pin-mux (ALT4) and baud-rate bugs that caused this whole
+     * investigation are both fixed directly in uart_hw_init() now;
+     * the other diagnostic self-tests built along the way
+     * (external-pin jumper test, ALT sweep, GPIO continuity, ALT-cycle
+     * pattern) are no longer called but kept in uart_pkt.c/.h for any
+     * future hardware bring-up debugging. */
     (void)Uart_SelfTestLoopback();
-    /* CONFIRMED on real hardware: ALT4 is the correct PORTC PCR MUX
-     * value for LPUART0 TX/RX on PTC3/PTC2 (uart_hw_init() now uses it
-     * directly) - found via Uart_SelfTestAltCyclePattern() cycling
-     * through every ALT value with a readable message and watching a
-     * real terminal on the wired adapter. All diagnostic self-tests
-     * disabled now that both root causes (the ~2x baud mismatch and
-     * the wrong ALT2 pin-mux guess) are fixed; kept available (just
-     * unused) for any future hardware bring-up debugging. */
-    /* (void)Uart_SelfTestExternalPins(); */
-    /* (void)Uart_SelfTestPinMuxSweep(); */
-    /* (void)Uart_SelfTestGpioContinuity(); */
-    /* Uart_SelfTestAltCyclePattern(); */
 
     /* GPIO */
 #if APP_GPIO_ENABLE
@@ -669,39 +664,6 @@ int main(void)
         Uart_Poll();
         Uart_Pkt_ForwardRTT();
         OTA_Task();
-
-        /* DIAG: raw, unframed, counting test message - confirms the
-         * fixed baud rate + ALT4 pin mux on a plain terminal. Remove
-         * once modules are re-enabled and this isn't needed anymore. */
-        if((now_ms - last_raw_test_ms) >= 1000U)
-        {
-            uint8_t  msg[16];
-            uint16_t mlen = 0U;
-            uint16_t n = (uint16_t)(raw_test_count % 10000U);
-
-            last_raw_test_ms = now_ms;
-            raw_test_count++;
-
-            msg[mlen++] = (uint8_t)'H';
-            msg[mlen++] = (uint8_t)'E';
-            msg[mlen++] = (uint8_t)'L';
-            msg[mlen++] = (uint8_t)'L';
-            msg[mlen++] = (uint8_t)'O';
-            msg[mlen++] = (uint8_t)'-';
-            msg[mlen++] = (uint8_t)('0' + ((n / 1000U) % 10U));
-            msg[mlen++] = (uint8_t)('0' + ((n / 100U)  % 10U));
-            msg[mlen++] = (uint8_t)('0' + ((n / 10U)   % 10U));
-            msg[mlen++] = (uint8_t)('0' + (n % 10U));
-            msg[mlen++] = (uint8_t)'\r';
-            msg[mlen++] = (uint8_t)'\n';
-
-            (void)Uart_RawSend(msg, mlen);
-
-            RTT_LOG(
-                "[RAW_TX] HELLO-%04u\r\n",
-                (unsigned)n
-            );
-        }
 #endif
 
 #if !CAN1_FULL_ANALYSIS_MODE
