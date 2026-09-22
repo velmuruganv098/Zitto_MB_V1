@@ -363,6 +363,21 @@ uint8_t Uart_SelfTestLoopback(void);
  */
 uint8_t Uart_SelfTestExternalPins(void);
 
+/*
+ * Sweeps ALT0-ALT7 on the same PTC3/PTC2 pins to find whichever value
+ * (if any) actually passes with the jumper wire in place. See
+ * uart_pkt.c for details.
+ */
+uint8_t Uart_SelfTestPinMuxSweep(void);
+
+/*
+ * Plain GPIO toggle/readback continuity test between PTC3 (drive) and
+ * PTC2 (read) - no LPUART0 peripheral involved. Isolates "is the
+ * jumper/pin identification good" from "is the pin mux correct". See
+ * uart_pkt.c for details.
+ */
+uint8_t Uart_SelfTestGpioContinuity(void);
+
 void Uart_Poll(void);
 
 /* ========================================================================

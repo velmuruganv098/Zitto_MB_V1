@@ -1014,6 +1014,38 @@ static uint8_t uart_selftest_run(
         );
     }
 
+    /*
+     * Also echo the result out the raw (unframed) UART path, same as
+     * Uart_RawSend()'s "123" heartbeat - RTT needs a debugger attached,
+     * but this is meant to be visible directly on a plain terminal.
+     */
+    {
+        uint8_t  msg[32];
+        uint16_t mlen = 0U;
+        const char *p;
+
+        for(p = "SELFTEST "; *p != '\0'; p++)      { msg[mlen++] = (uint8_t)*p; }
+        for(p = label;       *p != '\0'; p++)      { msg[mlen++] = (uint8_t)*p; }
+        msg[mlen++] = (uint8_t)':';
+        msg[mlen++] = (uint8_t)' ';
+
+        if(pass_count == 4U)
+        {
+            for(p = "PASS\r\n"; *p != '\0'; p++)    { msg[mlen++] = (uint8_t)*p; }
+        }
+        else
+        {
+            for(p = "FAIL "; *p != '\0'; p++)       { msg[mlen++] = (uint8_t)*p; }
+            msg[mlen++] = (uint8_t)('0' + pass_count);
+            msg[mlen++] = (uint8_t)'/';
+            msg[mlen++] = (uint8_t)'4';
+            msg[mlen++] = (uint8_t)'\r';
+            msg[mlen++] = (uint8_t)'\n';
+        }
+
+        (void)Uart_RawSend(msg, mlen);
+    }
+
     return (pass_count == 4U) ? 1U : 0U;
 }
 
@@ -1096,6 +1128,185 @@ uint8_t Uart_SelfTestExternalPins(void)
     }
 
     return result;
+}
+
+/*
+ * Sweeps every possible ALT value (0-7) on the same physical PTC3(TX)/
+ * PTC2(RX) pins, reusing whatever jumper wire is already in place for
+ * Uart_SelfTestExternalPins(). Confirmed on hardware that ALT2 (the
+ * value uart_hw_init() has always used) fails the external test even
+ * with that jumper installed - this either finds the actual correct
+ * ALT value for these two physical pins, or proves none of them work
+ * (meaning PTC3/PTC2 aren't LPUART0 TX/RX on this board at all, and a
+ * different pin pair - e.g. PTB0/PTB1 - needs to be tried next, with
+ * the jumper moved there).
+ */
+uint8_t Uart_SelfTestPinMuxSweep(void)
+{
+    uint32_t saved_pcr3;
+    uint32_t saved_pcr2;
+    uint8_t  alt;
+    uint8_t  found_alt = 0xFFU;
+
+    saved_pcr3 = PORTC->PCR[3U];
+    saved_pcr2 = PORTC->PCR[2U];
+
+    RTT_LOG(
+        "[UART_SELFTEST] Running PIN MUX SWEEP on PTC3(TX)/PTC2(RX) - "
+        "trying every ALT value 0-7 with the same jumper wire already "
+        "in place (package pin 16 to pin 17).\r\n"
+    );
+
+    for(alt = 0U; alt <= 7U; alt++)
+    {
+        uint8_t result;
+
+        PORTC->PCR[3U] = PORT_PCR_MUX((uint32_t)alt);
+        PORTC->PCR[2U] = PORT_PCR_MUX((uint32_t)alt);
+
+        RTT_LOG(
+            "[UART_SELFTEST][SWEEP] Trying ALT%u...\r\n",
+            (unsigned)alt
+        );
+
+        result = uart_selftest_run(0U, "SWEEP");
+
+        if(result != 0U)
+        {
+            RTT_LOG(
+                "[UART_SELFTEST][SWEEP] *** ALT%u WORKS *** - PTC3/"
+                "PTC2 need PORT_PCR_MUX(%u), not MUX(2)\r\n",
+                (unsigned)alt,
+                (unsigned)alt
+            );
+
+            if(found_alt == 0xFFU)
+            {
+                found_alt = alt;
+            }
+        }
+    }
+
+    if(found_alt != 0xFFU)
+    {
+        PORTC->PCR[3U] = PORT_PCR_MUX((uint32_t)found_alt);
+        PORTC->PCR[2U] = PORT_PCR_MUX((uint32_t)found_alt);
+
+        RTT_LOG(
+            "[UART_SELFTEST][SWEEP] DONE - working ALT value is %u. "
+            "Pins left configured at that value.\r\n",
+            (unsigned)found_alt
+        );
+    }
+    else
+    {
+        PORTC->PCR[3U] = saved_pcr3;
+        PORTC->PCR[2U] = saved_pcr2;
+
+        RTT_LOG(
+            "[UART_SELFTEST][SWEEP] DONE - NO ALT value (0-7) on PTC3/"
+            "PTC2 passed. These physical pins are not LPUART0 TX/RX on "
+            "this chip at all - check for a board-level fault on pins "
+            "16/17, or move the jumper to try a different pin pair "
+            "(PTB0/PTB1 next). Restored original ALT2 configuration.\r\n"
+        );
+    }
+
+    return (found_alt != 0xFFU) ? 1U : 0U;
+}
+
+/*
+ * Plain GPIO toggle/readback continuity test - no LPUART0 peripheral
+ * involved at all. PTC3 is driven as a GPIO output, PTC2 is read as a
+ * GPIO input; with the same jumper wire in place, this proves or
+ * disproves that the jumper (and pin identification) itself is good,
+ * completely independent of whether ALT2 (or any other ALT value) is
+ * the correct LPUART0 mux setting.
+ */
+uint8_t Uart_SelfTestGpioContinuity(void)
+{
+    uint8_t  pass_count = 0U;
+    uint8_t  i;
+    uint8_t  drive_high;
+    uint8_t  read_back;
+    volatile uint32_t d;
+
+    PORTC->PCR[3U] = PORT_PCR_MUX(1U);
+    PORTC->PCR[2U] = PORT_PCR_MUX(1U);
+
+    PTC->PDDR |= (1UL << 3U);
+    PTC->PDDR &= ~(1UL << 2U);
+
+    RTT_LOG(
+        "[UART_SELFTEST] Running GPIO CONTINUITY test - toggling PTC3 "
+        "as a plain GPIO output and reading PTC2 as a plain GPIO "
+        "input, no LPUART0 peripheral involved at all. Requires the "
+        "same jumper wire between pin 16 and pin 17.\r\n"
+    );
+
+    for(i = 0U; i < 8U; i++)
+    {
+        drive_high = (uint8_t)(i & 1U);
+
+        if(drive_high != 0U)
+        {
+            PTC->PSOR = (1UL << 3U);
+        }
+        else
+        {
+            PTC->PCOR = (1UL << 3U);
+        }
+
+        d = 200U;
+        while(d != 0U) { d--; }
+
+        read_back = (uint8_t)((PTC->PDIR >> 2U) & 1U);
+
+        if(read_back == drive_high)
+        {
+            pass_count++;
+        }
+        else
+        {
+            RTT_LOG(
+                "[UART_SELFTEST][GPIO] iter %u: drove PTC3=%u, read "
+                "PTC2=%u (mismatch)\r\n",
+                (unsigned)i,
+                (unsigned)drive_high,
+                (unsigned)read_back
+            );
+        }
+    }
+
+    /* Restore LPUART0 ALT2 pin mux for normal operation afterward. */
+    PORTC->PCR[3U] = PORT_PCR_MUX(2U);
+    PORTC->PCR[2U] = PORT_PCR_MUX(2U);
+
+    if(pass_count == 8U)
+    {
+        RTT_LOG(
+            "[UART_SELFTEST][GPIO] PASS 8/8 - PTC3 and PTC2 ARE "
+            "electrically connected (jumper and pin identification are "
+            "good). Combined with the ALT0-7 sweep already failing, "
+            "this means PTC2/PTC3 genuinely are not LPUART0 TX/RX "
+            "pins on this chip/package - the pin identification in "
+            "uart_hw_init() (not just the ALT value) is wrong.\r\n"
+        );
+    }
+    else
+    {
+        RTT_LOG(
+            "[UART_SELFTEST][GPIO] FAIL %u/8 - PTC3 and PTC2 are NOT "
+            "electrically connected right now. Either the jumper wire "
+            "is not making contact, or pin 16/17 are not the pins "
+            "actually jumpered - check the physical jumper/pin "
+            "identification before drawing any conclusion about the "
+            "pin mux.\r\n",
+            (unsigned)pass_count
+        );
+    }
+
+    return (pass_count == 8U) ? 1U : 0U;
 }
 
 /* ========================================================================

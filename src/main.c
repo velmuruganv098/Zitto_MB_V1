@@ -474,6 +474,7 @@ int main(void)
     uint32_t last_csa_tx_ms = 0U;
     uint32_t last_flm_tx_ms = 0U;
     uint32_t last_raw_test_ms = 0U;
+    uint32_t raw_test_count = 0U;
 
 
     /*
@@ -548,7 +549,14 @@ int main(void)
     Uart_Init(cmd_handler);
     RTT_LOG("[BOOT] UART ok  uptime=%lums\r\n", (unsigned long)Uart_GetMs());
     (void)Uart_SelfTestLoopback();
-    (void)Uart_SelfTestExternalPins();
+    /* Sweep/GPIO-continuity tests disabled for this pass - they churn
+     * through GPIO toggling and every ALT value, which can look like
+     * noise to a UART receiver mid-test and was muddying a clean
+     * send/receive correlation. Re-enable if needed for further
+     * hardware debugging. */
+    /* (void)Uart_SelfTestExternalPins(); */
+    /* (void)Uart_SelfTestPinMuxSweep(); */
+    /* (void)Uart_SelfTestGpioContinuity(); */
 
     /* GPIO */
 #if APP_GPIO_ENABLE
@@ -657,14 +665,35 @@ int main(void)
         Uart_Pkt_ForwardRTT();
         OTA_Task();
 
-        /* DIAG: raw, unframed test message for wiring/bring-up checks -
-         * bypasses the binary protocol entirely so it shows up as plain
-         * ASCII ("123") on any terminal at 115200 8N1 wired to PTC3 (TX)
-         * / PTC2 (RX). Remove once the physical UART link is confirmed. */
+        /* DIAG: raw, unframed, counting test message for wiring/bring-up
+         * checks - bypasses the binary protocol entirely so it shows up
+         * as plain ASCII on any terminal at 115200 8N1 wired to PTC3
+         * (TX) / PTC2 (RX). The counter lets a specific line sent here
+         * be matched exactly against what shows up on the far end.
+         * Remove once the physical UART link is confirmed. */
         if((now_ms - last_raw_test_ms) >= 1000U)
         {
+            uint8_t  msg[16];
+            uint16_t mlen = 0U;
+            uint16_t n = (uint16_t)(raw_test_count % 10000U);
+
             last_raw_test_ms = now_ms;
-            (void)Uart_RawSend((const uint8_t *)"123\r\n", 5U);
+            raw_test_count++;
+
+            msg[mlen++] = (uint8_t)'H';
+            msg[mlen++] = (uint8_t)'E';
+            msg[mlen++] = (uint8_t)'L';
+            msg[mlen++] = (uint8_t)'L';
+            msg[mlen++] = (uint8_t)'O';
+            msg[mlen++] = (uint8_t)'-';
+            msg[mlen++] = (uint8_t)('0' + ((n / 1000U) % 10U));
+            msg[mlen++] = (uint8_t)('0' + ((n / 100U)  % 10U));
+            msg[mlen++] = (uint8_t)('0' + ((n / 10U)   % 10U));
+            msg[mlen++] = (uint8_t)('0' + (n % 10U));
+            msg[mlen++] = (uint8_t)'\r';
+            msg[mlen++] = (uint8_t)'\n';
+
+            (void)Uart_RawSend(msg, mlen);
         }
 #endif
 
