@@ -1861,6 +1861,60 @@ class RxCallbacks
 };
 
 /* ================================================================
+ * TX CHARACTERISTIC CALLBACK - direct visibility into notify()
+ *
+ * BLECharacteristic::notify() returns void - there was previously no
+ * way to tell, from the firmware side, whether a given notify() call
+ * actually reached the NimBLE host queue or failed silently
+ * (ERROR_GATT covers ble_gatts_notify_custom() returning non-zero,
+ * e.g. BLE_HS_ENOMEM when the host's outbound notification queue is
+ * full - which is exactly what sustained high-rate notify() calls
+ * without any backpressure, as this bridge does, can trigger). This
+ * makes that failure mode visible on Serial instead of invisible.
+ * ================================================================ */
+
+static uint32_t g_notifyOk = 0;
+static uint32_t g_notifyErrGatt = 0;
+static uint32_t g_notifyErrNoSub = 0;
+static uint32_t g_notifyErrOther = 0;
+static uint32_t g_lastGattRc = 0;
+
+class TxCallbacks
+    : public BLECharacteristicCallbacks
+{
+    void onStatus(
+        BLECharacteristic *characteristic,
+        Status status,
+        uint32_t code)
+        override
+    {
+        (void)characteristic;
+
+        switch (status)
+        {
+            case SUCCESS_NOTIFY:
+                g_notifyOk++;
+                break;
+
+            case ERROR_GATT:
+                g_notifyErrGatt++;
+                g_lastGattRc = code;
+                break;
+
+            case ERROR_NO_SUBSCRIBER:
+            case ERROR_NO_CLIENT:
+            case ERROR_NOTIFY_DISABLED:
+                g_notifyErrNoSub++;
+                break;
+
+            default:
+                g_notifyErrOther++;
+                break;
+        }
+    }
+};
+
+/* ================================================================
  * HEARTBEAT
  * ================================================================ */
 
@@ -1964,6 +2018,21 @@ static void periodicStatusTask()
     s += g_bleConnected
          ? "1"
          : "0";
+
+    s += " notify_ok=";
+    s += String(g_notifyOk);
+
+    s += " notify_err_gatt=";
+    s += String(g_notifyErrGatt);
+
+    s += " notify_err_nosub=";
+    s += String(g_notifyErrNoSub);
+
+    s += " notify_err_other=";
+    s += String(g_notifyErrOther);
+
+    s += " last_gatt_rc=";
+    s += String(g_lastGattRc);
 
     publish(s);
 }
@@ -2082,6 +2151,9 @@ void setup()
 
     g_txChar->addDescriptor(
         new BLE2902());
+
+    g_txChar->setCallbacks(
+        new TxCallbacks());
 
     /* RX */
 
