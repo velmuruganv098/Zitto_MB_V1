@@ -467,6 +467,8 @@ int main(void)
     uint32_t now_ms;
     uint32_t last_alive_ms = 0U;
     uint32_t last_hb_ms = 0U;
+    uint32_t last_can_task_ms = 0U;
+    uint8_t  can_task_due;
     uint32_t last_imu_task_ms = 0U;
     uint32_t last_imu_tx_ms = 0U;
     uint32_t last_csa_tx_ms = 0U;
@@ -617,9 +619,26 @@ int main(void)
         now_ms = Uart_GetMs();
         g_tick++;
 
+        /* Can1_Task()/Can2_Task()'s auto-baud dwell logic counts calls,
+         * not elapsed time (see g_can1_detect_tick/g_can2_detect_tick),
+         * tuned assuming ~CAN1_TASK_PERIOD_MS between calls - matching
+         * how often they were always called back when the loop had no
+         * fast path (V0.0065-next_9: removing the old fixed per-iteration
+         * delay let this loop run 10-25x faster, which made CAN1 blow
+         * through all 4 baud candidates in ~30ms instead of ~200ms each,
+         * never giving real traffic a chance to arrive and lock). Gating
+         * just these two calls to their documented period restores that
+         * assumed cadence without reintroducing a delay that blocks
+         * every other section. */
+        can_task_due = ((now_ms - last_can_task_ms) >= CAN1_TASK_PERIOD_MS) ? 1U : 0U;
+        if(can_task_due != 0U)
+        {
+            last_can_task_ms = now_ms;
+        }
+
         /* CAN1 FIRST: minimize RX mailbox service latency. */
 #if APP_CAN1_ENABLE
-        if(g_can1_en != 0U)
+        if((g_can1_en != 0U) && (can_task_due != 0U))
         {
             /* V0.0063: Can1_Task() dispatches RX synchronously via the
              * RX callback now, no separate queue to drain. */
@@ -763,7 +782,7 @@ int main(void)
         /* CAN2 remains independent; when enabled it gets the same fast
          * cooperative service cadence and does not wait for CAN1. */
 #if APP_CAN2_ENABLE
-        if(g_can2_en != 0U) { Can2_Task(); }
+        if((g_can2_en != 0U) && (can_task_due != 0U)) { Can2_Task(); }
 #endif
 
         /* FLM */
