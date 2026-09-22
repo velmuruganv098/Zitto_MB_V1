@@ -18,6 +18,29 @@ static int16_t s_temp_c10;
 static uint8_t s_still,s_ready;
 static uint32_t s_n;
 
+/*
+ * Calibration timeout: bounds the whole non-blocking calibration
+ * sequence in case the sensor stops ACKing partway through (e.g.
+ * a flaky I2C bus) - without this, s_cal_state would stay RUNNING
+ * forever and IMU data would never start flowing.
+ */
+#define IMU_CAL_TIMEOUT_MS   (IMU_CAL_SAMPLES * IMU_DT_MS * 3U)
+
+typedef enum
+{
+    IMU_CAL_IDLE = 0,
+    IMU_CAL_RUNNING,
+    IMU_CAL_DONE,
+    IMU_CAL_TIMED_OUT
+} ImuCalState_t;
+
+static ImuCalState_t s_cal_state = IMU_CAL_IDLE;
+static uint8_t  s_cal_index;
+static int32_t  s_cal_sa,s_cal_sb,s_cal_sc,s_cal_sd,s_cal_se,s_cal_sf;
+static int32_t  s_cal_ca,s_cal_cd;
+static uint32_t s_cal_last_ms;
+static uint32_t s_cal_start_ms;
+
 
 #if APP_IMU_ENABLE
 
@@ -230,59 +253,105 @@ SEGGER_RTT_printf(0,"[IMU] ACCEL_X1=0x%02X %s\r\n",v,s_ready?"SENSORS ON":"FAIL"
 
 }
 
+/*
+ * Applies whatever samples were accumulated (full set, or a partial
+ * set on timeout) and prints the same summary the old blocking
+ * version printed.
+ */
+static void imu_cal_finish(void)
+{
+if(s_cal_ca>0){
+    s_ax0=s_cal_sa/s_cal_ca;
+    s_ay0=s_cal_sb/s_cal_ca;
+    s_az0=s_cal_sc/s_cal_ca;
+}
+
+if(s_cal_cd>0){
+    s_gx0=s_cal_sd/s_cal_cd;
+    s_gy0=s_cal_se/s_cal_cd;
+    s_gz0=s_cal_sf/s_cal_cd;
+}
+
+SEGGER_RTT_printf(0,"Accel: AX=%-6d AY=%-6d AZ=%-6d (%d)\r\n",
+    (int)s_ax0,(int)s_ay0,(int)s_az0,(int)s_cal_ca);
+
+SEGGER_RTT_printf(0,"Gyro: GX=%-6d GY=%-6d GZ=%-6d (%d)\r\n\r\n",
+    (int)s_gx0,(int)s_gy0,(int)s_gz0,(int)s_cal_cd);
+
+SEGGER_RTT_printf(0," N X mm Y mm Z mm AX cm/s AY cm/s AZ cm/s GX d/s GY d/s GZ d/s T C\r\n");
+SEGGER_RTT_printf(0,"-------------------------------------------------\r\n");
+}
+
+/*
+ * Starts calibration as a non-blocking background state machine
+ * instead of busy-waiting ~2s (IMU_CAL_SAMPLES * IMU_DT_MS) here.
+ * One sample is taken per imu_cal_step() call, driven from Imu_Task()
+ * at its normal IMU_DT_MS cadence from the main loop, so CAN1/CAN2,
+ * UART, CSA and FLM keep running the whole time - nothing blocks on
+ * this. Imu_IsReady() still reflects hardware init, not calibration
+ * progress; IMU packets sent while calibration is running just carry
+ * whatever s_ax_mg/etc last held (zero, until the first post-
+ * calibration Imu_Task() sample), same as CSA reporting zeros before
+ * Csa_Init() finishes.
+ */
 void Imu_Calibrate(void)
 {
-uint8_t raw[14],i;
-int32_t sa=0,sb=0,sc=0,sd=0,se=0,sf=0;
-int32_t ca=0,cd=0;
-
-
 if(!s_ready)return;
 
 SEGGER_RTT_printf(0,"Calibrating - keep STILL for 2s...\r\n");
 
-for(i=0U;i<IMU_CAL_SAMPLES;i++){
-    if(prv_Rd(ICM_REG_TEMP_DATA1,raw,14U)==0){
-        int16_t ax=prv_S16(raw[2],raw[3]);
-        int16_t ay=prv_S16(raw[4],raw[5]);
-        int16_t az=prv_S16(raw[6],raw[7]);
-        int16_t gx=prv_S16(raw[8],raw[9]);
-        int16_t gy=prv_S16(raw[10],raw[11]);
-        int16_t gz=prv_S16(raw[12],raw[13]);
+s_cal_index=0U;
+s_cal_sa=0;s_cal_sb=0;s_cal_sc=0;s_cal_sd=0;s_cal_se=0;s_cal_sf=0;
+s_cal_ca=0;s_cal_cd=0;
+s_cal_start_ms=Uart_GetMs();
+s_cal_last_ms=s_cal_start_ms;
+s_cal_state=IMU_CAL_RUNNING;
+}
 
-        if(ax!=(int16_t)0x8000){
-            sa+=ax;sb+=ay;sc+=az;ca++;
-        }
+static void imu_cal_step(void)
+{
+uint8_t raw[14];
+uint32_t now;
 
-        if(gx>-IMU_GYRO_ZRO_THR&&gx<IMU_GYRO_ZRO_THR&&
-           gy>-IMU_GYRO_ZRO_THR&&gy<IMU_GYRO_ZRO_THR&&
-           gz>-IMU_GYRO_ZRO_THR&&gz<IMU_GYRO_ZRO_THR){
-            sd+=gx;se+=gy;sf+=gz;cd++;
-        }
+now=Uart_GetMs();
+
+if((now-s_cal_start_ms)>=IMU_CAL_TIMEOUT_MS){
+    SEGGER_RTT_printf(0,
+        "[IMU_ERR] Calibration timeout after %u/%u samples\r\n",
+        (unsigned)s_cal_index,(unsigned)IMU_CAL_SAMPLES);
+    imu_cal_finish();
+    s_cal_state=IMU_CAL_TIMED_OUT;
+    return;
+}
+
+if((now-s_cal_last_ms)<IMU_DT_MS)return;
+s_cal_last_ms=now;
+
+if(prv_Rd(ICM_REG_TEMP_DATA1,raw,14U)==0){
+    int16_t ax=prv_S16(raw[2],raw[3]);
+    int16_t ay=prv_S16(raw[4],raw[5]);
+    int16_t az=prv_S16(raw[6],raw[7]);
+    int16_t gx=prv_S16(raw[8],raw[9]);
+    int16_t gy=prv_S16(raw[10],raw[11]);
+    int16_t gz=prv_S16(raw[12],raw[13]);
+
+    if(ax!=(int16_t)0x8000){
+        s_cal_sa+=ax;s_cal_sb+=ay;s_cal_sc+=az;s_cal_ca++;
     }
-    prv_Ms(IMU_DT_MS);
+
+    if(gx>-IMU_GYRO_ZRO_THR&&gx<IMU_GYRO_ZRO_THR&&
+       gy>-IMU_GYRO_ZRO_THR&&gy<IMU_GYRO_ZRO_THR&&
+       gz>-IMU_GYRO_ZRO_THR&&gz<IMU_GYRO_ZRO_THR){
+        s_cal_sd+=gx;s_cal_se+=gy;s_cal_sf+=gz;s_cal_cd++;
+    }
 }
 
-if(ca>0){
-    s_ax0=sa/ca;
-    s_ay0=sb/ca;
-    s_az0=sc/ca;
+s_cal_index++;
+
+if(s_cal_index>=IMU_CAL_SAMPLES){
+    imu_cal_finish();
+    s_cal_state=IMU_CAL_DONE;
 }
-
-if(cd>0){
-    s_gx0=sd/cd;
-    s_gy0=se/cd;
-    s_gz0=sf/cd;
-}
-
-SEGGER_RTT_printf(0,"Accel: AX=%-6d AY=%-6d AZ=%-6d (%d)\r\n",
-    (int)s_ax0,(int)s_ay0,(int)s_az0,(int)ca);
-
-SEGGER_RTT_printf(0,"Gyro: GX=%-6d GY=%-6d GZ=%-6d (%d)\r\n\r\n",
-    (int)s_gx0,(int)s_gy0,(int)s_gz0,(int)cd);
-
-SEGGER_RTT_printf(0," N X mm Y mm Z mm AX cm/s AY cm/s AZ cm/s GX d/s GY d/s GZ d/s T C\r\n");
-SEGGER_RTT_printf(0,"-------------------------------------------------\r\n");
 }
 
 void Imu_Task(void)
@@ -292,6 +361,7 @@ int16_t tp,ax,ay,az,gx,gy,gz;
 int32_t dax,day,daz,dgx,dgy,dgz;
 int32_t acx,acy,acz,gdx,gdy,gdz,tc;
 if(!s_ready)return;
+if(s_cal_state==IMU_CAL_RUNNING){imu_cal_step();return;}
 if(prv_Rd(ICM_REG_TEMP_DATA1,raw,14U)!=0)return;
 
 tp=prv_S16(raw[0],raw[1]);
