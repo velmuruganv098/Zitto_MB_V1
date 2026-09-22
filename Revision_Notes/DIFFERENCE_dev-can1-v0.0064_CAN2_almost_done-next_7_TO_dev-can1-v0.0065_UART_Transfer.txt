@@ -1,0 +1,538 @@
+============================================================
+PROJECT REVISION DIFFERENCE
+============================================================
+
+PROJECT:
+Zitto_MB_V1
+
+FROM:
+dev/can1-v0.0064_CAN2_almost_done-next_7
+
+TO:
+dev/can1-v0.0065_UART_Transfer
+
+DATE:
+22-09-2026 23:05:20
+
+BRANCH:
+dev/can1-v0.0065_UART_Transfer
+
+DIRECTION:
+LOCAL -> GITHUB
+
+SOURCE:
+C:\Projects\Zitto_MB_V1
+
+DESTINATION:
+velmuruganv098/Zitto_MB_V1 (branch: dev/can1-v0.0065_UART_Transfer)
+
+============================================================
+REVISION NOTES (author-entered - what was intended/done)
+============================================================
+UART_Transfer
+
+============================================================
+SUMMARY (what is actually included in this revision)
+============================================================
+
+Files Checked     : 303
+Unchanged         : 95
+Modified          : 5
+Added             : 2
+Deleted           : 0
+Excluded by user  : 201  (differs, but deliberately left as-is - see below)
+
+Lines Added       : 596
+Lines Deleted     : 0
+
+============================================================
+FILE DIFFERENCES (included in this revision)
+============================================================
+
+[1] DEBUG/debug_rtt.c
+------------------------------------------------------------
+
+STATUS:
+MODIFIED
+
+OLD SIZE:
+9,070 bytes
+
+NEW SIZE:
+8,741 bytes
+
+OLD LINES:
+329
+
+NEW LINES:
+329
+
+OLD SHA-256:
+7bc03c4fcd8bd093e6592cba0fafbb3e42ffca86fa95bc11dd5819a65a3b3dba
+
+NEW SHA-256:
+c9f9b77ff471b569a1acf6cb15fc817a5814f52375b86cd52be09da8af73f8a9
+
+============================================================
+
+[2] esp32/led_blink/led_blink.ino
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+372 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+24
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+ce919a0bd20d56d9cdd3536d865df9ba8505c87962e0b834086cffc514559d04
+
+============================================================
+
+[3] esp32/uart_ble_bridge/uart_ble_bridge.ino
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+19,714 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+572
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+08d55d7e3e7b0176f64239337f81e036e67f0c31941d34455f0c51834d56664b
+
+============================================================
+
+[4] src/CAN/can1.c
+------------------------------------------------------------
+
+STATUS:
+MODIFIED
+
+OLD SIZE:
+61,245 bytes
+
+NEW SIZE:
+59,785 bytes
+
+OLD LINES:
+1,460
+
+NEW LINES:
+1,460
+
+OLD SHA-256:
+a70be9a4c51566bef10c670c159f341c7ca6abfa3b6827b3edaa9eba70d71ed2
+
+NEW SHA-256:
+b45582449ddd63349bb2c7615fcc392cc070e14363f63ee01405fa2e91d4957a
+
+============================================================
+
+[5] src/CAN/can2.c
+------------------------------------------------------------
+
+STATUS:
+MODIFIED
+
+OLD SIZE:
+88,065 bytes
+
+NEW SIZE:
+85,224 bytes
+
+OLD LINES:
+2,841
+
+NEW LINES:
+2,841
+
+OLD SHA-256:
+8ed30d0ff59c26ece994907b27d3c3749c7ab19307e0548c1e7df56b4c882588
+
+NEW SHA-256:
+106116e91f39270547e3691991744783a3c3c28d078fbc1e2299a54139191a51
+
+============================================================
+
+[6] src/CAN/can2_irq.c
+------------------------------------------------------------
+
+STATUS:
+MODIFIED
+
+OLD SIZE:
+4,406 bytes
+
+NEW SIZE:
+4,280 bytes
+
+OLD LINES:
+126
+
+NEW LINES:
+126
+
+OLD SHA-256:
+c910bda1d0ddea818735cdf822f6db043fb932c90dc98d303225e47a859ac81c
+
+NEW SHA-256:
+ffcb9b6aed24656f65770134e04bd6c5ff5072b1092e0d5d6131f26015b03ddf
+
+============================================================
+
+[7] tools/uart_monitor.py
+------------------------------------------------------------
+
+STATUS:
+MODIFIED
+
+OLD SIZE:
+9,884 bytes
+
+NEW SIZE:
+9,581 bytes
+
+OLD LINES:
+303
+
+NEW LINES:
+303
+
+OLD SHA-256:
+9540ff2ffcb1108dc13c72423a41842b8904514f34454657b7e7c55c5dfe05a9
+
+NEW SHA-256:
+af3b8db2b548d02ffe11ad4f17fc1744f95f35fcba5f4ba5c132719170b8be0e
+
+============================================================
+
+EXCLUDED FROM THIS REVISION (differs, but the user chose not to include it)
+------------------------------------------------------------
+.claude/settings.local.json  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.cproject  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.git  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.gitignore  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.project  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/com.freescale.s32ds.cross.sdk.support.prefs  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/com.freescale.s32ds.cross.wizard.prefs  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/com.nxp.s32ds.cle.ide.sdk.attached.sdks.data.prefs  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/com.nxp.s32ds.cle.runtime.component.prefs  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/language.settings.xml  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/org.eclipse.cdt.codan.core.prefs  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/org.eclipse.cdt.core.prefs  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/org.eclipse.core.resources.prefs  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/IMU_Test.mex  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/Project_Settings/Debugger/Zitto_MB_V1_Debug_FLASH_PNE.launch  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/Project_Settings/Debugger/Zitto_MB_V1_Debug_RAM_PNE.launch  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/Project_Settings/Debugger/Zitto_MB_V1_Release_FLASH_PNE.launch  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/Project_Settings/Debugger/Zitto_MB_V1_Release_RAM_PNE.launch  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/Project_Settings/Linker_Files/S32K144_64_flash.ld  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/Project_Settings/Linker_Files/S32K144_64_ram.ld  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/Project_Settings/Startup_Code/startup_S32K144.S  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/README.md  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/RTT/SEGGER_RTT.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/RTT/SEGGER_RTT.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/RTT/SEGGER_RTT_ASM_ARMv7M.S  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/RTT/SEGGER_RTT_Conf.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/RTT/SEGGER_RTT_ConfDefaults.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/RTT/SEGGER_RTT_printf.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/S32K144/include/S32K144.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/S32K144/include/S32K144_features.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/S32K144/startup/system_S32K144.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/callbacks.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/common/s32_core_cm4.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/devassert.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/device_registers.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/startup.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/startup.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/status.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/inc/clock.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/inc/interrupt_manager.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/inc/pins_driver.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/clock/S32K1xx/pcc_hw_access.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/clock/S32K1xx/pmc_hw_access.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/clock/S32K1xx/scg_hw_access.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/clock/S32K1xx/sim_hw_access.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/clock/S32K1xx/smc_hw_access.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/interrupt/interrupt_manager.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/pins/pins_driver.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/pins/pins_gpio_hw_access.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/pins/pins_port_hw_access.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/pins/pins_port_hw_access.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/board/sdk_project_config.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/fix_startup.bat  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/flash.bat  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/flash.jlink  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/includes/system_init.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/APP/app_config.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/APP/app_main.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/APP/app_main.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/APP/app_modules.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/APP/app_modules.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/APP/app_status.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/APP/app_status.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/CAN/can1.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/CAN/can1.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/CAN/can1_irq.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/CAN/can2.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/CAN/can2.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/CAN/can2_irq.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/CMD/cmd.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/CMD/cmd.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/CSA/csa.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/CSA/csa.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/DEBUG/debug_rtt.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/DEBUG/debug_rtt.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/FLM/flm.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/FLM/flm.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/GPIO/gpio_control.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/GPIO/gpio_control.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/IMU/imu.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/IMU/imu.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/OTA/ota.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/OTA/ota.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/UART/uart_pkt.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/UART/uart_pkt.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/UART/uart_pkt_types.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/boot_main.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/boot_main.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/common/common_config.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/common/common_types.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/hal/hal_imu.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/hal/hal_led.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/libc_compat.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/main.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/mcal/mcal_i2c.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/system_init.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/system_init.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+DEBUG/debug_rtt.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+DEBUG/debug_rtt.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+DEBUG/debug_rtt.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+DEBUG/desktop.ini  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+DEBUG/exception_debug.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+DEBUG/exception_debug.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+DEBUG/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/DEBUG/debug_rtt.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/DEBUG/debug_rtt.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/DEBUG/debug_rtt.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/DEBUG/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/Project_Settings/Startup_Code/startup_S32K144.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/Project_Settings/Startup_Code/startup_S32K144.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/Project_Settings/Startup_Code/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/RTT/SEGGER_RTT.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/RTT/SEGGER_RTT.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/RTT/SEGGER_RTT.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/RTT/SEGGER_RTT_ASM_ARMv7M.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/RTT/SEGGER_RTT_ASM_ARMv7M.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/RTT/SEGGER_RTT_printf.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/RTT/SEGGER_RTT_printf.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/RTT/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/SDK/platform/devices/S32K144/startup/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/SDK/platform/devices/S32K144/startup/system_S32K144.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/SDK/platform/devices/S32K144/startup/system_S32K144.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/SDK/platform/devices/S32K144/startup/system_S32K144.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/SDK/platform/devices/startup.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/SDK/platform/devices/startup.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/SDK/platform/devices/startup.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/SDK/platform/devices/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/SDK/platform/drivers/src/clock/S32K1xx/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/SDK/platform/drivers/src/interrupt/interrupt_manager.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/SDK/platform/drivers/src/interrupt/interrupt_manager.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/SDK/platform/drivers/src/interrupt/interrupt_manager.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/SDK/platform/drivers/src/interrupt/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/SDK/platform/drivers/src/pins/pins_driver.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/SDK/platform/drivers/src/pins/pins_driver.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/SDK/platform/drivers/src/pins/pins_driver.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/SDK/platform/drivers/src/pins/pins_port_hw_access.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/SDK/platform/drivers/src/pins/pins_port_hw_access.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/SDK/platform/drivers/src/pins/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/Zitto_MB_V1.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/Zitto_MB_V1.elf  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/Zitto_MB_V1.map  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/makefile  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/objects.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/sources.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/APP/app_main.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/APP/app_main.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/APP/app_main.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/APP/app_modules.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/APP/app_modules.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/APP/app_status.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/APP/app_status.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/APP/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/CAN/can1.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/CAN/can1.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/CAN/can1.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/CAN/can1_irq.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/CAN/can1_irq.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/CAN/can2.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/CAN/can2.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/CAN/can2_irq.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/CAN/can2_irq.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/CAN/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/CSA/csa.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/CSA/csa.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/CSA/csa.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/CSA/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/FLM/flm.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/FLM/flm.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/FLM/flm.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/FLM/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/GPIO/gpio_control.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/GPIO/gpio_control.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/GPIO/gpio_control.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/GPIO/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/IMU/imu.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/IMU/imu.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/IMU/imu.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/IMU/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/OTA/ota.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/OTA/ota.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/OTA/ota.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/OTA/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/UART/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/UART/uart_pkt.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/UART/uart_pkt.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/UART/uart_pkt.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/boot_main.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/boot_main.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/boot_main.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/libc_compat.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/libc_compat.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/main.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/main.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/system_init.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+Debug_FLASH/src/system_init.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0064_CAN2_almost_done-next_7
+
+============================================================
+
+UNCHANGED FILES (verified, content identical)
+------------------------------------------------------------
+.cproject  -  SIZE: SAME  -  SHA256: SAME
+.gitignore  -  SIZE: SAME  -  SHA256: SAME
+.project  -  SIZE: SAME  -  SHA256: SAME
+.settings/com.freescale.s32ds.cross.sdk.support.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/com.freescale.s32ds.cross.wizard.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/com.nxp.s32ds.cle.ide.sdk.attached.sdks.data.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/com.nxp.s32ds.cle.runtime.component.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/language.settings.xml  -  SIZE: SAME  -  SHA256: SAME
+.settings/org.eclipse.cdt.codan.core.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/org.eclipse.cdt.core.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/org.eclipse.core.resources.prefs  -  SIZE: SAME  -  SHA256: SAME
+BASELINE_STATUS.md  -  SIZE: SAME  -  SHA256: SAME
+DEBUG/debug_rtt.h  -  SIZE: SAME  -  SHA256: SAME
+IMU_Test.mex  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Debugger/Zitto_MB_V1_Debug_FLASH_PNE.launch  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Debugger/Zitto_MB_V1_Debug_RAM_PNE.launch  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Debugger/Zitto_MB_V1_Release_FLASH_PNE.launch  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Debugger/Zitto_MB_V1_Release_RAM_PNE.launch  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Linker_Files/S32K144_64_flash.ld  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Linker_Files/S32K144_64_ram.ld  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Startup_Code/startup_S32K144.S  -  SIZE: SAME  -  SHA256: SAME
+README.md  -  SIZE: SAME  -  SHA256: SAME
+REVISION_NOTES.md  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT.c  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT.h  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT_ASM_ARMv7M.S  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT_Conf.h  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT_ConfDefaults.h  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT_printf.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/S32K144/include/S32K144.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/S32K144/include/S32K144_features.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/S32K144/startup/system_S32K144.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/callbacks.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/common/s32_core_cm4.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/devassert.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/device_registers.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/startup.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/startup.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/status.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/inc/clock.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/inc/interrupt_manager.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/inc/pins_driver.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/pcc_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/pmc_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/scg_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/sim_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/smc_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/interrupt/interrupt_manager.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/pins/pins_driver.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/pins/pins_gpio_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/pins/pins_port_hw_access.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/pins/pins_port_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+board/sdk_project_config.h  -  SIZE: SAME  -  SHA256: SAME
+fix_startup.bat  -  SIZE: SAME  -  SHA256: SAME
+flash.bat  -  SIZE: SAME  -  SHA256: SAME
+flash.jlink  -  SIZE: SAME  -  SHA256: SAME
+includes/system_init.h  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_config.h  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_main.c  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_main.h  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_modules.c  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_modules.h  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_status.c  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_status.h  -  SIZE: SAME  -  SHA256: SAME
+src/CAN/can1.h  -  SIZE: SAME  -  SHA256: SAME
+src/CAN/can1_irq.c  -  SIZE: SAME  -  SHA256: SAME
+src/CAN/can2.h  -  SIZE: SAME  -  SHA256: SAME
+src/CMD/cmd.c  -  SIZE: SAME  -  SHA256: SAME
+src/CMD/cmd.h  -  SIZE: SAME  -  SHA256: SAME
+src/CSA/csa.c  -  SIZE: SAME  -  SHA256: SAME
+src/CSA/csa.h  -  SIZE: SAME  -  SHA256: SAME
+src/FLM/flm.c  -  SIZE: SAME  -  SHA256: SAME
+src/FLM/flm.h  -  SIZE: SAME  -  SHA256: SAME
+src/GPIO/gpio_control.c  -  SIZE: SAME  -  SHA256: SAME
+src/GPIO/gpio_control.h  -  SIZE: SAME  -  SHA256: SAME
+src/IMU/imu.c  -  SIZE: SAME  -  SHA256: SAME
+src/IMU/imu.h  -  SIZE: SAME  -  SHA256: SAME
+src/OTA/ota.c  -  SIZE: SAME  -  SHA256: SAME
+src/OTA/ota.h  -  SIZE: SAME  -  SHA256: SAME
+src/UART/uart_pkt.c  -  SIZE: SAME  -  SHA256: SAME
+src/UART/uart_pkt.h  -  SIZE: SAME  -  SHA256: SAME
+src/UART/uart_pkt_types.h  -  SIZE: SAME  -  SHA256: SAME
+src/boot_main.c  -  SIZE: SAME  -  SHA256: SAME
+src/boot_main.h  -  SIZE: SAME  -  SHA256: SAME
+src/common/common_config.h  -  SIZE: SAME  -  SHA256: SAME
+src/common/common_types.h  -  SIZE: SAME  -  SHA256: SAME
+src/hal/hal_imu.h  -  SIZE: SAME  -  SHA256: SAME
+src/hal/hal_led.h  -  SIZE: SAME  -  SHA256: SAME
+src/libc_compat.c  -  SIZE: SAME  -  SHA256: SAME
+src/main.c  -  SIZE: SAME  -  SHA256: SAME
+src/mcal/mcal_i2c.h  -  SIZE: SAME  -  SHA256: SAME
+src/system_init.c  -  SIZE: SAME  -  SHA256: SAME
+src/system_init.h  -  SIZE: SAME  -  SHA256: SAME
+
+============================================================
