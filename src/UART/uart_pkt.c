@@ -202,20 +202,22 @@ static void uart_hw_init(void)
     /*
      * LPUART0:
      *
-     *      PTC3 ALT2 = TX
-     *      PTC2 ALT2 = RX
+     *      PTC3 ALT4 = TX
+     *      PTC2 ALT4 = RX
      *
-     * NOTE:
-     *
-     * Verify ALT2 against the exact S32K144 package/pin mux
-     * in S32 Design Studio before PCB release.
+     * CONFIRMED on real hardware (FS32K144HAT0MLFT, 48-LQFP): ALT2 was
+     * the original (never verified) guess and does NOT route LPUART0
+     * to these pins - found by cycling PTC3 through every ALT0-7 value
+     * while sending a readable "ALTn-HELLO" message at each one and
+     * watching an actual terminal on the wired TTL adapter; ALT4 was
+     * the only value that produced clean, readable text.
      */
 
     PORTC->PCR[3U] =
-        PORT_PCR_MUX(2U);
+        PORT_PCR_MUX(4U);
 
     PORTC->PCR[2U] =
-        PORT_PCR_MUX(2U);
+        PORT_PCR_MUX(4U);
 
     /*
      * Enable LPUART0 clock.
@@ -1223,7 +1225,8 @@ uint8_t Uart_SelfTestPinMuxSweep(void)
             "PTC2 passed. These physical pins are not LPUART0 TX/RX on "
             "this chip at all - check for a board-level fault on pins "
             "16/17, or move the jumper to try a different pin pair "
-            "(PTB0/PTB1 next). Restored original ALT2 configuration.\r\n"
+            "(PTB0/PTB1 next). Restored the original saved pin-mux "
+            "configuration.\r\n"
         );
     }
 
@@ -1293,9 +1296,9 @@ uint8_t Uart_SelfTestGpioContinuity(void)
         }
     }
 
-    /* Restore LPUART0 ALT2 pin mux for normal operation afterward. */
-    PORTC->PCR[3U] = PORT_PCR_MUX(2U);
-    PORTC->PCR[2U] = PORT_PCR_MUX(2U);
+    /* Restore LPUART0 ALT4 pin mux for normal operation afterward. */
+    PORTC->PCR[3U] = PORT_PCR_MUX(4U);
+    PORTC->PCR[2U] = PORT_PCR_MUX(4U);
 
     if(pass_count == 8U)
     {
@@ -1397,12 +1400,12 @@ void Uart_SelfTestAltCyclePattern(void)
         }
     }
 
-    /* Restore ALT2 for normal LPUART0 TX operation afterward. */
-    PORTC->PCR[3U] = PORT_PCR_MUX(2U);
+    /* Restore ALT4 for normal LPUART0 TX operation afterward. */
+    PORTC->PCR[3U] = PORT_PCR_MUX(4U);
 
     RTT_LOG(
         "[UART_SELFTEST][ALTCYCLE] DONE - all 8 ALT values tried over "
-        "32s. Restored ALT2.\r\n"
+        "32s. Restored ALT4.\r\n"
     );
 }
 

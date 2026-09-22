@@ -550,17 +550,18 @@ int main(void)
     Uart_Init(cmd_handler);
     RTT_LOG("[BOOT] UART ok  uptime=%lums\r\n", (unsigned long)Uart_GetMs());
     (void)Uart_SelfTestLoopback();
-    /* The ~2x baud rate bug is fixed, but ALT2/PTC2/PTC3 has never
-     * actually been confirmed correct on real hardware AT the correct
-     * baud rate - every earlier external test (jumper loopback, ALT0-7
-     * sweep) ran while baud was still wrong, so "all 8 failed" from
-     * that sweep is inconclusive, not a real result. Redo it now with
-     * a readable message at the corrected baud rate. Jumper/GPIO tests
-     * still disabled (not needed for this). */
+    /* CONFIRMED on real hardware: ALT4 is the correct PORTC PCR MUX
+     * value for LPUART0 TX/RX on PTC3/PTC2 (uart_hw_init() now uses it
+     * directly) - found via Uart_SelfTestAltCyclePattern() cycling
+     * through every ALT value with a readable message and watching a
+     * real terminal on the wired adapter. All diagnostic self-tests
+     * disabled now that both root causes (the ~2x baud mismatch and
+     * the wrong ALT2 pin-mux guess) are fixed; kept available (just
+     * unused) for any future hardware bring-up debugging. */
     /* (void)Uart_SelfTestExternalPins(); */
     /* (void)Uart_SelfTestPinMuxSweep(); */
     /* (void)Uart_SelfTestGpioContinuity(); */
-    Uart_SelfTestAltCyclePattern();
+    /* Uart_SelfTestAltCyclePattern(); */
 
     /* GPIO */
 #if APP_GPIO_ENABLE
@@ -669,10 +670,9 @@ int main(void)
         Uart_Pkt_ForwardRTT();
         OTA_Task();
 
-        /* DIAG: raw, unframed, counting test message - pin is back on
-         * ALT2 (LPUART0_TX) after Uart_SelfTestAltCyclePattern()
-         * restored it at the end of the boot-time sweep. Still useful
-         * as a live post-sweep check on a plain terminal. */
+        /* DIAG: raw, unframed, counting test message - confirms the
+         * fixed baud rate + ALT4 pin mux on a plain terminal. Remove
+         * once modules are re-enabled and this isn't needed anymore. */
         if((now_ms - last_raw_test_ms) >= 1000U)
         {
             uint8_t  msg[16];
