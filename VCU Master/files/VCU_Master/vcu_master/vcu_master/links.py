@@ -109,6 +109,7 @@ class BleLink(_LinkBase):
         self._user_disconnect = False
         self._wlock = asyncio.Lock()
         self._reconnect_task: Optional[asyncio.Task] = None
+        self._watchdog_task: Optional[asyncio.Task] = None
         self._partial = ""
 
     @staticmethod
@@ -161,6 +162,46 @@ class BleLink(_LinkBase):
         self._emit_state()
         # ask the bridge who it is
         asyncio.create_task(self._hello())
+        self._watchdog_task = asyncio.create_task(self._notify_pump())
+
+    async def _notify_pump(self):
+        """
+        Bench-observed behaviour on this Windows/bleak (WinRT) setup: the
+        ESP32 keeps calling notify() continuously (confirmed via its own
+        Serial log), and a bare standalone bleak script sustains hundreds
+        of notifications over 20+ seconds without issue - but a
+        long-running connection made from inside this FastAPI/uvicorn
+        process reliably delivers only a handful of notifications and
+        then goes silent (rx_lines stops advancing) while BleakClient
+        still reports connected.
+
+        Re-arming the notify subscription (stop_notify/start_notify) did
+        NOT fix this - idle time kept growing right through repeated
+        re-arms. What DID unstick it: issuing an unrelated GATT *write*
+        (a PING command) immediately caused several queued notifications
+        to arrive. That points to the WinRT bridge queuing notification
+        events but not dispatching them into this process's asyncio loop
+        until *some* GATT operation's own await chain happens to pump
+        it - a message-pump starvation issue specific to this process,
+        not a dropped/lost subscription.
+
+        Mitigation: periodically issue a harmless GATT *read* (of the
+        TX characteristic's own last-set value - this reads the
+        peripheral's local GATT cache, it does not touch the S32K/UART
+        side at all) purely to keep that pump active, rather than
+        waiting for a stall and reacting to it.
+        """
+        try:
+            while self.connected and not self._user_disconnect:
+                await asyncio.sleep(1.0)
+                if not self.connected or self.client is None:
+                    return
+                try:
+                    await self.client.read_gatt_char(NUS_TX)
+                except Exception as exc:
+                    log.warning("BLE notify pump read failed: %s", exc)
+        except asyncio.CancelledError:
+            pass
 
     async def _hello(self):
         await asyncio.sleep(0.3)
@@ -172,19 +213,36 @@ class BleLink(_LinkBase):
 
     def _on_notify(self, _handle, data: bytearray) -> None:
         text = data.decode("utf-8", errors="replace")
-        # The bridge sends one line per notification with no trailing
-        # newline, so normally this never splits anything. It's kept as
-        # a safety net in case a GATT stack ever delivers a payload
-        # split across callbacks (e.g. before MTU negotiation raises
-        # the usable payload size). Previously self._partial was always
-        # reset to "" here instead of holding the trailing incomplete
-        # fragment, so any such split line would silently lose its tail.
         text = self._partial + text.replace("\r", "")
-        parts = text.split("\n")
-        if text.endswith("\n"):
+
+        if "\n" not in text:
+            # The bridge sends one already-complete decoded line per
+            # notification with NO trailing newline (see
+            # uart_ble_bridge_vcumaster.ino publish()), so this is the
+            # normal case on every single call. A previous "fix" here
+            # unconditionally did `parts = text.split("\n"); self._partial
+            # = parts.pop()` - since split() on a string with no "\n"
+            # returns a single-element list, pop() removed that one
+            # element into _partial and left `parts` empty, so the
+            # emit loop below never ran on ANY line, ever. That
+            # silently broke 100% of BLE data delivery to VCU Master
+            # (writes/commands still worked - only this notify path
+            # was affected) despite the underlying BLE link itself
+            # being fine, which is why a standalone bleak script with
+            # its own inline callback saw plenty of notifications while
+            # this parser emitted zero.
             self._partial = ""
-        else:
-            self._partial = parts.pop()
+            if text.strip():
+                self._emit_line(text)
+            return
+
+        # Defensive path for a stack that ever does deliver a split
+        # payload spanning multiple callbacks (not observed from this
+        # bridge, but embedded newlines would show up here if it ever
+        # did): only the trailing fragment after the last "\n" can be
+        # incomplete, so hold that back and emit everything before it.
+        parts = text.split("\n")
+        self._partial = parts.pop()
         for p in parts:
             if p.strip():
                 self._emit_line(p)
@@ -216,6 +274,9 @@ class BleLink(_LinkBase):
             self._user_disconnect = True
             if self._reconnect_task:
                 self._reconnect_task.cancel()
+        if self._watchdog_task:
+            self._watchdog_task.cancel()
+            self._watchdog_task = None
         if self.client is not None:
             try:
                 if self.client.is_connected:
