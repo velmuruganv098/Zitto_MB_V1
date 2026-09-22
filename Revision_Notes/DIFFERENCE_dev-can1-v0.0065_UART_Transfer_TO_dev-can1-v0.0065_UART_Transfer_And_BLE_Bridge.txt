@@ -1,0 +1,1026 @@
+============================================================
+PROJECT REVISION DIFFERENCE
+============================================================
+
+PROJECT:
+Zitto_MB_V1
+
+FROM:
+dev/can1-v0.0065_UART_Transfer
+
+TO:
+dev/can1-v0.0065_UART_Transfer_And_BLE_Bridge
+
+DATE:
+23-09-2026 00:41:40
+
+BRANCH:
+dev/can1-v0.0065_UART_Transfer_And_BLE_Bridge
+
+DIRECTION:
+LOCAL -> GITHUB
+
+SOURCE:
+C:\Projects\Zitto_MB_V1
+
+DESTINATION:
+velmuruganv098/Zitto_MB_V1 (branch: dev/can1-v0.0065_UART_Transfer_And_BLE_Bridge)
+
+============================================================
+REVISION NOTES (author-entered - what was intended/done)
+============================================================
+UART_Transfer and BLE_Bridge
+
+============================================================
+SUMMARY (what is actually included in this revision)
+============================================================
+
+Files Checked     : 304
+Unchanged         : 95
+Modified          : 8
+Added             : 0
+Deleted           : 0
+Excluded by user  : 201  (differs, but deliberately left as-is - see below)
+
+Lines Added       : 288
+Lines Deleted     : 115
+
+============================================================
+FILE DIFFERENCES (included in this revision)
+============================================================
+
+[1] DEBUG/debug_rtt.c
+------------------------------------------------------------
+
+STATUS:
+MODIFIED
+
+OLD SIZE:
+9,070 bytes
+
+NEW SIZE:
+8,741 bytes
+
+OLD LINES:
+329
+
+NEW LINES:
+329
+
+OLD SHA-256:
+7bc03c4fcd8bd093e6592cba0fafbb3e42ffca86fa95bc11dd5819a65a3b3dba
+
+NEW SHA-256:
+c9f9b77ff471b569a1acf6cb15fc817a5814f52375b86cd52be09da8af73f8a9
+
+============================================================
+
+[2] esp32/led_blink/led_blink.ino
+------------------------------------------------------------
+
+STATUS:
+MODIFIED
+
+OLD SIZE:
+396 bytes
+
+NEW SIZE:
+372 bytes
+
+OLD LINES:
+24
+
+NEW LINES:
+24
+
+OLD SHA-256:
+15fca7462145a7216bb5677f88f7cf9e4883015e366083c7c08a8c7bae891a0f
+
+NEW SHA-256:
+ce919a0bd20d56d9cdd3536d865df9ba8505c87962e0b834086cffc514559d04
+
+============================================================
+
+[3] esp32/uart_ble_bridge/uart_ble_bridge.ino
+------------------------------------------------------------
+
+STATUS:
+MODIFIED
+
+OLD SIZE:
+20,240 bytes
+
+NEW SIZE:
+36,726 bytes
+
+OLD LINES:
+571
+
+NEW LINES:
+1,938
+
+OLD SHA-256:
+2975365b310493a9969b14e7b9b5c9367a8086d1f40be492640a49478a9f0bd9
+
+NEW SHA-256:
+13fa8b4d5d51dd10fd66b3a35233eaff20b2efbdb1ecca28868dceacd983ea7f
+
+------------------------------------------------------------
+LINE DIFFERENCE
+------------------------------------------------------------
+
+STATUS: MODIFIED
+OLD (from line 2):
+   * ESP32-S3-mini: UART <-> BLE bridge with GPIO control
+NEW (from line 2):
+   * Zitto_MB_V1 - ESP32-S3 Communication Bridge
+
+STATUS: MODIFIED
+OLD (from line 4):
+   * - Receives the Zitto_MB_V1 binary protocol over UART2 (IO4=RX,
+   *   IO5=TX) from the S32K144 board, decodes each frame, and publishes
+   *   the decoded text on USB serial (COM5) and as a BLE notification
+   *   (TX characteristic) so a local BLE central ("the server") can
+   *   subscribe and receive it.
+   * - Accepts text commands written to a second BLE characteristic (RX)
+   *   so that same server can control:
+   *     ESP32 GPIOs directly           - "ESP:<pin>:<0|1>"
+   *     S32K144 GPIOs over UART        - "S32:<gpio_id>:<dir>:<state>"
+   *       (built + sent as a framed CMD_GPIO_SET packet, type 0x02,
+   *       matching src/UART/uart_pkt.h exactly, so the existing
+   *       firmware's cmd_handler() on the other end needs no changes)
+   * - IO25 blinks as a simple always-on heartbeat.
+   * - IO21 lights up while a BLE client is connected.
+NEW (from line 4):
+   * S32K144 UART2 <-> ESP32-S3 <-> BLE Local Server
+
+STATUS: MODIFIED
+OLD (from line 19):
+   * Board:  ESP32-S3-mini, bare module / custom carrier
+   * Link:   UART2, 115200 8N1
+   *   IO4 = RX  <- wire to S32K144 PTC3 (LPUART0 TX)
+   *   IO5 = TX  -> wire to S32K144 PTC2 (LPUART0 RX)
+   * Debug:  native USB CDC Serial (Tools > USB CDC On Boot: Enabled)
+NEW (from line 6):
+   * FUNCTIONS
+   * ---------
+   * 1. Receive Zitto AA55 packets from S32K144 UART2.
+   * 2. Validate CRC16.
+   * 3. Decode packets.
+   * 4. Print decoded data to USB Serial / COM5.
+   * 5. Forward decoded data to BLE notification characteristic.
+   * 6. Receive BLE commands from local server.
+   * 7. Control ESP32 GPIOs.
+   * 8. Forward S32K144 GPIO commands through UART2.
+   * 9. Report BLE / UART / GPIO status.
+   * 10. Non-blocking heartbeat LED.
+   *
+   * UART2
+   * -----
+   * ESP32 GPIO4 = RX
+   * ESP32 GPIO5 = TX
+   * 115200 8N1
+   *
+   * IMPORTANT
+
+STATUS: ADDED
+NEW (from line 69):
+  #include <Arduino.h>
+
+STATUS: MODIFIED
+OLD (from line 31):
+  /* ---------------------------------------------------------------- */
+  /* Configuration                                                     */
+  /* ---------------------------------------------------------------- */
+NEW (from line 75):
+  /* ================================================================
+   * CONFIGURATION
+   * ================================================================ */
+
+STATUS: MODIFIED
+OLD (from line 35):
+  #define UART_RX_PIN      4
+  #define UART_TX_PIN      5
+  #define UART_BAUD        115200
+NEW (from line 79):
+  #define UART_RX_PIN             4
+  #define UART_TX_PIN             5
+  #define UART_BAUD               115200
+
+STATUS: MODIFIED
+OLD (from line 39):
+  #define BLE_STATUS_LED_PIN   21   /* on = BLE client connected */
+  #define HEARTBEAT_LED_PIN    25   /* always blinking, 1 Hz */
+NEW (from line 83):
+  #define HEARTBEAT_LED_PIN       25
+  #define BLE_STATUS_LED_PIN      21
+
+STATUS: MODIFIED
+OLD (from line 42):
+  #define BLE_DEVICE_NAME  "Zitto_MB_V1_Bridge"
+  #define SERVICE_UUID     "6e400001-b5a3-f393-e0a9-e50e24dcca9e"
+  #define CHAR_UUID_TX     "6e400003-b5a3-f393-e0a9-e50e24dcca9e"  /* notify: board -> server */
+  #define CHAR_UUID_RX     "6e400002-b5a3-f393-e0a9-e50e24dcca9e"  /* write:  server -> board */
+NEW (from line 86):
+  #define BLE_DEVICE_NAME \
+      "Zitto_MB_V1_Bridge"
+
+STATUS: MODIFIED
+OLD (from line 47):
+  #define BLE_MTU          247
+  #define NOTIFY_MAX_LEN   200   /* stays under (negotiated MTU - 3) */
+NEW (from line 89):
+  #define SERVICE_UUID \
+      "6e400001-b5a3-f393-e0a9-e50e24dcca9e"
+
+STATUS: MODIFIED
+OLD (from line 50):
+  /* Pins the server is not allowed to repurpose - keeps the S32K link alive. */
+  #define ESP_GPIO_RESERVED(pin) ((pin) == UART_RX_PIN || (pin) == UART_TX_PIN)
+NEW (from line 92):
+  #define CHAR_UUID_TX \
+      "6e400003-b5a3-f393-e0a9-e50e24dcca9e"
+
+STATUS: MODIFIED
+OLD (from line 53):
+  /* ---------------------------------------------------------------- */
+  /* Protocol constants (mirrors src/UART/uart_pkt.h)                  */
+  /* ---------------------------------------------------------------- */
+NEW (from line 95):
+  #define CHAR_UUID_RX \
+      "6e400002-b5a3-f393-e0a9-e50e24dcca9e"
+
+STATUS: MODIFIED
+OLD (from line 57):
+  #define SOF0  0xAA
+  #define SOF1  0x55
+  #define PROTOCOL_VERSION  0x01
+NEW (from line 98):
+  #define BLE_MTU                 247
+  #define BLE_NOTIFY_MAX_LEN     200
+
+STATUS: MODIFIED
+OLD (from line 61):
+  #define CMD_GPIO_SET     0x02
+NEW (from line 101):
+  #define SOF0                    0xAA
+  #define SOF1                    0x55
+
+STATUS: MODIFIED
+OLD (from line 63):
+  #define MSG_LOG          0x80
+  #define MSG_STATUS       0x81
+  #define MSG_HEARTBEAT    0x82
+  #define MSG_IMU          0x83
+  #define MSG_CSA          0x84
+  #define MSG_CAN          0x85
+  #define MSG_GPIO_STATUS  0x86
+  #define MSG_CMD_ACK      0x87
+  #define MSG_CAN_STATUS   0x88
+  #define MSG_FLM          0x89
+NEW (from line 104):
+  #define PROTOCOL_VERSION        0x01
+
+STATUS: MODIFIED
+OLD (from line 74):
+  #define MAX_PAYLOAD      256
+NEW (from line 106):
+  #define CMD_MODULE_EN           0x01
+  #define CMD_GPIO_SET            0x02
+  #define CMD_MCU_RESET           0x03
+  #define CMD_LED_CTRL            0x04
+  #define CMD_STATUS_REQ          0x05
+
+STATUS: MODIFIED
+OLD (from line 76):
+  /* ---------------------------------------------------------------- */
+  /* Globals                                                           */
+  /* ---------------------------------------------------------------- */
+NEW (from line 112):
+  #define MSG_LOG                 0x80
+  #define MSG_STATUS              0x81
+  #define MSG_HEARTBEAT           0x82
+  #define MSG_IMU                 0x83
+  #define MSG_CSA                 0x84
+  #define MSG_CAN                 0x85
+  #define MSG_GPIO_STATUS         0x86
+  #define MSG_CMD_ACK             0x87
+  #define MSG_CAN_STATUS          0x88
+  #define MSG_FLM                 0x89
+  
+  #define MAX_PAYLOAD             256
+  
+  #define UART_RX_TIMEOUT_MS      1000
+  #define BLE_STATUS_INTERVAL_MS  5000
+  #define HEARTBEAT_INTERVAL_MS   500
+  
+  /* ================================================================
+   * HARDWARE
+   * ================================================================ */
+
+STATUS: ADDED
+NEW (from line 134):
+  
+  /* ================================================================
+   * BLE GLOBALS
+   * ================================================================ */
+
+STATUS: ADDED
+NEW (from line 142):
+  
+
+STATUS: MODIFIED
+OLD (from line 89):
+  enum RxState {
+NEW (from line 147):
+  /* ================================================================
+   * ESP32 GPIO SAFE MAP
+   * ================================================================ */
+  
+  /*
+   * This list deliberately does NOT expose every physical ESP32-S3 pin.
+   *
+   * Modify this list only after checking your actual ESP32-S3-MINI
+   * carrier/schematic.
+   */
+  
+  static const int g_espAllowedPins[] =
+  {
+      0,
+      1,
+      2,
+      3,
+      6,
+      7,
+      8,
+
+STATUS: MODIFIED
+OLD (from line 102):
+  static RxState  g_state = WAIT_SOF0;
+  static uint8_t  g_type;
+  static uint16_t g_len;
+  static uint8_t  g_seq;
+  static uint8_t  g_payload[MAX_PAYLOAD];
+  static uint16_t g_payloadIdx;
+  static uint16_t g_crcCalc;
+  static uint16_t g_crcRx;
+NEW (from line 228):
+  static RxState g_state = WAIT_SOF0;
+
+STATUS: MODIFIED
+OLD (from line 111):
+  /* ---------------------------------------------------------------- */
+  /* CRC16 (Modbus, poly 0xA001, init 0xFFFF)                          */
+  /* ---------------------------------------------------------------- */
+NEW (from line 230):
+  static uint8_t  g_type = 0;
+  static uint16_t g_len = 0;
+  static uint8_t  g_seq = 0;
+
+STATUS: MODIFIED
+OLD (from line 115):
+  static uint16_t crc16Step(uint16_t crc, uint8_t data)
+NEW (from line 234):
+  static uint8_t
+  g_payload[MAX_PAYLOAD];
+  
+  static uint16_t
+  g_payloadIdx = 0;
+  
+  static uint16_t
+  g_crcCalc = 0;
+  
+  static uint16_t
+  g_crcRx = 0;
+  
+  /* Diagnostics */
+  
+  static uint32_t g_uartBytesRx = 0;
+  static uint32_t g_uartFramesRx = 0;
+  static uint32_t g_uartCrcErrors = 0;
+  static uint32_t g_uartBadLength = 0;
+  
+  static uint32_t g_lastUartByteMs = 0;
+
+STATUS: MODIFIED
+OLD (from line 118):
+      for (uint8_t i = 0; i < 8; i++) {
+          if (crc & 0x0001) {
+NEW (from line 264):
+  
+      for (uint8_t i = 0; i < 8; i++)
+      {
+          if (crc & 0x0001)
+          {
+
+STATUS: MODIFIED
+OLD (from line 121):
+          } else {
+NEW (from line 270):
+          }
+          else
+          {
+
+STATUS: ADDED
+NEW (from line 276):
+  
+
+STATUS: MODIFIED
+OLD (from line 128):
+  /* ---------------------------------------------------------------- */
+  /* Outgoing frame builder (ESP32 -> S32K144), mirrors Uart_Pkt_Send() */
+  /* ---------------------------------------------------------------- */
+NEW (from line 280):
+  /* ================================================================
+   * UART FRAME TRANSMIT
+   * ================================================================ */
+
+STATUS: MODIFIED
+OLD (from line 132):
+  static void sendFrame(uint8_t type, const uint8_t *payload, uint16_t len)
+NEW (from line 284):
+  static bool sendFrame(
+      uint8_t type,
+      const uint8_t *payload,
+      uint16_t len)
+
+STATUS: ADDED
+NEW (from line 289):
+      if (len > MAX_PAYLOAD)
+      {
+          Serial.println(
+              "[UART][ERR] TX payload too large");
+  
+          return false;
+      }
+  
+
+STATUS: ADDED
+NEW (from line 298):
+  
+
+STATUS: ADDED
+NEW (from line 303):
+  
+
+STATUS: MODIFIED
+OLD (from line 140):
+      crc = crc16Step(crc, PROTOCOL_VERSION);
+NEW (from line 305):
+      crc = crc16Step(
+          crc,
+          PROTOCOL_VERSION);
+
+STATUS: MODIFIED
+OLD (from line 143):
+      crc = crc16Step(crc, type);
+NEW (from line 310):
+      crc = crc16Step(
+          crc,
+          type);
+
+STATUS: MODIFIED
+OLD (from line 145):
+      UartLink.write((uint8_t)(len & 0xFF));
+      crc = crc16Step(crc, (uint8_t)(len & 0xFF));
+      UartLink.write((uint8_t)((len >> 8) & 0xFF));
+      crc = crc16Step(crc, (uint8_t)((len >> 8) & 0xFF));
+NEW (from line 314):
+      uint8_t lenL =
+          (uint8_t)(len & 0xFF);
+  
+      uint8_t lenH =
+          (uint8_t)((len >> 8) & 0xFF);
+  
+      UartLink.write(lenL);
+      crc = crc16Step(crc, lenL);
+  
+      UartLink.write(lenH);
+      crc = crc16Step(crc, lenH);
+
+STATUS: MODIFIED
+OLD (from line 153):
+      for (uint16_t i = 0; i < len; i++) {
+NEW (from line 329):
+      for (uint16_t i = 0; i < len; i++)
+      {
+
+STATUS: MODIFIED
+OLD (from line 155):
+          crc = crc16Step(crc, payload[i]);
+NEW (from line 332):
+  
+          crc = crc16Step(
+              crc,
+              payload[i]);
+
+STATUS: MODIFIED
+OLD (from line 158):
+      UartLink.write((uint8_t)(crc & 0xFF));
+      UartLink.write((uint8_t)((crc >> 8) & 0xFF));
+NEW (from line 338):
+      UartLink.write(
+          (uint8_t)(crc & 0xFF));
+  
+      UartLink.write(
+          (uint8_t)((crc >> 8) & 0xFF));
+  
+      UartLink.flush();
+  
+      return true;
+
+STATUS: MODIFIED
+OLD (from line 162):
+  /* ---------------------------------------------------------------- */
+  /* BLE server callbacks                                              */
+  /* ---------------------------------------------------------------- */
+NEW (from line 349):
+  /* ================================================================
+   * BLE PUBLISH
+   * ================================================================ */
+
+STATUS: MODIFIED
+OLD (from line 166):
+  class ServerCallbacks : public BLEServerCallbacks {
+      void onConnect(BLEServer *server) override
+      {
+          g_bleConnected = true;
+          digitalWrite(BLE_STATUS_LED_PIN, HIGH);
+          Serial.println("[BLE] client connected");
+      }
+  
+      void onDisconnect(BLEServer *server) override
+      {
+          g_bleConnected = false;
+          digitalWrite(BLE_STATUS_LED_PIN, LOW);
+          Serial.println("[BLE] client disconnected, restarting advertising");
+          BLEDevice::startAdvertising();
+      }
+  };
+  
+  /* ---------------------------------------------------------------- */
+  /* Publish a decoded message over BLE (and to USB serial for debug)  */
+  /* ---------------------------------------------------------------- */
+NEW (from line 353):
+  static void publish(
+      const String &line)
+
+STATUS: MODIFIED
+OLD (from line 191):
+      if (!g_bleConnected || g_txChar == nullptr) {
+NEW (from line 358):
+      if (!g_bleConnected ||
+          g_txChar == nullptr)
+      {
+
+STATUS: MODIFIED
+OLD (from line 196):
+      if (out.length() > NOTIFY_MAX_LEN) {
+          out = out.substring(0, NOTIFY_MAX_LEN);
+NEW (from line 365):
+  
+      if (out.length() > BLE_NOTIFY_MAX_LEN)
+      {
+          out = out.substring(
+              0,
+              BLE_NOTIFY_MAX_LEN);
+
+... (further differences in this file omitted for length) ...
+
+============================================================
+
+[4] esp32/uart_passthrough/uart_passthrough.ino
+------------------------------------------------------------
+
+STATUS:
+MODIFIED
+
+OLD SIZE:
+1,458 bytes
+
+NEW SIZE:
+1,410 bytes
+
+OLD LINES:
+48
+
+NEW LINES:
+48
+
+OLD SHA-256:
+79412f3128f4f64b1cc6dc194323a037b5178510fcdfe2ae2ef97c8b2a731026
+
+NEW SHA-256:
+c0b36739cb96f72212a62f1100bb347798c27c2a8dd3142c2c34ade5c94c7b74
+
+============================================================
+
+[5] src/CAN/can1.c
+------------------------------------------------------------
+
+STATUS:
+MODIFIED
+
+OLD SIZE:
+61,245 bytes
+
+NEW SIZE:
+59,785 bytes
+
+OLD LINES:
+1,460
+
+NEW LINES:
+1,460
+
+OLD SHA-256:
+a70be9a4c51566bef10c670c159f341c7ca6abfa3b6827b3edaa9eba70d71ed2
+
+NEW SHA-256:
+b45582449ddd63349bb2c7615fcc392cc070e14363f63ee01405fa2e91d4957a
+
+============================================================
+
+[6] src/CAN/can2.c
+------------------------------------------------------------
+
+STATUS:
+MODIFIED
+
+OLD SIZE:
+88,065 bytes
+
+NEW SIZE:
+85,224 bytes
+
+OLD LINES:
+2,841
+
+NEW LINES:
+2,841
+
+OLD SHA-256:
+8ed30d0ff59c26ece994907b27d3c3749c7ab19307e0548c1e7df56b4c882588
+
+NEW SHA-256:
+106116e91f39270547e3691991744783a3c3c28d078fbc1e2299a54139191a51
+
+============================================================
+
+[7] src/CAN/can2_irq.c
+------------------------------------------------------------
+
+STATUS:
+MODIFIED
+
+OLD SIZE:
+4,406 bytes
+
+NEW SIZE:
+4,280 bytes
+
+OLD LINES:
+126
+
+NEW LINES:
+126
+
+OLD SHA-256:
+c910bda1d0ddea818735cdf822f6db043fb932c90dc98d303225e47a859ac81c
+
+NEW SHA-256:
+ffcb9b6aed24656f65770134e04bd6c5ff5072b1092e0d5d6131f26015b03ddf
+
+============================================================
+
+[8] tools/uart_monitor.py
+------------------------------------------------------------
+
+STATUS:
+MODIFIED
+
+OLD SIZE:
+9,884 bytes
+
+NEW SIZE:
+9,581 bytes
+
+OLD LINES:
+303
+
+NEW LINES:
+303
+
+OLD SHA-256:
+9540ff2ffcb1108dc13c72423a41842b8904514f34454657b7e7c55c5dfe05a9
+
+NEW SHA-256:
+af3b8db2b548d02ffe11ad4f17fc1744f95f35fcba5f4ba5c132719170b8be0e
+
+============================================================
+
+EXCLUDED FROM THIS REVISION (differs, but the user chose not to include it)
+------------------------------------------------------------
+.claude/settings.local.json  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.cproject  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.git  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.gitignore  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.project  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/com.freescale.s32ds.cross.sdk.support.prefs  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/com.freescale.s32ds.cross.wizard.prefs  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/com.nxp.s32ds.cle.ide.sdk.attached.sdks.data.prefs  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/com.nxp.s32ds.cle.runtime.component.prefs  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/language.settings.xml  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/org.eclipse.cdt.codan.core.prefs  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/org.eclipse.cdt.core.prefs  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/org.eclipse.core.resources.prefs  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/IMU_Test.mex  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/Project_Settings/Debugger/Zitto_MB_V1_Debug_FLASH_PNE.launch  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/Project_Settings/Debugger/Zitto_MB_V1_Debug_RAM_PNE.launch  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/Project_Settings/Debugger/Zitto_MB_V1_Release_FLASH_PNE.launch  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/Project_Settings/Debugger/Zitto_MB_V1_Release_RAM_PNE.launch  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/Project_Settings/Linker_Files/S32K144_64_flash.ld  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/Project_Settings/Linker_Files/S32K144_64_ram.ld  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/Project_Settings/Startup_Code/startup_S32K144.S  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/README.md  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/RTT/SEGGER_RTT.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/RTT/SEGGER_RTT.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/RTT/SEGGER_RTT_ASM_ARMv7M.S  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/RTT/SEGGER_RTT_Conf.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/RTT/SEGGER_RTT_ConfDefaults.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/RTT/SEGGER_RTT_printf.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/S32K144/include/S32K144.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/S32K144/include/S32K144_features.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/S32K144/startup/system_S32K144.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/callbacks.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/common/s32_core_cm4.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/devassert.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/device_registers.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/startup.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/startup.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/status.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/inc/clock.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/inc/interrupt_manager.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/inc/pins_driver.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/clock/S32K1xx/pcc_hw_access.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/clock/S32K1xx/pmc_hw_access.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/clock/S32K1xx/scg_hw_access.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/clock/S32K1xx/sim_hw_access.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/clock/S32K1xx/smc_hw_access.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/interrupt/interrupt_manager.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/pins/pins_driver.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/pins/pins_gpio_hw_access.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/pins/pins_port_hw_access.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/pins/pins_port_hw_access.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/board/sdk_project_config.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/fix_startup.bat  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/flash.bat  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/flash.jlink  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/includes/system_init.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/APP/app_config.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/APP/app_main.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/APP/app_main.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/APP/app_modules.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/APP/app_modules.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/APP/app_status.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/APP/app_status.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/CAN/can1.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/CAN/can1.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/CAN/can1_irq.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/CAN/can2.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/CAN/can2.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/CAN/can2_irq.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/CMD/cmd.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/CMD/cmd.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/CSA/csa.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/CSA/csa.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/DEBUG/debug_rtt.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/DEBUG/debug_rtt.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/FLM/flm.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/FLM/flm.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/GPIO/gpio_control.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/GPIO/gpio_control.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/IMU/imu.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/IMU/imu.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/OTA/ota.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/OTA/ota.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/UART/uart_pkt.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/UART/uart_pkt.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/UART/uart_pkt_types.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/boot_main.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/boot_main.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/common/common_config.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/common/common_types.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/hal/hal_imu.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/hal/hal_led.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/libc_compat.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/main.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/mcal/mcal_i2c.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/system_init.c  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+.claude/worktrees/can-baudrate-detection-fix-0677f2/src/system_init.h  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+DEBUG/debug_rtt.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+DEBUG/debug_rtt.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+DEBUG/debug_rtt.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+DEBUG/desktop.ini  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+DEBUG/exception_debug.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+DEBUG/exception_debug.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+DEBUG/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/DEBUG/debug_rtt.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/DEBUG/debug_rtt.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/DEBUG/debug_rtt.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/DEBUG/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/Project_Settings/Startup_Code/startup_S32K144.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/Project_Settings/Startup_Code/startup_S32K144.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/Project_Settings/Startup_Code/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/RTT/SEGGER_RTT.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/RTT/SEGGER_RTT.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/RTT/SEGGER_RTT.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/RTT/SEGGER_RTT_ASM_ARMv7M.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/RTT/SEGGER_RTT_ASM_ARMv7M.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/RTT/SEGGER_RTT_printf.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/RTT/SEGGER_RTT_printf.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/RTT/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/SDK/platform/devices/S32K144/startup/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/SDK/platform/devices/S32K144/startup/system_S32K144.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/SDK/platform/devices/S32K144/startup/system_S32K144.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/SDK/platform/devices/S32K144/startup/system_S32K144.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/SDK/platform/devices/startup.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/SDK/platform/devices/startup.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/SDK/platform/devices/startup.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/SDK/platform/devices/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/SDK/platform/drivers/src/clock/S32K1xx/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/SDK/platform/drivers/src/interrupt/interrupt_manager.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/SDK/platform/drivers/src/interrupt/interrupt_manager.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/SDK/platform/drivers/src/interrupt/interrupt_manager.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/SDK/platform/drivers/src/interrupt/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/SDK/platform/drivers/src/pins/pins_driver.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/SDK/platform/drivers/src/pins/pins_driver.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/SDK/platform/drivers/src/pins/pins_driver.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/SDK/platform/drivers/src/pins/pins_port_hw_access.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/SDK/platform/drivers/src/pins/pins_port_hw_access.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/SDK/platform/drivers/src/pins/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/Zitto_MB_V1.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/Zitto_MB_V1.elf  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/Zitto_MB_V1.map  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/makefile  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/objects.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/sources.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/APP/app_main.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/APP/app_main.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/APP/app_main.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/APP/app_modules.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/APP/app_modules.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/APP/app_status.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/APP/app_status.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/APP/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/CAN/can1.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/CAN/can1.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/CAN/can1.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/CAN/can1_irq.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/CAN/can1_irq.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/CAN/can2.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/CAN/can2.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/CAN/can2_irq.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/CAN/can2_irq.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/CAN/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/CSA/csa.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/CSA/csa.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/CSA/csa.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/CSA/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/FLM/flm.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/FLM/flm.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/FLM/flm.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/FLM/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/GPIO/gpio_control.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/GPIO/gpio_control.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/GPIO/gpio_control.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/GPIO/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/IMU/imu.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/IMU/imu.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/IMU/imu.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/IMU/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/OTA/ota.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/OTA/ota.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/OTA/ota.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/OTA/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/UART/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/UART/uart_pkt.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/UART/uart_pkt.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/UART/uart_pkt.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/boot_main.args  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/boot_main.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/boot_main.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/libc_compat.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/libc_compat.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/main.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/main.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/subdir.mk  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/system_init.d  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+Debug_FLASH/src/system_init.o  -  DETECTED AS: ADDED  -  LEFT AS-IS on dev/can1-v0.0065_UART_Transfer
+
+============================================================
+
+UNCHANGED FILES (verified, content identical)
+------------------------------------------------------------
+.cproject  -  SIZE: SAME  -  SHA256: SAME
+.gitignore  -  SIZE: SAME  -  SHA256: SAME
+.project  -  SIZE: SAME  -  SHA256: SAME
+.settings/com.freescale.s32ds.cross.sdk.support.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/com.freescale.s32ds.cross.wizard.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/com.nxp.s32ds.cle.ide.sdk.attached.sdks.data.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/com.nxp.s32ds.cle.runtime.component.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/language.settings.xml  -  SIZE: SAME  -  SHA256: SAME
+.settings/org.eclipse.cdt.codan.core.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/org.eclipse.cdt.core.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/org.eclipse.core.resources.prefs  -  SIZE: SAME  -  SHA256: SAME
+BASELINE_STATUS.md  -  SIZE: SAME  -  SHA256: SAME
+DEBUG/debug_rtt.h  -  SIZE: SAME  -  SHA256: SAME
+IMU_Test.mex  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Debugger/Zitto_MB_V1_Debug_FLASH_PNE.launch  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Debugger/Zitto_MB_V1_Debug_RAM_PNE.launch  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Debugger/Zitto_MB_V1_Release_FLASH_PNE.launch  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Debugger/Zitto_MB_V1_Release_RAM_PNE.launch  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Linker_Files/S32K144_64_flash.ld  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Linker_Files/S32K144_64_ram.ld  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Startup_Code/startup_S32K144.S  -  SIZE: SAME  -  SHA256: SAME
+README.md  -  SIZE: SAME  -  SHA256: SAME
+REVISION_NOTES.md  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT.c  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT.h  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT_ASM_ARMv7M.S  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT_Conf.h  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT_ConfDefaults.h  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT_printf.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/S32K144/include/S32K144.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/S32K144/include/S32K144_features.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/S32K144/startup/system_S32K144.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/callbacks.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/common/s32_core_cm4.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/devassert.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/device_registers.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/startup.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/startup.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/status.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/inc/clock.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/inc/interrupt_manager.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/inc/pins_driver.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/pcc_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/pmc_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/scg_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/sim_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/smc_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/interrupt/interrupt_manager.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/pins/pins_driver.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/pins/pins_gpio_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/pins/pins_port_hw_access.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/pins/pins_port_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+board/sdk_project_config.h  -  SIZE: SAME  -  SHA256: SAME
+fix_startup.bat  -  SIZE: SAME  -  SHA256: SAME
+flash.bat  -  SIZE: SAME  -  SHA256: SAME
+flash.jlink  -  SIZE: SAME  -  SHA256: SAME
+includes/system_init.h  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_config.h  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_main.c  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_main.h  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_modules.c  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_modules.h  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_status.c  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_status.h  -  SIZE: SAME  -  SHA256: SAME
+src/CAN/can1.h  -  SIZE: SAME  -  SHA256: SAME
+src/CAN/can1_irq.c  -  SIZE: SAME  -  SHA256: SAME
+src/CAN/can2.h  -  SIZE: SAME  -  SHA256: SAME
+src/CMD/cmd.c  -  SIZE: SAME  -  SHA256: SAME
+src/CMD/cmd.h  -  SIZE: SAME  -  SHA256: SAME
+src/CSA/csa.c  -  SIZE: SAME  -  SHA256: SAME
+src/CSA/csa.h  -  SIZE: SAME  -  SHA256: SAME
+src/FLM/flm.c  -  SIZE: SAME  -  SHA256: SAME
+src/FLM/flm.h  -  SIZE: SAME  -  SHA256: SAME
+src/GPIO/gpio_control.c  -  SIZE: SAME  -  SHA256: SAME
+src/GPIO/gpio_control.h  -  SIZE: SAME  -  SHA256: SAME
+src/IMU/imu.c  -  SIZE: SAME  -  SHA256: SAME
+src/IMU/imu.h  -  SIZE: SAME  -  SHA256: SAME
+src/OTA/ota.c  -  SIZE: SAME  -  SHA256: SAME
+src/OTA/ota.h  -  SIZE: SAME  -  SHA256: SAME
+src/UART/uart_pkt.c  -  SIZE: SAME  -  SHA256: SAME
+src/UART/uart_pkt.h  -  SIZE: SAME  -  SHA256: SAME
+src/UART/uart_pkt_types.h  -  SIZE: SAME  -  SHA256: SAME
+src/boot_main.c  -  SIZE: SAME  -  SHA256: SAME
+src/boot_main.h  -  SIZE: SAME  -  SHA256: SAME
+src/common/common_config.h  -  SIZE: SAME  -  SHA256: SAME
+src/common/common_types.h  -  SIZE: SAME  -  SHA256: SAME
+src/hal/hal_imu.h  -  SIZE: SAME  -  SHA256: SAME
+src/hal/hal_led.h  -  SIZE: SAME  -  SHA256: SAME
+src/libc_compat.c  -  SIZE: SAME  -  SHA256: SAME
+src/main.c  -  SIZE: SAME  -  SHA256: SAME
+src/mcal/mcal_i2c.h  -  SIZE: SAME  -  SHA256: SAME
+src/system_init.c  -  SIZE: SAME  -  SHA256: SAME
+src/system_init.h  -  SIZE: SAME  -  SHA256: SAME
+
+============================================================
