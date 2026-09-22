@@ -178,14 +178,31 @@ static const uint32_t g_can2_baud_kbps[
  * detection wait the FULL timeout when traffic is already flowing).
  * 60 ticks = ~3000ms of silence tolerance per candidate at the
  * current ~50ms/tick rate - comfortable 3x margin above the
- * requested 1000ms/message worst case. Tradeoff: a candidate that
- * truly is wrong, with NO traffic reaching it at all, now takes up to
- * ~3s (not ~200ms) to abandon, so a full 4-candidate cycle when none
- * of them match can take up to ~12s worst case - an accepted cost of
- * reliably supporting very sparse traffic, per explicit requirement.
+ * requested 1000ms/message worst case.
+ *
+ * FIX (adaptive two-tier dwell): a flat 60-tick dwell made EVERY
+ * fresh detection pay the full sparse-traffic cost even when the bus
+ * is actually healthy and frequent - a full "nothing matches" 4-
+ * candidate cycle took up to ~12s before moving on, confirmed
+ * directly in testing where both CAN1 and CAN2 spent 30+ seconds
+ * continuously cycling candidates with never a lock. Per explicit
+ * request to prioritize speed while there is no lock: the FIRST lap
+ * through all 4 candidates after a fresh Can2_StartDetectionAt() now
+ * uses CAN2_AUTO_BAUD_TICKS_FAST (the original, pre-sparse-fix 4-tick
+ * /~200ms value, proven fine for normal/frequent traffic all session
+ * before the sparse-traffic requirement existed). Only if that whole
+ * fast lap completes with nothing locking does Can2_NextBaud()
+ * escalate to CAN2_AUTO_BAUD_TICKS_SLOW (the 60-tick/~3000ms value
+ * above) for all subsequent laps, so the sparse-traffic guarantee is
+ * still met - just as a fallback tier instead of the default cost of
+ * every single detection attempt. This is monotonic within one scan
+ * (fast -> slow, never back) and resets to fast on every fresh
+ * restart (Can2_StartDetectionAt()), so a fault-triggered re-scan
+ * always gets the fast lap's chance first too.
  */
 
-#define CAN2_AUTO_BAUD_TICKS        60U
+#define CAN2_AUTO_BAUD_TICKS_FAST   4U
+#define CAN2_AUTO_BAUD_TICKS_SLOW   60U
 
 
 /*
@@ -267,6 +284,20 @@ static const uint32_t g_can2_baud_kbps[
 
 #define CAN2_RUNNING_SILENCE_TICKS  60U   /* ~3000ms @ ~50ms/tick before probing */
 #define CAN2_LOM_PROBE_TICKS        20U   /* ~1000ms probe window */
+
+/*
+ * FIX: safety guard added after real hardware testing showed the
+ * probe itself can push an already-degrading PCAN sender into
+ * bus-off (see the FIX note at the probe's trigger site in
+ * Can2_Task() for the full causal chain). Only ever ENTER LOM when
+ * RxErr (delta since lock, the same value the burst check already
+ * computes) is still near its lock-time baseline - i.e. the bus is
+ * actually clean and simply has nothing to send right now, not
+ * actively erroring on every attempted frame. Kept well below
+ * CAN2_RXERR_BURST (32) so the probe never runs in a state anywhere
+ * close to what would trip that check anyway.
+ */
+#define CAN2_LOM_PROBE_MAX_RXERR_DELTA  8U
 
 
 /*
@@ -389,6 +420,21 @@ static uint8_t
 
 static uint32_t
     g_can2_detect_tick;
+
+
+/*
+ * Adaptive two-tier dwell state - see CAN2_AUTO_BAUD_TICKS_FAST/_SLOW's
+ * comment. g_can2_dwell_ticks is the ACTIVE per-candidate dwell for the
+ * current scan (starts at FAST, escalates to SLOW after one full lap
+ * finds nothing); g_can2_candidates_tried_this_lap counts
+ * Can2_NextBaud() calls since the last fresh restart, to detect when a
+ * full lap has completed.
+ */
+static uint32_t
+    g_can2_dwell_ticks;
+
+static uint8_t
+    g_can2_candidates_tried_this_lap;
 
 
 static uint32_t
@@ -756,45 +802,69 @@ static uint8_t Can2_SetBaud(
     }
 
 
+    /*
+     * FIX: two SEPARATE hardware-confirmed PRECISE bus faults
+     * (ACTLR.DISDEFWBUF is set in main() specifically to force these
+     * to be precise, not imprecise) have now been captured on THIS
+     * peripheral (plus the identical pattern on CAN1's own
+     * prv_ApplyBaud() - see that function's matching comment):
+     * CFSR=0x00008200 (BFSR=0x82 = PRECISERR|BFARVALID), hitting
+     * BFAR=0x4002B01C (ECR) once and BFAR=0x4002B010 (RXMGMASK)
+     * repeatedly, including AFTER this 2ms delay was already in place
+     * and had already let CTRL1 plus a full 64-word mailbox RAM clear
+     * (65 prior writes to this same peripheral's address space)
+     * complete successfully first - and including during a PLAIN
+     * Can2_NextBaud() candidate switch in DETECTING, not only
+     * RUNNING-triggered restarts, despite that path having run
+     * thousands of times previously without incident. This rules out
+     * "not enough time since freeze" as the mechanism (CTRL1, the
+     * very next write after this delay, has never been the fault
+     * address in any occurrence; RXMGMASK, dozens of writes later,
+     * always is) - the delay is kept and lengthened anyway as a
+     * final, cheap, low-risk experiment (still negligible next to
+     * this driver's multi-second detection timescales), but the
+     * balance of evidence now points to a rare hardware-level
+     * transient (electrical noise, a marginal AHB-to-peripheral
+     * bridge timing margin, or a silicon erratum) rather than a
+     * firmware ordering bug - it recurs on both physical FlexCAN
+     * instances at the identical relative register offset, roughly
+     * once per several hundred seconds of continuous operation,
+     * unaffected by every code-side reordering tried so far.
+     */
+    Can2_DelayMs(
+        10U
+    );
+
     if(clear_ecr != 0U)
     {
-        /*
-         * FIX: a real, hardware-confirmed PRECISE bus fault
-         * (ACTLR.DISDEFWBUF was set in main() specifically to force
-         * this) was captured here: CFSR=0x00008200 (BFSR=0x82 =
-         * PRECISERR|BFARVALID), BFAR=0x4002B01C - exactly
-         * CAN2_BASE+0x1C, the ECR register - on the very next write
-         * below. It happened specifically on a restart triggered
-         * immediately after a live RxErr burst ("[CAN2] RxErr burst
-         * ... Re-detecting"), i.e. right as TEC/REC were still
-         * actively being incremented by hardware from real bus
-         * errors. FRZACK being asserted (Can2_EnterFreeze() already
-         * returned success above) only confirms the module has
-         * stopped TAKING PART in bus transactions - it does not
-         * appear to guarantee its internal error-counter write port
-         * has already quiesced when entry into freeze immediately
-         * follows a live error burst. A brief settling delay here
-         * (only on the clear_ecr path - candidate switches within a
-         * scan never hit this) gives that in-flight internal update
-         * time to finish before the CPU's own write to the same
-         * register lands, avoiding the write-write collision that
-         * the AHB bridge was surfacing as a bus error.
-         */
-        Can2_DelayMs(
-            1U
-        );
-
         CAN2->ECR =
             0U;
     }
 
 
-    /* Always NORMAL mode (LOM never set) - see the NORMAL mode note in
-     * Can2_StartDetection(). */
+    /*
+     * FIX: matches CAN1's prv_ApplyBaud() exactly, which explicitly
+     * OR's in CAN_CTRL1_CLKSRC_MASK every time it builds ctrl1. This
+     * file's g_can2_ctrl1_normal[] table never includes CLKSRC, and
+     * the write below is a FULL overwrite (not OR-in), so every
+     * single call to this function - every candidate switch, every
+     * restart, every lock - was silently clearing CLKSRC back to 0
+     * immediately after Can2_HardwareInit() had set it to 1. This did
+     * not visibly break detection (empirically CLKSRC=0 still yields
+     * correct timing on this board), but it is a real divergence from
+     * CAN1's explicit, defensive pattern with no justification for
+     * being different - fixed to always assert the intended clock
+     * source on every apply, exactly like CAN1 does.
+     *
+     * Always NORMAL mode (LOM never set here) - see the NORMAL mode
+     * note in Can2_StartDetection().
+     */
     ctrl1 =
         g_can2_ctrl1_normal[
             index
-        ];
+        ]
+        |
+        CAN_CTRL1_CLKSRC_MASK;
 
 
     CAN2->CTRL1 =
@@ -1473,6 +1543,15 @@ static void Can2_StartDetectionAt(
         0U;
 
 
+    /* FIX: every fresh scan gets the fast tier's chance first - see
+     * CAN2_AUTO_BAUD_TICKS_FAST/_SLOW's comment. */
+    g_can2_dwell_ticks =
+        CAN2_AUTO_BAUD_TICKS_FAST;
+
+    g_can2_candidates_tried_this_lap =
+        0U;
+
+
     g_can2_no_frame_counter =
         0U;
 
@@ -1667,6 +1746,38 @@ static void Can2_NextBaud(void)
 
     g_can2_corrob_attempted =
         0U;
+
+
+    /*
+     * FIX: adaptive two-tier dwell escalation - see
+     * CAN2_AUTO_BAUD_TICKS_FAST/_SLOW's comment. Once a full lap of
+     * CAN2_AUTO_BAUD_COUNT candidates has been tried (at the fast
+     * dwell) without any of them locking, switch to the slow,
+     * sparse-traffic-tolerant dwell for all subsequent laps. Only
+     * escalates (fast -> slow), never reverts mid-scan; a fresh
+     * Can2_StartDetectionAt() resets back to fast for the next scan.
+     */
+    if(
+        g_can2_dwell_ticks ==
+        CAN2_AUTO_BAUD_TICKS_FAST
+    )
+    {
+        g_can2_candidates_tried_this_lap++;
+
+        if(
+            g_can2_candidates_tried_this_lap >=
+            CAN2_AUTO_BAUD_COUNT
+        )
+        {
+            g_can2_dwell_ticks =
+                CAN2_AUTO_BAUD_TICKS_SLOW;
+
+            RTT_LOG(
+                "[CAN2] No lock after fast pass - switching to slow"
+                " (sparse-traffic) dwell\r\n"
+            );
+        }
+    }
 
 
     if(
@@ -2346,7 +2457,7 @@ void Can2_Task(void)
 
         if(
             g_can2_detect_tick >=
-            CAN2_AUTO_BAUD_TICKS
+            g_can2_dwell_ticks
         )
         {
             g_can2_detect_tick =
@@ -2615,23 +2726,60 @@ void Can2_Task(void)
                     CAN2_RUNNING_SILENCE_TICKS
                 )
                 {
-                    RTT_LOG(
-                        "[CAN2] No CAN data - starting LOM error probe"
-                        " at locked %lu kbps\r\n",
-                        (unsigned long)
-                        g_can2_status.detected_baud_kbps
-                    );
-
                     g_can2_running_silence_ticks =
                         0U;
 
+                    /*
+                     * FIX: real-world testing showed the probe itself
+                     * can cause harm when RxErr is already elevated -
+                     * "no completed frame" does NOT mean "idle bus"
+                     * when frames are actively arriving and failing
+                     * mid-decode (the exact stale-baud case this
+                     * feature targets). In that case PCAN's OWN TEC is
+                     * also already climbing (missing ACK costs the
+                     * sender 8 points, per this file's documented
+                     * two-node dynamic), and switching into LOM right
+                     * then removes CAN2's ACK entirely - observed to
+                     * be enough to tip an already-degraded PCAN into
+                     * bus-off, silencing the bus for real (a genuinely
+                     * idle bus afterward, indistinguishable in the log
+                     * from "nothing wrong", but caused by this probe).
+                     * Only ever enter LOM when RxErr is still genuinely
+                     * low (bus actually clean, not just currently
+                     * silent) - rxerr_delta is already computed above
+                     * for the burst check. When it is NOT low, skip
+                     * the probe entirely and let the existing
+                     * fault-check/RxErr-burst check (which never touch
+                     * LOM, so never risk an extra missed ACK) handle
+                     * it on a later tick via the already-proven-safe
+                     * restart path.
+                     */
                     if(
+                        rxerr_delta >
+                        CAN2_LOM_PROBE_MAX_RXERR_DELTA
+                    )
+                    {
+                        RTT_LOG(
+                            "[CAN2] No CAN data, but RxErr already +%u"
+                            " since lock - skipping LOM probe, letting"
+                            " existing fault checks handle it\r\n",
+                            (unsigned)rxerr_delta
+                        );
+                    }
+                    else if(
                         Can2_SetLomMode(
                             1U
                         )
                         != 0U
                     )
                     {
+                        RTT_LOG(
+                            "[CAN2] No CAN data - starting LOM error"
+                            " probe at locked %lu kbps\r\n",
+                            (unsigned long)
+                            g_can2_status.detected_baud_kbps
+                        );
+
                         g_can2_lom_probe_active =
                             1U;
 

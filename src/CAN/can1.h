@@ -65,7 +65,28 @@ extern "C" {
 
 /* Auto-baud timing: task period × ticks = time per candidate */
 #define CAN1_TASK_PERIOD_MS         50U
-#define CAN1_DETECT_TICKS           4U    /* 4 × 50ms = 200ms of silence → next candidate */
+/*
+ * FIX (adaptive two-tier dwell): a flat 60-tick/~3000ms dwell (mirrors
+ * can2.c's CAN2_AUTO_BAUD_TICKS_FAST/_SLOW fix) made EVERY fresh
+ * detection pay the full sparse-traffic cost even when the bus is
+ * actually healthy and frequent - a full "nothing matches" 4-candidate
+ * cycle took up to ~12s before moving on, confirmed directly in
+ * testing where both CAN1 and CAN2 spent 30+ seconds continuously
+ * cycling candidates with never a lock. Per explicit request to
+ * prioritize speed while there is no lock: the FIRST lap through all 4
+ * candidates after a fresh prv_StartDetection() now uses
+ * CAN1_DETECT_TICKS_FAST (the original, pre-sparse-fix 4-tick/~200ms
+ * value, proven fine for normal/frequent traffic all session before
+ * the sparse-traffic requirement existed). Only if that whole fast lap
+ * completes with nothing locking does prv_NextBaud() escalate to
+ * CAN1_DETECT_TICKS_SLOW (the 60-tick/~3000ms value) for all
+ * subsequent laps, so the sparse-traffic guarantee is still met - just
+ * as a fallback tier instead of the default cost of every single
+ * detection attempt. Monotonic within one scan (fast -> slow, never
+ * back); resets to fast on every fresh restart.
+ */
+#define CAN1_DETECT_TICKS_FAST      4U    /* 4 x 50ms = 200ms - first lap */
+#define CAN1_DETECT_TICKS_SLOW      60U   /* 60 x 50ms = 3000ms - fallback after a fast lap finds nothing */
 #define CAN1_CONFIRM_FRAMES         3U    /* consecutive error-free frames required to lock a candidate */
 /* CAN1_RUNNING_SILENCE_TICKS / CAN1_LOM_PROBE_TICKS (READY-state
  * silence -> LOM probe -> re-detect only on an actual error) are
@@ -180,6 +201,13 @@ uint8_t      Can1_IsReady(void);
 
 void         Can1_Shutdown(void);    /* SHDN pin HIGH - transceiver off */
 void         Can1_WakeNormal(void);  /* SHDN pin LOW  - transceiver on  */
+
+/*
+ * Restart baud detection. Mirrors Can2_StartDetection() - made public
+ * as part of structural unification between can1.c/can2.c (was static
+ * "prv_StartDetection" before).
+ */
+void         Can1_StartDetection(void);
 
 /* IRQ diagnostic counters (can1_irq.c) */
 uint32_t     Can1_GetIrqCount(void);
