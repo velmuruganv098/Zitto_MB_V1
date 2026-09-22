@@ -694,6 +694,13 @@ int main(void)
             msg[mlen++] = (uint8_t)'\n';
 
             (void)Uart_RawSend(msg, mlen);
+
+            /* Mirror the exact same text into RTT so both channels can
+             * be compared side by side in real time. */
+            RTT_LOG(
+                "[RAW_TX] HELLO-%04u\r\n",
+                (unsigned)n
+            );
         }
 #endif
 
