@@ -28,7 +28,19 @@
 ENTRY(Reset_Handler)
 
 HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x00000400;
-STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x00000400;
+/* FIX: was 0x400 (1KB) - suspiciously small for call paths like
+ * Can2_Task() -> Can2_StartDetectionAt() -> Can2_EnterFreeze() +
+ * RTT_LOG(...) -> Can2_SetBaud() (its own freeze cycle + another
+ * RTT_LOG(...)), several frames deep with printf-style multi-argument
+ * formatting at each level - a plausible cause of "MCU sometimes
+ * resets" during CAN2 recovery (marginal stack overflow is
+ * non-deterministic by nature: it depends on exact call depth and
+ * interrupt timing, matching "sometimes", not "always"). Raised to
+ * 0x2000 (8KB) - total SRAM is 64KB and static usage (bss+data) is
+ * currently only ~14KB, so this costs negligible headroom and can
+ * only help: a larger stack never changes any module's behavior, it
+ * only prevents overflow. */
+STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x00002000;
 
 /* If symbol __flash_vector_table__=1 is defined at link time
  * the interrupt vector will not be copied to RAM.

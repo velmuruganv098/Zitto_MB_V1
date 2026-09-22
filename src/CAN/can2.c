@@ -148,6 +148,16 @@ static const uint32_t g_can2_baud_kbps[
  * cadence - this is what "mirror CAN1" means for the dwell timer;
  * each module still runs fully independently (separate state, no
  * cross-dependency, no shared blocking wait).
+ *
+ * REVERTED: briefly tried halving this (to 2) to shrink the window
+ * where a wrong candidate holds up reaching 1000 kbps (see the 1 Mbps
+ * bus-off investigation). That broke detection broadly, not just at
+ * 1 Mbps - candidates no longer got enough dwell time to reliably
+ * collect CAN2_CONFIRM_FRAMES=3 clean frames against real traffic
+ * timing, so CAN2 just cycled through every candidate forever without
+ * locking any of them, at any baud. Back to 4, matching CAN1 exactly.
+ * The 1 Mbps-specific bus-off issue needs a fix that does not touch
+ * working behavior at the other rates.
  */
 
 #define CAN2_AUTO_BAUD_TICKS        4U
@@ -580,6 +590,17 @@ static uint8_t Can2_SetBaud(
     }
 
 
+    /*
+     * ECR is NOT touched here (moved to Can2_StartDetectionAt(), the
+     * actual entry point for every fresh detection attempt - see its
+     * comment for why). REC is intentionally left to accumulate
+     * candidate-to-candidate WITHIN one scan (see CAN2_RXERR_BURST's
+     * comment) - this function is called for every candidate switch,
+     * including ones mid-scan (NextBaud()/RevertCorroboration()) where
+     * that accumulation is deliberate, not just the start of a scan.
+     */
+
+
     /* Always NORMAL mode (LOM never set) - see the NORMAL mode note in
      * Can2_StartDetection(). */
     ctrl1 =
@@ -842,6 +863,34 @@ static uint8_t Can2_HardwareInit(void)
     RTT_LOG("[CAN2_HW] F: Enter freeze\r\n");
 
     if(Can2_EnterFreeze() == 0U) { return 0U; }
+
+
+    /*
+     * FIX: SOFTRST (step E, above) does NOT reset ECR (TEC/REC) - this
+     * register is explicitly documented as unaffected by soft reset.
+     * ECR only otherwise returns to 0 via the ISO 11898 hardware
+     * auto-recovery sequence (128 occurrences of 11 consecutive
+     * recessive bits with zero transmission attempts in between),
+     * which can stall indefinitely once DETECTING resumes trying to
+     * receive/ACK in NORMAL mode - measured to genuinely never clear
+     * on its own at some baud/traffic combinations (1 Mbps). This is
+     * the actual reason bus-off previously stayed stuck until a real
+     * MCU reset: a real reset clears ECR by POR, which neither
+     * SOFTRST nor a plain freeze/CTRL1/ESR1 cycle does.
+     *
+     * ECR is explicitly documented as writable while the module is in
+     * Freeze mode (this is the FlexCAN-defined way to directly
+     * initialize the error counters), so clear it here, every time
+     * this function runs - both at boot and from Can2_Restart() - for
+     * a deterministic, guaranteed-clean TEC/REC with no dependency on
+     * bus quiet time.
+     */
+    CAN2->ECR = 0U;
+
+    RTT_LOG(
+        "[CAN2_HW]   ECR cleared  ECR=0x%08lX\r\n",
+        (unsigned long)CAN2->ECR
+    );
 
 
     /* ------------------------------------------------------------------ */
@@ -1140,8 +1189,38 @@ static uint8_t Can2_CheckFault(void)
 /* ========================================================================== */
 
 
-void Can2_StartDetection(void)
+/*
+ * start_index exists because g_can2_baud_kbps[]'s array ORDER is kept
+ * unchanged ({500,250,125,1000}, matching CAN1) while the STARTING
+ * point of every fresh scan is not - see Can2_StartDetection()'s own
+ * comment below for why 1000 kbps (index 3) is where every fresh scan
+ * now begins. (An earlier version of this function let RUNNING-state
+ * recovery pass a non-constant start_index - g_can2_baud_index, to
+ * retry the just-locked candidate first as a reacquisition-speed
+ * optimization. That did not resolve the 1 Mbps issue and was
+ * reverted per explicit requirement: every recovery is now a full,
+ * clean restart. Every current call site passes the literal 3U via
+ * the Can2_StartDetection() wrapper below - start_index is no longer
+ * used to "resume" anywhere, only to fix the scan's starting index.)
+ */
+static void Can2_StartDetectionAt(
+    uint8_t start_index
+)
 {
+    /*
+     * FIX: mirrors CAN1's prv_StartDetection() (can1.c), which
+     * explicitly clears g_status.ready here - this file's equivalent
+     * reset list was missing it. Not currently read by any caller for
+     * CAN2, so latent rather than actively wrong, but leaving RUNNING
+     * a fault-triggered restart with ready still 1 while
+     * detected/detected_baud_kbps are correctly cleared to 0 is an
+     * inconsistent status snapshot via Can2_GetStatus() - fixed for
+     * correctness and to keep this function's reset list exhaustive.
+     */
+    g_can2_status.ready =
+        0U;
+
+
     g_can2_status.detected =
         0U;
 
@@ -1155,7 +1234,7 @@ void Can2_StartDetection(void)
 
 
     g_can2_baud_index =
-        0U;
+        start_index;
 
 
     g_can2_detect_tick =
@@ -1185,6 +1264,41 @@ void Can2_StartDetection(void)
     RTT_LOG(
         "[CAN2] Start auto baud\r\n"
     );
+
+
+    /*
+     * FIX: this is THE entry point for every fresh detection attempt.
+     * A start_index parameter still exists here (an earlier
+     * reacquisition-speed optimization had the RUNNING-state recovery
+     * paths resume at a non-zero index - the just-locked candidate -
+     * instead of always 0; it did not resolve the 1 Mbps bus-off issue
+     * and per explicit requirement recovery now always clears the
+     * baud completely and starts fresh, so every current caller passes
+     * 0). The per-candidate ECR clear used to live inside
+     * Can2_SetBaud(), gated on index==0, which meant a resume at a
+     * NON-zero index never cleared ECR at all: the stale, already-
+     * elevated REC from whatever fault triggered recovery carried
+     * straight into the "fresh" attempt, undermining the very recovery
+     * it was supposed to perform - a real bug, fixed by moving the
+     * clear here so it always runs regardless of start_index.
+     * Can2_SetBaud() no longer touches ECR at all, so intra-scan
+     * candidate-to-candidate cycling (NextBaud()/RevertCorroboration(),
+     * which do NOT go through this function) still correctly preserves
+     * REC accumulation WITHIN one scan pass, unchanged. ECR is
+     * writable while frozen - same confirmed-working technique as
+     * Can2_HardwareInit().
+     */
+    if(
+        Can2_EnterFreeze()
+        != 0U
+    )
+    {
+        CAN2->ECR =
+            0U;
+
+        (void)
+        Can2_ExitFreeze();
+    }
 
 
     /*
@@ -1228,29 +1342,48 @@ void Can2_StartDetection(void)
 
 
 /*
- * FIX: bus-off does not reliably self-clear on its own timeline.
- * Can2_StartDetection() alone only cycles freeze/CTRL1/ESR1 (no
- * SOFTRST) - TEC/REC (and so FLTCONF) are NOT reset by that, so they
- * only return to 0 via the ISO 11898 hardware auto-recovery sequence
- * (128 occurrences of 11 consecutive recessive bits with NO
- * transmission attempt in between). While DETECTING is actively
- * cycling candidates in NORMAL mode, it keeps trying to
- * receive/ACK - any transmission attempt restarts that 128x11 count
- * from zero - so at some baud/traffic combinations (1 Mbps observed)
- * recovery could stall indefinitely: exactly "goes to bus-off, not
- * clear until MCU reset". A full MCU reset works because
- * Can2_HardwareInit() performs a SOFTRST, which resets TEC/REC to 0
- * immediately and unconditionally, with no dependency on bus quiet
- * time. Can2_Restart() reproduces that same guaranteed-deterministic
- * recovery from software - same sequence Can2_Init() runs at boot
- * (HardwareInit -> WakeNormal -> StartDetection) - so bus-heavy/
- * bus-off recovery is exactly as reliable as an MCU reset, per
- * requirement.
+ * FIX: start every fresh scan at index 3 (1000 kbps, the LAST entry
+ * in g_can2_baud_kbps[]/g_can2_ctrl1_normal[] - the array order itself
+ * is untouched, only the starting point changed) instead of index 0
+ * (500 kbps). Root-cause investigation confirmed CAN1's and CAN2's
+ * 1000 kbps CTRL1 timing values are bit-for-bit identical (not a
+ * timing-table bug), but candidate order alone meant 1000 kbps was
+ * ALWAYS tried last, paying the maximum possible wrong-candidate
+ * dwell (500/250/125, ~600ms worst case) before ever being attempted
+ * - and on this two-node NORMAL-mode bench, that whole window is also
+ * when the SENDER's (PCAN's) own error counter is racing toward its
+ * own bus-off (missing ACK costs it 8x what a protocol error costs
+ * CAN2's own REC). Starting at 1000 kbps directly is safe: aliasing
+ * (a lower candidate falsely decoding faster real traffic as clean
+ * frames) only happens when UNDER-sampling a faster real rate, which
+ * is exactly why g_can2_higher_idx[3] is 0xFF (fastest candidate,
+ * nothing to corroborate against) - there is no equivalent risk
+ * testing the fastest candidate first. NextBaud()'s plain
+ * increment-and-wrap (3->0->1->2->3->...) still visits every other
+ * candidate in the same relative order if 1000 kbps is not the real
+ * rate, so 500/250/125 kbps detection is unaffected - only 1000 kbps
+ * now gets tried immediately on every fresh restart instead of last.
+ */
+void Can2_StartDetection(void)
+{
+    Can2_StartDetectionAt(
+        3U
+    );
+}
+
+
+/*
+ * Full re-init (HardwareInit -> WakeNormal -> StartDetection), same
+ * sequence Can2_Init() runs at boot. Used for the CAN2 init-failure
+ * (ERROR state) path only, where the module never came up in the
+ * first place - a different, rarer failure than bus-heavy/bus-off,
+ * which is handled separately and more lightly (see the RUNNING
+ * block's Can2_CheckFault() use of plain Can2_StartDetection()).
  */
 static void Can2_Restart(void)
 {
     RTT_LOG(
-        "[CAN2] Restarting (full re-init, same as MCU reset)\r\n"
+        "[CAN2] Restarting (full re-init)\r\n"
     );
 
 
@@ -1640,27 +1773,48 @@ void Can2_Task(void)
     }
 
 
+    /*
+     * FIX: bus-HEAVY (error-passive, fault==1) must still NOT be
+     * checked during DETECTING - REC is deliberately never reset
+     * between candidates within one scan (see CAN2_RXERR_BURST's
+     * comment) and legitimately climbs past the error-passive
+     * threshold (128) as an ordinary byproduct of testing a mismatched
+     * candidate, most visibly during 2:1 corroboration. An earlier
+     * version checked FLTCONF unconditionally (bus-heavy included)
+     * during DETECTING and escalated straight to a forced MCU reset,
+     * which repeatedly nuked CAN2 mid-corroboration right as it was
+     * about to correctly lock - an infinite, self-inflicted loop. That
+     * escalation-to-reset is gone entirely now (removed per explicit
+     * requirement), but the underlying "bus-heavy alone is normal
+     * mid-scan" reasoning still holds, so it is still not checked here.
+     *
+     * TRUE bus-off (fault==2) is a different case and IS checked here.
+     * A module that is genuinely bus-off cannot transmit or ACK
+     * anything at all, so no candidate can ever succeed while it
+     * persists - DETECTING's own protocol-error bail-out and
+     * dwell-timeout cycling are powerless against this, since a
+     * bus-off module does not even generate the STFERR/FRMERR-style
+     * errors those checks look for. At a SPARSE traffic rate (e.g. one
+     * message every 500ms), a full multi-candidate lap can take longer
+     * than the interval between messages, so gathering
+     * CAN2_CONFIRM_FRAMES consecutive clean frames at the correct
+     * candidate before REC (never cleared within a scan, by design)
+     * drifts past 256 can take many laps - with nothing checking for
+     * it, REC could climb unboundedly across repeated laps and reach
+     * genuine bus-off while still "just detecting", locking the module
+     * out of ever succeeding, forever, with no escape. This is safe to
+     * check now (it was not, when this exclusion was first added):
+     * Can2_StartDetectionAt() unconditionally clears ECR on every
+     * fresh restart regardless of which candidate it resumes at, so a
+     * true-bus-off-triggered restart here gets a genuinely clean REC,
+     * not the "restart immediately re-triggers because ECR was never
+     * actually cleared" failure mode that originally motivated
+     * excluding DETECTING entirely.
+     */
+
     /* ---------------------------------------------------------------------- */
     /* DETECTION                                                              */
     /* ---------------------------------------------------------------------- */
-
-    /*
-     * FIX: bus-off (FLTCONF) must NOT be checked while DETECTING, only
-     * while RUNNING - mirrors CAN1's Can1_Task() exactly, where the
-     * fault==2 check lives after the DETECTING block's unconditional
-     * return and so never runs during a scan. FLTCONF does not clear
-     * the instant Can2_StartDetection()/Can2_SetBaud() cycles freeze
-     * (no SOFTRST happens there) - real recovery takes a little time.
-     * With the bus-off check running unconditionally (as it did
-     * before this fix), CheckBusOff() would still see FLTCONF==2 on
-     * the very next tick after a restart and call
-     * Can2_StartDetection() again before candidate 0 ever got a
-     * single tick's chance to receive anything - an infinite restart
-     * loop that never progresses, which is exactly the reported "goes
-     * to bus-off and is never recovered" symptom. DETECTING already
-     * has its own protocol-error bail-out (CAN2_ERR_FLAGS_MASK below)
-     * to abandon a bad candidate quickly, same as CAN1.
-     */
 
     if(
         g_can2_status.state ==
@@ -1669,6 +1823,42 @@ void Can2_Task(void)
     {
         uint32_t esr1;
         uint8_t  had_error;
+
+
+        /*
+         * TRUE bus-off (fault==2) only - checked here, unlike
+         * bus-heavy, for the reasons in the FIX note above. Placed as
+         * the very first check in DETECTING, ahead of the normal
+         * per-candidate error/frame handling below, since a genuinely
+         * bus-off module cannot produce a meaningful result from any
+         * of that - restart immediately rather than waste a dwell
+         * period on it.
+         */
+
+        if(
+            (
+                (CAN2->ESR1 >> 4U) &
+                0x03U
+            ) ==
+            2U
+        )
+        {
+            RTT_LOG(
+                "[CAN2_ERR] BUS OFF while detecting (RxErr=%u) -"
+                " restarting the scan\r\n",
+                (unsigned)((CAN2->ECR >> 8U) & 0xFFU)
+            );
+
+            g_can2_status.bus_off_count++;
+
+            g_can2_status.error_count++;
+
+            Can2_StartDetectionAt(
+                3U
+            );
+
+            return;
+        }
 
 
         /*
@@ -1920,7 +2110,15 @@ void Can2_Task(void)
         /*
          * Keep detecting forever.
          *
-         * Do NOT stop the firmware.
+         * Do NOT stop the firmware - matches CAN1's own philosophy
+         * exactly (its equivalent case just keeps retrying too, no
+         * forced reset ever). A forced system reset was tried here as
+         * a last-resort backstop, but the user does not want CAN2
+         * resetting the MCU under any circumstance - recovery must
+         * stay software-only, however long it takes. With the
+         * ECR-clear-on-resume fix in Can2_StartDetectionAt(), the
+         * lightweight recovery path should now actually complete
+         * rather than needing this as a crutch.
          */
 
         if(
@@ -1979,12 +2177,18 @@ void Can2_Task(void)
 
 
         /*
-         * Bus-off check belongs here, RUNNING-only (see the FIX note
-         * above the DETECTING block for why it must not run while
-         * scanning). Can2_Restart() (full re-init, not just
-         * Can2_StartDetection()) - see its own FIX note for why a
-         * plain restart alone is not a reliable enough recovery from
-         * a genuine bus-off.
+         * Bus-heavy/bus-off, RUNNING-only (never during DETECTING -
+         * see the FIX note above the DETECTING block for why). Recovery
+         * is a full, clean restart of the WHOLE candidate hunt from
+         * scratch (Can2_StartDetection(), which starts at 1000 kbps -
+         * see its own comment) - explicit requirement: on any fault,
+         * clear the baud completely and start auto-baud detection
+         * freshly, rather than guessing the candidate that was just
+         * locked is still correct. A previous version tried resuming
+         * at the just-locked candidate first as a reacquisition-speed
+         * optimization; it did not resolve the 1 Mbps issue and is no
+         * longer used here. Can2_StartDetectionAt() still clears ECR
+         * as part of every restart either way, regardless of caller.
          */
 
         if(
@@ -1992,7 +2196,7 @@ void Can2_Task(void)
             != 0U
         )
         {
-            Can2_Restart();
+            Can2_StartDetection();
 
             return;
         }
@@ -2004,7 +2208,8 @@ void Can2_Task(void)
          * errors since lock (delta against the baseline captured in
          * Can2_LockBaud()), not the raw counter, which still carries
          * scan-phase history. A sustained new burst means the bus
-         * speed genuinely changed after lock; re-detect.
+         * speed genuinely changed after lock; re-detect - same full,
+         * clean restart as the fault check above.
          */
 
         rxerr_now =

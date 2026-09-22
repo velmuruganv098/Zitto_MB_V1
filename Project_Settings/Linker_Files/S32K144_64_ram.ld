@@ -28,7 +28,8 @@
 ENTRY(Reset_Handler)
 
 HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x00000400;
-STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x00000400;
+/* Raised to match S32K144_64_flash.ld - see its comment for why. */
+STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x00002000;
 
 /* Specify the memory areas */
 MEMORY
