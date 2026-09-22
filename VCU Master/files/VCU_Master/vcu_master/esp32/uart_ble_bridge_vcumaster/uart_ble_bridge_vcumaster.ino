@@ -2049,6 +2049,25 @@ void setup()
 
     Serial.begin(115200);
 
+    /*
+     * USB CDC's default write timeout is 250ms (USBCDC.cpp
+     * tx_timeout_ms(250)): if a terminal has COM5 open but isn't
+     * draining it fast enough (paused, scrolled back, slow to read,
+     * or just not actively open), every Serial.print/println call -
+     * including the one inside publish(), which runs synchronously
+     * for every single decoded UART frame before control returns to
+     * uartTask() - can block for up to 250ms waiting for buffer
+     * space. At the observed 40+ frames/sec, that is enough to stall
+     * UART2 draining long enough to overflow its RX buffer and lose
+     * data, entirely dependent on whatever happens to be (or not be)
+     * reading COM5 at that moment - i.e. "random" data loss with no
+     * pattern in the UART/BLE code itself. Debug output must never be
+     * able to block the real data path, so make CDC writes
+     * non-blocking: if nothing is draining COM5, printed bytes are
+     * just dropped instead of stalling everything else.
+     */
+    Serial.setTxTimeoutMs(0);
+
     delay(300);
 
     Serial.println();
@@ -2091,6 +2110,23 @@ void setup()
 
     Serial.println(
         "[BOOT] Initializing UART2...");
+
+    /*
+     * Default HardwareSerial RX ring buffer on this core is only 256
+     * bytes. The S32K144 sends frames in bursts (several small
+     * IMU/CSA/CAN/CAN_STATUS/etc. frames within a ~100-200ms window -
+     * easily 300-500+ bytes back to back), and this loop() also does
+     * BLE stack work (notify() for every decoded frame) between calls
+     * to uartTask(). Any time that BLE work takes long enough to delay
+     * the next uartTask() call, a 256-byte buffer can fill and silently
+     * drop bytes - HardwareSerial has no overflow error, the bytes are
+     * just gone, corrupting whatever frame they belonged to and
+     * potentially losing an entire subsequent burst until the parser
+     * resyncs on the next SOF0/SOF1. That silent, timing-dependent
+     * loss is consistent with "randomly" missing chunks of data with
+     * no fixed pattern. Must be set before begin().
+     */
+    UartLink.setRxBufferSize(4096);
 
     UartLink.begin(
         UART_BAUD,
