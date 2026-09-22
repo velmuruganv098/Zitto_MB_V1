@@ -1,0 +1,25 @@
+VERSION ""
+
+NS_ :
+	CM_
+	VAL_
+
+BS_:
+
+BU_: ECU
+
+BO_ 1234 Moto_Mix: 8 ECU
+ SG_ BigU12 : 7|12@0+ (0.5,-10) [-10|2037.5] "V" ECU
+ SG_ BigS10 : 11|10@0- (1,0) [-512|511] "" ECU
+ SG_ LitS7 : 24|7@1- (0.25,1) [-15|16.75] "A" ECU
+ SG_ Big24 : 39|24@0+ (0.001,0) [0|16777.215] "km" ECU
+ SG_ Flag : 63|1@1+ (1,0) [0|1] "" ECU
+
+BO_ 2147484000 Mux_Msg: 8 ECU
+ SG_ Mode M : 0|4@1+ (1,0) [0|15] "" ECU
+ SG_ ValA m1 : 8|16@1+ (0.1,0) [0|6553.5] "" ECU
+ SG_ ValB m2 : 8|16@1- (1,0) [-32768|32767] "" ECU
+ SG_ Common : 32|8@1+ (1,0) [0|255] "" ECU
+
+CM_ BO_ 1234 "Motorola and signed mix";
+VAL_ 1234 Flag 0 "Off" 1 "On" ;
