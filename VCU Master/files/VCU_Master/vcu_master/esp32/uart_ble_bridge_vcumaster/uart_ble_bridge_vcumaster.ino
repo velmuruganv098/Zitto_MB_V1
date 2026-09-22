@@ -9,6 +9,20 @@
  *  - S32K GPIO IDs 1..13 and pin map aligned with src/GPIO/gpio_control.c.
  *  - Unknown message types published as RAW_RX with a hex dump.
  *
+ * REVISION (dev/can1-v0.0067) - firmware-side fix required this update:
+ *  - MSG_FLASH_DATA (0x8A) decode added. CMD_FLASH_RD's reply moved off
+ *    MSG_LOG (raw record bytes were being mashed into a text log line
+ *    with no structured decode anywhere) onto its own dedicated type -
+ *    see src/UART/uart_pkt.h / src/main.c.
+ *  - MSG_LOG frames are no longer forwarded over BLE (still printed to
+ *    Serial). The S32K firmware mirrors every RTT_LOG() call onto this
+ *    same link, so LOG text arrived at roughly the same rate as the
+ *    real structured frames - notify()ing BLE for all of it on top of
+ *    IMU/CSA/CAN/etc. doubled the notification rate for no benefit to
+ *    a BLE central, and measurement (a standalone bleak script against
+ *    this exact board) showed real-world BLE notification delivery
+ *    already falling well behind the ESP32's actual notify() rate.
+ *
  * S32K144 UART2 <-> ESP32-S3 <-> BLE Local Server
  *
  * FUNCTIONS
@@ -131,6 +145,7 @@
 #define MSG_CMD_ACK             0x87
 #define MSG_CAN_STATUS          0x88
 #define MSG_FLM                 0x89
+#define MSG_FLASH_DATA          0x8A
 
 #define MAX_PAYLOAD             256
 
@@ -363,11 +378,13 @@ static bool sendFrame(
  * ================================================================ */
 
 static void publish(
-    const String &line)
+    const String &line,
+    bool viaBle = true)
 {
     Serial.println(line);
 
-    if (!g_bleConnected ||
+    if (!viaBle ||
+        !g_bleConnected ||
         g_txChar == nullptr)
     {
         return;
@@ -888,6 +905,36 @@ static String decodeFrame(
             break;
         }
 
+        case MSG_FLASH_DATA:
+        {
+            /*
+             * CMD_FLASH_RD response. len==0 means "no record"; a real
+             * record is emitted as hex so it survives BLE/text
+             * transport intact regardless of byte content.
+             */
+            s += "FLASH_DATA len=";
+            s += String(len);
+
+            if (len == 0)
+            {
+                s += " empty";
+            }
+            else
+            {
+                s += " hex=";
+                for (uint16_t i = 0; i < len; i++)
+                {
+                    if (p[i] < 0x10)
+                    {
+                        s += "0";
+                    }
+                    s += String(p[i], HEX);
+                }
+            }
+
+            break;
+        }
+
         default:
         {
             s += "RAW_RX type=0x";
@@ -1130,12 +1177,20 @@ static void feedByte(
             {
                 g_uartFramesRx++;
 
+                /*
+                 * MSG_LOG is diagnostic text mirrored from the S32K's
+                 * own RTT console - keep it on Serial only, don't
+                 * compete with the real structured frames for BLE
+                 * notification bandwidth (see file header REVISION
+                 * note).
+                 */
                 publish(
                     decodeFrame(
                         g_type,
                         g_seq,
                         g_payload,
-                        g_len));
+                        g_len),
+                    g_type != MSG_LOG);
             }
             else
             {
