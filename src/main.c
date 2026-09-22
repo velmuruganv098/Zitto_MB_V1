@@ -558,6 +558,23 @@ int main(void)
     /* (void)Uart_SelfTestPinMuxSweep(); */
     /* (void)Uart_SelfTestGpioContinuity(); */
 
+    /* DIAG: pure GPIO square wave on PTC3, no LPUART0 peripheral
+     * involved at all - the most direct possible test of whether this
+     * physical pin toggles when firmware commands it to. Overrides the
+     * ALT2 (LPUART0_TX) mux the UART driver set up, so the raw UART
+     * "HELLO" heartbeat below is switched off for the duration of this
+     * test (the pin can't be both GPIO and LPUART0_TX at once). Meant
+     * for a logic analyzer/scope probe on pin 16 (PTC3) - a clean,
+     * slow (1Hz) square wave with no framing/baud to decode at all. */
+    PORTC->PCR[3U] = PORT_PCR_MUX(1U);
+    PTC->PDDR |= (1UL << 3U);
+    PTC->PCOR = (1UL << 3U);
+    RTT_LOG(
+        "[GPIO_TEST] PTC3 (pin 16) now a plain GPIO output, toggling "
+        "1Hz (500ms high / 500ms low). Probe pin 16 directly with a "
+        "logic analyzer/scope - no UART framing involved at all.\r\n"
+    );
+
     /* GPIO */
 #if APP_GPIO_ENABLE
     RTT_LOG("[BOOT] GPIO init\r\n");
@@ -665,42 +682,32 @@ int main(void)
         Uart_Pkt_ForwardRTT();
         OTA_Task();
 
-        /* DIAG: raw, unframed, counting test message for wiring/bring-up
-         * checks - bypasses the binary protocol entirely so it shows up
-         * as plain ASCII on any terminal at 115200 8N1 wired to PTC3
-         * (TX) / PTC2 (RX). The counter lets a specific line sent here
-         * be matched exactly against what shows up on the far end.
-         * Remove once the physical UART link is confirmed. */
-        if((now_ms - last_raw_test_ms) >= 1000U)
+        /* DIAG: pure GPIO square wave on PTC3 (see boot-time setup
+         * above) - toggle every 500ms (1Hz period), no UART framing/
+         * baud involved. raw_test_count is reused as a half-toggle
+         * counter here (odd/even = which edge), and the raw UART
+         * HELLO send is switched off since the pin is in GPIO mode. */
+        if((now_ms - last_raw_test_ms) >= 500U)
         {
-            uint8_t  msg[16];
-            uint16_t mlen = 0U;
-            uint16_t n = (uint16_t)(raw_test_count % 10000U);
-
             last_raw_test_ms = now_ms;
             raw_test_count++;
 
-            msg[mlen++] = (uint8_t)'H';
-            msg[mlen++] = (uint8_t)'E';
-            msg[mlen++] = (uint8_t)'L';
-            msg[mlen++] = (uint8_t)'L';
-            msg[mlen++] = (uint8_t)'O';
-            msg[mlen++] = (uint8_t)'-';
-            msg[mlen++] = (uint8_t)('0' + ((n / 1000U) % 10U));
-            msg[mlen++] = (uint8_t)('0' + ((n / 100U)  % 10U));
-            msg[mlen++] = (uint8_t)('0' + ((n / 10U)   % 10U));
-            msg[mlen++] = (uint8_t)('0' + (n % 10U));
-            msg[mlen++] = (uint8_t)'\r';
-            msg[mlen++] = (uint8_t)'\n';
-
-            (void)Uart_RawSend(msg, mlen);
-
-            /* Mirror the exact same text into RTT so both channels can
-             * be compared side by side in real time. */
-            RTT_LOG(
-                "[RAW_TX] HELLO-%04u\r\n",
-                (unsigned)n
-            );
+            if((raw_test_count & 1U) != 0U)
+            {
+                PTC->PSOR = (1UL << 3U);
+                RTT_LOG(
+                    "[GPIO_TEST] PTC3 -> HIGH  (uptime=%lums)\r\n",
+                    (unsigned long)now_ms
+                );
+            }
+            else
+            {
+                PTC->PCOR = (1UL << 3U);
+                RTT_LOG(
+                    "[GPIO_TEST] PTC3 -> LOW   (uptime=%lums)\r\n",
+                    (unsigned long)now_ms
+                );
+            }
         }
 #endif
 
