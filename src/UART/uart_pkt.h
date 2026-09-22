@@ -20,11 +20,13 @@
  *        +--> command callback
  *        |
  *        +--> GPIO_STATUS
- *        +--> STATUS
+ *        +--> STATUS (heartbeat_count populated from main.c's g_hb_count)
  *        +--> HEARTBEAT
  *        +--> IMU
  *        +--> CSA
  *        +--> CAN
+ *        +--> CAN_STATUS  (detailed CAN1/CAN2 health, 1Hz)
+ *        +--> FLM         (flash log status, 2s)
  *        +--> LOG
  *
  * uart_pkt.c is responsible for:
@@ -35,6 +37,10 @@
  *      4. RX packet validation
  *      5. Dispatching validated commands
  *      6. TX packet generation
+ *      7. Bounded, non-blocking TX queue (Uart_Pkt_Send() enqueues;
+ *         Uart_Pkt_Task(), called every Uart_Poll(), drains it to
+ *         hardware in UART_TX_SERVICE_MAX_BYTES-sized batches so a
+ *         caller is never blocked for the full frame's TX time)
  *
  * uart_pkt.c does NOT control GPIO/IMU/CAN/etc.
  */
@@ -132,6 +138,12 @@
 
 /* Generic command acknowledgement */
 #define MSG_CMD_ACK                  0x87U
+
+/* Detailed CAN1/CAN2 health (see CanStatusPkt_t) */
+#define MSG_CAN_STATUS               0x88U
+
+/* Flash log (FLM) status (see FlmStatusPkt_t) */
+#define MSG_FLM                      0x89U
 
 /* ========================================================================
  * Generic command result
@@ -369,6 +381,11 @@ uint8_t Uart_Pkt_SendImu(const ImuPkt_t *imu);
 uint8_t Uart_Pkt_SendCsa(const CsaPkt_t *csa);
 
 uint8_t Uart_Pkt_SendCan(const CanFramePkt_t *frame);
+
+uint8_t Uart_Pkt_SendCanStatus(const CanStatusPkt_t *status);
+
+uint8_t Uart_Pkt_SendFlm(const FlmStatusPkt_t *flm);
+
 void Uart_Pkt_Init(void);
 
 

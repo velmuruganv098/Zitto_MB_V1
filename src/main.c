@@ -29,8 +29,8 @@
  * MODULE ENABLE FLAGS
  * -------------------------------------------------------------------------- */
 
-#define APP_IMU_ENABLE     0
-#define APP_CSA_ENABLE     0
+#define APP_IMU_ENABLE     1
+#define APP_CSA_ENABLE     1
 #define APP_CAN1_ENABLE    1
 #define APP_CAN2_ENABLE    1
 #define APP_FLM_ENABLE     1
@@ -105,6 +105,7 @@ static uint8_t  g_led_state  = 0U;
 static uint8_t  g_reset_arm    = 0U;
 static uint32_t g_reset_arm_ms = 0U;
 static uint32_t g_tick = 0U;
+static uint32_t g_hb_count = 0U;
 
 /* g_last_exception_ipsr: DEFINED in boot_main.c (startup diagnostic).
  * RULE: exactly ONE C file may define each global - all others use extern. */
@@ -270,6 +271,7 @@ static void send_status(void)
 
     s.uptime_ms   = Uart_GetMs();
     s.reset_cause = (uint8_t)(RCM->SRS & 0xFFU);
+    s.heartbeat_count = g_hb_count;
 
     (void)Uart_Pkt_SendStatus(&s);
 
@@ -469,6 +471,7 @@ int main(void)
     uint32_t last_hb_ms = 0U;
     uint32_t last_imu_tx_ms = 0U;
     uint32_t last_csa_tx_ms = 0U;
+    uint32_t last_flm_tx_ms = 0U;
 
 
     /*
@@ -555,21 +558,6 @@ int main(void)
     OTA_Init();
     RTT_LOG("[BOOT] OTA ok  state=%u\r\n", (unsigned)OTA_GetState());
 
-    /* IMU */
-#if APP_IMU_ENABLE
-    RTT_LOG("[BOOT] IMU init\r\n");
-    Imu_Init();
-    Imu_Calibrate();
-    RTT_LOG("[BOOT] IMU ok\r\n");
-#endif
-
-    /* CSA */
-#if APP_CSA_ENABLE
-    RTT_LOG("[BOOT] CSA init\r\n");
-    Csa_Init();
-    RTT_LOG("[BOOT] CSA ok\r\n");
-#endif
-
     /* CAN1 - FlexCAN1 PTA12/PTA13 TCAN334 SHDN=PTB2
      * BUS_CLK=40MHz, known-working 500/250/125/1000kbps candidates.
      * Detection uses NORMAL/ACK and RX evidence; firmware generates no TX probe.
@@ -594,6 +582,23 @@ int main(void)
     RTT_LOG("[BOOT] FLM init\r\n");
     Flm_Init();
     RTT_LOG("[BOOT] FLM ok  free=%lu pages\r\n", (unsigned long)Flm_GetFreePages());
+#endif
+
+    /* IMU - initialized after CAN1/CAN2 so Imu_Calibrate()'s ~2s blocking
+     * calibration cannot delay CAN2's time-sensitive boot-time baud
+     * detection. */
+#if APP_IMU_ENABLE
+    RTT_LOG("[BOOT] IMU init\r\n");
+    Imu_Init();
+    Imu_Calibrate();
+    RTT_LOG("[BOOT] IMU ok\r\n");
+#endif
+
+    /* CSA */
+#if APP_CSA_ENABLE
+    RTT_LOG("[BOOT] CSA init\r\n");
+    Csa_Init();
+    RTT_LOG("[BOOT] CSA ok\r\n");
 #endif
 
     send_status();
@@ -646,6 +651,30 @@ int main(void)
                     (unsigned long)Can1_GetErrorIrqCount(),
                     (unsigned long)Can1_GetMbIrqCount());
 
+#if APP_CAN1_ENABLE
+            {
+                Can1_Status_t cs1;
+                CanStatusPkt_t p1;
+                memset(&cs1, 0, sizeof(cs1));
+                Can1_GetStatus(&cs1);
+                memset(&p1, 0, sizeof(p1));
+                p1.bus = 1U;
+                p1.state = (uint8_t)Can1_GetState();
+                p1.ready = cs1.ready;
+                p1.bus_off = cs1.bus_off;
+                p1.detected_baud_kbps = cs1.detected_baud_kbps;
+                p1.rx_count = cs1.rx_count;
+                p1.error_count = cs1.error_count;
+                p1.tx_err_cnt = cs1.tx_err_cnt;
+                p1.rx_err_cnt = cs1.rx_err_cnt;
+                p1.irq_count = Can1_GetIrqCount();
+                p1.error_irq_count = Can1_GetErrorIrqCount();
+                p1.mb_irq_count = Can1_GetMbIrqCount();
+                p1.ts_ms = now_ms;
+                (void)Uart_Pkt_SendCanStatus(&p1);
+            }
+#endif
+
 #if APP_CAN2_ENABLE
             RTT_LOG("[MAIN] tick=%lu uptime=%lums  CAN2=%lukbps  state=%u  IRQs: or=%lu err=%lu mb=%lu\r\n",
                     (unsigned long)g_tick,
@@ -655,6 +684,26 @@ int main(void)
                     (unsigned long)Can2_GetIrqCount(),
                     (unsigned long)Can2_GetErrorIrqCount(),
                     (unsigned long)Can2_GetMbIrqCount());
+
+            {
+                Can2_Status_t cs2;
+                CanStatusPkt_t p2;
+                memset(&cs2, 0, sizeof(cs2));
+                Can2_GetStatus(&cs2);
+                memset(&p2, 0, sizeof(p2));
+                p2.bus = 2U;
+                p2.state = (uint8_t)cs2.state;
+                p2.ready = cs2.ready;
+                p2.bus_off = (cs2.bus_off_count != 0U) ? 1U : 0U;
+                p2.detected_baud_kbps = cs2.detected_baud_kbps;
+                p2.rx_count = cs2.rx_count;
+                p2.error_count = cs2.error_count;
+                p2.irq_count = Can2_GetIrqCount();
+                p2.error_irq_count = Can2_GetErrorIrqCount();
+                p2.mb_irq_count = Can2_GetMbIrqCount();
+                p2.ts_ms = now_ms;
+                (void)Uart_Pkt_SendCanStatus(&p2);
+            }
 #endif
         }
 
@@ -706,11 +755,37 @@ int main(void)
         if(g_can2_en != 0U) { Can2_Task(); }
 #endif
 
+        /* FLM */
+#if APP_FLM_ENABLE
+        if(g_flm_en != 0U)
+        {
+            Flm_Task();
+            if((now_ms - last_flm_tx_ms) >= 2000U)
+            {
+                last_flm_tx_ms = now_ms;
+                FlmInfo_t info;
+                FlmStatusPkt_t p;
+                memset(&info, 0, sizeof(info));
+                Flm_GetInfo(&info);
+                memset(&p, 0, sizeof(p));
+                p.total_pages = info.total_pages;
+                p.used_pages  = info.used_pages;
+                p.free_pages  = info.free_pages;
+                p.next_page   = info.next_page;
+                p.last_page   = info.last_page;
+                p.records     = info.records;
+                p.ts_ms       = now_ms;
+                (void)Uart_Pkt_SendFlm(&p);
+            }
+        }
+#endif
+
 #if !CAN1_FULL_ANALYSIS_MODE
         /* Heartbeat + status every 5s */
         if((now_ms - last_hb_ms) >= 5000U)
         {
             last_hb_ms = now_ms;
+            g_hb_count++;
             (void)Uart_Pkt_SendHb();
             send_status();
         }

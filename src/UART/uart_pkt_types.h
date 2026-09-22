@@ -124,6 +124,77 @@ typedef struct
 
 
 /* ============================================================================
+ * CAN STATUS PACKET
+ *
+ * bus:
+ *      1 = CAN1
+ *      2 = CAN2
+ *
+ * state:
+ *      Raw Can1_State_t value when bus==1, raw Can2_State_t value when
+ *      bus==2. The two enums are not the same - the receiver must use
+ *      bus to pick the right decode table.
+ *
+ * tx_err_cnt / rx_err_cnt:
+ *      CAN1 only (can1.h tracks them separately). Always 0 for CAN2,
+ *      which only exposes a combined error_count.
+ * ========================================================================== */
+
+typedef struct
+{
+    uint8_t bus;
+
+    uint8_t state;
+
+    uint8_t ready;
+
+    uint8_t bus_off;
+
+    uint32_t detected_baud_kbps;
+
+    uint32_t rx_count;
+
+    uint32_t error_count;
+
+    uint32_t tx_err_cnt;
+
+    uint32_t rx_err_cnt;
+
+    uint32_t irq_count;
+
+    uint32_t error_irq_count;
+
+    uint32_t mb_irq_count;
+
+    uint32_t ts_ms;
+
+} CanStatusPkt_t;
+
+
+/* ============================================================================
+ * FLM (FLASH LOG) STATUS PACKET
+ * ========================================================================== */
+
+typedef struct
+{
+    uint32_t total_pages;
+
+    uint32_t used_pages;
+
+    uint32_t free_pages;
+
+    uint32_t next_page;
+
+    uint32_t last_page;
+
+    uint32_t records;
+
+    uint32_t ts_ms;
+
+} FlmStatusPkt_t;
+
+
+/* ============================================================================
  * GENERAL STATUS PACKET
  * ========================================================================== */
 

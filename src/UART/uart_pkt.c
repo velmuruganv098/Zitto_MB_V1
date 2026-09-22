@@ -49,6 +49,16 @@
 #define UART_FRAME_HEADER_SIZE      7U
 #define UART_FRAME_CRC_SIZE         2U
 
+/*
+ * Bounded per-call TX service budget.
+ *
+ * At 115200 baud one byte takes ~87us, so 32 bytes costs at most ~2.8ms
+ * per call - bounded so a large queued frame (e.g. a 256-byte flash
+ * read response) cannot block the caller the way the old synchronous
+ * send did (up to ~22ms for a max-size payload).
+ */
+#define UART_TX_SERVICE_MAX_BYTES   32U
+
 /* ========================================================================
  * RX parser states
  * ======================================================================== */
@@ -410,6 +420,75 @@ static uint8_t uart_rx_pop(
 }
 
 /* ========================================================================
+ * TX ring buffer
+ *
+ * Unlike the RX ring, a TX entry is a whole pre-built frame, not an
+ * independent byte - dropping the oldest byte on overflow (as the RX
+ * ring does) would corrupt whatever frame those bytes belonged to.
+ * Instead, uart_tx_push_frame() checks free space up front and rejects
+ * the entire frame if it doesn't fit.
+ * ======================================================================== */
+
+static uint16_t uart_tx_free_space(void)
+{
+    uint16_t used;
+
+    if(g_tx_head >= g_tx_tail)
+    {
+        used = (uint16_t)(g_tx_head - g_tx_tail);
+    }
+    else
+    {
+        used = (uint16_t)(UART_TX_BUFFER_SIZE - g_tx_tail + g_tx_head);
+    }
+
+    /* Keep one byte free so head==tail always means "empty". */
+    return (uint16_t)(UART_TX_BUFFER_SIZE - 1U - used);
+}
+
+static uint8_t uart_tx_push_frame(
+    const uint8_t *frame,
+    uint16_t len
+)
+{
+    uint16_t i;
+    uint16_t idx;
+
+    if((frame == NULL) || (len == 0U))
+    {
+        return 0U;
+    }
+
+    if(len > uart_tx_free_space())
+    {
+        RTT_LOG(
+            "[UART_ERR] TX queue full, dropping frame len=%u\r\n",
+            (unsigned)len
+        );
+
+        return 0U;
+    }
+
+    idx = g_tx_head;
+
+    for(i = 0U; i < len; i++)
+    {
+        g_tx_queue[idx] = frame[i];
+
+        idx++;
+
+        if(idx >= UART_TX_BUFFER_SIZE)
+        {
+            idx = 0U;
+        }
+    }
+
+    g_tx_head = idx;
+
+    return 1U;
+}
+
+/* ========================================================================
  * Poll hardware UART
  *
  * Non-blocking.
@@ -497,6 +576,43 @@ static uint8_t uart_hw_send_byte(
 
     return 1U;
 }
+
+/* ========================================================================
+ * TX ring buffer service
+ *
+ * Sends up to max_bytes queued bytes to hardware, bounded so one call
+ * cannot dominate a main-loop iteration. Called from Uart_Pkt_Task(),
+ * which Uart_Poll() invokes every iteration.
+ * ======================================================================== */
+
+static void uart_tx_service(uint16_t max_bytes)
+{
+    uint16_t sent;
+    uint8_t data;
+
+    sent = 0U;
+
+    while((sent < max_bytes) && (g_tx_tail != g_tx_head))
+    {
+        data = g_tx_queue[g_tx_tail];
+
+        if(uart_hw_send_byte(data) == 0U)
+        {
+            /* HW not ready - leave the byte queued, retry next call. */
+            break;
+        }
+
+        g_tx_tail++;
+
+        if(g_tx_tail >= UART_TX_BUFFER_SIZE)
+        {
+            g_tx_tail = 0U;
+        }
+
+        sent++;
+    }
+}
+
 /* ========================================================================
  * Reset RX parser
  * ======================================================================== */
@@ -815,6 +931,21 @@ void Uart_Poll(void)
 
         rx_parser_byte(data);
     }
+
+    /*
+     * Service queued TX bytes in a bounded batch every poll.
+     */
+
+    Uart_Pkt_Task();
+}
+
+/* ========================================================================
+ * TX queue service (bounded)
+ * ======================================================================== */
+
+void Uart_Pkt_Task(void)
+{
+    uart_tx_service(UART_TX_SERVICE_MAX_BYTES);
 }
 
 /* ========================================================================
@@ -1029,42 +1160,18 @@ uint8_t Uart_Pkt_Send(
 
 
     /* ------------------------------------------------------------
-     * Send frame
+     * Queue frame
      *
      * IMPORTANT:
      *
      * ESP does NOT need to be connected.
      *
-     * UART failure must never stop the MCU.
+     * UART failure must never stop the MCU - enqueue is bounded and
+     * non-blocking; uart_tx_service() (called every Uart_Poll()) drains
+     * it to hardware in bounded batches instead of blocking this caller.
      * ------------------------------------------------------------ */
 
-    for(i = 0U; i < index; i++)
-    {
-        if(
-            uart_hw_send_byte(
-                g_tx_buffer[i]
-            ) == 0U
-        )
-        {
-            RTT_LOG(
-                "[UART_ERR] Packet TX failed "
-                "byte=%u/%u "
-                "type=0x%02X\r\n",
-
-                (unsigned)i,
-
-                (unsigned)index,
-
-                (unsigned)type
-            );
-
-
-            return 0U;
-        }
-    }
-
-
-    return 1U;
+    return uart_tx_push_frame(g_tx_buffer, index);
 }
 uint8_t Uart_Pkt_SendLog(
     const char *text
@@ -1188,6 +1295,46 @@ uint8_t Uart_Pkt_SendCan(
         MSG_CAN,
         (const uint8_t *)frame,
         (uint16_t)sizeof(CanFramePkt_t)
+    );
+}
+
+/* ========================================================================
+ * CAN STATUS
+ * ======================================================================== */
+
+uint8_t Uart_Pkt_SendCanStatus(
+    const CanStatusPkt_t *status
+)
+{
+    if(status == NULL)
+    {
+        return 0U;
+    }
+
+    return Uart_Pkt_Send(
+        MSG_CAN_STATUS,
+        (const uint8_t *)status,
+        (uint16_t)sizeof(CanStatusPkt_t)
+    );
+}
+
+/* ========================================================================
+ * FLM STATUS
+ * ======================================================================== */
+
+uint8_t Uart_Pkt_SendFlm(
+    const FlmStatusPkt_t *flm
+)
+{
+    if(flm == NULL)
+    {
+        return 0U;
+    }
+
+    return Uart_Pkt_Send(
+        MSG_FLM,
+        (const uint8_t *)flm,
+        (uint16_t)sizeof(FlmStatusPkt_t)
     );
 }
 
