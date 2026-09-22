@@ -357,6 +357,20 @@ void Uart_Poll(void);
 uint32_t Uart_GetMs(void);
 
 /* ========================================================================
+ * Raw TX (diagnostic)
+ *
+ * Sends bytes exactly as given - no SOF/version/type/length/seq/CRC
+ * framing. Only for wiring/bring-up sanity checks against a plain
+ * terminal (PuTTY/TeraTerm at 115200 8N1); a real ESP32-side parser
+ * should only ever see framed Uart_Pkt_Send() traffic.
+ * ======================================================================== */
+
+uint8_t Uart_RawSend(
+    const uint8_t *data,
+    uint16_t len
+);
+
+/* ========================================================================
  * Generic TX
  * ======================================================================== */
 

@@ -473,6 +473,7 @@ int main(void)
     uint32_t last_imu_tx_ms = 0U;
     uint32_t last_csa_tx_ms = 0U;
     uint32_t last_flm_tx_ms = 0U;
+    uint32_t last_raw_test_ms = 0U;
 
 
     /*
@@ -653,6 +654,16 @@ int main(void)
         Uart_Poll();
         Uart_Pkt_ForwardRTT();
         OTA_Task();
+
+        /* DIAG: raw, unframed test message for wiring/bring-up checks -
+         * bypasses the binary protocol entirely so it shows up as plain
+         * ASCII ("123") on any terminal at 115200 8N1 wired to PTC3 (TX)
+         * / PTC2 (RX). Remove once the physical UART link is confirmed. */
+        if((now_ms - last_raw_test_ms) >= 1000U)
+        {
+            last_raw_test_ms = now_ms;
+            (void)Uart_RawSend((const uint8_t *)"123\r\n", 5U);
+        }
 #endif
 
 #if !CAN1_FULL_ANALYSIS_MODE
