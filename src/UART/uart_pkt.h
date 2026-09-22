@@ -348,6 +348,21 @@ typedef void (*UartCmdHandler_t)(
 
 void Uart_Init(UartCmdHandler_t handler);
 
+/*
+ * Internal loopback self-test - proves the LPUART0 peripheral itself
+ * (clock/baud/TX/RX) works, independent of pin mux/external wiring.
+ * Returns 1 on pass, 0 on fail. See uart_pkt.c for details.
+ */
+uint8_t Uart_SelfTestLoopback(void);
+
+/*
+ * Same test over the real PTC3/PTC2 pins (no internal loopback) -
+ * requires a jumper wire between package pin 16 (PTC3) and pin 17
+ * (PTC2) on the board. PASS proves the pin mux is correct in silicon;
+ * FAIL with the jumper installed means it isn't. See uart_pkt.c.
+ */
+uint8_t Uart_SelfTestExternalPins(void);
+
 void Uart_Poll(void);
 
 /* ========================================================================

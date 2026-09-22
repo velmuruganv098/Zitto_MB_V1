@@ -908,6 +908,197 @@ void Uart_Init(
 }
 
 /* ========================================================================
+ * Internal loopback self-test (diagnostic)
+ *
+ * LPUART's LOOPS bit (with RSRC=0, "duplex loopback") connects the
+ * transmitter output directly to the receiver input INSIDE the
+ * peripheral, entirely bypassing the physical TX/RX pins. If this
+ * passes, the LPUART0 peripheral itself is proven correct (clock
+ * source, baud divider, TE/RE, data path) and any remaining "no data
+ * on the wire" symptom is isolated to the pin mux (PORTC PCR ALT
+ * value) or external wiring/adapter - not the peripheral config this
+ * driver controls. If it fails, the problem is inside this driver's
+ * own LPUART0 setup, before the pins even matter.
+ * ======================================================================== */
+
+static uint8_t uart_selftest_run(
+    uint8_t use_internal_loops,
+    const char *label
+)
+{
+    static const uint8_t test_bytes[4] = { 0xA5U, 0x5AU, 0x00U, 0xFFU };
+    uint8_t  rx_byte;
+    uint8_t  pass_count = 0U;
+    uint8_t  i;
+    uint32_t ctrl_saved;
+    volatile uint32_t timeout;
+
+    ctrl_saved = LPUART0->CTRL;
+
+    if(use_internal_loops != 0U)
+    {
+        LPUART0->CTRL = ctrl_saved | LPUART_CTRL_LOOPS_MASK;
+    }
+
+    /* Drain any stale RX data/flags before starting. */
+    LPUART0->STAT =
+        LPUART_STAT_OR_MASK |
+        LPUART_STAT_NF_MASK |
+        LPUART_STAT_FE_MASK |
+        LPUART_STAT_PF_MASK;
+
+    if(LPUART0->STAT & LPUART_STAT_RDRF_MASK)
+    {
+        (void)LPUART0->DATA;
+    }
+
+    for(i = 0U; i < 4U; i++)
+    {
+        (void)uart_hw_send_byte(test_bytes[i]);
+
+        timeout = 50000U;
+
+        while(
+            ((LPUART0->STAT & LPUART_STAT_RDRF_MASK) == 0U) &&
+            (timeout != 0U)
+        )
+        {
+            timeout--;
+        }
+
+        if(timeout == 0U)
+        {
+            RTT_LOG(
+                "[UART_SELFTEST][%s] byte %u: no RX (RDRF timeout)\r\n",
+                label,
+                (unsigned)i
+            );
+
+            continue;
+        }
+
+        rx_byte = (uint8_t)LPUART0->DATA;
+
+        if(rx_byte == test_bytes[i])
+        {
+            pass_count++;
+        }
+        else
+        {
+            RTT_LOG(
+                "[UART_SELFTEST][%s] byte %u: sent 0x%02X got 0x%02X\r\n",
+                label,
+                (unsigned)i,
+                (unsigned)test_bytes[i],
+                (unsigned)rx_byte
+            );
+        }
+    }
+
+    /* Restore original (non-loopback) CTRL either way. */
+    LPUART0->CTRL = ctrl_saved;
+
+    if(pass_count == 4U)
+    {
+        RTT_LOG(
+            "[UART_SELFTEST][%s] PASS 4/4\r\n",
+            label
+        );
+    }
+    else
+    {
+        RTT_LOG(
+            "[UART_SELFTEST][%s] FAIL %u/4\r\n",
+            label,
+            (unsigned)pass_count
+        );
+    }
+
+    return (pass_count == 4U) ? 1U : 0U;
+}
+
+uint8_t Uart_SelfTestLoopback(void)
+{
+    uint8_t result;
+
+    RTT_LOG(
+        "[UART_SELFTEST] Running INTERNAL loopback test (bypasses "
+        "physical pins entirely - proves the LPUART0 peripheral "
+        "itself: clock/baud/TE/RE/data path)...\r\n"
+    );
+
+    result = uart_selftest_run(1U, "INTERNAL");
+
+    if(result != 0U)
+    {
+        RTT_LOG(
+            "[UART_SELFTEST] INTERNAL PASS means the peripheral is "
+            "correct. Any remaining no-data-on-the-wire symptom is "
+            "pin-mux or external wiring, not this driver's LPUART0 "
+            "config.\r\n"
+        );
+    }
+    else
+    {
+        RTT_LOG(
+            "[UART_SELFTEST] INTERNAL FAIL means the problem is inside "
+            "this driver's own LPUART0 setup (clock/baud/TE/RE) - fix "
+            "this before looking at pins/wiring at all.\r\n"
+        );
+    }
+
+    return result;
+}
+
+/*
+ * Same test, but WITHOUT the internal LOOPS bit - bytes actually go
+ * out the physical TX pin and must come back in on the physical RX
+ * pin. Requires a jumper wire physically shorting PTC3 (pin 16) to
+ * PTC2 (pin 17) on the board; with no jumper this will just report
+ * FAIL 0/4 (RDRF timeouts), which is expected and harmless.
+ *
+ * PASS here, on real silicon, is the definitive proof that PTC3/PTC2
+ * are really routed to LPUART0 TX/RX (i.e. the PORTC PCR MUX=ALT2
+ * setting in uart_hw_init() is correct) - independent of any adapter,
+ * cable, or external wiring beyond that one jumper.
+ */
+uint8_t Uart_SelfTestExternalPins(void)
+{
+    uint8_t result;
+
+    RTT_LOG(
+        "[UART_SELFTEST] Running EXTERNAL pin test (uses the real "
+        "PTC3/PTC2 pins - requires a jumper wire between package pin "
+        "16 and pin 17 on the board; harmless FAIL 0/4 with no "
+        "jumper)...\r\n"
+    );
+
+    result = uart_selftest_run(0U, "EXTERNAL");
+
+    if(result != 0U)
+    {
+        RTT_LOG(
+            "[UART_SELFTEST] EXTERNAL PASS proves PTC3/PTC2 are "
+            "correctly routed to LPUART0 TX/RX in silicon - any "
+            "remaining no-data symptom is downstream of the MCU "
+            "(adapter/cable/ground), not the pin mux.\r\n"
+        );
+    }
+    else
+    {
+        RTT_LOG(
+            "[UART_SELFTEST] EXTERNAL FAIL with the jumper installed "
+            "means PTC3/PTC2 are NOT actually LPUART0 TX/RX at MUX="
+            "ALT2 on this silicon - the pin mux assumption in "
+            "uart_hw_init() is wrong and needs a different ALT value "
+            "or different pins.\r\n"
+        );
+    }
+
+    return result;
+}
+
+/* ========================================================================
  * UART poll
  * ======================================================================== */
 

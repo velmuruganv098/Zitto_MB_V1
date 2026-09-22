@@ -29,12 +29,12 @@
  * MODULE ENABLE FLAGS
  * -------------------------------------------------------------------------- */
 
-#define APP_IMU_ENABLE     1
-#define APP_CSA_ENABLE     1
-#define APP_CAN1_ENABLE    1
-#define APP_CAN2_ENABLE    1
-#define APP_FLM_ENABLE     1
-#define APP_GPIO_ENABLE    1
+#define APP_IMU_ENABLE     0
+#define APP_CSA_ENABLE     0
+#define APP_CAN1_ENABLE    0
+#define APP_CAN2_ENABLE    0
+#define APP_FLM_ENABLE     0
+#define APP_GPIO_ENABLE    0
 
 /* --------------------------------------------------------------------------
  * INCLUDES
@@ -547,6 +547,8 @@ int main(void)
     RTT_LOG("[BOOT] UART init\r\n");
     Uart_Init(cmd_handler);
     RTT_LOG("[BOOT] UART ok  uptime=%lums\r\n", (unsigned long)Uart_GetMs());
+    (void)Uart_SelfTestLoopback();
+    (void)Uart_SelfTestExternalPins();
 
     /* GPIO */
 #if APP_GPIO_ENABLE
