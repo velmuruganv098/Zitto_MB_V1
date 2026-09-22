@@ -1770,6 +1770,71 @@ class ServerCallbacks
         Serial.println(
             "[BLE] Advertising restarted");
     }
+
+    /*
+     * Root cause of "connected but no UART data ever arrives at the
+     * server": without an explicit connection-parameter request, this
+     * board was negotiating a very slow BLE connection interval
+     * (confirmed empirically at ~4 seconds/event via a standalone
+     * bleak notification test - notifications arrived on an almost
+     * exact 4.0s cadence no matter how fast notify() was called).
+     * This stack can only send roughly one notification per
+     * connection event, so at a 4s interval nearly every IMU/CSA/CAN/
+     * etc. frame was silently dropped before ever reaching the
+     * central - this had nothing to do with the UART parser, CRC, or
+     * decode logic (all confirmed correct/working via Serial).
+     *
+     * This core builds ESP32-S3 with NimBLE (CONFIG_BT_NIMBLE_ENABLED,
+     * not Bluedroid), hence the ble_gap_conn_desc-based overloads
+     * below rather than the esp_ble_gatts_cb_param_t/esp_bd_addr_t
+     * ones BLEServerCallbacks also declares for a Bluedroid build.
+     *
+     * Actively request a fast interval right after connect.
+     */
+    void onConnect(
+        BLEServer *server,
+        ble_gap_conn_desc *desc) override
+    {
+        Serial.print(
+            "[BLE] Connected, current interval=");
+
+        Serial.print(
+            desc->conn_itvl * 1.25f);
+
+        Serial.println(
+            "ms - requesting 7.5-15ms");
+
+        server->requestConnParams(
+            desc->conn_handle,
+            6,    /* min interval: 6  * 1.25ms =  7.5ms */
+            12,   /* max interval: 12 * 1.25ms = 15.0ms */
+            0,    /* latency: 0 - do not skip connection events */
+            400); /* supervision timeout: 400 * 10ms = 4000ms */
+    }
+
+    void onConnParamsUpdate(
+        uint16_t conn_handle,
+        uint16_t interval,
+        uint16_t latency,
+        uint16_t timeout,
+        uint8_t status) override
+    {
+        (void)conn_handle;
+        (void)timeout;
+        (void)status;
+
+        Serial.print(
+            "[BLE] Connection params updated: interval=");
+
+        Serial.print(
+            interval * 1.25f);
+
+        Serial.print(
+            "ms latency=");
+
+        Serial.println(
+            latency);
+    }
 };
 
 /* ================================================================
