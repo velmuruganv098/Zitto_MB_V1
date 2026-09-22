@@ -550,18 +550,17 @@ int main(void)
     Uart_Init(cmd_handler);
     RTT_LOG("[BOOT] UART ok  uptime=%lums\r\n", (unsigned long)Uart_GetMs());
     (void)Uart_SelfTestLoopback();
-    /* All other diagnostic self-tests (external jumper, ALT-value
-     * sweep, GPIO continuity, ALT-cycle pattern) disabled now that the
-     * actual bug - a ~2x baud rate mismatch from an incorrect LPUART0
-     * clock assumption in uart_hw_init() - has been found and fixed.
-     * ALT2/PTC2/PTC3 were correct the whole time; ALT0-7 sweep and the
-     * jumper-based external test both failed because EVERY byte sent
-     * was garbled by the same wrong baud rate, not because the pin
-     * mux was wrong. Re-enable any of these if needed again. */
+    /* The ~2x baud rate bug is fixed, but ALT2/PTC2/PTC3 has never
+     * actually been confirmed correct on real hardware AT the correct
+     * baud rate - every earlier external test (jumper loopback, ALT0-7
+     * sweep) ran while baud was still wrong, so "all 8 failed" from
+     * that sweep is inconclusive, not a real result. Redo it now with
+     * a readable message at the corrected baud rate. Jumper/GPIO tests
+     * still disabled (not needed for this). */
     /* (void)Uart_SelfTestExternalPins(); */
     /* (void)Uart_SelfTestPinMuxSweep(); */
     /* (void)Uart_SelfTestGpioContinuity(); */
-    /* Uart_SelfTestAltCyclePattern(); */
+    Uart_SelfTestAltCyclePattern();
 
     /* GPIO */
 #if APP_GPIO_ENABLE

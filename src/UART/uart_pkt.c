@@ -1326,36 +1326,36 @@ uint8_t Uart_SelfTestGpioContinuity(void)
 
 /*
  * Cycles PTC3 (TX pin only - pin 16) through every ALT0-7 value,
- * sending a continuous 0x55 (01010101) byte stream through the real
- * LPUART0 peripheral for 3 seconds at each one. 0x55 is deliberately
- * chosen: framed at 115200 8N1 it produces START(0) DATA(1,0,1,0,1,0,
- * 1,0 - LSB first) STOP(1), i.e. a clean, almost perfectly alternating
- * bit pattern - trivial to recognize by eye on a scope and reliably
- * decodable by any logic analyzer's UART protocol decoder.
+ * repeatedly sending a human-readable "ALTn-HELLO\r\n" line (n = the
+ * ALT value currently active) through the real LPUART0 peripheral for
+ * 4 seconds at each one, now at the CORRECTED baud divisor (see the
+ * fix in uart_hw_init() - the earlier version of this sweep ran with
+ * a baud rate that was wrong by ~2x for every single ALT value, which
+ * made that entire earlier sweep's "all 8 failed" result meaningless:
+ * nothing could have decoded correctly at any ALT while the baud
+ * itself was broken).
  *
- * This needs NO working RX side, no jumper wire, and no PTC2 at all -
- * confirmed PTC3 already toggles correctly as plain GPIO, so this
- * isolates purely "which ALT value makes the LPUART0 peripheral's TX
- * logic actually drive this pin with real UART framing", independent
- * of everything tested so far. Probe pin 16 directly during each
- * window and note which one (if any) decodes as valid 0x55 @ 115200
- * 8N1.
+ * Needs no jumper wire, no PTC2, and no logic analyzer - watch a plain
+ * terminal (Tera Term etc.) at 115200 8N1 on the actual adapter wiring
+ * and read which "ALTn-HELLO" text (if any) actually appears.
  *
- * Blocking by design (busy-sends 0x55 back to back for the whole 3s
- * window) - fine here since every other module is disabled for this
- * diagnostic build and nothing else needs to run concurrently.
+ * Blocking by design - fine here since every other module is disabled
+ * for this diagnostic build.
  */
 void Uart_SelfTestAltCyclePattern(void)
 {
     uint8_t  alt;
     uint32_t phase_start;
+    uint8_t  msg[16];
+    uint16_t mlen;
 
     RTT_LOG(
         "[UART_SELFTEST] Running ALT CYCLE PATTERN test - cycling "
-        "PTC3 (TX only, pin 16) through every ALT0-7 value, sending "
-        "continuous 0x55 for 3s at each one. Probe pin 16 directly "
-        "with a logic analyzer/scope (115200 8N1 UART decode) and "
-        "note which ALT window, if any, shows valid framing.\r\n"
+        "PTC3 (TX only, pin 16) through every ALT0-7 value, repeatedly "
+        "sending \"ALTn-HELLO\" for 4s at each one, at the corrected "
+        "baud rate. Watch your terminal on the real adapter wiring and "
+        "note which ALTn-HELLO text (if any) actually shows up "
+        "readable.\r\n"
     );
 
     for(alt = 0U; alt <= 7U; alt++)
@@ -1364,16 +1364,36 @@ void Uart_SelfTestAltCyclePattern(void)
 
         RTT_LOG(
             "[UART_SELFTEST][ALTCYCLE] ALT%u starting now "
-            "(uptime=%lums), sending 0x55 continuously for 3s...\r\n",
+            "(uptime=%lums), sending ALT%u-HELLO repeatedly for 4s...\r\n",
             (unsigned)alt,
-            (unsigned long)Uart_GetMs()
+            (unsigned long)Uart_GetMs(),
+            (unsigned)alt
         );
+
+        mlen = 0U;
+        msg[mlen++] = (uint8_t)'A';
+        msg[mlen++] = (uint8_t)'L';
+        msg[mlen++] = (uint8_t)'T';
+        msg[mlen++] = (uint8_t)('0' + alt);
+        msg[mlen++] = (uint8_t)'-';
+        msg[mlen++] = (uint8_t)'H';
+        msg[mlen++] = (uint8_t)'E';
+        msg[mlen++] = (uint8_t)'L';
+        msg[mlen++] = (uint8_t)'L';
+        msg[mlen++] = (uint8_t)'O';
+        msg[mlen++] = (uint8_t)'\r';
+        msg[mlen++] = (uint8_t)'\n';
 
         phase_start = Uart_GetMs();
 
-        while((Uart_GetMs() - phase_start) < 3000U)
+        while((Uart_GetMs() - phase_start) < 4000U)
         {
-            (void)uart_hw_send_byte(0x55U);
+            uint16_t i;
+
+            for(i = 0U; i < mlen; i++)
+            {
+                (void)uart_hw_send_byte(msg[i]);
+            }
         }
     }
 
@@ -1382,7 +1402,7 @@ void Uart_SelfTestAltCyclePattern(void)
 
     RTT_LOG(
         "[UART_SELFTEST][ALTCYCLE] DONE - all 8 ALT values tried over "
-        "24s. Restored ALT2.\r\n"
+        "32s. Restored ALT2.\r\n"
     );
 }
 
