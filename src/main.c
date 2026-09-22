@@ -469,6 +469,7 @@ int main(void)
     uint32_t now_ms;
     uint32_t last_alive_ms = 0U;
     uint32_t last_hb_ms = 0U;
+    uint32_t last_imu_task_ms = 0U;
     uint32_t last_imu_tx_ms = 0U;
     uint32_t last_csa_tx_ms = 0U;
     uint32_t last_flm_tx_ms = 0U;
@@ -719,11 +720,21 @@ int main(void)
         }
 #endif
 
-        /* IMU */
+        /* IMU - Task() does a bit-banged I2C transaction and its
+         * velocity/position integration assumes a fixed IMU_DT_MS
+         * sample period, so it's gated to that interval instead of
+         * running every loop iteration (which previously stretched the
+         * ~5ms cooperative loop to ~100ms+ once IMU was enabled - see
+         * V0.0065-next_8). UART send stays independently gated at
+         * 500ms; ESP doesn't need every sample. */
 #if APP_IMU_ENABLE
         if(g_imu_en != 0U)
         {
-            Imu_Task();
+            if((now_ms - last_imu_task_ms) >= IMU_DT_MS)
+            {
+                last_imu_task_ms = now_ms;
+                Imu_Task();
+            }
             if((now_ms - last_imu_tx_ms) >= 500U)
             {
                 last_imu_tx_ms = now_ms;
@@ -734,14 +745,16 @@ int main(void)
         }
 #endif
 
-        /* CSA */
+        /* CSA - Task() does a handful of bit-banged I2C register reads
+         * per call; only needs to run as often as we actually send, so
+         * gate both together instead of reading every loop iteration. */
 #if APP_CSA_ENABLE
         if(g_csa_en != 0U)
         {
-            Csa_Task();
             if((now_ms - last_csa_tx_ms) >= 200U)
             {
                 last_csa_tx_ms = now_ms;
+                Csa_Task();
                 CsaPkt_t p; memset(&p,0,sizeof(p));
                 Csa_GetLastPkt(&p);
                 (void)Uart_Pkt_SendCsa(&p);

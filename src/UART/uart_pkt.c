@@ -461,10 +461,24 @@ static uint8_t uart_tx_push_frame(
 
     if(len > uart_tx_free_space())
     {
-        RTT_LOG(
-            "[UART_ERR] TX queue full, dropping frame len=%u\r\n",
-            (unsigned)len
-        );
+        /*
+         * Rate-limited: under sustained overload this path can be hit
+         * every call, and logging every single drop would itself add
+         * enough per-call RTT overhead to make the overload worse.
+         */
+        static uint32_t s_drop_count = 0U;
+
+        s_drop_count++;
+
+        if((s_drop_count % 50U) == 1U)
+        {
+            RTT_LOG(
+                "[UART_ERR] TX queue full, dropping frame len=%u "
+                "(drop #%lu)\r\n",
+                (unsigned)len,
+                (unsigned long)s_drop_count
+            );
+        }
 
         return 0U;
     }
