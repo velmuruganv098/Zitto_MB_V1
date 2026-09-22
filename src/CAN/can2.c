@@ -227,6 +227,49 @@ static const uint32_t g_can2_baud_kbps[
 
 
 /*
+ * NEW (explicit requirement): while RUNNING at a locked baud, silence
+ * alone (no frame received) does NOT necessarily mean anything is
+ * wrong - it may simply mean nobody has anything to send right now.
+ * But it also does not PROVE the bus is healthy: the external bus
+ * could have changed baud out from under this locked candidate
+ * without yet generating enough hard errors to trip Can2_CheckFault()
+ * (FLTCONF only asserts once TEC/REC cross 127) or the RxErr-burst
+ * threshold above - e.g. a low-traffic bus that has gone silent
+ * BECAUSE every attempted frame is now silently failing to decode.
+ *
+ * Design: after CAN2_RUNNING_SILENCE_TICKS of silence, briefly switch
+ * into Listen-Only Mode (LOM) at the SAME already-locked baud (a
+ * lightweight CTRL1 bit toggle via Can2_SetLomMode() - NOT a full
+ * Can2_SetBaud() restart, so rx_count/error_count/ECR are all left
+ * untouched) and watch for CAN2_LOM_PROBE_TICKS:
+ *   - a clean frame arrives -> baud still valid, bus was just idle -
+ *     revert to NORMAL immediately.
+ *   - a protocol error appears -> the locked baud is stale - trigger
+ *     a full, fresh Can2_StartDetection() (same escalation as the
+ *     existing fault/RxErr-burst checks).
+ *   - neither, for the whole probe window -> inconclusive (bus is
+ *     genuinely idle) - revert to NORMAL and keep waiting; do NOT
+ *     force a restart just because it is quiet.
+ *
+ * LOM is deliberately NOT used during initial DETECTING (see the
+ * NORMAL-mode-not-LOM rationale elsewhere in this file and in
+ * can1.h/can1.c - LOM never drives ACK, so a 2-node bench where this
+ * MCU is the only other node can never receive a single frame in
+ * LOM). That rationale does not apply here: this probe only ever
+ * activates during confirmed SILENCE (nothing being sent right this
+ * moment, so nothing to fail to ACK when the probe starts), is kept
+ * brief, and reverts to NORMAL the instant it either succeeds or
+ * times out - the same known tradeoff (a frame that happens to arrive
+ * mid-probe will not be ACKed, costing the sender's own error budget
+ * once) is accepted here per explicit requirement, not reintroduced
+ * as the general detection strategy.
+ */
+
+#define CAN2_RUNNING_SILENCE_TICKS  60U   /* ~3000ms @ ~50ms/tick before probing */
+#define CAN2_LOM_PROBE_TICKS        20U   /* ~1000ms probe window */
+
+
+/*
  * Number of consecutive detection cycles
  * before we simply keep cycling.
  *
@@ -382,6 +425,20 @@ static uint8_t
  */
 static uint32_t
     g_can2_last_stat_ms;
+
+
+/*
+ * Silence/LOM-probe state while RUNNING - see the CAN2_RUNNING_SILENCE_TICKS
+ * / CAN2_LOM_PROBE_TICKS comment above for the full design.
+ */
+static uint32_t
+    g_can2_running_silence_ticks;
+
+static uint8_t
+    g_can2_lom_probe_active;   /* 1 = currently in LOM, watching for an error */
+
+static uint32_t
+    g_can2_lom_probe_ticks;
 
 
 /* ========================================================================== */
@@ -561,6 +618,43 @@ static uint8_t Can2_ExitFreeze(void)
 
 
     return 1U;
+}
+
+
+/*
+ * NEW: lightweight LOM bit toggle for the RUNNING-state silence probe
+ * (see CAN2_RUNNING_SILENCE_TICKS' comment). Deliberately NOT built
+ * like Can2_SetBaud() - this must NOT touch CTRL1's timing fields,
+ * ECR, mailbox RAM, or IFLAG1/ESR1: the whole point is a brief,
+ * non-disruptive check that leaves RUNNING's rx_count/error_count/ECR
+ * baseline exactly as they were if the probe turns out inconclusive.
+ * Reads-modifies-writes the CURRENT CTRL1 (only flipping the LOM bit)
+ * rather than rebuilding it from g_can2_ctrl1_normal[], so it cannot
+ * disturb whatever the timing/CLKSRC fields currently hold.
+ */
+static uint8_t Can2_SetLomMode(
+    uint8_t enable
+)
+{
+    if(Can2_EnterFreeze() == 0U)
+    {
+        return 0U;
+    }
+
+
+    if(enable != 0U)
+    {
+        CAN2->CTRL1 |=
+            CAN_CTRL1_LOM_MASK;
+    }
+    else
+    {
+        CAN2->CTRL1 &=
+            ~(uint32_t)CAN_CTRL1_LOM_MASK;
+    }
+
+
+    return Can2_ExitFreeze();
 }
 
 
@@ -1399,6 +1493,25 @@ static void Can2_StartDetectionAt(
         0U;
 
 
+    /*
+     * NEW: a RUNNING-state LOM probe may have been in progress when
+     * whatever triggered this restart fired (fault check, RxErr
+     * burst, or the probe's own error detection) - clear its state so
+     * DETECTING starts clean. The hardware side self-corrects too:
+     * Can2_SetBaud() below fully overwrites CTRL1 from
+     * g_can2_ctrl1_normal[], which does not include the LOM bit, so
+     * LOM is implicitly cleared back to 0 regardless of this reset.
+     */
+    g_can2_running_silence_ticks =
+        0U;
+
+    g_can2_lom_probe_active =
+        0U;
+
+    g_can2_lom_probe_ticks =
+        0U;
+
+
     RTT_LOG(
         "[CAN2] Start auto baud\r\n"
     );
@@ -1654,6 +1767,17 @@ static void Can2_LockBaud(void)
 
 
     g_can2_corrob_attempted =
+        0U;
+
+
+    /* NEW: fresh RUNNING lock starts with a clean silence/probe slate. */
+    g_can2_running_silence_ticks =
+        0U;
+
+    g_can2_lom_probe_active =
+        0U;
+
+    g_can2_lom_probe_ticks =
         0U;
 
 
@@ -2288,15 +2412,51 @@ void Can2_Task(void)
 
         uint8_t rxerr_delta;
 
+        uint8_t frame_received;
 
-        if(
-            Can2_ReadFrame(
+
+        frame_received =
+            (Can2_ReadFrame(
                 &frame
             )
-            != 0U
-        )
+            != 0U)
+            ? 1U
+            : 0U;
+
+        if(frame_received != 0U)
         {
             g_can2_status.rx_count++;
+
+            g_can2_running_silence_ticks =
+                0U;
+
+            /*
+             * NEW: a clean frame arriving while an LOM probe is active
+             * is the probe's SUCCESS case - the locked baud is still
+             * correct and the bus was just quiet, not stale. Revert
+             * to NORMAL immediately rather than waiting out the rest
+             * of CAN2_LOM_PROBE_TICKS, so this MCU resumes ACKing as
+             * soon as possible (see the file header note on why a
+             * brief missed ACK during the probe is an accepted,
+             * bounded tradeoff, not something to prolong).
+             */
+            if(g_can2_lom_probe_active != 0U)
+            {
+                RTT_LOG(
+                    "[CAN2] LOM probe: clean frame - baud still valid,"
+                    " reverting to NORMAL\r\n"
+                );
+
+                g_can2_lom_probe_active =
+                    0U;
+
+                g_can2_lom_probe_ticks =
+                    0U;
+
+                (void)Can2_SetLomMode(
+                    0U
+                );
+            }
 
 
             if(
@@ -2367,6 +2527,119 @@ void Can2_Task(void)
             Can2_StartDetection();
 
             return;
+        }
+
+
+        /*
+         * NEW: silence-triggered LOM error probe - see the
+         * CAN2_RUNNING_SILENCE_TICKS comment for the full design.
+         * Only reached if the fault check and RxErr-burst check above
+         * did NOT already trigger a restart this tick.
+         */
+
+        if(frame_received == 0U)
+        {
+            if(g_can2_lom_probe_active != 0U)
+            {
+                uint32_t esr1_probe =
+                    CAN2->ESR1;
+
+                g_can2_lom_probe_ticks++;
+
+                if(
+                    (esr1_probe &
+                     CAN2_ERR_FLAGS_MASK)
+                    != 0U
+                )
+                {
+                    CAN2->ESR1 =
+                        CAN2_ERR_FLAGS_MASK;
+
+                    RTT_LOG(
+                        "[CAN2] LOM probe: protocol error at locked %lu"
+                        " kbps (ESR1=0x%08lX)  [%s%s%s%s%s] - baud"
+                        " stale, restarting auto-baud detection\r\n",
+                        (unsigned long)
+                        g_can2_status.detected_baud_kbps,
+                        (unsigned long)esr1_probe,
+                        (esr1_probe & CAN_ESR1_STFERR_MASK) ? "STF " : "",
+                        (esr1_probe & CAN_ESR1_FRMERR_MASK) ? "FRM " : "",
+                        (esr1_probe & CAN_ESR1_CRCERR_MASK) ? "CRC " : "",
+                        (esr1_probe & CAN_ESR1_BIT0ERR_MASK) ? "BIT0 " : "",
+                        (esr1_probe & CAN_ESR1_BIT1ERR_MASK) ? "BIT1 " : ""
+                    );
+
+                    g_can2_lom_probe_active =
+                        0U;
+
+                    g_can2_lom_probe_ticks =
+                        0U;
+
+                    Can2_StartDetection();
+
+                    return;
+                }
+
+                if(
+                    g_can2_lom_probe_ticks >=
+                    CAN2_LOM_PROBE_TICKS
+                )
+                {
+                    RTT_LOG(
+                        "[CAN2] LOM probe: no traffic, no errors - bus"
+                        " idle, reverting to NORMAL\r\n"
+                    );
+
+                    g_can2_lom_probe_active =
+                        0U;
+
+                    g_can2_lom_probe_ticks =
+                        0U;
+
+                    (void)Can2_SetLomMode(
+                        0U
+                    );
+
+                    g_can2_running_silence_ticks =
+                        0U;
+                }
+            }
+            else
+            {
+                g_can2_status.no_frame_count++;
+
+                g_can2_running_silence_ticks++;
+
+                if(
+                    g_can2_running_silence_ticks >=
+                    CAN2_RUNNING_SILENCE_TICKS
+                )
+                {
+                    RTT_LOG(
+                        "[CAN2] No CAN data - starting LOM error probe"
+                        " at locked %lu kbps\r\n",
+                        (unsigned long)
+                        g_can2_status.detected_baud_kbps
+                    );
+
+                    g_can2_running_silence_ticks =
+                        0U;
+
+                    if(
+                        Can2_SetLomMode(
+                            1U
+                        )
+                        != 0U
+                    )
+                    {
+                        g_can2_lom_probe_active =
+                            1U;
+
+                        g_can2_lom_probe_ticks =
+                            0U;
+                    }
+                }
+            }
         }
 
 

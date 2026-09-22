@@ -35,7 +35,9 @@
  *   Phase 3: READY  (NORMAL mode, unchanged)
  *     - Receive and forward frames
  *     - Bus-off or RX error burst → back to Phase 1
- *     - No frames for 10s → back to Phase 1
+ *     - Silence (CAN1_RUNNING_SILENCE_TICKS) → brief LOM probe at the
+ *       same locked baud (see can1.c); a protocol error seen during
+ *       the probe → back to Phase 1, otherwise stay READY
  *
  * IRQ NUMBERS (S32K144, confirmed from SDK S32K144.h):
  *   CAN1_ORed_IRQn          = 85  NVIC[2] bit21  IPSR=0x65
@@ -64,8 +66,12 @@ extern "C" {
 /* Auto-baud timing: task period × ticks = time per candidate */
 #define CAN1_TASK_PERIOD_MS         50U
 #define CAN1_DETECT_TICKS           4U    /* 4 × 50ms = 200ms of silence → next candidate */
-#define CAN1_NO_FRAME_LIMIT         200U  /* 200 × 50ms = 10s idle → re-detect */
 #define CAN1_CONFIRM_FRAMES         3U    /* consecutive error-free frames required to lock a candidate */
+/* CAN1_RUNNING_SILENCE_TICKS / CAN1_LOM_PROBE_TICKS (READY-state
+ * silence -> LOM probe -> re-detect only on an actual error) are
+ * defined in can1.c, next to their can2.c mirror - CAN1_NO_FRAME_LIMIT
+ * (the old, unconditional "restart after 10s of silence" threshold)
+ * was removed along with that behavior; nothing else referenced it. */
 
 /* Kept for compatibility with main.c's bench-analysis preprocessor
  * conditionals from the V0.0062 lineage; this driver has no analysis mode. */

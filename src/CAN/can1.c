@@ -109,6 +109,49 @@ extern volatile uint32_t g_can1_debug_step;
                                 CAN_ESR1_CRCERR_MASK | CAN_ESR1_BIT0ERR_MASK | \
                                 CAN_ESR1_BIT1ERR_MASK)
 
+/*
+ * NEW (explicit requirement, mirrors can2.c's identical addition):
+ * silence alone (no frame received while READY) does not prove the
+ * bus is healthy - the external bus could have changed baud out from
+ * under this locked candidate without yet generating enough hard
+ * errors to trip the bus-off/RxErr-burst checks below. Previously
+ * this driver's only response to silence was an UNCONDITIONAL
+ * prv_StartDetection() after CAN1_NO_FRAME_LIMIT ticks, even when the
+ * bus was simply, legitimately idle - wasteful and, on a bus that
+ * really is just quiet, needlessly disruptive.
+ *
+ * Replaced with the same probe design as can2.c: after
+ * CAN1_RUNNING_SILENCE_TICKS of silence, briefly switch into
+ * Listen-Only Mode (LOM) at the SAME locked baud via
+ * prv_SetLomMode() - a lightweight CTRL1 bit toggle, NOT a full
+ * prv_ApplyBaud() restart, so rx totals/ECR baseline are untouched -
+ * and watch for CAN1_LOM_PROBE_TICKS:
+ *   - a clean frame arrives -> baud still valid, bus was just idle -
+ *     revert to NORMAL immediately.
+ *   - a protocol error appears -> the locked baud is stale - trigger
+ *     a full prv_StartDetection() (same escalation as the existing
+ *     bus-off/RxErr-burst checks).
+ *   - neither, for the whole probe window -> inconclusive (bus is
+ *     genuinely idle) - revert to NORMAL and keep waiting.
+ *
+ * LOM is not reused for initial DETECTING (see the NORMAL MODE, NOT
+ * LOM note at the top of this file - it still applies there in full:
+ * a candidate scan needs to ACK to prove itself on a 2-node bench).
+ * This probe only ever activates during confirmed silence (nothing
+ * being sent right this moment, so nothing to fail to ACK when it
+ * starts), stays brief, and reverts to NORMAL as soon as it either
+ * succeeds or times out.
+ *
+ * Silence threshold aligned to can2.c's (60 ticks / 20 ticks) rather
+ * than kept at the old CAN1_NO_FRAME_LIMIT=200 (10s) value, so both
+ * modules behave consistently - per explicit "check compatibility
+ * across both CAN" requirement - and so a stale lock is noticed
+ * sooner now that noticing it no longer costs a disruptive blind
+ * restart when the bus is simply quiet.
+ */
+#define CAN1_RUNNING_SILENCE_TICKS  60U   /* ~3000ms @ CAN1_TASK_PERIOD_MS before probing */
+#define CAN1_LOM_PROBE_TICKS        20U   /* ~1000ms probe window */
+
 /* --------------------------------------------------------------------------
  * BAUD RATE TABLES  (80MHz protocol-engine clock, CLKSRC=1 is OR'd in at
  * runtime - see the BAUD MISDETECTION FIX note at the top of this file)
@@ -157,12 +200,14 @@ static uint8_t            g_confirm_count    = 0U;
 static uint8_t            g_corrob_active    = 0U;  /* 1 = testing the 2x-higher candidate */
 static uint8_t            g_corrob_attempted = 0U;  /* 1 = already tried corroborating this base candidate once */
 static uint8_t            g_corrob_base_idx  = 0U;  /* candidate being corroborated, valid only while g_corrob_active */
-static uint32_t           g_no_frame_ticks   = 0U;
+static uint32_t           g_no_frame_ticks   = 0U;  /* silence ticks while READY - see CAN1_RUNNING_SILENCE_TICKS */
 static uint8_t            g_ready_rxerr_base = 0U;  /* REC snapshot at lock time - see prv_CommitLock() */
 static uint32_t           g_task_cnt         = 0U;
 static uint32_t           g_rx_total         = 0U;
 static uint32_t           g_rx_dropped       = 0U;
 static uint32_t           g_last_stat_ms     = 0U;
+static uint8_t            g_lom_probe_active = 0U;  /* 1 = currently in LOM, watching for an error */
+static uint32_t           g_lom_probe_ticks  = 0U;
 
 /* ============================================================
  * NVIC: DISABLE ALL CAN1 INTERRUPTS
@@ -329,6 +374,34 @@ static uint8_t prv_ApplyBaud(uint8_t idx)
             (unsigned long)g_baud_kbps[idx],
             (unsigned long)ctrl1);
     return 1U;
+}
+
+/* ============================================================
+ * NEW: lightweight LOM bit toggle for the READY-state silence probe
+ * (see CAN1_RUNNING_SILENCE_TICKS' comment). Deliberately NOT built
+ * like prv_ApplyBaud() - this must NOT touch CTRL1's timing fields,
+ * ECR, mailbox RAM, or IFLAG1/ESR1: the whole point is a brief,
+ * non-disruptive check that leaves READY's rx totals/error baseline
+ * exactly as they were if the probe turns out inconclusive. Reads-
+ * modifies-writes the CURRENT CTRL1 (only flipping the LOM bit)
+ * rather than rebuilding it from g_ctrl1_base[], so it cannot disturb
+ * whatever the timing/CLKSRC fields currently hold. Mirrors can2.c's
+ * Can2_SetLomMode() exactly.
+ * ============================================================ */
+static uint8_t prv_SetLomMode(uint8_t enable)
+{
+    if(prv_EnterFreeze() == 0U) { return 0U; }
+
+    if(enable != 0U)
+    {
+        CAN1->CTRL1 |= CAN_CTRL1_LOM_MASK;
+    }
+    else
+    {
+        CAN1->CTRL1 &= ~(uint32_t)CAN_CTRL1_LOM_MASK;
+    }
+
+    return prv_ExitFreeze();
 }
 
 /* ============================================================
@@ -597,6 +670,8 @@ static void prv_StartDetection(void)
     g_corrob_active    = 0U;
     g_corrob_attempted = 0U;
     g_ready_rxerr_base = 0U;
+    g_lom_probe_active = 0U;
+    g_lom_probe_ticks  = 0U;
 
     g_status.ready              = 0U;
     g_status.hw_ready           = 0U;
@@ -722,6 +797,8 @@ static void prv_CommitLock(void)
     g_confirm_count    = 0U;
     g_corrob_active    = 0U;
     g_corrob_attempted = 0U;
+    g_lom_probe_active = 0U;
+    g_lom_probe_ticks  = 0U;
 
     g_state = CAN1_STATE_READY;
 
@@ -831,7 +908,9 @@ void Can1_Init(void)
  *
  *   READY: process RX, monitor errors
  *     Bus-off or RxErr burst → prv_StartDetection()
- *     No frames for 10s     → prv_StartDetection()
+ *     Silence (CAN1_RUNNING_SILENCE_TICKS) → brief LOM probe at the
+ *       locked baud; protocol error seen → prv_StartDetection(),
+ *       clean frame or timeout with no error → stay READY
  *
  *   ERROR: immediately restart detection
  * ============================================================ */
@@ -839,6 +918,7 @@ void Can1_Task(void)
 {
     uint32_t esr, ecr;
     uint8_t  fault;
+    uint8_t  frame_received;
 
     g_task_cnt++;
 
@@ -1040,20 +1120,33 @@ void Can1_Task(void)
     /* ------------------------------------------------------------------ */
     /* READY: normal RX + error monitoring                                */
     /* ------------------------------------------------------------------ */
-    if(prv_RxAvailable())
+    frame_received = prv_RxAvailable();
+
+    if(frame_received)
     {
         g_no_frame_ticks = 0U;
         prv_ProcessRx();
+
+        /*
+         * NEW: a clean frame arriving while an LOM probe is active is
+         * the probe's SUCCESS case - the locked baud is still correct
+         * and the bus was just quiet, not stale. Revert to NORMAL
+         * immediately rather than waiting out the rest of
+         * CAN1_LOM_PROBE_TICKS. See CAN1_RUNNING_SILENCE_TICKS'
+         * comment for the accepted missed-ACK tradeoff this implies.
+         */
+        if(g_lom_probe_active != 0U)
+        {
+            RTT_LOG("[CAN1] LOM probe: clean frame - baud still valid,"
+                    " reverting to NORMAL\r\n");
+            g_lom_probe_active = 0U;
+            g_lom_probe_ticks  = 0U;
+            (void)prv_SetLomMode(0U);
+        }
     }
     else
     {
         g_no_frame_ticks++;
-        if(g_no_frame_ticks >= CAN1_NO_FRAME_LIMIT)
-        {
-            RTT_LOG("[CAN1] No frames for ~10s - re-detecting baud\r\n");
-            prv_StartDetection();
-            return;
-        }
     }
 
     /* Error status */
@@ -1094,6 +1187,62 @@ void Can1_Task(void)
                     (unsigned)rxerr_delta, (unsigned)g_status.rx_err_cnt);
             prv_StartDetection();
             return;
+        }
+    }
+
+    /*
+     * NEW: silence-triggered LOM error probe - see
+     * CAN1_RUNNING_SILENCE_TICKS' comment for the full design. Only
+     * reached if the bus-off and RxErr-burst checks above did NOT
+     * already trigger a restart this tick.
+     */
+    if(!frame_received)
+    {
+        if(g_lom_probe_active != 0U)
+        {
+            uint32_t esr1_probe = CAN1->ESR1;
+
+            g_lom_probe_ticks++;
+
+            if((esr1_probe & CAN1_ERR_FLAGS_MASK) != 0U)
+            {
+                CAN1->ESR1 = CAN1_ERR_FLAGS_MASK;
+
+                RTT_LOG("[CAN1] LOM probe: protocol error at locked %lu"
+                        " kbps (ESR1=0x%08lX) - baud stale, restarting"
+                        " auto-baud detection\r\n",
+                        (unsigned long)g_status.detected_baud_kbps,
+                        (unsigned long)esr1_probe);
+
+                g_lom_probe_active = 0U;
+                g_lom_probe_ticks  = 0U;
+                prv_StartDetection();
+                return;
+            }
+
+            if(g_lom_probe_ticks >= CAN1_LOM_PROBE_TICKS)
+            {
+                RTT_LOG("[CAN1] LOM probe: no traffic, no errors - bus"
+                        " idle, reverting to NORMAL\r\n");
+                g_lom_probe_active = 0U;
+                g_lom_probe_ticks  = 0U;
+                (void)prv_SetLomMode(0U);
+                g_no_frame_ticks = 0U;
+            }
+        }
+        else if(g_no_frame_ticks >= CAN1_RUNNING_SILENCE_TICKS)
+        {
+            RTT_LOG("[CAN1] No CAN data - starting LOM error probe at"
+                    " locked %lu kbps\r\n",
+                    (unsigned long)g_status.detected_baud_kbps);
+
+            g_no_frame_ticks = 0U;
+
+            if(prv_SetLomMode(1U) != 0U)
+            {
+                g_lom_probe_active = 1U;
+                g_lom_probe_ticks  = 0U;
+            }
         }
     }
 
