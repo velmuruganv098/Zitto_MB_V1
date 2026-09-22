@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VCU Master</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231d2733'/><path d='M6 20h5l3-9 4 13 3-7h5' fill='none' stroke='%2346c2b0' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="shell">
+
+  <!-- ============================================================ RAIL -->
+  <nav class="rail" aria-label="Windows">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 20h6l3-9 4 13 3-7h8"/></svg>
+      <div><strong>VCU Master</strong><span>Zitto_MB_V1</span></div>
+    </div>
+    <button class="nav on" data-win="connect"><i class="dot" id="navLinkDot"></i>Connection</button>
+    <button class="nav" data-win="live">Live data</button>
+    <button class="nav" data-win="system">IMU and current</button>
+    <button class="nav" data-win="vehicle">Vehicle</button>
+    <button class="nav" data-win="updates">OTA and DBC</button>
+    <button class="nav" data-win="device">ESP32 and S32K</button>
+    <div class="rail-foot">
+      <div id="railLink" class="muted">Not connected</div>
+      <button id="themeBtn" class="ghost small" title="Switch light/dark">Theme</button>
+    </div>
+  </nav>
+
+  <!-- ============================================================ TOPBAR -->
+  <header class="top">
+    <h1 id="winTitle">Connection</h1>
+    <div class="trace" aria-hidden="true"><canvas id="traceCanvas"></canvas></div>
+    <div class="topstats">
+      <span class="pill" id="linkPill"><i></i><b>Offline</b></span>
+      <span class="stat"><b id="rateVal">0</b> msg/s</span>
+      <span class="stat"><b id="crcVal">0</b> CRC err</span>
+      <button id="recBtn" class="rec" title="Record session to CSV"><i></i><span>Record</span></button>
+    </div>
+  </header>
+
+  <main>
+  <!-- ============================================================ CONNECTION -->
+  <section class="win on" id="win-connect">
+    <div class="grid g-conn">
+      <div class="panel">
+        <div class="ph"><h2>Find a bridge</h2>
+          <div class="row">
+            <label class="inl">Scan for <select id="scanTime"><option>3</option><option selected>5</option><option>10</option></select> s</label>
+            <button id="scanBtn" class="primary">Scan</button>
+          </div>
+        </div>
+        <div class="row wrap pad">
+          <input id="scanName" placeholder="Name contains…" value="">
+          <label class="chk"><input type="checkbox" id="scanBridge"> Only Zitto bridges</label>
+          <label class="chk"><input type="checkbox" id="autoRe" checked> Reconnect automatically</label>
+        </div>
+        <div id="devList" class="devlist"><p class="empty">Run a scan to list nearby BLE devices. The simulator is always available for testing without hardware.</p></div>
+      </div>
+
+      <div class="panel">
+        <div class="ph"><h2>Link</h2><button id="discBtn" class="ghost" disabled>Disconnect</button></div>
+        <dl class="kv" id="linkKv"></dl>
+        <details class="pad"><summary>GATT services</summary><div id="gattList" class="gatt"></div></details>
+      </div>
+
+      <div class="panel span2">
+        <div class="ph"><h2>Bridge console</h2>
+          <div class="row">
+            <button class="ghost small qc" data-cmd="PING">Ping</button>
+            <button class="ghost small qc" data-cmd="INFO">Info</button>
+            <button class="ghost small qc" data-cmd="STATS">Stats</button>
+            <button class="ghost small qc" data-cmd="GPIO">GPIO map</button>
+            <button class="ghost small qc" data-cmd="RAW:03">Status request</button>
+          </div>
+        </div>
+        <div id="console" class="console mono"></div>
+        <form id="consoleForm" class="row pad">
+          <input id="consoleIn" class="mono grow" placeholder="PING, INFO, ESP:13:1, S32:3:1:1, RAW:010201" autocomplete="off">
+          <button class="primary">Send</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ LIVE -->
+  <section class="win" id="win-live">
+    <div class="livebar panel">
+      <div class="chips" id="tagChips"></div>
+      <div class="row wrap">
+        <input id="logSearch" class="grow" placeholder="Search text or /regex/">
+        <input id="logIds" class="w12 mono" placeholder="CAN IDs 0x101,0x201">
+        <div class="seg" id="logMode"><button class="on" data-m="stream">Stream</button><button data-m="latest">Latest by type</button><button data-m="raw">Raw lines</button></div>
+        <button id="pauseBtn" class="ghost">Pause</button>
+        <button id="clearBtn" class="ghost">Clear</button>
+        <button id="expCsv" class="ghost">Export CSV</button>
+        <button id="expTxt" class="ghost">Export TXT</button>
+      </div>
+      <details id="cfBox">
+        <summary>Custom filters <span id="cfCount" class="muted"></span></summary>
+        <div class="cf-list" id="cfList"></div>
+        <form id="cfForm" class="row wrap">
+          <input id="cfName" placeholder="Filter name" class="w12" required>
+          <input id="cfExpr" placeholder="Text or regex, e.g. id=0x1[0-9]{2}|bus_off=1" class="grow mono" required>
+          <label class="chk"><input type="checkbox" id="cfRegex" checked> Regex</label>
+          <select id="cfTag"><option value="">Any channel</option></select>
+          <button class="primary">Add filter</button>
+        </form>
+      </details>
+    </div>
+    <div class="logwrap panel">
+      <div class="loghead mono" id="logHead"><span>Time</span><span>Seq</span><span>Channel</span><span>Type</span><span>Data</span><span>DBC decode</span></div>
+      <div class="logbody mono" id="logBody"></div>
+      <div class="logfoot"><span id="logCount" class="muted"></span><span id="logPaused" class="warn" hidden>Paused. New data is still being collected.</span></div>
+    </div>
+    <aside class="detail panel" id="recDetail" hidden><div class="ph"><h2>Message detail</h2><button class="ghost small" id="detClose">Close</button></div><pre class="mono" id="detBody"></pre></aside>
+  </section>
+
+  <!-- ============================================================ SYSTEM -->
+  <section class="win" id="win-system">
+    <div class="grid g-sys">
+      <div class="panel ch-imu">
+        <div class="ph"><h2>IMU (ICM-42670-P)</h2><span class="muted" id="imuAge">No data yet</span></div>
+        <div class="tiles" id="imuTiles"></div>
+        <div class="chartbox"><div class="chart-title">Acceleration (mg)</div><canvas id="chAccel"></canvas></div>
+        <div class="chartbox"><div class="chart-title">Angular rate (mdps)</div><canvas id="chGyro"></canvas></div>
+      </div>
+      <div class="panel ch-imu att">
+        <div class="ph"><h2>Attitude</h2><span class="muted">From accelerometer</span></div>
+        <svg id="horizon" viewBox="-100 -100 200 200" role="img" aria-label="Roll and pitch indicator">
+          <defs><clipPath id="hc"><circle r="92"/></clipPath></defs>
+          <g clip-path="url(#hc)"><g id="hzGroup"><rect x="-300" y="-300" width="600" height="300" class="sky"/><rect x="-300" y="0" width="600" height="300" class="ground"/><line x1="-300" x2="300" y1="0" y2="0" class="hzline"/>
+            <g class="ladder"><line x1="-20" x2="20" y1="-30" y2="-30"/><line x1="-20" x2="20" y1="30" y2="30"/><line x1="-12" x2="12" y1="-15" y2="-15"/><line x1="-12" x2="12" y1="15" y2="15"/></g></g></g>
+          <circle r="92" class="bezel"/><path d="M-50 0h30l8 8 8-8h30" class="plane"/>
+        </svg>
+        <dl class="kv tight" id="attKv"></dl>
+      </div>
+      <div class="panel ch-csa span2">
+        <div class="ph"><h2>Current sense amplifier</h2><span class="muted" id="csaAge">No data yet</span></div>
+        <div class="tiles" id="csaTiles"></div>
+        <div class="grid g3">
+          <div class="chartbox"><div class="chart-title">Current (mA)</div><canvas id="chCur"></canvas></div>
+          <div class="chartbox"><div class="chart-title">Voltage (mV)</div><canvas id="chVol"></canvas></div>
+          <div class="chartbox"><div class="chart-title">Power (mW)</div><canvas id="chPow"></canvas></div>
+        </div>
+      </div>
+      <div class="panel span2">
+        <div class="ph"><h2>Chart window</h2>
+          <div class="seg" id="winSec"><button data-s="15">15 s</button><button class="on" data-s="30">30 s</button><button data-s="60">60 s</button><button data-s="120">2 min</button></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ VEHICLE -->
+  <section class="win" id="win-vehicle">
+    <div id="vehEmpty" class="panel callout"><p>Vehicle values come from CAN frames decoded with a DBC. Upload one in <a href="#" data-goto="updates">OTA and DBC</a>, or load the demo DBC to try it with the simulator.</p><button class="primary" id="loadDemoDbc">Load demo DBC</button></div>
+    <div class="grid g-veh">
+      <div class="panel gauges" id="gauges"></div>
+      <div class="panel"><div class="ph"><h2>Battery and drivetrain</h2><button class="ghost small" id="mapBtn">Map signals</button></div><div class="tiles vt" id="vehTiles"></div></div>
+      <div class="panel span2" id="mapPanel" hidden><div class="ph"><h2>Signal mapping</h2><span class="muted">Pick which DBC signal feeds each vehicle value</span></div><div class="mapgrid" id="mapGrid"></div></div>
+      <div class="panel span2"><div class="ph"><h2>Signal plot</h2><span class="muted" id="plotHint">Select up to 6 signals in the table below</span></div><div class="chartbox tall"><canvas id="chSig"></canvas></div><div class="legend" id="sigLegend"></div></div>
+      <div class="panel span2"><div class="ph"><h2>Decoded signals</h2><div class="row"><input id="sigSearch" placeholder="Filter signals"><div class="seg" id="sigBus"><button class="on" data-b="0">All</button><button data-b="1">CAN1</button><button data-b="2">CAN2</button></div></div></div><div class="tablewrap"><table class="tbl" id="sigTable"><thead><tr><th></th><th>Bus</th><th>Message</th><th>Signal</th><th class="r">Value</th><th>Unit</th><th class="r">Min</th><th class="r">Max</th><th class="r">Updates</th><th class="r">Age</th></tr></thead><tbody></tbody></table></div></div>
+      <div class="panel span2"><div class="ph"><h2>CAN trace</h2><span class="muted">One row per identifier</span></div><div class="tablewrap"><table class="tbl mono" id="traceTable"><thead><tr><th>Bus</th><th>ID</th><th>Message</th><th>Data</th><th class="r">Count</th><th class="r">Rate</th><th class="r">Age</th></tr></thead><tbody></tbody></table></div></div>
+    </div>
+  </section>
+
+  <!-- ============================================================ UPDATES -->
+  <section class="win" id="win-updates">
+    <div class="grid g-upd">
+      <div class="panel">
+        <div class="ph"><h2>S32K144 firmware update</h2><span class="badge" id="otaState">Idle</span></div>
+        <div class="pad">
+          <label class="drop" id="otaDrop"><input type="file" id="otaFile" accept=".bin"><span>Drop a .bin image here or choose a file</span></label>
+          <dl class="kv" id="otaKv"></dl>
+          <div class="row wrap">
+            <label class="inl">Chunk <input type="number" id="otaChunk" value="96" min="8" max="240" class="w6"> bytes</label>
+            <label class="inl">Gap <input type="number" id="otaDelay" value="30" min="0" max="1000" class="w6"> ms</label>
+            <span class="muted" id="otaEst"></span>
+          </div>
+          <div class="progress"><i id="otaBar"></i><span id="otaPct">0%</span></div>
+          <div class="row"><button class="primary" id="otaStart" disabled>Start update</button><button class="danger ghost" id="otaAbort" disabled>Abort</button></div>
+          <p class="note">Sequence: CMD_OTA_START (size, CRC32 big-endian) → CMD_OTA_DATA chunks → CMD_OTA_FINISH. The MCU verifies the CRC32 and replies OTA:ok or OTA:verify_fail. Data chunks are not individually acknowledged by the current firmware, so the gap setting paces the transfer.</p>
+          <div class="events mono" id="otaEvents"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="ph"><h2>CAN databases</h2><button class="ghost small" id="demoDbc2">Load demo DBC</button></div>
+        <div class="pad">
+          <label class="drop" id="dbcDrop"><input type="file" id="dbcFile" accept=".dbc" multiple><span>Drop .dbc files here or choose files</span></label>
+          <div class="row"><span>Decode on</span><label class="chk"><input type="checkbox" id="dbcB1" checked> CAN1</label><label class="chk"><input type="checkbox" id="dbcB2" checked> CAN2</label></div>
+          <div id="dbcList" class="dbclist"></div>
+        </div>
+      </div>
+      <div class="panel span2">
+        <div class="ph"><h2>DBC browser</h2><select id="dbcPick"></select></div>
+        <div class="dbcb"><ul id="dbcMsgs" class="msglist"></ul><div class="tablewrap"><table class="tbl" id="dbcSigs"><thead><tr><th>Signal</th><th class="r">Start</th><th class="r">Len</th><th>Order</th><th class="r">Scale</th><th class="r">Offset</th><th>Range</th><th>Unit</th><th>Values</th></tr></thead><tbody></tbody></table></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ DEVICE -->
+  <section class="win" id="win-device">
+    <div class="grid g-dev">
+      <div class="col">
+        <h2 class="colhead">S32K144 VCU controller</h2>
+        <div class="panel">
+          <div class="ph"><h3>System status</h3><div class="row"><button class="ghost small" id="stReq">Request status</button><button class="danger ghost small" id="mcuReset">Reset MCU</button></div></div>
+          <dl class="kv grid2" id="sysKv"></dl>
+        </div>
+        <div class="panel">
+          <div class="ph"><h3>Modules</h3><span class="muted">CMD_MODULE_EN</span></div>
+          <div class="modules" id="modList"></div>
+        </div>
+        <div class="panel">
+          <div class="ph"><h3>CAN controllers</h3></div>
+          <div class="grid g2" id="canCards"></div>
+        </div>
+        <div class="panel">
+          <div class="ph"><h3>GPIO</h3>
+            <label class="inl">Send via <select id="gpioVia"><option value="raw">RAW frame (IDs 1–13)</option><option value="native">S32: command (stock bridge)</option></select></label></div>
+          <div class="tablewrap"><table class="tbl" id="gpioTable"><thead><tr><th>ID</th><th>Port</th><th>Pin</th><th>Direction</th><th>Output</th><th>Reported</th><th></th></tr></thead><tbody></tbody></table></div>
+        </div>
+        <div class="panel">
+          <div class="ph"><h3>Status LED</h3><span class="muted">PTA0 and PTE5, CMD_LED_CTRL</span></div>
+          <div class="row wrap pad">
+            <label class="inl">Period <input type="number" id="ledP" value="500" min="20" max="65535" class="w8"> ms</label>
+            <label class="inl">Duty <input type="range" id="ledD" min="0" max="100" value="50"> <b id="ledDv">50%</b></label>
+            <button class="primary" id="ledApply">Apply</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="ph"><h3>Flash log</h3><button class="ghost small" id="flRead">Read latest record</button></div>
+          <dl class="kv grid2" id="flmKv"></dl>
+          <div class="row wrap pad">
+            <input id="flData" class="grow mono" placeholder="Record text, or hex like 01 A2 FF">
+            <label class="chk"><input type="checkbox" id="flHex"> Hex</label>
+            <button class="primary" id="flWrite">Write record</button>
+            <button class="danger ghost" id="flDel">Delete latest</button>
+          </div>
+          <div id="flOut" class="console mono short"></div>
+        </div>
+      </div>
+      <div class="col">
+        <h2 class="colhead">ESP32-S3 BLE bridge</h2>
+        <div class="panel">
+          <div class="ph"><h3>Bridge</h3><div class="row"><button class="ghost small qc" data-cmd="INFO">Info</button><button class="ghost small qc" data-cmd="STATS">Stats</button><button class="ghost small qc" data-cmd="PING">Ping</button></div></div>
+          <dl class="kv grid2" id="bridgeKv"></dl>
+        </div>
+        <div class="panel">
+          <div class="ph"><h3>ESP32 GPIO</h3><span class="muted">GPIO4 and GPIO5 are reserved for UART2</span></div>
+          <div class="espgrid" id="espGrid"></div>
+        </div>
+        <div class="panel">
+          <div class="ph"><h3>Protocol reference</h3></div>
+          <div class="pad ref mono" id="refBox"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </main>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="/static/charts.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>

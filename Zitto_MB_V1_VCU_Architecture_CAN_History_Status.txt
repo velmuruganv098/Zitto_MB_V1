@@ -1,0 +1,1291 @@
+ZITTO_MB_V1 – VCU PROJECT COMPLETE ARCHITECTURE, CAN1 DEVELOPMENT
+HISTORY, ISSUES AND FIX ATTEMPTS
+=========================================================================
+
+Document purpose
+
+This document consolidates the VCU firmware architecture, the
+architecture that was planned, the CAN1 development history, the CAN
+problems encountered, the fixes/experiments attempted, the current
+observed condition, and the important architecture mismatches that
+remain.
+
+This document is based on: 1. Zitto_MB_V1 Firmware
+Architecture_Doc_V1.0 - 310826.docx 2. Architecture.txt 3. GitHub
+repository: https://github.com/velmuruganv098/Zitto_MB_V1 4. CAN1
+revision history and source comments/commits available in the repository
+through V0.0063. 5. The project bench information established during the
+current debugging session, including the current PCAN-only CAN1 setup
+and RTT observations.
+
+IMPORTANT SOURCE STATUS
+
+This document distinguishes: - PLANNED ARCHITECTURE: what the
+architecture documents intended. - IMPLEMENTED/ATTEMPTED: what the
+repository history shows was coded. - OBSERVED: what was actually seen
+on the bench/RTT. - CURRENT ISSUE: conclusions supported by the current
+implementation and bench behavior.
+
+It does not claim that a hardware test passed merely because source code
+contains a corresponding fix or diagnostic.
+
+========================================================================= 1.
+PROJECT OVERVIEW
+=========================================================================
+
+MCU: NXP S32K144
+
+Board: Zitto_MB_V1
+
+Primary firmware architecture: Cooperative super-loop / non-RTOS
+architecture
+
+IDE: NXP S32 Design Studio
+
+Debug: SEGGER J-Link SWD SEGGER RTT
+
+Main communication architecture: Vehicle CAN | v S32K144 | +—- CAN1 +—-
+CAN2 +—- IMU +—- CSA +—- GPIO +—- Flash Logging +—- OTA | v UART | v
+ESP32 | v Cloud / Server
+
+The original architecture document describes the VCU as the central
+controller between vehicle interfaces, ESP32/server communications and
+local peripherals.
+
+Major firmware functions: - CAN bus monitoring - Dual CAN interfaces -
+CAN frame forwarding - IMU monitoring - Current Sense Amplifier
+monitoring - GPIO control - Flash logging - OTA update support - UART
+command processing - Device status reporting - Heartbeat - SEGGER RTT
+diagnostics
+
+=========================================================================
+2. PROJECT SOURCE STRUCTURE
+=========================================================================
+
+The planned/source architecture contains:
+
+src/ | +– APP/ | +– app_main.c | +– app_modules.c | +– app_status.c | +–
+app_config.h | +– UART/ | +– uart_pkt.c | +– uart_pkt.h | +– OTA/ | +–
+ota.c | +– ota.h | +– IMU/ | +– imu.c | +– imu.h | +– CSA/ | +– csa.c |
++– csa.h | +– CAN/ | +– can1.c | +– can1.h | +– can2.c | +– can2.h | +–
+FLM/ | +– flm.c | +– flm.h | +– GPIO/ | +– gpio_control.c | +–
+gpio_control.h | +– boot_main.c +– main.c +– system_init.c
+
+The architecture document also refers to lightweight C-library
+compatibility support and SDK/RTT support.
+
+Important architecture observation: The project historically contained
+both an APP-layer architecture and direct module scheduling in main.c.
+This was identified in the revision history as an architecture split
+that should eventually be cleaned up.
+
+=========================================================================
+3. HIGH-LEVEL EXECUTION ARCHITECTURE
+=========================================================================
+
+Planned execution:
+
+RESET | v Startup code | v boot_main.c | v System_Init() | v main() |
++–> UART +–> GPIO +–> OTA +–> IMU +–> CSA +–> CAN1 +–> CAN2 +–> FLM | v
+Initial status | v Infinite cooperative main loop
+
+The architecture document specifies a cooperative super-loop and
+explicitly states that there is no RTOS scheduler.
+
+The intended philosophy is:
+
+Hardware Driver | v Module Task | v Application Layer | v UART Packet
+Layer | v ESP32 | v Server
+
+=========================================================================
+4. MAIN LOOP / TIMING MODEL
+=========================================================================
+
+Original planned scheduler: TASK_DT_MS = 50 ms
+
+Every loop: UART Poll RTT Forward OTA Task Reset Handling IMU Task CSA
+Task CAN1 Task CAN2 Task LED Task
+
+Every 4 loops: CSA UART transmission approximately 200 ms
+
+Every 10 loops: IMU UART transmission approximately 500 ms
+
+Every 100 loops: Heartbeat Application Status approximately 5 seconds
+
+The architecture document identified an important weakness: a software
+delay at the end of the loop makes the real period dependent on CPU
+execution time, compiler optimization and all module execution times.
+
+The recommended future architecture is a hardware timer/SysTick-driven
+timebase, with each module running when its elapsed time expires.
+
+The V0.006 line also moved toward bounded/cooperative execution so that
+one module cannot monopolize the main loop.
+
+=========================================================================
+5. MODULE ENABLE/DISABLE ARCHITECTURE
+=========================================================================
+
+Runtime module controls include:
+
+    g_imu_en
+    g_csa_en
+    g_can1_en
+    g_can2_en
+    g_flm_en
+
+UART command: CMD_MODULE_EN
+
+Payload: Byte 0 = module ID Byte 1 = state
+
+The architecture explicitly notes that disabling a module currently
+stops its task processing but does not necessarily completely reset or
+power down the underlying hardware peripheral.
+
+Future desired interface: Module_Init() Module_Start() Module_Task()
+Module_Stop() Module_GetStatus()
+
+=========================================================================
+6. UART / ESP32 / SERVER ARCHITECTURE
+=========================================================================
+
+Data/control direction:
+
+ESP32 | v UART RX buffer | v Packet parser | v Command dispatcher | +–>
+APP +–> OTA +–> GPIO +–> Flash +–> Module enable/disable +–> Reset +–>
+Status
+
+Sensor/CAN data direction:
+
+IMU / CSA / CAN | v module driver | v main/application | v uart_pkt.c |
+v ESP32 | v Server
+
+Commands currently documented include: - CMD_MODULE_EN - CMD_GPIO_SET -
+CMD_MCU_RESET - CMD_LED_CTRL - CMD_STATUS_REQ - CMD_FLASH_RD -
+CMD_FLASH_WR - CMD_FLASH_DEL - OTA command range
+
+V0.005 introduced/retained a non-blocking UART TX queue so producers do
+not wait for the UART wire transmission.
+
+V0.006 added bounded UART RX/parser processing so a continuous ESP32
+stream cannot consume the entire cooperative scheduler.
+
+=========================================================================
+7. IMU ARCHITECTURE
+=========================================================================
+
+Planned flow:
+
+Imu_Init() | v Imu_Calibrate() | v Main Loop | v Imu_Task() | v Latest
+IMU data | v Periodic packet | v Uart_Pkt_SendImu()
+
+V0.006 work: - Startup calibration was changed toward a
+cooperative/background state machine. - Calibration has a timeout. -
+Timeout should report [IMU_ERR] instead of blocking the complete
+firmware. - I2C SCL release timeout is explicitly reported.
+
+=========================================================================
+8. CSA ARCHITECTURE
+=========================================================================
+
+Responsibilities: - Analog sensor initialization - Current/voltage
+acquisition - Filtering - Scaling - Packet generation
+
+Flow:
+
+Csa_Init() | v Csa_Task() | v Latest CSA data | v Periodic packet | v
+Uart_Pkt_SendCsa()
+
+V0.006 work: - CSA I2C SCL timeout reports [CSA_ERR]. - Measurement
+failure is reported instead of being silently ignored.
+
+=========================================================================
+9. FLASH LOGGING MANAGER
+=========================================================================
+
+FLM APIs: Flm_Init() Flm_Read() Flm_Write() Flm_Delete()
+
+Two logical API layers were planned: User storage API Raw API
+
+The flash architecture is also used by OTA/system-internal operations.
+
+V0.006 changed startup flash scanning toward a cooperative background
+scan with bounded page work per task call, preventing flash startup
+processing from holding the complete main loop.
+
+=========================================================================
+10. OTA ARCHITECTURE
+=========================================================================
+
+Boot/update concept:
+
+S32K144 reset | v Boot check | +–> no OTA_READY –> normal application |
++–> OTA_READY | v verify staged image | v program MCU flash | v clear
+OTA metadata | v start application
+
+Planned OTA states: OTA_IDLE OTA_RECEIVING OTA_VERIFYING OTA_READY
+OTA_PROGRAMMING OTA_COMPLETE OTA_FAILED
+
+=========================================================================
+11. CAN SYSTEM ARCHITECTURE
+=========================================================================
+
+Physical architecture:
+
+                         S32K144
+                            |
+              +-------------+-------------+
+              |                           |
+          FlexCAN1                    FlexCAN0
+             CAN1                       CAN2
+              |                           |
+          Transceiver                 Transceiver
+              |                           |
+          CAN BUS 1                  CAN BUS 2
+
+CAN1 documented hardware: S32K144 FlexCAN1 | v TCAN334 | v CANH / CANL
+
+CAN1 pins in current source: PTA12 = CAN1 RX, ALT3 PTA13 = CAN1 TX, ALT3
+
+CAN1 transceiver control: PTB2 = SHDN LOW = normal HIGH = shutdown
+
+The architecture document says the PTB2 logic should be verified against
+the actual Zitto_MB_V1 schematic and TCAN334 connection.
+
+=========================================================================
+12. CAN1 RESPONSIBILITIES
+=========================================================================
+
+CAN1 is responsible for:
+
+-   FlexCAN1 initialization
+-   CAN pin configuration
+-   TCAN334 control
+-   CAN baud configuration
+-   RX mailbox handling
+-   CAN error monitoring
+-   CAN frame callback
+-   CAN bus status reporting
+
+Planned public API:
+
+    Can1_Init()
+    Can1_Task()
+    Can1_SetRxCallback()
+    Can1_GetStatus()
+    Can1_IsReady()
+    Can1_Shutdown()
+    Can1_WakeNormal()
+
+CAN1 data flow:
+
+CAN BUS | v TCAN334 | v FlexCAN1 RX mailbox | v Can1_Task() | v
+Can1_ProcessRx() | v Can1_RxCallback | v main.c can1_rx() | v
+CanFramePkt_t | v Uart_Pkt_SendCan() | v ESP32 | v Server
+
+=========================================================================
+13. CAN1 STATUS MODEL
+=========================================================================
+
+The planned status includes:
+
+    ready
+    hw_ready
+    detecting
+    rx_active
+    tx_active
+    bus_idle
+    bus_off
+    error_passive
+    shdn_state
+    tx_err_cnt
+    rx_err_cnt
+    detected_baud_kbps
+    rx_count
+    tx_count
+    error_count
+    frames_rcvd
+
+This status is intended to be available to the application and status
+packet layer.
+
+=========================================================================
+14. ORIGINAL CAN AUTO-BAUD PLAN
+=========================================================================
+
+The architecture document proposed passive detection:
+
+    DETECT_START
+       |
+       v
+    candidate baud
+       |
+       v
+    passive/listen-only
+       |
+       v
+    wait for valid frame
+       |
+       +--> valid frame --> CONFIRM
+       |
+       +--> no frame --> next baud
+       |
+       v
+    repeat
+
+Candidate rates: 1000 kbps 500 kbps 250 kbps 125 kbps
+
+The document specifically states that passive detection should not
+transmit ACK or error frames that disturb the vehicle bus.
+
+The intended post-detection state was: CAN_RUNNING
+
+=========================================================================
+15. IMPORTANT ARCHITECTURE CHANGE DURING CAN DEVELOPMENT
+=========================================================================
+
+The project later discovered a fundamental bench constraint:
+
+CURRENT BENCH: PCAN <—-> S32K144 VCU
+
+There is no third active CAN node.
+
+This matters because listen-only/passive CAN detection prevents the S32K
+from participating as an ACKing node.
+
+Therefore, the original passive LOM auto-baud concept and a PCAN-only
+two-node bench are in tension.
+
+This is the most important CAN architecture issue discovered so far.
+
+If the S32K is in LOM and PCAN is the only other CAN station: - PCAN
+transmits. - S32K does not ACK the frame in LOM. - PCAN can accumulate
+CAN errors and report BUS HEAVY. - The S32K may not accept the frame as
+a normal received frame. - Therefore the detection algorithm can remain
+in DETECTING forever.
+
+This matches the current bench observation: PCAN = BUS HEAVY S32K CAN1
+state = DETECTING detected baud = 0 RX mailbox count = 0 error IRQ count
+observed = 0 in the shown RTT output
+
+This is a bus-participation/topology issue, not simply an RX mailbox
+issue.
+
+=========================================================================
+16. CAN1 REVISION HISTORY – HIGH LEVEL
+=========================================================================
+
+V0.003
+
+WORKING CAN AUTO-BAUD BASELINE
+
+-   Established a working CAN1 auto-baud baseline.
+-   FlexCAN1 + TCAN334.
+-   Candidate rates: 500 250 125 1000 kbps
+-   RX mailbox and interrupt/callback path established.
+-   CAN data forwarding toward UART/ESP32 established.
+-   RTT diagnostics established.
+
+This became the baseline for subsequent CAN architecture changes.
+
+V0.004
+
+CAN1 DETECTION / RECOVERY ARCHITECTURE
+
+Main goal: Do not re-detect simply because the bus is quiet.
+
+Planned behavior: - Detect on startup/reset. - Detect on serious CAN
+fault / bus-heavy / error-passive condition. - Detect on bus-off. - Once
+READY, bus inactivity must not force re-detection. - CAN1 should remain
+on the detected baud. - Detection was changed toward active/normal
+operation so the VCU could participate and ACK PCAN traffic. - Stale
+inactivity-based re-detection and the old internal loopback confirmation
+approach were intended to be removed.
+
+This revision became the architecture baseline for later CAN work.
+
+V0.0041
+
+FOCUS: - 5 ms cooperative CAN polling priority. - Candidate timing made
+independent of loop period. - 50 ms time-based candidate window. -
+Mailbox unlock/pending RX preservation. - 2 second fault guard and RX
+service budget. - Obsolete confirming/loopback state removed.
+
+This is important because it shows the architecture already moved away
+from the earlier loopback-confirmation design.
+
+V0.0042
+
+FOCUS: - Robust multi-frame detection. - Freeze entry hardening for
+bus-off recovery. - First-valid-frame and candidate confirmation
+changes. - Standard detection/recovery policy documented.
+
+V0.0043
+
+FOCUS: - Slow-traffic detection fixes. - Bad-candidate early rejection
+and verification. - Live baud-loss error window. - Avoid false recovery
+on healthy slow traffic. - Timing/profile corrections.
+
+V0.0044
+
+MAJOR CAN1 AUTO-BAUD REWORK
+
+The repository history records: - LOM detection was introduced. - A
+verified lock flow was introduced. - Later in the same revision line,
+active/normal probing was added specifically for PCAN-only detection so
+the VCU could ACK PCAN traffic. - Two clean external frames were
+required for baud lock. - Detection/recovery and RX forwarding were
+separated. - CAN safety ISRs were kept bounded/nonblocking. - RX
+buffering and service were hardened.
+
+Important lesson: The project itself already recognized that PCAN-only
+operation requires an ACK-capable detection mode. This is directly
+relevant to the current PCAN-only bench.
+
+V0.0045
+
+FOCUS: - Candidate-relative error diagnostics. - Centralized candidate
+error evidence. - READY guard corrections. - Recovery trigger narrowed
+toward Bus-Off rather than normal silence/warnings.
+
+V0.0046
+
+FOCUS: - Separate bounded detection profiles per baud. - Profile
+table/reference corrections.
+
+V0.0047
+
+FOCUS: - Bounded per-baud no-RX retries.
+
+V0.0048
+
+FOCUS: - Live baud mismatch recovery. - Bounded rescan. - RX frame
+retention and mailbox move-in protection. - RX/recovery invariants
+documented. - Project baseline recorded.
+
+V0.0050
+
+FOCUS: - RX BUSY handling. - FlexCAN RX BUSY/CODE handling correction. -
+Revision history and test notes added. - A separate UART TX queue
+storage/build issue was also fixed.
+
+V0.0051
+
+FOCUS: - RX register/mailbox diagnostics. - RX diagnostic state reset
+per baud candidate. - Static validation result recorded.
+
+V0.0052
+
+FOCUS: - CAN detection ACK path. - Detection mode changed/fixed around
+ACK behavior. - Clean detection documentation added.
+
+This revision is especially relevant because ACK behavior had already
+been identified as a key part of the PCAN-only detection problem.
+
+V0.0053
+
+FULL CAN ANALYSIS MODE
+
+-   Full auto-baud analysis mode.
+-   Candidate analysis telemetry.
+-   Detailed RTT diagnostics.
+-   Goal: determine why detection/locking was not reliable.
+
+V0.0054
+
+DEEPER ANALYSIS TELEMETRY
+
+-   Detailed candidate telemetry.
+-   RX and timing diagnostics.
+-   RX pin diagnostic scope correction.
+-   Analysis result telemetry completed.
+
+V0.0055
+
+ANALYSIS PLAN
+
+-   Analysis revision and plan documented.
+
+V0.0056
+
+ANALYSIS ISOLATION
+
+-   CAN analysis loop isolated.
+-   Candidate accounting improved.
+-   RX isolation improved.
+-   Non-CAN periodic work removed from the analysis loop.
+-   CAN service latency isolated.
+-   1 Mbps timing hardened.
+
+V0.0057
+
+-   CAN1 analysis service latency isolation.
+-   1 Mbps timing hardening.
+-   Revision notes updated.
+
+V0.0058
+
+QUALITY VALIDATION
+
+-   Quality gate added for baud detection.
+-   Cumulative CAN error evidence used in the verdict.
+-   Incomplete verification windows bounded.
+-   Candidate epochs and quality validation hardened.
+-   Production auto-baud restored as the default.
+
+V0.0059
+
+BOUNDARY / CANDIDATE EPOCH HARDENING
+
+-   Production CAN1 auto-baud made default.
+-   Candidate epochs and quality validation hardened.
+-   Revision notes recorded.
+
+V0.0060
+
+FIXED-BAUD TRUTH TEST
+
+A fixed-baud validation mode was added.
+
+Purpose: Separate the question “Can CAN1 actually receive correctly at a
+known baud?” from “Can auto-baud detection identify the baud?”
+
+This is a very important diagnostic concept. Auto-baud should not be
+trusted until fixed-baud CAN reception is proven independently.
+
+V0.0061
+
+HARMONIC / ALIAS REJECTION
+
+The repository history shows a significant detection problem: - Wrong
+candidate rates that are exact 2:1 relationships can produce alias-like
+reception. - 125 kbps could intermittently appear valid while the real
+traffic was 250 kbps. - Harmonic RX candidates were rejected. - RX was
+gated so application delivery happened only in READY. - Queued RX was
+blocked outside READY. - Candidate RX queues were cleared at candidate
+boundaries. - Fast pre-RX baud errors were used with bounded retry. -
+Same-version detection corrections and diagnostic string fixes were
+made.
+
+V0.0062
+
+DETECTION BOUNDARY CORRECTION
+
+The history records: - Candidate boundary-error policy was introduced. -
+Pre-RX boundary errors were identified as potentially caused by changing
+bit timing while the external transmitter is already mid-frame. - Such
+errors should not automatically reject a candidate before any clean
+frame has been received. - Pre-RX baud rejection was removed. -
+Symmetric 2:1 corroboration rules were generalized. - Obsolete
+retry/alias macros were cleaned up. - Build/alias cleanup was required
+after the logic changes.
+
+The key concept: An error immediately after changing the baud candidate
+is not necessarily evidence that the candidate is wrong.
+
+The implementation therefore distinguishes: boundary noise before first
+clean frame from protocol error after candidate confirmation has begun.
+
+V0.0063
+
+LATEST CAN1 LINE IN THE REPOSITORY
+
+The latest V0.0063 CAN1 source comments identify the major prior problem
+as baud misdetection caused by internal loopback and aliasing.
+
+The source states: - Internal loopback does not validate the external
+bus baud because TX and RX use the same controller timing. - A wrong
+candidate can occasionally decode a short CRC-valid frame because the
+candidate set contains exact 2x relationships. - This caused 250 kbps
+traffic to intermittently latch as 125 kbps.
+
+The intended V0.0063 fix: - Check real CAN protocol errors during
+DETECTING. - Only use errors after at least one clean frame as strong
+evidence against the candidate. - Require multiple consecutive clean
+frames before committing. - Re-apply the same timing with LOM cleared
+only after confirmation. - Do not fall back to normal mode on a silent
+bus.
+
+However, the current source also contains an important implementation
+mismatch described later in this document.
+
+=========================================================================
+17. CAN1 PROBLEMS ENCOUNTERED – COMPLETE LIST
+=========================================================================
+
+Problem A – CAN detection could remain stuck
+
+Symptom: CAN1 remained in DETECTING and never produced a detected baud.
+
+Root causes explored: - Candidate timing not matching the external
+bus. - RX mailbox handling. - RX BUSY/CODE state. - Candidate transition
+timing. - Boundary errors. - ACK behavior. - PCAN-only topology. -
+LOM/passive detection limitations.
+
+Current major root cause: PCAN-only + S32K in LOM means there is no
+other active node to ACK PCAN.
+
+Problem B – PCAN BUS HEAVY
+
+Current bench symptom: PCAN reports BUS HEAVY.
+
+The current LOM architecture explains this: - S32K is deliberately not
+transmitting/ACKing in LOM. - PCAN is the only active CAN transmitter. -
+PCAN therefore does not receive the ACK it expects.
+
+This is the strongest currently supported explanation for the present
+PCAN-only test.
+
+Problem C – False baud detection / harmonic alias
+
+A major historical failure: Real bus = 250 kbps Firmware could sometimes
+lock = 125 kbps
+
+Reason: Candidate rates have exact 2:1 relationships.
+
+A receiver at half the actual rate can sometimes interpret portions of a
+frame as a seemingly valid frame.
+
+Fix attempts: - Multi-frame confirmation. - Error-gated confirmation. -
+Candidate quality scoring. - Harmonic rejection. - Symmetric 2:1
+corroboration. - Candidate-boundary cleanup. - RX gating outside READY.
+
+Problem D – Internal loopback was not a valid external baud proof
+
+The earlier architecture used internal loopback confirmation.
+
+Problem: FlexCAN internal TX/RX loopback uses the controller’s own
+timing. It can prove internal controller operation but cannot
+independently prove that the external PCAN bus has the same bit timing.
+
+This became a known architectural weakness.
+
+Later work removed/abandoned the loopback-confirmation path in the
+V0.0041 development line and moved toward external-frame evidence.
+
+Problem E – Detection logic did not always match comments
+
+At various points the code comments described: DETECTING -> CONFIRMING
+-> READY
+
+but implementation paths did not always actually execute the stated
+confirmation function/state.
+
+This caused confusion when debugging and was one reason the architecture
+was repeatedly revised.
+
+Problem F – Wrong-candidate protocol errors at baud boundaries
+
+When CAN timing is changed while the external transmitter is already
+sending, transient bit/form/stuff errors can occur.
+
+Early detection logic treated such errors too aggressively.
+
+Result: A candidate could be rejected before it ever had a fair chance
+to receive a complete frame.
+
+V0.0062 corrected this by distinguishing: error before first clean frame
+from error after clean candidate evidence.
+
+Problem G – RX mailbox BUSY/CODE handling
+
+V0.0050 specifically fixed RX BUSY/CODE handling.
+
+The project had cases where RX mailbox state could prevent reliable
+frame processing or re-arming.
+
+The fix included explicit mailbox state handling and re-arm behavior.
+
+Problem H – Stale RX data across candidate changes
+
+When changing baud candidates: - old RX flags/data could survive. - an
+old frame could be attributed to a new candidate.
+
+Fixes: - clear IFLAG1 - clear ESR1 - clear/re-arm mailbox RAM - clear
+queued RX/application data at candidate boundaries - use
+candidate-relative evidence
+
+Problem I – CAN IRQ / DefaultISR risk
+
+The startup assembly uses weak aliases to DefaultISR.
+
+CAN interrupts therefore had to be explicitly handled.
+
+Work included: - CAN1 IRQ handlers. - bounded ISR behavior. - shared ESR
+masks. - immediate bus-off handling. - preventing stale interrupt state
+before enabling the peripheral.
+
+Problem J – CAN initialization / clock sequencing
+
+A major initialization issue was found around: - WDOG - 80 MHz SPLL
+clock - 40 MHz CAN bus clock - FlexCAN low-power/clock-source
+sequencing.
+
+The corrected main boot order became:
+
+    wdog_disable()
+    clock_init_80mhz()
+    SEGGER_RTT_Init()
+    remaining peripheral initialization
+
+The CAN hardware initialization was also hardened with bounded waits
+around: - LPMACK - SOFTRST - Freeze entry - Freeze exit
+
+Current CAN timing architecture: CAN clock source = bus clock bus clock
+= 40 MHz
+
+Problem K – Build errors caused by architecture changes
+
+One concrete build error encountered in the V0.001 line:
+
+    g_no_frame_ticks undeclared
+
+The remaining line was in Can1_Init():
+
+    g_no_frame_ticks = 0U;
+
+The fix was simply to remove the stale reference.
+
+Later V0.0062 also required build cleanup around removed aliases/macros
+and CAN1 detection state.
+
+Problem L – RTT revision/build confusion
+
+There were cases where source contained a new firmware revision but RTT
+appeared to show an older revision.
+
+The build artifact investigation showed: - ELF was being rebuilt. -
+main.o and can1.o timestamps matched the build. - After correct
+flashing, RTT showed V0.001.
+
+Lesson: Always verify source -> build timestamp -> ELF -> flash -> RTT
+banner.
+
+Problem M – CAN RX diagnostic visibility
+
+V0.0051 added register/mailbox diagnostics because a simple “no frame”
+observation was insufficient.
+
+Important diagnostics included: - IFLAG1 - ESR1 - MCR - CTRL1 - RX
+mailbox CS - IRQ counters
+
+The project repeatedly increased RTT diagnostics to separate: physical
+bus issue pin/mux issue controller clock issue mailbox issue candidate
+timing issue application forwarding issue
+
+Problem N – Main-loop service pressure
+
+CAN frames were forwarded to UART/ESP32.
+
+At higher CAN traffic rates, excessive logging and forwarding could put
+pressure on the cooperative loop.
+
+Fixes included: - non-blocking UART TX queue - bounded UART processing -
+reduced per-frame RTT logging - CAN application queue servicing -
+analysis-loop isolation - RX forwarding decoupling
+
+=========================================================================
+18. IMPORTANT CURRENT V0.0063 IMPLEMENTATION MISMATCHES
+=========================================================================
+
+This section is critical.
+
+The current V0.0063 source comments describe:
+
+    DETECTING (LOM)
+        ->
+    CONFIRMING (N clean frames)
+        ->
+    READY
+
+but the actual source currently does not contain an independent
+CONFIRMING state in the state machine.
+
+Instead, Can1_Task() effectively does:
+
+    DETECTING
+       |
+       +--> clean frame
+       |       |
+       |       +--> increment g_confirm_count
+       |       |
+       |       +--> N clean frames
+       |               |
+       |               v
+       |          Apply same baud with LOM=0
+       |               |
+       |               v
+       |             READY
+       |
+       +--> no frame for detection window
+               |
+               v
+           next candidate
+
+So: - The comment still mentions loopback confirmation. - The code no
+longer performs the old loopback confirmation. - The real confirmation
+is multiple external clean frames.
+
+This is actually conceptually better than internal loopback, but the
+comments need to be made consistent.
+
+CURRENT SOURCE ALSO CONTAINS A SILENCE RE-DETECTION PATH
+
+The current V0.0063 Can1_Task() contains:
+
+    if(g_no_frame_ticks >= CAN1_NO_FRAME_LIMIT)
+        prv_StartDetection();
+
+and the comment says approximately 10 seconds.
+
+That conflicts with the earlier V0.004 architecture decision:
+
+    Once READY, silence/inactivity must NOT cause re-detection.
+
+The planned architecture was: READY + no traffic = remain READY
+
+and: BUS-OFF / serious fault = re-detect
+
+Therefore this needs to be explicitly resolved in the next CAN
+architecture revision.
+
+CURRENT V0.0063 DETECTION IS STILL LOM
+
+Current source explicitly applies:
+
+    listen_only = 1
+
+during detection.
+
+Therefore the present source is still passive LOM detection.
+
+For the current physical setup:
+
+    PCAN <----> VCU
+
+this means the S32K does not ACK PCAN traffic while detecting.
+
+Therefore the current V0.0063 architecture cannot be considered
+validated for the PCAN-only bench simply because the code builds.
+
+=========================================================================
+19. CURRENT BENCH OBSERVATION
+=========================================================================
+
+Current physical setup: ONLY PCAN + VCU
+
+No third CAN node is present.
+
+Observed RTT behavior from the current debug session:
+
+    [CAN1] Auto-baud: 500/250/125/1000 kbps
+    [CAN1] LOM during detect, loopback confirm, then NORMAL
+
+    [CAN1] Next baud: 1000 kbps LOM ...
+    [CAN1] Next baud: 500 kbps LOM ...
+    [CAN1] Next baud: 250 kbps LOM ...
+    [CAN1] Next baud: 125 kbps LOM ...
+
+    [MAIN] ... CAN1=0kbps state=0 ...
+    IRQs: or=0 err=0 mb=0
+
+State 0 corresponds to DETECTING.
+
+PCAN: BUS HEAVY
+
+Interpretation: The VCU is continuously scanning but never receives the
+clean external frame needed to lock, while PCAN is accumulating bus
+errors because the VCU is not ACKing in LOM.
+
+This is consistent with the current topology and the current code.
+
+=========================================================================
+20. WHAT WAS TRIED TO FIX CAN1
+=========================================================================
+
+The CAN1 development was not one single fix. It went through multiple
+diagnostic and architecture iterations.
+
+Summary:
+
+1.  Initial auto-baud state machine
+    -   Candidate scanning.
+    -   RX mailbox.
+    -   READY state.
+2.  Stop re-detecting on simple silence
+    -   Intended READY persistence.
+3.  Active/normal probing
+    -   Added specifically because PCAN-only requires ACK participation.
+4.  LOM/passive detection experiments
+    -   Intended to protect a real vehicle bus from ACK/error
+        disturbance.
+5.  Multi-frame confirmation
+    -   Prevent one accidental frame from locking the baud.
+6.  Internal loopback confirmation
+    -   Tried as a controller-side verification.
+    -   Later recognized as insufficient to prove external baud.
+7.  RX BUSY/CODE fixes
+    -   Mailbox re-arm and state handling.
+8.  Candidate epoch cleanup
+    -   Clear mailbox/flags between baud candidates.
+9.  Candidate-relative error diagnostics
+    -   Determine whether errors belong to the current candidate.
+10. Analysis-only builds
+    -   Isolate CAN from UART/IMU/CSA and other scheduler activity.
+11. Detailed RTT register diagnostics
+    -   ESR1
+    -   IFLAG1
+    -   MCR
+    -   CTRL1
+    -   mailbox state
+    -   IRQ counters
+12. Quality gates
+    -   Multiple clean frames.
+    -   Cumulative error evidence.
+    -   Bounded verification windows.
+13. Harmonic rejection
+    -   Prevent 250 -> 125 alias locks.
+    -   Generalize 2:1 candidate corroboration.
+14. Boundary-error handling
+    -   Do not reject a candidate merely because timing was switched
+        while a frame was already in progress.
+15. Fixed-baud truth-test mode
+    -   Separate fixed-baud hardware/RX validation from auto-baud logic.
+16. Clock/initialization hardening
+    -   WDOG disabled before long initialization.
+    -   80 MHz SPLL.
+    -   40 MHz bus/CAN clock.
+    -   bounded LPMACK/freeze/reset waits.
+17. IRQ hardening
+    -   Disable/clear stale CAN IRQ state.
+    -   Bounded ISR behavior.
+    -   Bus-off detection.
+18. UART/main-loop pressure reduction
+    -   Non-blocking TX.
+    -   Bounded service.
+    -   Reduced RTT pressure.
+
+=========================================================================
+21. WHAT HAS BEEN PROVEN VS WHAT HAS NOT
+=========================================================================
+
+PROVEN / STRONGLY SUPPORTED BY SOURCE + BENCH
+
+-   S32K144 CAN1 is FlexCAN1.
+-   CAN1 pins used by current source are PTA12/PTA13 ALT3.
+-   TCAN334 is the intended external transceiver.
+-   PTB2 controls CAN1 transceiver shutdown/normal state in current
+    design.
+-   CAN clock is intended to be 40 MHz from the MCU bus clock.
+-   Candidate rates are 500/250/125/1000 kbps.
+-   RX mailbox is MB4 in the current CAN1 implementation.
+-   CAN1 uses RTT diagnostics.
+-   CAN1 has gone through extensive auto-baud/error-recovery iterations.
+-   Harmonic/alias baud misdetection was a real software-detection
+    problem.
+-   Boundary errors during candidate changes were a real detection
+    concern.
+-   Current PCAN-only setup produces BUS HEAVY while CAN1 remains in
+    detection.
+-   Current source uses LOM during detection.
+
+NOT YET VALIDATED AS A FINAL WORKING SYSTEM
+
+-   Fully reliable PCAN-only auto-baud with the current LOM
+    architecture.
+-   Guaranteed correct detection across all four baud rates on a
+    PCAN-only two-node bench.
+-   Final physical-layer termination and signal integrity.
+-   Final CANH/CANL polarity verification against the actual board
+    wiring.
+-   Final TCAN334 electrical behavior against the actual board
+    schematic.
+-   Full bus-off recovery validation under controlled hardware fault.
+-   Complete CAN1 fixed-baud truth test on the current exact hardware.
+-   Full IMU/CSA/OTA/ESP32/server integration bench validation.
+
+=========================================================================
+22. CURRENT ARCHITECTURE DECISION POINT
+=========================================================================
+
+The project now has two competing requirements:
+
+REQUIREMENT A: Vehicle-safe passive detection -> avoid transmitting
+ACK/error frames at unknown baud.
+
+REQUIREMENT B: PCAN-only two-node bench auto-detection -> S32K must
+participate/ACK in order to make PCAN traffic behave normally.
+
+A pure LOM detector satisfies A but conflicts with B.
+
+A pure normal-mode detector satisfies B but can disturb a real CAN bus
+when the selected candidate baud is wrong.
+
+Therefore the next CAN1 architecture should not simply “remove LOM”.
+
+The next implementation needs a deliberately controlled detection
+method, for example: - a dedicated PCAN/bench detection mode, or - a
+carefully bounded active-probe mode with immediate candidate recovery,
+or - a hardware/test configuration where another active CAN node
+supplies ACK.
+
+The choice should be made explicitly before another large CAN1 rewrite.
+
+=========================================================================
+23. RECOMMENDED CAN1 DEVELOPMENT ORDER
+=========================================================================
+
+The project history strongly supports the following order:
+
+STEP 1
+
+Fixed-baud truth test.
+
+Choose one known PCAN baud, for example 250 kbps.
+
+Configure CAN1 directly at 250 kbps.
+
+Do not auto-baud.
+
+Verify: - PCAN can transmit. - S32K receives frames. - RX mailbox
+works. - callback works. - UART/RTT forwarding works. - PCAN bus is not
+BUS HEAVY.
+
+If this fails, do not touch auto-baud yet.
+
+STEP 2
+
+Resolve the PCAN-only ACK topology.
+
+Explicitly choose whether CAN1 detection will: - participate in normal
+mode during bench detection, or - require another active CAN node for
+passive LOM detection.
+
+STEP 3
+
+Implement auto-baud only after fixed-baud RX is known good.
+
+STEP 4
+
+Keep candidate boundaries clean: - freeze - change timing - clear ESR1 -
+clear IFLAG1 - clear/re-arm MB - allow boundary to settle - collect
+external evidence
+
+STEP 5
+
+Use multiple clean frames.
+
+STEP 6
+
+Reject harmonic aliases.
+
+STEP 7
+
+Only enter READY after the candidate has passed the detection policy.
+
+STEP 8
+
+In READY: - normal RX - no re-detection on ordinary silence - diagnostic
+errors do not automatically restart CAN - Bus-Off triggers controlled
+recovery/re-detection
+
+STEP 9
+
+All waits must be bounded: - freeze entry - freeze exit - clock
+switching - bus-off recovery - mailbox processing - any external
+peripheral operation
+
+STEP 10
+
+Only after CAN1 is stable: enable/validate CAN2.
+
+=========================================================================
+24. NON-BLOCKING / NEVER-STUCK ENGINEERING RULE
+=========================================================================
+
+A major project requirement established during V0.006 is:
+
+No module should wait forever for: - IMU - CSA - UART/ESP32 - server
+command - CAN - flash - OTA - bus recovery - hardware state
+
+Expected pattern:
+
+operation | v timeout / error | v RTT/error report | v return to
+scheduler | v other modules continue
+
+CAN1 must follow the same rule.
+
+In particular: - no infinite Freeze wait - no infinite LPMACK wait - no
+infinite bus recovery wait - no infinite RX wait - no infinite auto-baud
+candidate wait - no blocking CAN forwarding
+
+=========================================================================
+25. CURRENT PROJECT REVISION / REPOSITORY STATUS
+=========================================================================
+
+Repository: velmuruganv098/Zitto_MB_V1
+
+Relevant branch/revision history currently visible: V0.005 V0.006
+V0.0063 dev/can1-v0.004 … through multiple CAN1 development revisions
+baseline/working-can-autobaud baseline/v0.003-current
+
+Latest named revision reviewed: V0.0063
+
+Latest V0.0063 commit: 065781d78d79561e38934611da7126a444967d8a
+
+Commit message: fix(can): stop rejecting every candidate on boundary
+noise before first RX
+
+Earlier important V0.0063 predecessor:
+c0b8c3dad316d78d257c0c9272c7fc02ac0b6740
+
+Message: fix(can): reject aliased baud locks; fix CAN2 clock+timing;
+restore missing debug_rtt
+
+Note: The repository’s V0.0063 line contains a CAN2-related fix in one
+commit. This document’s technical focus remains CAN1, as requested.
+
+=========================================================================
+26. ARCHITECTURE EVOLUTION SUMMARY
+=========================================================================
+
+Initial: CAN1 auto-baud baseline | v Candidate scan | v RX mailbox | v
+READY
+
+Then: Prevent false recovery on silence | v Active PCAN-compatible
+detection | v Multi-frame confirmation | v RX BUSY/mailbox fixes | v
+Candidate epoch/error diagnostics | v Analysis builds | v Quality gates
+| v Harmonic rejection | v Boundary-error correction | v Current
+V0.0063: LOM candidate detection multiple clean-frame confirmation
+normal mode after lock error/bus-off recovery
+
+=========================================================================
+27. MOST IMPORTANT LESSONS FROM THE CAN1 WORK
+=========================================================================
+
+1.  Auto-baud detection and CAN hardware validation are two different
+    problems.
+
+2.  A fixed-baud truth test must work before auto-baud can be trusted.
+
+3.  Internal loopback is not proof of external bus baud.
+
+4.  PCAN-only operation changes the ACK requirements.
+
+5.  LOM is useful for passive vehicle-safe detection, but it creates an
+    ACK problem when the VCU is the only other node.
+
+6.  Exact 2:1 baud candidates create alias/misdetection risks.
+
+7.  A candidate-boundary error is not automatically a wrong-baud
+    verdict.
+
+8.  RX mailbox state must be completely reset between candidate epochs.
+
+9.  Application RX should be gated until a baud candidate is genuinely
+    confirmed.
+
+10. READY should not be lost simply because the bus is quiet.
+
+11. Bus-Off is fundamentally different from ordinary CAN inactivity.
+
+12. All embedded waits must be bounded.
+
+13. RTT diagnostics are essential, but excessive per-frame logging can
+    itself interfere with cooperative firmware timing.
+
+14. CAN1 and CAN2 must remain independent.
+
+15. Architecture comments, state definitions and actual implementation
+    must always be kept synchronized. Several historical debugging
+    problems were made harder by comments describing a state path that
+    the code no longer executed.
+
+=========================================================================
+28. CURRENT CAN1 STATE – EXECUTIVE SUMMARY
+=========================================================================
+
+Current hardware: S32K144 + TCAN334 + PCAN
+
+Current bench: PCAN only No third CAN node
+
+Current source: V0.0063 FlexCAN1 PTA12 RX PTA13 TX PTB2 transceiver
+control 40 MHz CAN clock candidates 500/250/125/1000 MB4 RX LOM during
+detection
+
+Current observed behavior: CAN1 remains DETECTING no baud lock PCAN
+reports BUS HEAVY
+
+Primary current architecture issue: LOM detection is not compatible with
+a two-node PCAN-only bench when the VCU needs to ACK PCAN traffic.
+
+Secondary current source issue: The V0.0063 implementation still has a
+READY no-frame timeout that restarts detection, which conflicts with the
+earlier project requirement that silence must not trigger re-detection.
+
+Third current issue: Source comments still refer to “loopback confirm”
+although the actual current confirmation path is external clean-frame
+counting, not an independent loopback state.
+
+The next CAN1 revision should therefore be designed from the physical
+topology first, rather than continuing to tune the current LOM detector.
+
+=========================================================================
+29. REFERENCE MATERIAL
+=========================================================================
+
+GitHub repository: https://github.com/velmuruganv098/Zitto_MB_V1
+
+Architecture document: Zitto_MB_V1 Firmware Architecture_Doc_V1.0 -
+310826.docx
+
+Additional architecture notes: Architecture.txt
+
+Important CAN1 source: src/CAN/can1.c src/CAN/can1.h
+
+Important boot/application source: src/main.c src/boot_main.c
+src/system_init.c
+
+Important CAN interrupt source: src/CAN/can1_irq.c
+
+Important development line: dev/can1-v0.0062-detection-boundary-fix
+V0.0063
+
+=========================================================================
+30. FINAL PROJECT STATUS AT THIS POINT
+=========================================================================
+
+The VCU architecture itself is well defined at a high level: -
+cooperative super-loop - modular peripherals - UART/ESP32 gateway -
+CAN1/CAN2 separation - RTT diagnostics - bounded/non-blocking execution
+direction
+
+The CAN1 implementation has also gone through substantial engineering
+work: - auto-baud state machines - fixed-baud truth testing - active vs
+passive detection experiments - RX mailbox hardening - IRQ hardening -
+bus-off recovery - candidate quality validation - harmonic rejection -
+boundary-error handling - detailed diagnostics
+
+However, the current PCAN-only bench exposes a fundamental architecture
+constraint:
+
+    passive LOM detection
+            VS
+    two-node PCAN <-> VCU operation requiring ACK
+
+That constraint should be treated as the main design decision for the
+next CAN1 revision.
+
+The correct next step is therefore not another blind timing tweak. The
+correct sequence is:
+
+    1. prove fixed-baud CAN1 RX
+    2. prove physical bus/termination/transceiver
+    3. explicitly choose the PCAN-only detection strategy
+    4. implement bounded auto-baud around that strategy
+    5. preserve READY during ordinary silence
+    6. recover only from defined CAN faults
+    7. validate all four candidate rates
+    8. only then move attention back to CAN2
+
+END OF DOCUMENT
