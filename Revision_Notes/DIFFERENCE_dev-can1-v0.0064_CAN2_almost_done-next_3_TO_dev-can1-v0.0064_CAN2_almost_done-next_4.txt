@@ -1,0 +1,5776 @@
+============================================================
+PROJECT REVISION DIFFERENCE
+============================================================
+
+PROJECT:
+Zitto_MB_V1
+
+FROM:
+dev/can1-v0.0064_CAN2_almost_done-next_3
+
+TO:
+dev/can1-v0.0064_CAN2_almost_done-next_4
+
+DATE:
+22-09-2026 15:27:12
+
+BRANCH:
+dev/can1-v0.0064_CAN2_almost_done-next_4
+
+DIRECTION:
+LOCAL -> GITHUB
+
+SOURCE:
+C:\Projects\Zitto_MB_V1
+
+DESTINATION:
+velmuruganv098/Zitto_MB_V1 (branch: dev/can1-v0.0064_CAN2_almost_done-next_4)
+
+============================================================
+REVISION NOTES (author-entered - what was intended/done)
+============================================================
+CAN2 almost done , only some bus off at 1mbps
+
+============================================================
+SUMMARY (automatically detected - what actually changed)
+============================================================
+
+Files Checked     : 299
+Unchanged         : 96
+Modified          : 3
+Added             : 200
+Deleted           : 0
+
+Lines Added       : 50307
+Lines Deleted     : 81
+
+============================================================
+FILE DIFFERENCES
+============================================================
+
+[1] .claude/worktrees/can-baudrate-detection-fix-0677f2/.cproject
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+51,871 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+362
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+14734c9633bf2e643e1013b7f98cfc9e57ecf2dac22d08c3eb5ffbe60d28a9aa
+
+============================================================
+
+[2] .claude/worktrees/can-baudrate-detection-fix-0677f2/.git
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+81 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+1
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+d735a37bba09d046804b13e8ff19ce0bef618fafc95d17ba855cbeebc15a61e4
+
+============================================================
+
+[3] .claude/worktrees/can-baudrate-detection-fix-0677f2/.gitignore
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+959 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+58
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+b4ab7c90d2526464b1be10acdb183ee9943e9c50cf8a3ed89b15b9cb5c94e235
+
+============================================================
+
+[4] .claude/worktrees/can-baudrate-detection-fix-0677f2/.project
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+789 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+26
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+80bbd34a3b25973b3d4ca97a6fb0788f35ddf8676e629209d87c60edc91cdc01
+
+============================================================
+
+[5] .claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/com.freescale.s32ds.cross.sdk.support.prefs
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+154 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+2
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+a0c37635a3f2ec142dd92c6eb30c4de0be84bf7a7fbe88dae8134a2584b3824d
+
+============================================================
+
+[6] .claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/com.freescale.s32ds.cross.wizard.prefs
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+43 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+2
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+d61d32ccaaf7d83da659a00edad49a3bceb6e8aaddcde65d8bdda9df46ea691e
+
+============================================================
+
+[7] .claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/com.nxp.s32ds.cle.ide.sdk.attached.sdks.data.prefs
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+24,219 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+2
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+1e1fc44f10fced67300ae4d8115ba1aff686a7a188194be05246cb2c4bbac3ee
+
+============================================================
+
+[8] .claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/com.nxp.s32ds.cle.runtime.component.prefs
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+545 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+9
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+8f08bc45fc9b64b45a8d22be0d0fa77607aac058cb86eb5621ff862225ede25b
+
+============================================================
+
+[9] .claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/language.settings.xml
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+4,112 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+47
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+6404b318d5bfe14720c593853d315e5ddede6f12dafe888c4d4cfb3613bd58c3
+
+============================================================
+
+[10] .claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/org.eclipse.cdt.codan.core.prefs
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+62 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+3
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+6c355f2f86adcd3582bd685e521a179f63b362a8a8fec0da0b2f9111746eab9d
+
+============================================================
+
+[11] .claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/org.eclipse.cdt.core.prefs
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+5,229 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+45
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+ec2d3a5fba8e1f41d78d5e7d15384083db9a64340487d209adc856e225165f76
+
+============================================================
+
+[12] .claude/worktrees/can-baudrate-detection-fix-0677f2/.settings/org.eclipse.core.resources.prefs
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+125 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+4
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+dac6a34e4331fb6730869ee91187214f54098f81cd2be893e8852fa32d085830
+
+============================================================
+
+[13] .claude/worktrees/can-baudrate-detection-fix-0677f2/IMU_Test.mex
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+15,496 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+217
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+4b5758c3057c07e1f0072f4972f32fc10cba55dc6cfd0e283f77a5880d0ff2ec
+
+============================================================
+
+[14] .claude/worktrees/can-baudrate-detection-fix-0677f2/Project_Settings/Debugger/Zitto_MB_V1_Debug_FLASH_PNE.launch
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+19,897 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+211
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+608c57f96f81486f1a62bd1c4b3abde2685ffee39e70b0a36996326e09bb236f
+
+============================================================
+
+[15] .claude/worktrees/can-baudrate-detection-fix-0677f2/Project_Settings/Debugger/Zitto_MB_V1_Debug_RAM_PNE.launch
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+19,899 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+211
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+a787640be551a61ab091dd4c90d5e715ebbff88a0e0f2c78c61ea0bb06bd6b12
+
+============================================================
+
+[16] .claude/worktrees/can-baudrate-detection-fix-0677f2/Project_Settings/Debugger/Zitto_MB_V1_Release_FLASH_PNE.launch
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+19,902 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+211
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+dc0d7365858d921307be2926d98d3a8247129141697345e65b1fc1995011a0d7
+
+============================================================
+
+[17] .claude/worktrees/can-baudrate-detection-fix-0677f2/Project_Settings/Debugger/Zitto_MB_V1_Release_RAM_PNE.launch
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+19,904 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+211
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+8e630cc7fb148a804b790ecb179cbaf91ea8c3645b2c5b54ddcbf4e18a447e6e
+
+============================================================
+
+[18] .claude/worktrees/can-baudrate-detection-fix-0677f2/Project_Settings/Linker_Files/S32K144_64_flash.ld
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+7,592 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+220
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+0d7cd38b8c542bb2ec8f78a4c9ee92b1b97f38e3759518e5ce20bee139dfca74
+
+============================================================
+
+[19] .claude/worktrees/can-baudrate-detection-fix-0677f2/Project_Settings/Linker_Files/S32K144_64_ram.ld
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+5,356 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+175
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+c2748086d2f02c4b4c040c6a1969eebf18682d13e68057e9325ab62767985afa
+
+============================================================
+
+[20] .claude/worktrees/can-baudrate-detection-fix-0677f2/Project_Settings/Startup_Code/startup_S32K144.S
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+32,088 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+540
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+18cc9d85e1f8c0f787515f6487acd39c07f50f81f6b7ea7efdd65b2d96d5fda3
+
+============================================================
+
+[21] .claude/worktrees/can-baudrate-detection-fix-0677f2/README.md
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+20 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+1
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+d204f9648b2986599836e01c1c292c5a75c456417e2afe1db7f501549da010ee
+
+============================================================
+
+[22] .claude/worktrees/can-baudrate-detection-fix-0677f2/RTT/SEGGER_RTT.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+73,840 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+2,057
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+51f8969b91694d322bfe6fd0a4a5015e67e89eb46b3cbf6d3a22095cfcb58a50
+
+============================================================
+
+[23] .claude/worktrees/can-baudrate-detection-fix-0677f2/RTT/SEGGER_RTT.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+22,337 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+486
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+fe21e9618410807676e5e964ea76da11a1744d20b5c0125afc24f1474b09c595
+
+============================================================
+
+[24] .claude/worktrees/can-baudrate-detection-fix-0677f2/RTT/SEGGER_RTT_ASM_ARMv7M.S
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+11,749 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+247
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+55e7559d9f60f91e023e8eb1214e4a7ed77a889cfe95e41c8c140c4e2c730647
+
+============================================================
+
+[25] .claude/worktrees/can-baudrate-detection-fix-0677f2/RTT/SEGGER_RTT_Conf.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,666 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+41
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+3c9babb4e56da1a0fdad1d4042cdc0cee264622bd09b49280d954629e61a81a9
+
+============================================================
+
+[26] .claude/worktrees/can-baudrate-detection-fix-0677f2/RTT/SEGGER_RTT_ConfDefaults.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+25,750 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+476
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+f2f1e3a67bf139ba056860a745cf635d029e51f62be6d208f89412d25ea434a4
+
+============================================================
+
+[27] .claude/worktrees/can-baudrate-detection-fix-0677f2/RTT/SEGGER_RTT_printf.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+14,230 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+483
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+3a4f1f398a4a3eeac4d8bd77653a14573612d7d6b783eddcf7f15666293dfc4b
+
+============================================================
+
+[28] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/S32K144/include/S32K144.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+766,133 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+11,936
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+96d2eda5edfd000f0ec2cf78745ddd874af37ae0930abc4dd4d52ebd3c8ee6f4
+
+============================================================
+
+[29] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/S32K144/include/S32K144_features.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+85,248 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+1,520
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+34cf49de98b6aacb3c2880190f24244d2488f48b53402e32fdbd08bc482d0df4
+
+============================================================
+
+[30] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/S32K144/startup/system_S32K144.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+7,746 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+194
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+612747399599e025734794b7deed2389e958f2001800efa7fc3db77169814f0a
+
+============================================================
+
+[31] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/callbacks.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+7,056 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+187
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+0e06331572947fdbcd7359e088173b25ee06addbb5681074282734bbc4e69b97
+
+============================================================
+
+[32] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/common/s32_core_cm4.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+6,803 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+195
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+692244bf0114e77bac6e473a2156ed166d32459776e16ebf6bf025028ef33fd1
+
+============================================================
+
+[33] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/devassert.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+3,979 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+81
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+2c5e48ed021329ef1ab928e3dc6efcba18816987b83e9423ba1f54188823f816
+
+============================================================
+
+[34] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/device_registers.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+11,355 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+375
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+6036e36f3b07620680b8672a20261d04e6c32181db3b3a75e688f965b871813c
+
+============================================================
+
+[35] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/startup.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+8,603 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+245
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+dc4676e68e0b655788cbc26a93ed0fa8918db8a45665b80b0d7bf3a9fcef85dc
+
+============================================================
+
+[36] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/startup.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+6,378 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+130
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+5f1d78088b7844400fdd02ca691c34195a7384e75c8b630f4a549702c8079db1
+
+============================================================
+
+[37] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/devices/status.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+11,811 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+170
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+bd9a64b145c0f808f796b6ab02416eec0346531a91617c899ac49190f5a2c5cf
+
+============================================================
+
+[38] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/inc/clock.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+4,797 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+134
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+5a49a731e6fb4e53a2c717ee89be2a756184bb774be942d08fffd95151518224
+
+============================================================
+
+[39] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/inc/interrupt_manager.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+9,923 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+317
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+f2dcc1fbdaa3cf0163eaf6a856aa83a98ee7593c8476714c497bd443811fbb7b
+
+============================================================
+
+[40] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/inc/pins_driver.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+47,631 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+1,162
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+29708b7b0641b08be6b937fb6b2951ebd56a4a716b683c4d7c75c2f87f3585ff
+
+============================================================
+
+[41] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+158,448 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+4,295
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+7dc4ad1bf938a6d4804ad957140c56e47fd7f3880985d0eb6330dddc67472412
+
+============================================================
+
+[42] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+39,891 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+988
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+31d365a9dde7333643d223f72b31424f62e507cf066f361de812d1ce2e75d990
+
+============================================================
+
+[43] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/clock/S32K1xx/pcc_hw_access.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+6,988 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+203
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+bee9cd245a1b75f40521b397270352cad9302016780f553b39c3f03aff443ee3
+
+============================================================
+
+[44] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/clock/S32K1xx/pmc_hw_access.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+3,574 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+119
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+e83e76ce9903d0e5a5a1f73f969c1ef99b8d02e67227688fdf7caec4e8de36f5
+
+============================================================
+
+[45] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/clock/S32K1xx/scg_hw_access.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+25,570 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+822
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+f07375415041ebbbe3b434dd9e8c94a6f69fafbbd3254305913c62cd724afb31
+
+============================================================
+
+[46] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/clock/S32K1xx/sim_hw_access.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+22,819 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+654
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+f9248d00b85561c10758b1197864db73343eb54ad40d7d118ae508bb53a21b0f
+
+============================================================
+
+[47] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/clock/S32K1xx/smc_hw_access.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+2,023 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+70
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+ca7f06058f9b787df05490da4083c044b9d79231865e9326e8da61a07feab232
+
+============================================================
+
+[48] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/interrupt/interrupt_manager.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+23,872 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+572
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+48281cc53e548fa00421c8fe51f09f85aa940ad2885386d99a6e75784ded31fe
+
+============================================================
+
+[49] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/pins/pins_driver.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+22,506 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+561
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+ce8949069ba4970e1b8cf755401746f369452b80a28de71445e6638b051ecaea
+
+============================================================
+
+[50] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/pins/pins_gpio_hw_access.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+12,657 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+349
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+449bbfd6260db6ec3f745d4dc593247d0e964281aaef97f77a40510909baaa85
+
+============================================================
+
+[51] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/pins/pins_port_hw_access.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+14,959 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+400
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+ed80a018d50cfeac67bf71b5a937d917fbbcb177518bb12d024cbc0d8ea243d4
+
+============================================================
+
+[52] .claude/worktrees/can-baudrate-detection-fix-0677f2/SDK/platform/drivers/src/pins/pins_port_hw_access.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+12,486 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+352
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+9bae38c1a944631a7c7aac8674a52530089314ec4e8fddee1f700eb4c0aff8c2
+
+============================================================
+
+[53] .claude/worktrees/can-baudrate-detection-fix-0677f2/board/sdk_project_config.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+538 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+10
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+2dc9ccb022b4437390db20b7fd35b74baffd88012e13095aa8ad2ae376beb888
+
+============================================================
+
+[54] .claude/worktrees/can-baudrate-detection-fix-0677f2/fix_startup.bat
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+627 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+22
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+425b85a980f3a3609cf13ea5985a45de1c49dee4487f0540a8b1c494c6496348
+
+============================================================
+
+[55] .claude/worktrees/can-baudrate-detection-fix-0677f2/flash.bat
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+145 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+2
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+b165a0f7c47d1b6203ba0bb902f107aaf202971c1e5384cd13a328c71372a8e8
+
+============================================================
+
+[56] .claude/worktrees/can-baudrate-detection-fix-0677f2/flash.jlink
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+124 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+9
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+8f3f9b6cbc14801ae2827206071f5e167779fed05bc4c8dc88c77c30483bc58b
+
+============================================================
+
+[57] .claude/worktrees/can-baudrate-detection-fix-0677f2/includes/system_init.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+134 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+7
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+5fea8e0f9378a462b3cb46fd64f3f7792d7001a3021f69a3342f98c58bab9de7
+
+============================================================
+
+[58] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/APP/app_config.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+2,668 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+96
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+193c0712e69dfc45fcac4c8f68995d1893e9be78e6b385c090aca1fb1a69117a
+
+============================================================
+
+[59] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/APP/app_main.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+11,587 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+595
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+a84ba974f404a176550c04e1130c10a14581912d0234a4d28391a4afb516f193
+
+============================================================
+
+[60] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/APP/app_main.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+225 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+16
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+7e33588c8a7bc5ecaeeaa90c9445b1cf2dc6f6eb780f6b61952e89c3a42a843e
+
+============================================================
+
+[61] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/APP/app_modules.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,570 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+88
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+30217d580b97b19bbfb4b958026f8ef344e358aa1b99ad08fe9d6b30f71ddf7d
+
+============================================================
+
+[62] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/APP/app_modules.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+644 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+30
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+87d81bfcb88ed70ec1b5368094c191d58743deeed7a61f1cda6c26cf9fa3c2d8
+
+============================================================
+
+[63] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/APP/app_status.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,273 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+63
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+90497213c143c7e5c6400328c0cc0a67c11cac8f729bb95e5ff2ce79bb873d52
+
+============================================================
+
+[64] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/APP/app_status.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+624 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+38
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+90879c56f53b7b8d28cc97b94b1756711e49f404df9b60476dd2044fdb703f2d
+
+============================================================
+
+[65] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/CAN/can1.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+44,219 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+1,123
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+f3deea4e11d41adba88864f27913df74e96ffc9c0962717eb75769e6df7c6b04
+
+============================================================
+
+[66] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/CAN/can1.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+7,060 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+187
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+e91d11cdc28debc1284e493acfd79826d2985e7848ac4a4f3546defebf6f97ac
+
+============================================================
+
+[67] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/CAN/can1_irq.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+4,767 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+135
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+3d165386947eda1bd0fb58a6b8695ebd0829da6b4fe09b5c9e93838eb7dc92ec
+
+============================================================
+
+[68] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/CAN/can2.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+69,218 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+2,420
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+545599e0eb591e6af70d39ba0f3ddeee558dbe3a91c9850a9f14f0f8ba1e94bd
+
+============================================================
+
+[69] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/CAN/can2.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+3,461 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+166
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+03d3b8433310873c3a36f2b5e376ca00675d6215a1ce0a3d04b1a8dfee07e5b9
+
+============================================================
+
+[70] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/CAN/can2_irq.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+4,280 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+126
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+ffcb9b6aed24656f65770134e04bd6c5ff5072b1092e0d5d6131f26015b03ddf
+
+============================================================
+
+[71] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/CMD/cmd.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+8,837 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+474
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+3635967b4865933733894fcad59daa65a3213e98502a540b8acff6e280f72fd8
+
+============================================================
+
+[72] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/CMD/cmd.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,187 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+45
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+37515c468fe5d9894e78f396cc23c202c93f9dbc2f1462b81cbf841ea98b5b27
+
+============================================================
+
+[73] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/CSA/csa.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+7,073 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+380
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+28afc2f7b70913b76cc3900b41687a5c84491d3c192cfaab5474db2469493121
+
+============================================================
+
+[74] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/CSA/csa.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,000 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+44
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+bdeeeb476ca7a15a2f76cd51599b7c1abd8e8a3ac86a1d258f462f85144c8faa
+
+============================================================
+
+[75] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/DEBUG/debug_rtt.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+391 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+28
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+8a82fe1419e98771a781e2410487be7b867e112e25ea2b83eb3838fcaa0bf0e9
+
+============================================================
+
+[76] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/DEBUG/debug_rtt.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+291 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+20
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+50092bdfa9bb2c9a26fc8fd4d2201ba70ffef287cf8d76767fab6d8716613819
+
+============================================================
+
+[77] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/FLM/flm.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+16,733 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+1,079
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+dc837dd49db43fe300bb59ae015d5d21f4c8e090972568752fbaf5a45b0dd07f
+
+============================================================
+
+[78] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/FLM/flm.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+4,638 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+221
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+9722716e9407fdc30bb3262d0f6a8413f2817447983131350ebe0484a368c4cd
+
+============================================================
+
+[79] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/GPIO/gpio_control.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+14,734 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+675
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+d22521f33c498e06a8e6c98b1ba31845ef6b2571e73cb353294fe6936cc99e15
+
+============================================================
+
+[80] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/GPIO/gpio_control.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+3,016 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+149
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+b7c46e46409e654ca1f08a7e072cfce8ec257dd564eb6ad99fbf7921ddbd1ee7
+
+============================================================
+
+[81] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/IMU/imu.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+8,240 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+394
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+c0ccee45ca301dbe271f76049bed8404f5c82828eea506426174120196efbea4
+
+============================================================
+
+[82] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/IMU/imu.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+2,279 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+98
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+7791e79db4590d81c79fd6fac302aa5154df972c06720f1ddb0937f86b7f3f87
+
+============================================================
+
+[83] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/OTA/ota.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+10,841 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+540
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+5ed53d90c420a6c3e2c5b94b4b03c37efc677092c8ee373034176c7c56ee95ae
+
+============================================================
+
+[84] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/OTA/ota.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+2,646 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+108
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+58e1a5335796dde24c70ffda99b5fbe216c25c9eea832c08ec4d90e949b1bf07
+
+============================================================
+
+[85] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/UART/uart_pkt.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+25,840 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+1,335
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+9acacdbe541c3ad9f969abd97315bbb3913f7fe90d10d5ee3894dff3ec71fb0b
+
+============================================================
+
+[86] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/UART/uart_pkt.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+11,118 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+429
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+046b773e247a4efa7c2c7aaf15ded68a83eab898e568b0c07fa64734bd2602e1
+
+============================================================
+
+[87] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/UART/uart_pkt_types.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+3,388 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+172
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+2d70ce82201ae38f64325a8b8b6ebd20475a911fb52780d09732078b3249d417
+
+============================================================
+
+[88] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/boot_main.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,662 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+78
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+e3805b084560cedc6cb3f3b597130e963a7df9f595fa736091dca8efe87f5cc8
+
+============================================================
+
+[89] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/boot_main.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+374 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+19
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+b8f83754f74e9cb63fc689b1d072eae2a3ebd81bc66bc371cb3f7b861fbbe185
+
+============================================================
+
+[90] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/common/common_config.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+791 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+31
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+2cbad674ca8c6a97a5f802bdcd08f2c3b1618569848a2bb02d91aa93b75aa0cf
+
+============================================================
+
+[91] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/common/common_types.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+0 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+0
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+
+============================================================
+
+[92] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/hal/hal_imu.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+565 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+25
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+4810e5aeefa4b53faaae00b0f0d72d306395b7ef35cc260b6495badab5b2c0ce
+
+============================================================
+
+[93] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/hal/hal_led.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+200 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+10
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+edadeff3a672379f6e8884b88383de34fd4e4a88f904c1fe83e26c3ec19fa8cf
+
+============================================================
+
+[94] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/libc_compat.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+2,530 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+131
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+66c01ff6063a2924ab14ff104f6a04c1886bb19b9e6061b6d1c16c63792d45e0
+
+============================================================
+
+[95] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/main.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+18,342 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+564
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+20aec46d2048065c88dc55c6b134ebe5fc7b2fe3213db8135d731bba31fb9761
+
+============================================================
+
+[96] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/mcal/mcal_i2c.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+293 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+10
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+fd8bba087c592b672bbc62b30f6764b3c7bac01e0177744ba6f6f6caabfc3322
+
+============================================================
+
+[97] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/system_init.c
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+3,430 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+192
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+1aa70f1f48349a7274f155bc346ad4464b74e2506fb0719fcb7092b2581add18
+
+============================================================
+
+[98] .claude/worktrees/can-baudrate-detection-fix-0677f2/src/system_init.h
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+213 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+16
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+1858a23670aeaf0324598d2a201faafe8d35eafe292abc541fecfd1ad1baf932
+
+============================================================
+
+[99] DEBUG/debug_rtt.args
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,894 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+38
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+088005f7c564a59be8d36e5d6ccf7195b4812dae9fa80450fc3982aebb785d9a
+
+============================================================
+
+[100] DEBUG/debug_rtt.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+535 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+12
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+2c8c89c77d7c065acc4c0e11de778dd203c0b7cae206c18e3b5bd6292c60836c
+
+============================================================
+
+[101] DEBUG/debug_rtt.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+62,308 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+8f4105f91644e2dbeb0957641b9f22e5ec6681753446cdc03931098c09fc2768
+
+============================================================
+
+[102] DEBUG/desktop.ini
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+106 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+2
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+a46e137e1ee605e28313f20381fceea857889d26f8fc6e5f29e552811997ad30
+
+============================================================
+
+[103] DEBUG/exception_debug.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+61 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+1
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+fc7184e156d8a99c15f728f13a0912b17aadf41a91dd97a6b42721cebb6599f8
+
+============================================================
+
+[104] DEBUG/exception_debug.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+28,544 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+92237f7ad7e072a9c86068205f1c06289dbc4b55108bb087e8254eac07483d7a
+
+============================================================
+
+[105] DEBUG/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+836 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+27
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+40aa5f017cbabe1c622e3b90eacbda4746ad051c5caf308c96087348d632bb52
+
+============================================================
+
+[106] Debug_FLASH/DEBUG/debug_rtt.args
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,520 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+39
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+============================================================
+
+[107] Debug_FLASH/DEBUG/debug_rtt.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+393 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+12
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+da264ed578ed5549ecb83d964965c2b96b055661666d8fcf9d17f87c28ea9587
+
+============================================================
+
+[108] Debug_FLASH/DEBUG/debug_rtt.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+60,420 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+d98f1fa93c845f748a14884035c4732e3e96df09afdaff0396213b50d7028c6a
+
+============================================================
+
+[109] Debug_FLASH/DEBUG/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+781 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+28
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+03d15ec7c5552f6998967d015b4a667f6afcc5c276e68d12b1b0c3d442333a40
+
+============================================================
+
+[110] Debug_FLASH/Project_Settings/Startup_Code/startup_S32K144.args
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+94 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+7
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+0b881e879e4d87c7d6cfb603330b27de6c42f68f75ef4232fa61d2d4c773b79c
+
+============================================================
+
+[111] Debug_FLASH/Project_Settings/Startup_Code/startup_S32K144.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+10,112 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+f216d8a1efd8214799db36846c451aefd6307d6ad4f5dcca0eb8e4f4fc9119ed
+
+============================================================
+
+[112] Debug_FLASH/Project_Settings/Startup_Code/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+785 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+21
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+802d254aa3cf3a0dd5097f1aec00195677486844e7edfdc6ac6e0645246c81c9
+
+============================================================
+
+[113] Debug_FLASH/RTT/SEGGER_RTT.args
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,520 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+39
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+============================================================
+
+[114] Debug_FLASH/RTT/SEGGER_RTT.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+211 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+8
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+5a8466cb6fb5082c3287cf2a4e57c8f38cc564e990598fef464a5b38a6d79824
+
+============================================================
+
+[115] Debug_FLASH/RTT/SEGGER_RTT.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+89,120 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+b0e9f3b774c14ea9b73eec6033ad5b92de874b27afa17e058dea7865e9d77c1d
+
+============================================================
+
+[116] Debug_FLASH/RTT/SEGGER_RTT_ASM_ARMv7M.args
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+94 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+7
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+0b881e879e4d87c7d6cfb603330b27de6c42f68f75ef4232fa61d2d4c773b79c
+
+============================================================
+
+[117] Debug_FLASH/RTT/SEGGER_RTT_ASM_ARMv7M.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+2,004 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+f0f2a299ffcb1901d8f7bb740164005fa3d1a1d430d34d36cb619cf774ce377f
+
+============================================================
+
+[118] Debug_FLASH/RTT/SEGGER_RTT_printf.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+225 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+8
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+eec894af587995e7a0e915dd4e26550c1cd9b0be2ebf88a18bdfa10988d318d1
+
+============================================================
+
+[119] Debug_FLASH/RTT/SEGGER_RTT_printf.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+66,392 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+3da01816e788633d5fb8a88dce25d9ac4e26fd8609635beecc4bd236a9967ece
+
+============================================================
+
+[120] Debug_FLASH/RTT/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,084 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+38
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+6a322f4f8fb7c84c5324b31e0a90d58ff6c4adbfbffe79745f7749af21348dc9
+
+============================================================
+
+[121] Debug_FLASH/SDK/platform/devices/S32K144/startup/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+921 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+24
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+63d2edb3450170233cdca8b7bbc530f5155c1f58438e3946284b980387766c9f
+
+============================================================
+
+[122] Debug_FLASH/SDK/platform/devices/S32K144/startup/system_S32K144.args
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,520 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+39
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+============================================================
+
+[123] Debug_FLASH/SDK/platform/devices/S32K144/startup/system_S32K144.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,057 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+20
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+70a9e05d8026d68128e3ab14064f22f23b0cde8b986d724f3295ba6a99bf789c
+
+============================================================
+
+[124] Debug_FLASH/SDK/platform/devices/S32K144/startup/system_S32K144.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+586,660 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+be25ffdaf3f9a92a98da228f39f43a40ceabdb98949eb392151d69fca966cd25
+
+============================================================
+
+[125] Debug_FLASH/SDK/platform/devices/startup.args
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,520 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+39
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+============================================================
+
+[126] Debug_FLASH/SDK/platform/devices/startup.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+651 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+19
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+5cc8904528b4930b61c5b8cb232fbfd3e2c768762251dc642c3cc70437cfcf04
+
+============================================================
+
+[127] Debug_FLASH/SDK/platform/devices/startup.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+586,208 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+533f01b47219f8a15b577b58a8a15a1b2fee1150ba64a23e4b28af5505b0f692
+
+============================================================
+
+[128] Debug_FLASH/SDK/platform/devices/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+797 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+24
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+870deebcfeacc01c6c5de64c2cfb762583173e632ae252364b95c0e72ddac940
+
+============================================================
+
+[129] Debug_FLASH/SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.args
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,520 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+39
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+============================================================
+
+[130] Debug_FLASH/SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+2,007 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+44
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+aa29ac83ff0221b4beb8070049b6b852b73cc585d57f525a86ac12dcf982979b
+
+============================================================
+
+[131] Debug_FLASH/SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+700,208 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+919060881595f2f467dc197e0b068417d48010f5cca7a24fbc41326804e004ad
+
+============================================================
+
+[132] Debug_FLASH/SDK/platform/drivers/src/clock/S32K1xx/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+929 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+24
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+67d188658d5f862a2f64cbda6a9e86a32ac299a516f54f27dd92526dd749a39c
+
+============================================================
+
+[133] Debug_FLASH/SDK/platform/drivers/src/interrupt/interrupt_manager.args
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,520 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+39
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+============================================================
+
+[134] Debug_FLASH/SDK/platform/drivers/src/interrupt/interrupt_manager.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,237 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+26
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+0621c16c8c7a321c97145656b0b99683cc5a78a233455bf6d45c53a3c8d59f81
+
+============================================================
+
+[135] Debug_FLASH/SDK/platform/drivers/src/interrupt/interrupt_manager.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+594,396 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+7cd914bfda0373571453bb8fba4d64f9207995123376889c73869a5f266e091c
+
+============================================================
+
+[136] Debug_FLASH/SDK/platform/drivers/src/interrupt/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+921 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+24
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+36f799d6642294b6135a126947553d306455a428ab65e7f529c4e9b54c4b4f29
+
+============================================================
+
+[137] Debug_FLASH/SDK/platform/drivers/src/pins/pins_driver.args
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,520 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+39
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+============================================================
+
+[138] Debug_FLASH/SDK/platform/drivers/src/pins/pins_driver.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,301 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+29
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+6c432813a23561b7f7af9fb9fb80f2e63a5b92f136404ca0d373d95b2b204983
+
+============================================================
+
+[139] Debug_FLASH/SDK/platform/drivers/src/pins/pins_driver.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+611,868 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+0c561de602d608f95914f2cf2b82a766c78a460a2dd1646b28c6501096fca246
+
+============================================================
+
+[140] Debug_FLASH/SDK/platform/drivers/src/pins/pins_port_hw_access.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,317 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+29
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+8c562c6f9969cbe6a8ed693614e97fef767f3ffc9ae11eb0947123c8ebc460bd
+
+============================================================
+
+[141] Debug_FLASH/SDK/platform/drivers/src/pins/pins_port_hw_access.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+592,968 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+2f7f9f28a8b9560129be137b8b2affa9f1224a12bec8c4d59a377742d9a3cf8c
+
+============================================================
+
+[142] Debug_FLASH/SDK/platform/drivers/src/pins/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,036 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+27
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+d0a611e886356d0c1e24f153cfa3995cb771ec794530addc367b40efc8330e21
+
+============================================================
+
+[143] Debug_FLASH/Zitto_MB_V1.args
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,026 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+36
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+4ea4794a4ccbbcd47fe24f774dec248727aee81d51b4f94a62468c4d4ff70309
+
+============================================================
+
+[144] Debug_FLASH/Zitto_MB_V1.elf
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+771,764 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+2f1b5d5250f62afd9bcf15b8c2b36ba06148c4bb6a4acb6a59431cbe20317e6d
+
+============================================================
+
+[145] Debug_FLASH/Zitto_MB_V1.map
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+183,620 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+3,280
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+305bbe321efbd092ee02800a7a024bc206cd36642ba76255d80612d43c5b8fb7
+
+============================================================
+
+[146] Debug_FLASH/makefile
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+2,325 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+84
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+a2dfcb75ba966b3d1999d06a98305ed74393125ede5181be66ab31144b3c8e2d
+
+============================================================
+
+[147] Debug_FLASH/objects.mk
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+239 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+8
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+641505e28f50833dbb9650655eb96c094d4c163bbfe7a48e0dd6515183dba8c2
+
+============================================================
+
+[148] Debug_FLASH/sources.mk
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+833 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+40
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+af243f7e53d38137d441ad7165f2d174de75947193ad09ff9b6c1ebdc3d6acfd
+
+============================================================
+
+[149] Debug_FLASH/src/APP/app_main.args
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,520 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+39
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+============================================================
+
+[150] Debug_FLASH/src/APP/app_main.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+2,445 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+74
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+ca4e93d2d12f09cb6e2918dbbdeb2bf14a93bbade1d4cffef896ec04a6ca4403
+
+============================================================
+
+[151] Debug_FLASH/src/APP/app_main.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+627,444 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+364e036da3346a4a4653447a03c38e23f89fb615183d5f9b844e0991b63c3b1b
+
+============================================================
+
+[152] Debug_FLASH/src/APP/app_modules.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+201 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+6
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+f22d37f53d73c16f1c4cbfef5696c15ec2258fcc7b41623d4be81eec3b0ed3ed
+
+============================================================
+
+[153] Debug_FLASH/src/APP/app_modules.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+34,644 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+39cea9e0c518951d1a83b36f4503aa24a6aad2fe42e68400476c8c2fb64d1aec
+
+============================================================
+
+[154] Debug_FLASH/src/APP/app_status.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+157 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+6
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+2a50e8edc4092b249b515caa928afc4d846e8ca65b114a3bb1388a08af6e530e
+
+============================================================
+
+[155] Debug_FLASH/src/APP/app_status.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+34,760 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+c7e1cebd6ae01bd562651d7d098da21d66715294cfe19bd54396ce9a30f80ba0
+
+============================================================
+
+[156] Debug_FLASH/src/APP/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+878 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+30
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+676d0559aa348b8212b90e4b2fc3d6a39c4e73c4147162d797324c1e0f315567
+
+============================================================
+
+[157] Debug_FLASH/src/CAN/can1.args
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,520 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+39
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+============================================================
+
+[158] Debug_FLASH/src/CAN/can1.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+827 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+24
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+246a69aa637d331e871cd51f7067b6e0b3ba3b7c7831bd25f83c1a562ac0c4f3
+
+============================================================
+
+[159] Debug_FLASH/src/CAN/can1.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+613,568 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+a6224d152fbdcdc2346af146aefe5997870b16e3f80b2cbc05b45dfc2f19a17a
+
+============================================================
+
+[160] Debug_FLASH/src/CAN/can1_irq.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+233 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+6
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+b12483ea6f3041615e2a6b8b76ca238c39e80633833354d203d588cfff681be1
+
+============================================================
+
+[161] Debug_FLASH/src/CAN/can1_irq.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+556,776 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+5f889d53a15d2fc1e02055d0f8e00e8959ab39d6b3c4df5d4965fc0b7e7b58ac
+
+============================================================
+
+[162] Debug_FLASH/src/CAN/can2.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+767 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+23
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+577472216a5b7fd45cbd39636881be1e3b7e84f390b0566fa4007b0caa8b0d8a
+
+============================================================
+
+[163] Debug_FLASH/src/CAN/can2.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+611,856 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+8cc5f0f7a6cc87c802f949a05a325d69ff2c52296566f47cc6010fda58052d0b
+
+============================================================
+
+[164] Debug_FLASH/src/CAN/can2_irq.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+631 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+18
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+b7622d73ddcd37814cc85fb8cb9e0c252d6a320fe37e0d6b91ff52050dc37a24
+
+============================================================
+
+[165] Debug_FLASH/src/CAN/can2_irq.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+587,032 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+236cb614b97860e54ca22c1c68b7b511ff7ad68c7659010027073f72cb014b63
+
+============================================================
+
+[166] Debug_FLASH/src/CAN/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+905 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+33
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+a7e37d8dcbba2e09d4ef83495b205207c35da66c73d09b6525da164728eb0640
+
+============================================================
+
+[167] Debug_FLASH/src/CSA/csa.args
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,520 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+39
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+============================================================
+
+[168] Debug_FLASH/src/CSA/csa.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+763 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+23
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+5e90609e31269daf790653aed3fc266dba2947832ddc60c9796470bf2a9092c3
+
+============================================================
+
+[169] Debug_FLASH/src/CSA/csa.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+600,288 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+2b0cdf94e0f6d55b33b5c48fbd0bf6ad061de87167e471f9c04e906ef9eeb38c
+
+============================================================
+
+[170] Debug_FLASH/src/CSA/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+703 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+24
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+3f5e88eba43e07d011245b6332bd2f2652cdd2a91ddd743db38fe2fa6a861dbc
+
+============================================================
+
+[171] Debug_FLASH/src/FLM/flm.args
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,520 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+39
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+============================================================
+
+[172] Debug_FLASH/src/FLM/flm.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+553 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+18
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+74c7c3e1ab179b204ec0bf6c5d2afb888915e78cb52d1d5f633437202f1dc498
+
+============================================================
+
+[173] Debug_FLASH/src/FLM/flm.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+74,732 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+c92b2d13b070867127b02c20f6466e7b398bb46da3551e9912fa534b24b29a12
+
+============================================================
+
+[174] Debug_FLASH/src/FLM/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+703 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+24
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+291f33fe75bcc7080f6c6f0ea3c706871dd461baeb5c08d6a1a7806311fb8ee5
+
+============================================================
+
+[175] Debug_FLASH/src/GPIO/gpio_control.args
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,520 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+39
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+============================================================
+
+[176] Debug_FLASH/src/GPIO/gpio_control.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+907 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+27
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+ca39c6f7d8da7c56ebe65bdbce9e702d67b0e65b69f144681d0bde59c234f1a0
+
+============================================================
+
+[177] Debug_FLASH/src/GPIO/gpio_control.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+595,808 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+278eae64bc74850ef10539b7ae67d786cc3e6417443dc0b8b829d6579594695f
+
+============================================================
+
+[178] Debug_FLASH/src/GPIO/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+745 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+24
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+a5d137ca6eed66ae56b676f421c3cc0f5b2801b9b5704b3823faac4ffa57b301
+
+============================================================
+
+[179] Debug_FLASH/src/IMU/imu.args
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,520 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+39
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+============================================================
+
+[180] Debug_FLASH/src/IMU/imu.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+843 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+26
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+6bce83aeb634c4cc7c3e4dae93b804586ffe7ab84ea90902852af35eda1b4faf
+
+============================================================
+
+[181] Debug_FLASH/src/IMU/imu.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+605,156 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+c4ceda19793e6a63b8b831637de407832f87a973e3c5098b86039c9bfb2a0157
+
+============================================================
+
+[182] Debug_FLASH/src/IMU/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+703 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+24
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+db1d98b0242749cbc256a374de93bc5491b6435fdc9005e29aaf20e1199ef4dc
+
+============================================================
+
+[183] Debug_FLASH/src/OTA/ota.args
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,520 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+39
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+============================================================
+
+[184] Debug_FLASH/src/OTA/ota.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+699 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+22
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+42cb9e4bdf11d8d650c7807e8406bc452860f234a00a3631ddd6d2883d9eab71
+
+============================================================
+
+[185] Debug_FLASH/src/OTA/ota.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+76,744 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+ffccff55952522c695a4339b50e6030a12a197b3202f4acfd986d49a4c3533ac
+
+============================================================
+
+[186] Debug_FLASH/src/OTA/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+703 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+24
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+9b46963eb05cbdee2b1ebb3392d5d37d43781aa8bacd9efa84d308023b3e07a0
+
+============================================================
+
+[187] Debug_FLASH/src/UART/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+729 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+24
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+cea343828cf1c42a79ad6bb550d4e17855de2accb5955c85ddcf05d9f3e20a2f
+
+============================================================
+
+[188] Debug_FLASH/src/UART/uart_pkt.args
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,520 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+39
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+============================================================
+
+[189] Debug_FLASH/src/UART/uart_pkt.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+709 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+21
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+1e176ebe9f1591d0200eff6a0797a1443386a33c202886b133b15bcef13d72b9
+
+============================================================
+
+[190] Debug_FLASH/src/UART/uart_pkt.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+604,976 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+22d00f4f3a03a3899fc92c23e00855bf31c58f1abfbc8deafec8321b0e30e701
+
+============================================================
+
+[191] Debug_FLASH/src/boot_main.args
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,520 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+39
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+19c3085eeb02fd87caf9de95287d178ff49f4def52512cb97325fa53a44fc049
+
+============================================================
+
+[192] Debug_FLASH/src/boot_main.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+477 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+15
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+ec21fd50c677b7fb527e3dd408f9f76e7e7b862fa7537bd7cbd0756076b8f134
+
+============================================================
+
+[193] Debug_FLASH/src/boot_main.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+61,436 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+a1b8a522e50bad5ec2b1411a47f976e517560c559a6b3b6ee157ebb12b99d9af
+
+============================================================
+
+[194] Debug_FLASH/src/libc_compat.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+41 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+1
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+0b31e3258db1bcbd295196240bf0a501e19ff6514d7213295c4433090abb85e8
+
+============================================================
+
+[195] Debug_FLASH/src/libc_compat.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+24,448 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+1975baca8cae750e848b326fdac0ce91d697db793a1dda53130fc88c59b6df86
+
+============================================================
+
+[196] Debug_FLASH/src/main.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+1,245 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+46
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+c8291166f6c4e8ed8a9275e671992fcc16d75c6cf26792dabcb324430c2bf6da
+
+============================================================
+
+[197] Debug_FLASH/src/main.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+607,968 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+6042a97c1f729c0d7b72574eb8d201cd0667ea8e4fde1e4b3c4d93f6d4d18e4f
+
+============================================================
+
+[198] Debug_FLASH/src/subdir.mk
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+883 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+33
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+da8ee92e368325d59e8792d087aa1b519724125ff36767b566127b24695ab25e
+
+============================================================
+
+[199] Debug_FLASH/src/system_init.d
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+241 bytes
+
+OLD LINES:
+N/A
+
+NEW LINES:
+7
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+83aeb7ce29322c1c7c2c2cee5510f20afc142ab034f8f5863836d952515e747a
+
+============================================================
+
+[200] Debug_FLASH/src/system_init.o
+------------------------------------------------------------
+
+STATUS:
+ADDED
+
+TYPE:
+BINARY DIFFERENCE (size/hash compared, not line content)
+
+OLD SIZE:
+N/A
+
+NEW SIZE:
+553,476 bytes
+
+OLD SHA-256:
+FILE DOES NOT EXIST
+
+NEW SHA-256:
+7486d95490b11555b22d3385b4377d7fa10553c95903ecae72fba16cea4752d8
+
+============================================================
+
+[201] src/CAN/can2.c
+------------------------------------------------------------
+
+STATUS:
+MODIFIED
+
+OLD SIZE:
+62,571 bytes
+
+NEW SIZE:
+69,218 bytes
+
+OLD LINES:
+2,240
+
+NEW LINES:
+2,420
+
+OLD SHA-256:
+140cc92be814438607ee99795ed350b906c00f029857931aa8762e5ad65e0e08
+
+NEW SHA-256:
+545599e0eb591e6af70d39ba0f3ddeee558dbe3a91c9850a9f14f0f8ba1e94bd
+
+------------------------------------------------------------
+LINE DIFFERENCE
+------------------------------------------------------------
+
+STATUS: ADDED
+NEW (from line 6):
+  
+  #include "../UART/uart_pkt.h"
+
+STATUS: MODIFIED
+OLD (from line 147):
+   * Matched to CAN1_DETECT_TICKS so both scan at the same real-time
+   * cadence - this is what "mirror CAN1" means for the dwell timer;
+   * each module still runs fully independently (separate state, no
+   * cross-dependency, no shared blocking wait).
+NEW (from line 149):
+   * Was then matched to CAN1_DETECT_TICKS (4) so both scanned at the
+   * same real-time cadence.
+
+STATUS: MODIFIED
+OLD (from line 152):
+   * REVERTED: briefly tried halving this (to 2) to shrink the window
+   * where a wrong candidate holds up reaching 1000 kbps (see the 1 Mbps
+   * bus-off investigation). That broke detection broadly, not just at
+   * 1 Mbps - candidates no longer got enough dwell time to reliably
+   * collect CAN2_CONFIRM_FRAMES=3 clean frames against real traffic
+   * timing, so CAN2 just cycled through every candidate forever without
+   * locking any of them, at any baud. Back to 4, matching CAN1 exactly.
+   * The 1 Mbps-specific bus-off issue needs a fix that does not touch
+   * working behavior at the other rates.
+NEW (from line 152):
+   * REVERTED once: briefly tried HALVING this (to 2) to shrink the
+   * window where a wrong candidate holds up reaching 1000 kbps. That
+   * broke detection broadly, not just at 1 Mbps - too SHORT a dwell
+   * meant candidates no longer got enough time to reliably collect
+   * CAN2_CONFIRM_FRAMES=3 clean frames against real traffic timing, so
+   * CAN2 just cycled through every candidate forever without locking
+   * any of them, at any baud.
+   *
+   * FIX (this time, the opposite direction): raised well ABOVE CAN1's
+   * value, a deliberate, explicit divergence from "mirror CAN1 exactly"
+   * for the dwell timer specifically - CAN1 was never asked to reliably
+   * detect traffic as sparse as 1 message/second; CAN2 explicitly is.
+   * Root cause, confirmed directly by the user's own testing (500ms
+   * between messages fails, 50ms works): the OLD dwell of 4 ticks was
+   * only ~200ms of silence tolerance per candidate at the current
+   * ~50ms/main-loop-tick rate (see TASK_DT_MS in main.c) - shorter than
+   * the gap between messages at anything slower than ~200ms/msg. The
+   * dwell only resets when a CLEAN frame actually arrives, so at a
+   * SLOWER message rate than the timeout itself, EVERY candidate -
+   * including the correct one - gets abandoned before a single message
+
+STATUS: MODIFIED
+OLD (from line 163):
+  #define CAN2_AUTO_BAUD_TICKS        4U
+NEW (from line 188):
+  #define CAN2_AUTO_BAUD_TICKS        60U
+
+STATUS: MODIFIED
+OLD (from line 208):
+   * No blocking.
+NEW (from line 233):
+   * No blocking. Diagnostic-log-only, no functional effect (see its one
+   * use, the "[CAN2] Still waiting for CAN traffic" line).
+   *
+   * FIX: scaled up along with CAN2_AUTO_BAUD_TICKS's increase (4->60) so
+   * this still fires at a sensible cadence relative to the new, longer
+   * per-candidate dwell - a full 4-candidate cycle can now legitimately
+   * take up to ~12s when nothing matches, so the old 200-tick (~10s)
+   * threshold would fire before even one full cycle completed.
+
+STATUS: MODIFIED
+OLD (from line 211):
+  #define CAN2_NO_FRAME_LIMIT         200U
+NEW (from line 243):
+  #define CAN2_NO_FRAME_LIMIT         600U
+
+STATUS: ADDED
+NEW (from line 373):
+  
+  
+  /*
+   * Periodic [CAN2_STAT] heartbeat while RUNNING - mirrors CAN1's own
+   * [CAN1_STAT] line exactly (can1.c), which CAN2 previously had no
+   * equivalent of: CAN2 only ever logged at state transitions (lock,
+   * fault, next-baud), giving no ongoing visibility into the bus
+   * between those events - e.g. watching RxErr climb toward the
+   * error-passive threshold BEFORE a fault actually triggers.
+   */
+  static uint32_t
+      g_can2_last_stat_ms;
+
+STATUS: ADDED
+NEW (from line 617):
+  /*
+   * FIX: was two SEPARATE freeze/unfreeze cycles back-to-back whenever
+   * called from a fresh-scan restart (Can2_StartDetectionAt() used to
+   * do its own dedicated EnterFreeze->ECR=0->ExitFreeze pass, then
+   * immediately call this function for a SECOND, independent
+   * EnterFreeze->...->ExitFreeze pass). CAN1's directly equivalent
+   * restart-from-RUNNING path (prv_StartDetection() -> prv_ApplyBaud())
+   * only ever does ONE freeze/unfreeze cycle - a genuine, verified
+   * structural difference from CAN1's proven-safe pattern, found while
+   * investigating a HardFault reproducible in exactly that RUNNING ->
+   * restart transition. clear_ecr folds the ECR clear into THIS
+   * function's own single, already-existing freeze cycle instead of a
+   * separate one, matching CAN1's one-cycle-per-restart-step pattern
+   * exactly. Callers building a fresh scan (Can2_StartDetectionAt())
+   * pass 1U; every intra-scan candidate switch (NextBaud(),
+   * RevertCorroboration(), the corroboration-initiation path, and
+   * Can2_LockBaud()'s final re-arm) passes 0U, preserving REC
+   * accumulation WITHIN one scan exactly as before - only WHERE the
+   * clear happens changed, not which calls get one.
+   *
+
+STATUS: MODIFIED
+OLD (from line 574):
+      uint8_t index
+NEW (from line 644):
+      uint8_t index,
+      uint8_t clear_ecr
+
+STATUS: ADDED
+NEW (from line 649):
+      uint32_t i;
+
+STATUS: MODIFIED
+OLD (from line 593):
+      /*
+       * ECR is NOT touched here (moved to Can2_StartDetectionAt(), the
+       * actual entry point for every fresh detection attempt - see its
+       * comment for why). REC is intentionally left to accumulate
+       * candidate-to-candidate WITHIN one scan (see CAN2_RXERR_BURST's
+       * comment) - this function is called for every candidate switch,
+       * including ones mid-scan (NextBaud()/RevertCorroboration()) where
+       * that accumulation is deliberate, not just the start of a scan.
+       */
+NEW (from line 665):
+      if(clear_ecr != 0U)
+      {
+          /*
+           * FIX: a real, hardware-confirmed PRECISE bus fault
+           * (ACTLR.DISDEFWBUF was set in main() specifically to force
+           * this) was captured here: CFSR=0x00008200 (BFSR=0x82 =
+           * PRECISERR|BFARVALID), BFAR=0x4002B01C - exactly
+           * CAN2_BASE+0x1C, the ECR register - on the very next write
+           * below. It happened specifically on a restart triggered
+           * immediately after a live RxErr burst ("[CAN2] RxErr burst
+           * ... Re-detecting"), i.e. right as TEC/REC were still
+           * actively being incremented by hardware from real bus
+           * errors. FRZACK being asserted (Can2_EnterFreeze() already
+           * returned success above) only confirms the module has
+           * stopped TAKING PART in bus transactions - it does not
+           * appear to guarantee its internal error-counter write port
+           * has already quiesced when entry into freeze immediately
+           * follows a live error burst. A brief settling delay here
+           * (only on the clear_ecr path - candidate switches within a
+           * scan never hit this) gives that in-flight internal update
+
+STATUS: MODIFIED
+OLD (from line 617):
+       * Re-arm mailbox.
+NEW (from line 711):
+       * Clear the full mailbox RAM, then re-arm the RX mailbox - matches
+       * CAN1's prv_ApplyBaud() exactly.
+
+STATUS: ADDED
+NEW (from line 714):
+  
+      for(
+          i = 0U;
+          i < 64U;
+          i++
+      )
+      {
+          CAN2->RAMn[
+              i
+          ] =
+              0U;
+      }
+  
+      /* FIX: matches CAN1's prv_ApplyBaud(), which re-clears these three
+       * mask registers on EVERY baud apply, not just once at init - this
+       * file previously only set them in Can2_HardwareInit() (step G).
+       * IRMQ is not set for CAN2 (same as CAN1), so these legacy global
+       * masks are what actually governs ID acceptance; leaving them
+       * unrestated here was a real mirror gap even though their reset
+       * value (0, accept-all) already matched what init left behind. */
+
+STATUS: ADDED
+NEW (from line 1289):
+          /*
+           * FIX: name the SPECIFIC protocol error flag(s) latched in
+           * ESR1, not just the aggregate error-passive/bus-off
+           * confinement level - each error type points at a different
+           * likely cause (e.g. a run of ACKERR specifically is the
+           * signature of the sender not getting acknowledged - the
+           * two-node-bench PCAN dynamic documented elsewhere in this
+           * file - whereas STF/FRM/CRC/BIT errors point at a genuine
+           * bit-timing/candidate mismatch or signal-integrity issue).
+           * Flags read here reflect whatever is currently latched in
+           * ESR1 at this exact check, same register Can2_SetBaud()
+           * clears (W1C) on every candidate switch.
+           */
+
+STATUS: MODIFIED
+OLD (from line 1172):
+              "[CAN2_ERR] %s  TxErr=%u RxErr=%u - re-detecting\r\n",
+NEW (from line 1303):
+              "[CAN2_ERR] %s  TxErr=%u RxErr=%u  [%s%s%s%s%s%s] -"
+              " re-detecting\r\n",
+
+STATUS: MODIFIED
+OLD (from line 1175):
+              (unsigned)((CAN2->ECR >> 8U) & 0xFFU)
+NEW (from line 1307):
+              (unsigned)((CAN2->ECR >> 8U) & 0xFFU),
+              (esr & CAN_ESR1_STFERR_MASK) ? "STF " : "",
+              (esr & CAN_ESR1_FRMERR_MASK) ? "FRM " : "",
+              (esr & CAN_ESR1_CRCERR_MASK) ? "CRC " : "",
+              (esr & CAN_ESR1_BIT0ERR_MASK) ? "BIT0 " : "",
+              (esr & CAN_ESR1_BIT1ERR_MASK) ? "BIT1 " : "",
+              (esr & CAN_ESR1_ACKERR_MASK) ? "ACK " : ""
+
+STATUS: MODIFIED
+OLD (from line 1277):
+       * 0). The per-candidate ECR clear used to live inside
+       * Can2_SetBaud(), gated on index==0, which meant a resume at a
+       * NON-zero index never cleared ECR at all: the stale, already-
+       * elevated REC from whatever fault triggered recovery carried
+       * straight into the "fresh" attempt, undermining the very recovery
+       * it was supposed to perform - a real bug, fixed by moving the
+       * clear here so it always runs regardless of start_index.
+       * Can2_SetBaud() no longer touches ECR at all, so intra-scan
+       * candidate-to-candidate cycling (NextBaud()/RevertCorroboration(),
+       * which do NOT go through this function) still correctly preserves
+       * REC accumulation WITHIN one scan pass, unchanged. ECR is
+       * writable while frozen - same confirmed-working technique as
+       * Can2_HardwareInit().
+       */
+      if(
+          Can2_EnterFreeze()
+          != 0U
+      )
+      {
+          CAN2->ECR =
+NEW (from line 1415):
+       * 3U). ECR is cleared by passing clear_ecr=1U to Can2_SetBaud()
+       * below, folded into its single existing freeze cycle rather than
+       * a separate dedicated one - see Can2_SetBaud()'s own comment for
+       * why a second, independent freeze/unfreeze pass here was removed
+       * (a genuine, verified structural difference from CAN1's
+       * one-cycle-per-restart pattern, found while investigating a
+       * HardFault reproducible in exactly this RUNNING -> restart
+       * transition).
+       *
+
+STATUS: MODIFIED
+OLD (from line 1317):
+              g_can2_baud_index
+NEW (from line 1436):
+              g_can2_baud_index,
+              1U
+
+STATUS: MODIFIED
+OLD (from line 1441):
+              g_can2_baud_index
+NEW (from line 1561):
+              g_can2_baud_index,
+              0U
+
+STATUS: MODIFIED
+OLD (from line 1491):
+              index
+NEW (from line 1612):
+              index,
+              0U
+
+STATUS: MODIFIED
+OLD (from line 1590):
+              g_can2_baud_index
+NEW (from line 1712):
+              g_can2_baud_index,
+              0U
+
+STATUS: DELETED
+OLD (from line 1838):
+          if(
+              (
+                  (CAN2->ESR1 >> 4U) &
+                  0x03U
+              ) ==
+              2U
+          )
+
+STATUS: MODIFIED
+OLD (from line 1846):
+              RTT_LOG(
+                  "[CAN2_ERR] BUS OFF while detecting (RxErr=%u) -"
+                  " restarting the scan\r\n",
+                  (unsigned)((CAN2->ECR >> 8U) & 0xFFU)
+              );
+NEW (from line 1962):
+              uint32_t esr1_detect =
+                  CAN2->ESR1;
+
+STATUS: MODIFIED
+OLD (from line 1852):
+              g_can2_status.bus_off_count++;
+NEW (from line 1965):
+              if(
+                  ((esr1_detect >> 4U) &
+                   0x03U) ==
+                  2U
+              )
+              {
+                  RTT_LOG(
+                      "[CAN2_ERR] BUS OFF while detecting  TxErr=%u"
+                      " RxErr=%u  [%s%s%s%s%s%s] - restarting the"
+                      " scan\r\n",
+                      (unsigned)(CAN2->ECR & 0xFFU),
+                      (unsigned)((CAN2->ECR >> 8U) & 0xFFU),
+                      (esr1_detect & CAN_ESR1_STFERR_MASK) ? "STF " : "",
+                      (esr1_detect & CAN_ESR1_FRMERR_MASK) ? "FRM " : "",
+                      (esr1_detect & CAN_ESR1_CRCERR_MASK) ? "CRC " : "",
+                      (esr1_detect & CAN_ESR1_BIT0ERR_MASK) ? "BIT0 " : "",
+                      (esr1_detect & CAN_ESR1_BIT1ERR_MASK) ? "BIT1 " : "",
+                      (esr1_detect & CAN_ESR1_ACKERR_MASK) ? "ACK " : ""
+                  );
+
+STATUS: MODIFIED
+OLD (from line 1854):
+              g_can2_status.error_count++;
+NEW (from line 1985):
+                  g_can2_status.bus_off_count++;
+
+STATUS: MODIFIED
+OLD (from line 1856):
+              Can2_StartDetectionAt(
+                  3U
+              );
+NEW (from line 1987):
+                  g_can2_status.error_count++;
+
+STATUS: MODIFIED
+OLD (from line 1860):
+              return;
+NEW (from line 1989):
+                  Can2_StartDetectionAt(
+                      3U
+                  );
+  
+                  return;
+              }
+
+STATUS: MODIFIED
+OLD (from line 2038):
+                              g_can2_baud_index
+NEW (from line 2172):
+                              g_can2_baud_index,
+                              0U
+
+STATUS: ADDED
+NEW (from line 2373):
+          /*
+           * Periodic status - see the FIX note on g_can2_last_stat_ms
+           * for why this exists. Same 5-second cadence and field set as
+           * CAN1's [CAN1_STAT] line, plus the specific ESR1 protocol-
+           * error flag names (Can2_CheckFault() only reports the
+           * aggregate error-passive/bus-off confinement LEVEL, not which
+           * individual error type is actually occurring - stuff/form/
+           * CRC/bit/ACK errors each point at a different root cause,
+           * e.g. a run of ACKERR specifically is the signature of a
+           * sender not getting acknowledged, exactly the two-node-bench
+           * PCAN dynamic documented elsewhere in this file).
+           */
+  
+          if(
+              (Uart_GetMs() - g_can2_last_stat_ms) >=
+              5000U
+          )
+          {
+              uint32_t esr1_now;
+  
+
+============================================================
+
+[202] src/CAN/can2_irq.c
+------------------------------------------------------------
+
+STATUS:
+MODIFIED
+
+OLD SIZE:
+4,406 bytes
+
+NEW SIZE:
+4,280 bytes
+
+OLD LINES:
+126
+
+NEW LINES:
+126
+
+OLD SHA-256:
+c910bda1d0ddea818735cdf822f6db043fb932c90dc98d303225e47a859ac81c
+
+NEW SHA-256:
+ffcb9b6aed24656f65770134e04bd6c5ff5072b1092e0d5d6131f26015b03ddf
+
+============================================================
+
+[203] src/main.c
+------------------------------------------------------------
+
+STATUS:
+MODIFIED
+
+OLD SIZE:
+21,851 bytes
+
+NEW SIZE:
+26,759 bytes
+
+OLD LINES:
+638
+
+NEW LINES:
+731
+
+OLD SHA-256:
+556bff60215a64ab784bf055e1ea5b4b8ba7eb68e0223ea4018ae3c8b1b3b839
+
+NEW SHA-256:
+f1bb67678cd549fbb9c5ee66d06a4a63d7c92dc49f6632d35962bf5a71b23139
+
+------------------------------------------------------------
+LINE DIFFERENCE
+------------------------------------------------------------
+
+STATUS: ADDED
+NEW (from line 122):
+  
+      /*
+       * FIX: capture the ACTUAL faulting stack frame FIRST, as the very
+       * first statement in this function - "mrs %0,msp" is a single
+       * instruction with no stack use of its own, executed before this
+       * function's own (small, fixed) prologue has a chance to push
+       * anything that would offset the value away from where the CPU's
+       * automatic exception entry left it. HardFault_Handler is not
+       * naked (an earlier, simpler diagnostic pass just read CFSR/HFSR/
+       * BFAR/MMFAR, which proved the fault is BFSR=0x04 IMPRECISERR - an
+       * imprecise bus fault, meaning the CPU's write buffer only
+       * detected the bad write several instructions AFTER it actually
+       * happened, so CFSR/HFSR alone cannot say WHICH instruction/write
+       * was responsible). PSP is confirmed 0 in this project (no RTOS,
+       * everything runs on the main/exception stack), so MSP is always
+       * the frame that matters. The hardware exception frame is
+       * {R0,R1,R2,R3,R12,LR,PC,xPSR} - offsets 0..7 - PC (offset 6) is
+       * the return address into the code that was running when the
+       * exception was TAKEN, which for an imprecise fault is only a
+       * rough neighborhood of the real culprit, not the exact faulting
+
+STATUS: ADDED
+NEW (from line 473):
+  
+      /*
+       * FIX: ACTLR.DISDEFWBUF=1 (bit1) disables the Cortex-M4's default
+       * write buffering, forcing every bus fault to be PRECISE instead
+       * of imprecise - the CPU stalls until the faulting write's
+       * response comes back, so the exception is taken with PC pointing
+       * AT the actual faulting instruction rather than several
+       * instructions later. Done as the very first thing in main() (a
+       * single core-register write, no peripheral/clock dependency, so
+       * it is safe before even WDOG/clock init) specifically because a
+       * confirmed, reproducible IMPRECISERR HardFault (BFSR=0x04) during
+       * CAN2's bus-heavy/bus-off restart path has resisted every static
+       * hypothesis tried so far (freeze-cycle merge, mailbox RAM bounds,
+       * mask-register mirroring) - CFSR/HFSR alone cannot say WHICH
+       * register/RAM write in that sequence is responsible when the
+       * fault is imprecise. Costs a little write throughput (writes can
+       * no longer post to the buffer and return immediately); acceptable
+       * for a debug build chasing this specific fault. See
+       * HardFault_Handler()'s stacked-PC capture, which becomes exact
+       * once this is set.
+
+STATUS: MODIFIED
+OLD (from line 433):
+          " Firmware Revision : V0.006300\r\n"
+NEW (from line 526):
+          " Firmware Revision : V0.00630\r\n"
+
+============================================================
+
+UNCHANGED FILES (verified, content identical)
+------------------------------------------------------------
+.cproject  -  SIZE: SAME  -  SHA256: SAME
+.gitignore  -  SIZE: SAME  -  SHA256: SAME
+.project  -  SIZE: SAME  -  SHA256: SAME
+.settings/com.freescale.s32ds.cross.sdk.support.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/com.freescale.s32ds.cross.wizard.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/com.nxp.s32ds.cle.ide.sdk.attached.sdks.data.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/com.nxp.s32ds.cle.runtime.component.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/language.settings.xml  -  SIZE: SAME  -  SHA256: SAME
+.settings/org.eclipse.cdt.codan.core.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/org.eclipse.cdt.core.prefs  -  SIZE: SAME  -  SHA256: SAME
+.settings/org.eclipse.core.resources.prefs  -  SIZE: SAME  -  SHA256: SAME
+BASELINE_STATUS.md  -  SIZE: SAME  -  SHA256: SAME
+DEBUG/debug_rtt.c  -  SIZE: SAME  -  SHA256: SAME
+DEBUG/debug_rtt.h  -  SIZE: SAME  -  SHA256: SAME
+IMU_Test.mex  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Debugger/Zitto_MB_V1_Debug_FLASH_PNE.launch  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Debugger/Zitto_MB_V1_Debug_RAM_PNE.launch  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Debugger/Zitto_MB_V1_Release_FLASH_PNE.launch  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Debugger/Zitto_MB_V1_Release_RAM_PNE.launch  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Linker_Files/S32K144_64_flash.ld  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Linker_Files/S32K144_64_ram.ld  -  SIZE: SAME  -  SHA256: SAME
+Project_Settings/Startup_Code/startup_S32K144.S  -  SIZE: SAME  -  SHA256: SAME
+README.md  -  SIZE: SAME  -  SHA256: SAME
+REVISION_NOTES.md  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT.c  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT.h  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT_ASM_ARMv7M.S  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT_Conf.h  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT_ConfDefaults.h  -  SIZE: SAME  -  SHA256: SAME
+RTT/SEGGER_RTT_printf.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/S32K144/include/S32K144.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/S32K144/include/S32K144_features.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/S32K144/startup/system_S32K144.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/callbacks.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/common/s32_core_cm4.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/devassert.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/device_registers.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/startup.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/startup.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/devices/status.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/inc/clock.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/inc/interrupt_manager.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/inc/pins_driver.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/pcc_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/pmc_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/scg_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/sim_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/clock/S32K1xx/smc_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/interrupt/interrupt_manager.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/pins/pins_driver.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/pins/pins_gpio_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/pins/pins_port_hw_access.c  -  SIZE: SAME  -  SHA256: SAME
+SDK/platform/drivers/src/pins/pins_port_hw_access.h  -  SIZE: SAME  -  SHA256: SAME
+board/sdk_project_config.h  -  SIZE: SAME  -  SHA256: SAME
+fix_startup.bat  -  SIZE: SAME  -  SHA256: SAME
+flash.bat  -  SIZE: SAME  -  SHA256: SAME
+flash.jlink  -  SIZE: SAME  -  SHA256: SAME
+includes/system_init.h  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_config.h  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_main.c  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_main.h  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_modules.c  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_modules.h  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_status.c  -  SIZE: SAME  -  SHA256: SAME
+src/APP/app_status.h  -  SIZE: SAME  -  SHA256: SAME
+src/CAN/can1.c  -  SIZE: SAME  -  SHA256: SAME
+src/CAN/can1.h  -  SIZE: SAME  -  SHA256: SAME
+src/CAN/can1_irq.c  -  SIZE: SAME  -  SHA256: SAME
+src/CAN/can2.h  -  SIZE: SAME  -  SHA256: SAME
+src/CMD/cmd.c  -  SIZE: SAME  -  SHA256: SAME
+src/CMD/cmd.h  -  SIZE: SAME  -  SHA256: SAME
+src/CSA/csa.c  -  SIZE: SAME  -  SHA256: SAME
+src/CSA/csa.h  -  SIZE: SAME  -  SHA256: SAME
+src/FLM/flm.c  -  SIZE: SAME  -  SHA256: SAME
+src/FLM/flm.h  -  SIZE: SAME  -  SHA256: SAME
+src/GPIO/gpio_control.c  -  SIZE: SAME  -  SHA256: SAME
+src/GPIO/gpio_control.h  -  SIZE: SAME  -  SHA256: SAME
+src/IMU/imu.c  -  SIZE: SAME  -  SHA256: SAME
+src/IMU/imu.h  -  SIZE: SAME  -  SHA256: SAME
+src/OTA/ota.c  -  SIZE: SAME  -  SHA256: SAME
+src/OTA/ota.h  -  SIZE: SAME  -  SHA256: SAME
+src/UART/uart_pkt.c  -  SIZE: SAME  -  SHA256: SAME
+src/UART/uart_pkt.h  -  SIZE: SAME  -  SHA256: SAME
+src/UART/uart_pkt_types.h  -  SIZE: SAME  -  SHA256: SAME
+src/boot_main.c  -  SIZE: SAME  -  SHA256: SAME
+src/boot_main.h  -  SIZE: SAME  -  SHA256: SAME
+src/common/common_config.h  -  SIZE: SAME  -  SHA256: SAME
+src/common/common_types.h  -  SIZE: SAME  -  SHA256: SAME
+src/hal/hal_imu.h  -  SIZE: SAME  -  SHA256: SAME
+src/hal/hal_led.h  -  SIZE: SAME  -  SHA256: SAME
+src/libc_compat.c  -  SIZE: SAME  -  SHA256: SAME
+src/mcal/mcal_i2c.h  -  SIZE: SAME  -  SHA256: SAME
+src/system_init.c  -  SIZE: SAME  -  SHA256: SAME
+src/system_init.h  -  SIZE: SAME  -  SHA256: SAME
+
+============================================================

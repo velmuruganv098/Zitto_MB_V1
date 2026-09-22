@@ -4,6 +4,8 @@
 
 #include "../DEBUG/debug_rtt.h"
 
+#include "../UART/uart_pkt.h"
+
 
 /* ========================================================================== */
 /* USER HARDWARE CONFIGURATION                                                */
@@ -144,23 +146,46 @@ static const uint32_t g_can2_baud_kbps[
  * rate that was never actually true once both were folded into one
  * loop), giving CAN2 a 5x longer per-candidate dwell than CAN1
  * (CAN1_DETECT_TICKS=4) despite ticking at the identical real rate.
- * Matched to CAN1_DETECT_TICKS so both scan at the same real-time
- * cadence - this is what "mirror CAN1" means for the dwell timer;
- * each module still runs fully independently (separate state, no
- * cross-dependency, no shared blocking wait).
+ * Was then matched to CAN1_DETECT_TICKS (4) so both scanned at the
+ * same real-time cadence.
  *
- * REVERTED: briefly tried halving this (to 2) to shrink the window
- * where a wrong candidate holds up reaching 1000 kbps (see the 1 Mbps
- * bus-off investigation). That broke detection broadly, not just at
- * 1 Mbps - candidates no longer got enough dwell time to reliably
- * collect CAN2_CONFIRM_FRAMES=3 clean frames against real traffic
- * timing, so CAN2 just cycled through every candidate forever without
- * locking any of them, at any baud. Back to 4, matching CAN1 exactly.
- * The 1 Mbps-specific bus-off issue needs a fix that does not touch
- * working behavior at the other rates.
+ * REVERTED once: briefly tried HALVING this (to 2) to shrink the
+ * window where a wrong candidate holds up reaching 1000 kbps. That
+ * broke detection broadly, not just at 1 Mbps - too SHORT a dwell
+ * meant candidates no longer got enough time to reliably collect
+ * CAN2_CONFIRM_FRAMES=3 clean frames against real traffic timing, so
+ * CAN2 just cycled through every candidate forever without locking
+ * any of them, at any baud.
+ *
+ * FIX (this time, the opposite direction): raised well ABOVE CAN1's
+ * value, a deliberate, explicit divergence from "mirror CAN1 exactly"
+ * for the dwell timer specifically - CAN1 was never asked to reliably
+ * detect traffic as sparse as 1 message/second; CAN2 explicitly is.
+ * Root cause, confirmed directly by the user's own testing (500ms
+ * between messages fails, 50ms works): the OLD dwell of 4 ticks was
+ * only ~200ms of silence tolerance per candidate at the current
+ * ~50ms/main-loop-tick rate (see TASK_DT_MS in main.c) - shorter than
+ * the gap between messages at anything slower than ~200ms/msg. The
+ * dwell only resets when a CLEAN frame actually arrives, so at a
+ * SLOWER message rate than the timeout itself, EVERY candidate -
+ * including the correct one - gets abandoned before a single message
+ * can ever arrive to confirm or reject it. This is unconditionally
+ * safe to lengthen, unlike shortening it: a LONGER timeout can only
+ * help slower traffic, never hurt faster traffic, since a candidate
+ * that would have succeeded quickly under the old timeout still
+ * succeeds just as quickly under a longer one (frames still arrive
+ * and reset the dwell the moment they do; nothing here makes
+ * detection wait the FULL timeout when traffic is already flowing).
+ * 60 ticks = ~3000ms of silence tolerance per candidate at the
+ * current ~50ms/tick rate - comfortable 3x margin above the
+ * requested 1000ms/message worst case. Tradeoff: a candidate that
+ * truly is wrong, with NO traffic reaching it at all, now takes up to
+ * ~3s (not ~200ms) to abandon, so a full 4-candidate cycle when none
+ * of them match can take up to ~12s worst case - an accepted cost of
+ * reliably supporting very sparse traffic, per explicit requirement.
  */
 
-#define CAN2_AUTO_BAUD_TICKS        4U
+#define CAN2_AUTO_BAUD_TICKS        60U
 
 
 /*
@@ -205,10 +230,17 @@ static const uint32_t g_can2_baud_kbps[
  * Number of consecutive detection cycles
  * before we simply keep cycling.
  *
- * No blocking.
+ * No blocking. Diagnostic-log-only, no functional effect (see its one
+ * use, the "[CAN2] Still waiting for CAN traffic" line).
+ *
+ * FIX: scaled up along with CAN2_AUTO_BAUD_TICKS's increase (4->60) so
+ * this still fires at a sensible cadence relative to the new, longer
+ * per-candidate dwell - a full 4-candidate cycle can now legitimately
+ * take up to ~12s when nothing matches, so the old 200-tick (~10s)
+ * threshold would fire before even one full cycle completed.
  */
 
-#define CAN2_NO_FRAME_LIMIT         200U
+#define CAN2_NO_FRAME_LIMIT         600U
 
 
 /*
@@ -338,6 +370,18 @@ static uint8_t
 
 static uint8_t
     g_can2_ready_rxerr_base;   /* REC snapshot at lock time - see Can2_LockBaud() */
+
+
+/*
+ * Periodic [CAN2_STAT] heartbeat while RUNNING - mirrors CAN1's own
+ * [CAN1_STAT] line exactly (can1.c), which CAN2 previously had no
+ * equivalent of: CAN2 only ever logged at state transitions (lock,
+ * fault, next-baud), giving no ongoing visibility into the bus
+ * between those events - e.g. watching RxErr climb toward the
+ * error-passive threshold BEFORE a fault actually triggers.
+ */
+static uint32_t
+    g_can2_last_stat_ms;
 
 
 /* ========================================================================== */
@@ -570,11 +614,39 @@ static void Can2_SetRxMailbox(void)
 /* ========================================================================== */
 
 
+/*
+ * FIX: was two SEPARATE freeze/unfreeze cycles back-to-back whenever
+ * called from a fresh-scan restart (Can2_StartDetectionAt() used to
+ * do its own dedicated EnterFreeze->ECR=0->ExitFreeze pass, then
+ * immediately call this function for a SECOND, independent
+ * EnterFreeze->...->ExitFreeze pass). CAN1's directly equivalent
+ * restart-from-RUNNING path (prv_StartDetection() -> prv_ApplyBaud())
+ * only ever does ONE freeze/unfreeze cycle - a genuine, verified
+ * structural difference from CAN1's proven-safe pattern, found while
+ * investigating a HardFault reproducible in exactly that RUNNING ->
+ * restart transition. clear_ecr folds the ECR clear into THIS
+ * function's own single, already-existing freeze cycle instead of a
+ * separate one, matching CAN1's one-cycle-per-restart-step pattern
+ * exactly. Callers building a fresh scan (Can2_StartDetectionAt())
+ * pass 1U; every intra-scan candidate switch (NextBaud(),
+ * RevertCorroboration(), the corroboration-initiation path, and
+ * Can2_LockBaud()'s final re-arm) passes 0U, preserving REC
+ * accumulation WITHIN one scan exactly as before - only WHERE the
+ * clear happens changed, not which calls get one.
+ *
+ * Also now clears the full 64-word mailbox RAM before re-arming the
+ * RX mailbox, matching CAN1's prv_ApplyBaud() exactly (can1.c) -
+ * Can2_SetRxMailbox() alone only touches the single RX mailbox's own
+ * 4 words, leaving the other 15 mailboxes holding stale RAM contents
+ * across every candidate switch.
+ */
 static uint8_t Can2_SetBaud(
-    uint8_t index
+    uint8_t index,
+    uint8_t clear_ecr
 )
 {
     uint32_t ctrl1;
+    uint32_t i;
 
 
     if(index >=
@@ -590,15 +662,37 @@ static uint8_t Can2_SetBaud(
     }
 
 
-    /*
-     * ECR is NOT touched here (moved to Can2_StartDetectionAt(), the
-     * actual entry point for every fresh detection attempt - see its
-     * comment for why). REC is intentionally left to accumulate
-     * candidate-to-candidate WITHIN one scan (see CAN2_RXERR_BURST's
-     * comment) - this function is called for every candidate switch,
-     * including ones mid-scan (NextBaud()/RevertCorroboration()) where
-     * that accumulation is deliberate, not just the start of a scan.
-     */
+    if(clear_ecr != 0U)
+    {
+        /*
+         * FIX: a real, hardware-confirmed PRECISE bus fault
+         * (ACTLR.DISDEFWBUF was set in main() specifically to force
+         * this) was captured here: CFSR=0x00008200 (BFSR=0x82 =
+         * PRECISERR|BFARVALID), BFAR=0x4002B01C - exactly
+         * CAN2_BASE+0x1C, the ECR register - on the very next write
+         * below. It happened specifically on a restart triggered
+         * immediately after a live RxErr burst ("[CAN2] RxErr burst
+         * ... Re-detecting"), i.e. right as TEC/REC were still
+         * actively being incremented by hardware from real bus
+         * errors. FRZACK being asserted (Can2_EnterFreeze() already
+         * returned success above) only confirms the module has
+         * stopped TAKING PART in bus transactions - it does not
+         * appear to guarantee its internal error-counter write port
+         * has already quiesced when entry into freeze immediately
+         * follows a live error burst. A brief settling delay here
+         * (only on the clear_ecr path - candidate switches within a
+         * scan never hit this) gives that in-flight internal update
+         * time to finish before the CPU's own write to the same
+         * register lands, avoiding the write-write collision that
+         * the AHB bridge was surfacing as a bus error.
+         */
+        Can2_DelayMs(
+            1U
+        );
+
+        CAN2->ECR =
+            0U;
+    }
 
 
     /* Always NORMAL mode (LOM never set) - see the NORMAL mode note in
@@ -614,8 +708,32 @@ static uint8_t Can2_SetBaud(
 
 
     /*
-     * Re-arm mailbox.
+     * Clear the full mailbox RAM, then re-arm the RX mailbox - matches
+     * CAN1's prv_ApplyBaud() exactly.
      */
+
+    for(
+        i = 0U;
+        i < 64U;
+        i++
+    )
+    {
+        CAN2->RAMn[
+            i
+        ] =
+            0U;
+    }
+
+    /* FIX: matches CAN1's prv_ApplyBaud(), which re-clears these three
+     * mask registers on EVERY baud apply, not just once at init - this
+     * file previously only set them in Can2_HardwareInit() (step G).
+     * IRMQ is not set for CAN2 (same as CAN1), so these legacy global
+     * masks are what actually governs ID acceptance; leaving them
+     * unrestated here was a real mirror gap even though their reset
+     * value (0, accept-all) already matched what init left behind. */
+    CAN2->RXMGMASK = 0U;
+    CAN2->RX14MASK = 0U;
+    CAN2->RX15MASK = 0U;
 
     Can2_SetRxMailbox();
 
@@ -1168,11 +1286,31 @@ static uint8_t Can2_CheckFault(void)
         g_can2_status.error_count++;
 
 
+        /*
+         * FIX: name the SPECIFIC protocol error flag(s) latched in
+         * ESR1, not just the aggregate error-passive/bus-off
+         * confinement level - each error type points at a different
+         * likely cause (e.g. a run of ACKERR specifically is the
+         * signature of the sender not getting acknowledged - the
+         * two-node-bench PCAN dynamic documented elsewhere in this
+         * file - whereas STF/FRM/CRC/BIT errors point at a genuine
+         * bit-timing/candidate mismatch or signal-integrity issue).
+         * Flags read here reflect whatever is currently latched in
+         * ESR1 at this exact check, same register Can2_SetBaud()
+         * clears (W1C) on every candidate switch.
+         */
         RTT_LOG(
-            "[CAN2_ERR] %s  TxErr=%u RxErr=%u - re-detecting\r\n",
+            "[CAN2_ERR] %s  TxErr=%u RxErr=%u  [%s%s%s%s%s%s] -"
+            " re-detecting\r\n",
             (fault == 2U) ? "BUS OFF" : "BUS HEAVY (error-passive)",
             (unsigned)(CAN2->ECR & 0xFFU),
-            (unsigned)((CAN2->ECR >> 8U) & 0xFFU)
+            (unsigned)((CAN2->ECR >> 8U) & 0xFFU),
+            (esr & CAN_ESR1_STFERR_MASK) ? "STF " : "",
+            (esr & CAN_ESR1_FRMERR_MASK) ? "FRM " : "",
+            (esr & CAN_ESR1_CRCERR_MASK) ? "CRC " : "",
+            (esr & CAN_ESR1_BIT0ERR_MASK) ? "BIT0 " : "",
+            (esr & CAN_ESR1_BIT1ERR_MASK) ? "BIT1 " : "",
+            (esr & CAN_ESR1_ACKERR_MASK) ? "ACK " : ""
         );
 
 
@@ -1274,34 +1412,15 @@ static void Can2_StartDetectionAt(
      * instead of always 0; it did not resolve the 1 Mbps bus-off issue
      * and per explicit requirement recovery now always clears the
      * baud completely and starts fresh, so every current caller passes
-     * 0). The per-candidate ECR clear used to live inside
-     * Can2_SetBaud(), gated on index==0, which meant a resume at a
-     * NON-zero index never cleared ECR at all: the stale, already-
-     * elevated REC from whatever fault triggered recovery carried
-     * straight into the "fresh" attempt, undermining the very recovery
-     * it was supposed to perform - a real bug, fixed by moving the
-     * clear here so it always runs regardless of start_index.
-     * Can2_SetBaud() no longer touches ECR at all, so intra-scan
-     * candidate-to-candidate cycling (NextBaud()/RevertCorroboration(),
-     * which do NOT go through this function) still correctly preserves
-     * REC accumulation WITHIN one scan pass, unchanged. ECR is
-     * writable while frozen - same confirmed-working technique as
-     * Can2_HardwareInit().
-     */
-    if(
-        Can2_EnterFreeze()
-        != 0U
-    )
-    {
-        CAN2->ECR =
-            0U;
-
-        (void)
-        Can2_ExitFreeze();
-    }
-
-
-    /*
+     * 3U). ECR is cleared by passing clear_ecr=1U to Can2_SetBaud()
+     * below, folded into its single existing freeze cycle rather than
+     * a separate dedicated one - see Can2_SetBaud()'s own comment for
+     * why a second, independent freeze/unfreeze pass here was removed
+     * (a genuine, verified structural difference from CAN1's
+     * one-cycle-per-restart pattern, found while investigating a
+     * HardFault reproducible in exactly this RUNNING -> restart
+     * transition).
+     *
      * NORMAL mode, not Listen-Only (V0.0063): in LOM, FlexCAN never
      * drives the CAN ACK bit. On a bench where this MCU is the only
      * OTHER node besides the tool sending test traffic, nobody acks the
@@ -1314,7 +1433,8 @@ static void Can2_StartDetectionAt(
      */
     if(
         Can2_SetBaud(
-            g_can2_baud_index
+            g_can2_baud_index,
+            1U
         )
         == 0U
     )
@@ -1438,7 +1558,8 @@ static void Can2_NextBaud(void)
 
     if(
         Can2_SetBaud(
-            g_can2_baud_index
+            g_can2_baud_index,
+            0U
         )
         == 0U
     )
@@ -1488,7 +1609,8 @@ static void Can2_LockBaud(void)
 
     if(
         Can2_SetBaud(
-            index
+            index,
+            0U
         )
         == 0U
     )
@@ -1587,7 +1709,8 @@ static void Can2_RevertCorroboration(void)
 
     if(
         Can2_SetBaud(
-            g_can2_baud_index
+            g_can2_baud_index,
+            0U
         )
         == 0U
     )
@@ -1835,29 +1958,40 @@ void Can2_Task(void)
          * period on it.
          */
 
-        if(
-            (
-                (CAN2->ESR1 >> 4U) &
-                0x03U
-            ) ==
-            2U
-        )
         {
-            RTT_LOG(
-                "[CAN2_ERR] BUS OFF while detecting (RxErr=%u) -"
-                " restarting the scan\r\n",
-                (unsigned)((CAN2->ECR >> 8U) & 0xFFU)
-            );
+            uint32_t esr1_detect =
+                CAN2->ESR1;
 
-            g_can2_status.bus_off_count++;
+            if(
+                ((esr1_detect >> 4U) &
+                 0x03U) ==
+                2U
+            )
+            {
+                RTT_LOG(
+                    "[CAN2_ERR] BUS OFF while detecting  TxErr=%u"
+                    " RxErr=%u  [%s%s%s%s%s%s] - restarting the"
+                    " scan\r\n",
+                    (unsigned)(CAN2->ECR & 0xFFU),
+                    (unsigned)((CAN2->ECR >> 8U) & 0xFFU),
+                    (esr1_detect & CAN_ESR1_STFERR_MASK) ? "STF " : "",
+                    (esr1_detect & CAN_ESR1_FRMERR_MASK) ? "FRM " : "",
+                    (esr1_detect & CAN_ESR1_CRCERR_MASK) ? "CRC " : "",
+                    (esr1_detect & CAN_ESR1_BIT0ERR_MASK) ? "BIT0 " : "",
+                    (esr1_detect & CAN_ESR1_BIT1ERR_MASK) ? "BIT1 " : "",
+                    (esr1_detect & CAN_ESR1_ACKERR_MASK) ? "ACK " : ""
+                );
 
-            g_can2_status.error_count++;
+                g_can2_status.bus_off_count++;
 
-            Can2_StartDetectionAt(
-                3U
-            );
+                g_can2_status.error_count++;
 
-            return;
+                Can2_StartDetectionAt(
+                    3U
+                );
+
+                return;
+            }
         }
 
 
@@ -2035,7 +2169,8 @@ void Can2_Task(void)
 
                     if(
                         Can2_SetBaud(
-                            g_can2_baud_index
+                            g_can2_baud_index,
+                            0U
                         )
                         == 0U
                     )
@@ -2232,6 +2367,51 @@ void Can2_Task(void)
             Can2_StartDetection();
 
             return;
+        }
+
+
+        /*
+         * Periodic status - see the FIX note on g_can2_last_stat_ms
+         * for why this exists. Same 5-second cadence and field set as
+         * CAN1's [CAN1_STAT] line, plus the specific ESR1 protocol-
+         * error flag names (Can2_CheckFault() only reports the
+         * aggregate error-passive/bus-off confinement LEVEL, not which
+         * individual error type is actually occurring - stuff/form/
+         * CRC/bit/ACK errors each point at a different root cause,
+         * e.g. a run of ACKERR specifically is the signature of a
+         * sender not getting acknowledged, exactly the two-node-bench
+         * PCAN dynamic documented elsewhere in this file).
+         */
+
+        if(
+            (Uart_GetMs() - g_can2_last_stat_ms) >=
+            5000U
+        )
+        {
+            uint32_t esr1_now;
+
+            g_can2_last_stat_ms =
+                Uart_GetMs();
+
+            esr1_now =
+                CAN2->ESR1;
+
+            RTT_LOG(
+                "[CAN2_STAT] baud=%lu rx=%lu err=%lu ESR1=0x%08lX"
+                " TxErr=%u RxErr=%u  [%s%s%s%s%s%s]\r\n",
+                (unsigned long)g_can2_status.detected_baud_kbps,
+                (unsigned long)g_can2_status.rx_count,
+                (unsigned long)g_can2_status.error_count,
+                (unsigned long)esr1_now,
+                (unsigned)(CAN2->ECR & 0xFFU),
+                (unsigned)((CAN2->ECR >> 8U) & 0xFFU),
+                (esr1_now & CAN_ESR1_STFERR_MASK) ? "STF " : "",
+                (esr1_now & CAN_ESR1_FRMERR_MASK) ? "FRM " : "",
+                (esr1_now & CAN_ESR1_CRCERR_MASK) ? "CRC " : "",
+                (esr1_now & CAN_ESR1_BIT0ERR_MASK) ? "BIT0 " : "",
+                (esr1_now & CAN_ESR1_BIT1ERR_MASK) ? "BIT1 " : "",
+                (esr1_now & CAN_ESR1_ACKERR_MASK) ? "ACK " : ""
+            );
         }
 
 

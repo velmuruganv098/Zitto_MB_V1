@@ -119,6 +119,77 @@ void HardFault_Handler(void)
 {
     uint32_t i;
     volatile uint32_t n;
+
+    /*
+     * FIX: capture the ACTUAL faulting stack frame FIRST, as the very
+     * first statement in this function - "mrs %0,msp" is a single
+     * instruction with no stack use of its own, executed before this
+     * function's own (small, fixed) prologue has a chance to push
+     * anything that would offset the value away from where the CPU's
+     * automatic exception entry left it. HardFault_Handler is not
+     * naked (an earlier, simpler diagnostic pass just read CFSR/HFSR/
+     * BFAR/MMFAR, which proved the fault is BFSR=0x04 IMPRECISERR - an
+     * imprecise bus fault, meaning the CPU's write buffer only
+     * detected the bad write several instructions AFTER it actually
+     * happened, so CFSR/HFSR alone cannot say WHICH instruction/write
+     * was responsible). PSP is confirmed 0 in this project (no RTOS,
+     * everything runs on the main/exception stack), so MSP is always
+     * the frame that matters. The hardware exception frame is
+     * {R0,R1,R2,R3,R12,LR,PC,xPSR} - offsets 0..7 - PC (offset 6) is
+     * the return address into the code that was running when the
+     * exception was TAKEN, which for an imprecise fault is only a
+     * rough neighborhood of the real culprit, not the exact faulting
+     * write - but it is still far more specific than nothing, and
+     * combined with ACTLR.DISDEFWBUF being set in main() below
+     * (disables write buffering from this boot onward), the NEXT
+     * occurrence of this fault will be PRECISE and this same PC
+     * capture will then point at the exact faulting instruction.
+     */
+    uint32_t fault_msp;
+    uint32_t fault_pc;
+    uint32_t fault_lr;
+    __asm volatile ("mrs %0, msp" : "=r" (fault_msp));
+    fault_pc = ((volatile uint32_t *)fault_msp)[6];
+    fault_lr = ((volatile uint32_t *)fault_msp)[5];
+
+    /*
+     * FIX: capture the hardware fault-status registers BEFORE doing
+     * anything else, while they are still fresh - CFSR/HFSR/BFAR are
+     * plain memory-mapped registers (System Control Block), reading
+     * them is just a load, no function call beyond one printf, no
+     * extra stack use beyond this function's own locals, so this is
+     * safe even if the stack that triggered the fault is suspect.
+     * Logged (not just left for a debugger to inspect) specifically
+     * because this handler's whole purpose is to recover via reset
+     * when nothing is attached - without this, every occurrence was
+     * diagnosed blind from indirect RTT evidence (which CAN2 log
+     * line printed last), never from the CPU's own account of what
+     * actually happened.
+     */
+    {
+        uint32_t cfsr  = *((volatile uint32_t *)0xE000ED28UL);
+        uint32_t hfsr  = *((volatile uint32_t *)0xE000ED2CUL);
+        uint32_t bfar  = *((volatile uint32_t *)0xE000ED38UL);
+        uint32_t mmfar = *((volatile uint32_t *)0xE000ED34UL);
+
+        SEGGER_RTT_printf(0,
+            "\r\n[FAULT] HardFault  CFSR=0x%08lX (MMFSR=0x%02lX BFSR=0x%02lX"
+            " UFSR=0x%04lX)  HFSR=0x%08lX  BFAR=0x%08lX  MMFAR=0x%08lX\r\n",
+            (unsigned long)cfsr,
+            (unsigned long)(cfsr & 0xFFUL),
+            (unsigned long)((cfsr >> 8U) & 0xFFUL),
+            (unsigned long)((cfsr >> 16U) & 0xFFFFUL),
+            (unsigned long)hfsr,
+            (unsigned long)bfar,
+            (unsigned long)mmfar);
+
+        SEGGER_RTT_printf(0,
+            "[FAULT]   stacked PC=0x%08lX  LR=0x%08lX  MSP=0x%08lX\r\n",
+            (unsigned long)fault_pc,
+            (unsigned long)fault_lr,
+            (unsigned long)fault_msp);
+    }
+
     for(i = 0U; i < 20U; i++)
     {
         PTA->PTOR = (1UL << 0U);
@@ -399,6 +470,28 @@ int main(void)
     uint32_t last_imu_tx_ms = 0U;
     uint32_t last_csa_tx_ms = 0U;
 
+
+    /*
+     * FIX: ACTLR.DISDEFWBUF=1 (bit1) disables the Cortex-M4's default
+     * write buffering, forcing every bus fault to be PRECISE instead
+     * of imprecise - the CPU stalls until the faulting write's
+     * response comes back, so the exception is taken with PC pointing
+     * AT the actual faulting instruction rather than several
+     * instructions later. Done as the very first thing in main() (a
+     * single core-register write, no peripheral/clock dependency, so
+     * it is safe before even WDOG/clock init) specifically because a
+     * confirmed, reproducible IMPRECISERR HardFault (BFSR=0x04) during
+     * CAN2's bus-heavy/bus-off restart path has resisted every static
+     * hypothesis tried so far (freeze-cycle merge, mailbox RAM bounds,
+     * mask-register mirroring) - CFSR/HFSR alone cannot say WHICH
+     * register/RAM write in that sequence is responsible when the
+     * fault is imprecise. Costs a little write throughput (writes can
+     * no longer post to the buffer and return immediately); acceptable
+     * for a debug build chasing this specific fault. See
+     * HardFault_Handler()'s stacked-PC capture, which becomes exact
+     * once this is set.
+     */
+    *((volatile uint32_t *)0xE000E008UL) |= (1UL << 1U);
     /* ======================================================================
      * STEP 1: WDOG DISABLE  - absolute first call
      * STEP 2: CLOCK INIT    - starts bus clock (40MHz for CAN) and
@@ -430,7 +523,7 @@ int main(void)
     SEGGER_RTT_printf(0,
         "\r\n================================================\r\n"
         " Zitto MB V1 - VCU Firmware Boot\r\n"
-        " Firmware Revision : V0.006300\r\n"
+        " Firmware Revision : V0.00630\r\n"
         " Change            : CAN1 pre-RX error immunity + symmetric 2:1 baud corroboration; fixed test OFF\r\n"
         " MCU: S32K144  Clock: 80MHz SPLL  WDOG: OFF\r\n"
         " Modules: IMU=%d CSA=%d CAN1=%d CAN2=%d FLM=%d GPIO=%d\r\n"
