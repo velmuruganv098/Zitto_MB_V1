@@ -36,8 +36,6 @@
 #define APP_FLM_ENABLE     1
 #define APP_GPIO_ENABLE    1
 
-#define TASK_DT_MS          5U
-
 /* --------------------------------------------------------------------------
  * INCLUDES
  * -------------------------------------------------------------------------- */
@@ -608,11 +606,11 @@ int main(void)
     /* ======================================================================
      * MAIN LOOP
      *
-     * V0.0048 CAN priority:
-     *   - 5ms cooperative loop instead of 50ms fixed loop
-     *   - CAN1 is serviced first
+     * V0.0048 CAN priority, V0.0065 no fixed delay:
+     *   - CAN1 is serviced first every iteration
      *   - UART/OTA remain frequent
-     *   - slower sensor/status work keeps explicit time gates
+     *   - slower sensor/status work keeps explicit Uart_GetMs() time
+     *     gates instead of relying on a shared per-iteration delay
      * ====================================================================== */
     while(1)
     {
@@ -806,12 +804,19 @@ int main(void)
         led_task();
 #endif
 
-        /* Short cooperative yield. CAN1 detection timing is time-based,
-         * so it remains deterministic even if this loop is adjusted later. */
+        /* No fixed per-iteration delay here (V0.0065): every section
+         * above gates itself off the Uart_GetMs() timebase rather than
+         * off loop-iteration counts, so nothing needs a shared sleep to
+         * pace it - and measurement showed this delay costing ~45ms
+         * against a ~5ms budget in this debug build, which was blocking
+         * every other section (including UART TX queue servicing) once
+         * per iteration regardless of whether it had any work to do.
+         * CAN1/CAN2 detection is explicitly time-based (see their own
+         * comments), so it stays correct with the loop running as fast
+         * as the enabled sections' real work allows. Bench-analysis mode
+         * keeps its own explicit delay unchanged. */
 #if CAN1_FULL_ANALYSIS_MODE
         delay_ms(CAN1_ANALYSIS_LOOP_DELAY_MS);
-#else
-        delay_ms(TASK_DT_MS);
 #endif
     }
 
