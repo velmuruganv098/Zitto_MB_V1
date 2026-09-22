@@ -284,6 +284,17 @@ static int rtt_uart_vformat(
  * MSG_LOG, via the existing bounded/non-blocking TX queue), so
  * anything visible over RTT is also visible to whatever is on the
  * other end of the physical UART - not just to a debugger session.
+ *
+ * BUG FIX: Uart_Pkt_Send() (called by Uart_Pkt_SendLog() below) itself
+ * calls RTT_LOG() to log "[UART_TX] Frame ready ..." for every
+ * non-MSG_CAN type it sends - including MSG_LOG, the very type this
+ * mirror sends. Without a guard that is unbounded recursion: RTT_LOG
+ * -> Uart_Pkt_SendLog -> Uart_Pkt_Send -> RTT_LOG -> ... - confirmed
+ * on hardware as a boot crash-loop (stack overflow within the first
+ * few log lines, board resets, repeats forever). s_in_uart_mirror
+ * makes any RTT_LOG call made from *within* this mirror's own call
+ * chain skip re-entering the mirror (it still logs to RTT), which
+ * breaks the cycle regardless of which internal function triggers it.
  */
 int RTT_LOG(const char *format, ...)
 {
@@ -292,17 +303,23 @@ int RTT_LOG(const char *format, ...)
     va_list args2;
     char buf[200];
     int len;
+    static volatile uint8_t s_in_uart_mirror = 0U;
 
     va_start(args, format);
     va_copy(args2, args);
 
     ret = SEGGER_RTT_vprintf(0, format, &args);
 
-    len = rtt_uart_vformat(buf, sizeof(buf), format, args2);
-
-    if(len > 0)
+    if(s_in_uart_mirror == 0U)
     {
-        (void)Uart_Pkt_SendLog(buf);
+        len = rtt_uart_vformat(buf, sizeof(buf), format, args2);
+
+        if(len > 0)
+        {
+            s_in_uart_mirror = 1U;
+            (void)Uart_Pkt_SendLog(buf);
+            s_in_uart_mirror = 0U;
+        }
     }
 
     va_end(args);
