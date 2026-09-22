@@ -1651,7 +1651,7 @@ uint8_t Uart_Pkt_Send(
             "[UART_TX] Frame ready "
             "type=0x%02X "
             "payload=%u "
-            "total=%u\\r\\n",
+            "total=%u \r \n",
 
             (unsigned)type,
             (unsigned)len,
