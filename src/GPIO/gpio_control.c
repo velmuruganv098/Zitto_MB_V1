@@ -667,9 +667,26 @@ void Gpio_ControlTask(void)
      *
      * For now we only refresh the cached state.
      */
+    uint8_t changed = 0U;
+
     for(i = 0U; i < GPIO_CONTROL_COUNT; i++)
     {
-        g_gpio_state[i] =
-            gpio_read_physical(&g_gpio_table[i]);
+        uint8_t now_state = gpio_read_physical(&g_gpio_table[i]);
+        if(now_state != g_gpio_state[i])
+        {
+            EVT_LOG("[GPIO] ID=%u PT%c%u %s changed -> %s\r\n",
+                    (unsigned)g_gpio_table[i].logical_id, g_gpio_table[i].port,
+                    (unsigned)g_gpio_table[i].pin,
+                    (g_gpio_direction[i] == GPIO_DIR_OUTPUT) ? "OUT" : "IN",
+                    now_state ? "HIGH" : "LOW");
+            changed = 1U;
+        }
+        g_gpio_state[i] = now_state;
+    }
+
+    /* V0.0073: push the new state so the UI follows real pin changes. */
+    if(changed != 0U)
+    {
+        Gpio_ControlSendStatus();
     }
 }

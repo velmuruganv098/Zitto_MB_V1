@@ -1,0 +1,77 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: TEL BMU
+
+
+BO_ 2559706100 TEL_Immob_Write_Request: 8 TEL
+ SG_ Immobilization_Request : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Parameter_ID : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2559833091 BMU_Immob_Write_Response: 8 BMU
+ SG_ Immobilization_Status : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Result : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Parameter_ID : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2559575028 TEL_Immob_Read_Request: 8 TEL
+ SG_ Parameter_ID : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2559702019 BMU_Immob_Read_Response: 8 BMU
+ SG_ Immobilization_Status : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Result : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Parameter_ID : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+
+
+
+CM_ BO_ 2559706100 "PGN 0x9200 - repeat until BMS confirms.";
+CM_ SG_ 2559706100 Parameter_ID "0x04B0 = immobilization";
+CM_ BO_ 2559833091 "PGN 0x9300";
+CM_ BO_ 2559575028 "PGN 0x9000";
+CM_ BO_ 2559702019 "PGN 0x9100";
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_ "GenMsgCycleTime" BO_ 2559706100 1000;
+BA_ "GenMsgCycleTime" BO_ 2559833091 1000;
+BA_ "GenMsgCycleTime" BO_ 2559575028 1000;
+BA_ "GenMsgCycleTime" BO_ 2559702019 1000;
+VAL_ 2559706100 Immobilization_Request 0 "Clear" 1 "Set" ;
+VAL_ 2559833091 Immobilization_Status 0 "Clear" 1 "Set" ;
+VAL_ 2559833091 Result 0 "Failure" 1 "Success" ;
+VAL_ 2559702019 Immobilization_Status 0 "Clear" 1 "Set" ;
+VAL_ 2559702019 Result 0 "Failure" 1 "Success" ;
+
+
+

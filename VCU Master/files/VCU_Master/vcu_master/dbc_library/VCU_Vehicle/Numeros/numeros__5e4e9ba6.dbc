@@ -1,0 +1,116 @@
+VERSION ""
+
+
+BS_:
+
+BU_:
+
+
+BO_ 2566914309 ecu_control_feedback: 6 Vector__XXX
+ SG_ overuse_pi_output_fb : 0|8@1+ (0.392157,0) [0|100] "" Vector__XXX
+ SG_ speed_controller_speed_cmd : 8|12@1- (0.390625,0) [-800|799.609] "RPM" Vector__XXX
+ SG_ ecu_control_foc_iq_fb : 20|11@1- (0.341797,0) [-350|349.658] "A" Vector__XXX
+ SG_ battery_iq_fb : 31|11@1- (0.341797,0) [-350|349.658] "A" Vector__XXX
+
+BO_ 2566914308 vehicle_status: 6 Vector__XXX
+ SG_ bms_derating_fb : 46|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ motor_derating_fb : 45|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ controller_derating_fb : 44|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ temperature_fault_fb : 40|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ voltage_fault_fb : 42|2@1+ (1,0) [0|2] "" Vector__XXX
+ SG_ motor_temperature_fault_fb : 41|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ current_fault_fb : 39|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ speed_fb : 0|12@1- (0.390816,0) [-800.391|800] "Rpm" Vector__XXX
+ SG_ bus_current_fb : 12|9@1- (0.588235,0) [-150.588|150] "A" Vector__XXX
+ SG_ bus_voltage_fb : 21|8@1+ (0.313726,0) [0|80.0001] "V" Vector__XXX
+ SG_ key_switch_status_fb : 29|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ drivemode_switch_status_fb : 30|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ sidestand_status_fb : 31|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ hall_a_fb : 36|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ hall_b_fb : 37|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ hall_c_fb : 38|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ direction_switch_status_fb : 33|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ ignition_switch_status_fb : 34|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ hall_state_fb : 35|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ kill_switch_status_fb : 32|1@1- (1,0) [0|1] "" Vector__XXX
+
+BO_ 2566914305 foc_feedback: 5 Vector__XXX
+ SG_ foc_id_fb : 11|9@1- (0.392157,0) [-100.392|100] "A" Vector__XXX
+ SG_ foc_iq_fb : 0|11@1- (0.342131,0) [-350.342|350] "A" Vector__XXX
+ SG_ foc_vq_fb : 28|8@1- (0.362205,0) [-46.3622|46] "V" Vector__XXX
+ SG_ foc_vd_fb : 20|8@1- (0.362205,0) [-46.3622|46] "V" Vector__XXX
+
+BO_ 2566914306 motor_status: 3 Vector__XXX
+ SG_ motor_temperature_fb : 8|8@1+ (0.588235,0) [0|150] "°C" Vector__XXX
+ SG_ mosfet_temperature_fb : 0|8@1+ (0.588235,0) [0|150] "°C" Vector__XXX
+ SG_ motor_run_substate_fb : 18|4@1+ (1,0) [0|15] "state" Vector__XXX
+ SG_ motor_state_fb : 16|2@1+ (1,0) [0|3] "state" Vector__XXX
+
+BO_ 2566914307 throttle_state: 5 Vector__XXX
+ SG_ throttle_status_fb : 33|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ throttle_map_status_fb : 30|3@1+ (1,0) [0|2] "" Vector__XXX
+ SG_ throttle_map_no_fb : 27|3@1+ (1,0) [0|4] "Map" Vector__XXX
+ SG_ throttle_percent_fb : 19|8@1+ (0.392157,0) [0|100] "%" Vector__XXX
+ SG_ throttle_voltage_fb : 11|8@1+ (0.017647,0) [0|4.49999] "V" Vector__XXX
+ SG_ throttle_iq_fb : 0|11@1- (0.342131,0) [-350.342|350] "A" Vector__XXX
+
+BO_ 2550072784 FORSEE_BATTERY_STATE: 8 Vector__XXX
+ SG_ SOH : 24|16@1+ (1,0) [0|64] "%" Vector__XXX
+ SG_ SOC : 0|16@1+ (1,0) [0|64] "%" Vector__XXX
+
+BO_ 2550072272 FORSEE_TEMPERATURE_INFO_CELL: 8 Vector__XXX
+ SG_ Temperature_Cell_Max : 24|16@1- (1,0) [-32768|32767] "degC" Vector__XXX
+ SG_ Temperature_Cell_Min : 8|16@1- (1,0) [-32768|32767] "degC" Vector__XXX
+
+BO_ 2550071760 FORSEE_VOLTAGE_INFO: 8 Vector__XXX
+ SG_ Max_Voltage : 48|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ Min_Voltage : 32|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ Battery_Voltage : 0|32@1+ (1,0) [0|2704] "V" Vector__XXX
+
+BO_ 2550075600 FORSEE_ERROR_INFO: 8 Vector__XXX
+ SG_ Current_short_circuit : 23|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ Date_validation_error : 15|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ Data_corrupted_error : 14|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ JSON_parsing_error : 13|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ DeepDischargeError : 12|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ PDU_Over_temp : 11|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ BatteryThermalRunaway : 10|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ Precharge_NoLoad_detected_Error : 9|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ precharge_incomplete_Error : 8|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ BatteryOverVoltage : 7|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ BatteryUnderVoltage : 6|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ BatteryOverTemp : 5|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ BatteryUnderTemp : 4|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ PDU_failure : 3|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ Cell_temp_imbalance_Fault : 2|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ BatteryOverLoad : 1|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ PDU_Lock : 0|1@1- (1,0) [0|1] "" Vector__XXX
+
+BO_ 2419629571 DISPLAY_MSG: 8 Vector__XXX
+ SG_ Mode_Set_Switch_Status : 56|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Software_Version : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ TripA : 24|24@1+ (1,0) [0|1.67772e+007] "" Vector__XXX
+ SG_ odometer : 0|24@1+ (1,0) [0|1.67772e+007] "" Vector__XXX
+
+
+
+ VAL_ 2566914308 bms_derating_fb 1 "derating_enable" 0 "derating_disable" ;
+ VAL_ 2566914308 motor_derating_fb 1 "derating_enable" 0 "derating_disable" ;
+ VAL_ 2566914308 controller_derating_fb 1 "derating_enable" 0 "derating_disable" ;
+ VAL_ 2566914308 temperature_fault_fb 1 "fault" 0 "no_fault" ;
+ VAL_ 2566914308 voltage_fault_fb 2 "over_voltage_error" 1 "under_voltage_error" 0 "bus_voltage_in_range" ;
+ VAL_ 2566914308 motor_temperature_fault_fb 1 "fault" 0 "no_fault" ;
+ VAL_ 2566914308 current_fault_fb 1 "fault" 0 "no_fault" ;
+ VAL_ 2566914308 key_switch_status_fb 1 "on" 0 "off" ;
+ VAL_ 2566914308 drivemode_switch_status_fb 1 "eco_mode" 0 "normal_mode" ;
+ VAL_ 2566914308 sidestand_status_fb 1 "engaged" 0 "disengaged" ;
+ VAL_ 2566914308 direction_switch_status_fb 1 "reverse_direction" 0 "forward_direction" ;
+ VAL_ 2566914308 ignition_switch_status_fb 1 "on" 0 "off" ;
+ VAL_ 2566914308 hall_state_fb 1 "invalid_hall_state" 0 "valid_hall_state" ;
+ VAL_ 2566914308 kill_switch_status_fb 1 "on" 0 "off" ;
+ VAL_ 2566914306 motor_run_substate_fb 14 "run_substate_fault_drive_e" 13 "run_substate_drive_e" 12 "run_substate_reverse_e" 11 "run_substate_regen_e" 10 "run_substate_idle_e" ;
+ VAL_ 2566914306 motor_state_fb 3 "fault_mode" 2 "run_mode" 1 "idle_mode" 0 "block_mode" ;
+ VAL_ 2566914307 throttle_status_fb 5 "throttle_short_to_supply" 4 "throttle_short_to_ground" 3 "throttle_ok" 2 "throttle_ready" 1 "throttle_init" 0 "throttle_power_on_delay" ;
+ VAL_ 2566914307 throttle_map_status_fb 2 "throttlemap_verify_success" 1 "throttlemap_verify_failed" 0 "throttlemap_missing" ;
+ VAL_ 2566914307 throttle_map_no_fb 4 "forward4_mode" 3 "forward3_mode" 2 "forward2_mode" 1 "forward1_mode" 0 "reverse_mode" ;
+

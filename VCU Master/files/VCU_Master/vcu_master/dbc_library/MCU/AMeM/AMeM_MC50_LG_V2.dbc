@@ -1,0 +1,241 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: NHPJT
+
+
+BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
+ SG_ W_Current_Aux : 0|16@1+ (0.1,-300) [-300|300] "A" Vector__XXX
+ SG_ V_Current_Aux : 0|16@1+ (0.1,-300) [-300|300] "A" Vector__XXX
+ SG_ U_Current_Aux : 0|16@1+ (0.1,-300) [-300|300] "A" Vector__XXX
+
+BO_ 529 Logger11: 8 NHPJT
+ SG_ ExtraDataMon_7 : 48|16@1+ (0.1,-3000) [-3000|3000] "" Vector__XXX
+ SG_ ExtraDataMon_6 : 32|16@1+ (0.1,-3000) [-3000|3000] "" Vector__XXX
+ SG_ ExtraDataMon_5 : 16|16@1+ (0.1,-3000) [-3000|3000] "" Vector__XXX
+ SG_ ExtraDataMon_4 : 0|16@1+ (0.1,-3000) [-3000|3000] "" Vector__XXX
+
+BO_ 528 Logger10: 8 NHPJT
+ SG_ ExtraDataMon_3 : 48|16@1+ (0.1,-3000) [-3000|3000] "" Vector__XXX
+ SG_ ExtraDataMon_2 : 32|16@1+ (0.1,-3000) [-3000|3000] "" Vector__XXX
+ SG_ ExtraDataMon_1 : 16|16@1+ (0.1,-3000) [-3000|3000] "" Vector__XXX
+ SG_ ExtraDataMon_0 : 0|16@1+ (0.1,-3000) [-3000|3000] "" Vector__XXX
+
+BO_ 521 Logger09: 8 NHPJT
+ SG_ Counter10ms : 16|16@1+ (0.01,0) [0|10] "ms" Vector__XXX
+ SG_ CounterAdc : 0|16@1+ (0.01,0) [0|100] "us" Vector__XXX
+
+BO_ 520 Logger08: 8 NHPJT
+ SG_ Temperature_MCU : 48|16@1+ (0.1,-50) [-50|200] "DegC" Vector__XXX
+ SG_ FailArraySlow01 : 32|16@1+ (1,0) [0|4095] "" Vector__XXX
+ SG_ FailArrayFast02 : 16|16@1+ (1,0) [0|4095] "" Vector__XXX
+ SG_ FailArrayFast01 : 0|16@1+ (1,0) [0|4095] "" Vector__XXX
+
+BO_ 519 Logger07: 8 NHPJT
+ SG_ DC_Cur_Offset : 48|16@1+ (0.1,0) [0|4095] "" Vector__XXX
+ SG_ W_Cur_Offset : 32|16@1+ (0.1,0) [0|4095] "" Vector__XXX
+ SG_ V_Cur_Offset : 16|16@1+ (0.1,0) [0|4095] "" Vector__XXX
+ SG_ U_Cur_Offset : 0|16@1+ (0.1,0) [0|4095] "" Vector__XXX
+
+BO_ 518 Logger06: 8 NHPJT
+ SG_ DC_Cur_Gain_Mon : 48|16@1+ (0.001,0) [0|2] "" Vector__XXX
+ SG_ W_Cur_Gain_Mon : 32|16@1+ (0.001,0) [0|2] "" Vector__XXX
+ SG_ V_Cur_Gain_Mon : 16|16@1+ (0.001,0) [0|2] "" Vector__XXX
+ SG_ U_Cur_Gain_Mon : 0|16@1+ (0.001,0) [0|2] "" Vector__XXX
+
+BO_ 517 Logger05: 8 NHPJT
+ SG_ Hall_C_Mon : 63|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Hall_B_Mon : 62|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Hall_A_Mon : 61|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Precharge_Mon : 60|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Contactor_Mon : 59|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Buglar_Mon : 51|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Sidestand_Mon : 57|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Brake_Mon : 56|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Button_3_speed_Mon : 58|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Turbo_Mon : 55|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Eco_Sport_Mon : 54|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Reverse_Mon : 53|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ D_Gear_Mon : 52|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Pwm_Enable_Mon : 50|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Run_Flag_Mon : 49|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Fault_Flag_Mon : 48|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MotorSpeed : 32|16@1+ (1,-10000) [-10000|10000] "Rpm" Vector__XXX
+ SG_ Electrical_Theta : 16|16@1+ (0.01,-4) [-4|4] "Rad" Vector__XXX
+ SG_ Vq_Ref : 0|16@1+ (0.01,-250) [-250|250] "V" Vector__XXX
+
+BO_ 516 Logger04: 8 NHPJT
+ SG_ Vd_Ref : 48|16@1+ (0.01,-250) [-250|250] "V" Vector__XXX
+ SG_ Iq_Mon : 32|16@1+ (0.1,-1000) [-1000|1000] "A" Vector__XXX
+ SG_ Iq_Ref : 16|16@1+ (0.1,-1000) [-1000|1000] "A" Vector__XXX
+ SG_ Id_Mon : 0|16@1+ (0.1,-1000) [-1000|1000] "A" Vector__XXX
+
+BO_ 515 Logger03: 8 NHPJT
+ SG_ LS_Voltage_Wph : 0|16@1+ (0.1,0) [0|4095] "mV" Vector__XXX
+ SG_ Id_Ref : 48|16@1+ (0.1,-1000) [-1000|1000] "A" Vector__XXX
+ SG_ Temperature_FET : 40|8@1+ (1,-50) [-50|200] "DegC" Vector__XXX
+ SG_ Temperature_MOTOR : 32|8@1+ (1,-50) [-50|200] "DegC" Vector__XXX
+ SG_ Temperature_PCB : 24|8@1+ (1,-50) [-50|200] "DegC" Vector__XXX
+ SG_ Voltage_Reg15V : 16|8@1+ (0.1,0) [0|20] "V" Vector__XXX
+
+BO_ 514 Logger02: 8 NHPJT
+ SG_ LS_Voltage_Vph : 48|16@1+ (0.1,0) [0|4095] "mV" Vector__XXX
+ SG_ LS_Voltage_Uph : 32|16@1+ (0.1,0) [0|4095] "mV" Vector__XXX
+ SG_ Throttle_Percent : 24|8@1+ (1,0) [0|100] "%" Vector__XXX
+ SG_ Throttle_Voltage : 16|8@1+ (0.1,0) [0|5] "V" Vector__XXX
+ SG_ Voltage_DC : 0|16@1+ (0.1,0) [0|200] "V" Vector__XXX
+
+BO_ 513 Logger01: 8 NHPJT
+ SG_ Current_DC : 48|16@1+ (0.1,-500) [-500|500] "A" Vector__XXX
+ SG_ Current_Wph : 32|16@1+ (0.1,-1000) [-1000|1000] "A" Vector__XXX
+ SG_ Current_Vph : 16|16@1+ (0.1,-1000) [-1000|1000] "A" Vector__XXX
+ SG_ Current_Uph : 0|16@1+ (0.1,-1000) [-1000|1000] "A" Vector__XXX
+
+
+
+CM_ BO_ 3221225472 "This is a message for not used signals, created by Vector CANdb++ DBC OLE DB Provider.";
+BA_DEF_ BO_  "LE_MsgCalloutEnable" ENUM  "false","true";
+BA_DEF_ BO_  "LE_iPduGroup" ENUM  "NormalGroup","LoggerGroup","DiagnosticGroup";
+BA_DEF_ BO_  "LE_TimeoutTime" INT 0 100000;
+BA_DEF_ BO_  "LE_DebounceTime" INT 0 10000;
+BA_DEF_ BO_  "LE_CycleTime" INT 0 10000;
+BA_DEF_ BO_  "LE_SendType" ENUM  "Cyclic","Event","Mixed";
+BA_DEF_ BO_  "LE_DiagMessage" ENUM  "No","Functional Request","Physical Request","Response";
+BA_DEF_ BO_  "LE_RxLenCheckEnable" ENUM  "false","true";
+BA_DEF_ BO_  "LE_LogMsg" ENUM  "false","true";
+BA_DEF_ BO_  "LE_MsgCallbackEnable" ENUM  "false","true";
+BA_DEF_ BU_  "CANoeStartDelay" INT 0 0;
+BA_DEF_ BU_  "CANoeDrift" INT 0 0;
+BA_DEF_ BU_  "CANoeJitterMin" INT 0 0;
+BA_DEF_ BU_  "CANoeJitterMax" INT 0 0;
+BA_DEF_ BU_  "ECU" STRING ;
+BA_DEF_ BU_  "NodeLayerModules" STRING ;
+BA_DEF_ BU_  "LE_PduLengthValidationEnable" ENUM  "false","true";
+BA_DEF_ BU_  "LE_UseLockMechanismEnable" ENUM  "false","true";
+BA_DEF_ BU_  "LE_DoublebufferingEnable" ENUM  "false","true";
+BA_DEF_ BU_  "LE_MemcopyEnable" ENUM  "false","true";
+BA_DEF_ BU_  "LE_RxProcessingPeriod" INT 1 1000;
+BA_DEF_ BU_  "LE_TxProcessingPeriod" INT 1 1000;
+BA_DEF_ BU_  "LE_MappedControllerNode" INT 0 6;
+BA_DEF_ BU_  "LE_MappedControllerChannel" INT 0 10;
+BA_DEF_ BU_  "LE_ControllerType" ENUM  "FullCan_AURIX_tc23x","FullCan_AURIX_tc26x","FullCan_AURIX_tc27x","FullCan_AURIX_tc29x","FullCan_PPC","BasicCan";
+BA_DEF_ BU_  "LE_RteTypePrefix" ENUM  "false","true";
+BA_DEF_ BU_  "LE_PhySignalPrefix" STRING ;
+BA_DEF_ BU_  "LE_RawSignalPrefix" STRING ;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_  "LE_GenNode" STRING ;
+BA_DEF_  "LE_DbName" STRING ;
+BA_DEF_  "LE_Baudrate" INT 0 8000000;
+BA_DEF_  "LE_BusType" ENUM  "Can","CanFd";
+BA_DEF_DEF_  "LE_MsgCalloutEnable" "false";
+BA_DEF_DEF_  "LE_iPduGroup" "NormalGroup";
+BA_DEF_DEF_  "LE_TimeoutTime" 0;
+BA_DEF_DEF_  "LE_DebounceTime" 0;
+BA_DEF_DEF_  "LE_CycleTime" 10;
+BA_DEF_DEF_  "LE_SendType" "Cyclic";
+BA_DEF_DEF_  "LE_DiagMessage" "No";
+BA_DEF_DEF_  "LE_RxLenCheckEnable" "false";
+BA_DEF_DEF_  "LE_LogMsg" "false";
+BA_DEF_DEF_  "LE_MsgCallbackEnable" "false";
+BA_DEF_DEF_  "CANoeStartDelay" 0;
+BA_DEF_DEF_  "CANoeDrift" 0;
+BA_DEF_DEF_  "CANoeJitterMin" 0;
+BA_DEF_DEF_  "CANoeJitterMax" 0;
+BA_DEF_DEF_  "ECU" "";
+BA_DEF_DEF_  "NodeLayerModules" "";
+BA_DEF_DEF_  "LE_PduLengthValidationEnable" "false";
+BA_DEF_DEF_  "LE_UseLockMechanismEnable" "false";
+BA_DEF_DEF_  "LE_DoublebufferingEnable" "false";
+BA_DEF_DEF_  "LE_MemcopyEnable" "false";
+BA_DEF_DEF_  "LE_RxProcessingPeriod" 10;
+BA_DEF_DEF_  "LE_TxProcessingPeriod" 10;
+BA_DEF_DEF_  "LE_MappedControllerNode" 0;
+BA_DEF_DEF_  "LE_MappedControllerChannel" 0;
+BA_DEF_DEF_  "LE_ControllerType" "FullCan_AURIX_tc23x";
+BA_DEF_DEF_  "LE_RteTypePrefix" "false";
+BA_DEF_DEF_  "LE_PhySignalPrefix" "";
+BA_DEF_DEF_  "LE_RawSignalPrefix" "";
+BA_DEF_DEF_  "BusType" "";
+BA_DEF_DEF_  "LE_GenNode" "";
+BA_DEF_DEF_  "LE_DbName" "network";
+BA_DEF_DEF_  "LE_Baudrate" 500000;
+BA_DEF_DEF_  "LE_BusType" "Can";
+BA_ "LE_GenNode" "NHPJT";
+BA_ "BusType" "CAN";
+BA_ "LE_Baudrate" 250000;
+BA_ "LE_PduLengthValidationEnable" BU_ NHPJT 1;
+BA_ "LE_DoublebufferingEnable" BU_ NHPJT 1;
+BA_ "LE_MappedControllerNode" BU_ NHPJT 1;
+BA_ "LE_MappedControllerChannel" BU_ NHPJT 1;
+BA_ "LE_RteTypePrefix" BU_ NHPJT 1;
+BA_ "LE_PhySignalPrefix" BU_ NHPJT "Phy_";
+BA_ "LE_RawSignalPrefix" BU_ NHPJT "Raw_";
+BA_ "LE_iPduGroup" BO_ 529 1;
+BA_ "LE_SendType" BO_ 529 1;
+BA_ "LE_LogMsg" BO_ 529 1;
+BA_ "LE_iPduGroup" BO_ 528 1;
+BA_ "LE_SendType" BO_ 528 1;
+BA_ "LE_LogMsg" BO_ 528 1;
+BA_ "LE_LogMsg" BO_ 521 1;
+BA_ "LE_SendType" BO_ 521 1;
+BA_ "LE_iPduGroup" BO_ 521 1;
+BA_ "LE_LogMsg" BO_ 520 1;
+BA_ "LE_SendType" BO_ 520 1;
+BA_ "LE_iPduGroup" BO_ 520 1;
+BA_ "LE_LogMsg" BO_ 519 1;
+BA_ "LE_SendType" BO_ 519 1;
+BA_ "LE_iPduGroup" BO_ 519 1;
+BA_ "LE_LogMsg" BO_ 518 1;
+BA_ "LE_SendType" BO_ 518 1;
+BA_ "LE_iPduGroup" BO_ 518 1;
+BA_ "LE_LogMsg" BO_ 517 1;
+BA_ "LE_SendType" BO_ 517 1;
+BA_ "LE_iPduGroup" BO_ 517 1;
+BA_ "LE_LogMsg" BO_ 516 1;
+BA_ "LE_SendType" BO_ 516 1;
+BA_ "LE_iPduGroup" BO_ 516 1;
+BA_ "LE_LogMsg" BO_ 515 1;
+BA_ "LE_SendType" BO_ 515 1;
+BA_ "LE_iPduGroup" BO_ 515 1;
+BA_ "LE_LogMsg" BO_ 514 1;
+BA_ "LE_SendType" BO_ 514 1;
+BA_ "LE_iPduGroup" BO_ 514 1;
+BA_ "LE_LogMsg" BO_ 513 1;
+BA_ "LE_SendType" BO_ 513 1;
+BA_ "LE_iPduGroup" BO_ 513 1;
+VAL_ 520 FailArraySlow01 32768 "S_Reserve1-3" 16384 "S_Reserve1-2" 8192 "S_Reserve1-1" 4096 "S_MotorSpeed_Fail" 2048 "S_McuTemp_Overheat" 1024 "S_MosfetTemp_Overheat" 512 "S_MotorTemp_Overheat" 256 "S_PcbTemp_Overheat" 128 "S_Can_BusOff" 64 "S_MosfetTemp_Fail" 32 "S_MotorTemp_Fail" 16 "S_PcbTemp_Fail" 8 "S_Throttle_Fail" 4 "S_Reg15v_Fail" 2 "S_Battery_Over_Voltage" 1 "S_Battery_Under_Voltage" ;
+VAL_ 520 FailArrayFast02 32768 "F_Reserve2-9" 16384 "F_Reserve2-8" 8192 "F_Reserve2-7" 4096 "F_Reserve2-6" 2048 "F_Reserve2-5" 1024 "F_Reserve2-4" 512 "F_Reserve2-3" 256 "F_Reserve2-2" 128 "F_Reserve2-1" 64 "F_Dc_Over_Current(SW)" 32 "F_Vph_Aux_Over_Current" 16 "F_Uph_Aux_Over_Current" 8 "F_Dc_Over_Current(HW)" 4 "F_Wph_RdsOn_Over_Current" 2 "F_Vph_RdsOn_Over_Current" 1 "F_Uph_RdsOn_Over_Current" ;
+VAL_ 520 FailArrayFast01 32768 "F_Reserve1-1" 16384 "F_Hall_Continuity_Fail" 8192 "F_Hall_Level_Fail" 4096 "F_Dc_Curr_Offset_Fail" 2048 "F_Dc_Curr_Gain_Fail" 1024 "F_Dc_Current_Fail" 512 "F_Vph_Aux_Fail" 256 "F_Uph_Aux_Fail" 128 "F_RdsOn_Gail_Fail" 64 "F_Wph_RdsOn_Offset_Fail" 32 "F_Vph_RdsOn_Offset_Fail" 16 "F_Uph_RdsOn_Offset_Fail" 8 "F_Wph_RdsOn_Fail" 4 "F_Vph_RdsOn_Fail" 2 "F_Uph_RdsOn_Fail" 1 "F_Battery_Over_Voltage" ;
+

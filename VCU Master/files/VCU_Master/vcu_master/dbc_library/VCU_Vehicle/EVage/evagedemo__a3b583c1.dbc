@@ -1,0 +1,203 @@
+VERSION ""
+
+
+NS_ :
+  CM_
+  BA_DEF_
+  BA_
+  VAL_
+  BA_DEF_DEF_
+  SIG_VALTYPE_
+
+BS_:
+
+BU_: Vector__XXX
+
+
+BO_ 2559590401 SOCofTotalVoltageCurrent_Rx: 8 Vector__XXX
+SG_ CumulativeTotalVoltage : 7|16@0+ (0.1,0) [0|1] "Volt" Vector__XXX
+SG_ GatherTotlalVoltage : 23|16@0+ (0.1,0) [0|1] "Volt" Vector__XXX
+SG_ BMSCurrent : 39|16@0+ (0.1,-30000) [-30000|-23446.5] "Amp" Vector__XXX
+SG_ SOC : 55|16@0+ (0.1,0) [0|1] "%" Vector__XXX
+
+BO_ 2559655937 MaxMinVoltage_Rx: 8 Vector__XXX
+SG_ MaxCellVolt : 7|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ NoofCellWithMaxiVoltage : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ MinCellVolt : 31|16@0+ (1,0) [0|1] "mV" Vector__XXX
+SG_ NoofCellWithMinVoltage : 47|8@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2559721473 MaxMinTemperature_Rx: 8 Vector__XXX
+SG_ MaxTemp : 7|8@0+ (1,-40) [-40|215] "DegC" Vector__XXX
+SG_ NoofCellWithMaxTemp : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ MinTemp : 23|8@0+ (1,-40) [-40|215] "DegC" Vector__XXX
+SG_ NoofCellWithMinTemp : 31|8@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2559787009 ChargeDischargeMOSStatus_Rx: 8 Vector__XXX
+SG_ State : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChargeMOSstate : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Remain_Capacity : 39|32@0+ (1,0) [0|1] "mAH" Vector__XXX
+SG_ DischargeMOSstate : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ BMS_life : 31|8@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2559852545 Statusinformation_Rx: 8 Vector__XXX
+SG_ NoOfBattertyString : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ NoofTemperature : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Charger_Status : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Load_Status : 31|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DI_State : 35|4@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DO_State : 39|4@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2559918081 CellVoltages_Rx: 8 Vector__XXX
+SG_ CellVoltFrameNumber : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CellVoltage1x : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ CellVoltage2x : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ CellVoltage3x : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+
+BO_ 2559983617 CellTemperature_Rx: 8 Vector__XXX
+SG_ celltempframeNumber : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CellTemp1x : 15|8@0+ (1,-40) [-40|215] "" Vector__XXX
+SG_ cellTemp2x : 23|8@0+ (1,-40) [-40|215] "" Vector__XXX
+SG_ celltemp3x : 31|8@0+ (1,-40) [-40|215] "" Vector__XXX
+
+BO_ 769 SOCofTotalVoltageCurrent_Rx_BMS1: 8 Vector__XXX
+SG_ CumulativeTotalVoltage : 7|16@0+ (0.1,0) [0|1] "Volt" Vector__XXX
+SG_ GatherTotlalVoltage : 23|16@0+ (0.1,0) [0|1] "Volt" Vector__XXX
+SG_ BMSCurrent : 39|16@0+ (0.1,-30000) [-30000|-23446.5] "Amp" Vector__XXX
+SG_ SOC : 55|16@0+ (0.1,0) [0|1] "%" Vector__XXX
+
+BO_ 785 SOCofTotalVoltageCurrent_Rx_BMS2: 8 Vector__XXX
+SG_ CumulativeTotalVoltage : 7|16@0+ (0.1,0) [0|1] "Volt" Vector__XXX
+SG_ GatherTotlalVoltage : 23|16@0+ (0.1,0) [0|1] "Volt" Vector__XXX
+SG_ BMSCurrent : 39|16@0+ (0.1,-30000) [-30000|-23446.5] "Amp" Vector__XXX
+SG_ SOC : 55|16@0+ (0.1,0) [0|1] "%" Vector__XXX
+
+BO_ 770 MaxMinVoltage_Rx_BMS1: 8 Vector__XXX
+SG_ MaxCellVolt : 7|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ NoofCellWithMaxiVoltage : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ MinCellVolt : 31|16@0+ (1,0) [0|1] "mV" Vector__XXX
+SG_ NoofCellWithMinVoltage : 47|8@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 786 MaxMinVoltage_Rx_BMS2: 8 Vector__XXX
+SG_ MaxCellVolt : 7|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ NoofCellWithMaxiVoltage : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ MinCellVolt : 31|16@0+ (1,0) [0|1] "mV" Vector__XXX
+SG_ NoofCellWithMinVoltage : 47|8@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 771 MaxMinTemperature_Rx_BMS1: 8 Vector__XXX
+SG_ MaxTemp : 7|8@0+ (1,-40) [-40|215] "DegC" Vector__XXX
+SG_ NoofCellWithMaxTemp : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ MinTemp : 23|8@0+ (1,-40) [-40|215] "DegC" Vector__XXX
+SG_ NoofCellWithMinTemp : 31|8@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 787 MaxMinTemperature_Rx_BMS2: 8 Vector__XXX
+SG_ MaxTemp : 7|8@0+ (1,-40) [-40|215] "DegC" Vector__XXX
+SG_ NoofCellWithMaxTemp : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ MinTemp : 23|8@0+ (1,-40) [-40|215] "DegC" Vector__XXX
+SG_ NoofCellWithMinTemp : 31|8@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 772 ChargeDischargeMOSStatus_Rx_BMS1: 8 Vector__XXX
+SG_ State : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChargeMOSstate : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Remain_Capacity : 39|32@0+ (1,0) [0|1] "mAH" Vector__XXX
+SG_ DischargeMOSstate : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ BMS_life : 31|8@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 788 ChargeDischargeMOSStatus_Rx_BMS2: 8 Vector__XXX
+SG_ State : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChargeMOSstate : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Remain_Capacity : 39|32@0+ (1,0) [0|1] "mAH" Vector__XXX
+SG_ DischargeMOSstate : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ BMS_life : 31|8@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 773 Statusinformation_Rx_BMS1: 8 Vector__XXX
+SG_ NoOfBattertyString : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ NoofTemperature : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Charger_Status : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Load_Status : 31|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DI_State : 35|4@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DO_State : 39|4@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 789 Statusinformation_Rx_BMS2: 8 Vector__XXX
+SG_ NoOfBattertyString : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ NoofTemperature : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Charger_Status : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Load_Status : 31|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DI_State : 35|4@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DO_State : 39|4@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 774 CellVoltages_Rx_BMS1: 8 Vector__XXX
+SG_ CellVoltFrameNumber : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CellVoltage1x : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ CellVoltage2x : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ CellVoltage3x : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+
+BO_ 790 CellVoltages_Rx_BMS2: 8 Vector__XXX
+SG_ CellVoltFrameNumber : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CellVoltage1x : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ CellVoltage2x : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ CellVoltage3x : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+
+BO_ 775 CellTemperature_Rx_BMS1: 8 Vector__XXX
+SG_ celltempframeNumber : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CellTemp1x : 15|8@0+ (1,-40) [-40|215] "" Vector__XXX
+SG_ cellTemp2x : 23|8@0+ (1,-40) [-40|215] "" Vector__XXX
+SG_ celltemp3x : 31|8@0+ (1,-40) [-40|215] "" Vector__XXX
+
+BO_ 791 CellTemperature_Rx_BMS2: 8 Vector__XXX
+SG_ celltempframeNumber : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CellTemp1x : 15|8@0+ (1,-40) [-40|215] "" Vector__XXX
+SG_ cellTemp2x : 23|8@0+ (1,-40) [-40|215] "" Vector__XXX
+SG_ celltemp3x : 31|8@0+ (1,-40) [-40|215] "" Vector__XXX
+
+BO_ 513 Volt_Current: 8 Vector__XXX
+SG_ DCCurrent : 0|16@1- (0.1,0) [-3276.8|3276.7] "Amp" Vector__XXX
+SG_ DCVoltage : 16|16@1- (0.1,0) [-3276.8|3276.7] "Volt" Vector__XXX
+SG_ ACVoltage : 32|16@1- (0.1,0) [-3276.8|3276.7] "Volt" Vector__XXX
+SG_ ACCurrent : 48|16@1- (0.1,0) [-3276.8|3276.7] "Amp" Vector__XXX
+
+BO_ 529 Motor_Input_Output: 8 Vector__XXX
+SG_ ThrottlePercentage : 0|8@1+ (1,0) [0|100] "%" Vector__XXX
+SG_ MotorTorque : 15|16@0- (0.1,0) [0|1] "Nm" Vector__XXX
+SG_ MotorSpeed : 31|16@0+ (1,0) [0|65535] "RPM" Vector__XXX
+
+BO_ 545 TemperatureAndStatus: 8 Vector__XXX
+SG_ MCUTemperature : 0|8@1+ (1,-40) [-40|215] "Deg C" Vector__XXX
+SG_ MotorTemperature : 8|8@1+ (1,-40) [-40|215] "Deg C" Vector__XXX
+SG_ FaultCode : 16|8@1+ (1,0) [0|1] "" Vector__XXX
+SG_ OverallStatus : 24|8@1+ (1,0) [0|1] "" Vector__XXX
+SG_ MCUStatus : 32|8@1+ (1,0) [0|1] "" Vector__XXX
+SG_ MotorStatus : 40|8@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 561 MotorDir_Mode: 4 Vector__XXX
+SG_ MotorDirection : 0|3@1+ (1,0) [0|1] "" Vector__XXX
+SG_ DriveMode : 3|3@1+ (1,0) [0|1] "" Vector__XXX
+SG_ GearRatio : 8|8@1+ (0.1,0) [0|25.5] "" Vector__XXX
+SG_ WheelPerimeter : 16|16@1+ (1,0) [0|1] "mm" Vector__XXX
+
+BA_DEF_  "BusType" STRING ;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_ SG_  "GenSigStartValue" FLOAT -3.4E+038 3.4E+038;
+
+BA_DEF_DEF_  "BusType" "CAN";
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_DEF_DEF_  "GenSigStartValue" 0;
+
+BA_ "BusType" "CAN";
+
+BA_ "GenMsgCycleTime" BO_ 2559574336 1000;
+BA_ "GenMsgCycleTime" BO_ 2559639872 1000;
+BA_ "GenMsgCycleTime" BO_ 2559705408 1000;
+BA_ "GenMsgCycleTime" BO_ 2559770944 1000;
+BA_ "GenMsgCycleTime" BO_ 2559836480 1000;
+BA_ "GenMsgCycleTime" BO_ 2559967552 1000;
+BA_ "GenMsgCycleTime" BO_ 2560033088 1000;
+BA_ "GenMsgCycleTime" BO_ 2560098624 1000;
+BA_ "GenMsgCycleTime" BO_ 2559902016 1000;
+
+BA_ "GenSigStartValue" SG_ 2559590401 BMSCurrent -23446.5;
+BA_ "GenSigStartValue" SG_ 769 BMSCurrent -23446.5;
+BA_ "GenSigStartValue" SG_ 785 BMSCurrent -23446.5;
+BA_ "GenMsgCycleTime" BO_ 513 20;
+BA_ "GenMsgCycleTime" BO_ 529 50;
+BA_ "GenMsgCycleTime" BO_ 545 50;
+BA_ "GenMsgCycleTime" BO_ 561 100;

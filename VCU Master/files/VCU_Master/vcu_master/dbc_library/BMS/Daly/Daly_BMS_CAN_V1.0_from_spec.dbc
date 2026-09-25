@@ -1,0 +1,319 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: BMS Upper_Computer
+
+
+BO_ 2559590401 Daly_SOC_Total_Voltage_Current: 8 BMS
+ SG_ SOC : 55|16@0+ (0.1,0) [0|100] "%" Vector__XXX
+ SG_ Current : 39|16@0+ (0.1,-3000) [-3000|3553.5] "A" Vector__XXX
+ SG_ Gather_Total_Voltage : 23|16@0+ (0.1,0) [0|6553.5] "V" Vector__XXX
+ SG_ Cumulative_Total_Voltage : 7|16@0+ (0.1,0) [0|6553.5] "V" Vector__XXX
+
+BO_ 2559655937 Daly_Max_Min_Voltage: 8 BMS
+ SG_ Min_Cell_Voltage_No : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Min_Cell_Voltage : 31|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Max_Cell_Voltage_No : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Max_Cell_Voltage : 7|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+
+BO_ 2559721473 Daly_Max_Min_Temperature: 8 BMS
+ SG_ Min_Temperature_Cell_No : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Min_Temperature : 16|8@1+ (1,-40) [-40|215] "degC" Vector__XXX
+ SG_ Max_Temperature_Cell_No : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Max_Temperature : 0|8@1+ (1,-40) [-40|215] "degC" Vector__XXX
+
+BO_ 2559787009 Daly_Charge_Discharge_MOS_Status: 8 BMS
+ SG_ Remain_Capacity : 39|32@0+ (1,0) [0|0] "mAh" Vector__XXX
+ SG_ BMS_Life : 24|8@1+ (1,0) [0|0] "cycles" Vector__XXX
+ SG_ Discharge_MOS_State : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Charge_MOS_State : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ State : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2559852545 Daly_Status_Information_1: 8 BMS
+ SG_ DO4_State : 39|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DO3_State : 38|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DO2_State : 37|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DO1_State : 36|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DI4_State : 35|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DI3_State : 34|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DI2_State : 33|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DI1_State : 32|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Load_Status : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Charger_Status : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ No_Of_Temperature : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ No_Of_Battery_String : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2559918081 Daly_Cell_Voltages: 8 BMS
+ SG_ Cell_48_Voltage m15 : 47|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_45_Voltage m14 : 47|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_42_Voltage m13 : 47|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_39_Voltage m12 : 47|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_36_Voltage m11 : 47|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_33_Voltage m10 : 47|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_30_Voltage m9 : 47|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_27_Voltage m8 : 47|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_24_Voltage m7 : 47|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_21_Voltage m6 : 47|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_18_Voltage m5 : 47|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_15_Voltage m4 : 47|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_12_Voltage m3 : 47|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_9_Voltage m2 : 47|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_6_Voltage m1 : 47|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_3_Voltage m0 : 47|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_47_Voltage m15 : 31|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_44_Voltage m14 : 31|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_41_Voltage m13 : 31|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_38_Voltage m12 : 31|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_35_Voltage m11 : 31|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_32_Voltage m10 : 31|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_29_Voltage m9 : 31|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_26_Voltage m8 : 31|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_23_Voltage m7 : 31|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_20_Voltage m6 : 31|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_17_Voltage m5 : 31|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_14_Voltage m4 : 31|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_11_Voltage m3 : 31|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_8_Voltage m2 : 31|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_5_Voltage m1 : 31|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_2_Voltage m0 : 31|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_46_Voltage m15 : 15|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_43_Voltage m14 : 15|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_40_Voltage m13 : 15|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_37_Voltage m12 : 15|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_34_Voltage m11 : 15|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_31_Voltage m10 : 15|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_28_Voltage m9 : 15|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_25_Voltage m8 : 15|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_22_Voltage m7 : 15|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_19_Voltage m6 : 15|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_16_Voltage m5 : 15|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_13_Voltage m4 : 15|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_10_Voltage m3 : 15|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_7_Voltage m2 : 15|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_4_Voltage m1 : 15|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_1_Voltage m0 : 15|16@0+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_Voltage_Frame_No M : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2559983617 Daly_Cell_Temperatures: 8 BMS
+ SG_ Cell_Temp_14 m1 : 56|8@1+ (1,-40) [-40|215] "degC" Vector__XXX
+ SG_ Cell_Temp_7 m0 : 56|8@1+ (1,-40) [-40|215] "degC" Vector__XXX
+ SG_ Cell_Temp_13 m1 : 48|8@1+ (1,-40) [-40|215] "degC" Vector__XXX
+ SG_ Cell_Temp_6 m0 : 48|8@1+ (1,-40) [-40|215] "degC" Vector__XXX
+ SG_ Cell_Temp_12 m1 : 40|8@1+ (1,-40) [-40|215] "degC" Vector__XXX
+ SG_ Cell_Temp_5 m0 : 40|8@1+ (1,-40) [-40|215] "degC" Vector__XXX
+ SG_ Cell_Temp_11 m1 : 32|8@1+ (1,-40) [-40|215] "degC" Vector__XXX
+ SG_ Cell_Temp_4 m0 : 32|8@1+ (1,-40) [-40|215] "degC" Vector__XXX
+ SG_ Cell_Temp_10 m1 : 24|8@1+ (1,-40) [-40|215] "degC" Vector__XXX
+ SG_ Cell_Temp_3 m0 : 24|8@1+ (1,-40) [-40|215] "degC" Vector__XXX
+ SG_ Cell_Temp_16 m2 : 16|8@1+ (1,-40) [-40|215] "degC" Vector__XXX
+ SG_ Cell_Temp_9 m1 : 16|8@1+ (1,-40) [-40|215] "degC" Vector__XXX
+ SG_ Cell_Temp_2 m0 : 16|8@1+ (1,-40) [-40|215] "degC" Vector__XXX
+ SG_ Cell_Temp_15 m2 : 8|8@1+ (1,-40) [-40|215] "degC" Vector__XXX
+ SG_ Cell_Temp_8 m1 : 8|8@1+ (1,-40) [-40|215] "degC" Vector__XXX
+ SG_ Cell_Temp_1 m0 : 8|8@1+ (1,-40) [-40|215] "degC" Vector__XXX
+ SG_ Cell_Temp_Frame_No M : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2560049153 Daly_Cell_Balance_State: 8 BMS
+ SG_ Cell_48_Balance_State : 47|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_47_Balance_State : 46|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_46_Balance_State : 45|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_45_Balance_State : 44|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_44_Balance_State : 43|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_43_Balance_State : 42|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_42_Balance_State : 41|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_41_Balance_State : 40|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_40_Balance_State : 39|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_39_Balance_State : 38|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_38_Balance_State : 37|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_37_Balance_State : 36|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_36_Balance_State : 35|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_35_Balance_State : 34|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_34_Balance_State : 33|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_33_Balance_State : 32|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_32_Balance_State : 31|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_31_Balance_State : 30|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_30_Balance_State : 29|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_29_Balance_State : 28|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_28_Balance_State : 27|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_27_Balance_State : 26|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_26_Balance_State : 25|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_25_Balance_State : 24|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_24_Balance_State : 23|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_23_Balance_State : 22|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_22_Balance_State : 21|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_21_Balance_State : 20|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_20_Balance_State : 19|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_19_Balance_State : 18|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_18_Balance_State : 17|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_17_Balance_State : 16|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_16_Balance_State : 15|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_15_Balance_State : 14|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_14_Balance_State : 13|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_13_Balance_State : 12|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_12_Balance_State : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_11_Balance_State : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_10_Balance_State : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_9_Balance_State : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_8_Balance_State : 7|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_7_Balance_State : 6|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_6_Balance_State : 5|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_5_Balance_State : 4|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_4_Balance_State : 3|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_3_Balance_State : 2|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_2_Balance_State : 1|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_1_Balance_State : 0|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2560114689 Daly_Battery_Failure_Status: 8 BMS
+ SG_ Fault_Code : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Low_Volt_Forbidden_Chg_Fault : 51|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Short_Circuit_Protect_Fault : 50|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Sum_Voltage_Detect_Fault : 49|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Current_Module_Fault : 48|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Internal_Communication_Failure : 47|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Communication_Failure : 46|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Precharge_Failure : 45|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTC_Err : 44|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ EEPROM_Err : 43|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_Temp_Sensor_Err : 42|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Voltage_Collect_Dropped : 41|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ AFE_Collect_Chip_Err : 40|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_MOS_Open_Circuit_Err : 39|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_MOS_Open_Circuit_Err : 38|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_MOS_Adhesion_Err : 37|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_MOS_Adhesion_Err : 36|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_MOS_Temp_Sensor_Err : 35|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_MOS_Temp_Sensor_Err : 34|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_MOS_Temp_High_Alarm : 33|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_MOS_Temp_High_Alarm : 32|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Diff_Temp_L2 : 27|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Diff_Temp_L1 : 26|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Diff_Volt_L2 : 25|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Diff_Volt_L1 : 24|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SOC_Low_L2 : 23|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SOC_Low_L1 : 22|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SOC_High_L2 : 21|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SOC_High_L1 : 20|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_Overcurrent_L2 : 19|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_Overcurrent_L1 : 18|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_Overcurrent_L2 : 17|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_Overcurrent_L1 : 16|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_Temp_Low_L2 : 15|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_Temp_Low_L1 : 14|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_Temp_High_L2 : 13|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_Temp_High_L1 : 12|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_Temp_Low_L2 : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_Temp_Low_L1 : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_Temp_High_L2 : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_Temp_High_L1 : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Sum_Volt_Low_L2 : 7|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Sum_Volt_Low_L1 : 6|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Sum_Volt_High_L2 : 5|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Sum_Volt_High_L1 : 4|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_Volt_Low_L2 : 3|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_Volt_Low_L1 : 2|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_Volt_High_L2 : 1|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_Volt_High_L1 : 0|1@1+ (1,0) [0|0] "" Vector__XXX
+
+
+
+
+CM_ BO_ 2559918081 "Byte0 frame number (spec: starting from 0, 0xFF invalid); frame n carries cells 3n+1..3n+3.";
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_ "GenMsgCycleTime" BO_ 2559590401 1000;
+BA_ "GenMsgCycleTime" BO_ 2559655937 1000;
+BA_ "GenMsgCycleTime" BO_ 2559721473 1000;
+BA_ "GenMsgCycleTime" BO_ 2559787009 1000;
+BA_ "GenMsgCycleTime" BO_ 2559852545 1000;
+BA_ "GenMsgCycleTime" BO_ 2559918081 1000;
+BA_ "GenMsgCycleTime" BO_ 2559983617 1000;
+BA_ "GenMsgCycleTime" BO_ 2560049153 1000;
+BA_ "GenMsgCycleTime" BO_ 2560114689 1000;
+VAL_ 2559787009 Discharge_MOS_State 0 "OFF" 1 "ON" ;
+VAL_ 2559787009 Charge_MOS_State 0 "OFF" 1 "ON" ;
+VAL_ 2559787009 State 0 "Stationary" 1 "Charge" 2 "Discharge" ;
+VAL_ 2559852545 Load_Status 0 "Disconnect" 1 "Access" ;
+VAL_ 2559852545 Charger_Status 0 "Disconnect" 1 "Access" ;
+VAL_ 2560049153 Cell_48_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_47_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_46_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_45_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_44_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_43_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_42_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_41_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_40_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_39_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_38_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_37_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_36_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_35_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_34_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_33_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_32_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_31_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_30_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_29_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_28_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_27_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_26_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_25_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_24_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_23_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_22_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_21_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_20_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_19_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_18_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_17_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_16_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_15_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_14_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_13_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_12_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_11_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_10_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_9_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_8_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_7_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_6_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_5_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_4_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_3_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_2_Balance_State 0 "Closed" 1 "Open" ;
+VAL_ 2560049153 Cell_1_Balance_State 0 "Closed" 1 "Open" ;
+
+
+

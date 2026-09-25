@@ -63,7 +63,20 @@ typedef struct
 
     uint32_t ts_ms;
 
-} ImuPkt_t;
+    /* V0.0073 motion tracking (appended - bytes 0..31 unchanged) */
+    int32_t  px_mm10;       /* displacement since IMU start, 0.1 mm, X */
+    int32_t  py_mm10;       /* Y */
+    int32_t  pz_mm10;       /* Z (up) */
+    uint32_t dist_mm10;     /* travelled path length since IMU start, 0.1 mm */
+    int16_t  roll_cd;       /* orientation, 0.01 deg */
+    int16_t  pitch_cd;
+    int16_t  yaw_cd;
+    uint8_t  moving;        /* 1 = board moving (not zero-velocity) */
+    uint8_t  flags;         /* bit0 calibrated, bit1 tracking */
+    uint32_t imu_up_ms;     /* time since tracking started (after calibration) */
+    int32_t  speed_mms;     /* current speed, mm/s */
+
+} ImuPkt_t;                 /* 64 bytes */
 
 
 /* ============================================================================

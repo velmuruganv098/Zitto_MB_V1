@@ -18,6 +18,19 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import cantools
 
+from .analyzer import analyze, signal_kind, PANEL_LABEL, Binding, Role
+
+# Signals that report how many cells / temperature sensors the pack really has
+# (e.g. Daly "No_Of_Battery_String" / "No_Of_Temperature"): the Battery window
+# shows that many slots even when the DBC defines more (Daly: 48 cells, 16 NTC).
+_COUNT_PAT = {
+    "bms.cell_count": re.compile(r"(no|num|number)_?of_?(battery_?)?(string|cell|series)s?$|cell_?(count|num|qty)$|num_?cells?$|series_?(count|num)$", re.I),
+    "bms.temp_count": re.compile(r"(no|num|number)_?of_?(temp|temperature|ntc)s?(_sensors?)?$|(temp|ntc)_?(count|num|qty)$", re.I),
+}
+
+# folder hint for the analyzer's default message context
+_CTX_HINT = {"battery": "BMS", "motor": "MCU", "vehicle": "VCU_Vehicle", "charger": "Charger"}
+
 VEHICLE_ROLES: Dict[str, Dict[str, Any]] = {
     "speed":        {"label": "Vehicle speed",      "unit": "km/h", "max": 120,
                      "pat": r"^(?!.*(motor|limit|rpm)).*(speed|spd)"},
@@ -56,18 +69,32 @@ class DbcEngine:
         self.messages: Dict[str, Dict[str, Any]] = {}  # key "bus:0xID"
         self.vehicle_map: Dict[str, Optional[str]] = {r: None for r in VEHICLE_ROLES}
         self.map_overrides: Dict[str, Optional[str]] = {}
+        # DBC-driven product roles (same analyzer as CAN_DBC_Simulator)
+        self.analyses: Dict[str, Any] = {}             # dbc name -> Analysis
+        self.role_index: Dict[tuple, List[tuple]] = {} # (dbc, msg, sig) -> [(role_key, binding)]
+        self.role_values: Dict[str, float] = {}
+        self.role_t: Dict[str, float] = {}
+        self.roles_version = 0
+        # V0.0074: frames no loaded DBC explains (for library auto-match) and per-DBC activity
+        self.unknown: Dict[Tuple[int, int, bool], float] = {}     # (bus, id, ext) -> last seen
+        self.dbc_last: Dict[str, float] = {}                       # dbc name -> last decode
+        self._active: Tuple[str, ...] = ()
 
     # ------------------------------------------------------------ load
     def load(self, name: str, text: str, buses=(1, 2), path: str = "") -> Dict[str, Any]:
         db = cantools.database.load_string(text, database_format="dbc", strict=False)
         self.dbcs[name] = {"db": db, "buses": set(buses), "path": path}
         self._automap()
+        self._analyze(name)
         return self.describe(name)
 
     def remove(self, name: str) -> None:
         self.dbcs.pop(name, None)
+        self.dbc_last.pop(name, None)
         self.signals = {k: v for k, v in self.signals.items() if v["dbc"] != name}
         self._automap()
+        self.analyses.pop(name, None)
+        self._rebuild_role_index()
 
     def set_buses(self, name: str, buses) -> None:
         if name in self.dbcs:
@@ -149,7 +176,12 @@ class DbcEngine:
 
         dbc_name, msg = self._find(bus, can_id, ext)
         if msg is None:
+            mstat["name"] = mstat["dbc"] = None
+            if len(self.unknown) < 4096:
+                self.unknown[(bus, can_id, ext)] = t
             return None
+        self.unknown.pop((bus, can_id, ext), None)
+        self.dbc_last[dbc_name] = t
         mstat["name"], mstat["dbc"] = msg.name, dbc_name
         try:
             raw = bytes(data) + bytes(max(0, msg.length - len(data)))
@@ -187,6 +219,10 @@ class DbcEngine:
                 st["min_seen"] = num if st["min_seen"] is None else min(st["min_seen"], num)
                 st["max_seen"] = num if st["max_seen"] is None else max(st["max_seen"], num)
             out[s.name] = {"v": num, "label": label, "unit": s.unit or ""}
+            if num is not None:
+                for role_key, b in self.role_index.get((dbc_name, msg.name, s.name), ()):
+                    self.role_values[role_key] = b.to_role(num)
+                    self.role_t[role_key] = t
         return {"message": msg.name, "dbc": dbc_name, "signals": out}
 
     # ------------------------------------------------------------ vehicle map
@@ -240,3 +276,120 @@ class DbcEngine:
     def reset_stats(self) -> None:
         self.signals.clear()
         self.messages.clear()
+        self.role_values.clear()
+        self.role_t.clear()
+
+    # ------------------------------------------------------------ product roles
+    def _analyze(self, name: str) -> None:
+        db = self.dbcs[name]["db"]
+        try:
+            # The DBC's product is unknown here: analyze it as each product type
+            # and keep the reading that maps the most roles.
+            best = None
+            for hint in ("BMS", "MCU", "VCU_Vehicle", "Charger"):
+                a = analyze(db, hint)
+                score = len(a.roles)
+                if best is None or score > best[0]:
+                    best = (score, a)
+            a = best[1]
+            for key, pat in _COUNT_PAT.items():
+                if key in a.roles:
+                    continue
+                for m in db.messages:
+                    sg = next((x for x in m.signals if pat.search(x.name)), None)
+                    if sg is not None:
+                        a.roles[key] = Role(key=key, label="Cells in pack" if key == "bms.cell_count" else "Temperature sensors",
+                                            unit="", kind="number", panel="battery", section="count",
+                                            bindings=[Binding(m.name, sg.name)], source=f"{m.name}.{sg.name}")
+                        break
+            self.analyses[name] = a
+        except Exception:                                    # never break DBC loading
+            self.analyses.pop(name, None)
+        self._rebuild_role_index()
+
+    def _rebuild_role_index(self) -> None:
+        self.role_index = {}
+        for name, a in self.analyses.items():
+            for key, role in a.roles.items():
+                for b in role.bindings:
+                    self.role_index.setdefault((name, b.msg, b.sig), []).append((key, b))
+        self.roles_version += 1
+
+    # ------------------------------------------------------------ activity
+    def unknown_ids(self, within_s: float = 15.0) -> Dict[Tuple[int, bool], set]:
+        """{(id, ext): {buses}} of recent frames that no loaded DBC decodes."""
+        cut = time.time() - within_s
+        out: Dict[Tuple[int, bool], set] = {}
+        for (bus, cid, ext), t in list(self.unknown.items()):
+            if t >= cut:
+                out.setdefault((cid, ext), set()).add(bus)
+        return out
+
+    def refresh_active(self, within_s: float = 10.0) -> None:
+        """Re-order the Battery / Motor windows when a different DBC starts receiving frames."""
+        cut = time.time() - within_s
+        act = tuple(sorted(n for n, t in self.dbc_last.items() if t >= cut and n in self.analyses))
+        if act != self._active:
+            self._active = act
+            self.roles_version += 1
+
+    def _ordered_analyses(self):
+        """Analyses of DBCs that are receiving frames first, so their layout wins."""
+        items = list(self.analyses.items())
+        return sorted(items, key=lambda kv: kv[0] not in self._active)
+
+    def _primary_analysis(self, attr: str):
+        best = None
+        pool = [(n, a) for n, a in self._ordered_analyses() if n in self._active] or list(self.analyses.items())
+        for name, a in pool:
+            if best is None or len(getattr(a, attr)) > len(getattr(best[1], attr)):
+                best = (name, a)
+        return best
+
+    def roles_meta(self) -> Dict[str, Any]:
+        """Everything the Battery / Motor windows need to lay themselves out."""
+        roles: Dict[str, Any] = {}
+        panels: List[str] = []
+        flags: Dict[str, List[Dict[str, Any]]] = {"battery": [], "motor": [], "vehicle": [], "charger": []}
+        for name, a in self._ordered_analyses():
+            if self._active and name not in self._active:
+                continue                      # windows follow the DBCs that are receiving frames
+            for key, r in a.roles.items():
+                if key not in roles:
+                    roles[key] = r.to_json()
+            for p in a.panels:
+                if p not in panels:
+                    panels.append(p)
+            if self._active and name not in self._active:
+                continue                      # only the DBCs that are receiving frames
+            db = self.dbcs[name]["db"]
+            for m in db.messages:
+                sysname = a.msg_system.get(m.name)
+                if sysname not in flags:
+                    continue
+                for sg in m.signals:
+                    if (m.name, sg.name) in a.sig_role or sg.is_multiplexer:
+                        continue
+                    kind = signal_kind(sg)
+                    if kind in ("bool", "enum"):
+                        flags[sysname].append({"dbc": name, "msg": m.name, "sig": sg.name, "kind": kind,
+                                               "choices": {int(k): str(v) for k, v in (sg.choices or {}).items()}})
+        cells = self._primary_analysis("cells")
+        temps = self._primary_analysis("temps")
+        return {
+            "version": self.roles_version,
+            "panels": [{"key": p, "label": PANEL_LABEL.get(p, p)} for p in panels],
+            "roles": roles,
+            "cells": cells[1].cells if cells else [],
+            "temps": temps[1].temps if temps else [],
+            "balance": {str(k): v for k, v in (cells[1].balance.items() if cells else [])},
+            "flags": flags,
+            "dbcs": [n for n, _ in self._ordered_analyses() if not self._active or n in self._active],
+            "active": list(self._active),
+        }
+
+    def roles_snapshot(self) -> Dict[str, Any]:
+        now = time.time()
+        return {"version": self.roles_version,
+                "values": dict(self.role_values),
+                "age": {k: round(now - t, 2) for k, t in self.role_t.items()}}

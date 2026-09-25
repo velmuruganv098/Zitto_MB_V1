@@ -1,0 +1,177 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: BMS
+
+
+BO_ 2216688362 CellVoltage1: 8 BMS
+ SG_ C4 : 48|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ C3 : 32|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ C2 : 16|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ C1 : 0|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+
+BO_ 2233465578 CellVoltage2: 8 BMS
+ SG_ C8 : 48|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ C7 : 32|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ C6 : 16|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ C5 : 0|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+
+BO_ 2250242794 CellVoltage3: 8 BMS
+ SG_ C12 : 48|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ C11 : 32|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ C10 : 16|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ C9 : 0|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+
+BO_ 2267020010 CellVoltage4: 8 BMS
+ SG_ C16 : 48|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ C15 : 32|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ C14 : 16|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ C13 : 0|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+
+BO_ 2216753898 CellVoltage5: 8 BMS
+ SG_ C20 : 48|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ C19 : 32|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ C18 : 16|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ C17 : 0|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+
+BO_ 2233531114 CellVoltage6: 8 BMS
+ SG_ Cvmax : 48|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ Cvmin : 32|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ Vstack : 16|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ Cavg : 0|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+
+BO_ 2283928298 Current: 8 BMS
+ SG_ SOH : 56|8@1+ (1,0) [0|100] "%" Vector__XXX
+ SG_ SOC : 48|8@1+ (1,0) [0|100] "%" Vector__XXX
+ SG_ CurrentAFE : 16|16@1- (0.1,0) [-3276.8|3276.7] "A" Vector__XXX
+ SG_ CurrentCSA : 0|16@1- (0.1,0) [-3276.8|3276.7] "A" Vector__XXX
+
+BO_ 2485320426 Temperature1: 8 BMS
+ SG_ T4 : 48|16@1- (0.01,0) [-327.68|327.67] "degC" Vector__XXX
+ SG_ T3 : 32|16@1- (0.01,0) [-327.68|327.67] "degC" Vector__XXX
+ SG_ T2 : 16|16@1- (0.01,0) [-327.68|327.67] "degC" Vector__XXX
+ SG_ T1 : 0|16@1- (0.01,0) [-327.68|327.67] "degC" Vector__XXX
+
+BO_ 2485451498 Temperature2: 8 BMS
+ SG_ T8 : 48|16@1- (0.01,0) [-327.68|327.67] "degC" Vector__XXX
+ SG_ T7 : 32|16@1- (0.01,0) [-327.68|327.67] "degC" Vector__XXX
+ SG_ T6 : 16|16@1- (0.01,0) [-327.68|327.67] "degC" Vector__XXX
+ SG_ T5 : 0|16@1- (0.01,0) [-327.68|327.67] "degC" Vector__XXX
+
+BO_ 2485517034 Temperature3: 8 BMS
+ SG_ T12 : 48|16@1- (0.01,0) [-327.68|327.67] "degC" Vector__XXX
+ SG_ T11 : 32|16@1- (0.01,0) [-327.68|327.67] "degC" Vector__XXX
+ SG_ T10 : 16|16@1- (0.01,0) [-327.68|327.67] "degC" Vector__XXX
+ SG_ T9 : 0|16@1- (0.01,0) [-327.68|327.67] "degC" Vector__XXX
+
+BO_ 2485582570 Temperature4: 8 BMS
+ SG_ Tmax : 48|16@1- (0.01,0) [-327.68|327.67] "degC" Vector__XXX
+ SG_ Tmin : 32|16@1- (0.01,0) [-327.68|327.67] "degC" Vector__XXX
+ SG_ T14 : 16|16@1- (0.01,0) [-327.68|327.67] "degC" Vector__XXX
+ SG_ T13 : 0|16@1- (0.01,0) [-327.68|327.67] "degC" Vector__XXX
+
+BO_ 2351168234 State: 8 BMS
+ SG_ CycleCount : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ FANStatus : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SDCardFileNo : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ES3_FuseFailure : 29|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ES3_SDCardErr_3 : 27|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ES3_FETOT : 26|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ES3_FETERR : 25|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ES3_CCOMER : 24|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ VehicleState : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ES2_DeepDischargeWarning : 14|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ES2_ShuntOffsetError : 13|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ES2_NTCFailure : 12|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ES2_SDCardErr : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ES2_ChargerTimeoutCutoff : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ES2_VoltageGradErr : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ES2_TempGradErr : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ES1_RDY : 7|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ES1_CTO : 6|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ES1_SCE : 5|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ES1_OT : 4|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ES1_RegenErr : 3|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ES1_OC : 2|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ES1_UV : 1|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ES1_FullCharge_OV : 0|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2585066475 Authentication: 8 BMS
+ SG_ CustomerID : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RatedCapacity : 48|8@1+ (1,0) [0|0] "Ah" Vector__XXX
+ SG_ CellType : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ HWversionMinor : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ HWversionMajor : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SWversionMinor : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SWversionMajor : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2383739883 ChargeParameters: 8 BMS
+ SG_ CapacityActive : 48|16@1+ (0.01,0) [0|655.35] "Ah" Vector__XXX
+ SG_ ChargerError_2 : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ChargerError_1 : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ReserveSwitch : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ChargeCurrentDemand : 0|16@1+ (0.1,0) [0|6553.5] "A" Vector__XXX
+
+BO_ 2568284922 Battery_ID: 8 BMS
+ SG_ Battery_ID_Raw : 0|64@1+ (1,0) [0|0] "" Vector__XXX
+
+
+
+
+CM_ BO_ 2250242794 "Spec lists C11 twice; the 4th value is C12.";
+CM_ BO_ 2568284922 "Spec: Byte0-7 (not decoded further).";
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_ "GenMsgCycleTime" BO_ 2216688362 1000;
+BA_ "GenMsgCycleTime" BO_ 2233465578 1000;
+BA_ "GenMsgCycleTime" BO_ 2250242794 1000;
+BA_ "GenMsgCycleTime" BO_ 2267020010 1000;
+BA_ "GenMsgCycleTime" BO_ 2216753898 1000;
+BA_ "GenMsgCycleTime" BO_ 2233531114 1000;
+BA_ "GenMsgCycleTime" BO_ 2283928298 1000;
+BA_ "GenMsgCycleTime" BO_ 2485320426 1000;
+BA_ "GenMsgCycleTime" BO_ 2485451498 1000;
+BA_ "GenMsgCycleTime" BO_ 2485517034 1000;
+BA_ "GenMsgCycleTime" BO_ 2485582570 1000;
+BA_ "GenMsgCycleTime" BO_ 2351168234 1000;
+BA_ "GenMsgCycleTime" BO_ 2585066475 1000;
+BA_ "GenMsgCycleTime" BO_ 2383739883 1000;
+BA_ "GenMsgCycleTime" BO_ 2568284922 10000;
+VAL_ 2351168234 FANStatus 0 "NoFan" 1 "FanOn" 2 "FanOff" ;
+VAL_ 2351168234 VehicleState 0 "Idle" 1 "Discharge" 2 "Charger0EVQ" 3 "Balancing" 4 "Error" 5 "Charging_1DronePower" 6 "Charging_2GBT" 7 "Charging_3Solterra" ;
+VAL_ 2383739883 ReserveSwitch 1 "OFF" 2 "ON" ;
+
+
+

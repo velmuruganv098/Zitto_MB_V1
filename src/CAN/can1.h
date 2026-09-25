@@ -213,6 +213,8 @@ void         Can1_StartDetection(void);
 uint32_t     Can1_GetIrqCount(void);
 uint32_t     Can1_GetErrorIrqCount(void);
 uint32_t     Can1_GetMbIrqCount(void);
+uint32_t     Can1_GetRxFps(void);          /* frames/s received (1 s window) */
+
 
 #ifdef __cplusplus
 }

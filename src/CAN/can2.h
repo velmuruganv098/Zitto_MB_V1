@@ -157,6 +157,10 @@ void Can2_StartDetection(void);
 uint32_t Can2_GetIrqCount(void);
 uint32_t Can2_GetErrorIrqCount(void);
 uint32_t Can2_GetMbIrqCount(void);
+uint32_t Can2_GetRxFps(void);
+uint8_t  Can2_GetTec(void);
+uint8_t  Can2_GetRec(void);
+
 
 
 #ifdef __cplusplus

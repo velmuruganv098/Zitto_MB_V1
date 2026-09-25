@@ -1,0 +1,1499 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_:
+
+
+BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
+ SG_ New_Signal_662 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ New_Signal_661 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BATTERY_VOLTAGE : 0|16@1+ (0.1,0) [0|6553.5] "V" Vector__XXX
+ SG_ EXT_EN_FLAG : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DCDC_FLAG : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ INTHVAC_Total_Power_Input : 0|8@1+ (0.1,0) [0|25.5] "KW" Vector__XXX
+ SG_ INTHVAC_Total_Working_Hour : 0|16@1+ (1,0) [0|65535] "Hour" Vector__XXX
+ SG_ INTHVAC_Compressor_Run_Hour : 0|16@1+ (1,0) [0|65535] "Hour" Vector__XXX
+ SG_ INTHVAC_Car_Inside_Temp : 0|8@1+ (1,-40) [-40|215] "degC" Vector__XXX
+ SG_ INTHVAC_Ambient_Temp : 0|8@1+ (1,-40) [-40|215] "degC" Vector__XXX
+ SG_ INTHVAC_Blower_operation_step : 0|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ INTHVAC_AC_operation_mode : 0|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ bcm_Fault_monitor_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_cell_balancing_status_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_balancing_count_B : 0|8@0+ (1,0) [0|255] "count" Vector__XXX
+ SG_ bcm_fault_low_temperature_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_high_temperature_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_cell_under_voltage_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_cell_over_voltage_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_module_under_voltage_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_module_over_voltage_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_low_temp_charge_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_low_temp_disc_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_high_temp_charg_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_high_temp_disc_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_over_current_charge_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_Over_current_disch_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_Isolation_Detection_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_over_temperature_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_pack_under_voltage_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_pack_over_voltage_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_precharge_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_Slave_Mute_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_hvil_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_contactor_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_contactor_cant_close_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_contactor_cant_open_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_High_Volt_Measureme_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_Current_Sensor_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_Thermistor_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_Pack_CAN_Missing_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_Fault_Pack_Balance_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_Fault_coolantLeak_B : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ BCS_controller_temperature : 0|8@1+ (1,-40) [-40|215] "°C" Vector__XXX
+ SG_ BCS_compressor_status : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ BCS_speed_of_compressor : 0|16@1+ (1,0) [0|65535] "rpm" Vector__XXX
+ SG_ bcm_cell_temperature_maximum_B : 0|8@0+ (0.5,-40) [-40|87.5] "DegC" Vector__XXX
+ SG_ bcm_cell_temperature_minimum_B : 0|8@0+ (0.5,-40) [-40|87.5] "DegC" Vector__XXX
+ SG_ bcm_cell_voltage_maximum_B : 0|13@0+ (0.001,0) [0|8.191] "volts" Vector__XXX
+ SG_ bcm_cell_voltage_minimum_B : 0|13@0+ (0.001,0) [0|8.191] "volts" Vector__XXX
+ SG_ BCM_PACK_EMERGENCY_OFF_STAT_B : 0|1@0+ (1,0) [0|1] "Flag" Vector__XXX
+ SG_ BCM_PACK_LOCKOUT_B : 0|1@0+ (1,0) [0|1] "flag" Vector__XXX
+ SG_ BCM_GROUND_FAULT_DETECTION_B : 0|12@0+ (0.25,0) [0|1023.75] "kOhm" Vector__XXX
+ SG_ BCM_BATTERY_CURRENT_B : 0|16@0+ (0.025,-1000) [-1000|638.375] "amps" Vector__XXX
+ SG_ BCM_MAIN_CONTACTOR_STATE_B : 0|2@0+ (1,0) [0|3] "unsignedInt" Vector__XXX
+ SG_ BCM_READY_B : 0|1@0+ (1,0) [0|1] "flag" Vector__XXX
+ SG_ BCM_SOC_B : 0|8@0+ (0.5,0) [0|127.5] "%" Vector__XXX
+ SG_ BCM_BATTERY_VOLTAGE_B : 0|12@0+ (0.25,0) [0|1023.75] "volts" Vector__XXX
+ SG_ BCM_HVIL_MONITOR_B : 0|1@0+ (1,0) [0|1] "flag" Vector__XXX
+ SG_ bcm_charge_current_max_B : 0|12@0+ (0.25,0) [0|1023.75] "amps" Vector__XXX
+ SG_ bcm_discharge_current_max_B : 0|12@0+ (0.25,0) [0|1023.75] "amps" Vector__XXX
+ SG_ bcm_kwh_remain_B : 0|8@0+ (1,0) [0|255] "kwh" Vector__XXX
+ SG_ bcm_cell_temperature_maximum_A : 0|8@0+ (0.5,-40) [-40|87.5] "DegC" Vector__XXX
+ SG_ bcm_cell_temperature_minimum_A : 0|8@0+ (0.5,-40) [-40|87.5] "DegC" Vector__XXX
+ SG_ bcm_cell_voltage_maximum_A : 0|13@0+ (0.001,0) [0|8.191] "volts" Vector__XXX
+ SG_ bcm_cell_voltage_minimum_A : 0|13@0+ (0.001,0) [0|8.191] "volts" Vector__XXX
+ SG_ bcm_charge_current_max_A : 0|12@0+ (0.25,0) [0|1023.75] "amps" Vector__XXX
+ SG_ bcm_discharge_current_max_A : 0|12@0+ (0.25,0) [0|1023.75] "amps" Vector__XXX
+ SG_ bcm_kwh_remain_A : 0|8@0+ (1,0) [0|255] "kwh" Vector__XXX
+ SG_ BCM_PACK_EMERGENCY_OFF_STATE_A : 0|1@0+ (1,0) [0|1] "Flag" Vector__XXX
+ SG_ BCM_PACK_LOCKOUT_A : 0|1@0+ (1,0) [0|1] "flag" Vector__XXX
+ SG_ BCM_GROUND_FAULT_DETECTION_A : 0|12@0+ (0.25,0) [0|1023.75] "kOhm" Vector__XXX
+ SG_ BCM_BATTERY_CURRENT_A : 0|16@0+ (0.025,-1000) [-1000|638.375] "amps" Vector__XXX
+ SG_ BCM_MAIN_CONTACTOR_STATE_A : 0|2@0+ (1,0) [0|3] "unsignedInt" Vector__XXX
+ SG_ BCM_READY_A : 0|1@0+ (1,0) [0|1] "flag" Vector__XXX
+ SG_ BCM_SOC_A : 0|8@0+ (0.5,0) [0|127.5] "%" Vector__XXX
+ SG_ BCM_BATTERY_VOLTAGE_A : 0|12@0+ (0.25,0) [0|1023.75] "volts" Vector__XXX
+ SG_ BCM_HVIL_MONITOR_A : 0|1@0+ (1,0) [0|1] "flag" Vector__XXX
+ SG_ bcm_Fault_monitor_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_cell_balancing_status_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_balancing_count_A : 0|8@0+ (1,0) [0|255] "count" Vector__XXX
+ SG_ bcm_fault_low_temperature_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_high_temperature_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_cell_under_voltage_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_cell_over_voltage_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_module_under_voltage_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_module_over_voltage_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_low_temp_charge_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_low_temp_disc_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_high_temp_charg_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_high_temp_disc_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_over_current_charge_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_Over_current_disch_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_Isolation_Detection_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_over_temperature_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_pack_under_voltage_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_pack_over_voltage_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_precharge_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_Slave_Mute_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_hvil_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_contactor_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_contactor_cant_close_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_contactor_cant_open_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_High_Volt_Measureme_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_Current_SensorA : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_Thermistor_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_fault_Pack_CAN_Missing_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_Fault_Pack_Balance_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ bcm_Fault_coolantLeak_A : 0|1@0+ (1,0) [0|1] "FLAG" Vector__XXX
+ SG_ Distance_to_empty : 0|8@1+ (1,0) [0|255] "Km" Vector__XXX
+ SG_ ErrorLamp : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Errorcode : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ act_DCBusVoltage : 0|8@1+ (4,0) [0|1020] "V" Vector__XXX
+ SG_ act_DCBusPower : 0|16@1+ (0.005,-160) [-160|167.675] "kW" Vector__XXX
+ SG_ act_DeviceTemperature : 0|8@1+ (1,-40) [-40|215] "°C" Vector__XXX
+ SG_ Precharged : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ act_ErrorStatus : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ act_Speed : 0|16@1+ (1,-32000) [-32000|33535] "rpm" Vector__XXX
+ SG_ act_Torque : 0|16@1+ (0.2,-6400) [-6400|6707] "Nm" Vector__XXX
+ SG_ act_Power : 0|16@1+ (0.005,-160) [-160|167.675] "kW" Vector__XXX
+ SG_ act_MotorTemperature : 0|8@1+ (1,-40) [-40|215] "°C" Vector__XXX
+ SG_ act_ErrorStatus : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ act_Voltage : 0|16@1+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ act_Current : 0|16@1+ (0.05,-1600) [-1600|1676.75] "A" Vector__XXX
+ SG_ act_Power : 0|16@1+ (0.005,-160) [-160|167.675] "kW" Vector__XXX
+ SG_ act_Temperature : 0|8@1+ (1,-40) [-40|215] "°C" Vector__XXX
+ SG_ ErrorLamp : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Errorcode : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ act_DCBusVoltage : 0|8@1+ (4,0) [0|1020] "V" Vector__XXX
+ SG_ act_DCBusPower : 0|16@1+ (0.005,-160) [-160|167.675] "kW" Vector__XXX
+ SG_ act_DeviceTemperature : 0|8@1+ (1,-40) [-40|215] "°C" Vector__XXX
+ SG_ Precharged : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ act_ErrorStatus : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ act_Speed : 0|16@1+ (1,-32000) [-32000|33535] "rpm" Vector__XXX
+ SG_ act_Torque : 0|16@1+ (0.2,-6400) [-6400|6707] "Nm" Vector__XXX
+ SG_ act_Power : 0|16@1+ (0.005,-160) [-160|167.675] "kW" Vector__XXX
+ SG_ act_MotorTemperature : 0|8@1+ (1,-40) [-40|215] "°C" Vector__XXX
+ SG_ BMS_KWH_Remaing : 0|8@1+ (1,0) [0|255] "KWH" Vector__XXX
+ SG_ hld_mcu_u8McuFltLvl : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ hld_mcu_bMotMode : 0|3@1+ (1,0) [0|7] "/" Vector__XXX
+ SG_ hld_mcu_u16MotTq : 0|16@1+ (0.2,-6400) [-6400|6707] "N" Vector__XXX
+ SG_ hld_mcu_u16MotSpd : 0|16@1+ (1,-32000) [-32000|33535] "rpm" Vector__XXX
+ SG_ hld_mcu_u16DcLinkCur : 0|16@1+ (0.05,-1600) [-1600|1676.75] "A" Vector__XXX
+ SG_ hld_mcu_u16DcLinkVot : 0|16@1+ (0.05,0) [0|3276.75] "V" Vector__XXX
+ SG_ hld_mcu_bDischgFail : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ hld_mcu_bDcLinkOCLvl1 : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ hld_mcu_bDcCurSenFlt : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ hld_mcu_bMcuSwOCFlt : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ hld_mcu_bMcuCanFlt : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bStallFlt : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bDcLinkOVLvl1 : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bDcCurSampFlt : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bPowerModuleFlt : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bLvbatOVFlt : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bLvbatUVFlt : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bPosiSenFlt : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bMotOSFlt : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ hld_mcu_bMotTempSampFlt : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bIgbt3TempSampFlt : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bIgbt2TempSampFlt : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bIgbt1TempSampFlt : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ hld_mcu_bMotOTFlt2 : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bMotOTFlt1 : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ hld_mcu_bIgbtOTFlt2 : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bIgbtOTFlt1 : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bWCurSampFlt : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bVCurSampFlt : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bUCurSampFlt : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ hld_mcu_bWCurSenFlt : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bVCurSenFlt : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ hld_mcu_bUCurSenFlt : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bWHwOCFlt : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ hld_mcu_bVHwOCFlt : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bUHwOCFlt : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bWIgbtDrvFlt : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ hld_mcu_bUIgbtDrvFlt : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bVIgbtDrvFlt : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bDcLinkOVFlt : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_bDcLinkUVFlt : 0|1@1+ (1,0) [0|1] "/" Vector__XXX
+ SG_ hld_mcu_u8MotTemp : 0|8@1+ (1,-40) [-40|215] "¡æ" Vector__XXX
+ SG_ hld_mcu_u8McuTemp : 0|8@1+ (1,-40) [-40|215] "¡æ" Vector__XXX
+ SG_ DcLinkVoltage : 0|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ TotalMotorPower : 0|16@1+ (10,0) [0|655350] "" Vector__XXX
+ SG_ HeatSinkTemp : 0|8@1+ (1,-125) [-125|130] "" Vector__XXX
+ SG_ OverloadProtectionStatus : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ HV_Battery_Voltage : 0|8@1+ (4,0) [0|1020] "V" Vector__XXX
+ SG_ BMS_Emergrency_Power_OFF : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Switch_OFF_Ignition : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Speed_Limit_Warning : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ TPMS_Communication_Fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ECAS_Communication_Fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Kneeling_Left_Activated : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ EBS_Communication_Fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ TCS_Communication_Fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVAC_BCS_Communication_Fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Radiator_Fan_Not_Working : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ TCS_BCS_Pump_Faulty : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ EVCC_Faulty : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PP_Value_Not_OK : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ CP_Value_Not_OK : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ EVCC_Not_Ready : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ EVCC2_Communication_Fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ E_Compressor_Motor_Blocked : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Steering_Motor_Faulty : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Aux_Inverter_Polarity_Fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ APU_Switch_Faulty : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Aux_Inverter_Over_Tempearture : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Brake_Tank_Pressure2_Low : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Brake_Tank_Pressure1_Low : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Steering_Motor_Over_Temperature : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Aux_Inverter_Communication_Fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DC_DC_Communication_Fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DC_DC_Over_Temperature : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ LV_Battery_Voltage_Low_Alert : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Vehicle_Is_In_Reverse : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Vehicle_Is_In_Drive : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Park_Brake_Engaged : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Door_Open : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Motor_Over_Run_Fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DC_Link_Under_Voltage : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DC_Link_Over_Voltage : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MCU_Communication_Fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MCU_Fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MCU_Over_Temperature_Warning : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Motor_Overtemperature_Warning : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Busbar_Temperature_High : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Brake_Pedal_Sensor_Faulty : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Acc_Pedal_Position_Sensor_Faulty : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_Communication_Fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Battery_Pack_Lockout : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ High_Voltage_Interlock_Fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Battery_Contactor_Fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Battery_Cell_Over_Voltage : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Battery_Cell_Over_Temperature : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ TPMS_Fault : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ E_Compressor_Service_Alert : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ BCS_Coolant_Level_Low : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ TPMS_Sensor_Battery_Level_Low : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DC_DC_Converter_Status : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Vehicle_Charging_Condition : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Motor_IGBT_Resolver_Fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVPDU_Open : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ EVCC1_Communication_Fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ECAS_Non_ECAS_Bus : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ E_Compressor_Over_Temperature : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_Status : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ TPMS_Status : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ TCS_Status : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Staff_Bus_Pure_EV : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ School_Bus_Pure_EV : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MCU_Status : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Hydrogen_Bus : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVAC_BCS_Status : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ FCE_Status : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EVCC_Status : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EBS_ECAS_Status : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ City_Bus_Pure_EV : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Buck_DC_DC_Converter_Status : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Boost_DC_DC_Converter_Status : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ BMS_Status : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Aux_Inverter_Status : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ ADAS_Status : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ AC_Non_AC_Bus : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ TCS_Coolant_Level_Low : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Manual_Hydrogen_CutOFF_Switch_ON : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Evacuation : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Emergency_Door_Open : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Cell_Maximum_Voltage : 0|4@1+ (0.3,0) [0|4.5] "V" Vector__XXX
+ SG_ Cell_Minimum_Voltage : 0|4@1+ (0.3,0) [0|4.5] "V" Vector__XXX
+ SG_ Auxiliary_Battery_Voltage_Low : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ ECAS_Fault : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Charging_Indication : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Service_Alert : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ ADAS_Fault : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Dual_Gun_Connected : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Stop_Charging : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Contactor_Control_1 : 0|1@0+ (1,0) [0|1] "Flag" Vector__XXX
+ SG_ Charging_Status_1 : 0|1@0+ (1,0) [0|1] "Flag" Vector__XXX
+ SG_ Charger_Gun_Detected_1 : 0|1@0+ (1,0) [0|1] "Flag" Vector__XXX
+ SG_ EVCC_status_code_1 : 0|8@0+ (1,0) [0|255] "Num" Vector__XXX
+ SG_ EVCC_Ready_1 : 0|1@0+ (1,0) [0|1] "Flag" Vector__XXX
+ SG_ INTHVAC_Coolant_inlet_temp : 0|8@1+ (1,-40) [-40|215] "degC" Vector__XXX
+ SG_ INTHVAC_Coolant_outlet_temp : 0|8@1+ (1,0) [0|255] "degC" Vector__XXX
+ SG_ INTHVAC_TMS_OR_VCU_Mode : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ INTHVAC_control_command : 0|3@1+ (1,-50) [-50|-43] "" Vector__XXX
+ SG_ INTHVAC_Work_mode : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ INTHVAC_Pump_Rly_Output : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ INTHVAC_Comp_Frequency : 0|8@1+ (1,0) [0|255] "Hz" Vector__XXX
+ SG_ INTHVAC_Flt_Code : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ INTHVAC_Pump_Actual_Speed : 0|8@1+ (50,0) [0|12750] "RPM" Vector__XXX
+ SG_ INTHVAC_Fan_Duty : 0|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ INTHVAC_Signallife : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ DCDC_INPUT_VOLTAGE_1 : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ DCDC_OUTPUT_VOLTAGE_1 : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ DCDC_OUTPUT_CURRENT_1 : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ DCDC_AUX_BATTERY_VOLTAGE : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ Reserve : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ MaximumtemperatureinsideDCDC : 0|8@1+ (1,-40) [-40|215] "C" Vector__XXX
+ SG_ DCDCoutputcurrent : 0|16@1+ (0.1,0) [0|6553.5] "A" Vector__XXX
+ SG_ DCDCoutputvoltage : 0|16@1+ (0.1,0) [0|6553.5] "V" Vector__XXX
+ SG_ Live : 0|8@1- (1,0) [-128|127] "" Vector__XXX
+ SG_ DCDCversion : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ DCDCinputcurrent : 0|8@1+ (0.1,0) [0|25.5] "A" Vector__XXX
+ SG_ DCDCinputvoltage : 0|16@1+ (0.1,0) [0|6553.5] "V" Vector__XXX
+ SG_ DCDC_workingmode : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ faultbit : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ Vehicle_Stop_Charging_2 : 0|1@0+ (1,0) [0|1] "Flag" Vector__XXX
+ SG_ Charge_Piont_Voltage_2 : 0|16@0+ (0.1,0) [0|6553.5] "Volt" Vector__XXX
+ SG_ Nominal_battery_Capacity_2 : 0|16@0- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ BCM_KWH_Remaining_2 : 0|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ Deapth_of_discharge_2 : 0|8@0+ (1,0) [0|255] "%" Vector__XXX
+ SG_ Battery_SOC_2 : 0|8@0+ (0.5,0) [0|127.5] "%" Vector__XXX
+ SG_ battery_Voltage_2 : 0|12@0+ (0.25,0) [0|1023.75] "Volt" Vector__XXX
+ SG_ ParkingBrakeSwitch : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DualAUXRedStopLampStopHV : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DualAUXAmberWarningLampCheckHV : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ PumpCommunicationFault : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ PumpUnderVoltageFault : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ PumpThermalFault : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ PumpStallFault : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ PumpDryRunFault : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Steering_Actual_Torque : 0|16@1+ (0.1,-3212.7) [-3212.7|3340.8] "%" Vector__XXX
+ SG_ Ecompressor_Actual_Torque : 0|16@1+ (0.1,-3212.7) [-3212.7|3340.8] "%" Vector__XXX
+ SG_ SPN_DTC1 : 0|19@1+ (1,0) [0|524287] "" Vector__XXX
+ SG_ Traction_Battery_Connected : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ LV_Batt_Low_Warning : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ HV_Ready : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Motor_Inv_Over_Temp_Warning : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ HV_Volt_Batt_2_Fault : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ High_Volt_Batt_1_Fault : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Leak_Detection_Fault : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Traction_Batt_Over_T_Warning : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Inverter_Temperature : 0|8@1+ (1,-40) [-40|215] "C" Vector__XXX
+ SG_ Traction_Battery_Temperature : 0|8@1+ (1,-40) [-40|215] "C" Vector__XXX
+ SG_ Motor_Speed : 0|8@1+ (50,-2000) [-2000|10750] "RPM" Vector__XXX
+ SG_ Traction_Battery_Current : 0|8@1+ (1,0) [0|255] "A" Vector__XXX
+ SG_ Traction_Battery_SOC : 0|8@1+ (10,0) [0|2550] "%" Vector__XXX
+ SG_ HV_System_Voltage : 0|8@1+ (4,0) [0|1020] "V" Vector__XXX
+ SG_ SOH : 0|8@1+ (0.4,0) [0|102] "%" Vector__XXX
+ SG_ Regeneration_Braking_ON : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ HVPDU_Fault : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DC_DC_Converter_Fault : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ TCS_Fault : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Hydrogen_Leakage_Detected : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ E_Compressor_Oil_Pressure_Low : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ HVAC_BCS_Fault : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Traction_Battery_SOC : 0|8@1+ (0.4,0) [0|102] "%" Vector__XXX
+ SG_ Boost_DC_DC_Converter_Fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Buck_DC_DC_Converter_Fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Aux_Inverter_Fault : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Fuel_Cell_Engine_Fault : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Fuel_Cell_Engine_ON : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Traction_Motor_Fault : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Replace_Battery_Pack : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Reset_Ignition : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Energy_Generated_Fuelcell_Engine : 0|8@1+ (2,0) [0|510] "Kwh" Vector__XXX
+ SG_ Hydrogen_Consumption : 0|8@1+ (4,0) [0|1020] "Kg" Vector__XXX
+ SG_ A_Temp_Sensor_Fail_Cri_fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ A_Vsense_open_circuit_fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ A_Sensing_point_V3 : 0|16@1+ (0.02,0) [0|1310.7] "Volt" Vector__XXX
+ SG_ A_Sensing_point_V1 : 0|16@1+ (0.02,0) [0|1310.7] "Volt" Vector__XXX
+ SG_ B_Temp_Sensor_Fail_Cri_fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_Vsense_open_circuit_fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_Sensing_point_V3 : 0|16@1+ (0.02,0) [0|1310.7] "Volt" Vector__XXX
+ SG_ B_Sensing_point_V1 : 0|16@1+ (0.02,0) [0|1310.7] "Volt" Vector__XXX
+ SG_ B_SOH_Zero_Flt : 0|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Slave_Comm_Loss_Slave_No : 0|3@1+ (1,0) [0|7] "-" Vector__XXX
+ SG_ B_ExtE2P_readwrite_fail_Alarm : 0|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_BMS_Cooling_Request : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_BMS_Insulation_Ack_Flag : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_Emergency_Chrg_Ack_Flag : 0|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_E2P_Fault_Event_Status : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ B_HVPreRelay_Status : 0|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_HVNegRelay_Status : 0|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_HVPosRelay_Status : 0|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Emergency_Power_Off : 0|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_ExtE2P_readwrite_fail_Alarm : 0|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_BMS_Cooling_Request : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ A_BMS_Insulation_Ack_Flag : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ A_Emergency_Chrg_Ack_Flag : 0|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_E2P_Fault_Event_Status : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ A_HVPreRelay_Status : 0|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_HVNegRelay_Status : 0|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_HVPosRelay_Status : 0|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Emergency_Power_Off : 0|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ MCU_MotorCoolingFlowRequest : 0|8@1+ (0.78125,0) [0|199.21875] "%" Vector__XXX
+ SG_ MCU_ThermalIndicator : 0|8@1+ (0.78125,0) [0|199.21875] "" Vector__XXX
+ SG_ MCU_DriveCoolingFlowRequest : 0|8@1+ (0.78125,0) [0|199.21875] "%" Vector__XXX
+ SG_ Steering_Pump_Mot_Temp_Protec : 0|8@1+ (1,-40) [-40|215] "C" Vector__XXX
+ SG_ Signal_8 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Signal_7 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Signal_6 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Signal_5 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Signal_4 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Signal_3 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Signal_2 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Signal_1 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Steering_Actual_Motor_Temp : 0|8@1+ (1,-40) [-40|215] "°C" Vector__XXX
+ SG_ EcompressorActual_Motor_Temp : 0|8@1+ (1,-40) [-40|215] "°C" Vector__XXX
+
+BO_ 2147485760 BMS_PackC_Data3: 8 Vector__XXX
+ SG_ C_Counter_CFFB9F6 : 56|4@1+ (1,0) [0|15] "Counter" Vector__XXX
+ SG_ C_Temp_Sensor_Fail_Cri_fault : 47|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ C_Vsense_open_circuit_fault : 46|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ C_Insulation_Value : 32|14@1+ (1,0) [0|16383] "KOhm" Vector__XXX
+ SG_ C_Sensing_point_V3 : 16|16@1+ (0.02,0) [0|1310.7] "Volt" Vector__XXX
+ SG_ C_Sensing_point_V1 : 0|16@1+ (0.02,0) [0|1310.7] "Volt" Vector__XXX
+
+BO_ 2147485753 Distance_to_empty: 8 Vector__XXX
+ SG_ DTE : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ odometer : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 2147485752 BMS_PackC_Current_Limits: 8 Vector__XXX
+ SG_ C_CRC_CFF8BF5 : 60|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ C_Counter_CFF8BF5 : 56|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ C_Derate_Flag : 51|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ C_Fault_Rank : 48|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ C_KWh_Remain : 40|8@1+ (1,0) [0|255] "KWatt" Vector__XXX
+ SG_ C_Cont_Disch_Curr_Limit : 32|8@1+ (1,0) [0|255] "A" Vector__XXX
+ SG_ C_Cont_Chrg_Curr_Limit : 24|8@1+ (1,0) [0|255] "A" Vector__XXX
+ SG_ C_Peak_Regen_Curr_30s_Limit : 12|12@1+ (0.25,0) [0|1023.75] "A" Vector__XXX
+ SG_ C_Peak_Disch_Curr_30s_Limit : 0|12@1+ (0.25,0) [0|1023.75] "A" Vector__XXX
+
+BO_ 2147485751 BMS_PackC_Data1: 8 Vector__XXX
+ SG_ C_Min_Cell_Volt : 13|13@1+ (0.001,0) [0|8.191] "V" Vector__XXX
+ SG_ C_Min_Cell_Temp : 26|8@1+ (0.5,-40) [-40|87.5] "" Vector__XXX
+ SG_ C_Max_Cell_Volt : 0|13@1+ (0.001,0) [0|8.191] "V" Vector__XXX
+ SG_ C_Max_Cell_Temp : 34|8@1+ (0.5,-40) [-40|87.5] "" Vector__XXX
+
+BO_ 2147485750 BMS_PackC_Flt: 8 Vector__XXX
+ SG_ C_VCU_BMS_CRC_Failure_Flt : 47|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_VCU_BMS_Comm_Flt : 34|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_Thermal_Sensor_HW_Flt : 55|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_Thermal_Runaway_Flt : 54|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_Temp_Sensor_Hw_Flt : 37|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_SOH_Zero_Flt : 40|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_SOC_Low_Alarm : 22|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_Slave_Comm_Loss_Slave_No : 44|3@1+ (1,0) [0|7] "-" Vector__XXX
+ SG_ C_Slave_Comm_Loss_Alarm : 28|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_Precharge_Flt : 41|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_Pos_Contactor_Weld_Flt : 31|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_Pos_Contactor_Hw_Flt : 30|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_Peak_Regen_OverCurr_30s_Alarm : 0|2@1+ (1,0) [0|3] "-" Vector__XXX
+ SG_ C_Peak_OverDischCurr_30s_Alarm : 4|2@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_Pack_Volt_Sampling_flt : 35|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_Pack_Volt_Mismatch_Flt : 52|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_Pack_UnderVolt_Alarm : 18|2@1+ (1,0) [0|3] "-" Vector__XXX
+ SG_ C_Pack_OverVolt_Alarm : 16|2@1+ (1,0) [0|3] "-" Vector__XXX
+ SG_ C_Pack_Balancing_Hw_Flt : 39|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_Pack2Pack_Comm_Flt : 38|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_Neg_Contactor_Weld_Flt : 33|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_Neg_Contactor_Hw_Flt : 32|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_Low_SOH_Alarm : 27|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_Insulation_Detection_Flt : 42|2@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_HVIL_Alarm : 29|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_Curr_Sensor_Hw_Flt : 36|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_Coolant_Leakage_sensor_Alarm : 23|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ C_Cont_OverDischCurr_Alarm : 6|2@1+ (1,0) [0|3] "-" Vector__XXX
+ SG_ C_Cont_Charging_OverCurr_Alarm : 2|2@1+ (1,0) [0|3] "-" Vector__XXX
+ SG_ C_Cell_volt_sampling_Alarm : 20|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_Cell_UnderVolt_Alarm : 10|2@1+ (1,0) [0|3] "-" Vector__XXX
+ SG_ C_Cell_UnderTemp_Alarm : 14|2@1+ (1,0) [0|3] "-" Vector__XXX
+ SG_ C_Cell_temp_sampling_Alarm : 21|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_Cell_OverVolt_Alarm : 8|2@1+ (1,0) [0|3] "-" Vector__XXX
+ SG_ C_Cell_OverTemp_Alarm : 12|2@1+ (1,0) [0|3] "-" Vector__XXX
+ SG_ C_Cell_DV_Static_Alarm : 25|2@1+ (1,0) [0|3] "-" Vector__XXX
+ SG_ C_Cell_DV_Dyn_Alarm : 48|2@1+ (1,0) [0|3] "-" Vector__XXX
+ SG_ C_Cell_Delta_Temperture_Alarm : 50|2@1+ (1,0) [0|3] "-" Vector__XXX
+ SG_ C_Cell_Balancing_Hw_Flt : 53|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ C_BMS_CRC_CFF83F5 : 56|4@1+ (1,0) [0|15] "Counter" Vector__XXX
+ SG_ C_BMS_Counter_CFF83F5 : 60|4@1+ (1,0) [0|15] "Counter" Vector__XXX
+ SG_ C_All_Contactor_Flt : 24|1@1+ (1,0) [0|1] "-" Vector__XXX
+
+BO_ 2147485749 BMS_PackC_Status: 8 Vector__XXX
+ SG_ C_SOC_Value : 29|8@1+ (0.5,0) [0|127.5] "%" Vector__XXX
+ SG_ C_Packlockout : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ C_Pack_Voltage_Value : 37|12@1+ (0.25,0) [0|1023.75] "" Vector__XXX
+ SG_ C_Pack_Ready : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ C_Pack_Curr_Value : 13|16@1+ (0.5,-1000) [-1000|31767.5] "" Vector__XXX
+ SG_ C_Main_Contactors_Status : 4|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ C_HVIL_Monitoring_Status : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ C_Emergency_Power_Off : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ C_Charging_Done : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2147485699 B_Cell_volt: 4 Vector__XXX
+ SG_ B_Min_Cell_Volt : 16|13@1+ (0.001,0) [0|8.191] "Volts" Vector__XXX
+ SG_ B_Max_Cell_Volt : 0|13@1+ (0.001,0) [0|8.191] "Volts" Vector__XXX
+
+BO_ 2147485696 A_Cell_volt: 4 Vector__XXX
+ SG_ A_Min_Cell_Volt : 16|13@1+ (0.001,0) [0|8.191] "Volts" Vector__XXX
+ SG_ A_Max_Cell_Volt : 0|13@1+ (0.001,0) [0|8.191] "Volts" Vector__XXX
+
+BO_ 2147485720 command_BMS_TCS_BCS: 4 Vector__XXX
+ SG_ VCU_BMS_No_of_packs : 29|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ VCU_BMS_Charge_Flag : 28|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_BMS_Insulation_Enable : 27|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_BMS_MainC_Close : 26|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_BMS_EPO : 25|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_BMS_Enable : 24|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Target_value : 1|7@1+ (1,0) [0|127] "" Vector__XXX
+ SG_ Speed_of_compressor : 8|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ ATC_compressor_enable : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2147485737 MCU_command: 4 Vector__XXX
+ SG_ commandMode : 27|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ OperationalModeCmd : 24|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ Acceration_pedal_position : 16|8@1+ (0.4,0) [0|102] "%" Vector__XXX
+ SG_ TorqueCommand : 0|16@1+ (0.125,-4096) [-4096|4095.875] "" Vector__XXX
+
+BO_ 2147485716 BMS_PackB_Status_2: 4 Vector__XXX
+ SG_ B_SOH_Zero_Flt : 26|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Precharge_Flt : 23|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Insulation_Detection_Flt : 25|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Slave_Comm_Loss_Slave_No : 24|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_VCU_BMS_CRC_Failure_Flt : 22|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Cell_DV_Dyn_Alarm : 21|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Pack_Volt_Mismatch_Flt : 20|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Cell_Balancing_Hw_Flt : 19|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Cell_Delta_Temperture_Alarm : 18|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Thermal_Sensor_HW_Flt : 17|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Thermal_Runaway_Flt : 16|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_BMS_CRC_CFFA7F4 : 13|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ B_BMS_Counter_CFFA7F4 : 10|3@1+ (1,0) [0|7] "Counter" Vector__XXX
+ SG_ B_Main_Contactors_Status : 8|2@1+ (1,0) [0|3] "-" Vector__XXX
+ SG_ B_SOC_Value : 0|8@1+ (0.5,0) [0|127.5] "%" Vector__XXX
+
+BO_ 2147485705 BMS_PackA_Status_2: 4 Vector__XXX
+ SG_ A_SOH_Zero_Flt : 26|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Precharge_Flt : 23|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Insulation_Detection_Flt : 25|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Slave_Comm_Loss_Slave_No : 24|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_VCU_BMS_CRC_Failure_Flt : 22|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Cell_DV_Dyn_Alarm : 21|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Pack_Volt_Mismatch_Flt : 20|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Cell_Balancing_Hw_Flt : 19|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Cell_Delta_Temperture_Alarm : 18|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Thermal_Sensor_HW_Flt : 17|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Thermal_Runaway_Flt : 16|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_BMS_CRC_CFF83F3 : 13|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ A_BMS_Counter_CFF83F3 : 10|3@1+ (1,0) [0|7] "Counter" Vector__XXX
+ SG_ A_Main_Contactors_Status : 8|2@1+ (1,0) [0|3] "-" Vector__XXX
+ SG_ A_SOC_Value : 0|8@1+ (0.5,0) [0|127.5] "%" Vector__XXX
+
+BO_ 2147485745 MCU_speed_torque: 4 Vector__XXX
+ SG_ MCU_MotorTorqueEstimated : 16|16@1+ (0.125,-4096) [-4096|4095.875] "Nm" Vector__XXX
+ SG_ MCU_MotorSpeed : 0|16@1+ (1,-32767) [-32767|32768] "RPM" Vector__XXX
+
+BO_ 2147485721 command_Charging: 4 Vector__XXX
+ SG_ Charging_Complete_2 : 7|1@0+ (1,0) [0|1] "Flag" Vector__XXX
+ SG_ EV_Error_Code_2 : 31|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ MaxiM_Peak_charging_curr_2 : 3|12@0+ (0.25,0) [0|1023.75] "Amps" Vector__XXX
+ SG_ Continous_Charging_curr_limit_2 : 23|8@0+ (1,0) [0|255] "Amps" Vector__XXX
+
+BO_ 2147485697 ALL_faults_and_detection: 4 Vector__XXX
+ SG_ KneelingLeft : 20|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ BUS_bar_Temp : 24|8@1+ (1,-40) [-40|215] "C" Vector__XXX
+ SG_ InHVAC_detection : 19|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ EBS_detection : 18|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ECAS_detection : 17|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ TCS_detection : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MCU_detection : 15|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Dual_aux_detection : 14|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BCS_detection : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DCDC_detection : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ EVCC_detection : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_detection : 10|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ TCS_fault : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ InHVAC_fault : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ EVCC_fault : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ECAS_fault : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ EBS_fault : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Dual_aux_fault : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DCDC_fault : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MCU_fault : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BCS_fault : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2147485729 DCDC_TEMPERATURES: 4 Vector__XXX
+ SG_ Primary_mosfet_Temperature : 24|8@1+ (1,0) [0|255] "Deg C" Vector__XXX
+ SG_ Secondary_mosfet_Temperature : 16|8@1+ (1,0) [0|255] "Deg C" Vector__XXX
+ SG_ TRANSFORMER_TEMP : 8|8@1+ (1,0) [0|255] "Deg C" Vector__XXX
+ SG_ SHIM_INDUCTOR_TEMP : 0|8@1+ (1,0) [0|255] "Deg C" Vector__XXX
+
+BO_ 2147485700 Battery_cooling_system: 4 Vector__XXX
+ SG_ BCS_compressor_input_voltage : 8|8@1+ (4,0) [0|1020] "V" Vector__XXX
+ SG_ BCS_compressor_input_current : 24|8@1+ (0.2,0) [0|51] "A" Vector__XXX
+ SG_ BCS_compressor_error : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ BCS_compressor_input_power : 0|8@1+ (0.1,0) [0|25.5] "kW" Vector__XXX
+
+BO_ 2147485718 Cluster_parameters: 4 Vector__XXX
+ SG_ ServiceBrakeCircuit2AirPres : 24|8@1+ (0.08,0) [0|20.4] "" Vector__XXX
+ SG_ ServiceBrakeCircuit1AirPres : 16|8@1+ (0.08,0) [0|20.4] "" Vector__XXX
+ SG_ WheelBasedVehicleSpeed_Rx : 0|16@1+ (0.00390625,0) [0|255.99609375] "Km/hr" Vector__XXX
+
+BO_ 2147485733 Electronic_braking_system_1: 4 Vector__XXX
+ SG_ TransmissionSelectedGear : 24|8@1+ (1,-125) [-125|130] "" Vector__XXX
+ SG_ Road_Speed_limit_Status : 14|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Break_pedal_position : 16|8@1+ (0.4,0) [0|102] "%" Vector__XXX
+ SG_ Brake_Temperature_High : 12|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Anti_Lock_Braking_ABS_Active : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EBS_Brake_Switch : 2|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ ABS_Offroad_Switch : 6|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ ABS_Fully_Operational : 4|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EBS_Red_Warning_Lamp_State : 10|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ ABS_EBS_Amber_Warning_Lamp_State : 8|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 2147485698 All_Flag: 4 Vector__XXX
+ SG_ VCU_Flag : 0|7@1+ (1,0) [0|127] "Flag" Vector__XXX
+ SG_ Trq_Flag : 20|4@1+ (1,0) [0|15] "Flag" Vector__XXX
+ SG_ TCS_Flag : 16|4@1+ (1,0) [0|15] "Flag" Vector__XXX
+ SG_ Mot_Trq_Flag : 24|2@1+ (1,0) [0|3] "Flag" Vector__XXX
+ SG_ Lenze_Flag : 8|4@1+ (1,0) [0|15] "Flag" Vector__XXX
+ SG_ BCS_Flag : 12|4@1+ (1,0) [0|15] "Flag" Vector__XXX
+
+BO_ 2147485748 Traction_cooling_Pump_Info: 4 Vector__XXX
+ SG_ PumpCurrent : 24|8@1+ (0.2,0) [0|51] "A" Vector__XXX
+ SG_ PumpSpeed : 0|16@1+ (1,0) [0|65535] "rpm" Vector__XXX
+ SG_ PumpVoltage : 16|8@1+ (0.2,0) [0|51] "V" Vector__XXX
+
+BO_ 2147485747 Steering_system_ActualValues: 4 Vector__XXX
+ SG_ Streering_input_Power : 12|12@1+ (1.5,0) [0|6142.5] "Watt" Vector__XXX
+ SG_ Steering_Actual_Heat_Sink_Temp : 24|8@1+ (1,-40) [-40|215] "°C" Vector__XXX
+ SG_ Steering_Actual_Velocity : 0|12@1+ (1,-1000) [-1000|3095] "rpm" Vector__XXX
+
+BO_ 2147485732 Ecompressor_system_ActualValues: 4 Vector__XXX
+ SG_ Ecomp_Actual_Heat_Sink_Temp : 24|8@1+ (1,-40) [-40|215] "°C" Vector__XXX
+ SG_ ECompressor_Input_Power : 12|12@1+ (1.5,0) [0|6142.5] "Watt" Vector__XXX
+ SG_ Ecompressor_Actual_Velocity : 0|12@1+ (1,-1000) [-1000|3095] "rpm" Vector__XXX
+
+BO_ 2147485731 Diagnostic_message_01: 4 Vector__XXX
+ SG_ FlashAmberWarningLamp : 10|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ AmberWarningLamp : 2|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ OC_DTC1 : 24|7@1+ (1,0) [0|127] "" Vector__XXX
+ SG_ FMI_DTC1 : 16|5@1+ (1,0) [0|31] "" Vector__XXX
+ SG_ FlashRedStopLamp : 12|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ FlashProtectLamp : 8|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ FlashMalfuncIndicatorLamp : 14|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ RedStopLampState : 4|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ ProtectLampStatus : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 2147485717 Charging_status: 4 Vector__XXX
+ SG_ PumpOverVoltageFault : 13|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ PumpOvercurrentFault : 11|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ PumpFaultLevel : 9|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ PumpTemp : 16|8@1+ (1,-50) [-50|205] "¡æ" Vector__XXX
+ SG_ Brake_Pedal_Position : 24|8@1+ (0.4,0) [0|102] "" Vector__XXX
+ SG_ Charging_Status_2 : 8|1@0+ (1,0) [0|1] "Flag" Vector__XXX
+ SG_ Contactor_Control_2 : 7|1@0+ (1,0) [0|1] "Flag" Vector__XXX
+ SG_ Charger_Gun_Detected_2 : 6|1@0+ (1,0) [0|1] "Flag" Vector__XXX
+ SG_ EVCC_Ready_2 : 5|1@0+ (1,0) [0|1] "Flag" Vector__XXX
+ SG_ EVCC_status_code_2 : 4|5@0+ (1,0) [0|31] "Num" Vector__XXX
+
+BO_ 2147485728 DCDC_FAULTS: 4 Vector__XXX
+ SG_ Fault_bit : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ DCDC_INPUT_Undervolt : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DCDC_INPUT_Overvolt : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DCDCLow_volt_power_supply_UV : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DCDCLow_volt_power_supply_OV : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DCDC_Output_Over_volt : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DCDC_Output_UV : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DCDC_EXTERNAL_ENB_FAULT : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Phase_shift_full_bridge_FAULT : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DCDC_Secondary_mosfet_Under_temp : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DCDC_SHIM_inductor_Under_temp : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DCDC_SHIM_inductor_Over_temp : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DCDC_Secondary_mosfet_over_temp : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DCDC_Transformer_Over_temp : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DCDC_Transformer_Under_temp : 10|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DCDC_Primary_mosfet_Under_temp : 14|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DCDC_Primary_mosfet_Over_temp : 15|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DCDC_HVIL_FAULT : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2147485730 DCDC_Voltage_Current: 4 Vector__XXX
+ SG_ DCDC_Input_Voltage : 0|10@1+ (1,0) [0|1023] "V" Vector__XXX
+ SG_ DCDC_Input_Current : 16|3@1+ (1,0) [0|7] "A" Vector__XXX
+ SG_ DCDC_Output_Voltage : 10|6@1+ (1,0) [0|63] "V" Vector__XXX
+ SG_ DCDC_Output_Current : 24|8@1+ (1,0) [0|255] "A" Vector__XXX
+
+BO_ 2147485714 BMS_PackB_Flt_LFP: 4 Vector__XXX
+ SG_ B_Coolant_Leakage_sensor_Alarm : 15|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_Peak_OverDischCurr_30s_Alarm : 2|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Peak_Regen_OverCurr_30s_Alarm : 0|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Pack_Balancing_Hw_Flt : 31|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Pack2Pack_Comm_Flt : 30|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Temp_Sensor_Hw_Flt : 29|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Curr_Sensor_Hw_Flt : 28|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_VCU_BMS_Comm_Flt : 26|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Neg_Contactor_Weld_Flt : 25|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Neg_Contactor_Hw_Flt : 24|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Pos_Contactor_Weld_Flt : 23|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Pos_Contactor_Hw_Flt : 22|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Low_SOH_Alarm : 19|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_SOC_Low_Alarm : 14|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_All_Contactor_Flt : 16|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Pack_Volt_Sampling_flt : 27|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_HVIL_Alarm : 21|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Slave_Comm_Loss_Alarm : 20|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Cell_temp_sampling_Alarm : 13|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Cell_volt_sampling_Alarm : 12|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Pack_UnderVolt_Alarm : 10|2@1+ (1,0) [0|3] "-" Vector__XXX
+ SG_ B_Pack_OverVolt_Alarm : 8|2@1+ (1,0) [0|3] "-" Vector__XXX
+ SG_ B_Cell_UnderTemp_Alarm : 7|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Cell_OverTemp_Alarm : 6|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Cell_UnderVolt_Alarm : 5|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Cell_OverVolt_Alarm : 4|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Cont_OverDischCurr_Alarm : 3|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Cont_Charging_OverCurr_Alarm : 1|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Cell_DV_Static_Alarm : 17|2@1+ (1,0) [0|3] "-" Vector__XXX
+
+BO_ 2147485713 BMS_PackB_Data1_LFP: 4 Vector__XXX
+ SG_ B_Insulation_Value : 16|11@1+ (1,0) [0|2047] "KOhm" Vector__XXX
+ SG_ B_Balancing_Enabled_Flag : 1|1@1+ (1,0) [0|1] "Flag" Vector__XXX
+ SG_ B_SOC_Calibration_flag : 0|1@1+ (1,0) [0|1] "Flag" Vector__XXX
+ SG_ B_Min_Cell_Temp : 2|6@1+ (1,-10) [-10|53] "DegC" Vector__XXX
+ SG_ B_Max_Cell_Temp : 8|6@1+ (1,-10) [-10|53] "DegC" Vector__XXX
+
+BO_ 2147485712 BMS_PackB_Current_Limits_LFP: 4 Vector__XXX
+ SG_ B_Counter_CFFAFF4 : 29|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ B_CRC_CFFAFF4 : 26|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ B_Derate_Flag : 23|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Fault_Rank : 24|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ B_KWh_Remain : 16|7@1+ (1,0) [0|127] "Kwatt" Vector__XXX
+ SG_ B_Cont_Disch_Curr_Limit : 8|8@1+ (1,0) [0|255] "A" Vector__XXX
+ SG_ B_Cont_Chrg_Curr_Limit : 0|8@1+ (1,0) [0|255] "A" Vector__XXX
+
+BO_ 2147485715 BMS_PackB_Status_1: 4 Vector__XXX
+ SG_ B_Pack_Voltage_Value : 20|12@1+ (0.25,0) [0|1023.75] "Volts" Vector__XXX
+ SG_ B_Pack_Current_Value : 4|16@1+ (0.5,-1000) [-1000|31767.5] "A" Vector__XXX
+ SG_ B_Charging_Done : 1|1@1+ (1,0) [0|1] "Flag" Vector__XXX
+ SG_ B_Packlockout : 3|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_HVIL_Monitoring_Status : 2|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ B_Pack_Ready : 0|1@1+ (1,0) [0|1] "-" Vector__XXX
+
+BO_ 2147485704 BMS_PackA_Status_1: 4 Vector__XXX
+ SG_ A_Pack_Voltage_Value : 20|12@1+ (0.25,0) [0|1023.75] "Volts" Vector__XXX
+ SG_ A_Pack_Current_Value : 4|16@1+ (0.5,-1000) [-1000|31767.5] "A" Vector__XXX
+ SG_ A_Charging_Done : 1|1@1+ (1,0) [0|1] "Flag" Vector__XXX
+ SG_ A_Packlockout : 3|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_HVIL_Monitoring_Status : 2|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Pack_Ready : 0|1@1+ (1,0) [0|1] "-" Vector__XXX
+
+BO_ 2147485701 BMS_PackA_Current_Limits_LFP: 4 Vector__XXX
+ SG_ A_Counter_CFF8BF3 : 26|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ A_CRC_CFF8BF3 : 29|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ A_KWh_Remain : 16|7@1+ (1,0) [0|127] "Kwatt" Vector__XXX
+ SG_ A_Derate_Flag : 23|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Fault_Rank : 24|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ A_Cont_Disch_Curr_Limit : 8|8@1+ (1,0) [0|255] "A" Vector__XXX
+ SG_ A_Cont_Chrg_Curr_Limit : 0|8@1+ (1,0) [0|255] "A" Vector__XXX
+
+BO_ 2147485702 BMS_PackA_Data1_LFP: 4 Vector__XXX
+ SG_ A_Insulation_Value : 16|11@1+ (1,0) [0|2047] "KOhm" Vector__XXX
+ SG_ A_Balancing_Enabled_Flag : 1|1@1+ (1,0) [0|1] "Flag" Vector__XXX
+ SG_ A_SOC_Calibration_flag : 0|1@1+ (1,0) [0|1] "Flag" Vector__XXX
+ SG_ A_Min_Cell_Temp : 2|6@1+ (1,-10) [-10|53] "DegC" Vector__XXX
+ SG_ A_Max_Cell_Temp : 8|6@1+ (1,-10) [-10|53] "DegC" Vector__XXX
+
+BO_ 2147485703 BMS_PackA_Flt_LFP: 4 Vector__XXX
+ SG_ A_Coolant_Leakage_sensor_Alarm : 15|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ A_Peak_Regen_OverCurr_30s_Alarm : 0|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Pack_Balancing_Hw_Flt : 31|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Pack2Pack_Comm_Flt : 30|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Temp_Sensor_Hw_Flt : 29|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Curr_Sensor_Hw_Flt : 28|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_VCU_BMS_Comm_Flt : 26|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Neg_Contactor_Weld_Flt : 25|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Neg_Contactor_Hw_Flt : 24|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Pos_Contactor_Weld_Flt : 23|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Pos_Contactor_Hw_Flt : 22|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Low_SOH_Alarm : 19|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_SOC_Low_Alarm : 14|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_All_Contactor_Flt : 16|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Pack_Volt_Sampling_flt : 27|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_HVIL_Alarm : 21|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Slave_Comm_Loss_Alarm : 20|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Cell_temp_sampling_Alarm : 13|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Cell_volt_sampling_Alarm : 12|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Pack_UnderVolt_Alarm : 10|2@1+ (1,0) [0|3] "-" Vector__XXX
+ SG_ A_Pack_OverVolt_Alarm : 8|2@1+ (1,0) [0|3] "-" Vector__XXX
+ SG_ A_Cell_UnderTemp_Alarm : 7|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Cell_OverTemp_Alarm : 6|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Cell_UnderVolt_Alarm : 5|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Cell_OverVolt_Alarm : 4|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Cont_OverDischCurr_Alarm : 3|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Peak_OverDischCurr_30s_Alarm : 2|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Cont_Charging_OverCurr_Alarm : 1|1@1+ (1,0) [0|1] "-" Vector__XXX
+ SG_ A_Cell_DV_Static_Alarm : 17|2@1+ (1,0) [0|3] "-" Vector__XXX
+
+BO_ 2147485746 MCU_Thermal_: 4 Vector__XXX
+ SG_ MCUTemperature : 24|8@1+ (1,-40) [-40|215] "Degree C" Vector__XXX
+ SG_ MCU_EMITemperature : 16|8@1+ (1,-40) [-40|215] "Degree C" Vector__XXX
+ SG_ MCU_AmbientTemperature : 8|8@1+ (1,-40) [-40|215] "Degree C" Vector__XXX
+ SG_ MCU_MotorTemperature : 0|8@1+ (1,-40) [-40|215] "Degree C" Vector__XXX
+
+BO_ 2147485744 MCU_Response_DANA: 4 Vector__XXX
+ SG_ MCU_CommandMode : 29|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ MCU_state : 25|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ MCU_HighPowerVoltage : 14|11@1+ (1,0) [0|2047] "V" Vector__XXX
+ SG_ MCU_HighPowerCurrent : 0|14@1+ (0.25,-2048) [-2048|2047.75] "A" Vector__XXX
+
+BO_ 2147485736 Hardwired_OUTPUT: 4 Vector__XXX
+ SG_ MCU_IGN_Relay_Drive_LSO12 : 10|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Solenoid_Relay_Drive_LSO11 : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ IC_Relay_Drive_LSO10 : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVAC_Drive_Relay_LSO15 : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ HV_Batt_A_B_IGN_Relay_Drive_LSO9 : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Aux_Inverter_2_IGN_Relay_LSO14 : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Aux_Inverter_1_IGN_Relay_LSO13 : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ E_Comp_FAN_LSO8 : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BCS_Relay_Coil_GND_LSO7 : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ HV_TCS_Elctronic_On_Realy_LSO5 : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ HV_TCS_FAN_LSO4 : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Tarction_Rad_Freq : 22|5@1+ (1000,0) [0|31000] "" Vector__XXX
+ SG_ Traction_RadDuty_Cycle : 14|8@1+ (100,0) [0|25500] "" Vector__XXX
+ SG_ ChargerB_En_Contactor_LSO3 : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ChargerA_En_Contactor_LSO2 : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Traction_MotorEn_Contactor_LSO1 : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2147485734 Hardwired_INPUT_IOS: 4 Vector__XXX
+ SG_ TCS_Thermistor : 24|8@1+ (1,-40) [-40|215] "C" Vector__XXX
+ SG_ Oil_Pressure_Switch2 : 22|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Oil_Pressure_Switch1 : 20|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Coolent_Level_SW : 18|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Service_Indictor_Ecomp : 16|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ TCS_Rad_Fan_FB1 : 14|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ E_Comp_Cutoff_SW : 12|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DCDC_Con_AuxInterLock2 : 10|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DCDC_Con_AuxInterLock1 : 8|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ BCS_HVIL_Out : 6|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ HVPDU_HVIL_Out : 4|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Junction_box_switch : 2|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Ignition_Sense : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 2147485735 Hardwired_Input_TEMP: 4 Vector__XXX
+ SG_ CCSB_MaxTemp : 24|8@1+ (1,-40) [-40|215] "C" Vector__XXX
+ SG_ CCSA_MaxTemp : 16|8@1+ (1,-40) [-40|215] "C" Vector__XXX
+ SG_ BCS_Thermistor2 : 8|8@1+ (1,-40) [-40|215] "C" Vector__XXX
+ SG_ BCS_Thermistor1 : 0|8@1+ (1,-40) [-40|215] "C" Vector__XXX
+
+BO_ 2147485719 command_AUX_DCDC_: 4 Vector__XXX
+ SG_ Steering_enable : 24|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EComp_enable : 26|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DCDCoutputcurrentlimitsetting : 16|8@1+ (1,0) [0|255] "A" Vector__XXX
+ SG_ DCDCoutputvoltagepointsetting : 8|5@1+ (1,0) [0|31] "V" Vector__XXX
+ SG_ DCDCenablecommand : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+
+
+CM_ BO_ 3221225472 "This is a message for not used signals, created by Vector CANdb++ DBC OLE DB Provider.";
+CM_ SG_ 3221225472 hld_mcu_u8McuFltLvl "¹ÊÕÏµÈ¼¶";
+CM_ SG_ 3221225472 hld_mcu_bMotMode "MCUµ±Ç°Ä£Ê½";
+CM_ SG_ 3221225472 hld_mcu_u16MotTq "µç»ú×ª¾Ø";
+CM_ SG_ 3221225472 hld_mcu_u16MotSpd "µç»ú×ªËÙ";
+CM_ SG_ 3221225472 hld_mcu_u16DcLinkCur "Ö±Á÷Ä¸ÏßµçÁ÷";
+CM_ SG_ 3221225472 hld_mcu_u16DcLinkVot "Ö±Á÷Ä¸ÏßµçÑ¹";
+CM_ SG_ 3221225472 hld_mcu_bDischgFail "¿ìËÙ·ÅµçÊ§°Ü";
+CM_ SG_ 3221225472 hld_mcu_bDcLinkOCLvl1 "Ö±Á÷Ä¸ÏßÇ·Ñ¹¾¯¸æÖ±Á÷Ä¸ÏßÇ·Ñ¹¾¯¸æ";
+CM_ SG_ 3221225472 hld_mcu_bDcCurSenFlt "Ö±Á÷µçÁ÷´«¸ÐÆ÷¼ì²â»ØÂ·¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_bMcuSwOCFlt "Èí¼þ¹ýÁ÷¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_bMcuCanFlt "CANÍ¨Ñ¶¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_bStallFlt "µç»ú¶Â×ª¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_bDcLinkOVLvl1 "Ö±Á÷Ä¸Ïß¹ýÑ¹¾¯¸æ";
+CM_ SG_ 3221225472 hld_mcu_bDcCurSampFlt "Ö±Á÷µçÁ÷²ÉÑùÁãÆ¯";
+CM_ SG_ 3221225472 hld_mcu_bPowerModuleFlt "µçÔ´Ä£¿é¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_bLvbatOVFlt "Ðîµç³Ø¹ýÑ¹¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_bLvbatUVFlt "Ðîµç³ØÇ·Ñ¹¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_bPosiSenFlt "×ª×ÓÎ»ÖÃ´«¸ÐÆ÷¼ì²â»ØÂ·¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_bMotOSFlt "³¬ËÙ¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_bMotTempSampFlt "µç»úÎÂ¶È´«¸ÐÆ÷¼ì²â»ØÂ·¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_bIgbt3TempSampFlt "IGBT3ÎÂ¶È´«¸ÐÆ÷¼ì²â»ØÂ·¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_bIgbt2TempSampFlt "IGBT2ÎÂ¶È´«¸ÐÆ÷¼ì²â»ØÂ·¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_bIgbt1TempSampFlt "IGBT1ÎÂ¶È´«¸ÐÆ÷¼ì²â»ØÂ·¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_bMotOTFlt2 "µç»ú¹ýÎÂ¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_bMotOTFlt1 "µç»ú¹ýÎÂ¾¯¸æ";
+CM_ SG_ 3221225472 hld_mcu_bIgbtOTFlt2 "IGBT¹ýÎÂ¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_bIgbtOTFlt1 "IGBT¹ýÎÂ¾¯¸æ";
+CM_ SG_ 3221225472 hld_mcu_bWCurSampFlt "WÏàµçÁ÷²ÉÑùÁãÆ¯";
+CM_ SG_ 3221225472 hld_mcu_bVCurSampFlt "VÏàµçÁ÷²ÉÑùÁãÆ¯";
+CM_ SG_ 3221225472 hld_mcu_bUCurSampFlt "UÏàµçÁ÷²ÉÑùÁãÆ¯¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_bWCurSenFlt "WÏàµçÁ÷´«¸ÐÆ÷¼ì²â»ØÂ·¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_bVCurSenFlt "VÏàµçÁ÷´«¸ÐÆ÷¼ì²â»ØÂ·¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_bUCurSenFlt "UÏàµçÁ÷´«¸ÐÆ÷¼ì²â»ØÂ·¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_bWHwOCFlt "WÏàÓ²¼þ¹ýÁ÷";
+CM_ SG_ 3221225472 hld_mcu_bVHwOCFlt "VÏàÓ²¼þ¹ýÁ÷";
+CM_ SG_ 3221225472 hld_mcu_bUHwOCFlt "UÏàÓ²¼þ¹ýÁ÷";
+CM_ SG_ 3221225472 hld_mcu_bWIgbtDrvFlt "WÏàIGBTÇý¶¯¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_bUIgbtDrvFlt "UÏàIGBTÇý¶¯¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_bVIgbtDrvFlt "VÏàIGBTÇý¶¯¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_bDcLinkOVFlt "Ö±Á÷Ä¸Ïß¹ýÑ¹";
+CM_ SG_ 3221225472 hld_mcu_bDcLinkUVFlt "Ö±Á÷Ä¸ÏßÇ·Ñ¹¹ÊÕÏ";
+CM_ SG_ 3221225472 hld_mcu_u8MotTemp "µç»úÎÂ¶È";
+CM_ SG_ 3221225472 hld_mcu_u8McuTemp "µç»ú¿ØÖÆÆ÷ÎÂ¶È";
+CM_ SG_ 3221225472 INTHVAC_TMS_OR_VCU_Mode "0 = According to TMS1 = According to VCU";
+CM_ SG_ 3221225472 PumpCommunicationFault "0:normal1:Fault";
+CM_ SG_ 3221225472 PumpUnderVoltageFault "0:normal1:Fault";
+CM_ SG_ 3221225472 PumpThermalFault "0:normal1:Fault";
+CM_ SG_ 3221225472 PumpStallFault "0:normal1:Fault";
+CM_ SG_ 3221225472 PumpDryRunFault "0:normal1:Fault";
+CM_ SG_ 3221225472 A_Sensing_point_V3 "V3 voltage sensing point";
+CM_ SG_ 3221225472 A_Sensing_point_V1 "V1  voltage sensing point";
+CM_ SG_ 3221225472 B_Sensing_point_V3 "V3 voltage sensing point";
+CM_ SG_ 3221225472 B_Sensing_point_V1 "V1  voltage sensing point";
+CM_ SG_ 3221225472 B_SOH_Zero_Flt "zero State of health fault";
+CM_ SG_ 3221225472 B_Slave_Comm_Loss_Slave_No "It will indicate the slave no which is having comm issue";
+CM_ SG_ 3221225472 B_ExtE2P_readwrite_fail_Alarm "External Memory read write fail alarm";
+CM_ SG_ 3221225472 B_E2P_Fault_Event_Status "E2P status signal";
+CM_ SG_ 3221225472 B_HVPreRelay_Status "High voltage Precharge relay status";
+CM_ SG_ 3221225472 B_HVNegRelay_Status "High voltage negitive relay status";
+CM_ SG_ 3221225472 B_HVPosRelay_Status "High voltage positive relay status";
+CM_ SG_ 3221225472 B_Emergency_Power_Off "Emergency power off";
+CM_ SG_ 3221225472 A_ExtE2P_readwrite_fail_Alarm "External Memory read write fail alarm";
+CM_ SG_ 3221225472 A_E2P_Fault_Event_Status "E2P status signal";
+CM_ SG_ 3221225472 A_HVPreRelay_Status "High voltage Precharge relay status";
+CM_ SG_ 3221225472 A_HVNegRelay_Status "High voltage negitive relay status";
+CM_ SG_ 3221225472 A_HVPosRelay_Status "High voltage positive relay status";
+CM_ SG_ 3221225472 A_Emergency_Power_Off "Emergency power off";
+CM_ SG_ 2147485750 C_VCU_BMS_Comm_Flt "VCU BMS commuication loss";
+CM_ SG_ 2147485750 C_Thermal_Sensor_HW_Flt "Thermal sensor hardware  fault";
+CM_ SG_ 2147485750 C_Thermal_Runaway_Flt "Thermal runaway fault";
+CM_ SG_ 2147485750 C_Temp_Sensor_Hw_Flt "Temperature sensor hardware fault";
+CM_ SG_ 2147485750 C_SOH_Zero_Flt "zero State of health fault";
+CM_ SG_ 2147485750 C_SOC_Low_Alarm "State of charge low alarm";
+CM_ SG_ 2147485750 C_Slave_Comm_Loss_Slave_No "It will indicate the slave no which is having comm issueIt will indicate the slave no which is having comm issue";
+CM_ SG_ 2147485750 C_Precharge_Flt "Precharge fault";
+CM_ SG_ 2147485750 C_Pos_Contactor_Weld_Flt "Positive contactor weld fault";
+CM_ SG_ 2147485750 C_Pos_Contactor_Hw_Flt "Positive contactor Hardware fault";
+CM_ SG_ 2147485750 C_Peak_Regen_OverCurr_30s_Alarm "Peak Regen Over current alarm";
+CM_ SG_ 2147485750 C_Peak_OverDischCurr_30s_Alarm "Peak Over Discharging current alarm";
+CM_ SG_ 2147485750 C_Pack_Volt_Sampling_flt "Pack voltage sampling fault";
+CM_ SG_ 2147485750 C_Pack_Volt_Mismatch_Flt "Pack level voltage mismatch fault";
+CM_ SG_ 2147485750 C_Pack_UnderVolt_Alarm "Pack Under voltage alarm";
+CM_ SG_ 2147485750 C_Pack_OverVolt_Alarm "Pack Over voltage alarm";
+CM_ SG_ 2147485750 C_Pack_Balancing_Hw_Flt "Pack  balancing Hardware fault";
+CM_ SG_ 2147485750 C_Pack2Pack_Comm_Flt "Pack to pack communciation loss";
+CM_ SG_ 2147485750 C_Neg_Contactor_Weld_Flt "Negative contactor weld fault";
+CM_ SG_ 2147485750 C_Neg_Contactor_Hw_Flt "Negitive contactor Hardware fault";
+CM_ SG_ 2147485750 C_Low_SOH_Alarm "State of charge low alarm";
+CM_ SG_ 2147485750 C_Insulation_Detection_Flt "Insulation detction fault";
+CM_ SG_ 2147485750 C_HVIL_Alarm "HVIL alarm";
+CM_ SG_ 2147485750 C_Curr_Sensor_Hw_Flt "Current sensor hardware fault";
+CM_ SG_ 2147485750 C_Cont_OverDischCurr_Alarm "Continous Over Discharging current alarm";
+CM_ SG_ 2147485750 C_Cont_Charging_OverCurr_Alarm "Continous Regen Over current alarm";
+CM_ SG_ 2147485750 C_Cell_volt_sampling_Alarm "Cell voltage sampling alarm";
+CM_ SG_ 2147485750 C_Cell_UnderVolt_Alarm "Cell Under voltage alarm";
+CM_ SG_ 2147485750 C_Cell_UnderTemp_Alarm "Cell Under temperature alarm";
+CM_ SG_ 2147485750 C_Cell_temp_sampling_Alarm "Cell temperature sampling alarm";
+CM_ SG_ 2147485750 C_Cell_OverVolt_Alarm "Cell Over voltage alarm";
+CM_ SG_ 2147485750 C_Cell_OverTemp_Alarm "Cell Over temperature alarm";
+CM_ SG_ 2147485750 C_Cell_DV_Static_Alarm "Cell difference voltage static alarm";
+CM_ SG_ 2147485750 C_Cell_DV_Dyn_Alarm "Cell difference voltage dynamic alarm";
+CM_ SG_ 2147485750 C_Cell_Delta_Temperture_Alarm "Cell Delta temperature alarm";
+CM_ SG_ 2147485750 C_Cell_Balancing_Hw_Flt "Cell level balancing HW fault";
+CM_ SG_ 2147485750 C_BMS_CRC_CFF83F5 "Counter";
+CM_ SG_ 2147485750 C_BMS_Counter_CFF83F5 "Counter";
+CM_ SG_ 2147485750 C_All_Contactor_Flt "External Memory read write fail alarm";
+CM_ SG_ 2147485699 B_Min_Cell_Volt "Min cell voltage";
+CM_ SG_ 2147485699 B_Max_Cell_Volt "Max cell voltage";
+CM_ SG_ 2147485696 A_Min_Cell_Volt "Min cell voltage";
+CM_ SG_ 2147485696 A_Max_Cell_Volt "Max cell voltage";
+CM_ SG_ 2147485737 Acceration_pedal_position "61443";
+CM_ SG_ 2147485716 B_SOH_Zero_Flt "zero State of health fault";
+CM_ SG_ 2147485716 B_Precharge_Flt "Precharge fault";
+CM_ SG_ 2147485716 B_Insulation_Detection_Flt "Insulation detction fault";
+CM_ SG_ 2147485716 B_Slave_Comm_Loss_Slave_No "It will indicate the slave no which is having comm issue";
+CM_ SG_ 2147485716 B_Cell_DV_Dyn_Alarm "Cell difference voltage dynamic alarm";
+CM_ SG_ 2147485716 B_Pack_Volt_Mismatch_Flt "Pack level voltage mismatch fault";
+CM_ SG_ 2147485716 B_Cell_Balancing_Hw_Flt "Cell level balancing HW fault";
+CM_ SG_ 2147485716 B_Cell_Delta_Temperture_Alarm "Cell Delta temperature alarm";
+CM_ SG_ 2147485716 B_Thermal_Sensor_HW_Flt "Thermal sensor hardware  fault";
+CM_ SG_ 2147485716 B_Thermal_Runaway_Flt "Thermal runaway fault";
+CM_ SG_ 2147485716 B_BMS_CRC_CFFA7F4 "CRC";
+CM_ SG_ 2147485716 B_BMS_Counter_CFFA7F4 "Counter";
+CM_ SG_ 2147485716 B_SOC_Value "SOC value";
+CM_ SG_ 2147485705 A_SOH_Zero_Flt "zero State of health fault";
+CM_ SG_ 2147485705 A_Precharge_Flt "Precharge fault";
+CM_ SG_ 2147485705 A_Insulation_Detection_Flt "Insulation detction fault";
+CM_ SG_ 2147485705 A_Slave_Comm_Loss_Slave_No "It will indicate the slave no which is having comm issue";
+CM_ SG_ 2147485705 A_Cell_DV_Dyn_Alarm "Cell difference voltage dynamic alarm";
+CM_ SG_ 2147485705 A_Pack_Volt_Mismatch_Flt "Pack level voltage mismatch fault";
+CM_ SG_ 2147485705 A_Cell_Balancing_Hw_Flt "Cell level balancing HW fault";
+CM_ SG_ 2147485705 A_Cell_Delta_Temperture_Alarm "Cell Delta temperature alarm";
+CM_ SG_ 2147485705 A_Thermal_Sensor_HW_Flt "Thermal sensor hardware  fault";
+CM_ SG_ 2147485705 A_Thermal_Runaway_Flt "Thermal runaway fault";
+CM_ SG_ 2147485705 A_BMS_CRC_CFF83F3 "CRC";
+CM_ SG_ 2147485705 A_BMS_Counter_CFF83F3 "Counter";
+CM_ SG_ 2147485705 A_SOC_Value "SOC value";
+CM_ SG_ 2147485697 KneelingLeft "53504";
+CM_ SG_ 2147485733 Break_pedal_position "61443";
+CM_ BO_ 2147485731 "Active Diagnostic Trouble CodesActive Diagnostic Trouble Codes";
+CM_ SG_ 2147485731 FlashRedStopLamp "This parameter provides the capability to flash the RSL00 - Slow Flash (1 Hz, 50 % duty cycle)01 - Fast Flash (2 Hz or faster, 50% duty cycle)10 - Reserved11 - Unavailable / Do Not Flash";
+CM_ SG_ 2147485731 FlashProtectLamp "This parameter provides the capability to flash the engine protect lamp00 - Slow Flash (1 Hz, 50 % duty cycle)01 - Fast Flash (2 Hz or faster, 50% duty cycle)10 - Reserved11 - Unavailable / Do Not Flash";
+CM_ SG_ 2147485731 FlashMalfuncIndicatorLamp "This parameter provides the capability to flash the MIL00 - Slow Flash (1 Hz, 50 % duty cycle)01 - Fast Flash (2 Hz or faster, 50% duty cycle)10 - Class C DTC11 - Unavailable / Do Not FlashNote:  State 10 is for WWH OBD discriminatory ...";
+CM_ SG_ 2147485731 RedStopLampState "This lamp is used to relay trouble code information that is of a severe enough condition that it warrants stopping the vehicle.00     Lamp Off01     Lamp On10     Reserved11     Not available";
+CM_ SG_ 2147485731 ProtectLampStatus "This lamp is used to relay trouble code information that is reporting a problem with a vehicle system that is most probably not electronic subsystem related. For instance, engine coolant temperature is exceeding its prescribed temperature range.00 ...";
+CM_ SG_ 2147485717 PumpOverVoltageFault "0:normal1:Fault";
+CM_ SG_ 2147485717 PumpOvercurrentFault "0:normal1:Fault";
+CM_ SG_ 2147485717 PumpFaultLevel "1£ºL1µÈ¼¶2£ºL2µÈ¼¶3£ºL3µÈ¼¶";
+CM_ SG_ 2147485714 B_Peak_OverDischCurr_30s_Alarm "Peak Over Discharging current alarm";
+CM_ SG_ 2147485714 B_Peak_Regen_OverCurr_30s_Alarm "Peak Regen Over current alarm";
+CM_ SG_ 2147485714 B_Pack_Balancing_Hw_Flt "Pack  balancing Hardware fault";
+CM_ SG_ 2147485714 B_Pack2Pack_Comm_Flt "Pack to pack communciation loss";
+CM_ SG_ 2147485714 B_Temp_Sensor_Hw_Flt "Temperature sensor hardware fault";
+CM_ SG_ 2147485714 B_Curr_Sensor_Hw_Flt "Current sensor hardware fault";
+CM_ SG_ 2147485714 B_VCU_BMS_Comm_Flt "VCU BMS commuication loss";
+CM_ SG_ 2147485714 B_Neg_Contactor_Weld_Flt "Negative contactor weld fault";
+CM_ SG_ 2147485714 B_Neg_Contactor_Hw_Flt "Negitive contactor Hardware fault";
+CM_ SG_ 2147485714 B_Pos_Contactor_Weld_Flt "Positive contactor weld fault";
+CM_ SG_ 2147485714 B_Pos_Contactor_Hw_Flt "Positive contactor Hardware fault";
+CM_ SG_ 2147485714 B_Low_SOH_Alarm "State of charge low alarm";
+CM_ SG_ 2147485714 B_SOC_Low_Alarm "State of charge low alarm";
+CM_ SG_ 2147485714 B_All_Contactor_Flt "External Memory read write fail alarm";
+CM_ SG_ 2147485714 B_Pack_Volt_Sampling_flt "Pack voltage sampling fault";
+CM_ SG_ 2147485714 B_HVIL_Alarm "HVIL alarm";
+CM_ SG_ 2147485714 B_Slave_Comm_Loss_Alarm "Slave to slave communication loss";
+CM_ SG_ 2147485714 B_Cell_temp_sampling_Alarm "Cell temperature sampling alarm";
+CM_ SG_ 2147485714 B_Cell_volt_sampling_Alarm "Cell voltage sampling alarm";
+CM_ SG_ 2147485714 B_Pack_UnderVolt_Alarm "Pack Under voltage alarm";
+CM_ SG_ 2147485714 B_Pack_OverVolt_Alarm "Pack Over voltage alarm";
+CM_ SG_ 2147485714 B_Cell_UnderTemp_Alarm "Cell Under temperature alarm";
+CM_ SG_ 2147485714 B_Cell_OverTemp_Alarm "Cell Over temperature alarm";
+CM_ SG_ 2147485714 B_Cell_UnderVolt_Alarm "Cell Under voltage alarm";
+CM_ SG_ 2147485714 B_Cell_OverVolt_Alarm "Cell Over voltage alarm";
+CM_ SG_ 2147485714 B_Cont_OverDischCurr_Alarm "Continous Over Discharging current alarm";
+CM_ SG_ 2147485714 B_Cont_Charging_OverCurr_Alarm "Continous Regen Over current alarm";
+CM_ SG_ 2147485714 B_Cell_DV_Static_Alarm "Cell difference voltage static alarm";
+CM_ SG_ 2147485713 B_Insulation_Value "Insulation value";
+CM_ SG_ 2147485713 B_Balancing_Enabled_Flag "Balancing enable flag";
+CM_ SG_ 2147485713 B_SOC_Calibration_flag "Soc calibration flag";
+CM_ SG_ 2147485713 B_Min_Cell_Temp "Min cell temperature";
+CM_ SG_ 2147485713 B_Max_Cell_Temp "Max cell temperature";
+CM_ SG_ 2147485712 B_Fault_Rank "Highest fault rank";
+CM_ SG_ 2147485712 B_KWh_Remain "Remaining pack energy";
+CM_ SG_ 2147485712 B_Cont_Disch_Curr_Limit "Continous discharging curent limits";
+CM_ SG_ 2147485712 B_Cont_Chrg_Curr_Limit "Continous charging curent limits";
+CM_ SG_ 2147485715 B_Pack_Voltage_Value "Pack voltage value";
+CM_ SG_ 2147485715 B_Pack_Current_Value "Current value of pack";
+CM_ SG_ 2147485715 B_Charging_Done "Charging completed";
+CM_ SG_ 2147485715 B_Packlockout "Pack lock out flag";
+CM_ SG_ 2147485715 B_HVIL_Monitoring_Status "HVIL monitoring status";
+CM_ SG_ 2147485715 B_Pack_Ready "Pack Ready";
+CM_ SG_ 2147485704 A_Pack_Voltage_Value "Pack voltage value";
+CM_ SG_ 2147485704 A_Pack_Current_Value "Current value of pack";
+CM_ SG_ 2147485704 A_Charging_Done "Charging completed";
+CM_ SG_ 2147485704 A_Packlockout "Pack lock out flag";
+CM_ SG_ 2147485704 A_HVIL_Monitoring_Status "HVIL monitoring status";
+CM_ SG_ 2147485704 A_Pack_Ready "Pack Ready";
+CM_ SG_ 2147485701 A_KWh_Remain "Remaining pack energy";
+CM_ SG_ 2147485701 A_Fault_Rank "Highest fault rank";
+CM_ SG_ 2147485701 A_Cont_Disch_Curr_Limit "Continous discharging curent limits";
+CM_ SG_ 2147485701 A_Cont_Chrg_Curr_Limit "Continous charging curent limits";
+CM_ SG_ 2147485702 A_Insulation_Value "Insulation value";
+CM_ SG_ 2147485702 A_Balancing_Enabled_Flag "Balancing enable flag";
+CM_ SG_ 2147485702 A_SOC_Calibration_flag "Soc calibration flag";
+CM_ SG_ 2147485702 A_Min_Cell_Temp "Min cell temperature";
+CM_ SG_ 2147485702 A_Max_Cell_Temp "Max cell temperature";
+CM_ SG_ 2147485703 A_Peak_Regen_OverCurr_30s_Alarm "Peak Regen Over current 30sec alarm";
+CM_ SG_ 2147485703 A_Pack_Balancing_Hw_Flt "Pack  balancing Hardware fault";
+CM_ SG_ 2147485703 A_Pack2Pack_Comm_Flt "Pack to pack communciation loss";
+CM_ SG_ 2147485703 A_Temp_Sensor_Hw_Flt "Temperature sensor hardware fault";
+CM_ SG_ 2147485703 A_Curr_Sensor_Hw_Flt "Current sensor hardware fault";
+CM_ SG_ 2147485703 A_VCU_BMS_Comm_Flt "VCU BMS commuication loss";
+CM_ SG_ 2147485703 A_Neg_Contactor_Weld_Flt "Negative contactor weld fault";
+CM_ SG_ 2147485703 A_Neg_Contactor_Hw_Flt "Negitive contactor Hardware fault";
+CM_ SG_ 2147485703 A_Pos_Contactor_Weld_Flt "Positive contactor weld fault";
+CM_ SG_ 2147485703 A_Pos_Contactor_Hw_Flt "Positive contactor Hardware fault";
+CM_ SG_ 2147485703 A_Low_SOH_Alarm "State of charge low alarm";
+CM_ SG_ 2147485703 A_SOC_Low_Alarm "State of charge low alarm";
+CM_ SG_ 2147485703 A_All_Contactor_Flt "External Memory read write fail alarm";
+CM_ SG_ 2147485703 A_Pack_Volt_Sampling_flt "Pack voltage sampling fault";
+CM_ SG_ 2147485703 A_HVIL_Alarm "HVIL alarm";
+CM_ SG_ 2147485703 A_Slave_Comm_Loss_Alarm "Slave to slave communication loss";
+CM_ SG_ 2147485703 A_Cell_temp_sampling_Alarm "Cell temperature sampling alarm";
+CM_ SG_ 2147485703 A_Cell_volt_sampling_Alarm "Cell voltage sampling alarm";
+CM_ SG_ 2147485703 A_Pack_UnderVolt_Alarm "Pack Under voltage alarm";
+CM_ SG_ 2147485703 A_Pack_OverVolt_Alarm "Pack Over voltage alarm";
+CM_ SG_ 2147485703 A_Cell_UnderTemp_Alarm "Cell Under temperature alarm";
+CM_ SG_ 2147485703 A_Cell_OverTemp_Alarm "Cell Over temperature alarm";
+CM_ SG_ 2147485703 A_Cell_UnderVolt_Alarm "Cell Under voltage alarm";
+CM_ SG_ 2147485703 A_Cell_OverVolt_Alarm "Cell Over voltage alarm";
+CM_ SG_ 2147485703 A_Cont_OverDischCurr_Alarm "Continous Over Discharging current alarm";
+CM_ SG_ 2147485703 A_Peak_OverDischCurr_30s_Alarm "Peak Over Discharging current 30sec alarm";
+CM_ SG_ 2147485703 A_Cont_Charging_OverCurr_Alarm "Continous Regen Over current alarm";
+CM_ SG_ 2147485703 A_Cell_DV_Static_Alarm "Cell difference voltage static alarm";
+BA_DEF_  "BusType" STRING ;
+BA_DEF_  "ProtocolType" STRING ;
+BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","J1939PG";
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_ SG_  "GenSigStartValue" FLOAT -3.4E+038 3.4E+038;
+BA_DEF_ SG_  "SPN" INT -3.4E+038 3.4E+038;
+BA_DEF_DEF_  "BusType" "CAN";
+BA_DEF_DEF_  "ProtocolType" "J1939";
+BA_DEF_DEF_  "VFrameFormat" "J1939PG";
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_DEF_DEF_  "GenSigStartValue" 0;
+BA_DEF_DEF_  "SPN" 0;
+BA_ "ProtocolType" "J1939";
+BA_ "BusType" "CAN";
+BA_ "VFrameFormat" BO_ 2147485760 1;
+BA_ "VFrameFormat" BO_ 2147485753 1;
+BA_ "VFrameFormat" BO_ 2147485752 1;
+BA_ "VFrameFormat" BO_ 2147485751 1;
+BA_ "VFrameFormat" BO_ 2147485750 1;
+BA_ "VFrameFormat" BO_ 2147485749 1;
+BA_ "GenMsgCycleTime" BO_ 2147485699 500;
+BA_ "VFrameFormat" BO_ 2147485699 1;
+BA_ "VFrameFormat" BO_ 2147485696 1;
+BA_ "GenMsgCycleTime" BO_ 2147485696 500;
+BA_ "GenMsgCycleTime" BO_ 2147485720 500;
+BA_ "VFrameFormat" BO_ 2147485720 1;
+BA_ "GenMsgCycleTime" BO_ 2147485737 500;
+BA_ "VFrameFormat" BO_ 2147485737 1;
+BA_ "GenMsgCycleTime" BO_ 2147485716 500;
+BA_ "VFrameFormat" BO_ 2147485716 1;
+BA_ "GenMsgCycleTime" BO_ 2147485705 500;
+BA_ "VFrameFormat" BO_ 2147485705 1;
+BA_ "GenMsgCycleTime" BO_ 2147485745 500;
+BA_ "VFrameFormat" BO_ 2147485745 1;
+BA_ "GenMsgCycleTime" BO_ 2147485721 500;
+BA_ "VFrameFormat" BO_ 2147485721 1;
+BA_ "GenMsgCycleTime" BO_ 2147485697 500;
+BA_ "VFrameFormat" BO_ 2147485697 1;
+BA_ "GenMsgCycleTime" BO_ 2147485729 500;
+BA_ "VFrameFormat" BO_ 2147485729 1;
+BA_ "GenMsgCycleTime" BO_ 2147485700 500;
+BA_ "VFrameFormat" BO_ 2147485700 1;
+BA_ "GenMsgCycleTime" BO_ 2147485718 500;
+BA_ "VFrameFormat" BO_ 2147485718 1;
+BA_ "GenMsgCycleTime" BO_ 2147485733 500;
+BA_ "VFrameFormat" BO_ 2147485733 1;
+BA_ "GenMsgCycleTime" BO_ 2147485698 500;
+BA_ "VFrameFormat" BO_ 2147485698 1;
+BA_ "GenMsgCycleTime" BO_ 2147485748 500;
+BA_ "VFrameFormat" BO_ 2147485748 1;
+BA_ "GenMsgCycleTime" BO_ 2147485747 500;
+BA_ "VFrameFormat" BO_ 2147485747 1;
+BA_ "GenMsgCycleTime" BO_ 2147485732 500;
+BA_ "VFrameFormat" BO_ 2147485732 1;
+BA_ "GenMsgCycleTime" BO_ 2147485731 500;
+BA_ "VFrameFormat" BO_ 2147485731 1;
+BA_ "GenMsgCycleTime" BO_ 2147485717 500;
+BA_ "VFrameFormat" BO_ 2147485717 1;
+BA_ "GenMsgCycleTime" BO_ 2147485728 500;
+BA_ "VFrameFormat" BO_ 2147485728 1;
+BA_ "GenMsgCycleTime" BO_ 2147485730 500;
+BA_ "VFrameFormat" BO_ 2147485730 1;
+BA_ "GenMsgCycleTime" BO_ 2147485714 500;
+BA_ "VFrameFormat" BO_ 2147485714 1;
+BA_ "GenMsgCycleTime" BO_ 2147485713 500;
+BA_ "VFrameFormat" BO_ 2147485713 1;
+BA_ "GenMsgCycleTime" BO_ 2147485712 500;
+BA_ "VFrameFormat" BO_ 2147485712 1;
+BA_ "GenMsgCycleTime" BO_ 2147485715 500;
+BA_ "VFrameFormat" BO_ 2147485715 1;
+BA_ "GenMsgCycleTime" BO_ 2147485704 500;
+BA_ "VFrameFormat" BO_ 2147485704 1;
+BA_ "GenMsgCycleTime" BO_ 2147485701 500;
+BA_ "VFrameFormat" BO_ 2147485701 1;
+BA_ "GenMsgCycleTime" BO_ 2147485702 500;
+BA_ "VFrameFormat" BO_ 2147485702 1;
+BA_ "GenMsgCycleTime" BO_ 2147485703 500;
+BA_ "VFrameFormat" BO_ 2147485703 1;
+BA_ "GenMsgCycleTime" BO_ 2147485746 500;
+BA_ "VFrameFormat" BO_ 2147485746 1;
+BA_ "GenMsgCycleTime" BO_ 2147485744 500;
+BA_ "VFrameFormat" BO_ 2147485744 1;
+BA_ "GenMsgCycleTime" BO_ 2147485736 500;
+BA_ "VFrameFormat" BO_ 2147485736 1;
+BA_ "GenMsgCycleTime" BO_ 2147485734 500;
+BA_ "VFrameFormat" BO_ 2147485734 1;
+BA_ "GenMsgCycleTime" BO_ 2147485735 500;
+BA_ "VFrameFormat" BO_ 2147485735 1;
+BA_ "GenMsgCycleTime" BO_ 2147485719 500;
+BA_ "VFrameFormat" BO_ 2147485719 1;
+BA_ "GenSigStartValue" SG_ 3221225472 BCM_BATTERY_CURRENT_A 40000;
+BA_ "GenSigStartValue" SG_ 3221225472 act_DCBusPower 32000;
+BA_ "GenSigStartValue" SG_ 3221225472 act_DeviceTemperature 40;
+BA_ "GenSigStartValue" SG_ 3221225472 act_Speed 32000;
+BA_ "GenSigStartValue" SG_ 3221225472 act_Torque 32000;
+BA_ "GenSigStartValue" SG_ 3221225472 act_Power 32000;
+BA_ "GenSigStartValue" SG_ 3221225472 act_MotorTemperature 40;
+BA_ "GenSigStartValue" SG_ 3221225472 act_Current 32000;
+BA_ "GenSigStartValue" SG_ 3221225472 act_Temperature 40;
+BA_ "GenSigStartValue" SG_ 3221225472 hld_mcu_u16MotTq 32000;
+BA_ "GenSigStartValue" SG_ 3221225472 hld_mcu_u16MotSpd 32000;
+BA_ "GenSigStartValue" SG_ 3221225472 hld_mcu_u16DcLinkCur 32000;
+BA_ "GenSigStartValue" SG_ 3221225472 hld_mcu_u8MotTemp 40;
+BA_ "GenSigStartValue" SG_ 3221225472 hld_mcu_u8McuTemp 40;
+BA_ "GenSigStartValue" SG_ 3221225472 HeatSinkTemp 125;
+BA_ "GenSigStartValue" SG_ 3221225472 INTHVAC_control_command -43;
+BA_ "GenSigStartValue" SG_ 3221225472 Steering_Actual_Torque 32127;
+BA_ "GenSigStartValue" SG_ 3221225472 Ecompressor_Actual_Torque 32127;
+BA_ "GenSigStartValue" SG_ 3221225472 Inverter_Temperature 40;
+BA_ "GenSigStartValue" SG_ 3221225472 Traction_Battery_Temperature 40;
+BA_ "GenSigStartValue" SG_ 3221225472 Motor_Speed 40;
+BA_ "GenSigStartValue" SG_ 3221225472 Steering_Actual_Motor_Temp 40;
+BA_ "GenSigStartValue" SG_ 3221225472 EcompressorActual_Motor_Temp 40;
+BA_ "GenSigStartValue" SG_ 2147485751 C_Min_Cell_Temp 80;
+BA_ "GenSigStartValue" SG_ 2147485751 C_Max_Cell_Temp 80;
+BA_ "GenSigStartValue" SG_ 2147485749 C_Pack_Curr_Value 2000;
+BA_ "GenSigStartValue" SG_ 2147485745 MCU_MotorSpeed 7;
+BA_ "GenSigStartValue" SG_ 2147485729 Primary_mosfet_Temperature 0;
+BA_ "GenSigStartValue" SG_ 2147485729 Secondary_mosfet_Temperature 0;
+BA_ "GenSigStartValue" SG_ 2147485733 TransmissionSelectedGear 125.125;
+BA_ "GenSigStartValue" SG_ 2147485747 Streering_input_Power 0;
+BA_ "GenSigStartValue" SG_ 2147485747 Steering_Actual_Heat_Sink_Temp 40;
+BA_ "GenSigStartValue" SG_ 2147485747 Steering_Actual_Velocity 1000;
+BA_ "GenSigStartValue" SG_ 2147485732 Ecomp_Actual_Heat_Sink_Temp 40;
+BA_ "GenSigStartValue" SG_ 2147485732 ECompressor_Input_Power 0;
+BA_ "GenSigStartValue" SG_ 2147485732 Ecompressor_Actual_Velocity 1000;
+BA_ "SPN" SG_ 2147485731 FlashRedStopLamp 3039;
+BA_ "SPN" SG_ 2147485731 FlashProtectLamp 3041;
+BA_ "SPN" SG_ 2147485731 FlashMalfuncIndicatorLamp 3038;
+BA_ "SPN" SG_ 2147485731 RedStopLampState 623;
+BA_ "SPN" SG_ 2147485731 ProtectLampStatus 987;
+BA_ "GenSigStartValue" SG_ 2147485717 PumpTemp 50;
+BA_ "GenSigStartValue" SG_ 2147485715 B_Pack_Current_Value 1000;
+BA_ "GenSigStartValue" SG_ 2147485704 A_Pack_Current_Value 1000;
+BA_ "GenSigStartValue" SG_ 2147485746 MCUTemperature 40;
+BA_ "GenSigStartValue" SG_ 2147485746 MCU_EMITemperature 40;
+BA_ "GenSigStartValue" SG_ 2147485746 MCU_AmbientTemperature 40;
+BA_ "GenSigStartValue" SG_ 2147485746 MCU_MotorTemperature 40;
+BA_ "GenSigStartValue" SG_ 2147485744 MCU_CommandMode 1;
+BA_ "GenSigStartValue" SG_ 2147485719 DCDCoutputcurrentlimitsetting 5;
+BA_ "GenSigStartValue" SG_ 2147485719 DCDCoutputvoltagepointsetting 0;
+VAL_ 3221225472 bcm_Fault_coolantLeak_B 0 "NO FAULT,0" 0 "FAULT,1" ;
+VAL_ 3221225472 bcm_cell_temperature_maximum_B 254 "NO_VALUE" 255 "ERROR" ;
+VAL_ 3221225472 bcm_cell_temperature_minimum_B 254 "NO_VALUE" 255 "ERROR" ;
+VAL_ 3221225472 bcm_cell_voltage_maximum_B 8190 "NO_VALUE" 8191 "ERROR" ;
+VAL_ 3221225472 bcm_cell_voltage_minimum_B 8190 "NO_VALUE" 8191 "ERROR" ;
+VAL_ 3221225472 BCM_PACK_LOCKOUT_B 0 "PACK NOT LOCKOUT,0" 0 "PACK IN LOCKOUT,1" ;
+VAL_ 3221225472 BCM_GROUND_FAULT_DETECTION_B 4094 "NO_VALUE" 4095 "ERROR" ;
+VAL_ 3221225472 BCM_BATTERY_CURRENT_B 65535 "ERROR" 65534 "NO_VALUE" ;
+VAL_ 3221225472 BCM_MAIN_CONTACTOR_STATE_B 0 "OPEN" 1 "CLOSED" 2 "FAILURE" ;
+VAL_ 3221225472 BCM_READY_B 0 "BCM NOR READY,0" 0 "BCM READY,1" ;
+VAL_ 3221225472 BCM_SOC_B 254 "NO_VALUE" 255 "ERROR" ;
+VAL_ 3221225472 BCM_BATTERY_VOLTAGE_B 4094 "NO_VALUE" 4095 "ERROR" ;
+VAL_ 3221225472 BCM_HVIL_MONITOR_B 3 "HVIL unhealthy,0" 1 "HVIL Healthy,1" ;
+VAL_ 3221225472 bcm_charge_current_max_B 4094 "NO_VALUE" 4095 "ERROR" ;
+VAL_ 3221225472 bcm_discharge_current_max_B 4094 "NO_VALUE" 4095 "ERROR" ;
+VAL_ 3221225472 bcm_cell_temperature_maximum_A 254 "NO_VALUE" 255 "ERROR" ;
+VAL_ 3221225472 bcm_cell_temperature_minimum_A 254 "NO_VALUE" 255 "ERROR" ;
+VAL_ 3221225472 bcm_cell_voltage_maximum_A 8190 "NO_VALUE" 8191 "ERROR" ;
+VAL_ 3221225472 bcm_cell_voltage_minimum_A 8190 "NO_VALUE" 8191 "ERROR" ;
+VAL_ 3221225472 bcm_charge_current_max_A 4094 "NO_VALUE" 4095 "ERROR" ;
+VAL_ 3221225472 bcm_discharge_current_max_A 4094 "NO_VALUE" 4095 "ERROR" ;
+VAL_ 3221225472 BCM_PACK_LOCKOUT_A 0 "PACK NOT LOCKOUT,0" 0 "PACK IN LOCKOUT,1" ;
+VAL_ 3221225472 BCM_GROUND_FAULT_DETECTION_A 4094 "NO_VALUE" 4095 "ERROR" ;
+VAL_ 3221225472 BCM_BATTERY_CURRENT_A 65535 "ERROR" 65534 "NO_VALUE" ;
+VAL_ 3221225472 BCM_MAIN_CONTACTOR_STATE_A 0 "OPEN" 1 "CLOSED" 2 "FAILURE" ;
+VAL_ 3221225472 BCM_READY_A 0 "BCM NOR READY,0" 0 "BCM READY,1" ;
+VAL_ 3221225472 BCM_SOC_A 254 "NO_VALUE" 255 "ERROR" ;
+VAL_ 3221225472 BCM_BATTERY_VOLTAGE_A 4094 "NO_VALUE" 4095 "ERROR" ;
+VAL_ 3221225472 BCM_HVIL_MONITOR_A 3 "HVIL unhealthy,0" 1 "HVIL Healthy,1" ;
+VAL_ 3221225472 bcm_Fault_coolantLeak_A 0 "NO FAULT,0" 0 "FAULT,1" ;
+VAL_ 3221225472 hld_mcu_u8McuFltLvl 3 "Fault" 2 "Warning2" 1 "Warning1" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bMotMode 2 "Rapid discharge" 1 "Speed model" 0 "Torque model" ;
+VAL_ 3221225472 hld_mcu_bDischgFail 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bDcLinkOCLvl1 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bDcCurSenFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bMcuSwOCFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bMcuCanFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bStallFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bDcLinkOVLvl1 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bDcCurSampFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bPowerModuleFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bLvbatOVFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bLvbatUVFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bPosiSenFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bMotOSFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bMotTempSampFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bIgbt3TempSampFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bIgbt2TempSampFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bIgbt1TempSampFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bMotOTFlt2 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bMotOTFlt1 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bIgbtOTFlt2 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bIgbtOTFlt1 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bWCurSampFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bVCurSampFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bUCurSampFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bWCurSenFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bVCurSenFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bUCurSenFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bWHwOCFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bVHwOCFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bUHwOCFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bWIgbtDrvFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bUIgbtDrvFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bVIgbtDrvFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bDcLinkOVFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 hld_mcu_bDcLinkUVFlt 1 "Fault" 0 "Normal" ;
+VAL_ 3221225472 DCDC_workingmode 2 "faulure" 1 "running" 0 "stop" ;
+VAL_ 3221225472 faultbit 64 "Reduced_poweroperation" 32 "Module_overtemperature" 24 "Output_overcurrent" 16 "Output_overvoltage" 8 "Output_undervoltage" 4 "Input_overcurrent" 2 "Input_overvoltage" 1 "Input_undervoltage" ;
+VAL_ 3221225472 SPN_DTC1 0 "No Error" 517290 "MCU Node 0, No Error" 517291 "MCU Node 0, No configuration file found" 517292 "MCU Node 0, Invalid J1939 license" 517293 "MCU Node 0, Error downloading configuration file" 517294 "MCU Node 0, Overload protection active" 517295 "MCU Node 0, Invalid app selection" 517296 "MCU Node 0, Overload warning active" 518000 "DCU Node 1, No Error" 518001 "DCU Node 1, status not available" 518002 "DCU Node 1, status not available" 518003 "DCU Node 1, Error, Overcurrent Power Unit" 518004 "DCU Node 1, Error, Overcurrent Analog" 518005 "DCU Node 1, Error, Overvoltage DC Link" 518006 "DCU Node 1, Error, Undervoltage DC Link" 518007 "DCU Node 1, Error, Overload" 518008 "DCU Node 1, Reset Error, Overload" 518009 "DCU Node 1, Error, Overload 02" 518010 "DCU Node 1, Error, Power Module Overheat" 518011 "DCU Node 1, Reset Error, Power Module Overheat" 518012 "DCU Node 1, Error, Internal Power Unit Overheat" 518013 "DCU Node 1, Reset Error, Internal Power Unit Overheat" 518014 "DCU Node 1, Error, Motor Protection" 518015 "DCU Node 1, Reset Error, Motor Protection" 518016 "DCU Node 1, Error, Drive Overheat" 518017 "DCU Node 1, Reset Error, Drive Overheat" 518018 "DCU Node 1, Error, Overspeed" 518019 "DCU Node 1, status not available" 518020 "DCU Node 1, Error, Drive Data" 518021 "DCU Node 1, Error, Motor Data Not Stored" 518022 "DCU Node 1, Error, Indentification" 518023 "DCU Node 1, Error, Speed Difference" 518024 "DCU Node 1, Error, Fieldbus Memory" 518025 "DCU Node 1, status not available" 518026 "DCU Node 1, status not available" 518027 "DCU Node 1, status not available" 518028 "DCU Node 1, status not available" 518029 "DCU Node 1, status not available" 518030 "DCU Node 1, status not available" 518031 "DCU Node 1, status not available" 518032 "DCU Node 1, status not available" 518033 "DCU Node 1, status not available" 518034 "DCU Node 1, status not available" 518035 "DCU Node 1, status not available" 518036 "DCU Node 1, status not available" 518037 "DCU Node 1, status not available" 518038 "DCU Node 1, Error, Memory Size" 518039 "DCU Node 1, Error, Power Unit Software Version" 518040 "DCU Node 1, Error, FPGA Config" 518041 "DCU Node 1, status not available" 518042 "DCU Node 1, status not available" 518043 "DCU Node 1, Error, Encoder Interface Communication" 518044 "DCU Node 1, Error, Invlid Data, Power Unit" 518045 "DCU Node 1, status not available" 518046 "DCU Node 1, status not available" 518047 "DCU Node 1, status not available" 518048 "DCU Node 1, status not available" 518049 "DCU Node 1, status not available" 518050 "DCU Node 1, status not available" 518051 "DCU Node 1, status not available" 518052 "DCU Node 1, Error, Phase Undervoltage" 518053 "DCU Node 1, Error, Rotor Detection Current" 518054 "DCU Node 1, status not available" 518055 "DCU Node 1, status not available" 518056 "DCU Node 1, Error, SW Switch Left" 518057 "DCU Node 1, Error, SW Switch Right" 518058 "DCU Node 1, Error, Fieldbus Watchdog Response" 518059 "DCU Node 1, Error, Prog. Input" 518060 "DCU Node 1, status not available" 518061 "DCU Node 1, status not available" 518062 "DCU Node 1, Error, Power Unit Changed" 518063 "DCU Node 1, Error, Encoder Interface Changed" 518064 "DCU Node 1, Error, Power Unit Type Changed" 518065 "DCU Node 1, Error, Invalid Ver., Encoder Interface" 518066 "DCU Node 1, Error, Overcurrent" 518067 "DCU Node 1, Error, Max Accel/Decel Setting Exceeded" 518068 "DCU Node 1, Error, Overcurrent Brake" 518069 "DCU Node 1, Error, Power Unit" 518070 "DCU Node 1, status not available" 518071 "DCU Node 1, status not available" 518072 "DCU Node 1, status not available" 518073 "DCU Node 1, status not available" 518074 "DCU Node 1, status not available" 518075 "DCU Node 1, status not available" 518076 "DCU Node 1, status not available" 518077 "DCU Node 1, status not available" 518078 "DCU Node 1, status not available" 518079 "DCU Node 1, status not available" 518080 "DCU Node 1, status not available" 518081 "DCU Node 1, Error, Rotor Detection, Five Step" 518082 "DCU Node 1, Error, Rotor Detection, Ld equal Lq" 518083 "DCU Node 1, Error, Limit Switch Forward" 518084 "DCU Node 1, Error, Limit Switch Reverse" 518085 "DCU Node 1, Error, Limit Switch Override Forward" 518086 "DCU Node 1, Error, Limit Switch Override Reverse" 518087 "DCU Node 1, Error Limit Switch" 518088 "DCU Node 1, Error, Power Off End" 518089 "DCU Node 1, Error, Encoder Type Change" 518090 "DCU Node 1, Error, Control Board Communication" 518091 "DCU Node 1, INIT, Encoder Interface" 518092 "DCU Node 1, status not available" 518093 "DCU Node 1, status not available" 518094 "DCU Node 1, status not available" 518095 "DCU Node 1, status not available" 518096 "DCU Node 1, Error, Encoder Missing" 518097 "DCU Node 1, Error, Overspeed (EMF)" 518098 "DCU Node 1, Error, Encoder A Changed" 518099 "DCU Node 1, Error, Encoder B Changed" 518100 "DCU Node 1, Error Overcurrent, Out 01" 518101 "DCU Node 1, Error Overcurrent, Out 02" 518102 "DCU Node 1, Error Overcurrent, Out 03" 518103 "DCU Node 1, Error Overcurrent, Out 04" 518104 "DCU Node 1, Error Overcurrent, Fan" 518105 "DCU Node 1, Error Overcurrent ,Encoder" 518106 "DCU Node 1, Error Overcurrent, 24V Supply" 518107 "DCU Node 1, Error, Overfrequency" 518108 "DCU Node 1, Error Reset, Internal Overheat Control Board" 518109 "DCU Node 1, Error, Internal Overheat, Control Board" 518110 "DCU Node 1, Error, Ramp OH" 518111 "DCU Node 1, Error, Ramp OHI" 518112 "DCU Node 1, Error 24V Supply Undervoltage" 518113 "DCU Node 1, Error STO signals" 518114 "DCU Node 1, Error Ext. 24V Supply Undervoltage" 518115 "DCU Node 1, Error GTR7 Always OFF" 518116 "DCU Node 1, Error GTR7 OC" 518117 "DCU Node 1, Error GTR7 Always ON" 518118 "DCU Node 1, OC at 5V Diagnostic" 518119 "DCU Node 1, Error, Extreme Overpotential" 518120 "DCU Node 1, Error, DC Capacitor Damaged" 518121 "DCU Node 1, status not available" 518122 "DCU Node 1, status not available" 518123 "DCU Node 1, status not available" 518124 "DCU Node 1, status not available" 518125 "DCU Node 1, status not available" 518126 "DCU Node 1, status not available" 518127 "DCU Node 1, status not available" 518128 "DCU Node 1, status not available" 518129 "DCU Node 1, status not available" 518130 "DCU Node 1, status not available" 518131 "DCU Node 1, status not available" 518132 "DCU Node 1, status not available" 518133 "DCU Node 1, status not available" 518134 "DCU Node 1, status not available" 518135 "DCU Node 1, status not available" 518300 "App Node 1, No error" 518301 "App Node 1, No axis" 518302 "App Node 1, Error reading mapping" 518303 "App Node 1, Error reading rated current" 518304 "App Node 1, Error rated current mismatch" 518305 "App Node 1, Error write pll offset" 518306 "App Node 1, Error auto mapping" 518307 "App Node 1, Error interlink communication" 518308 "App Node 1, Error overload parameter" 518309 "App Node 1, Incompatible default download" 518310 "App Node 1, Error downloading default download" 518311 "App Node 1, Default download not found" 518312 "App Node 1, Error CAN data timeout" 518313 "App Node 1, Error CAN data invalid" 518314 "App Node 1, Invalid license" 518315 "App Node 1, Error reinitializing app" 518319 "App Node 1, General application error" 519000 "DCU Node 2, No Error" 519001 "DCU Node 2, status not available" 519002 "DCU Node 2, status not available" 519003 "DCU Node 2, Error, Overcurrent Power Unit" 519004 "DCU Node 2, Error, Overcurrent Analog" 519005 "DCU Node 2, Error, Overvoltage DC Link" 519006 "DCU Node 2, Error, Undervoltage DC Link" 519007 "DCU Node 2, Error, Overload" 519008 "DCU Node 2, Reset Error, Overload" 519009 "DCU Node 2, Error, Overload 02" 519010 "DCU Node 2, Error, Power Module Overheat" 519011 "DCU Node 2, Reset Error, Power Module Overheat" 519012 "DCU Node 2, Error, Internal Power Unit Overheat" 519013 "DCU Node 2, Reset Error, Internal Power Unit Overheat" 519014 "DCU Node 2, Error, Motor Protection" 519015 "DCU Node 2, Reset Error, Motor Protection" 519016 "DCU Node 2, Error, Drive Overheat" 519017 "DCU Node 2, Reset Error, Drive Overheat" 519018 "DCU Node 2, Error, Overspeed" 519019 "DCU Node 2, status not available" 519020 "DCU Node 2, Error, Drive Data" 519021 "DCU Node 2, Error, Motor Data Not Stored" 519022 "DCU Node 2, Error, Indentification" 519023 "DCU Node 2, Error, Speed Difference" 519024 "DCU Node 2, Error, Fieldbus Memory" 519025 "DCU Node 2, status not available" 519026 "DCU Node 2, status not available" 519027 "DCU Node 2, status not available" 519028 "DCU Node 2, status not available" 519029 "DCU Node 2, status not available" 519030 "DCU Node 2, status not available" 519031 "DCU Node 2, status not available" 519032 "DCU Node 2, status not available" 519033 "DCU Node 2, status not available" 519034 "DCU Node 2, status not available" 519035 "DCU Node 2, status not available" 519036 "DCU Node 2, status not available" 519037 "DCU Node 2, status not available" 519038 "DCU Node 2, Error, Memory Size" 519039 "DCU Node 2, Error, Power Unit Software Version" 519040 "DCU Node 2, Error, FPGA Config" 519041 "DCU Node 2, status not available" 519042 "DCU Node 2, status not available" 519043 "DCU Node 2, Error, Encoder Interface Communication" 519044 "DCU Node 2, Error, Invlid Data, Power Unit" 519045 "DCU Node 2, status not available" 519046 "DCU Node 2, status not available" 519047 "DCU Node 2, status not available" 519048 "DCU Node 2, status not available" 519049 "DCU Node 2, status not available" 519050 "DCU Node 2, status not available" 519051 "DCU Node 2, status not available" 519052 "DCU Node 2, Error, Phase Undervoltage" 519053 "DCU Node 2, Error, Rotor Detection Current" 519054 "DCU Node 2, status not available" 519055 "DCU Node 2, status not available" 519056 "DCU Node 2, Error, SW Switch Left" 519057 "DCU Node 2, Error, SW Switch Right" 519058 "DCU Node 2, Error, Fieldbus Watchdog Response" 519059 "DCU Node 2, Error, Prog. Input" 519060 "DCU Node 2, status not available" 519061 "DCU Node 2, status not available" 519062 "DCU Node 2, Error, Power Unit Changed" 519063 "DCU Node 2, Error, Encoder Interface Changed" 519064 "DCU Node 2, Error, Power Unit Type Changed" 519065 "DCU Node 2, Error, Invalid Ver., Encoder Interface" 519066 "DCU Node 2, Error, Overcurrent" 519067 "DCU Node 2, Error, Max Accel/Decel Setting Exceeded" 519068 "DCU Node 2, Error, Overcurrent Brake" 519069 "DCU Node 2, Error, Power Unit" 519070 "DCU Node 2, status not available" 519071 "DCU Node 2, status not available" 519072 "DCU Node 2, status not available" 519073 "DCU Node 2, status not available" 519074 "DCU Node 2, status not available" 519075 "DCU Node 2, status not available" 519076 "DCU Node 2, status not available" 519077 "DCU Node 2, status not available" 519078 "DCU Node 2, status not available" 519079 "DCU Node 2, status not available" 519080 "DCU Node 2, status not available" 519081 "DCU Node 2, Error, Rotor Detection, Five Step" 519082 "DCU Node 2, Error, Rotor Detection, Ld equal Lq" 519083 "DCU Node 2, Error, Limit Switch Forward" 519084 "DCU Node 2, Error, Limit Switch Reverse" 519085 "DCU Node 2, Error, Limit Switch Override Forward" 519086 "DCU Node 2, Error, Limit Switch Override Reverse" 519087 "DCU Node 2, Error Limit Switch" 519088 "DCU Node 2, Error, Power Off End" 519089 "DCU Node 2, Error, Encoder Type Change" 519090 "DCU Node 2, Error, Control Board Communication" 519091 "DCU Node 2, INIT, Encoder Interface" 519092 "DCU Node 2, status not available" 519093 "DCU Node 2, status not available" 519094 "DCU Node 2, status not available" 519095 "DCU Node 2, status not available" 519096 "DCU Node 2, Error, Encoder Missing" 519097 "DCU Node 2, Error, Overspeed (EMF)" 519098 "DCU Node 2, Error, Encoder A Changed" 519099 "DCU Node 2, Error, Encoder B Changed" 519100 "DCU Node 2, Error Overcurrent, Out 01" 519101 "DCU Node 2, Error Overcurrent, Out 02" 519102 "DCU Node 2, Error Overcurrent, Out 03" 519103 "DCU Node 2, Error Overcurrent, Out 04" 519104 "DCU Node 2, Error Overcurrent, Fan" 519105 "DCU Node 2, Error Overcurrent ,Encoder" 519106 "DCU Node 2, Error Overcurrent, 24V Supply" 519107 "DCU Node 2, Error, Overfrequency" 519108 "DCU Node 2, Error Reset, Internal Overheat Control Board" 519109 "DCU Node 2, Error, Internal Overheat, Control Board" 519110 "DCU Node 2, Error, Ramp OH" 519111 "DCU Node 2, Error, Ramp OHI" 519112 "DCU Node 2, Error 24V Supply Undervoltage" 519113 "DCU Node 2, Error STO signals" 519114 "DCU Node 2, Error Ext. 24V Supply Undervoltage" 519115 "DCU Node 2, Error GTR7 Always OFF" 519116 "DCU Node 2, Error GTR7 OC" 519117 "DCU Node 2, Error GTR7 Always ON" 519118 "DCU Node 2, OC at 5V Diagnostic" 519119 "DCU Node 2, Error, Extreme Overpotential" 519120 "DCU Node 2, Error, DC Capacitor Damaged" 519121 "DCU Node 2, status not available" 519122 "DCU Node 2, status not available" 519123 "DCU Node 2, status not available" 519124 "DCU Node 2, status not available" 519125 "DCU Node 2, status not available" 519126 "DCU Node 2, status not available" 519127 "DCU Node 2, status not available" 519128 "DCU Node 2, status not available" 519129 "DCU Node 2, status not available" 519130 "DCU Node 2, status not available" 519131 "DCU Node 2, status not available" 519132 "DCU Node 2, status not available" 519133 "DCU Node 2, status not available" 519134 "DCU Node 2, status not available" 519135 "DCU Node 2, status not available" 519300 "App Node 2, No error" 519301 "App Node 2, No axis" 519302 "App Node 2, Error reading mapping" 519303 "App Node 2, Error reading rated current" 519304 "App Node 2, Error rated current mismatch" 519305 "App Node 2, Error write pll offset" 519306 "App Node 2, Error auto mapping" 519307 "App Node 2, Error interlink communication" 519308 "App Node 2, Error overload parameter" 519309 "App Node 2, Incompatible default download" 519310 "App Node 2, Error downloading default download" 519311 "App Node 2, Default download not found" 519312 "App Node 2, Error CAN data timeout" 519313 "App Node 2, Error CAN data invalid" 519314 "App Node 2, Invalid license" 519315 "App Node 2, Error reinitializing app" 519319 "App Node 2, General application error" 520000 "DCU Node 3, No Error" 520001 "DCU Node 3, status not available" 520002 "DCU Node 3, status not available" 520003 "DCU Node 3, Error, Overcurrent Power Unit" 520004 "DCU Node 3, Error, Overcurrent Analog" 520005 "DCU Node 3, Error, Overvoltage DC Link" 520006 "DCU Node 3, Error, Undervoltage DC Link" 520007 "DCU Node 3, Error, Overload" 520008 "DCU Node 3, Reset Error, Overload" 520009 "DCU Node 3, Error, Overload 02" 520010 "DCU Node 3, Error, Power Module Overheat" 520011 "DCU Node 3, Reset Error, Power Module Overheat" 520012 "DCU Node 3, Error, Internal Power Unit Overheat" 520013 "DCU Node 3, Reset Error, Internal Power Unit Overheat" 520014 "DCU Node 3, Error, Motor Protection" 520015 "DCU Node 3, Reset Error, Motor Protection" 520016 "DCU Node 3, Error, Drive Overheat" 520017 "DCU Node 3, Reset Error, Drive Overheat" 520018 "DCU Node 3, Error, Overspeed" 520019 "DCU Node 3, status not available" 520020 "DCU Node 3, Error, Drive Data" 520021 "DCU Node 3, Error, Motor Data Not Stored" 520022 "DCU Node 3, Error, Indentification" 520023 "DCU Node 3, Error, Speed Difference" 520024 "DCU Node 3, Error, Fieldbus Memory" 520025 "DCU Node 3, status not available" 520026 "DCU Node 3, status not available" 520027 "DCU Node 3, status not available" 520028 "DCU Node 3, status not available" 520029 "DCU Node 3, status not available" 520030 "DCU Node 3, status not available" 520031 "DCU Node 3, status not available" 520032 "DCU Node 3, status not available" 520033 "DCU Node 3, status not available" 520034 "DCU Node 3, status not available" 520035 "DCU Node 3, status not available" 520036 "DCU Node 3, status not available" 520037 "DCU Node 3, status not available" 520038 "DCU Node 3, Error, Memory Size" 520039 "DCU Node 3, Error, Power Unit Software Version" 520040 "DCU Node 3, Error, FPGA Config" 520041 "DCU Node 3, status not available" 520042 "DCU Node 3, status not available" 520043 "DCU Node 3, Error, Encoder Interface Communication" 520044 "DCU Node 3, Error, Invlid Data, Power Unit" 520045 "DCU Node 3, status not available" 520046 "DCU Node 3, status not available" 520047 "DCU Node 3, status not available" 520048 "DCU Node 3, status not available" 520049 "DCU Node 3, status not available" 520050 "DCU Node 3, status not available" 520051 "DCU Node 3, status not available" 520052 "DCU Node 3, Error, Phase Undervoltage" 520053 "DCU Node 3, Error, Rotor Detection Current" 520054 "DCU Node 3, status not available" 520055 "DCU Node 3, status not available" 520056 "DCU Node 3, Error, SW Switch Left" 520057 "DCU Node 3, Error, SW Switch Right" 520058 "DCU Node 3, Error, Fieldbus Watchdog Response" 520059 "DCU Node 3, Error, Prog. Input" 520060 "DCU Node 3, status not available" 520061 "DCU Node 3, status not available" 520062 "DCU Node 3, Error, Power Unit Changed" 520063 "DCU Node 3, Error, Encoder Interface Changed" 520064 "DCU Node 3, Error, Power Unit Type Changed" 520065 "DCU Node 3, Error, Invalid Ver., Encoder Interface" 520066 "DCU Node 3, Error, Overcurrent" 520067 "DCU Node 3, Error, Max Accel/Decel Setting Exceeded" 520068 "DCU Node 3, Error, Overcurrent Brake" 520069 "DCU Node 3, Error, Power Unit" 520070 "DCU Node 3, status not available" 520071 "DCU Node 3, status not available" 520072 "DCU Node 3, status not available" 520073 "DCU Node 3, status not available" 520074 "DCU Node 3, status not available" 520075 "DCU Node 3, status not available" 520076 "DCU Node 3, status not available" 520077 "DCU Node 3, status not available" 520078 "DCU Node 3, status not available" 520079 "DCU Node 3, status not available" 520080 "DCU Node 3, status not available" 520081 "DCU Node 3, Error, Rotor Detection, Five Step" 520082 "DCU Node 3, Error, Rotor Detection, Ld equal Lq" 520083 "DCU Node 3, Error, Limit Switch Forward" 520084 "DCU Node 3, Error, Limit Switch Reverse" 520085 "DCU Node 3, Error, Limit Switch Override Forward" 520086 "DCU Node 3, Error, Limit Switch Override Reverse" 520087 "DCU Node 3, Error Limit Switch" 520088 "DCU Node 3, Error, Power Off End" 520089 "DCU Node 3, Error, Encoder Type Change" 520090 "DCU Node 3, Error, Control Board Communication" 520091 "DCU Node 3, INIT, Encoder Interface" 520092 "DCU Node 3, status not available" 520093 "DCU Node 3, status not available" 520094 "DCU Node 3, status not available" 520095 "DCU Node 3, status not available" 520096 "DCU Node 3, Error, Encoder Missing" 520097 "DCU Node 3, Error, Overspeed (EMF)" 520098 "DCU Node 3, Error, Encoder A Changed" 520099 "DCU Node 3, Error, Encoder B Changed" 520100 "DCU Node 3, Error Overcurrent, Out 01" 520101 "DCU Node 3, Error Overcurrent, Out 02" 520102 "DCU Node 3, Error Overcurrent, Out 03" 520103 "DCU Node 3, Error Overcurrent, Out 04" 520104 "DCU Node 3, Error Overcurrent, Fan" 520105 "DCU Node 3, Error Overcurrent ,Encoder" 520106 "DCU Node 3, Error Overcurrent, 24V Supply" 520107 "DCU Node 3, Error, Overfrequency" 520108 "DCU Node 3, Error Reset, Internal Overheat Control Board" 520109 "DCU Node 3, Error, Internal Overheat, Control Board" 520110 "DCU Node 3, Error, Ramp OH" 520111 "DCU Node 3, Error, Ramp OHI" 520112 "DCU Node 3, Error 24V Supply Undervoltage" 520113 "DCU Node 3, Error STO signals" 520114 "DCU Node 3, Error Ext. 24V Supply Undervoltage" 520115 "DCU Node 3, Error GTR7 Always OFF" 520116 "DCU Node 3, Error GTR7 OC" 520117 "DCU Node 3, Error GTR7 Always ON" 520118 "DCU Node 3, OC at 5V Diagnostic" 520119 "DCU Node 3, Error, Extreme Overpotential" 520120 "DCU Node 3, Error, DC Capacitor Damaged" 520121 "DCU Node 3, status not available" 520122 "DCU Node 3, status not available" 520123 "DCU Node 3, status not available" 520124 "DCU Node 3, status not available" 520125 "DCU Node 3, status not available" 520126 "DCU Node 3, status not available" 520127 "DCU Node 3, status not available" 520128 "DCU Node 3, status not available" 520129 "DCU Node 3, status not available" 520130 "DCU Node 3, status not available" 520131 "DCU Node 3, status not available" 520132 "DCU Node 3, status not available" 520133 "DCU Node 3, status not available" 520134 "DCU Node 3, status not available" 520135 "DCU Node 3, status not available" 520300 "App Node 3, No error" 520301 "App Node 3, No axis" 520302 "App Node 3, Error reading mapping" 520303 "App Node 3, Error reading rated current" 520304 "App Node 3, Error rated current mismatch" 520305 "App Node 3, Error write pll offset" 520306 "App Node 3, Error auto mapping" 520307 "App Node 3, Error interlink communication" 520308 "App Node 3, Error overload parameter" 520309 "App Node 3, Incompatible default download" 520310 "App Node 3, Error downloading default download" 520311 "App Node 3, Default download not found" 520312 "App Node 3, Error CAN data timeout" 520313 "App Node 3, Error CAN data invalid" 520314 "App Node 3, Invalid license" 520315 "App Node 3, Error reinitializing app" 520319 "App Node 3, General application error" 521000 "DCU Node 4, No Error" 521001 "DCU Node 4, status not available" 521002 "DCU Node 4, status not available" 521003 "DCU Node 4, Error, Overcurrent Power Unit" 521004 "DCU Node 4, Error, Overcurrent Analog" 521005 "DCU Node 4, Error, Overvoltage DC Link" 521006 "DCU Node 4, Error, Undervoltage DC Link" 521007 "DCU Node 4, Error, Overload" 521008 "DCU Node 4, Reset Error, Overload" 521009 "DCU Node 4, Error, Overload 02" 521010 "DCU Node 4, Error, Power Module Overheat" 521011 "DCU Node 4, Reset Error, Power Module Overheat" 521012 "DCU Node 4, Error, Internal Power Unit Overheat" 521013 "DCU Node 4, Reset Error, Internal Power Unit Overheat" 521014 "DCU Node 4, Error, Motor Protection" 521015 "DCU Node 4, Reset Error, Motor Protection" 521016 "DCU Node 4, Error, Drive Overheat" 521017 "DCU Node 4, Reset Error, Drive Overheat" 521018 "DCU Node 4, Error, Overspeed" 521019 "DCU Node 4, status not available" 521020 "DCU Node 4, Error, Drive Data" 521021 "DCU Node 4, Error, Motor Data Not Stored" 521022 "DCU Node 4, Error, Indentification" 521023 "DCU Node 4, Error, Speed Difference" 521024 "DCU Node 4, Error, Fieldbus Memory" 521025 "DCU Node 4, status not available" 521026 "DCU Node 4, status not available" 521027 "DCU Node 4, status not available" 521028 "DCU Node 4, status not available" 521029 "DCU Node 4, status not available" 521030 "DCU Node 4, status not available" 521031 "DCU Node 4, status not available" 521032 "DCU Node 4, status not available" 521033 "DCU Node 4, status not available" 521034 "DCU Node 4, status not available" 521035 "DCU Node 4, status not available" 521036 "DCU Node 4, status not available" 521037 "DCU Node 4, status not available" 521038 "DCU Node 4, Error, Memory Size" 521039 "DCU Node 4, Error, Power Unit Software Version" 521040 "DCU Node 4, Error, FPGA Config" 521041 "DCU Node 4, status not available" 521042 "DCU Node 4, status not available" 521043 "DCU Node 4, Error, Encoder Interface Communication" 521044 "DCU Node 4, Error, Invlid Data, Power Unit" 521045 "DCU Node 4, status not available" 521046 "DCU Node 4, status not available" 521047 "DCU Node 4, status not available" 521048 "DCU Node 4, status not available" 521049 "DCU Node 4, status not available" 521050 "DCU Node 4, status not available" 521051 "DCU Node 4, status not available" 521052 "DCU Node 4, Error, Phase Undervoltage" 521053 "DCU Node 4, Error, Rotor Detection Current" 521054 "DCU Node 4, status not available" 521055 "DCU Node 4, status not available" 521056 "DCU Node 4, Error, SW Switch Left" 521057 "DCU Node 4, Error, SW Switch Right" 521058 "DCU Node 4, Error, Fieldbus Watchdog Response" 521059 "DCU Node 4, Error, Prog. Input" 521060 "DCU Node 4, status not available" 521061 "DCU Node 4, status not available" 521062 "DCU Node 4, Error, Power Unit Changed" 521063 "DCU Node 4, Error, Encoder Interface Changed" 521064 "DCU Node 4, Error, Power Unit Type Changed" 521065 "DCU Node 4, Error, Invalid Ver., Encoder Interface" 521066 "DCU Node 4, Error, Overcurrent" 521067 "DCU Node 4, Error, Max Accel/Decel Setting Exceeded" 521068 "DCU Node 4, Error, Overcurrent Brake" 521069 "DCU Node 4, Error, Power Unit" 521070 "DCU Node 4, status not available" 521071 "DCU Node 4, status not available" 521072 "DCU Node 4, status not available" 521073 "DCU Node 4, status not available" 521074 "DCU Node 4, status not available" 521075 "DCU Node 4, status not available" 521076 "DCU Node 4, status not available" 521077 "DCU Node 4, status not available" 521078 "DCU Node 4, status not available" 521079 "DCU Node 4, status not available" 521080 "DCU Node 4, status not available" 521081 "DCU Node 4, Error, Rotor Detection, Five Step" 521082 "DCU Node 4, Error, Rotor Detection, Ld equal Lq" 521083 "DCU Node 4, Error, Limit Switch Forward" 521084 "DCU Node 4, Error, Limit Switch Reverse" 521085 "DCU Node 4, Error, Limit Switch Override Forward" 521086 "DCU Node 4, Error, Limit Switch Override Reverse" 521087 "DCU Node 4, Error Limit Switch" 521088 "DCU Node 4, Error, Power Off End" 521089 "DCU Node 4, Error, Encoder Type Change" 521090 "DCU Node 4, Error, Control Board Communication" 521091 "DCU Node 4, INIT, Encoder Interface" 521092 "DCU Node 4, status not available" 521093 "DCU Node 4, status not available" 521094 "DCU Node 4, status not available" 521095 "DCU Node 4, status not available" 521096 "DCU Node 4, Error, Encoder Missing" 521097 "DCU Node 4, Error, Overspeed (EMF)" 521098 "DCU Node 4, Error, Encoder A Changed" 521099 "DCU Node 4, Error, Encoder B Changed" 521100 "DCU Node 4, Error Overcurrent, Out 01" 521101 "DCU Node 4, Error Overcurrent, Out 02" 521102 "DCU Node 4, Error Overcurrent, Out 03" 521103 "DCU Node 4, Error Overcurrent, Out 04" 521104 "DCU Node 4, Error Overcurrent, Fan" 521105 "DCU Node 4, Error Overcurrent ,Encoder" 521106 "DCU Node 4, Error Overcurrent, 24V Supply" 521107 "DCU Node 4, Error, Overfrequency" 521108 "DCU Node 4, Error Reset, Internal Overheat Control Board" 521109 "DCU Node 4, Error, Internal Overheat, Control Board" 521110 "DCU Node 4, Error, Ramp OH" 521111 "DCU Node 4, Error, Ramp OHI" 521112 "DCU Node 4, Error 24V Supply Undervoltage" 521113 "DCU Node 4, Error STO signals" 521114 "DCU Node 4, Error Ext. 24V Supply Undervoltage" 521115 "DCU Node 4, Error GTR7 Always OFF" 521116 "DCU Node 4, Error GTR7 OC" 521117 "DCU Node 4, Error GTR7 Always ON" 521118 "DCU Node 4, OC at 5V Diagnostic" 521119 "DCU Node 4, Error, Extreme Overpotential" 521120 "DCU Node 4, Error, DC Capacitor Damaged" 521121 "DCU Node 4, status not available" 521122 "DCU Node 4, status not available" 521123 "DCU Node 4, status not available" 521124 "DCU Node 4, status not available" 521125 "DCU Node 4, status not available" 521126 "DCU Node 4, status not available" 521127 "DCU Node 4, status not available" 521128 "DCU Node 4, status not available" 521129 "DCU Node 4, status not available" 521130 "DCU Node 4, status not available" 521131 "DCU Node 4, status not available" 521132 "DCU Node 4, status not available" 521133 "DCU Node 4, status not available" 521134 "DCU Node 4, status not available" 521135 "DCU Node 4, status not available" 521300 "App Node 4, No error" 521301 "App Node 4, No axis" 521302 "App Node 4, Error reading mapping" 521303 "App Node 4, Error reading rated current" 521304 "App Node 4, Error rated current mismatch" 521305 "App Node 4, Error write pll offset" 521306 "App Node 4, Error auto mapping" 521307 "App Node 4, Error interlink communication" 521308 "App Node 4, Error overload parameter" 521309 "App Node 4, Incompatible default download" 521310 "App Node 4, Error downloading default download" 521311 "App Node 4, Default download not found" 521312 "App Node 4, Error CAN data timeout" 521313 "App Node 4, Error CAN data invalid" 521314 "App Node 4, Invalid license" 521315 "App Node 4, Error reinitializing app" 521319 "App Node 4, General application error" 522000 "DCU Node 5, No Error" 522001 "DCU Node 5, status not available" 522002 "DCU Node 5, status not available" 522003 "DCU Node 5, Error, Overcurrent Power Unit" 522004 "DCU Node 5, Error, Overcurrent Analog" 522005 "DCU Node 5, Error, Overvoltage DC Link" 522006 "DCU Node 5, Error, Undervoltage DC Link" 522007 "DCU Node 5, Error, Overload" 522008 "DCU Node 5, Reset Error, Overload" 522009 "DCU Node 5, Error, Overload 02" 522010 "DCU Node 5, Error, Power Module Overheat" 522011 "DCU Node 5, Reset Error, Power Module Overheat" 522012 "DCU Node 5, Error, Internal Power Unit Overheat" 522013 "DCU Node 5, Reset Error, Internal Power Unit Overheat" 522014 "DCU Node 5, Error, Motor Protection" 522015 "DCU Node 5, Reset Error, Motor Protection" 522016 "DCU Node 5, Error, Drive Overheat" 522017 "DCU Node 5, Reset Error, Drive Overheat" 522018 "DCU Node 5, Error, Overspeed" 522019 "DCU Node 5, status not available" 522020 "DCU Node 5, Error, Drive Data" 522021 "DCU Node 5, Error, Motor Data Not Stored" 522022 "DCU Node 5, Error, Indentification" 522023 "DCU Node 5, Error, Speed Difference" 522024 "DCU Node 5, Error, Fieldbus Memory" 522025 "DCU Node 5, status not available" 522026 "DCU Node 5, status not available" 522027 "DCU Node 5, status not available" 522028 "DCU Node 5, status not available" 522029 "DCU Node 5, status not available" 522030 "DCU Node 5, status not available" 522031 "DCU Node 5, status not available" 522032 "DCU Node 5, status not available" 522033 "DCU Node 5, status not available" 522034 "DCU Node 5, status not available" 522035 "DCU Node 5, status not available" 522036 "DCU Node 5, status not available" 522037 "DCU Node 5, status not available" 522038 "DCU Node 5, Error, Memory Size" 522039 "DCU Node 5, Error, Power Unit Software Version" 522040 "DCU Node 5, Error, FPGA Config" 522041 "DCU Node 5, status not available" 522042 "DCU Node 5, status not available" 522043 "DCU Node 5, Error, Encoder Interface Communication" 522044 "DCU Node 5, Error, Invlid Data, Power Unit" 522045 "DCU Node 5, status not available" 522046 "DCU Node 5, status not available" 522047 "DCU Node 5, status not available" 522048 "DCU Node 5, status not available" 522049 "DCU Node 5, status not available" 522050 "DCU Node 5, status not available" 522051 "DCU Node 5, status not available" 522052 "DCU Node 5, Error, Phase Undervoltage" 522053 "DCU Node 5, Error, Rotor Detection Current" 522054 "DCU Node 5, status not available" 522055 "DCU Node 5, status not available" 522056 "DCU Node 5, Error, SW Switch Left" 522057 "DCU Node 5, Error, SW Switch Right" 522058 "DCU Node 5, Error, Fieldbus Watchdog Response" 522059 "DCU Node 5, Error, Prog. Input" 522060 "DCU Node 5, status not available" 522061 "DCU Node 5, status not available" 522062 "DCU Node 5, Error, Power Unit Changed" 522063 "DCU Node 5, Error, Encoder Interface Changed" 522064 "DCU Node 5, Error, Power Unit Type Changed" 522065 "DCU Node 5, Error, Invalid Ver., Encoder Interface" 522066 "DCU Node 5, Error, Overcurrent" 522067 "DCU Node 5, Error, Max Accel/Decel Setting Exceeded" 522068 "DCU Node 5, Error, Overcurrent Brake" 522069 "DCU Node 5, Error, Power Unit" 522070 "DCU Node 5, status not available" 522071 "DCU Node 5, status not available" 522072 "DCU Node 5, status not available" 522073 "DCU Node 5, status not available" 522074 "DCU Node 5, status not available" 522075 "DCU Node 5, status not available" 522076 "DCU Node 5, status not available" 522077 "DCU Node 5, status not available" 522078 "DCU Node 5, status not available" 522079 "DCU Node 5, status not available" 522080 "DCU Node 5, status not available" 522081 "DCU Node 5, Error, Rotor Detection, Five Step" 522082 "DCU Node 5, Error, Rotor Detection, Ld equal Lq" 522083 "DCU Node 5, Error, Limit Switch Forward" 522084 "DCU Node 5, Error, Limit Switch Reverse" 522085 "DCU Node 5, Error, Limit Switch Override Forward" 522086 "DCU Node 5, Error, Limit Switch Override Reverse" 522087 "DCU Node 5, Error Limit Switch" 522088 "DCU Node 5, Error, Power Off End" 522089 "DCU Node 5, Error, Encoder Type Change" 522090 "DCU Node 5, Error, Control Board Communication" 522091 "DCU Node 5, INIT, Encoder Interface" 522092 "DCU Node 5, status not available" 522093 "DCU Node 5, status not available" 522094 "DCU Node 5, status not available" 522095 "DCU Node 5, status not available" 522096 "DCU Node 5, Error, Encoder Missing" 522097 "DCU Node 5, Error, Overspeed (EMF)" 522098 "DCU Node 5, Error, Encoder A Changed" 522099 "DCU Node 5, Error, Encoder B Changed" 522100 "DCU Node 5, Error Overcurrent, Out 01" 522101 "DCU Node 5, Error Overcurrent, Out 02" 522102 "DCU Node 5, Error Overcurrent, Out 03" 522103 "DCU Node 5, Error Overcurrent, Out 04" 522104 "DCU Node 5, Error Overcurrent, Fan" 522105 "DCU Node 5, Error Overcurrent ,Encoder" 522106 "DCU Node 5, Error Overcurrent, 24V Supply" 522107 "DCU Node 5, Error, Overfrequency" 522108 "DCU Node 5, Error Reset, Internal Overheat Control Board" 522109 "DCU Node 5, Error, Internal Overheat, Control Board" 522110 "DCU Node 5, Error, Ramp OH" 522111 "DCU Node 5, Error, Ramp OHI" 522112 "DCU Node 5, Error 24V Supply Undervoltage" 522113 "DCU Node 5, Error STO signals" 522114 "DCU Node 5, Error Ext. 24V Supply Undervoltage" 522115 "DCU Node 5, Error GTR7 Always OFF" 522116 "DCU Node 5, Error GTR7 OC" 522117 "DCU Node 5, Error GTR7 Always ON" 522118 "DCU Node 5, OC at 5V Diagnostic" 522119 "DCU Node 5, Error, Extreme Overpotential" 522120 "DCU Node 5, Error, DC Capacitor Damaged" 522121 "DCU Node 5, status not available" 522122 "DCU Node 5, status not available" 522123 "DCU Node 5, status not available" 522124 "DCU Node 5, status not available" 522125 "DCU Node 5, status not available" 522126 "DCU Node 5, status not available" 522127 "DCU Node 5, status not available" 522128 "DCU Node 5, status not available" 522129 "DCU Node 5, status not available" 522130 "DCU Node 5, status not available" 522131 "DCU Node 5, status not available" 522132 "DCU Node 5, status not available" 522133 "DCU Node 5, status not available" 522134 "DCU Node 5, status not available" 522135 "DCU Node 5, status not available" 522300 "App Node 5, No error" 522301 "App Node 5, No axis" 522302 "App Node 5, Error reading mapping" 522303 "App Node 5, Error reading rated current" 522304 "App Node 5, Error rated current mismatch" 522305 "App Node 5, Error write pll offset" 522306 "App Node 5, Error auto mapping" 522307 "App Node 5, Error interlink communication" 522308 "App Node 5, Error overload parameter" 522309 "App Node 5, Incompatible default download" 522310 "App Node 5, Error downloading default download" 522311 "App Node 5, Default download not found" 522312 "App Node 5, Error CAN data timeout" 522313 "App Node 5, Error CAN data invalid" 522314 "App Node 5, Invalid license" 522315 "App Node 5, Error reinitializing app" 522319 "App Node 5, General application error" 523000 "DCU Node 6, No Error" 523001 "DCU Node 6, status not available" 523002 "DCU Node 6, status not available" 523003 "DCU Node 6, Error, Overcurrent Power Unit" 523004 "DCU Node 6, Error, Overcurrent Analog" 523005 "DCU Node 6, Error, Overvoltage DC Link" 523006 "DCU Node 6, Error, Undervoltage DC Link" 523007 "DCU Node 6, Error, Overload" 523008 "DCU Node 6, Reset Error, Overload" 523009 "DCU Node 6, Error, Overload 02" 523010 "DCU Node 6, Error, Power Module Overheat" 523011 "DCU Node 6, Reset Error, Power Module Overheat" 523012 "DCU Node 6, Error, Internal Power Unit Overheat" 523013 "DCU Node 6, Reset Error, Internal Power Unit Overheat" 523014 "DCU Node 6, Error, Motor Protection" 523015 "DCU Node 6, Reset Error, Motor Protection" 523016 "DCU Node 6, Error, Drive Overheat" 523017 "DCU Node 6, Reset Error, Drive Overheat" 523018 "DCU Node 6, Error, Overspeed" 523019 "DCU Node 6, status not available" 523020 "DCU Node 6, Error, Drive Data" 523021 "DCU Node 6, Error, Motor Data Not Stored" 523022 "DCU Node 6, Error, Indentification" 523023 "DCU Node 6, Error, Speed Difference" 523024 "DCU Node 6, Error, Fieldbus Memory" 523025 "DCU Node 6, status not available" 523026 "DCU Node 6, status not available" 523027 "DCU Node 6, status not available" 523028 "DCU Node 6, status not available" 523029 "DCU Node 6, status not available" 523030 "DCU Node 6, status not available" 523031 "DCU Node 6, status not available" 523032 "DCU Node 6, status not available" 523033 "DCU Node 6, status not available" 523034 "DCU Node 6, status not available" 523035 "DCU Node 6, status not available" 523036 "DCU Node 6, status not available" 523037 "DCU Node 6, status not available" 523038 "DCU Node 6, Error, Memory Size" 523039 "DCU Node 6, Error, Power Unit Software Version" 523040 "DCU Node 6, Error, FPGA Config" 523041 "DCU Node 6, status not available" 523042 "DCU Node 6, status not available" 523043 "DCU Node 6, Error, Encoder Interface Communication" 523044 "DCU Node 6, Error, Invlid Data, Power Unit" 523045 "DCU Node 6, status not available" 523046 "DCU Node 6, status not available" 523047 "DCU Node 6, status not available" 523048 "DCU Node 6, status not available" 523049 "DCU Node 6, status not available" 523050 "DCU Node 6, status not available" 523051 "DCU Node 6, status not available" 523052 "DCU Node 6, Error, Phase Undervoltage" 523053 "DCU Node 6, Error, Rotor Detection Current" 523054 "DCU Node 6, status not available" 523055 "DCU Node 6, status not available" 523056 "DCU Node 6, Error, SW Switch Left" 523057 "DCU Node 6, Error, SW Switch Right" 523058 "DCU Node 6, Error, Fieldbus Watchdog Response" 523059 "DCU Node 6, Error, Prog. Input" 523060 "DCU Node 6, status not available" 523061 "DCU Node 6, status not available" 523062 "DCU Node 6, Error, Power Unit Changed" 523063 "DCU Node 6, Error, Encoder Interface Changed" 523064 "DCU Node 6, Error, Power Unit Type Changed" 523065 "DCU Node 6, Error, Invalid Ver., Encoder Interface" 523066 "DCU Node 6, Error, Overcurrent" 523067 "DCU Node 6, Error, Max Accel/Decel Setting Exceeded" 523068 "DCU Node 6, Error, Overcurrent Brake" 523069 "DCU Node 6, Error, Power Unit" 523070 "DCU Node 6, status not available" 523071 "DCU Node 6, status not available" 523072 "DCU Node 6, status not available" 523073 "DCU Node 6, status not available" 523074 "DCU Node 6, status not available" 523075 "DCU Node 6, status not available" 523076 "DCU Node 6, status not available" 523077 "DCU Node 6, status not available" 523078 "DCU Node 6, status not available" 523079 "DCU Node 6, status not available" 523080 "DCU Node 6, status not available" 523081 "DCU Node 6, Error, Rotor Detection, Five Step" 523082 "DCU Node 6, Error, Rotor Detection, Ld equal Lq" 523083 "DCU Node 6, Error, Limit Switch Forward" 523084 "DCU Node 6, Error, Limit Switch Reverse" 523085 "DCU Node 6, Error, Limit Switch Override Forward" 523086 "DCU Node 6, Error, Limit Switch Override Reverse" 523087 "DCU Node 6, Error Limit Switch" 523088 "DCU Node 6, Error, Power Off End" 523089 "DCU Node 6, Error, Encoder Type Change" 523090 "DCU Node 6, Error, Control Board Communication" 523091 "DCU Node 6, INIT, Encoder Interface" 523092 "DCU Node 6, status not available" 523093 "DCU Node 6, status not available" 523094 "DCU Node 6, status not available" 523095 "DCU Node 6, status not available" 523096 "DCU Node 6, Error, Encoder Missing" 523097 "DCU Node 6, Error, Overspeed (EMF)" 523098 "DCU Node 6, Error, Encoder A Changed" 523099 "DCU Node 6, Error, Encoder B Changed" 523100 "DCU Node 6, Error Overcurrent, Out 01" 523101 "DCU Node 6, Error Overcurrent, Out 02" 523102 "DCU Node 6, Error Overcurrent, Out 03" 523103 "DCU Node 6, Error Overcurrent, Out 04" 523104 "DCU Node 6, Error Overcurrent, Fan" 523105 "DCU Node 6, Error Overcurrent ,Encoder" 523106 "DCU Node 6, Error Overcurrent, 24V Supply" 523107 "DCU Node 6, Error, Overfrequency" 523108 "DCU Node 6, Error Reset, Internal Overheat Control Board" 523109 "DCU Node 6, Error, Internal Overheat, Control Board" 523110 "DCU Node 6, Error, Ramp OH" 523111 "DCU Node 6, Error, Ramp OHI" 523112 "DCU Node 6, Error 24V Supply Undervoltage" 523113 "DCU Node 6, Error STO signals" 523114 "DCU Node 6, Error Ext. 24V Supply Undervoltage" 523115 "DCU Node 6, Error GTR7 Always OFF" 523116 "DCU Node 6, Error GTR7 OC" 523117 "DCU Node 6, Error GTR7 Always ON" 523118 "DCU Node 6, OC at 5V Diagnostic" 523119 "DCU Node 6, Error, Extreme Overpotential" 523120 "DCU Node 6, Error, DC Capacitor Damaged" 523121 "DCU Node 6, status not available" 523122 "DCU Node 6, status not available" 523123 "DCU Node 6, status not available" 523124 "DCU Node 6, status not available" 523125 "DCU Node 6, status not available" 523126 "DCU Node 6, status not available" 523127 "DCU Node 6, status not available" 523128 "DCU Node 6, status not available" 523129 "DCU Node 6, status not available" 523130 "DCU Node 6, status not available" 523131 "DCU Node 6, status not available" 523132 "DCU Node 6, status not available" 523133 "DCU Node 6, status not available" 523134 "DCU Node 6, status not available" 523135 "DCU Node 6, status not available" 523300 "App Node 6, No error" 523301 "App Node 6, No axis" 523302 "App Node 6, Error reading mapping" 523303 "App Node 6, Error reading rated current" 523304 "App Node 6, Error rated current mismatch" 523305 "App Node 6, Error write pll offset" 523306 "App Node 6, Error auto mapping" 523307 "App Node 6, Error interlink communication" 523308 "App Node 6, Error overload parameter" 523309 "App Node 6, Incompatible default download" 523310 "App Node 6, Error downloading default download" 523311 "App Node 6, Default download not found" 523312 "App Node 6, Error CAN data timeout" 523313 "App Node 6, Error CAN data invalid" 523314 "App Node 6, Invalid license" 523315 "App Node 6, Error reinitializing app" 523319 "App Node 6, General application error" ;
+VAL_ 3221225472 A_Temp_Sensor_Fail_Cri_fault 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 3221225472 A_Vsense_open_circuit_fault 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 3221225472 B_Temp_Sensor_Fail_Cri_fault 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 3221225472 B_Vsense_open_circuit_fault 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 3221225472 B_SOH_Zero_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 3221225472 B_Slave_Comm_Loss_Slave_No 6 "Slave No 6 Fault" 5 "Slave No 5 Fault" 4 "Slave No 4 Fault" 3 "Slave No 3 Fault" 2 "Slave No 2 Fault" 1 "Slave No 1 Fault" 0 "No Fault" ;
+VAL_ 3221225472 B_ExtE2P_readwrite_fail_Alarm 1 "Fault" 0 "No Fault" ;
+VAL_ 3221225472 B_BMS_Cooling_Request 1 "Cooling required" 0 "Cooling not required" ;
+VAL_ 3221225472 B_BMS_Insulation_Ack_Flag 1 "Insulation Enabled" 0 "Insulation Diabled" ;
+VAL_ 3221225472 B_Emergency_Chrg_Ack_Flag 1 "Emergency Charging flag" 0 "No Emergency Charging flag" ;
+VAL_ 3221225472 B_E2P_Fault_Event_Status 3 "Data Transfer Error/Stopped" 2 "Data Transfer Complete" 1 "Data Transfer in Process" 0 "No Data Transfer in Process" ;
+VAL_ 3221225472 B_HVPreRelay_Status 1 "Close" 0 "Open" ;
+VAL_ 3221225472 B_HVNegRelay_Status 1 "Close" 0 "Open" ;
+VAL_ 3221225472 B_HVPosRelay_Status 1 "Close" 0 "Open" ;
+VAL_ 3221225472 B_Emergency_Power_Off 1 "ON" 0 "OFF" ;
+VAL_ 3221225472 A_ExtE2P_readwrite_fail_Alarm 1 "Fault" 0 "No Fault" ;
+VAL_ 3221225472 A_BMS_Cooling_Request 1 "Cooling required" 0 "Cooling not required" ;
+VAL_ 3221225472 A_BMS_Insulation_Ack_Flag 1 "Insulation Enabled" 0 "Insulation Diabled" ;
+VAL_ 3221225472 A_Emergency_Chrg_Ack_Flag 1 "Emergency Charging flag" 0 "No Emergency Charging flag" ;
+VAL_ 3221225472 A_E2P_Fault_Event_Status 3 "Data Transfer Error/Stopped" 2 "Data Transfer Complete" 1 "Data Transfer in Process" 0 "No Data Transfer in Process" ;
+VAL_ 3221225472 A_HVPreRelay_Status 1 "Close" 0 "Open" ;
+VAL_ 3221225472 A_HVNegRelay_Status 1 "Close" 0 "Open" ;
+VAL_ 3221225472 A_HVPosRelay_Status 1 "Close" 0 "Open" ;
+VAL_ 3221225472 A_Emergency_Power_Off 1 "ON" 0 "OFF" ;
+VAL_ 2147485750 C_VCU_BMS_Comm_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_Thermal_Sensor_HW_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_Thermal_Runaway_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_Temp_Sensor_Hw_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_SOH_Zero_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_SOC_Low_Alarm 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_Slave_Comm_Loss_Slave_No 6 "Slave No 6 Fault" 5 "Slave No 5 Fault" 4 "Slave No 4 Fault" 3 "Slave No 3 Fault" 2 "Slave No 2 Fault" 1 "Slave No 1 Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_Precharge_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_Pos_Contactor_Weld_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_Pos_Contactor_Hw_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_Peak_Regen_OverCurr_30s_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485750 C_Peak_OverDischCurr_30s_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485750 C_Pack_Volt_Sampling_flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_Pack_Volt_Mismatch_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_Pack_UnderVolt_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485750 C_Pack_OverVolt_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485750 C_Pack_Balancing_Hw_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_Pack2Pack_Comm_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_Neg_Contactor_Weld_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_Neg_Contactor_Hw_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_Low_SOH_Alarm 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_Insulation_Detection_Flt 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485750 C_HVIL_Alarm 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_Curr_Sensor_Hw_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_Coolant_Leakage_sensor_Alarm 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_Cont_OverDischCurr_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485750 C_Cont_Charging_OverCurr_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485750 C_Cell_volt_sampling_Alarm 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_Cell_UnderVolt_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485750 C_Cell_UnderTemp_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485750 C_Cell_temp_sampling_Alarm 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_Cell_OverVolt_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485750 C_Cell_OverTemp_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485750 C_Cell_DV_Static_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485750 C_Cell_DV_Dyn_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485750 C_Cell_Delta_Temperture_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485750 C_Cell_Balancing_Hw_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485750 C_All_Contactor_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485716 B_SOH_Zero_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485716 B_Precharge_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485716 B_Insulation_Detection_Flt 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485716 B_Slave_Comm_Loss_Slave_No 6 "Slave No 6 Fault" 5 "Slave No 5 Fault" 4 "Slave No 4 Fault" 3 "Slave No 3 Fault" 2 "Slave No 2 Fault" 1 "Slave No 1 Fault" 0 "No Fault" ;
+VAL_ 2147485716 B_Cell_DV_Dyn_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485716 B_Pack_Volt_Mismatch_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485716 B_Cell_Balancing_Hw_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485716 B_Cell_Delta_Temperture_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485716 B_Thermal_Sensor_HW_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485716 B_Thermal_Runaway_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485716 B_Main_Contactors_Status 2 "Failure" 1 "Close" 0 "Open" ;
+VAL_ 2147485705 A_SOH_Zero_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485705 A_Precharge_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485705 A_Insulation_Detection_Flt 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485705 A_Slave_Comm_Loss_Slave_No 6 "Slave No 6 Fault" 5 "Slave No 5 Fault" 4 "Slave No 4 Fault" 3 "Slave No 3 Fault" 2 "Slave No 2 Fault" 1 "Slave No 1 Fault" 0 "No Fault" ;
+VAL_ 2147485705 A_Cell_DV_Dyn_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485705 A_Pack_Volt_Mismatch_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485705 A_Cell_Balancing_Hw_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485705 A_Cell_Delta_Temperture_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485705 A_Thermal_Sensor_HW_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485705 A_Thermal_Runaway_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485705 A_Main_Contactors_Status 2 "Failure" 1 "Close" 0 "Open" ;
+VAL_ 2147485731 FlashAmberWarningLamp 3 "Unavailable / Do Not Flash" 2 "Class C DTC  " 1 "Fast Flash" 0 "Slow Flash" ;
+VAL_ 2147485731 AmberWarningLamp 3 "Not available" 2 "Reserved" 1 "Lamp On" 0 "Lamp Off" ;
+VAL_ 2147485731 FMI_DTC1 22 "Data Drifted Low" 21 "Data Drifted High" 20 "Received Network Data In Error" 0 "Above normal (most severe)" 1 "Below normal (most severe)" 2 "Data erratic" 3 "Voltage above normal" 4 "Voltage below normal" 5 "Current below normal" 6 "Current above normal" 7 "Mechanical system not responding" 8 "Abnormal frequency" 9 "Abnormal update rate" 10 "Abnormal rate of change" 11 "Root cause not known" 12 "Bad intelligent device" 13 "Out of calibration" 14 "Special intstructions" 15 "Above normal (least severe)" 16 "Above normal (moderately severe)" 17 "Below normal (least severe)" 18 "Below normal (moderately severe)" 19 "Received network data in error" 31 "Condition Exists" ;
+VAL_ 2147485731 FlashRedStopLamp 3 "Unavailable / Do Not Flash" 2 "Class C DTC  " 1 "Fast Flash" 0 "Slow Flash" ;
+VAL_ 2147485731 FlashProtectLamp 3 "Unavailable / Do Not Flash" 2 "Class C DTC  " 1 "Fast Flash" 0 "Slow Flash" ;
+VAL_ 2147485731 FlashMalfuncIndicatorLamp 3 "Unavailable / Do Not Flash" 2 "Class C DTC  " 1 "Fast Flash" 0 "Slow Flash" ;
+VAL_ 2147485731 RedStopLampState 3 "Not available" 2 "Reserved" 1 "Lamp On" 0 "Lamp Off" ;
+VAL_ 2147485731 ProtectLampStatus 3 "Not available" 2 "Reserved" 1 "Lamp On" 0 "Lamp Off" ;
+VAL_ 2147485714 B_Coolant_Leakage_sensor_Alarm 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485714 B_Peak_OverDischCurr_30s_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485714 B_Peak_Regen_OverCurr_30s_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485714 B_Pack_Balancing_Hw_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485714 B_Pack2Pack_Comm_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485714 B_Temp_Sensor_Hw_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485714 B_Curr_Sensor_Hw_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485714 B_VCU_BMS_Comm_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485714 B_Neg_Contactor_Weld_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485714 B_Neg_Contactor_Hw_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485714 B_Pos_Contactor_Weld_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485714 B_Pos_Contactor_Hw_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485714 B_Low_SOH_Alarm 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485714 B_SOC_Low_Alarm 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485714 B_All_Contactor_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485714 B_Pack_Volt_Sampling_flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485714 B_HVIL_Alarm 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485714 B_Slave_Comm_Loss_Alarm 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485714 B_Cell_temp_sampling_Alarm 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485714 B_Cell_volt_sampling_Alarm 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485714 B_Pack_UnderVolt_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485714 B_Pack_OverVolt_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485714 B_Cell_UnderTemp_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485714 B_Cell_OverTemp_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485714 B_Cell_UnderVolt_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485714 B_Cell_OverVolt_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485714 B_Cont_OverDischCurr_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485714 B_Cont_Charging_OverCurr_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485714 B_Cell_DV_Static_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485713 B_Balancing_Enabled_Flag 1 "ON" 0 "OFF" ;
+VAL_ 2147485713 B_SOC_Calibration_flag 1 "Begin to Calibrate" 0 "Not Calibration" ;
+VAL_ 2147485712 B_Fault_Rank 4 "Fourth Fault Level" 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485715 B_Packlockout 1 "Pack Lockout" 0 "No PAck Lockout" ;
+VAL_ 2147485715 B_HVIL_Monitoring_Status 1 "ON" 0 "OFF" ;
+VAL_ 2147485715 B_Pack_Ready 1 "Pack Ready" 0 "Pack Not Ready" ;
+VAL_ 2147485704 A_Packlockout 1 "Pack Lockout" 0 "No PAck Lockout" ;
+VAL_ 2147485704 A_HVIL_Monitoring_Status 1 "ON" 0 "OFF" ;
+VAL_ 2147485704 A_Pack_Ready 1 "Pack Ready" 0 "Pack Not Ready" ;
+VAL_ 2147485701 A_Fault_Rank 4 "Fourth Fault Level" 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485702 A_Balancing_Enabled_Flag 1 "ON" 0 "OFF" ;
+VAL_ 2147485702 A_SOC_Calibration_flag 1 "Begin to Calibrate" 0 "Not Calibration" ;
+VAL_ 2147485703 A_Coolant_Leakage_sensor_Alarm 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485703 A_Peak_Regen_OverCurr_30s_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485703 A_Pack_Balancing_Hw_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485703 A_Pack2Pack_Comm_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485703 A_Temp_Sensor_Hw_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485703 A_Curr_Sensor_Hw_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485703 A_VCU_BMS_Comm_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485703 A_Neg_Contactor_Weld_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485703 A_Neg_Contactor_Hw_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485703 A_Pos_Contactor_Weld_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485703 A_Pos_Contactor_Hw_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485703 A_Low_SOH_Alarm 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485703 A_SOC_Low_Alarm 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485703 A_All_Contactor_Flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485703 A_Pack_Volt_Sampling_flt 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485703 A_HVIL_Alarm 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485703 A_Slave_Comm_Loss_Alarm 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485703 A_Cell_temp_sampling_Alarm 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485703 A_Cell_volt_sampling_Alarm 1 "Fault" 0 "No Fault" ;
+VAL_ 2147485703 A_Pack_UnderVolt_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485703 A_Pack_OverVolt_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485703 A_Cell_UnderTemp_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485703 A_Cell_OverTemp_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485703 A_Cell_UnderVolt_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485703 A_Cell_OverVolt_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485703 A_Cont_OverDischCurr_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485703 A_Peak_OverDischCurr_30s_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485703 A_Cont_Charging_OverCurr_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485703 A_Cell_DV_Static_Alarm 3 "Third Fault Level" 2 "Second Fault Level" 1 "First Fault Level" 0 "No Fault" ;
+VAL_ 2147485744 MCU_CommandMode 3 "DC Voltage Mode (VoltageCommand)" 2 "Speed Mode (SpeedCommand)" 1 "Torque Mode (TorqueCommand)" ;
+VAL_ 2147485744 MCU_state 8 "WaitForSafeCondition" 7 "ReadyToShutdown" 6 "CloseDown" 5 "Failure" 4 "Operational" 3 "TearDown" 2 "Startup" 1 "Standby" 0 "Initialisation" ;
+VAL_ 2147485719 DCDCenablecommand 170 "start" 85 "stop" ;
+

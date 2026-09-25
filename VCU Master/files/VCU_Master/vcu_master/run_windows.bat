@@ -1,12 +1,5 @@
 @echo off
-REM VCU Master - first run creates a virtual environment and installs deps
+REM VCU Master - run.py creates .venv, installs / updates the dependencies and starts the app.
 cd /d "%~dp0"
-if not exist .venv (
-    py -3 -m venv .venv || python -m venv .venv
-    call .venv\Scripts\activate.bat
-    python -m pip install --upgrade pip
-    pip install -r requirements.txt
-) else (
-    call .venv\Scripts\activate.bat
-)
-python run.py %*
+where py >nul 2>&1 && (py -3 run.py %*) || (python run.py %*)
+pause

@@ -106,6 +106,10 @@ static volatile uint16_t g_tx_tail = 0U;
 
 static uint8_t g_tx_seq = 0U;
 
+/* V0.0073: 1 once Uart_StartIrq() enabled the LPUART0 interrupt path. Before
+ * that (boot, loopback self-test) the old polled TX/RX path is used. */
+static volatile uint8_t g_uart_irq_on = 0U;
+
 static UartRxState_t g_rx_state = RX_WAIT_SOF0;
 
 static UartPkt_t g_rx_pkt;
@@ -289,7 +293,9 @@ static void uart_hw_init(void)
      * well within standard UART tolerance)
      */
 
-    baud_div = 22U;
+    /* V0.0073: link baud from UART_BAUDRATE (uart_pkt.h). 40 MHz / 16 / SBR:
+     * 500000 -> SBR 5 (exact), 115200 -> SBR 22 (-1.4 %). */
+    baud_div = (UART_CLOCK_HZ + (8U * UART_BAUDRATE)) / (16U * UART_BAUDRATE);
 
     LPUART0->BAUD =
         LPUART_BAUD_OSR(15U) |
@@ -374,41 +380,26 @@ uint32_t Uart_GetMs(void)
  * RX ring buffer
  * ======================================================================== */
 
+static volatile uint32_t g_rx_overflow = 0U;
+
+/* Called from the LPUART0 ISR only (single producer). When full the NEW byte
+ * is dropped and counted - the ISR must never move the consumer's tail. */
 static void uart_rx_push(uint8_t data)
 {
-    uint16_t next;
-
-    next = (uint16_t)(g_rx_head + 1U);
+    uint16_t next = (uint16_t)(g_rx_head + 1U);
 
     if(next >= UART_RX_BUFFER_SIZE)
     {
         next = 0U;
     }
-
-    /*
-     * Buffer full:
-     *
-     * Drop the oldest byte rather than blocking.
-     */
-
     if(next == g_rx_tail)
     {
-        g_rx_tail++;
-
-        if(g_rx_tail >= UART_RX_BUFFER_SIZE)
-        {
-            g_rx_tail = 0U;
-        }
+        g_rx_overflow++;
+        return;
     }
-
     g_rx_buffer[g_rx_head] = data;
-
     g_rx_head = next;
 }
-
-/* ========================================================================
- * RX ring buffer pop
- * ======================================================================== */
 
 static uint8_t uart_rx_pop(
     uint8_t *data
@@ -516,6 +507,12 @@ static uint8_t uart_tx_push_frame(
 
     g_tx_head = idx;
 
+    /* Kick the TX interrupt; the ISR drains the ring and disables TIE when empty. */
+    if(g_uart_irq_on != 0U)
+    {
+        LPUART0->CTRL |= LPUART_CTRL_TIE_MASK;
+    }
+
     return 1U;
 }
 
@@ -530,6 +527,11 @@ static uint8_t uart_tx_push_frame(
 static void uart_hw_poll_rx(void)
 {
     uint8_t data;
+
+    if(g_uart_irq_on != 0U)
+    {
+        return;                         /* RX handled by LPUART0_RxTx_IRQHandler */
+    }
 
     /*
      * Drain all available RX bytes.
@@ -620,6 +622,15 @@ static void uart_tx_service(uint16_t max_bytes)
 {
     uint16_t sent;
     uint8_t data;
+
+    if(g_uart_irq_on != 0U)
+    {
+        if(g_tx_tail != g_tx_head)
+        {
+            LPUART0->CTRL |= LPUART_CTRL_TIE_MASK;   /* make sure the ISR is draining */
+        }
+        return;
+    }
 
     sent = 0U;
 
@@ -912,7 +923,7 @@ void Uart_Init(
 
     SEGGER_RTT_printf(
         0,
-        "[UART] LPUART0 initialized 115200 8N1\r\n"
+        "[UART] LPUART0 initialized %lu 8N1 (IRQ-driven TX/RX)\r\n", (unsigned long)UART_BAUDRATE
     );
     /*
      * Explicitly enable UART TX and RX.
@@ -922,6 +933,81 @@ void Uart_Init(
         LPUART_CTRL_RE_MASK;
 
 
+}
+
+/* ========================================================================
+ * V0.0073: interrupt-driven LPUART0
+ *
+ * At 500 kbaud a byte arrives every 20 us and the LPUART FIFO is only a few
+ * bytes deep, so RX must be interrupt driven; TX is interrupt driven so the
+ * main loop never busy-waits on TDRE (the old bounded service loop cost up to
+ * ~2.8 ms per main-loop pass under CAN load).
+ * ======================================================================== */
+void LPUART0_RxTx_IRQHandler(void)
+{
+    uint32_t stat = LPUART0->STAT;
+    uint32_t n = 0U;
+
+    if((stat & (LPUART_STAT_OR_MASK | LPUART_STAT_FE_MASK | LPUART_STAT_NF_MASK | LPUART_STAT_PF_MASK)) != 0U)
+    {
+        LPUART0->STAT = stat & (LPUART_STAT_OR_MASK | LPUART_STAT_FE_MASK |
+                                LPUART_STAT_NF_MASK | LPUART_STAT_PF_MASK);
+    }
+    while(((LPUART0->STAT & LPUART_STAT_RDRF_MASK) != 0U) && (n < 16U))
+    {
+        uart_rx_push((uint8_t)LPUART0->DATA);
+        n++;
+    }
+    if((LPUART0->CTRL & LPUART_CTRL_TIE_MASK) != 0U)
+    {
+        n = 0U;
+        while(((LPUART0->STAT & LPUART_STAT_TDRE_MASK) != 0U) && (g_tx_tail != g_tx_head) && (n < 16U))
+        {
+            uint16_t t = g_tx_tail;
+            LPUART0->DATA = (uint32_t)g_tx_queue[t];
+            t++;
+            if(t >= UART_TX_BUFFER_SIZE) { t = 0U; }
+            g_tx_tail = t;
+            n++;
+        }
+        if(g_tx_tail == g_tx_head)
+        {
+            LPUART0->CTRL &= ~LPUART_CTRL_TIE_MASK;
+            if(g_tx_tail != g_tx_head)             /* producer raced us - keep going */
+            {
+                LPUART0->CTRL |= LPUART_CTRL_TIE_MASK;
+            }
+        }
+    }
+}
+
+void Uart_StartIrq(void)
+{
+    volatile uint32_t *iser = (volatile uint32_t *)0xE000E100UL;
+
+    g_uart_irq_on = 1U;
+    LPUART0->CTRL |= LPUART_CTRL_RIE_MASK | LPUART_CTRL_ORIE_MASK;
+    if(g_tx_tail != g_tx_head)
+    {
+        LPUART0->CTRL |= LPUART_CTRL_TIE_MASK;
+    }
+    iser[31U >> 5U] = 1UL << (31U & 31U);          /* LPUART0_RxTx_IRQn = 31 */
+    SEGGER_RTT_printf(0, "[UART] IRQ-driven TX/RX active at %lu baud\r\n", (unsigned long)UART_BAUDRATE);
+}
+
+uint8_t Uart_GetLastCmdSeq(void)
+{
+    return g_rx_pkt.seq;
+}
+
+uint32_t Uart_GetRxOverflow(void)
+{
+    return g_rx_overflow;
+}
+
+uint16_t Uart_GetTxQueued(void)
+{
+    return (uint16_t)(UART_TX_BUFFER_SIZE - 1U - uart_tx_free_space());
 }
 
 /* ========================================================================
@@ -1676,19 +1762,13 @@ uint8_t Uart_Pkt_Send(
      * CAN frames can arrive much faster than RTT can display them.
      * Keep the packet path bounded without one debug line per CAN frame.
      */
+#if UART_TX_VERBOSE
     if(type != MSG_CAN)
     {
-        RTT_LOG(
-            "[UART_TX] Frame ready "
-            "type=0x%02X "
-            "payload=%u "
-            "total=%u \r \n",
-
-            (unsigned)type,
-            (unsigned)len,
-            (unsigned)index
-        );
+        SEGGER_RTT_printf(0, "[UART_TX] Frame ready type=0x%02X payload=%u total=%u\r\n",
+                          (unsigned)type, (unsigned)len, (unsigned)index);
     }
+#endif
 
     return result;
 }

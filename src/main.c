@@ -36,6 +36,10 @@
 #define APP_FLM_ENABLE     1
 #define APP_GPIO_ENABLE    1
 
+/* V0.0073: 1 = print every received CAN frame on RTT (costly at hundreds of
+ * frames/s); 0 = a once-per-second rate/drop summary instead. */
+#define CAN_RTT_PER_FRAME  0
+
 /* --------------------------------------------------------------------------
  * INCLUDES
  * -------------------------------------------------------------------------- */
@@ -103,6 +107,7 @@ static uint8_t  g_led_state  = 0U;
 static uint8_t  g_reset_arm    = 0U;
 static uint32_t g_reset_arm_ms = 0U;
 static uint32_t g_tick = 0U;
+static uint32_t g_tick_last = 0U;
 static uint32_t g_hb_count = 0U;
 
 /* g_last_exception_ipsr: DEFINED in boot_main.c (startup diagnostic).
@@ -291,7 +296,8 @@ static void can1_rx(uint32_t id, uint8_t ide, uint8_t rtr,
     f.bus=1U; f.ide=ide; f.rtr=rtr; f.dlc=dlc; f.can_id=id; f.ts_ms=Uart_GetMs();
     if(data) { for(i=0U;i<8U;i++) f.data[i]=(i<dlc)?data[i]:0U; }
 
-    RTT_LOG("[CAN1_APP] baud=%lu ID=0x%08lX DLC=%u DATA=%02X %02X %02X %02X %02X %02X %02X %02X\\r\\n",
+#if CAN_RTT_PER_FRAME
+    RTT_LOG("[CAN1_APP] baud=%lu ID=0x%08lX DLC=%u DATA=%02X %02X %02X %02X %02X %02X %02X %02X\r\n",
             (unsigned long)baud,
             (unsigned long)id,
             (unsigned)dlc,
@@ -299,6 +305,9 @@ static void can1_rx(uint32_t id, uint8_t ide, uint8_t rtr,
             (unsigned)f.data[2], (unsigned)f.data[3],
             (unsigned)f.data[4], (unsigned)f.data[5],
             (unsigned)f.data[6], (unsigned)f.data[7]);
+#else
+    (void)baud;
+#endif
 
     (void)Uart_Pkt_SendCan(&f);
 }
@@ -318,6 +327,7 @@ static void can2_rx(const Can2_Frame_t *frame)
     f.can_id=frame->id; f.ts_ms=Uart_GetMs();
     for(i=0U;i<8U;i++) { f.data[i]=(i<frame->dlc)?frame->data[i]:0U; }
 
+#if CAN_RTT_PER_FRAME
     RTT_LOG("[CAN2_APP] baud=%lu ID=0x%08lX DLC=%u DATA=%02X %02X %02X %02X %02X %02X %02X %02X\r\n",
             (unsigned long)Can2_GetBaudrate(),
             (unsigned long)frame->id,
@@ -326,16 +336,54 @@ static void can2_rx(const Can2_Frame_t *frame)
             (unsigned)f.data[2], (unsigned)f.data[3],
             (unsigned)f.data[4], (unsigned)f.data[5],
             (unsigned)f.data[6], (unsigned)f.data[7]);
+#endif
 
     (void)Uart_Pkt_SendCan(&f);
 }
 #endif
 
 /* --------------------------------------------------------------------------
+ * COMMAND ACK  (V0.0073)
+ *   MSG_CMD_ACK payload: [cmd type, result (0 = OK), arg (gpio/module id),
+ *                         actual state (read back), request seq]
+ *   Sent after the command has been executed, so a UI can show "pending"
+ *   until this arrives and "confirmed" (green) only with the real result.
+ * -------------------------------------------------------------------------- */
+static void send_ack(uint8_t cmd, uint8_t result, uint8_t arg, uint8_t state)
+{
+    uint8_t a[5];
+    a[0] = cmd;
+    a[1] = result;
+    a[2] = arg;
+    a[3] = state;
+    a[4] = Uart_GetLastCmdSeq();
+    (void)Uart_Pkt_Send(MSG_CMD_ACK, a, (uint16_t)sizeof(a));
+}
+
+static const char *mod_name(uint8_t m)
+{
+    switch(m)
+    {
+        case MOD_IMU:  return "IMU";
+        case MOD_CSA:  return "CSA";
+        case MOD_CAN1: return "CAN1";
+        case MOD_CAN2: return "CAN2";
+        case MOD_FLM:  return "FLM";
+        default:       return "?";
+    }
+}
+
+/* --------------------------------------------------------------------------
  * COMMAND HANDLER
  * -------------------------------------------------------------------------- */
 static void cmd_handler(uint8_t type, const uint8_t *pl, uint16_t len)
 {
+    if(type != CMD_OTA_DATA)
+    {
+        EVT_LOG("[CMD] rx type=0x%02X len=%u seq=%u\r\n",
+                (unsigned)type, (unsigned)len, (unsigned)Uart_GetLastCmdSeq());
+    }
+
     /* OTA commands */
     if((type >= CMD_OTA_START) && (type <= CMD_OTA_ABORT))
     {
@@ -380,16 +428,30 @@ static void cmd_handler(uint8_t type, const uint8_t *pl, uint16_t len)
                 case MOD_CAN1: g_can1_en = state; break;
                 case MOD_CAN2: g_can2_en = state; break;
                 case MOD_FLM:  g_flm_en  = state; break;
-                default: Uart_Pkt_SendLog("CMD_MODULE_EN:bad_module"); break;
+                default:
+                    EVT_LOG("[CMD] MODULE_EN bad module id=%u\r\n", (unsigned)mod);
+                    send_ack(type, 2U, mod, 0U);
+                    return;
             }
+            EVT_LOG("[CMD] MODULE %s -> %s  OK\r\n", mod_name(mod), state ? "ENABLED" : "DISABLED");
             send_status();
+            send_ack(type, 0U, mod, state);
         }
         break;
 
         case CMD_GPIO_SET:
 #if APP_GPIO_ENABLE
-            if((pl == NULL)||(len == 0U)) { Uart_Pkt_SendLog("GPIO:bad_cmd"); break; }
-            (void)Gpio_ControlProcessCommand(pl, len);
+            if((pl == NULL)||(len == 0U)) { EVT_LOG("[CMD] GPIO bad command\r\n"); send_ack(type, 1U, 0U, 0U); break; }
+            {
+                int rc = Gpio_ControlProcessCommand(pl, len);   /* also sends GPIO_STATUS (read-back) */
+                uint8_t gid = pl[0];
+                uint8_t act = Gpio_ControlRead(gid);
+                EVT_LOG("[CMD] GPIO id=%u dir=%s req=%s -> actual=%s  %s\r\n",
+                        (unsigned)gid, (len > 1U && pl[1] != 0U) ? "OUT" : "IN",
+                        (len > 2U && pl[2] != 0U) ? "HIGH" : "LOW", act ? "HIGH" : "LOW",
+                        (rc == 0) ? "OK" : "FAIL");
+                send_ack(type, (rc == 0) ? 0U : (uint8_t)(-rc), gid, act);
+            }
 #else
             Uart_Pkt_SendLog("GPIO:disabled");
 #endif
@@ -407,12 +469,32 @@ static void cmd_handler(uint8_t type, const uint8_t *pl, uint16_t len)
                 memcpy(&lc, pl, sizeof(lc));
                 g_led_period = (lc.period_ms != 0U) ? lc.period_ms : 500U;
                 g_led_duty   = (lc.duty_pct  <= 100U)? lc.duty_pct  : 50U;
+                EVT_LOG("[CMD] LED period=%u ms duty=%u %%  OK\r\n", (unsigned)g_led_period, (unsigned)g_led_duty);
+                send_ack(type, 0U, 0U, g_led_duty);
             }
             else { Uart_Pkt_SendLog("LED:bad_cmd"); }
             break;
 
         case CMD_STATUS_REQ:
             send_status();
+            send_ack(type, 0U, 0U, 0U);
+            break;
+
+        case CMD_IMU_ZERO:
+#if APP_IMU_ENABLE
+            Imu_ZeroPosition();
+#endif
+            send_ack(type, 0U, 0U, 0U);
+            break;
+
+        case CMD_RTT_ENABLE:
+            Debug_SetUartMirror(1U);
+            EVT_LOG("[CMD] RTT->UART log mirror ON\r\n");
+            break;
+
+        case CMD_RTT_DISABLE:
+            EVT_LOG("[CMD] RTT->UART log mirror OFF\r\n");
+            Debug_SetUartMirror(0U);
             break;
 
         case CMD_FLASH_RD:
@@ -527,8 +609,8 @@ int main(void)
     SEGGER_RTT_printf(0,
         "\r\n================================================\r\n"
         " Zitto MB V1 - VCU Firmware Boot\r\n"
-        " Firmware Revision : V0.00631\r\n"
-        " Change            : CAN1 pre-RX error immunity + symmetric 2:1 baud corroboration; fixed test OFF\r\n"
+        " Firmware Revision : V0.0073\r\n"
+        " Change            : shared FlexCAN driver: RX FIFO+IRQ ring, listen-only baud scan, 10s baud hold\r\n"
         " MCU: S32K144  Clock: 80MHz SPLL  WDOG: OFF\r\n"
         " Modules: IMU=%d CSA=%d CAN1=%d CAN2=%d FLM=%d GPIO=%d\r\n"
         "================================================\r\n\r\n",
@@ -557,6 +639,7 @@ int main(void)
      * pattern) are no longer called but kept in uart_pkt.c/.h for any
      * future hardware bring-up debugging. */
     (void)Uart_SelfTestLoopback();
+    Uart_StartIrq();                       /* V0.0073: IRQ-driven UART from here on */
 
     /* GPIO */
 #if APP_GPIO_ENABLE
@@ -649,7 +732,7 @@ int main(void)
 
         /* CAN1 FIRST: minimize RX mailbox service latency. */
 #if APP_CAN1_ENABLE
-        if((g_can1_en != 0U) && (can_task_due != 0U))
+        if(g_can1_en != 0U)
         {
             /* V0.0063: Can1_Task() dispatches RX synchronously via the
              * RX callback now, no separate queue to drain. */
@@ -671,14 +754,20 @@ int main(void)
         if((now_ms - last_alive_ms) >= 1000U)
         {
             last_alive_ms = now_ms;
-            RTT_LOG("[MAIN] tick=%lu uptime=%lums  CAN1=%lukbps  state=%u  IRQs: or=%lu err=%lu mb=%lu\r\n",
-                    (unsigned long)g_tick,
+            RTT_LOG("[MAIN] up=%lums loops/s=%lu | CAN1 %lukbps st=%u rx=%lu/s drop=%lu | CAN2 %lukbps st=%u rx=%lu/s drop=%lu TEC=%u REC=%u\r\n",
                     (unsigned long)now_ms,
+                    (unsigned long)(g_tick - g_tick_last),
                     (unsigned long)Can1_GetBaudrate(),
                     (unsigned)Can1_GetState(),
-                    (unsigned long)Can1_GetIrqCount(),
+                    (unsigned long)Can1_GetRxFps(),
                     (unsigned long)Can1_GetErrorIrqCount(),
-                    (unsigned long)Can1_GetMbIrqCount());
+                    (unsigned long)Can2_GetBaudrate(),
+                    (unsigned)Can2_GetState(),
+                    (unsigned long)Can2_GetRxFps(),
+                    (unsigned long)Can2_GetErrorIrqCount(),
+                    (unsigned)Can2_GetTec(),
+                    (unsigned)Can2_GetRec());
+            g_tick_last = g_tick;
 
 #if APP_CAN1_ENABLE
             {
@@ -705,14 +794,7 @@ int main(void)
 #endif
 
 #if APP_CAN2_ENABLE
-            RTT_LOG("[MAIN] tick=%lu uptime=%lums  CAN2=%lukbps  state=%u  IRQs: or=%lu err=%lu mb=%lu\r\n",
-                    (unsigned long)g_tick,
-                    (unsigned long)now_ms,
-                    (unsigned long)Can2_GetBaudrate(),
-                    (unsigned)Can2_GetState(),
-                    (unsigned long)Can2_GetIrqCount(),
-                    (unsigned long)Can2_GetErrorIrqCount(),
-                    (unsigned long)Can2_GetMbIrqCount());
+
 
             {
                 Can2_Status_t cs2;
@@ -763,7 +845,7 @@ int main(void)
                 last_imu_task_ms = now_ms;
                 Imu_Task();
             }
-            if((now_ms - last_imu_tx_ms) >= 500U)
+            if((now_ms - last_imu_tx_ms) >= 100U)          /* V0.0073: 10 Hz (was 500 ms) */
             {
                 last_imu_tx_ms = now_ms;
                 ImuPkt_t p; memset(&p,0,sizeof(p));
@@ -793,7 +875,19 @@ int main(void)
         /* CAN2 remains independent; when enabled it gets the same fast
          * cooperative service cadence and does not wait for CAN1. */
 #if APP_CAN2_ENABLE
-        if((g_can2_en != 0U) && (can_task_due != 0U)) { Can2_Task(); }
+        if(g_can2_en != 0U) { Can2_Task(); }
+#endif
+
+        /* GPIO input change detection (V0.0073) */
+#if APP_GPIO_ENABLE
+        {
+            static uint32_t s_last_gpio_ms = 0U;
+            if((now_ms - s_last_gpio_ms) >= 100U)
+            {
+                s_last_gpio_ms = now_ms;
+                Gpio_ControlTask();
+            }
+        }
 #endif
 
         /* FLM */

@@ -1,0 +1,254 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_:
+
+
+BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
+ SG_ NewSignal_0027 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BATTERY_CAPACITY_INDEX m1 : 8|8@1+ (1,0) [0|1] "count" Vector__XXX
+ SG_ NewSignal_0019 : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0020 : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0022 : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0021 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0040 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0055 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ UNDER_TEMPERATURE_CHARGE : 15|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ UNDER_TEMPERATURE_DISCHARGE : 14|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ INTERNAL_UNDER_TEMPERATURE : 13|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ RESERVED_3 : 12|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ OVER_TEMPERATURE_CHARGE : 11|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ OVER_TEMPERATURE_DISCHARGE : 10|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ INTERNAL_OVER_TEMPERATURE : 9|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ FET_OVER_TEMPERATURE : 8|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ RESERVED_2 : 7|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ RESERVED_1 : 6|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ OVER_CURRENT_CHARGE : 5|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ OVER_CURRENT_DISCHARGE_2 : 4|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ OVER_CURRENT_DISCHARGE_1 : 3|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ CELL_UNDER_VOLTAGE : 2|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ CELL_OVER_VOLTAGE : 1|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ SHORT_CIRUIT : 0|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ CONTROL_MUX : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CLOSE_FIRMWARE_FILE m13 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ OPEN_FIRMWARE_FILE m12 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ OFF_DICHRAGE_MOS m8 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ON_DICHRAGE_MOS m7 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ OFF_CHRAGE_MOS m6 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ON_CHRAGE_MOS m5 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTC_INIT m1 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SHUTDOWN_ALL_TASKS m11 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ IS_BATTERY_OK m10 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ GET_FIRM_VERSION m9 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2484081955 BATTERY_ADVANCED_PARAMETER: 8 Vector__XXX
+ SG_ BATTERY_PARAMETER_MUX M : 0|8@1+ (1,0) [1|3] "count" Vector__XXX
+ SG_ CELL_VOLTAGE_INDEX m2M : 8|8@1+ (1,0) [0|5] "count" Vector__XXX
+ SG_ CELL_1_VOLTAGE m0 : 16|16@1+ (1,0) [0|65535] "mV" Vector__XXX
+ SG_ CELL_2_VOLTAGE m0 : 32|16@1+ (1,0) [0|65535] "mV" Vector__XXX
+ SG_ CELL_3_VOLTAGE m0 : 48|16@1+ (1,0) [0|65535] "mV" Vector__XXX
+ SG_ CELL_4_VOLTAGE m1 : 16|16@1+ (1,0) [0|65535] "mV" Vector__XXX
+ SG_ CELL_5_VOLTAGE m1 : 32|16@1+ (1,0) [0|65535] "mV" Vector__XXX
+ SG_ CELL_6_VOLTAGE m1 : 48|16@1+ (1,0) [0|65535] "mV" Vector__XXX
+ SG_ CELL_7_VOLTAGE m2 : 16|16@1+ (1,0) [0|65535] "mV" Vector__XXX
+ SG_ CELL_8_VOLTAGE m2 : 32|16@1+ (1,0) [0|65535] "mV" Vector__XXX
+ SG_ CELL_9_VOLTAGE m2 : 48|16@1+ (1,0) [0|65535] "mV" Vector__XXX
+ SG_ CELL_10_VOLTAGE m3 : 16|16@1+ (1,0) [0|65535] "mV" Vector__XXX
+ SG_ CELL_11_VOLTAGE m3 : 32|16@1+ (1,0) [0|65535] "mV" Vector__XXX
+ SG_ CELL_12_VOLTAGE m3 : 48|16@1+ (1,0) [0|65535] "mV" Vector__XXX
+ SG_ CELL_13_VOLTAGE m4 : 16|16@1+ (1,0) [0|65535] "mV" Vector__XXX
+ SG_ CELL_14_VOLTAGE m4 : 32|16@1+ (1,0) [0|65535] "mV" Vector__XXX
+ SG_ CELL_15_VOLTAGE m4 : 48|16@1+ (1,0) [0|65535] "mV" Vector__XXX
+ SG_ CELL_16_VOLTAGE m5 : 16|16@1+ (1,0) [0|65535] "mV" Vector__XXX
+ SG_ CELL_TEMPERATURE_INDEX m3M : 8|8@1+ (1,0) [0|1] "count" Vector__XXX
+ SG_ TEMPERATURE_SENSOR_1 m0 : 16|16@1- (0.01,0) [-32768|32767] "°C" Vector__XXX
+ SG_ TEMPERATURE_SENSOR_2 m0 : 32|16@1- (0.01,0) [-32768|32767] "°C" Vector__XXX
+ SG_ TEMPERATURE_SENSOR_3 m0 : 48|16@1- (0.01,0) [-32768|32767] "°C" Vector__XXX
+ SG_ TEMPERATURE_SENSOR_4 m1 : 16|16@1- (0.01,0) [-32768|32767] "°C" Vector__XXX
+ SG_ TEMPERATURE_SENSOR_5 m1 : 32|16@1- (0.01,0) [-32768|32767] "°C" Vector__XXX
+ SG_ TEMPERATURE_SENSOR_6 m1 : 48|16@1- (0.01,0) [-32768|32767] "°C" Vector__XXX
+ SG_ TOTAL_CAPACITY m1 : 8|16@1+ (0.01,0) [0|0] "Ah" Vector__XXX
+ SG_ RESIDUAL_CAPACITY m1 : 24|16@1+ (0.01,0) [0|0] "Ah" Vector__XXX
+ SG_ NUMBER_OF_CELLS m1 : 40|8@1+ (1,0) [0|16] "count" Vector__XXX
+ SG_ NUMBER_OF_TEMPERATURE_SENSORS m1 : 48|8@1+ (1,0) [0|6] "count" Vector__XXX
+ SG_ BATTERY_CHEMISTRY m1 : 56|8@1+ (1,0) [0|2] "count" Vector__XXX
+
+BO_ 2566192931 BATTERY_BASIC_INFO: 8 Vector__XXX
+ SG_ BATTERY_VOLTAGE : 0|16@1+ (0.01,0) [0|65535] "V" Vector__XXX
+ SG_ BATTERY_CURRENT : 16|16@1- (0.01,0) [0|32767] "A" Vector__XXX
+ SG_ SOC : 32|8@1+ (1,0) [0|100] "count" Vector__XXX
+ SG_ SOH : 40|8@1+ (1,0) [0|100] "count" Vector__XXX
+ SG_ BMS_STATE : 48|8@1+ (1,0) [0|3] "count" Vector__XXX
+ SG_ MOS_STATE : 56|8@1+ (1,0) [0|255] "count" Vector__XXX
+
+BO_ 2566127395 BMS_HEARTBEAT: 8 Vector__XXX
+ SG_ YEAR : 0|8@1+ (1,2000) [0|0] "count" Vector__XXX
+ SG_ MONTH : 8|8@1+ (1,0) [1|12] "count" Vector__XXX
+ SG_ DAY : 16|8@1+ (1,0) [1|31] "count" Vector__XXX
+ SG_ HOUR : 24|8@1+ (1,0) [0|23] "count" Vector__XXX
+ SG_ MINUTE : 32|8@1+ (1,0) [0|59] "count" Vector__XXX
+ SG_ SECOND : 40|8@1+ (1,0) [0|59] "count" Vector__XXX
+ SG_ FIRMWARE_VERSION : 48|8@1+ (1,0) [0|0] "count" Vector__XXX
+ SG_ HARDWARE_VERSION : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2566258467 CELLS_BASIC_INFO: 8 Vector__XXX
+ SG_ MAX_CELL_VOLTAGE : 0|16@1+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ MIN_CELL_VOLTAGE : 16|16@1+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ MAX_CELL_TEMPERATURE : 32|16@1+ (1,0) [0|0] "°C" Vector__XXX
+ SG_ MIN_CELL_TEMPERATURE : 48|16@1+ (1,0) [0|0] "°C" Vector__XXX
+
+BO_ 2566324003 ALERTS_AND_FAULTS: 8 Vector__XXX
+ SG_ LD_ON : 0|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ LD_TIMEOUT : 1|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ DEEPSLEEP : 2|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ RSVD_0 : 3|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ RSVD_1 : 4|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ RSVD_2 : 5|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ RSVD_3 : 6|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ RSVD_4 : 7|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ RSVD_5 : 8|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ RSVD_6 : 9|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ CUV : 10|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ COV : 11|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ OCC : 12|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ OCD1 : 13|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ OCD2 : 14|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ SCD : 15|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ UTC : 16|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ UTD : 17|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ UTINT : 18|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ RSVD_7 : 19|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ OTC : 20|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ OTD : 21|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ OTINT : 22|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ OTF : 23|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ RSVD_8 : 24|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ HWDF : 25|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ PTO : 26|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ RSVD_9 : 27|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ COVL : 28|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ OCDL : 29|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ SCDL : 30|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ OCD3 : 31|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ WAKE : 32|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ ADSCAN : 33|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ CB : 34|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ FUSE : 35|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ SHUTV : 36|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ XDSG : 37|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ XCHG : 38|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ FULLSCAN : 39|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ RSVD_10 : 40|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ INITCOMP : 41|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ INITSTART : 42|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ MSK_PFALERT : 43|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ MSK_SFALERT : 44|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ PF : 45|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ SSA : 46|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ SSBC : 47|1@1+ (1,0) [0|1] "bool" Vector__XXX
+ SG_ CHG_FET : 48|1@1+ (1,0) [0|0] "bool" Vector__XXX
+ SG_ PCHG_FET : 49|1@1+ (1,0) [0|0] "bool" Vector__XXX
+ SG_ DSG_FET : 50|1@1+ (1,0) [0|0] "bool" Vector__XXX
+ SG_ PDSG_FET : 51|1@1+ (1,0) [0|0] "bool" Vector__XXX
+ SG_ DCHG_PIN : 52|1@1+ (1,0) [0|0] "bool" Vector__XXX
+ SG_ DDSG_PIN : 53|1@1+ (1,0) [0|0] "bool" Vector__XXX
+ SG_ ALRT_PIN : 54|1@1+ (1,0) [0|0] "bool" Vector__XXX
+ SG_ RSVD_11 : 55|1@1+ (1,0) [0|0] "bool" Vector__XXX
+ SG_ AFE_ERROR : 56|1@1+ (1,0) [0|0] "bool" Vector__XXX
+ SG_ CAN_ERROR : 57|1@1+ (1,0) [0|0] "bool" Vector__XXX
+ SG_ SDIO_ERROR : 58|1@1+ (1,0) [0|0] "bool" Vector__XXX
+ SG_ CAN_LINE_ERROR : 59|1@1+ (1,0) [0|0] "bool" Vector__XXX
+ SG_ RSVD_12 : 60|1@1+ (1,0) [0|0] "bool" Vector__XXX
+ SG_ RSVD_13 : 61|1@1+ (1,0) [0|0] "bool" Vector__XXX
+ SG_ RSVD_14 : 62|1@1+ (1,0) [0|0] "bool" Vector__XXX
+ SG_ RSVD_15 : 63|1@1+ (1,0) [0|0] "bool" Vector__XXX
+
+BO_ 2485130531 BMS_CONTROL_RESPONSE: 8 Vector__XXX
+ SG_ RESPONSE_STATUS : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ COMMAND M : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2487227683 BMS_CONFIG_RESPONSE: 8 Vector__XXX
+ SG_ CONFIG_MUX M : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ XOR_VALUE m0 : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+
+
+
+CM_ BO_ 2484081955 "Broadcast Cell voltages, temperature sensors and battery capacity data. ";
+CM_ SG_ 2484081955 BATTERY_PARAMETER_MUX "Id for Cell Voltages ";
+CM_ SG_ 2484081955 CELL_VOLTAGE_INDEX "Cell Index";
+CM_ SG_ 2484081955 CELL_1_VOLTAGE "";
+CM_ SG_ 2484081955 CELL_2_VOLTAGE "";
+CM_ SG_ 2484081955 CELL_3_VOLTAGE "";
+CM_ SG_ 2484081955 CELL_4_VOLTAGE "";
+CM_ SG_ 2484081955 CELL_5_VOLTAGE "";
+CM_ SG_ 2484081955 CELL_6_VOLTAGE "";
+CM_ BO_ 2566192931 "Broadcast Battery Voltage, Current, SOC,SOH, BMS State and MOSFET State.";
+CM_ BO_ 2566127395 "Broadcast Date, Time, Firmware and Hardware Version.";
+CM_ BO_ 2566258467 "Broadcast Max, Min Voltage and Temperature sensor data.";
+CM_ BO_ 2566324003 "Broadcast BMS Fault and Status.";
+CM_ BO_ 2485130531 "Response BMS Control Frame Data ";
+CM_ BO_ 2487227683 "Response BMS Config Data";
+
+SG_MUL_VAL_ 2484081955 CELL_VOLTAGE_INDEX BATTERY_PARAMETER_MUX 2-2;
+SG_MUL_VAL_ 2484081955 CELL_1_VOLTAGE CELL_VOLTAGE_INDEX 0-0;
+SG_MUL_VAL_ 2484081955 CELL_2_VOLTAGE CELL_VOLTAGE_INDEX 0-0;
+SG_MUL_VAL_ 2484081955 CELL_3_VOLTAGE CELL_VOLTAGE_INDEX 0-0;
+SG_MUL_VAL_ 2484081955 CELL_4_VOLTAGE CELL_VOLTAGE_INDEX 1-1;
+SG_MUL_VAL_ 2484081955 CELL_5_VOLTAGE CELL_VOLTAGE_INDEX 1-1;
+SG_MUL_VAL_ 2484081955 CELL_6_VOLTAGE CELL_VOLTAGE_INDEX 1-1;
+SG_MUL_VAL_ 2484081955 CELL_7_VOLTAGE CELL_VOLTAGE_INDEX 2-2;
+SG_MUL_VAL_ 2484081955 CELL_8_VOLTAGE CELL_VOLTAGE_INDEX 2-2;
+SG_MUL_VAL_ 2484081955 CELL_9_VOLTAGE CELL_VOLTAGE_INDEX 2-2;
+SG_MUL_VAL_ 2484081955 CELL_10_VOLTAGE CELL_VOLTAGE_INDEX 3-3;
+SG_MUL_VAL_ 2484081955 CELL_11_VOLTAGE CELL_VOLTAGE_INDEX 3-3;
+SG_MUL_VAL_ 2484081955 CELL_12_VOLTAGE CELL_VOLTAGE_INDEX 3-3;
+SG_MUL_VAL_ 2484081955 CELL_13_VOLTAGE CELL_VOLTAGE_INDEX 4-4;
+SG_MUL_VAL_ 2484081955 CELL_14_VOLTAGE CELL_VOLTAGE_INDEX 4-4;
+SG_MUL_VAL_ 2484081955 CELL_15_VOLTAGE CELL_VOLTAGE_INDEX 4-4;
+SG_MUL_VAL_ 2484081955 CELL_16_VOLTAGE CELL_VOLTAGE_INDEX 5-5;
+SG_MUL_VAL_ 2484081955 CELL_TEMPERATURE_INDEX BATTERY_PARAMETER_MUX 3-3;
+SG_MUL_VAL_ 2484081955 TEMPERATURE_SENSOR_1 CELL_TEMPERATURE_INDEX 0-0;
+SG_MUL_VAL_ 2484081955 TEMPERATURE_SENSOR_2 CELL_TEMPERATURE_INDEX 0-0;
+SG_MUL_VAL_ 2484081955 TEMPERATURE_SENSOR_3 CELL_TEMPERATURE_INDEX 0-0;
+SG_MUL_VAL_ 2484081955 TEMPERATURE_SENSOR_4 CELL_TEMPERATURE_INDEX 1-1;
+SG_MUL_VAL_ 2484081955 TEMPERATURE_SENSOR_5 CELL_TEMPERATURE_INDEX 1-1;
+SG_MUL_VAL_ 2484081955 TEMPERATURE_SENSOR_6 CELL_TEMPERATURE_INDEX 1-1;
+SG_MUL_VAL_ 2484081955 TOTAL_CAPACITY BATTERY_PARAMETER_MUX 1-1;
+SG_MUL_VAL_ 2484081955 RESIDUAL_CAPACITY BATTERY_PARAMETER_MUX 1-1;
+SG_MUL_VAL_ 2484081955 NUMBER_OF_CELLS BATTERY_PARAMETER_MUX 1-1;
+SG_MUL_VAL_ 2484081955 NUMBER_OF_TEMPERATURE_SENSORS BATTERY_PARAMETER_MUX 1-1;
+SG_MUL_VAL_ 2484081955 BATTERY_CHEMISTRY BATTERY_PARAMETER_MUX 1-1;
+SG_MUL_VAL_ 2487227683 XOR_VALUE CONFIG_MUX 0-0;
+

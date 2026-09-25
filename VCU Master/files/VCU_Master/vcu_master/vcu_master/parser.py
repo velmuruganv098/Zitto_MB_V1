@@ -105,6 +105,17 @@ def parse_line(line: str) -> Dict[str, Any]:
                      gx_mdps=gx, gy_mdps=gy, gz_mdps=gz,
                      temp_c=_num(kv.get("temp", "0C")),
                      ts_ms=_num(kv.get("ts", "0ms")))
+            # V0.0073 firmware: displacement since power-on / tracking start
+            if "pos_mm" in kv:
+                px, py, pz = [float(x) for x in kv["pos_mm"].strip("()").split(",")]
+                r, pi, ya = [float(x) for x in kv.get("rpy_deg", "(0,0,0)").strip("()").split(",")]
+                f.update(pos_x_mm=px, pos_y_mm=py, pos_z_mm=pz,
+                         dist_mm=float(kv.get("dist_mm", "0")),
+                         roll_fw=r, pitch_fw=pi, yaw_fw=ya,
+                         moving=int(kv.get("moving", "0")),
+                         imu_flags=int(kv.get("imu_flags", "0")),
+                         imu_up_ms=int(kv.get("imu_up_ms", "0")),
+                         speed_mms=int(kv.get("speed_mms", "0")))
             rec["tags"] = ["IMU"]
 
         elif mtype == "CSA":
@@ -170,6 +181,11 @@ def parse_line(line: str) -> Dict[str, Any]:
             f["text"] = body
             up = body.upper()
             tags = ["LOG"]
+            # V0.0073 firmware events: "[CMD] ...", "[GPIO] ...", "[IMU] ..."
+            if up.startswith("[CMD]"):
+                tags.append("CMD")
+            if up.startswith("[GPIO]"):
+                tags.append("GPIO")
             if up.startswith("FLASH"):
                 tags.append("FLASH")
             if up.startswith("OTA"):

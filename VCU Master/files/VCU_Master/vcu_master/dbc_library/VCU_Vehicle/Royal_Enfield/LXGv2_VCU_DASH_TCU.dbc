@@ -1,0 +1,110 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: VCU
+
+
+BO_ 775 ID0x307_OBC: 8 Vector__XXX
+ SG_ OBC_DC_V : 16|16@1+ (0.1,0) [0|500] "V" Vector__XXX
+ SG_ OBC_DC_I : 48|16@1+ (0.1,0) [0|50] "A" Vector__XXX
+ SG_ OBC_AC_V : 0|16@1+ (0.1,0) [0|500] "V" Vector__XXX
+ SG_ OBC_AC_I : 32|16@1+ (0.1,0) [0|50] "A" Vector__XXX
+
+BO_ 513 ID0x201_INVMODE: 1 Vector__XXX
+ SG_ Inverter_Mode : 0|8@1+ (1,0) [0|5] "" Vector__XXX
+
+BO_ 768 VCU_BMS_COMBINED: 8 Vector__XXX
+ SG_ Battery_voltage : 0|16@1+ (0.1,0) [0|450] "V" Vector__XXX
+ SG_ Battery_cv_min : 16|16@1+ (0.001,0) [0|0] "V" Vector__XXX
+ SG_ Battery_cv_max : 32|16@1+ (0.001,0) [0|0] "V" Vector__XXX
+ SG_ Battery_SoC : 48|16@1+ (1,0) [0|100] "%" Vector__XXX
+
+BO_ 808 VCU_BMS_SEC_T: 6 Vector__XXX
+ SG_ Battery_Sec_Temp_AVG : 32|16@1- (0.1,0) [0|0] "degreC" Vector__XXX
+ SG_ Battery_Sec_Temp_Max : 16|16@1- (0.1,0) [0|0] "degreC" Vector__XXX
+ SG_ Battery_Sec_Temp_Min : 0|16@1- (0.1,0) [0|0] "degreC" Vector__XXX
+
+BO_ 776 VCU_BMS_PRI_T: 6 Vector__XXX
+ SG_ Battery_Pri_Temp_AVG : 32|16@1- (0.1,0) [0|0] "degreC" Vector__XXX
+ SG_ Battery_Pri_Temp_Max : 16|16@1- (0.1,0) [0|0] "degreC" Vector__XXX
+ SG_ Battery_Pri_Temp_Min : 0|16@1- (0.1,0) [0|0] "degreC" Vector__XXX
+
+BO_ 802 VCU_BMS_SEC_V: 8 Vector__XXX
+ SG_ Battery_Sec_cv_max : 32|16@1+ (0.001,0) [0|0] "V" Vector__XXX
+ SG_ Battery_Sec_cv_min : 16|16@1+ (0.001,0) [0|0] "V" Vector__XXX
+ SG_ Battery_Sec_voltage : 0|16@1+ (0.1,0) [0|450] "V" Vector__XXX
+ SG_ Battery_Sec_SoC : 48|16@1+ (1,0) [0|100] "%" Vector__XXX
+
+BO_ 770 VCU_BMS_PRI_V: 8 VCU
+ SG_ Battery_Pri_SoC : 48|16@1+ (1,0) [0|100] "%" Vector__XXX
+ SG_ Battery_Pri_cv_min : 16|16@1+ (0.001,0) [0|0] "V" Vector__XXX
+ SG_ Battery_Pri_cv_max : 32|16@1+ (0.001,0) [0|0] "V" Vector__XXX
+ SG_ Battery_Pri_voltage : 0|16@1+ (0.1,0) [0|450] "V" Vector__XXX
+
+BO_ 1031 ID0x407: 8 Vector__XXX
+ SG_ Pump_Output_ADU : 36|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Fan_Output_ADU : 38|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Sidestand_Switch_ADU : 32|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Bike_Armed_ADU : 35|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 771 ID0x303: 8 VCU
+ SG_ Map : 0|16@1+ (1,0) [0|5] ""  VCU
+ SG_ RPM : 32|16@1- (1,0) [-15000|15000] "rpm"  VCU
+
+BO_ 772 ID0x304: 8 VCU
+ SG_ Motor_Temp_Max : 0|16@1+ (0.1,0) [0|0] "C"  VCU
+ SG_ IGBT_Temp : 16|16@1+ (0.1,0) [0|0] "degreC"  VCU
+ SG_ Battery_Temp_Min : 32|16@1- (0.1,0) [0|0] "degreC"  VCU
+ SG_ Battery_Temp_Max : 48|16@1- (0.1,0) [0|0] "degreC"  VCU
+
+BO_ 773 ID0x305: 8 VCU
+ SG_ Inverter_current : 0|16@1- (1,0) [-300|300] "Amps"  VCU
+ SG_ Charging_amps_FD : 16|16@1+ (0.1,0) [0|0] "amps"  VCU
+ SG_ Charging_amps_SP : 32|16@1+ (0.1,0) [0|0] "amps"  VCU
+ SG_ Battery_Temp_AVG : 48|16@1- (0.1,0) [0|0] "degreC"  VCU
+
+BO_ 774 ID0x306: 8 VCU
+ SG_ Torque_Demand : 32|16@1- (0.1,0) [-3276.8|3276.7] "Nm" Vector__XXX
+ SG_ TPS : 16|16@1+ (0.1,0) [0|0] "%"  VCU
+
+
+
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 0;
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_ "GenMsgCycleTime" BO_ 771 20;
+BA_ "GenMsgCycleTime" BO_ 772 40;
+BA_ "GenMsgCycleTime" BO_ 773 20;
+BA_ "GenMsgCycleTime" BO_ 774 20;
+

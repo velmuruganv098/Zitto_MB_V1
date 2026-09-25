@@ -56,10 +56,12 @@
  * UART configuration
  * ======================================================================== */
 
-#define UART_BAUDRATE              115200U
+#define UART_BAUDRATE              500000U   /* V0.0073: was 115200 - ESP32 bridge must match */
+#define UART_CLOCK_HZ              40000000U /* SPLLDIV2 */
+#define UART_TX_VERBOSE            0         /* 1 = RTT line per queued non-CAN frame */
 
 #define UART_RX_BUFFER_SIZE        512U
-#define UART_TX_BUFFER_SIZE        1024U
+#define UART_TX_BUFFER_SIZE        2048U
 
 #define UART_MAX_PAYLOAD           256U
 
@@ -100,6 +102,7 @@
 #define CMD_FLASH_RD                 0x06U
 #define CMD_FLASH_WR                 0x07U
 #define CMD_FLASH_DEL                0x08U
+#define CMD_IMU_ZERO                 0x09U   /* V0.0073: restart IMU displacement origin */
 
 #ifndef CMD_RTT_ENABLE
 #define CMD_RTT_ENABLE     0x70U
@@ -502,5 +505,11 @@ uint8_t Uart_Pkt_SendAck(
  * ======================================================================== */
 
 void Uart_Pkt_ForwardRTT(void);
+
+/* V0.0073 */
+void     Uart_StartIrq(void);
+uint32_t Uart_GetRxOverflow(void);
+uint8_t  Uart_GetLastCmdSeq(void);   /* seq byte of the command being dispatched */
+uint16_t Uart_GetTxQueued(void);
 
 #endif /* UART_PKT_H */

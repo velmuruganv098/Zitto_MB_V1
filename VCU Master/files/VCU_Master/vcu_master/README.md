@@ -4,7 +4,7 @@ BLE bench console for the **Zitto_MB_V1** VCU (NXP S32K144 + ESP32-S3 bridge).
 Python backend, browser UI. Works on Windows, macOS and Linux.
 
 ```
-S32K144 ──UART2 115200──> ESP32-S3 bridge ──BLE (Nordic UART)──> VCU Master (Python) ──HTTP/WebSocket──> Browser
+S32K144 ──UART2 500000──> ESP32-S3 bridge ──BLE (Nordic UART)──> VCU Master (Python) ──HTTP/WebSocket──> Browser
 ```
 
 Built against branch `dev/can1-v0.0065_UART_Transfer_And_BLE_Bridge`.
@@ -19,12 +19,21 @@ Double-click `run_windows.bat`. The first run creates `.venv` and installs the d
 
 ### Any OS
 ```bash
-python -m venv .venv
-.venv\Scripts\activate          # Windows
-source .venv/bin/activate       # macOS / Linux
-pip install -r requirements.txt
 python run.py
 ```
+`run.py` checks Python (3.9+), creates `.venv` on first run and re-starts itself inside it,
+installs missing or outdated packages from `requirements.txt`, checks Bluetooth, and picks the next
+free port if 8765 is busy. `python run.py --check` only reports; `--no-venv` uses the current interpreter.
+
+Only one VCU Master can use the bridge at a time: the ESP32 accepts one BLE client and stops advertising
+while connected. `run.py` opens an already-running copy instead of starting a second one (`--new` forces it).
+
+**DBC library** (`dbc_library/`, same tree as CAN_DBC_Simulator): when CAN IDs arrive that no loaded DBC
+knows, the best-matching library DBC is loaded automatically (toggle in *OTA and DBC → DBC library*).
+
+UI (V0.0073): **Battery (BMS)** and **Motor (MCU)** are read-only
+views like CAN_DBC_Simulator. The **Connection** window shows data integrity (S32K sequence gaps); the
+**Device** window shows the command log (a command glows while waiting and turns green on the S32K ACK).
 
 Options:
 

@@ -65,26 +65,37 @@ const S = {
 };
 
 /* ------------------------------------------------------------------ nav + theme */
-const TITLES = { connect: "Connection", live: "Live data", system: "IMU and current sensing", vehicle: "Vehicle", updates: "Firmware update and CAN databases", device: "ESP32 and S32K144 control" };
-function showWin(w) {
-  $$(".nav").forEach((b) => b.classList.toggle("on", b.dataset.win === w));
+const TITLES = { connect: "Connection", live: "Live data", system: "IMU and current sensing", vehicle: "Vehicle", bms: "Battery (BMS) - from DBC", mcu: "Motor (MCU) - from DBC", updates: "Firmware update and CAN databases", device: "ESP32 and S32K144 control" };
+function showWin(w, focus = false) {
+  if (!TITLES[w]) w = "connect";
+  $$(".nav").forEach((b) => { const on = b.dataset.win === w; b.classList.toggle("on", on); on ? b.setAttribute("aria-current", "page") : b.removeAttribute("aria-current"); });
   $$(".win").forEach((s) => s.classList.toggle("on", s.id === "win-" + w));
   $("#winTitle").textContent = TITLES[w];
+  document.title = `${TITLES[w]} · VCU Master`;
   S.win = w; LS.set("win", w);
   S.dirtyLog = true;
+  if (w === "bms" || w === "mcu") window.VCUProducts?.refresh?.();
+  if (w === "vehicle") renderVehicleTables();
+  if (w === "updates") loadLibrary();
+  if (focus) $("#winTitle").focus({ preventScroll: true });
 }
-$$(".nav").forEach((b) => b.addEventListener("click", () => showWin(b.dataset.win)));
+$$(".nav").forEach((b) => b.addEventListener("click", () => showWin(b.dataset.win, true)));
 document.addEventListener("click", (e) => {
   const g = e.target.closest("[data-goto]");
-  if (g) { e.preventDefault(); showWin(g.dataset.goto); }
+  if (g) { e.preventDefault(); showWin(g.dataset.goto, true); }
 });
 const theme = LS.get("theme", null);
 if (theme) document.documentElement.dataset.theme = theme;
+const isDark = () => document.documentElement.dataset.theme === "dark" ||
+  (!document.documentElement.dataset.theme && matchMedia("(prefers-color-scheme: dark)").matches);
+const syncThemeBtn = () => $("#themeBtn").setAttribute("aria-pressed", isDark());
+syncThemeBtn();
 $("#themeBtn").addEventListener("click", () => {
   const dark = document.documentElement.dataset.theme === "dark" ||
     (!document.documentElement.dataset.theme && matchMedia("(prefers-color-scheme: dark)").matches);
   document.documentElement.dataset.theme = dark ? "light" : "dark";
   LS.set("theme", document.documentElement.dataset.theme);
+  syncThemeBtn();
   Object.values(charts).forEach((c) => (c.dirty = true));
 });
 
@@ -97,7 +108,10 @@ function connectWs() {
     else if (m.t === "state") onState(m.state);
     else if (m.t === "link") { if (S.snap) { S.snap.link = m.link; renderLink(); } }
     else if (m.t === "hist") onHist(m);
-    else if (m.t === "signals") { S.signals = m.signals; S.messages = m.messages; renderVehicleTables(); }
+    else if (m.t === "signals") { S.signals = m.signals; S.messages = m.messages; renderVehicleTables(); window.VCUProducts?.onSignals(m.signals); }
+    else if (m.t === "roles_meta") window.VCUProducts?.onMeta(m);
+    else if (m.t === "roles") window.VCUProducts?.onRoles(m);
+    else if (m.t === "notice") { window.VCUProducts?.onNotice(m.text); S.libLoaded = null; refreshDbcPick(); if (S.win === "updates") loadLibrary(); }
   };
   ws.onclose = () => { setPill("Server offline", "err"); setTimeout(connectWs, 1500); };
   setInterval(() => { if (ws.readyState === 1) ws.send("k"); }, 20000);
@@ -112,6 +126,7 @@ function onRecs(items, replay) {
     if (!replay) ribbon.hit(ribbonLane(r), r.t);
     feedCharts(r);
     feedConsole(r);
+    if (!replay) window.VCUProducts?.onRec(r);
   }
   if (S.recs.length > S.maxRecs) S.recs.splice(0, S.recs.length - S.maxRecs);
   S.dirtyLog = true;
@@ -248,12 +263,13 @@ function filtered() { return S.recs.filter(passes); }
 function rowHtml(r) {
   const cc = `--cc:var(${CH[r.ch].c})`;
   const err = r.tags.includes("ERR") || r.tags.includes("PARSE_ERR") || /fail|bus_off=1|ERROR|CMD_ERR/.test(r.raw);
-  if (S.mode === "raw") return `<div class="lr${err ? " err" : ""}" style="${cc}" data-id="${r.id}"><span>${clock(r.t)}</span><span>${esc(r.raw)}</span></div>`;
+  if (S.mode === "raw") return `<div class="lr${err ? " err" : ""}" style="${cc}" data-id="${r.id}" tabindex="-1"><span>${clock(r.t)}</span><span>${esc(r.raw)}</span></div>`;
   const busTxt = r.type === "CAN" ? CH[r.ch].label : CH[r.ch].label;
-  return `<div class="lr${err ? " err" : ""}" style="${cc}" data-id="${r.id}"><span>${clock(r.t)}</span><span>${r.seq ?? ""}</span><span class="ch">${busTxt}</span><span class="ty">${esc(r.type)}</span><span>${summary(r)}</span><span class="dc" title="${esc(decodeText(r))}">${esc(decodeText(r))}</span></div>`;
+  return `<div class="lr${err ? " err" : ""}" style="${cc}" data-id="${r.id}" tabindex="-1"><span>${clock(r.t)}</span><span>${r.seq ?? ""}</span><span class="ch">${busTxt}</span><span class="ty">${esc(r.type)}</span><span>${summary(r)}</span><span class="dc" title="${esc(decodeText(r))}">${esc(decodeText(r))}</span></div>`;
 }
 function renderLog() {
   if (S.win !== "live" || !S.dirtyLog || S.paused) return;
+  if ($("#logBody").contains(document.activeElement) && document.activeElement !== $("#logBody")) return;  // keep keyboard position
   S.dirtyLog = false;
   const body = $("#logBody");
   const atBottom = body.scrollTop + body.clientHeight >= body.scrollHeight - 40;
@@ -272,13 +288,33 @@ function renderLog() {
   $("#logCount").textContent = `Showing ${rows.length} of ${total} matching (${S.recs.length} collected)`;
   if (atBottom) body.scrollTop = body.scrollHeight;
 }
-$("#logBody").addEventListener("click", (e) => {
-  const row = e.target.closest(".lr"); if (!row) return;
+function openDetail(row) {
   const r = S.recs.find((x) => x.id === +row.dataset.id); if (!r) return;
   $("#detBody").textContent = JSON.stringify({ time: clock(r.t), seq: r.seq, type: r.type, tags: r.tags, raw: r.raw, fields: r.fields, dbc: r.dbc }, null, 2);
+  S.detReturn = row;
   $("#recDetail").hidden = false;
+  $("#detClose").focus();
+}
+function closeDetail() {
+  $("#recDetail").hidden = true;
+  if (S.detReturn && document.contains(S.detReturn)) S.detReturn.focus(); else $("#logBody").focus();
+}
+$("#logBody").addEventListener("click", (e) => { const row = e.target.closest(".lr"); if (row) openDetail(row); });
+$("#logBody").addEventListener("keydown", (e) => {
+  const rows = $$(".lr", $("#logBody")); if (!rows.length) return;
+  const cur = document.activeElement.closest?.(".lr");
+  let i = cur ? rows.indexOf(cur) : -1;
+  if (e.key === "ArrowDown") i = Math.min(rows.length - 1, i + 1);
+  else if (e.key === "ArrowUp") i = i < 0 ? rows.length - 1 : Math.max(0, i - 1);
+  else if (e.key === "Home") i = 0;
+  else if (e.key === "End") i = rows.length - 1;
+  else if ((e.key === "Enter" || e.key === " ") && cur) { e.preventDefault(); openDetail(cur); return; }
+  else if (e.key === "Escape" && cur) { $("#logBody").focus(); S.dirtyLog = true; return; }
+  else return;
+  e.preventDefault(); rows[i].focus();
 });
-$("#detClose").addEventListener("click", () => ($("#recDetail").hidden = true));
+$("#detClose").addEventListener("click", closeDetail);
+$("#recDetail").addEventListener("keydown", (e) => { if (e.key === "Escape") closeDetail(); });
 
 function download(name, text, type) {
   const a = document.createElement("a");
@@ -388,10 +424,18 @@ function onState(st) {
   $("#crcVal").textContent = st.latest.BRIDGE?.crc_errors ?? 0;
   const rec = $("#recBtn");
   rec.classList.toggle("on", !!st.recording);
+  rec.setAttribute("aria-pressed", !!st.recording);
+  for (const bus of [1, 2]) {
+    const c = st.latest["CAN_STATUS_" + bus], p = $("#busPill" + bus); if (!p) continue;
+    const bad = c && (c.bus_off || c.state_name === "ERROR");
+    p.className = "pill bus " + (!c ? "" : bad ? "err" : c.ready ? "ok" : "run");
+    $("b", p).textContent = !c ? `CAN${bus} –` : c.ready ? `CAN${bus} ${c.baud}k` : `CAN${bus} ${c.state_name.toLowerCase()}`;
+  }
   $("span", rec).textContent = st.recording ? `Recording ${st.recording.rows}` : "Record";
   rec.title = st.recording ? `Writing data/logs/${st.recording.name}` : "Record session to CSV";
   for (const t of CH_ORDER) { const el = $("#cnt-" + t); if (el) el.textContent = st.counts["#" + t] || 0; }
   renderLink(); renderSystem(); renderVehicle(); renderUpdates(); renderDevice();
+  window.VCUProducts?.onState(st);
 }
 function renderLink() {
   const L = S.snap?.link || {};
@@ -425,6 +469,7 @@ $("#scanBtn").addEventListener("click", async () => {
   try {
     const r = await POST("/api/scan", { timeout: +$("#scanTime").value, name_filter: $("#scanName").value, only_bridge: $("#scanBridge").checked });
     renderDevices(r.devices);
+    if (r.note) $("#devList").insertAdjacentHTML("afterbegin", `<p class="note warn" role="status">${esc(r.note)}</p>`);
   } catch (e) {
     toast(e.message, true);
     renderDevices([{ address: "SIM", name: "Zitto_MB_V1_Bridge (simulator)", rssi: -42, bridge: true }]);
@@ -437,6 +482,7 @@ function rssiBars(r) {
 function renderDevices(list) {
   $("#devList").innerHTML = list.length ? list.map((d) => `<div class="dev ${d.bridge ? "bridge" : ""}"><div><div class="nm">${esc(d.name)}</div><div class="ad">${esc(d.address)}</div></div><div>${rssiBars(d.rssi)}</div><button class="${d.bridge ? "primary" : ""}" data-addr="${esc(d.address)}" data-name="${esc(d.name)}">Connect</button></div>`).join("")
     : `<p class="empty">No devices found. Check the ESP32 is powered and advertising as Zitto_MB_V1_Bridge, then scan again.</p>`;
+  $$("#devList .dev button").forEach((b) => b.setAttribute("aria-label", `Connect to ${b.dataset.name} ${b.dataset.addr}`));
 }
 $("#devList").addEventListener("click", async (e) => {
   const b = e.target.closest("[data-addr]"); if (!b) return;
@@ -485,7 +531,7 @@ function renderSystem() {
   const L = S.snap.latest;
   const imu = L.IMU, csa = L.CSA;
   const staleI = !S.imuT || now() - S.imuT > 3, staleC = !S.csaT || now() - S.csaT > 3;
-  $("#imuAge").textContent = imu ? (staleI ? `Last sample ${ago(S.imuT)} ago` : "Live, every 500 ms") : "No IMU data yet. Enable the IMU module on the ESP32 and S32K page.";
+  $("#imuAge").textContent = imu ? (staleI ? `Last sample ${ago(S.imuT)} ago` : "Live, every 100 ms") : "No IMU data yet. Enable the IMU module on the ESP32 and S32K page.";
   $("#csaAge").textContent = csa ? (staleC ? `Last sample ${ago(S.csaT)} ago` : "Live, every 200 ms") : "No CSA data yet";
   if (imu) {
     tiles($("#imuTiles"), [
@@ -642,7 +688,8 @@ function renderUpdates() {
   $("#otaEvents").textContent = o.events.join("\n") || "Transfer events appear here.";
 
   // DBC list
-  $("#dbcList").innerHTML = S.snap.dbc.map((d) => `<div class="dbc"><div><b>${esc(d.name)}</b><div class="muted">${d.messages} messages, ${d.signals} signals</div></div><div class="row"><label class="chk"><input type="checkbox" data-dbc="${esc(d.name)}" data-bus="1" ${d.buses.includes(1) ? "checked" : ""}> CAN1</label><label class="chk"><input type="checkbox" data-dbc="${esc(d.name)}" data-bus="2" ${d.buses.includes(2) ? "checked" : ""}> CAN2</label></div><button class="ghost small danger" data-rm="${esc(d.name)}">Remove</button></div>`).join("") || `<p class="muted">No DBC loaded. Frames still show in the CAN trace as raw bytes.</p>`;
+  const dbcSig = JSON.stringify(S.snap.dbc);
+  if (S.dbcListSig !== dbcSig && !$("#dbcList").contains(document.activeElement)) { S.dbcListSig = dbcSig; $("#dbcList").innerHTML = S.snap.dbc.map((d) => `<div class="dbc"><div><b>${esc(d.name)}</b><div class="muted">${d.messages} messages, ${d.signals} signals</div></div><div class="row"><label class="chk"><input type="checkbox" data-dbc="${esc(d.name)}" data-bus="1" ${d.buses.includes(1) ? "checked" : ""}> CAN1</label><label class="chk"><input type="checkbox" data-dbc="${esc(d.name)}" data-bus="2" ${d.buses.includes(2) ? "checked" : ""}> CAN2</label></div><button class="ghost small danger" data-rm="${esc(d.name)}" aria-label="Remove ${esc(d.name)}">Remove</button></div>`).join("") || `<p class="muted">No DBC loaded. Frames still show in the CAN trace as raw bytes.</p>`; }
   if (S.dbcNames !== S.snap.dbc.map((d) => d.name).join("|")) refreshDbcPick();
 }
 hookDrop($("#dbcDrop"), $("#dbcFile"), async (files) => {
@@ -664,7 +711,8 @@ $("#dbcList").addEventListener("change", (e) => {
 $("#dbcList").addEventListener("click", async (e) => {
   const b = e.target.closest("[data-rm]"); if (!b) return;
   if (!confirm(`Remove ${b.dataset.rm}? Its decoded values are cleared.`)) return;
-  await act(() => DEL(`/api/dbc/${encodeURIComponent(b.dataset.rm)}`), "DBC removed");
+  await act(() => DEL(`/api/dbc/${encodeURIComponent(b.dataset.rm)}`), "DBC removed. Automatic matching will not load it again; load it from the library to undo.");
+  S.libLoaded = null; S.dbcListSig = null; if (S.win === "updates") loadLibrary();
   refreshDbcPick();
 });
 async function refreshDbcPick() {
@@ -680,12 +728,15 @@ async function loadDbcBrowser(name) {
   if (!name) return;
   const d = await act(() => GET(`/api/dbc/${encodeURIComponent(name)}`)); if (!d) return;
   S.dbcDesc = d;
-  $("#dbcMsgs").innerHTML = d.messages.map((m, i) => `<li data-i="${i}" class="${i === 0 ? "on" : ""}">${esc(m.name)}<small>${hexId(m.id, m.ext)} dlc ${m.dlc}${m.cycle_ms ? ", " + m.cycle_ms + " ms" : ""}${m.senders.length ? ", from " + esc(m.senders.join(", ")) : ""}</small></li>`).join("");
+  $("#dbcMsgs").innerHTML = d.messages.map((m, i) => `<li data-i="${i}" tabindex="0" role="button" aria-pressed="${i === 0}" class="${i === 0 ? "on" : ""}">${esc(m.name)}<small>${hexId(m.id, m.ext)} dlc ${m.dlc}${m.cycle_ms ? ", " + m.cycle_ms + " ms" : ""}${m.senders.length ? ", from " + esc(m.senders.join(", ")) : ""}</small></li>`).join("");
   showDbcMsg(0);
 }
 $("#dbcMsgs").addEventListener("click", (e) => {
   const li = e.target.closest("li"); if (!li) return;
-  $$("li", $("#dbcMsgs")).forEach((x) => x.classList.toggle("on", x === li)); showDbcMsg(+li.dataset.i);
+  $$("li", $("#dbcMsgs")).forEach((x) => { x.classList.toggle("on", x === li); x.setAttribute("aria-pressed", x === li); }); showDbcMsg(+li.dataset.i);
+});
+$("#dbcMsgs").addEventListener("keydown", (e) => {
+  if ((e.key === "Enter" || e.key === " ") && e.target.closest("li")) { e.preventDefault(); e.target.click(); }
 });
 function showDbcMsg(i) {
   const m = S.dbcDesc?.messages[i]; if (!m) return;
@@ -696,9 +747,9 @@ function showDbcMsg(i) {
 const MOD_META = { IMU: ["ICM-42670-P over I2C", "--c-imu", "imu"], CSA: ["Current sense", "--c-csa", "csa"], CAN1: ["FlexCAN1, TCAN334", "--c-can1", "can1"], CAN2: ["FlexCAN2, PTC16/PTB13", "--c-can2", "can2"], FLM: ["Flash log manager", "--c-flash", "flm"] };
 function buildDevice() {
   $("#modList").innerHTML = Object.entries(MOD_META).map(([m, [d, c]]) => `<div class="mod" style="--cc:var(${c})"><div><b>${m}</b><small>${d}</small></div><button class="sw" role="switch" aria-checked="false" aria-label="${m} module" data-mod="${m}"></button></div>`).join("");
-  $("#gpioTable tbody").innerHTML = S.hw.s32_gpio.map((g) => `<tr data-g="${g.id}"><td class="num">${g.id}</td><td class="mono">${g.port}</td><td class="num">${g.pkg_pin}</td><td><select data-f="dir"><option value="0">Input</option><option value="1">Output</option></select></td><td><button class="lvl" data-f="st" disabled>LOW</button></td><td class="rep mono">–</td><td><button class="small" data-f="apply">Apply</button></td></tr>`).join("");
+  $("#gpioTable tbody").innerHTML = S.hw.s32_gpio.map((g) => `<tr data-g="${g.id}"><td class="num">${g.id}</td><td class="mono">${g.port}</td><td class="num">${g.pkg_pin}</td><td><select data-f="dir" aria-label="GPIO ${g.id} ${g.port} direction"><option value="0">Input</option><option value="1">Output</option></select></td><td><button class="lvl" data-f="st" disabled aria-pressed="false" aria-label="GPIO ${g.id} output level">LOW</button></td><td class="rep mono" aria-live="off">–</td><td><button class="small" data-f="apply" aria-label="Apply GPIO ${g.id} ${g.port}">Apply</button></td></tr>`).join("");
   S.hw.s32_gpio.forEach((g) => (S.gpioDraft[g.id] = { dir: 0, state: 0 }));
-  $("#espGrid").innerHTML = S.hw.esp_pins.map((p) => `<div class="esp"><b>GPIO${p.pin}</b><small>${esc(p.note)}</small><div class="row"><button class="lvl small" data-esp="${p.pin}" data-v="0">LOW</button><button class="lvl small" data-esp="${p.pin}" data-v="1">HIGH</button></div></div>`).join("");
+  $("#espGrid").innerHTML = S.hw.esp_pins.map((p) => `<div class="esp"><b>GPIO${p.pin}</b><small>${esc(p.note)}</small><div class="row"><button class="lvl small" data-esp="${p.pin}" data-v="0" aria-label="ESP32 GPIO${p.pin} low">LOW</button><button class="lvl small" data-esp="${p.pin}" data-v="1" aria-label="ESP32 GPIO${p.pin} high">HIGH</button></div></div>`).join("");
   $("#refBox").textContent = REF;
 }
 $("#modList").addEventListener("click", (e) => {
@@ -706,6 +757,7 @@ $("#modList").addEventListener("click", (e) => {
   const want = !b.classList.contains("on");
   S.modPend[b.dataset.mod] = now();
   b.classList.add("pend");
+  window.VCUProducts?.pending("mod", b.dataset.mod, want);
   act(() => POST("/api/cmd/module", { name: b.dataset.mod, state: want }), `${b.dataset.mod} ${want ? "enable" : "disable"} sent`);
 });
 $("#stReq").addEventListener("click", () => act(() => POST("/api/cmd/status"), "Status requested"));
@@ -721,10 +773,11 @@ $("#gpioTable").addEventListener("click", (e) => {
   const tr = e.target.closest("tr"); if (!tr) return;
   const id = +tr.dataset.g, d = S.gpioDraft[id];
   if (e.target.dataset.f === "st") {
-    d.state ^= 1; e.target.textContent = d.state ? "HIGH" : "LOW"; e.target.classList.toggle("hi", !!d.state);
+    d.state ^= 1; e.target.textContent = d.state ? "HIGH" : "LOW"; e.target.classList.toggle("hi", !!d.state); e.target.setAttribute("aria-pressed", !!d.state);
   } else if (e.target.dataset.f === "apply") {
     const via = $("#gpioVia").value;
     if (via === "native" && id === 13) { toast("The stock bridge rejects ID 13. Switch to RAW frame or flash the patched bridge.", true); return; }
+    window.VCUProducts?.pending("gpio", id, { dir: d.dir, state: d.dir ? d.state : 0 });
     act(() => POST("/api/cmd/s32gpio", { id, dir: d.dir, state: d.dir ? d.state : 0, via }), `GPIO ${id} command sent`);
   }
 });
@@ -783,7 +836,7 @@ function renderDevice() {
   $("#flmKv").innerHTML = F ? [["Pages used", `${F.used} of ${F.total}`], ["Free", F.free], ["Records", F.records], ["Next page", F.next]].map(([k, v]) => `<dt>${k}</dt><dd>${esc(v)}</dd>`).join("") : `<dt>Status</dt><dd>No FLM report yet</dd>`;
 }
 
-const REF = `UART frame (S32K144 <-> ESP32, 115200 8N1)
+const REF = `UART frame (S32K144 <-> ESP32, 500000 8N1)
   AA 55 | VER 01 | TYPE | LEN_L LEN_H | SEQ | PAYLOAD | CRC16_L CRC16_H
   CRC16 Modbus (poly 0xA001, init 0xFFFF) over VER..PAYLOAD
 
@@ -794,6 +847,8 @@ Commands to S32K144 (via bridge RAW:<TT><hex>)
   04 MCU_RESET   (AIRCR 0x05FA0004 after 100 ms)
   05 LED_CTRL    period u16 LE, duty %, 0
   06 FLASH_RD   07 FLASH_WR data   08 FLASH_DEL
+  09 IMU_ZERO    restart the displacement origin
+  70 RTT_ENABLE  71 RTT_DISABLE   (mirror RTT debug text to UART)
   10 OTA_START   size u32 BE, crc32 u32 BE
   11 OTA_DATA    chunk   12 OTA_FINISH   13 OTA_ABORT
 
@@ -806,6 +861,48 @@ Bridge text commands (BLE RX 6e400002)
   ESP:<pin>:<0|1>
   S32:<id>:<dir>:<state>
   RAW:<TT><payload hex>      (VCU Master bridge patch)`;
+
+/* ------------------------------------------------------------------ DBC library (V0.0074) */
+async function loadLibrary(force = false) {
+  if (!S.lib || force) {
+    const r = await act(() => GET("/api/library")); if (!r) return;
+    S.lib = r.items; S.libLoaded = new Set(r.loaded); $("#libAuto").checked = r.auto;
+    const prods = [...new Set(r.items.map((i) => i.product))].sort();
+    $("#libProduct").innerHTML = `<option value="">All</option>` + prods.map((p) => `<option>${esc(p)}</option>`).join("");
+  } else if (!S.libLoaded) {
+    const r = await act(() => GET("/api/library")); if (r) S.libLoaded = new Set(r.loaded);
+  }
+  renderLibrary();
+  matchLibrary();
+}
+function renderLibrary() {
+  if (!S.lib) return;
+  const q = $("#libSearch").value.trim().toLowerCase(), prod = $("#libProduct").value;
+  const rows = S.lib.filter((i) => (!prod || i.product === prod) && (!q || i.id.toLowerCase().includes(q))).slice(0, 300);
+  $("#libTable tbody").innerHTML = rows.map((i) => `<tr><td>${esc(i.product)}</td><td>${esc(i.vendor)}</td><td class="mono">${esc(i.file)}</td><td class="num">${i.messages}</td><td>${S.libLoaded?.has(i.id) ? `<span class="loaded">Loaded</span>` : `<button class="small" data-lib="${esc(i.id)}" aria-label="Load ${esc(i.file)}">Load</button>`}</td></tr>`).join("")
+    || `<tr><td colspan="5" class="unk">No DBC matches that search.</td></tr>`;
+}
+async function matchLibrary() {
+  const r = await act(() => GET("/api/library/match")); if (!r) return;
+  const box = $("#libMatch");
+  if (!r.unknown) { box.innerHTML = `<p class="muted">Every CAN frame received in the last 15 s is decoded by a loaded DBC.</p>`; return; }
+  box.innerHTML = `<p class="muted">${r.unknown} identifier(s) on the bus are not in any loaded DBC: <span class="mono">${esc(r.unknown_ids.slice(0, 8).join(", "))}${r.unknown_ids.length > 8 ? " …" : ""}</span></p>` +
+    (r.candidates.length ? `<div class="libmatch">${r.candidates.slice(0, 5).map((c, i) => `<div class="libcand ${i === 0 ? "best" : ""}"><div><b>${esc(c.vendor || c.product)} / ${esc(c.file)}</b><span class="muted">defines ${c.matched} of these IDs (${Math.round(c.coverage * 100)} % of its ${c.messages} messages seen) on CAN${esc(c.buses.join("/"))}</span></div><button class="${i === 0 ? "primary" : ""} small" data-lib="${esc(c.id)}" data-buses="${esc(c.buses.join(","))}" aria-label="Load ${esc(c.file)}">Load</button></div>`).join("")}</div>`
+      : `<p class="muted">No library DBC defines these identifiers. Upload the right DBC above.</p>`);
+}
+$("#libSearch").addEventListener("input", renderLibrary);
+$("#libProduct").addEventListener("change", renderLibrary);
+$("#libMatchBtn").addEventListener("click", matchLibrary);
+$("#libAuto").addEventListener("change", (e) => act(() => POST("/api/library/auto", { on: e.target.checked }), e.target.checked ? "Automatic DBC matching on" : "Automatic DBC matching off"));
+$("#win-updates").addEventListener("click", async (e) => {
+  const b = e.target.closest("[data-lib]"); if (!b) return;
+  const buses = b.dataset.buses ? b.dataset.buses.split(",").map(Number) : [1, 2].filter((n) => $("#libB" + n).checked);
+  if (!buses.length) { toast("Pick CAN1, CAN2 or both first.", true); return; }
+  b.disabled = true;
+  const r = await act(() => POST("/api/library/load", { id: b.dataset.lib, buses }));
+  if (r) { toast(`${r.dbc.name} loaded on CAN${buses.join("/")} (${r.dbc.messages} messages)`); S.libLoaded = null; await loadLibrary(); refreshDbcPick(); }
+  else b.disabled = false;
+});
 
 /* ------------------------------------------------------------------ record */
 $("#recBtn").addEventListener("click", () => {
@@ -822,6 +919,9 @@ function frame() {
   renderLog();
   setTimeout(() => requestAnimationFrame(frame), 50);
 }
+
+/* ------------------------------------------------------------------ products.js bridge */
+window.VCU = { S, $, $$, esc, POST, GET, act, toast };
 
 /* ------------------------------------------------------------------ boot */
 (async function boot() {

@@ -1,0 +1,137 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_:
+
+
+BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
+ SG_ C17 : 0|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C18 : 0|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C19 : 0|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C20 : 0|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+
+BO_ 2216688362 CellVoltage1: 8 Vector__XXX
+ SG_ C1 : 0|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C2 : 16|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C3 : 32|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C4 : 48|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+
+BO_ 2233465578 CellVoltage2: 8 Vector__XXX
+ SG_ C5 : 0|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C6 : 16|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C7 : 32|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C8 : 48|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+
+BO_ 2250242794 CellVoltage3: 8 Vector__XXX
+ SG_ C9 : 0|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C10 : 16|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C11 : 32|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C12 : 48|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+
+BO_ 2267020010 CellVoltage4: 8 Vector__XXX
+ SG_ C13 : 0|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C14 : 16|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C15 : 32|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C16 : 48|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+
+BO_ 2233531114 CellVoltage6: 8 Vector__XXX
+ SG_ Cavg : 0|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ Vstack : 16|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ Cmin : 32|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ Cmax : 48|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+
+BO_ 2283928298 Current: 8 Vector__XXX
+ SG_ ShuntCurrent : 32|16@1- (0.1,0) [-3276.8|3276.7] "Amps" Vector__XXX
+ SG_ SOH : 56|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CurrentCSA : 0|16@1- (0.1,0) [-3276.8|3276.7] "Amps" Vector__XXX
+ SG_ CurrentAFE : 16|16@1- (0.1,0) [-3276.8|3276.7] "Amps" Vector__XXX
+ SG_ SOC : 48|8@1+ (1,0) [0|255] "%" Vector__XXX
+
+BO_ 2485320426 Temperature1: 8 Vector__XXX
+ SG_ T1 : 0|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ T2 : 16|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ T3 : 32|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ T4 : 48|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+
+BO_ 2351168234 State: 8 Vector__XXX
+ SG_ FANStatus : 48|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ SdcardFilno : 32|16@1+ (1,0) [0|65535] "None" Vector__XXX
+ SG_ ErrorState3 : 24|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ VehicleState : 16|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ ErrorState2 : 8|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ ErrorState1 : 0|8@1+ (1,0) [0|255] "None" Vector__XXX
+
+BO_ 2485451498 Temperature2: 8 Vector__XXX
+ SG_ T5 : 0|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ T6 : 16|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ T7 : 32|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ T8 : 48|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+
+BO_ 2485517034 Temperature3: 8 Vector__XXX
+ SG_ T9 : 0|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ T10 : 16|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ T11 : 32|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ T12 : 48|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+
+BO_ 2485582570 Temperature4: 8 Vector__XXX
+ SG_ T13 : 0|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ T14 : 16|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ Tmin : 32|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ Tmax : 48|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+
+BO_ 2383739883 Charge_parameters: 8 Vector__XXX
+ SG_ ChargeETA : 40|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ ReserveSwitch : 16|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ ChargeCurrentDemand : 0|16@1+ (1,0) [0|65535] "amp" Vector__XXX
+ SG_ ChargerError1 : 24|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ ChargerError2 : 32|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ CapacityActive : 48|16@1+ (0.01,0) [0|655.35] "ah" Vector__XXX
+
+BO_ 2585066475 Authentication: 8 Vector__XXX
+ SG_ SWVersionMajor : 8|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ SWVersionMinor : 16|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ BootLoaderVersionMajor : 24|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ BootLoaderVersionMinor : 32|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ CellType : 40|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ RatedCapacity : 48|8@1+ (1,0) [0|255] "Ah" Vector__XXX
+ SG_ CustomeID : 56|8@1+ (1,0) [0|255] "None" Vector__XXX
+
+BO_ 2568284922 BatteryID: 8 Vector__XXX
+ SG_ BatteryID : 0|64@1+ (1,0) [0|1.84467440737096E+019] "None" Vector__XXX
+
+
+
+CM_ BO_ 3221225472 "This is a message for not used signals, created by Vector CANdb++ DBC OLE DB Provider.";
+

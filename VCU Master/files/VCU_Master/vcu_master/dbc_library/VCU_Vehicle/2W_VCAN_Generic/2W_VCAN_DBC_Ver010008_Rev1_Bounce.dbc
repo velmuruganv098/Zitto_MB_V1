@@ -1,0 +1,651 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: IPC MCU DIU VCU TEL BMS
+VAL_TABLE_ Cruise_Mode 1 "Cruise Mode ON" 0 "Cruise Mode OFF" ;
+VAL_TABLE_ Vt_Sig_SideStandIndicator 3 "TBD" 2 "TBD" 1 "ON" 0 "Off" ;
+
+
+BO_ 2147483814 Cruise: 8 Vector__XXX
+ SG_ Cruise_Mode : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2555449408 MCU4: 8 MCU
+ SG_ Sig_MCU4_VehcleNotReadyIndicator : 4|2@1+ (1,0) [0|3] ""  IPC
+ SG_ Sig_MCU4_VehicleReadyIndicator : 2|2@1+ (1,0) [0|3] ""  IPC
+ SG_ Sig_MCU4_SideStandIndicator : 0|2@1+ (1,0) [0|3] ""  IPC
+
+BO_ 2421161808 Msg_DIU6: 8 DIU
+ SG_ Sig_FltAuxRelayShortOrOpen : 3|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ Sig_FltAuxRelayShort : 2|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ SigFltAuxBatteryLowFault : 1|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ SigFltAuxBatteryLowWarning : 0|1@1+ (1,0) [0|1] ""  IPC,MCU
+
+BO_ 2555006992 Msg_IPC1: 8 IPC
+ SG_ Sig_IPC1_Odometer : 0|32@1+ (0.1,0) [0|429496729.5] "Km"  DIU
+
+BO_ 2487845456 Msg_DriveParameters: 8 DIU
+ SG_ Sig_AvailableEnergy : 48|16@1+ (0.01,0) [0|655.35] "KWHR"  MCU
+ SG_ Sig_MinCellTemp : 40|8@1- (1,0) [-128|127] "degC"  MCU
+ SG_ Sig_MaxCellTemp : 32|8@1- (1,0) [-128|127] "degC"  MCU
+ SG_ sigNoOfCommunicationLossBPs : 24|8@1+ (1,0) [0|5] "Number"  MCU
+ SG_ sigNoOfActiveBPs : 16|8@1+ (1,0) [0|5] "Number"  MCU
+ SG_ sigPackVoltage : 0|16@1+ (0.01,0) [0|60] "V"  MCU
+
+BO_ 2553303104 MCU3: 8 MCU
+ SG_ sigFltTMotorSelfLearning : 21|1@1+ (1,0) [0|1] ""  DIU
+ SG_ sigFltMotorOverload : 20|1@1+ (1,0) [0|1] ""  DIU
+ SG_ sigFltMotorStalling : 19|1@1+ (1,0) [0|1] ""  DIU
+ SG_ sigFltBrake : 18|1@1+ (1,0) [0|1] ""  DIU
+ SG_ sigFltContPlus15V : 17|1@1+ (1,0) [0|1] ""  DIU
+ SG_ sigFltContUnderVoltage : 16|1@1+ (1,0) [0|1] ""  DIU
+ SG_ sigFltContOverVoltage : 15|1@1+ (1,0) [0|1] ""  DIU
+ SG_ sigFltContOverTempProtection : 14|1@1+ (1,0) [0|1] ""  DIU
+ SG_ sigFltMotorOverTempProtection : 13|1@1+ (1,0) [0|1] ""  DIU
+ SG_ sigFltThrottle : 12|1@1+ (1,0) [0|1] ""  DIU
+ SG_ sigFltMotorLockedRotating : 11|1@1+ (1,0) [0|1] ""  DIU
+ SG_ sigFltMotorStartFail : 10|1@1+ (1,0) [0|1] ""  DIU
+ SG_ sigFltMotorEncoder : 9|1@1+ (1,0) [0|1] ""  DIU
+ SG_ sigFltMotorPositionSensor : 8|1@1+ (1,0) [0|1] ""  DIU
+ SG_ sigFltContOverCurrent : 7|1@1+ (1,0) [0|1] ""  DIU
+ SG_ sigFltEEProm : 6|1@1+ (1,0) [0|1] ""  DIU
+ SG_ sigFltFOCBootProcedure : 5|1@1+ (1,0) [0|1] ""  DIU
+ SG_ sigFltFOCRunningSW : 4|1@1+ (1,0) [0|1] ""  DIU
+ SG_ sigFltMotorMissingPhase : 3|1@1+ (1,0) [0|1] ""  DIU
+ SG_ sigFltMOSFET : 2|1@1+ (1,0) [0|1] ""  DIU
+ SG_ sigFltGUIParamInEEPROM : 1|1@1+ (1,0) [0|1] ""  DIU
+ SG_ sigFltCurrentSamplingCkt : 0|1@1+ (1,0) [0|1] ""  DIU
+
+BO_ 2552713280 MCU2: 8 MCU
+ SG_ sigOdometer : 32|32@1+ (0.1,0) [0|429496729.5] "Kms"  DIU
+ SG_ sigCapacitorVoltage : 16|16@1+ (0.1,0) [0|80] "Volt"  DIU
+ SG_ sigMotorRPM : 0|16@1+ (1,0) [0|8000] "RPM"  DIU
+
+BO_ 2552647744 MCU1: 8 MCU
+ SG_ sigBrake : 40|8@1+ (1,0) [0|100] "%"  DIU
+ SG_ sigDriveMode : 56|3@1+ (1,0) [0|7] ""  DIU
+ SG_ sigSpeed : 48|8@1+ (1,0) [0|100] "Kmph"  DIU
+ SG_ sigThrottle : 32|8@1+ (1,0) [0|100] "%"  DIU
+ SG_ sigRMSCurrent : 16|16@1+ (0.1,0) [0|500] "Amp"  DIU
+ SG_ sigMotorTemperature : 8|8@1- (1,0) [-128|127] "DegC"  DIU
+ SG_ sigControllerTemperature : 0|8@1- (1,0) [-128|127] "DegC"  DIU
+
+BO_ 2485403728 Msg_DIU3: 8 DIU
+ SG_ sigMaxCellVoltageSetpoint : 48|16@1+ (0.001,0) [0|5] "Volt"  MCU
+ SG_ sigMaxCellVoltage : 32|16@1+ (0.001,0) [0|5] "Volt"  MCU
+ SG_ sigMinCellVoltageSetpoint : 16|16@1+ (0.001,0) [0|5] "Volt"  MCU
+ SG_ sigMinCellVoltage : 0|16@1+ (0.001,0) [0|5] "Volt"  MCU
+
+BO_ 2485338192 Msg_DIU2: 8 DIU
+ SG_ Sig_RegenCurrentLimit_MSB : 48|8@1+ (1,0) [0|255] "Amp"  MCU
+ SG_ Sig_DriveCurrentLimit_MSB : 40|8@1+ (1,0) [0|255] "Amp"  MCU
+ SG_ sigVehicleModeRequest : 32|3@1+ (1,0) [0|7] ""  MCU
+ SG_ Sig_RegenCurrentLimit_LSB : 24|8@1+ (1,0) [0|255] "Amp"  MCU
+ SG_ Sig_DriveCurrentLimit_LSB : 16|8@1+ (1,0) [0|255] "Amp"  MCU
+ SG_ sigBatteryCurrent : 0|16@1- (0.1,0) [-3276.8|3276.7] "Amp"  MCU
+
+BO_ 2419654480 Msg_DIU1: 8 DIU
+ SG_ SigFltBPPhaseMismatch : 63|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ SigFltShortCircuitAllBPs : 62|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ SigFltShortCircuitAnyBP : 61|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ SigFltBPTypMsmtchCapTmoutAllBPs : 60|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ SigFltBPTypMsmtchCapTmoutAnyBP : 59|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ SigFltSOCOrPackVoltageImbalance : 58|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ SigFltOCPorSCPAllBPs : 57|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ SigFltOCPorSCPAnyBP : 56|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ SigFltThermalRunawayFault : 55|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltSevDckPosTerminalTempAnyBP : 49|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltSevDckNegTerminalTempAnyBP : 50|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltPackPosSevOverTempAnyBP : 54|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltMOSFETBodySevOverTempAnyBP : 53|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltBatterySevUnderVtgAnyBP : 48|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltBatterySevUnderTempAnyBP : 46|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltBatterySevOverVtgAnyBP : 47|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltBatteryPosSevOverTempAnyBP : 51|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltBatterySevOverTempAnyBP : 45|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltBatteryNegSevOverTempAnyBP : 52|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltDIUMOSFETSevOverTemp : 44|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltDIUMOSFETOverTemp : 43|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltPackPosSevOverTempAllBP : 42|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltPackPosOverTemp : 41|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltMOSFETBodySevOverTempAllBP : 40|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltMOSFETBodyOverTemp : 39|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltBatteryNegSevOverTempAllBP : 38|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltBatteryNegOverTemp : 37|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltBatteryPosSevOverTempAllBP : 36|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ sigFltBatteryPosOverTemp : 35|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltAllChargeFlagsNotSet : 34|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltBPSerialNoMismatch : 33|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltBPIDStatusNotReceived : 32|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltErroneousDriveStatusRcvd : 31|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltMultipleDriveEnStatusRcvd : 30|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltNoBPWithDriveEnable : 29|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltTargetDOCKIDNotReceived : 28|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltTargetDOCKIDMismatch : 27|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltEVOUTSenseMalfunction : 26|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltVCUCommunicationFailure : 25|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltKeyAlreadyON : 24|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ SigFltThermalRunawayWarning : 23|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ SigFltOverCurrentAllBP : 22|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ SigFltOverCurrentAnyBP : 21|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltMCUCommunicationFault : 19|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltEVInSenseMalfunction : 20|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltPermDckNegTerminalTemp : 18|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltPermDckPosTerminalTemp : 17|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltLessBatteryDuringDrive : 16|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltLessBatteryDuringKeyOn : 15|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltOverDckPosTerminalTemp : 13|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltOverDckNegTerminalTemp : 14|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltSevDckNegTerminalTempAllBP : 12|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltSevDckPosTerminalTempAllBP : 11|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltPrechargeFailure : 10|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltMOSFETOff : 9|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltBatterySevUnderVtgAllBP : 8|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltBatteryUnderVtg : 7|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltBatteryOverVtg : 6|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltBatterySevOverVtgAllBP : 5|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltBatterySevUnderTempAllBP : 4|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltBatteryUnderTemp : 3|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltBatterySevOverTempAllBP : 2|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltBatteryOverTemp : 1|1@1+ (1,0) [0|1] ""  IPC,MCU
+ SG_ sigFltBatteryFault : 0|1@1+ (1,0) [0|1] ""  IPC,MCU
+
+BO_ 2418544720 Msg_DIU4: 8 DIU
+ SG_ sigBatteryMalfunctionLight : 36|2@1+ (1,0) [0|3] ""  MCU,IPC
+ SG_ sigKeyOnIndicator : 34|2@1+ (1,0) [0|3] ""  IPC,MCU
+ SG_ sigDistanceToEmpty : 8|16@1+ (1,0) [0|65535] "Kms"  IPC,MCU
+ SG_ sigStateOfCharge : 0|8@1+ (1,0) [0|100] "%"  IPC,MCU
+
+BO_ 2421035088 Msg_DIU5: 8 DIU
+ SG_ Sig_DIU5_Mode3WHrPerKm : 32|16@1+ (0.1,0) [0|6553.5] "WHr/Km"  IPC
+ SG_ Sig_DIU5_Mode2WHrPerKm : 16|16@1+ (0.1,0) [0|6553.5] "WHr/Km"  IPC
+ SG_ Sig_DIU5_Mode1WHrPerKm : 0|16@1+ (0.1,0) [0|6553.5] "WHr/Km"  IPC
+
+
+
+CM_ SG_ 2555449408 Sig_MCU4_VehcleNotReadyIndicator "ON: When drive train is in Error and vehicle cannot drive";
+CM_ SG_ 2555449408 Sig_MCU4_VehicleReadyIndicator "ON: When drive train is Okay and vehicle ready to drive";
+CM_ SG_ 2555449408 Sig_MCU4_SideStandIndicator "ON: When side stand is applied, MCU will cut off Motor power
+OFF: When side stand is not applied, MCU will keep motor power
+";
+CM_ SG_ 2421161808 Sig_FltAuxRelayShortOrOpen "Reserved - Short to Gnd or Open";
+CM_ SG_ 2421161808 Sig_FltAuxRelayShort "Reserved - Short to HV";
+CM_ SG_ 2421161808 SigFltAuxBatteryLowFault "Aux Battery Voltage Less Critical";
+CM_ SG_ 2421161808 SigFltAuxBatteryLowWarning "Aux Battery Voltage Less Warning ";
+CM_ SG_ 2555006992 Sig_IPC1_Odometer "Odometer value from IPC.";
+CM_ SG_ 2487845456 Sig_AvailableEnergy "Total Available Energy of active BPs";
+CM_ SG_ 2487845456 Sig_MinCellTemp "Min Cell Temperature of active BPs";
+CM_ SG_ 2487845456 Sig_MaxCellTemp "Max Cell Temperature of active BPs";
+CM_ SG_ 2487845456 sigNoOfCommunicationLossBPs "Number of BPs not communicating with DIU.";
+CM_ SG_ 2487845456 sigNoOfActiveBPs "Number of BPs are dispensing power.";
+CM_ SG_ 2487845456 sigPackVoltage "Pack Voltage - Output Voltage of the Battery";
+CM_ BO_ 2553303104 "Other Faults from the motor controller should be added in this message.
+
+Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2553303104 sigFltTMotorSelfLearning "Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2553303104 sigFltMotorOverload "Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2553303104 sigFltMotorStalling "Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2553303104 sigFltBrake "Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2553303104 sigFltContPlus15V "Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2553303104 sigFltContUnderVoltage "Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2553303104 sigFltContOverVoltage "Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2553303104 sigFltContOverTempProtection "Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2553303104 sigFltMotorOverTempProtection "Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2553303104 sigFltThrottle "Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2553303104 sigFltMotorLockedRotating "Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2553303104 sigFltMotorStartFail "Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2553303104 sigFltMotorEncoder "Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2553303104 sigFltMotorPositionSensor "Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2553303104 sigFltContOverCurrent "Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2553303104 sigFltEEProm "Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2553303104 sigFltFOCBootProcedure "Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2553303104 sigFltFOCRunningSW "Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2553303104 sigFltMotorMissingPhase "Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2553303104 sigFltMOSFET "Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2553303104 sigFltGUIParamInEEPROM "Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2553303104 sigFltCurrentSamplingCkt "Fault Set and Reset conditions has to be discussed to Motor Controller Team.";
+CM_ SG_ 2552713280 sigOdometer "Odometer Value";
+CM_ SG_ 2552713280 sigCapacitorVoltage "Capacitor Voltage";
+CM_ SG_ 2552713280 sigMotorRPM "Motor Rpm";
+CM_ SG_ 2552647744 sigBrake "Brake Percentage";
+CM_ SG_ 2552647744 sigDriveMode "Drive modes from Motor Controller";
+CM_ SG_ 2552647744 sigSpeed "Vehicle Speed";
+CM_ SG_ 2552647744 sigThrottle "Throttle Percentage";
+CM_ SG_ 2552647744 sigRMSCurrent "RMS Current";
+CM_ SG_ 2552647744 sigMotorTemperature "Motor Temperature
+";
+CM_ SG_ 2552647744 sigControllerTemperature "Controller Temperature.
+
+";
+CM_ BO_ 2485403728 "
+";
+CM_ SG_ 2485403728 sigMaxCellVoltageSetpoint "Max Cell Voltage cut off of all BPs, which are able to dispense power.
+Max Cell Voltage >= Min Cell Voltage Cut off, BP will stop dispensing power.";
+CM_ SG_ 2485403728 sigMaxCellVoltage "Max Cell Voltage of all BPs which are dispensing power.";
+CM_ SG_ 2485403728 sigMinCellVoltageSetpoint "Min Cell Voltage cut off of all BPs, which are able to dispense power.
+Min Cell Voltage <= Min Cell Voltage Cut off, BP will stop dispensing power.";
+CM_ SG_ 2485403728 sigMinCellVoltage "Min Cell Voltage of all BPs which are dispensing power";
+CM_ SG_ 2485338192 Sig_RegenCurrentLimit_MSB "Regen Current Request from DIU (MSB)";
+CM_ SG_ 2485338192 Sig_DriveCurrentLimit_MSB "Drive Current Request from DIU (MSB)";
+CM_ SG_ 2485338192 sigVehicleModeRequest "Vehicle Mode Request to the Motor Controller based on SOC";
+CM_ SG_ 2485338192 Sig_RegenCurrentLimit_LSB "Regen Current Request from DIU (LSB).";
+CM_ SG_ 2485338192 Sig_DriveCurrentLimit_LSB "Drive Current Request from DIU (LSB)";
+CM_ SG_ 2485338192 sigBatteryCurrent "Total Battery Current of all BPs which are dispensing power";
+CM_ SG_ 2419654480 SigFltBPPhaseMismatch "Set Condition: If Vehicle is certified for Phase2, vehicle is not drivable if any of the BP present in the vehicle is not certified for Phase2.
+Reset Condition: Key off.
+
+Vehicle is not drivable.";
+CM_ SG_ 2419654480 SigFltShortCircuitAllBPs "Set Condition: Short Circuit Fault Received from all BPs.
+Reset Condition: Key Off.";
+CM_ SG_ 2419654480 SigFltShortCircuitAnyBP "Set Condition: Short Circuit Fault received from any BP.
+Reset Condition: Key Off";
+CM_ SG_ 2419654480 SigFltBPTypMsmtchCapTmoutAllBPs "Set Condition: BP Type Mismatch or BP Type Capture Timeout fault received from all BPs.
+Reset Condition: Key Off.";
+CM_ SG_ 2419654480 SigFltBPTypMsmtchCapTmoutAnyBP "Set Condition: BP Type Mismatch or BP Type Capture Timeout fault received from any of the BP.
+Reset Condition: Key Off.";
+CM_ SG_ 2419654480 SigFltSOCOrPackVoltageImbalance "Set Condition: SOC or PackVoltage  Imbalance Fault Recieved from any of the BP.
+Reset Condition: None of the BPs sending SOC or Pack Voltage Imbalance Fault or Key Off.";
+CM_ SG_ 2419654480 SigFltOCPorSCPAllBPs "Set Condition: Over Current or Short Circuit Fault from all BPs.
+Reset condition: Over Current orShort Circuit Fault is not recived from any of the BP.";
+CM_ SG_ 2419654480 SigFltOCPorSCPAnyBP "Set Condition: Over Current or Short Circuit Fault from any of the BP.
+Reset condition: Over Current orShort Circuit Fault from none of the BPs.";
+CM_ SG_ 2419654480 SigFltThermalRunawayFault "Set Condition: Thermal Runaway Fault from any of the BP.
+Reset condition: Key Off.";
+CM_ SG_ 2419654480 sigFltSevDckPosTerminalTempAnyBP "Set Condition: Severe DOCK Positive Terminal Temperature Fault received from any of the BP.
+Reset Condition:Severe DOCK Positive TerminalTemperature Fault received from none of the BP.
+
+Vehicle is drivable with derated performance when Fault is set.
+";
+CM_ SG_ 2419654480 sigFltSevDckNegTerminalTempAnyBP "Set Condition: Severe DOCK NegativeTerminal Temperature Fault received from any of the BP.
+Reset Condition:Severe DOCK NegativeTerminalTemperature Fault received from none of the BP.
+
+Vehicle is drivable with derated performance when Fault is set.
+
+";
+CM_ SG_ 2419654480 sigFltPackPosSevOverTempAnyBP "Set Condition: Pack Positive Severe Over Temperature Fault received from any of the BP.
+Reset Condition: Pack Positive Severe Over Temperature Fault received from none of the BP.
+
+Vehicle is drivable with derated performance when Fault is set.";
+CM_ SG_ 2419654480 sigFltMOSFETBodySevOverTempAnyBP "Set Condition: MOSFET Body Severe Over Temperature Fault received from any of the BP.
+Reset Condition: MOSFET Body Severe Over Temperature Fault received from none of the BP.
+
+Vehicle is drivable with derated performance when Fault is set.";
+CM_ SG_ 2419654480 sigFltBatterySevUnderVtgAnyBP "Set Condition: Battery Severe Under Voltage Fault received from any of the BP.
+Reset Condition:Battery Severe Under Voltage Fault received from none of the BP.
+
+Vehicle is drivable with derated performance when Fault is set.";
+CM_ SG_ 2419654480 sigFltBatterySevUnderTempAnyBP "Set Condition: Battery Severe UnderTemperature Fault received from any of the BP.
+Reset Condition:Battery Severe UnderTemperature Fault received from none of the BP.
+
+Vehicle is drivable with derated performance when Fault is set.";
+CM_ SG_ 2419654480 sigFltBatterySevOverVtgAnyBP "Set Condition: Battery Severe Over Voltage Fault received from any of the BP.
+Reset Condition:Battery Severe Over Voltage Fault received from none of the BP.
+
+Vehicle is drivable with derated performance when Fault is set.";
+CM_ SG_ 2419654480 sigFltBatteryPosSevOverTempAnyBP "Set Condition: Battery Positive Severe Over Temperature Fault received from any of the BP.
+Reset Condition: Battery Positive Severe Over Temperature Fault received from none of the BP.
+
+Vehicle is drivable with derated performance when Fault is set.
+";
+CM_ SG_ 2419654480 sigFltBatterySevOverTempAnyBP "Set Condition: Battery Severe Over Temperature Fault received from any of the BP.
+Reset Condition:Battery Severe Over Temperature Fault received from none of the BP.
+
+Vehicle is drivable with derated performance when Fault is set.";
+CM_ SG_ 2419654480 sigFltBatteryNegSevOverTempAnyBP "Set Condition: Battery Positive Severe Over Temperature Fault received from any of the BP.
+Reset Condition: Battery Positive Severe Over Temperature Fault received from none of the BP.
+
+Vehicle is drivable with derated performance when Fault is set.";
+CM_ SG_ 2419654480 sigFltDIUMOSFETSevOverTemp "Set Condition: DIU MOSFET Temperature >= DIU MOSFET Severe Over Temperature Threshold.
+Reset Condition: Key Toggle and DIU MOSFET Temperature < DIU MOSFET Severe Over Temperature Threshold.
+
+Vehicle not drivable when Fault is set.";
+CM_ SG_ 2419654480 sigFltDIUMOSFETOverTemp "Set Condition: DIU MOSFET Temperature >= DIU MOSFET Over Temperature Threshold.
+Reset Condition:DIU MOSFET Temperature < DIU MOSFET Over Temperature Threshold.";
+CM_ SG_ 2419654480 sigFltPackPosSevOverTempAllBP "Set Condition: Pack Positive Severe  Over Temperature Fault received from all BPs.
+Reset Condition: Pack Positve Severe Over Temperature Fault not received from any of the BPs.
+
+Vehicle is not drivable when Fault is set.";
+CM_ SG_ 2419654480 sigFltPackPosOverTemp "Set Condition: Pack Positive Over Temperature Fault received from any of the BP.
+Reset Condition: Pack Positive Over Temperature Fault received from none of the BP.
+
+Vehicle is drivable with derated performance when Fault is set.";
+CM_ SG_ 2419654480 sigFltMOSFETBodySevOverTempAllBP "Set Condition: MOSFET Body Severe  Over Temperature Fault received from all BPs.
+Reset Condition:  MOSFET Body Severe Over Temperature Fault not received from any of the BPs.
+
+Vehicle is not drivable when Fault is set.";
+CM_ SG_ 2419654480 sigFltMOSFETBodyOverTemp "Set Condition: MOSFET Body Over Temperature Fault received from any of the BP.
+Reset Condition: MOSFET Body Over Temperature Fault received from none of the BP.
+
+Vehicle is drivable with derated performance when Fault is set.";
+CM_ SG_ 2419654480 sigFltBatteryNegSevOverTempAllBP "Set Condition: Battery Negative Severe  Over Temperature Fault received from all BPs.
+Reset Condition: Battery Negative Severe Over Temperature Fault not received from any of the BPs.
+
+Vehicle is not drivable when Fault is set.";
+CM_ SG_ 2419654480 sigFltBatteryNegOverTemp "Set Condition: Battery Negative Over Temperature Fault received from any of the BP.
+Reset Condition: Battery Negative Over Temperature Fault received from none of the BP.
+
+Vehicle is drivable with derated performance when Fault is set.";
+CM_ SG_ 2419654480 sigFltBatteryPosSevOverTempAllBP "Set Condition: Battery Positive Severe  Over Temperature Fault received from all BPs.
+Reset Condition: Battery Positive Severe Over Temperature Fault not received from any of the BPs.
+
+Vehicle is not drivable when Fault is set.";
+CM_ SG_ 2419654480 sigFltBatteryPosOverTemp "Set Condition: Battery Positive Over Temperature Fault received from any of the BP.
+Reset Condition: Battery Positive Over Temperature Fault received from none of the BP.
+
+Vehicle is drivable with derated performance when Fault is set.";
+CM_ SG_ 2419654480 sigFltAllChargeFlagsNotSet "Set Condition: 
+1. Charge Flag is not set in the BP.
+2. Vehicle is inserted with already Driven BPs.
+
+Reset Condition:
+1. Turn Off the Key.
+
+Vehicle is not drivable when Fault is set.";
+CM_ SG_ 2419654480 sigFltBPSerialNoMismatch "Set condition: Inserted BPs serial Number not maching with stored Serial Numbers (Fault will be set iin Key ON Condition).
+Reset condition: Turn Off the Key.
+
+Vehicle is not drivable when Fault is set.";
+CM_ SG_ 2419654480 sigFltBPIDStatusNotReceived "Set Condition: 
+1. Partial communication between BPs and DIU during Key ON.
+
+Reset Condition:
+1. Turn off the Key.
+
+Vehicle is not drivable when Fault is set.";
+CM_ SG_ 2419654480 sigFltErroneousDriveStatusRcvd "Set Condition:
+1. Drive status Not configured from the station during dispense.
+Reset Condition: Key Off.
+
+Vehicle is not Drivable when Fault is set.
+
+
+";
+CM_ SG_ 2419654480 sigFltMultipleDriveEnStatusRcvd "Set Condition: More than one BP configured with Drive Enable status during dispense (Fault will be set in Key ON).
+Reset Condition: Key Toogle.
+
+Vehicle is not drivable when Fault is set.";
+CM_ SG_ 2419654480 sigFltNoBPWithDriveEnable "Set Condition: All BPs are configured with Drive Disable status during dispense from station(Fault will be set in Key ON).
+Reset Condition: Key Off.
+
+Vehicle is not drivable when Fault is set.";
+CM_ SG_ 2419654480 sigFltTargetDOCKIDNotReceived "Set Condition: Partial Communication between Batteries and DIU during Key ON.
+Reset Condition: Key Off.
+
+Vehicle is not drivable when Fault is set.";
+CM_ SG_ 2419654480 sigFltTargetDOCKIDMismatch "Set Condition: 
+BP from other Vehicle is inserted or BPs are swapped by using different Key Fob and inserted to the Vehicle (Fault will be set in Key ON).
+Reset Condition: Key Off.
+
+Vehicle is not drivable when Fault is set.";
+CM_ SG_ 2419654480 sigFltEVOUTSenseMalfunction "Set Condition: EVOUTSENSE > 18V, before turing ON the DIU MOSFET.
+Reset Conditon: Key Toggle and Correct the wiring.
+
+Vehicle is not driveable when Fault is set.";
+CM_ SG_ 2419654480 sigFltVCUCommunicationFailure "Set Condition: Key is ON and VCU is not communicating for more than 2 sec.
+Reset Condtion: Key Off or Key is ON and VCU Communication is restored.
+
+Applicable only for VCU Vehicles.";
+CM_ SG_ 2419654480 sigFltKeyAlreadyON "Set Condition:First Battery inserted in the vehicle in Key ON Condition.
+Reset Condition: Key Toggle.
+
+Vehicle is not drivable when Fault is set.";
+CM_ SG_ 2419654480 SigFltThermalRunawayWarning "Set Condition: Thermal Runway Warning received from any BP.
+Reset Condition: Clear Fault using Diagnostics.
+
+Vehicle is  not drivable when Fault is set.
+";
+CM_ SG_ 2419654480 SigFltOverCurrentAllBP "Set Condition: Over Current Fault received from all BPs.
+Reset Condition: Over Current Fault not received from any of the BPs.
+
+Vehicle is not drivable when Fault is set.";
+CM_ SG_ 2419654480 SigFltOverCurrentAnyBP "Set Condition: Over Current Fault received from any of the BP.
+Reset Condition: Over Current Fault received from none of the BPs.
+
+Vehicle is drivable with derated performance when Fault is set.";
+CM_ SG_ 2419654480 sigFltMCUCommunicationFault "Set Condition: MCU is not communicating for more than 2 secs, when 48V output is present from the DIU.
+Reset Condition: Key Off or MCU communication is restored.
+
+Applicable only for MCU Vehicles";
+CM_ SG_ 2419654480 sigFltEVInSenseMalfunction "Set Condition: EVINSENSE >= 18V for 5 sec before turing ON the Key.(Battery MOSFET Short)
+Reset Condtion: Key Off and EVINSENSE < 18V for 5 sec. 
+
+Vehicle not drivable when Fault is set.";
+CM_ SG_ 2419654480 sigFltPermDckNegTerminalTemp "Set Condition: Severe DOCK NegativeTempFault in any of the BP in 3 cycles out of last 10 Swap cycles.
+Reset Condition: Diagnose and correct the dock NegativeTerminal, Clear the fault using Diagnostics.
+
+Vehicle not drivable when Fault is set.";
+CM_ SG_ 2419654480 sigFltPermDckPosTerminalTemp "Set Condition: Severe DOCK Positive Temp Fault in any of the BP in 3 cycles out of last 10 Swap cycles.
+Reset Condition: Diagnose and correct the dock positive Terminal, Clear the fault using Diagnostics.
+
+Vehicle not drivable when Fault is set.";
+CM_ SG_ 2419654480 sigFltLessBatteryDuringDrive "Set Condition: Less Number of BPs communicating during drive.
+Reset Condition: All BPs communicating during drive.
+
+Vehicle is drivable with derated performance when Fault is set.";
+CM_ SG_ 2419654480 sigFltLessBatteryDuringKeyOn "Set Condition: Less BPs communicating during Key ON.
+Reset Condition: Key off.
+
+Vehicle is not drivable when this fault is set.";
+CM_ SG_ 2419654480 sigFltOverDckPosTerminalTemp "Set Condition: Over DOCK Positive Terminal Temperature Fault received from any of the BP.
+Reset Condition:  Over DOCK Positive Terminal Temperature Fault received from none of the BP.
+
+Vehicle is drivable with derated performance when Fault is set.";
+CM_ SG_ 2419654480 sigFltOverDckNegTerminalTemp "Set Condition: Over DOCK Negative Terminal Temperature Fault received from any of the BP.
+Reset Condition:  Over DOCK Negative Terminal Temperature Fault received from none of the BP.
+
+Vehicle is drivable with derated performance when Fault is set.";
+CM_ SG_ 2419654480 sigFltSevDckNegTerminalTempAllBP "Set Condition: Severe DOCK Negative Terminal Temperature Fault received from all BPs.
+Reset Condition: Severe DOCK Negative Terminal Temperature Fault not received from any of the BPs.
+
+Vehicle is not drivable when Fault is set.
+";
+CM_ SG_ 2419654480 sigFltSevDckPosTerminalTempAllBP "Set Condition: Severe DOCK Positive Terminal Temperature Fault received from all BPs.
+Reset Condition: Severe DOCK Positive Terminal Temperature Fault not received from any of the BPs.
+
+Vehicle is not drivable when Fault is set.
+
+";
+CM_ SG_ 2419654480 sigFltPrechargeFailure "Set Condition: Precharge Failure Fault received from any of th BP
+Reset condition: Key Toggle.
+
+Vehicle is drivable with derated performance when Fault is set.";
+CM_ SG_ 2419654480 sigFltMOSFETOff "Not used";
+CM_ SG_ 2419654480 sigFltBatterySevUnderVtgAllBP "Set Condition: Battery Severe Under Voltage Fault received from all BPs.
+Reset Condition: Battery Severe Under Voltage Fault not received from any of the BPs.
+
+Vehicle is not drivable when Fault is set.";
+CM_ SG_ 2419654480 sigFltBatteryUnderVtg "Set Condition: Battery Under Voltage Fault received from any of the BP.
+Reset Condition: Battery Under Voltage Fault received from none of the BP.
+
+Vehicle is drivable with derated performance when Fault is set.";
+CM_ SG_ 2419654480 sigFltBatteryOverVtg "Set Condition: Battery Over Voltage Fault received from any of the BP.
+Reset Condition: Battery Over Voltage Fault received from none of the BP.
+
+Vehicle is drivable with derated performance when Fault is set.";
+CM_ SG_ 2419654480 sigFltBatterySevOverVtgAllBP "Set Condition: Battery Severe Over Voltage Fault received from all BPs.
+Reset Condition: Battery Severe Over Voltage Fault not received from any of the BPs.
+
+Vehicle is not drivable when Fault is set.";
+CM_ SG_ 2419654480 sigFltBatterySevUnderTempAllBP "Set Condition: Battery Severe Under Temperature Fault received from all BPs.
+Reset Condition: Battery Severe Under Temperature Fault not received from any of the BPs.
+
+Vehicle is not drivable when Fault is set.";
+CM_ SG_ 2419654480 sigFltBatteryUnderTemp "Set Condition: Battery UnderTemperature Fault received from any of the BP.
+Reset Condition: Battery Under Temperature Fault received from none of the BP.
+
+Vehicle is drivable with derated performance when Fault is set.";
+CM_ SG_ 2419654480 sigFltBatterySevOverTempAllBP "Set Condition: Battery Severe Over Temperature Fault received from all BPs.
+Reset Condition: Battery Severe Over Temperature Fault not received from any of the BPs.
+
+Vehicle is not drivable when Fault is set.";
+CM_ SG_ 2419654480 sigFltBatteryOverTemp "Set Condition: Battery Over Temperature Fault received from any of the BP.
+Reset Condition: Battery Over Temperature Fault received from none of the BP.
+
+Vehicle is drivable with derated performance when Fault is set.";
+CM_ SG_ 2419654480 sigFltBatteryFault "Set condition: Any of the faults mentioned in Bit 1 to Bit 10  or  Bit21 to Bit 23  or Bit 35 to Bit 42 or Bit 45 to Bit 62 are present.
+Reset condition: None of the faults mentioned in set conditon are present.";
+CM_ SG_ 2418544720 sigBatteryMalfunctionLight "Not used";
+CM_ SG_ 2418544720 sigKeyOnIndicator "Key Status";
+CM_ SG_ 2418544720 sigDistanceToEmpty "Protected at DIU";
+CM_ SG_ 2418544720 sigStateOfCharge "Average SOC of all BPs";
+CM_ SG_ 2421035088 Sig_DIU5_Mode3WHrPerKm "Mode3 - WHr/Km";
+CM_ SG_ 2421035088 Sig_DIU5_Mode2WHrPerKm "Mode2 - WHr/Km";
+CM_ SG_ 2421035088 Sig_DIU5_Mode1WHrPerKm "Mode1- Whr/Km";
+BA_DEF_ BU_  "GenNodeAddress" HEX 0 4095;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 0;
+BA_DEF_ BO_  "GenMsgSendType" ENUM  "None","Cyclic","Event","Startup","Shutdown","vector_leerstring";
+BA_DEF_  "DBName" STRING ;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_  "Baudrate" INT 0 500000;
+BA_DEF_DEF_  "GenNodeAddress" 0;
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_DEF_DEF_  "GenMsgSendType" "Cyclic";
+BA_DEF_DEF_  "DBName" "";
+BA_DEF_DEF_  "BusType" "CAN";
+BA_DEF_DEF_  "Baudrate" 500000;
+BA_ "BusType" "CAN";
+BA_ "DBName" "Wheeler";
+BA_ "GenNodeAddress" BU_ MCU 130;
+BA_ "GenNodeAddress" BU_ DIU 80;
+BA_ "GenMsgCycleTime" BO_ 2555449408 500;
+BA_ "GenMsgCycleTime" BO_ 2421161808 100;
+BA_ "GenMsgCycleTime" BO_ 2555006992 1000;
+BA_ "GenMsgCycleTime" BO_ 2487845456 100;
+BA_ "GenMsgCycleTime" BO_ 2553303104 500;
+BA_ "GenMsgCycleTime" BO_ 2552713280 500;
+BA_ "GenMsgCycleTime" BO_ 2552647744 500;
+BA_ "GenMsgCycleTime" BO_ 2485403728 100;
+BA_ "GenMsgCycleTime" BO_ 2485338192 100;
+BA_ "GenMsgCycleTime" BO_ 2419654480 100;
+BA_ "GenMsgCycleTime" BO_ 2418544720 100;
+BA_ "GenMsgCycleTime" BO_ 2421035088 1000;
+VAL_ 2147483814 Cruise_Mode 1 "Cruise Mode ON" 0 "Cruise Mode OFF" ;
+VAL_ 2555449408 Sig_MCU4_VehcleNotReadyIndicator 3 "TBD" 2 "TBD" 1 "ON" 0 "Off" ;
+VAL_ 2555449408 Sig_MCU4_VehicleReadyIndicator 3 "TBD" 2 "TBD" 1 "ON" 0 "Off" ;
+VAL_ 2555449408 Sig_MCU4_SideStandIndicator 3 "TBD" 2 "TBD" 1 "ON" 0 "Off" ;
+VAL_ 2421161808 Sig_FltAuxRelayShortOrOpen 1 "Fault" 0 "No Fault" ;
+VAL_ 2421161808 Sig_FltAuxRelayShort 1 "Fault" 0 "No Fault" ;
+VAL_ 2421161808 SigFltAuxBatteryLowFault 1 "Fault" 0 "No Fault" ;
+VAL_ 2421161808 SigFltAuxBatteryLowWarning 1 "Fault" 0 "No Fault" ;
+VAL_ 2553303104 sigFltTMotorSelfLearning 1 "Fault" 0 "No Fault" ;
+VAL_ 2553303104 sigFltMotorOverload 1 "Fault" 0 "No Fault" ;
+VAL_ 2553303104 sigFltMotorStalling 1 "Fault" 0 "No Fault" ;
+VAL_ 2553303104 sigFltBrake 1 "Fault" 0 "No Fault" ;
+VAL_ 2553303104 sigFltContPlus15V 1 "Fault" 0 "No Fault" ;
+VAL_ 2553303104 sigFltContUnderVoltage 1 "Fault" 0 "No Fault" ;
+VAL_ 2553303104 sigFltContOverVoltage 1 "Fault" 0 "No Fault" ;
+VAL_ 2553303104 sigFltContOverTempProtection 1 "Fault" 0 "No Fault" ;
+VAL_ 2553303104 sigFltMotorOverTempProtection 1 "Fault" 0 "No Fault" ;
+VAL_ 2553303104 sigFltThrottle 1 "Fault" 0 "No Fault" ;
+VAL_ 2553303104 sigFltMotorLockedRotating 1 "Fault" 0 "No Fault" ;
+VAL_ 2553303104 sigFltMotorStartFail 1 "Fault" 0 "No Fault" ;
+VAL_ 2553303104 sigFltMotorEncoder 1 "Fault" 0 "No Fault" ;
+VAL_ 2553303104 sigFltMotorPositionSensor 1 "Fault" 0 "No Fault" ;
+VAL_ 2553303104 sigFltContOverCurrent 1 "Fault" 0 "No Fault" ;
+VAL_ 2553303104 sigFltEEProm 1 "Fault" 0 "No Fault" ;
+VAL_ 2553303104 sigFltFOCBootProcedure 1 "Fault" 0 "No Fault" ;
+VAL_ 2553303104 sigFltFOCRunningSW 1 "Fault" 0 "No Fault" ;
+VAL_ 2553303104 sigFltMotorMissingPhase 1 "Fault" 0 "No Fault" ;
+VAL_ 2553303104 sigFltMOSFET 1 "Fault" 0 "No Fault" ;
+VAL_ 2553303104 sigFltGUIParamInEEPROM 1 "Fault" 0 "No Fault" ;
+VAL_ 2553303104 sigFltCurrentSamplingCkt 1 "Fault" 0 "No Fault" ;
+VAL_ 2552647744 sigDriveMode 7 "TBD" 6 "TBD" 5 "TBD" 4 "Forward-Economy" 3 "Reverse" 2 "Forward-Turbo" 1 "Forward-Power" 0 "Neutral" ;
+VAL_ 2485338192 sigVehicleModeRequest 7 "TBD" 6 "TBD" 5 "TBD" 4 "TBD" 3 "Stop" 2 "Forward-Limphome" 1 "Forward-Economy" 0 "Normal/Reserved" ;
+VAL_ 2419654480 SigFltBPPhaseMismatch 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 SigFltShortCircuitAllBPs 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 SigFltShortCircuitAnyBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 SigFltBPTypMsmtchCapTmoutAllBPs 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 SigFltBPTypMsmtchCapTmoutAnyBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 SigFltSOCOrPackVoltageImbalance 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 SigFltOCPorSCPAllBPs 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 SigFltOCPorSCPAnyBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 SigFltThermalRunawayFault 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltSevDckPosTerminalTempAnyBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltSevDckNegTerminalTempAnyBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltPackPosSevOverTempAnyBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltMOSFETBodySevOverTempAnyBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltBatterySevUnderVtgAnyBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltBatterySevUnderTempAnyBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltBatterySevOverVtgAnyBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltBatteryPosSevOverTempAnyBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltBatterySevOverTempAnyBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltBatteryNegSevOverTempAnyBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltDIUMOSFETSevOverTemp 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltDIUMOSFETOverTemp 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltPackPosSevOverTempAllBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltPackPosOverTemp 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltMOSFETBodySevOverTempAllBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltMOSFETBodyOverTemp 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltBatteryNegSevOverTempAllBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltBatteryNegOverTemp 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltBatteryPosSevOverTempAllBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltBatteryPosOverTemp 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltAllChargeFlagsNotSet 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltBPSerialNoMismatch 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltBPIDStatusNotReceived 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltErroneousDriveStatusRcvd 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltMultipleDriveEnStatusRcvd 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltNoBPWithDriveEnable 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltTargetDOCKIDNotReceived 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltTargetDOCKIDMismatch 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltEVOUTSenseMalfunction 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltVCUCommunicationFailure 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltKeyAlreadyON 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 SigFltThermalRunawayWarning 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 SigFltOverCurrentAllBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 SigFltOverCurrentAnyBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltMCUCommunicationFault 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltEVInSenseMalfunction 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltPermDckNegTerminalTemp 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltPermDckPosTerminalTemp 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltLessBatteryDuringDrive 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltLessBatteryDuringKeyOn 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltOverDckPosTerminalTemp 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltOverDckNegTerminalTemp 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltSevDckNegTerminalTempAllBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltSevDckPosTerminalTempAllBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltPrechargeFailure 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltMOSFETOff 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltBatterySevUnderVtgAllBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltBatteryUnderVtg 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltBatteryOverVtg 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltBatterySevOverVtgAllBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltBatterySevUnderTempAllBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltBatteryUnderTemp 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltBatterySevOverTempAllBP 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltBatteryOverTemp 1 "Fault" 0 "No Fault" ;
+VAL_ 2419654480 sigFltBatteryFault 1 "Fault" 0 "No Fault" ;
+VAL_ 2418544720 sigBatteryMalfunctionLight 3 "TBD" 2 "Flash" 1 "On" 0 "Off" ;
+VAL_ 2418544720 sigKeyOnIndicator 3 "TBD" 2 "TBD" 1 "On" 0 "Off" ;
+

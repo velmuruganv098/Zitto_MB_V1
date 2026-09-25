@@ -1,0 +1,430 @@
+VERSION "v0.1"
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: 
+
+
+
+BO_ 2147483948 BS1_SF1: 8 Vector__XXX
+ SG_ BS1_riderIdComingFromBle : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS1_swapOperatorID : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483949 BS1_SF2: 8 Vector__XXX
+ SG_ BS1_battery_alerts_bits : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS1_max_cell_volt : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS1_min_cell_volt : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483950 BS1_SF3: 8 Vector__XXX
+ SG_ BS1_soc_postmapping : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS1_soc_premapping : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS1_batteryIdRegistered : 16|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS1_batteryRegistrationFlag : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS1_emptyDoorOpened : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483951 BS1_SF4: 8 Vector__XXX
+ SG_ BS1_balanceAfterDeduction : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS1_riderIdViaPaymentProcessScan : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483952 BS1_SF5: 8 Vector__XXX
+ SG_ BS1_lastProcessedState : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS1_batteryDispatchingDoor : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS1_kmLeftInTheBatteryGiven : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS1_batteryGivenSoc : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS1_batteryIdGiven : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483953 BS1_SF6: 8 Vector__XXX
+ SG_ BS1_soc_mapping_flag : 24|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS1_soc_after_charging_stops : 8|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS1_kmTravelled : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483958 BS2_SF1: 8 Vector__XXX
+ SG_ BS2_riderIdComingFromBle : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS2_swapOperatorID : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483959 BS2_SF2: 8 Vector__XXX
+ SG_ BS2_battery_alerts_bits : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS2_max_cell_volt : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS2_min_cell_volt : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483960 BS2_SF3: 8 Vector__XXX
+ SG_ BS2_soc_postmapping : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS2_soc_premapping : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS2_batteryIdRegistered : 16|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS2_batteryRegistrationFlag : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS2_emptyDoorOpened : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483961 BS2_SF4: 8 Vector__XXX
+ SG_ BS2_balanceAfterDeduction : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS2_riderIdViaPaymentProcessScan : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483962 BS2_SF5: 8 Vector__XXX
+ SG_ BS2_lastProcessedState : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS2_batteryDispatchingDoor : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS2_kmLeftInTheBatteryGiven : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS2_batteryGivenSoc : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS2_batteryIdGiven : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483963 BS2_SF6: 8 Vector__XXX
+ SG_ BS2_soc_mapping_flag : 24|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS2_soc_after_charging_stops : 8|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS2_kmTravelled : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483968 BS3_SF1: 8 Vector__XXX
+ SG_ BS3_riderIdComingFromBle : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS3_swapOperatorID : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483969 BS3_SF2: 8 Vector__XXX
+ SG_ BS3_battery_alerts_bits : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS3_max_cell_volt : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS3_min_cell_volt : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483970 BS3_SF3: 8 Vector__XXX
+ SG_ BS3_soc_postmapping : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS3_soc_premapping : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS3_batteryIdRegistered : 16|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS3_batteryRegistrationFlag : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS3_emptyDoorOpened : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483971 BS3_SF4: 8 Vector__XXX
+ SG_ BS3_balanceAfterDeduction : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS3_riderIdViaPaymentProcessScan : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483972 BS3_SF5: 8 Vector__XXX
+ SG_ BS3_lastProcessedState : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS3_batteryDispatchingDoor : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS3_kmLeftInTheBatteryGiven : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS3_batteryGivenSoc : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS3_batteryIdGiven : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483973 BS3_SF6: 8 Vector__XXX
+ SG_ BS3_soc_mapping_flag : 24|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS3_soc_after_charging_stops : 8|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS3_kmTravelled : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483978 BS4_SF1: 8 Vector__XXX
+ SG_ BS4_riderIdComingFromBle : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS4_swapOperatorID : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483979 BS4_SF2: 8 Vector__XXX
+ SG_ BS4_battery_alerts_bits : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS4_max_cell_volt : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS4_min_cell_volt : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483980 BS4_SF3: 8 Vector__XXX
+ SG_ BS4_soc_postmapping : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS4_soc_premapping : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS4_batteryIdRegistered : 16|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS4_batteryRegistrationFlag : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS4_emptyDoorOpened : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483981 BS4_SF4: 8 Vector__XXX
+ SG_ BS4_balanceAfterDeduction : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS4_riderIdViaPaymentProcessScan : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483982 BS4_SF5: 8 Vector__XXX
+ SG_ BS4_lastProcessedState : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS4_batteryDispatchingDoor : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS4_kmLeftInTheBatteryGiven : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS4_batteryGivenSoc : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS4_batteryIdGiven : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483983 BS4_SF6: 8 Vector__XXX
+ SG_ BS4_soc_mapping_flag : 24|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS4_soc_after_charging_stops : 8|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS4_kmTravelled : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483988 BS5_SF1: 8 Vector__XXX
+ SG_ BS5_riderIdComingFromBle : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS5_swapOperatorID : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483989 BS5_SF2: 8 Vector__XXX
+ SG_ BS5_battery_alerts_bits : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS5_max_cell_volt : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS5_min_cell_volt : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483990 BS5_SF3: 8 Vector__XXX
+ SG_ BS5_soc_postmapping : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS5_soc_premapping : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS5_batteryIdRegistered : 16|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS5_batteryRegistrationFlag : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS5_emptyDoorOpened : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483991 BS5_SF4: 8 Vector__XXX
+ SG_ BS5_balanceAfterDeduction : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS5_riderIdViaPaymentProcessScan : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483992 BS5_SF5: 8 Vector__XXX
+ SG_ BS5_lastProcessedState : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS5_batteryDispatchingDoor : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS5_kmLeftInTheBatteryGiven : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS5_batteryGivenSoc : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS5_batteryIdGiven : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483993 BS5_SF6: 8 Vector__XXX
+ SG_ BS5_soc_mapping_flag : 24|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS5_soc_after_charging_stops : 8|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BS5_kmTravelled : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484148 CR1_RF1: 8 Vector__XXX
+ SG_ CR1_oldRechargeIdFromBle : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR1_rfidCardIdRequestedViaBle : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484149 CR1_RF2: 8 Vector__XXX
+ SG_ CR1_amountToRechargeWith : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR1_newRechargeIdFromBle : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484150 CR1_RF3: 8 Vector__XXX
+ SG_ CR1_oldBalanceReadFromTheCard : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR1_rfidCardIdTappedForRecharge : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484151 CR1_RF4: 8 Vector__XXX
+ SG_ CR1_oldRechargeIdFromTheCard : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR1_newRechargeIdReadFromTheCard : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484152 CR1_RF5: 8 Vector__XXX
+ SG_ CR1_lastProcessedState : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR1_newBalanceReadFromTheCard : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484158 CR2_RF1: 8 Vector__XXX
+ SG_ CR2_oldRechargeIdFromBle : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR2_rfidCardIdRequestedViaBle : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484159 CR2_RF2: 8 Vector__XXX
+ SG_ CR2_amountToRechargeWith : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR2_newRechargeIdFromBle : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484160 CR2_RF3: 8 Vector__XXX
+ SG_ CR2_oldBalanceReadFromTheCard : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR2_rfidCardIdTappedForRecharge : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484161 CR2_RF4: 8 Vector__XXX
+ SG_ CR2_oldRechargeIdFromTheCard : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR2_newRechargeIdReadFromTheCard : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484162 CR2_RF5: 8 Vector__XXX
+ SG_ CR2_lastProcessedState : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR2_newBalanceReadFromTheCard : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484168 CR3_RF1: 8 Vector__XXX
+ SG_ CR3_oldRechargeIdFromBle : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR3_rfidCardIdRequestedViaBle : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484169 CR3_RF2: 8 Vector__XXX
+ SG_ CR3_amountToRechargeWith : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR3_newRechargeIdFromBle : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484170 CR3_RF3: 8 Vector__XXX
+ SG_ CR3_oldBalanceReadFromTheCard : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR3_rfidCardIdTappedForRecharge : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484171 CR3_RF4: 8 Vector__XXX
+ SG_ CR3_oldRechargeIdFromTheCard : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR3_newRechargeIdReadFromTheCard : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484172 CR3_RF5: 8 Vector__XXX
+ SG_ CR3_lastProcessedState : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR3_newBalanceReadFromTheCard : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484178 CR4_RF1: 8 Vector__XXX
+ SG_ CR4_oldRechargeIdFromBle : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR4_rfidCardIdRequestedViaBle : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484179 CR4_RF2: 8 Vector__XXX
+ SG_ CR4_amountToRechargeWith : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR4_newRechargeIdFromBle : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484180 CR4_RF3: 8 Vector__XXX
+ SG_ CR4_oldBalanceReadFromTheCard : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR4_rfidCardIdTappedForRecharge : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484181 CR4_RF4: 8 Vector__XXX
+ SG_ CR4_oldRechargeIdFromTheCard : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR4_newRechargeIdReadFromTheCard : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484182 CR4_RF5: 8 Vector__XXX
+ SG_ CR4_lastProcessedState : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR4_newBalanceReadFromTheCard : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484188 CR5_RF1: 8 Vector__XXX
+ SG_ CR5_oldRechargeIdFromBle : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR5_rfidCardIdRequestedViaBle : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484189 CR5_RF2: 8 Vector__XXX
+ SG_ CR5_amountToRechargeWith : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR5_newRechargeIdFromBle : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484190 CR5_RF3: 8 Vector__XXX
+ SG_ CR5_oldBalanceReadFromTheCard : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR5_rfidCardIdTappedForRecharge : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484191 CR5_RF4: 8 Vector__XXX
+ SG_ CR5_oldRechargeIdFromTheCard : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR5_newRechargeIdReadFromTheCard : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484192 CR5_RF5: 8 Vector__XXX
+ SG_ CR5_lastProcessedState : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CR5_newBalanceReadFromTheCard : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484248 RunnerTakeBatteryData1: 8 Vector__XXX
+ SG_ RTB_numberOfbatteriesInstations : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_numberOfBatteriesRequestedVi : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_runnerID : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484249 RunnerTakeBatteryData2: 8 Vector__XXX
+ SG_ RTB_batteryDispatchinDoor_B1 : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_kmLeft_B1 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_SOC_B1 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_BatteryID1 : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484250 RunnerTakeBatteryData3: 8 Vector__XXX
+ SG_ RTB_batteryDispatchinDoor_B2 : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_kmLeft_B2 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_SOC_B2 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_BatteryID2 : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484251 RunnerTakeBatteryData4: 8 Vector__XXX
+ SG_ RTB_batteryDispatchinDoor_B3 : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_kmLeft_B3 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_SOC_B3 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_BatteryID3 : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484252 RunnerTakeBatteryData5: 8 Vector__XXX
+ SG_ RTB_batteryDispatchinDoor_B4 : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_kmLeft_B4 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_SOC_B4 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_BatteryID4 : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484253 RunnerTakeBatteryData6: 8 Vector__XXX
+ SG_ RTB_batteryDispatchinDoor_B5 : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_kmLeft_B5 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_SOC_B5 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_BatteryID5 : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484254 RunnerTakeBatteryData7: 8 Vector__XXX
+ SG_ RTB_batteryDispatchinDoor_B6 : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_kmLeft_B6 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_SOC_B6 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_BatteryID6 : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484255 RunnerTakeBatteryData8: 8 Vector__XXX
+ SG_ RTB_batteryDispatchinDoor_B7 : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_kmLeft_B7 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_SOC_B7 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_BatteryID7 : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484256 RunnerTakeBatteryData9: 8 Vector__XXX
+ SG_ RTB_batteryDispatchinDoor_B8 : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_kmLeft_B8 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_SOC_B8 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_BatteryID8 : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484257 RunnerTakeBatteryData10: 8 Vector__XXX
+ SG_ RTB_batteryDispatchinDoor_B9 : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_kmLeft_B9 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_SOC_B9 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTB_BatteryID9 : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484258 RunnerPutBatteryData1: 8 Vector__XXX
+ SG_ RPB_numberOfEmptyCompartments : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RPB_numberOfBatteriesToBePutViaB : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RPB_runnerID : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484259 RunnerPutBatteryData2: 8 Vector__XXX
+ SG_ RPB_emptyDoorOpened_B1 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RPB_SOC_B1 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RPB_BatteryID1 : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484260 RunnerPutBatteryData3: 8 Vector__XXX
+ SG_ RPB_emptyDoorOpened_B2 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RPB_SOC_B2 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RPB_BatteryID2 : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484261 RunnerPutBatteryData4: 8 Vector__XXX
+ SG_ RPB_emptyDoorOpened_B3 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RPB_SOC_B3 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RPB_BatteryID3 : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484262 RunnerPutBatteryData5: 8 Vector__XXX
+ SG_ RPB_emptyDoorOpened_B4 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RPB_SOC_B4 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RPB_BatteryID4 : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484263 RunnerPutBatteryData6: 8 Vector__XXX
+ SG_ RPB_emptyDoorOpened_B5 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RPB_SOC_B5 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RPB_BatteryID5 : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484264 RunnerPutBatteryData7: 8 Vector__XXX
+ SG_ RPB_emptyDoorOpened_B6 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RPB_SOC_B6 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RPB_BatteryID6 : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484265 RunnerPutBatteryData8: 8 Vector__XXX
+ SG_ RPB_emptyDoorOpened_B7 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RPB_SOC_B7 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RPB_BatteryID7 : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484266 RunnerPutBatteryData9: 8 Vector__XXX
+ SG_ RPB_emptyDoorOpened_B8 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RPB_SOC_B8 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RPB_BatteryID8 : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484267 RunnerPutBatteryData10: 8 Vector__XXX
+ SG_ RPB_emptyDoorOpened_B9 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RPB_SOC_B9 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RPB_BatteryID9 : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484268 RunnerTakeDumbBatteryData1: 8 Vector__XXX
+ SG_ RTDB_numberOfDumbBatteriesInStat : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTDB_runnerID : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484269 RunnerTakeDumbBatteryData2: 8 Vector__XXX
+ SG_ RTDB_batteryDispatchingDoor7 : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTDB_batteryDispatchingDoor6 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTDB_batteryDispatchingDoor5 : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTDB_batteryDispatchingDoor4 : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTDB_batteryDispatchingDoor3 : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTDB_batteryDispatchingDoor2 : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTDB_batteryDispatchingDoor1 : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTDB_batteryDispatchingDoor0 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+
+BA_DEF_ SG_  "SystemSignalLongSymbol" STRING ;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_DEF_  "SystemSignalLongSymbol" "";
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_ "SystemSignalLongSymbol" SG_ 2147484248 RTB_numberOfBatteriesRequestedVi "RTB_numberOfBatteriesRequestedViaBLE";
+BA_ "SystemSignalLongSymbol" SG_ 2147484258 RPB_numberOfBatteriesToBePutViaB "RPB_numberOfBatteriesToBePutViaBLE";
+BA_ "SystemSignalLongSymbol" SG_ 2147484268 RTDB_numberOfDumbBatteriesInStat "RTDB_numberOfDumbBatteriesInStation";

@@ -1,0 +1,126 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_:
+
+
+BO_ 2583626849 BMS_FETStatus: 4 Vector__XXX
+ SG_ DischargeFETStatus : 31|8@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ ChargeFETStatus : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ CellVoltage13 : 7|16@0+ (0.001,0) [2700|4200] "mV" Vector__XXX
+
+BO_ 2566849376 CellVoltageInfo_3: 8 Vector__XXX
+ SG_ CellVoltage12 : 55|16@0+ (0.001,0) [2700|4200] "mV" Vector__XXX
+ SG_ CellVoltage11 : 39|16@0+ (0.001,0) [2700|4200] "mV" Vector__XXX
+ SG_ CellVoltage10 : 23|16@0+ (0.001,0) [2700|4200] "mV" Vector__XXX
+ SG_ Cellvoltage9 : 7|16@0+ (0.001,0) [2700|4200] "mV" Vector__XXX
+
+BO_ 2486108048 CellVoltageInfo_2: 8 Vector__XXX
+ SG_ CellVoltage8 : 55|16@0+ (0.001,0) [2700|4200] "mV" Vector__XXX
+ SG_ CellVoltage7 : 39|16@0+ (0.001,0) [2700|4200] "mV" Vector__XXX
+ SG_ CellVoltage6 : 23|16@0+ (0.001,0) [2700|4200] "mV" Vector__XXX
+ SG_ CellVoltage5 : 7|16@0+ (0.001,0) [2700|4200] "mV" Vector__XXX
+
+BO_ 2485403728 CellVoltageInfo_1: 8 Vector__XXX
+ SG_ CellVoltage4 : 55|16@0+ (0.001,0) [2700|4200] "mV" Vector__XXX
+ SG_ CellVoltage3 : 39|16@0+ (0.001,0) [2700|4200] "mV" Vector__XXX
+ SG_ CellVoltage2 : 23|16@0+ (0.001,0) [2700|4200] "mV" Vector__XXX
+ SG_ CellVoltage1 : 7|16@0+ (0.001,0) [2700|4200] "mV" Vector__XXX
+
+BO_ 2485338192 BatteryFaults: 8 Vector__XXX
+ SG_ UnderTemperature : 63|8@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ OverTemperature_Cell : 55|8@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ OverTemperature_FET : 47|8@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ OverCurrent_Discharge : 39|8@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ CellUnderVoltage : 31|8@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ CellOverVoltage : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ OverCurrent_charging : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Short_Circuit : 7|8@0+ (1,0) [0|1] " " Vector__XXX
+
+BO_ 2419654480 BatteryData2: 6 Vector__XXX
+ SG_ BMSTemperature : 47|8@0- (1,0) [0|90] "degC" Vector__XXX
+ SG_ CellTemperature4 : 39|8@0- (1,0) [0|70] "degC" Vector__XXX
+ SG_ CellTemperature3 : 31|8@0- (1,0) [0|70] "degC" Vector__XXX
+ SG_ CellTemperature2 : 23|8@0- (1,0) [0|70] "degC" Vector__XXX
+ SG_ CellTemperature1 : 15|8@0- (1,0) [0|70] "degC" Vector__XXX
+ SG_ StateOfCharge : 7|8@0+ (1,0) [0|100] "%" Vector__XXX
+
+BO_ 2418544720 BatteryData1: 5 Vector__XXX
+ SG_ BatteryCapacity : 39|8@0+ (1,0) [0|45] "Ah" Vector__XXX
+ SG_ PackVoltage : 23|16@0+ (0.001,0) [0|60] "Volt" Vector__XXX
+ SG_ PackCurrent : 7|16@0- (0.01,0) [-327.68|327.67] "A" Vector__XXX
+
+
+
+CM_ SG_ 2583626849 DischargeFETStatus "0 = Discharge FET is in ON state
+1 = Discharge FET is in OFF state";
+CM_ SG_ 2583626849 ChargeFETStatus "0 = Charge FET is in ON state
+1 = Charge FET is in OFF state";
+CM_ SG_ 2583626849 CellVoltage13 "16 bit voltgae value of cell 13";
+CM_ SG_ 2566849376 CellVoltage12 "16 bit voltage value of cell 12";
+CM_ SG_ 2566849376 CellVoltage11 "16 bit voltage value of cell 11";
+CM_ SG_ 2566849376 CellVoltage10 "16 bit voltage value of cell 10
+";
+CM_ SG_ 2566849376 Cellvoltage9 "16 bit voltage value of cell 9";
+CM_ SG_ 2486108048 CellVoltage8 "16 bit voltage value of cell 8";
+CM_ SG_ 2486108048 CellVoltage7 "16 bit voltage value of cell 7";
+CM_ SG_ 2486108048 CellVoltage6 "16 bit voltage value of cell 6";
+CM_ SG_ 2486108048 CellVoltage5 "16 bit voltage value of cell 5";
+CM_ SG_ 2485403728 CellVoltage4 "16 bit voltage value of cell 4";
+CM_ SG_ 2485403728 CellVoltage3 "16 bit voltage value of cell 3
+";
+CM_ SG_ 2485403728 CellVoltage2 "16 bit voltage value of cell 2";
+CM_ SG_ 2485403728 CellVoltage1 "16 bit voltage value of cell 1";
+CM_ SG_ 2485338192 UnderTemperature "0 = No UT fault
+1 = UT fault has occured";
+CM_ SG_ 2485338192 OverTemperature_Cell "0 = No OT (CELL) fault
+1 = OT (CELL) fault has occured";
+CM_ SG_ 2485338192 OverTemperature_FET "0 = No OT (FET) fault
+1 = OT (FET) fault has occured";
+CM_ SG_ 2485338192 OverCurrent_Discharge "0 = No OC (discharging) fault
+1 = OC (discharging) fault has occured";
+CM_ SG_ 2485338192 CellUnderVoltage "0 = No UV fault
+1 = UV fault has occured";
+CM_ SG_ 2485338192 CellOverVoltage "0 = No OV fault
+1 = OV fault has occured";
+CM_ SG_ 2485338192 OverCurrent_charging "0 = No OC (charging) fault
+1 = OC (charging) fault has occured";
+CM_ SG_ 2485338192 Short_Circuit "0 = No short circuit fault
+1 = Short circuit fault has occured";
+BA_DEF_  "MultiplexExtEnabled" ENUM  "No","Yes";
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "MultiplexExtEnabled" "No";
+BA_DEF_DEF_  "BusType" "CAN";
+

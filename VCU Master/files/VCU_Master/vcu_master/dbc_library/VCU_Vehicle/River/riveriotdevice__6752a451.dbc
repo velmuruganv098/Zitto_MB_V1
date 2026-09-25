@@ -1,0 +1,241 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: Charger TEL Display BMS VCU MotorController
+VAL_TABLE_ Brightness_Control 10 "100% Brightness" 9 "90% Brightness" 8 "80% Brightness" 7 "70% Brightness" 6 "60% Brightness" 5 "50% Brightness" 4 "40% Brightness" 3 "30% Brightness" 2 "20% Brightness" 1 "10% Brightness" 0 "100% Brightness" ;
+VAL_TABLE_ VCU_Charge_Current_Lim_A 7 "FAULT_BIT_READ_SBS_CONFIG" 6 "FAULT_BIT_READ_CALIBRATION" 5 "FAULT_BIT_READ_POWER" 4 "FAULT_BIT_READ_FUEL_GAUGING" 3 "FAULT_BIT_READ_ADV_CHRG_ALGO" 2 "FAULT_BIT_READ_PERM_FAIL" 1 "FAULT_BIT_READ_SETTINGS" 0 "FAULT_BIT_READ_PROTECTION" ;
+VAL_TABLE_ Hibernation 2 "Blink" 1 "Enabled" 0 "Disabled" ;
+VAL_TABLE_ SpeedMode 3 "Rush" 2 "Ride" 1 "Eco" 0 "Default" ;
+VAL_TABLE_ TripStatus 1 "Trip2" 0 "Trip1" ;
+VAL_TABLE_ Charger_Status_ERR_NRML 1 "Error" 0 "Normal" ;
+VAL_TABLE_ Charger_TX 1 "Disable" 0 "Enable" ;
+VAL_TABLE_ Error_State 2 "Permanenet_Fault" 1 "Temporary_Fault" 0 "No Fault" ;
+VAL_TABLE_ Kill_SwitchStatus 1 "kill Switch Off" 0 "Kill Switch On" ;
+VAL_TABLE_ Switch_statius 1 "Pressed" 0 "Not  Pressed" ;
+VAL_TABLE_ Throttle_Control 1 "VCU CAN Command throttle%" 0 "Motor Controller HW Throttle%" ;
+VAL_TABLE_ DriveMode_Req 3 "Rush" 2 "Ride" 1 "Eco" 0 "Default" ;
+VAL_TABLE_ Deratings 1 "Enabled" 0 "Disabled" ;
+VAL_TABLE_ DriveMode_Ack 7 "Reserved" 6 "Reserved" 5 "Reserved" 4 "Reserved" 3 "Rush" 2 "Ride" 1 "Eco" 0 "Reserved" ;
+VAL_TABLE_ OCD_Latch 1 "Lacth" 0 "Default" ;
+VAL_TABLE_ Load_V_present 1 "DFET On" 0 "DFET Off" ;
+VAL_TABLE_ KeyStatus_BMS 1 "Connected" 0 "Not Connected" ;
+VAL_TABLE_ DFET_Status 1 "MDFET_ON" 0 "MDFET_OFF" ;
+VAL_TABLE_ BMS_Fault_Status 1 "Error" 0 "Normal" ;
+VAL_TABLE_ Battery_DFET_Temp_Warning 2 "FET_UNDER_TEMP" 1 "FET_OVER_TEMP" 0 "NO_FET_TEMP_FAULT" ;
+VAL_TABLE_ Battery_DFET_TempFault 3 "Reserved" 2 "DFET Under Temperature" 1 "DFET Over Temperature" 0 "No Fault" ;
+VAL_TABLE_ Battery_CFET_Temp_Fault 3 "Reserved" 2 "CFET Uder Temperature" 1 "CFET Over Temperature" 0 "No Fault" ;
+VAL_TABLE_ CellVoltageFault 3 "Reserved" 2 "Cell Under Votage Fault" 1 "Cell Over Voltage Fault" 0 "No Fault" ;
+VAL_TABLE_ Battery_Voltage_fault 3 "Reserved" 2 "Pack Under Voltage Fault" 1 "Pack Over Voltage Fault" 0 "No Fault" ;
+VAL_TABLE_ Battery_Thermalrunaway_fault 1 "Fault" 0 "No Fault" ;
+VAL_TABLE_ Battery_DischargeTempFault 4 "Charging Under Temperature" 3 "Discharging Under Temperature" 2 "Charging Over Temperature" 1 "Discharging Over Temperature" 0 "No Fault" ;
+VAL_TABLE_ Reverse_Enable_Disable 1 "Disable" 0 "Enable" ;
+VAL_TABLE_ Charger_LED_Color 3 "Reserved" 2 "Green" 1 "Red" 0 "Disable" ;
+VAL_TABLE_ ChargerLEDBlink 15 "na" 14 "na" 13 "na" 12 "na" 11 "na" 10 "na" 9 "na" 8 "na" 7 "na" 6 "na" 5 "na" 4 "blink 4 times" 3 "blink 3 times" 2 "blink 2 times" 1 "blink 1 time" 0 "no blink" ;
+VAL_TABLE_ SOH_estimation_flag 7 "NA" 6 "NA" 5 "NA" 4 "NA" 3 "Both flag on" 2 "SOH estimation flag on" 1 "SOH reset trigger on" 0 "Default" ;
+VAL_TABLE_ Cell_Upnormal_Voltage 2 "UP_Normal_Min_Voltage_Fault" 1 "UP_Normal_Max_Voltage_Fault" 0 "NO_error" ;
+VAL_TABLE_ BMS_State 6 "BMS_Calibration" 5 "BMS_Critical_Fault" 4 "BMS_Charging_Fault" 3 "BMS_Discharging_Fault" 2 "BMS_Charging" 1 "BMS_Discharging" 0 "Idle" ;
+VAL_TABLE_ VCU_Trip_status 1 "Trip 2" 0 "Trip 1" ;
+VAL_TABLE_ Rare_BPS_Timeout 1 "Rare_BPS_Timeout" 0 "No error" ;
+VAL_TABLE_ Front_BPS_TimeOut 2 "reserved" 1 "Front_BPS_Timeout" 0 "No_error" ;
+VAL_TABLE_ VehicleModeStatus 6 "Traction disable" 5 "Linphome mode while traction" 4 "Charge" 3 "Traction" 2 "Idle" 1 "Authentication" 0 "Lock" ;
+VAL_TABLE_ BootStatus 1 "Boot_opean" 0 "Boot_locked" ;
+VAL_TABLE_ ECUErrorCode 326 "Cell Under Voltage Fault" 325 "Cell Over Voltage Fault" 322 "BrakeLamp_Fault" 318 "BMS_CANMSG_Timeout" 315 "Battery_Thermal_Runaway_Fault" 314 "BatteryDisSortCircuitFault" 312 "Charging_under_temp" 310 "Discharging_under_temp" 309 " Charging_over_current_fault" 308 "Discharging_over_current_fault" 307 "Charging_over_temp" 306 "Discharging_over_temp" 305 "DFET under temperature" 304 "DFET over temperature" 303 "CFET under temperature" 302 "CFET over temperature" 301 "Fuse_Fault" 203 "BMS_SCD" 142 "Throttle_2_Low_Voltage" 140 "Motor_Control_Error" 139 "Application_parameters_Fault" 137 "Kill_switch_SRO" 136 "Max_speed_exceeded" 135 "Controller_logic_supply_error" 134 "Throttle channel mismatch " 133 "Motor Stalled" 132 "Throttle SRO" 131 "Contactor_Coil_Overcurrent" 130 "Parameter_Limitation" 129 "Throttle_2_High_Voltage" 128 "High Motor Temperature" 127 "High Controller Temperature" 126 "Corrupted_Position_Sensor_Cal" 125 "Corrupted_Persis_Para" 124 "Corrupted_Comm_Parameters" 123 "Corrupted_Throttle_Calibration" 122 "Corrupted V&I Sensor Calibration" 121 "Motor_Temperature_Sensor" 120 "Controller_Temperature_Sensor" 119 "Motor over temperature" 118 "Controller over temperature" 117 "Charging_Of_Capacitors_Failed" 116 "Throttle 1 Low Voltage" 115 "Throttle 1 High Voltage" 114 "Encoder_Fault" 113 "Throttle_Pedal_Cal_Error" 112 "Corrupted_Application_Parameters" 111 "Contactor_Welded" 110 "Contactor_Bridge_Fault" 109 "Over_Current" 108 "Current_Sensor_Fault" 107 "Sensor_Calibration_Error_V&I" 106 "12V_Failure" 105 "5V_Failure" 104 "Under_Voltage" 103 "Over_Voltage" 102 "Low_Battery_Voltage" 101 "High_Battery_Voltage" ;
+VAL_TABLE_ SolenoidFeedbackStatus 1 "solenoid latched" 0 "solenoid unlatched" ;
+VAL_TABLE_ RegenFlag 1 "Enable" 0 "Disable" ;
+VAL_TABLE_ CalibrationDataSetNumber 4 "Cell 13,14 data" 3 "Cell 10,11,12 data" 2 "Cell 7,8,9 data" 1 "Cell 4,5,6 data" 0 "Cell 1,2,3 data" ;
+VAL_TABLE_ CalibrationDescription 171 "Current Mode" 170 "Voltage Mode  " 34 "Current Calibration Third Point" 33 "Voltage Calibration Third Point" 18 "Current Calibration Second Point" 17 "Voltage Calibration Second Point" 2 "Current Calibration First Point" 1 "Voltage Calibration First Point" ;
+VAL_TABLE_ CalibrationAckStatus 171 "Current Mode" 170 "Voltage Mode" 17 "Second Voltage point read" 3 "FinalCurrentPointReadCalibrated" 2 "Current point read" 1 "First Voltage point read" ;
+VAL_TABLE_ AFESrecWriteStatus 1 "afe_srec written" 0 "afe_srec_not_written" ;
+VAL_TABLE_ AFEDataFlashMemoryWriteFaultCode 7 " FAULT_BIT_READ_SBS_CONFIG" 6 "FAULT_BIT_READ_CALIBRATION" 5 "FAULT_BIT_READ_POWER" 4 "FAULT_BIT_READ_FUEL_GAUGING" 3 " FAULT_BIT_READ_ADV_CHRG_ALGO" 2 "FAULT_BIT_READ_PERM_FAIL" 1 "FAULT_BIT_READ_SETTINGS" 0 "FAULT_BIT_READ_PROTECTION" ;
+VAL_TABLE_ I2c_Status 517 "STATUS_I2C_BUS_BUSY" 516 "STATUS_I2C_ABORTED" 515 "STATUS_I2C_ARBITRATION_LOST " 514 "STATUS_I2C_RX_OVERRUN " 513 "STATUS_I2C_TX_UNDERRUN" 512 "STATUS_I2C_RECEIVED_NACK " ;
+VAL_TABLE_ SystemDiagInitFaultCode 30 "FaultBitReadAFEHistoryFaultData" 29 "FAULTBIT_READ_AFE_LIFE_TIME_DATA" 28 "FAULT_BIT_INT_FLASH_WRITE_FAILED" 27 "FAULT_BIT_INT_FLASH_READ_FAILED" 26 "AULT_BIT_ADC_READ" 25 "FAULT_BIT_AFE_READ " 24 "FAULT_BIT_POST_OS_INIT_FAILED" 23 "FAULT_BIT_OS_CREATE_INTRPTS" 22 "FAULT_BIT_OS_CREATE_TASK" 21 "FAULT_BIT_OS_CREATE_QUEUE" 20 "FAULT_BIT_OS_CREATE_SEMPR" 19 "FAULT_BIT_CAN_TX" 18 "FAULT_BIT_INTERNAL_FLASH_INIT" 17 "FAULT_BIT_I2C_CRC_ERROR" 16 "FAULT_BIT_I2C_RX_ERROR" 15 "FAULT_BIT_I2C_TX_ERROR" 14 "FAULT_BIT_I2C_INIT" 13 "FAULT_BIT_ADC_INIT" 12 "FAULT_BIT_TIMER_FTM1" 11 "FAULT_BIT_TIMER_FTM0" 10 "FAULT_BIT_CAN_INIT_1" 9 "FAULT_BIT_GPIO_INIT" 8 "FAULT_BIT_CLOCK_UPDATE" 7 "FAULT_BIT_BOOT_CLOCK_INIT" 6 "FAULT_BIT_RESET_SOFT" 5 "FAULT_BIT_RESET_NRST_EXT" 4 "FAULT_BIT_RESET_ACK_ERR" 3 "FAULT_BIT_RESET_LV_DETECT" 2 "FAULT_BIT_RESET_SJTAG" 1 "FAULT_BIT_RESET_POWER_ON" 0 "FAULT_BIT_RESET_WDG" ;
+VAL_TABLE_ BatteryAFETempWarning 4 "CHARGING_UNDER_TEMP_FAULT" 3 "DISCHARGING_UNDER_TEMPE_FAULT" 2 "CHARGING_OVER_TEMP_FAULT" 1 "DISCHARGING_OVER_TEMPE_FAULT" 0 "NO_TEMP_FAULT" ;
+VAL_TABLE_ BatteryMDFETTempWarning 2 "FET_UNDER_TEMP" 1 "FET_OVER_TEMP" 0 "NO_FET_TEMP_FAULT" ;
+VAL_TABLE_ BatteryCellVoltageWarning 2 "UNDER_VOLTAGE_FAULT" 1 "OVER_VOLTAGE_FAULT" 0 "NO_VOLTAGE_FAULT" ;
+VAL_TABLE_ BatteryCFETTempWarning 2 "CHARG_UNDER_TEMP_FAULT" 1 "CHARG_OVER_TEMP_FAULT" 0 "NO_CHG_TEMP_FAULT" ;
+VAL_TABLE_ BatteryTempWarning 4 "CHARGING_UNDER_TEMP_FAULT" 3 "DISCHARGING_UNDER_TEMPE_FAULT" 2 "CHARGING_OVER_TEMP_FAULT" 1 "DISCHARGING_OVER_TEMPE_FAULT" 0 "NO_TEMP_FAULT" ;
+VAL_TABLE_ BatteryCurrentWarning 3 "RESERVED" 2 " CHARGING_OVER_CURRENT_FAULT" 1 "DISCHARGING_OVER_CURRENT_FAULT" 0 "NO_CURRENT_FAULT" ;
+VAL_TABLE_ ParkArrowBlink 3 "Top and Bottom Arrow Blink" 2 "Top Arrow Blink" 1 "Bottom Arrow Blink" 0 "No Blink" ;
+VAL_TABLE_ On_Off 1 "ON" 0 "OFF" ;
+VAL_TABLE_ Charger_TX 1 "Disable" 0 "Enable" ;
+VAL_TABLE_ LED_Color 3 "Reserved" 2 "Green" 1 "Red" 0 "Disable" ;
+VAL_TABLE_ BatteryChargingTempFault 4 "Reserved" 3 "Reserved" 2 "Charging Under Temperature" 1 "Charging Over Temperature" 0 "No Fault" ;
+VAL_TABLE_ BatteryFull 1 "Battery Full" 0 "Default" ;
+VAL_TABLE_ Latch 1 "Latch" 0 "Default" ;
+VAL_TABLE_ DFET_Status 1 "DFET On" 0 "DFET Off" ;
+VAL_TABLE_ Gauge_TemperatureFault 3 "Reserved" 2 "Gauge UT Fault" 1 "Gauge OT Fault" 0 "Gauge Temperature Normal" ;
+VAL_TABLE_ Auth_Fault 1 "Auth Fault" 0 "No Auth Fault" ;
+VAL_TABLE_ SpeedMode 3 "Rush" 2 "Sport" 1 "Ride" 0 "Default" ;
+VAL_TABLE_ Fuse 1 "Fuse Blown" 0 "Normal" ;
+VAL_TABLE_ Reset_Display 7 "Reserved" 6 "Reserved" 5 "Reserved" 4 "Reserved" 3 "Clear Service Icon" 2 "Reset Trip 2" 1 "Reset Trip1" 0 "Default" ;
+VAL_TABLE_ CFET_Status 1 "CFET On" 0 "CFET Off" ;
+VAL_TABLE_ Charger_Enable 1 "Disable" 0 "Enable" ;
+VAL_TABLE_ DrivenMode 7 "Reserved" 6 "Reserved" 5 "Reserved" 4 "Reserved" 3 "Reserved" 2 "Rush" 1 "Sport" 0 "Ride" ;
+VAL_TABLE_ Park_Mode_Direction 1 "Forward" 0 "Reverse" ;
+VAL_TABLE_ Park_Mode_Enable 1 "Park Enabled" 0 "Park Disabled" ;
+VAL_TABLE_ DriveMode_Req 7 "Reserved" 6 "Reserved" 5 "Reserved" 4 "Reserved" 3 "Limphome" 2 "Park Reverse" 1 "Foward" 0 "Default" ;
+VAL_TABLE_ Version_Req 1 "Update Version" 0 "Default" ;
+VAL_TABLE_ VehicleMode 9 "Reserved" 8 "Reserved" 7 "Reserved" 6 "Hibernation" 5 "Cloud Update Mode" 4 "Charging" 3 "Reverse" 2 "Forward" 1 "Idle" 0 "Sleep/Lock" ;
+VAL_TABLE_ FET_Fault 3 "Reserved" 2 "Reserved" 1 "Over Temperature " 0 "No Fault" ;
+VAL_TABLE_ Precharging_Status 3 "Precharging Failed" 2 "Precharging Successful" 1 "Precharging In-progress" 0 "Default" ;
+VAL_TABLE_ Drive_Manoeuvre 4 "Acceleration Backward" 3 "Direction Transition" 2 "Service Braking " 1 "Neutral braking" 0 "Accelartion Forward  " ;
+VAL_TABLE_ Motor_ErrorCodes 94 "Kill switch Off" 93 "Kill switch SRO" 83 "Motor stalled " 82 "Throttle SRO" 52 "High motor temperature " 51 "High controller temperature " 97 "Motor control error " 96 "Application parameters fault" 92 "Max. speed exceeded " 90 "Controller logicsupply error " 85 "Throttle channel mismatch " 66 "Contactor coil overcurrent" 56 "Parameter limitation" 54 "Throttle 1 Low Voltage" 53 "Throttle 2 High Voltage" 49 "Corrupted positionsensor cal" 48 "Corrupted Persis Para" 47 "Corrupted Comm parameters " 46 "Corrupted throttle calibration" 45 "Corrupted V&I sensor calibration" 44 "Motor temperature sensor" 43 "Controller temperature sensor" 42 "Motor over temperature" 36 "Charging of capacitors failed " 34 "Throttle 1 Low Voltage" 32 "Encoder Fault" 41 "Controller over temperature" 33 "Throttle 1 High Voltage" 31 "Throttle Pedal Cal Error" 26 "Corrupted Application Parameters" 25 "Contactor  Welded" 24 "Contactor Bridge Fault" 21 "Over Current" 18 "Current Sensor Fault" 17 "Sensor Calibration Error V&I" 16 "12V Failure" 15 "5V Failure" 14 "Under Voltage V<32" 13 "Over Voltage V>62" 12 "Low Battery Voltage V<28" 11 "High Battery Voltage V>100" ;
+VAL_TABLE_ Am_Pm 1 "pm" 0 "am" ;
+VAL_TABLE_ Blink 1 "Blinking" 0 "No Blinking" ;
+VAL_TABLE_ Trip 1 "Trip 2" 0 "Trip 1" ;
+VAL_TABLE_ Enable_Disable 1 "Enabled" 0 "Disabled" ;
+VAL_TABLE_ Direction 3 "Reserved" 2 "Reverse" 1 "Forward" 0 "Neutral" ;
+VAL_TABLE_ KillSwitch 1 "Kill Switch Off" 0 "Kill Switch On" ;
+VAL_TABLE_ PowerStage 3 "Not Used" 2 "On" 1 "Active Short" 0 "Off" ;
+VAL_TABLE_ MotorMode 7 "Reserved" 6 "Reserved" 5 "Reserved" 4 "Reserved" 3 "Rush" 2 "Ride" 1 "Eco" 0 "Reserved" ;
+VAL_TABLE_ BrakeStatus 1 "Pressed" 0 "Not Pressed" ;
+VAL_TABLE_ SideStandStatus 1 "Up" 0 "Down" ;
+VAL_TABLE_ ServiceIndication 1 "Enable" 0 "Disable" ;
+VAL_TABLE_ ChargePlugStatus 1 "Connected" 0 "Not Connected" ;
+VAL_TABLE_ RegenStatus 1 "Enabled" 0 "Disabled" ;
+VAL_TABLE_ VCU_DisplayMode 9 "Reserved" 8 "Reserved" 7 "Reserved" 6 "Factory Mode" 5 "Charging" 4 "Park Forward" 3 "Park Reverse" 2 "Forward" 1 "Idle" 0 "Sleep" ;
+VAL_TABLE_ Green_Red 3 "Green&Red" 2 "Red" 1 "Green" 0 "Default" ;
+VAL_TABLE_ CurrentFaults 3 "Reserved" 2 "Charging Over Current Fault" 1 "Discharging Over Current Fault" 0 "No Fault" ;
+VAL_TABLE_ VoltageFaults 3 "Reserved " 2 "Under Voltage Fault" 1 "Over Voltage Fault" 0 "No Fault" ;
+VAL_TABLE_ BatteryDischargingTempFault 4 "Reserved" 3 "Reserved" 2 "Discharging Under Temperature" 1 "Discharging Over Temperature" 0 "No Fault" ;
+VAL_TABLE_ Fault 1 "Fault" 0 "No Fault" ;
+VAL_TABLE_ Authentication 3 "Fail" 2 "Pass" 1 "InProgress" 0 "Default" ;
+VAL_TABLE_ BalancingStatus 1 "Balancing" 0 "Not Balancing" ;
+VAL_TABLE_ BMS_Status 10 "Reserved" 9 "Reserved" 8 "Reserved" 7 "Charge Recovery Fault" 6 "Discharge Recovery Fault" 5 "Critical Fault" 4 "Hibernate" 3 "Charging" 2 "Discharging" 1 "Precharging" 0 "Sleep" ;
+VAL_TABLE_ charger_status_msg 1 "Error" 0 "Normal" ;
+VAL_TABLE_ SECURITY_Mode_OP_sts 3 "Sealed" 2 "Unsealed" 1 "Full_Access" 0 "Reserved" ;
+VAL_TABLE_ Error_Code_BT_Sts 7 "Unknown_Error" 6 "Bad_Size" 5 "Overflow/UnderFlow" 4 "AccessDenied" 3 "unsupported_Command" 2 "Reserved_Command" 1 "Busy" 0 "OK" ;
+
+
+BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
+ SG_ subversion_u8 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1797 Charger_SWInfo: 8 Charger
+ SG_ Charger_SW_SubVersion_CHG : 48|8@1+ (1,0) [0|255] ""  TEL
+ SG_ SW_LSB_CHG : 32|8@1+ (1,0) [0|255] ""  TEL
+ SG_ SW_MSB_CHG : 24|8@1+ (1,0) [0|255] ""  TEL
+
+BO_ 1796 Display_SWInfo: 8 Display
+ SG_ DIS_Display_SW_SubVersion : 48|8@1+ (1,0) [0|255] ""  TEL
+ SG_ SW_LSB_DIS : 32|8@1+ (1,0) [0|255] ""  TEL
+ SG_ SW_MSB_DIS : 24|8@1+ (1,0) [0|255] ""  TEL
+
+BO_ 1828 Display_HW_Version: 8 Display
+ SG_ SW_SubVersion_HW_DIS : 48|8@1+ (1,0) [0|255] ""  VCU
+ SG_ HW_LSB_DIS : 32|8@1+ (1,0) [0|255] ""  VCU
+ SG_ HW_MSB_DIS : 24|8@1+ (1,0) [0|255] ""  VCU
+
+BO_ 1792 VCU_SWInfo: 8 VCU
+ SG_ SW_SubVersion_VCU : 48|8@1+ (1,0) [0|255] ""  TEL
+ SG_ SW_LSB_VCU : 32|8@1+ (1,0) [0|255] ""  TEL
+ SG_ SW_MSB_VCU : 24|8@1+ (1,0) [0|255] ""  TEL
+
+BO_ 1827 VCU_HardwareVersion: 8 VCU
+ SG_ subversion_u8 : 56|8@1+ (1,0) [0|255] ""  TEL
+ SG_ VCU_hw_lsb_u8 : 48|8@1+ (1,0) [0|255] ""  TEL
+ SG_ VCU_hw_msb_u8 : 40|8@1+ (1,0) [0|255] ""  TEL
+ SG_ VCU_dot_u8 : 32|8@1+ (1,0) [0|255] ""  TEL
+ SG_ vcu_info2_u8 : 24|8@1+ (1,0) [0|255] ""  TEL
+ SG_ vcu_info1_u8 : 16|8@1+ (1,0) [0|255] ""  TEL
+ SG_ VCU_hw_supplier_u8 : 8|8@1+ (1,0) [0|255] ""  TEL
+ SG_ vcu_id_u8 : 0|8@1+ (1,0) [0|255] ""  TEL
+
+BO_ 1793 BMS_SWInfo: 8 BMS
+ SG_ SW_SubVersion_BMS : 48|8@1+ (1,0) [0|255] ""  TEL
+ SG_ SW_LSB_BMS : 32|8@1+ (1,0) [0|255] ""  TEL
+ SG_ SW_MSB_BMS : 24|8@1+ (1,0) [0|255] ""  TEL
+
+BO_ 1857 BMS_HardwareVersion: 8 BMS
+ SG_ battery_Cell_Capacity_b4 : 20|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ BMS_subversion_u8 : 56|8@1+ (1,0) [0|255] ""  TEL
+ SG_ BMS_hw_lsb_u8 : 48|8@1+ (1,0) [0|255] ""  TEL
+ SG_ BMS_hw_msb_u8 : 40|8@1+ (1,0) [0|255] ""  TEL
+ SG_ battery_number_of_parallel_b4 : 28|4@1+ (1,0) [0|15] ""  TEL
+ SG_ battery_number_of_series_b4 : 24|4@1+ (1,0) [0|15] ""  TEL
+ SG_ battery_formfactor_b4 : 16|4@1+ (1,0) [0|15] ""  TEL
+ SG_ battery_chemistry_b4 : 12|4@1+ (1,0) [0|15] ""  TEL
+ SG_ cell_supplier_b4 : 8|4@1- (1,0) [-8|7] ""  TEL
+ SG_ battery_id_u8 : 0|8@1+ (1,0) [0|255] ""  TEL
+
+BO_ 581 TEL_Data_4: 8 VCU
+ SG_ Bms_SOH_StdDev_TEL_Data : 16|8@1+ (1,0) [0|255] ""  TEL
+ SG_ BMS_SOH_Perc_TEL_Data : 8|8@1+ (0.1,75) [75|100.5] ""  TEL
+ SG_ Bms_SOH_Mean_TEL_Data : 0|8@1+ (0.1,75) [75|100.5] ""  TEL
+
+
+
+CM_ BO_ 3221225472 "This is a message for not used signals, created by Vector CANdb++ DBC OLE DB Provider.";
+BA_DEF_ SG_  "SPN" INT 0 524287;
+BA_DEF_ SG_  "SigType" ENUM  "Default","Range","RangeSigned","ASCII","Discrete","Control","ReferencePGN","DTC","StringDelimiter","StringLength","StringLengthControl","MessageCounter","MessageChecksum";
+BA_DEF_ BO_  "GenMsgRequestable" INT 0 1;
+BA_DEF_ BO_  "TpJ1939VarDlc" ENUM  "No","Yes";
+BA_DEF_ BO_  "GenMsgSendType" ENUM  "Fixed Periodic","Event","Event Periodic";
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 1000000;
+BA_DEF_ BU_  "UDSResponseID" HEX 0 2047;
+BA_DEF_ BU_  "UDSRequestID" HEX 0 2047;
+BA_DEF_ BU_  "UDSEnabled" STRING ;
+BA_DEF_ BU_  "NmNode" ENUM  "No","Yes";
+BA_DEF_ BU_  "NodeLayerModules" STRING ;
+BA_DEF_ BU_  "ECU" STRING ;
+BA_DEF_  "ProtocolType" STRING ;
+BA_DEF_  "DBName" STRING ;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "SPN" 0;
+BA_DEF_DEF_  "SigType" "Default";
+BA_DEF_DEF_  "GenMsgRequestable" 1;
+BA_DEF_DEF_  "TpJ1939VarDlc" "No";
+BA_DEF_DEF_  "GenMsgSendType" "Fixed Periodic";
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_DEF_DEF_  "UDSResponseID" 0;
+BA_DEF_DEF_  "UDSRequestID" 0;
+BA_DEF_DEF_  "UDSEnabled" "NO";
+BA_DEF_DEF_  "NmNode" "No";
+BA_DEF_DEF_  "NodeLayerModules" "";
+BA_DEF_DEF_  "ECU" "";
+BA_DEF_DEF_  "ProtocolType" "CAN Standard";
+BA_DEF_DEF_  "DBName" "";
+BA_DEF_DEF_  "BusType" "CAN";
+BA_ "BusType" "CAN";
+BA_ "DBName" "RX1_VehicleGEN2_500K_DBC";
+BA_ "GenMsgCycleTime" BO_ 1797 10000;
+BA_ "GenMsgCycleTime" BO_ 1796 10000;
+BA_ "GenMsgCycleTime" BO_ 1828 1000;
+BA_ "GenMsgCycleTime" BO_ 1792 10000;
+BA_ "GenMsgSendType" BO_ 1827 2;
+BA_ "GenMsgCycleTime" BO_ 1827 1000;
+BA_ "GenMsgCycleTime" BO_ 1793 10000;
+BA_ "GenMsgSendType" BO_ 1857 1;
+BA_ "GenMsgSendType" BO_ 581 1;
+

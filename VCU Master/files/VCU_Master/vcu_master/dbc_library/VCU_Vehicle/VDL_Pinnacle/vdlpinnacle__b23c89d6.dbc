@@ -1,0 +1,279 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_:
+
+
+BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
+ SG_ DCDC_Control : 0|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ DCDC_Enable : 0|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ BMS_ChargeControl : 0|8@0+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 2566888533 Battery_Fault_Code: 8 Vector__XXX
+ SG_ Low_vtg_code : 56|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Low_vtg_ass_no : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ High_vtg_code : 40|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ High_vtg_ass_no : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Min_temp_assm_no : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Min_temp_assm_code : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Max_temp_assm_no : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Max_temp_assm_code : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 2566889301 Battery_Faults: 8 Vector__XXX
+ SG_ Battery_Indication : 40|8@1+ (0.4,0) [0|102] "" Vector__XXX
+ SG_ Charging_cable_indication2 : 24|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Charging_cable_Indication1 : 38|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ low_battery : 12|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Power_Battery_Failure : 6|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Insulartion_fault : 4|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 2566844520 ABS: 8 Vector__XXX
+ SG_ ABS_Signal : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2365521928 MCU_Status1: 8 Vector__XXX
+ SG_ Motor_Torque : 16|16@1+ (1,-30000) [-5000|60535] "" Vector__XXX
+ SG_ Motor_AC_Current : 32|16@1+ (0.1,0) [0|1000] "" Vector__XXX
+ SG_ MCU_Motor_Speed : 0|16@1+ (1,-15000) [-15000|50535] "rpm" Vector__XXX
+
+BO_ 2566836817 Fault_Message_2: 8 Vector__XXX
+ SG_ resolver_speed_sensor_failure : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Phase_current_balance_fault : 10|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Phase_curre_overcurren_fault : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Motor_stall_fault : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Motor_overspeed : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Motor_overcurrent : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Motor_control_overtemp_fault : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Motor_bus_undervolt_fault_sec : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Motor_bus_overvolt_fault_sec : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ IGBT_module_failure : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Current_sensor_failure : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2566836561 Fault_Message_1: 8 Vector__XXX
+ SG_ DNR_Active_Same_Time : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ High_Volt_Connector_Failure : 59|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ diff_btwn_two_AD_acc_Pedal : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_CAN_Bus_disconnected : 20|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_Active_failure : 17|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Active_failure_insula_moni_mod : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Acc_pedal_short_open_circuit : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_enable_water_pump_failure : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_ena_Main_relay_failure : 22|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_en_pre_charge_relay_failure : 23|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Steering_failure : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Motor_electr_cntrl_Active_Fail : 18|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Motor_CAN_Disconnected : 21|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Insula_monit_CAN_commu_failure : 19|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Battery_SOC_too_low_level : 34|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Battery_internal_communi_failed : 35|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Battery_imbalnce_fault : 26|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2566000371 Batt_pack_therm_manag_statu_req: 8 Vector__XXX
+ SG_ Min_battery_pack_temp : 24|8@1+ (1,-40) [-40|215] "deg C" Vector__XXX
+ SG_ Max_battery_pack_temp : 16|8@1+ (1,-40) [-40|215] "deg C" Vector__XXX
+
+BO_ 2565997043 Battery_basic_information: 8 Vector__XXX
+ SG_ Total_Battery_Voltage : 8|16@1+ (0.02,0) [0|1310.7] "V" Vector__XXX
+ SG_ Total_Battery_Current : 24|16@1- (0.1,-3200) [-3200|3353.5] "A" Vector__XXX
+ SG_ Battery_SOC : 0|8@1+ (0.4,0) [0|102] "%" Vector__XXX
+
+BO_ 2550261236 BMS_OBC: 7 Vector__XXX
+ SG_ BMS_VoltageSet : 7|16@0+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ BMS_CurrentSet : 23|16@0+ (0.01,0) [0|655.35] "A" Vector__XXX
+
+BO_ 2550265061 OBC_BMS_Status2: 8 Vector__XXX
+ SG_ OBC_ACVoltage : 39|16@0+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ OBC_ACCurrent : 55|16@0+ (0.01,0) [0|65535] "" Vector__XXX
+ SG_ OBC_CurrentLimit : 23|16@0+ (0.01,0) [0|655.35] "" Vector__XXX
+ SG_ OBC_BatteryVoltage : 7|16@0+ (0.1,0) [0|6553.5] "" Vector__XXX
+
+BO_ 2566876695 Instrument_data_output2: 8 Vector__XXX
+ SG_ battery_CHG_methods : 34|2@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ABS_failure : 38|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ smalllight_signal : 44|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ rear_foglight_signal : 52|2@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ headlight_signal : 46|2@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Fwd_foglight_signal : 54|2@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Current_speed : 16|16@1+ (0.00390625,0) [0|255.99609375] "" Vector__XXX
+
+BO_ 2566876951 Instrument_data_output: 8 Vector__XXX
+ SG_ vehicle_turning_information : 54|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Travel_distance_From_last_charge : 32|16@1+ (0.1,0) [0|6553.5] "Km" Vector__XXX
+ SG_ Total_travel_distance : 0|32@1+ (0.1,0) [0|429496729.5] "Km" Vector__XXX
+ SG_ door_open_signal : 60|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 2364539985 Motor_rpm_and_VCU_ready: 8 Vector__XXX
+ SG_ brake_failure : 14|2@1- (1,0) [-2|1] "" Vector__XXX
+ SG_ VCU_Ready : 7|2@1- (1,0) [0|1] "" Vector__XXX
+ SG_ Motor_Speed : 24|16@1+ (0.5,-16000) [-16000|16767.5] "rpm" Vector__XXX
+
+BO_ 2566888789 Batt_voltage_and_current: 8 Vector__XXX
+ SG_ Total_battery_current : 16|16@1+ (0.02,-640) [-640|670.7] "A" Vector__XXX
+ SG_ total_batt_vtg : 0|16@1+ (0.02,0) [0|999] "V" Vector__XXX
+
+BO_ 2566843985 Motor_and_MCU_temperature: 8 Vector__XXX
+ SG_ motor_controller_temperature : 8|8@1- (1,-40) [-40|210] "" Vector__XXX
+ SG_ Motor_temp : 16|8@1- (1,-40) [-40|210] "" Vector__XXX
+
+BO_ 2566872913 Critical_Parameters_Indication: 8 Vector__XXX
+ SG_ Mileage : 24|8@1+ (2,0) [0|510] "" Vector__XXX
+ SG_ Undervoltage_indication : 16|2@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ System_Error_Motor_Controller : 6|2@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Power_reduction_Index : 12|2@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ operation_Ready : 8|2@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Motor_overheat : 20|2@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Vehicle_Fault : 48|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ battery_cut_off : 2|2@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2566889045 Battery_cell_information: 8 Vector__XXX
+ SG_ battery_cell_min_temp : 24|8@1+ (1,-40) [-40|215] "C" Vector__XXX
+ SG_ battery_cell_max_temp : 16|8@1+ (1,-40) [-40|215] "C" Vector__XXX
+ SG_ battery_cell_min_voltage : 48|16@1+ (1,0) [0|65535] "mV" Vector__XXX
+ SG_ battery_cell_max_voltage : 32|16@1+ (1,0) [0|65535] "mV" Vector__XXX
+
+BO_ 2566832977 Modes: 8 Vector__XXX
+ SG_ Reverse : 8|2@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Neutral : 10|2@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Drive : 12|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 2566844753 Speedometer: 8 Vector__XXX
+ SG_ Speed : 8|16@1+ (0.00390625,0) [0|255.99609375] "km/hr" Vector__XXX
+
+
+
+CM_ BO_ 3221225472 "This is a message for not used signals, created by Vector CANdb++ DBC OLE DB Provider.";
+BA_DEF_ BO_  "FsJ1939UseCrcAndCounter" STRING ;
+BA_DEF_ BO_  "FsJ1939NeedsSHM" ENUM  "No","Yes";
+BA_DEF_ BO_  "FsJ1939Delay" INT 0 1000;
+BA_DEF_ BO_  "TpJ1939VarDlc" ENUM  "No","Yes";
+BA_DEF_ SG_  "SigType" ENUM  "Default","Range","RangeSigned","ASCII","Discrete","Control","ReferencePGN","DTC","StringDelimiter","StringLength","StringLengthControl","MessageCounter","MessageChecksum";
+BA_DEF_ SG_  "GenSigEVName" STRING ;
+BA_DEF_ SG_  "GenSigILSupport" ENUM  "No","Yes";
+BA_DEF_ SG_  "GenSigSendType" ENUM  "Cyclic","OnWrite","OnWriteWithRepetition","OnChange","OnChangeWithRepetition","IfActive","IfActiveWithRepetition","NoSigSendType";
+BA_DEF_ BO_  "GenMsgFastOnStart" INT 0 100000;
+BA_DEF_ SG_  "GenSigInactiveValue" INT 0 0;
+BA_DEF_ BO_  "GenMsgCycleTimeFast" INT 0 3600000;
+BA_DEF_ BO_  "GenMsgNrOfRepetition" INT 0 1000000;
+BA_DEF_ SG_  "GenSigStartValue" INT 0 2147483647;
+BA_DEF_ BO_  "GenMsgDelayTime" INT 0 1000;
+BA_DEF_ BO_  "GenMsgILSupport" ENUM  "No","Yes";
+BA_DEF_ BO_  "GenMsgStartDelayTime" INT 0 100000;
+BA_DEF_ BU_  "NodeLayerModules" STRING ;
+BA_DEF_ BU_  "ECU" STRING ;
+BA_DEF_ BU_  "NmJ1939SystemInstance" INT 0 15;
+BA_DEF_ BU_  "NmJ1939System" INT 0 127;
+BA_DEF_ BU_  "NmJ1939ManufacturerCode" INT 0 2047;
+BA_DEF_ BU_  "NmJ1939IndustryGroup" INT 0 7;
+BA_DEF_ BU_  "NmJ1939IdentityNumber" INT 0 2097151;
+BA_DEF_ BU_  "NmJ1939FunctionInstance" INT 0 7;
+BA_DEF_ BU_  "NmJ1939Function" INT 0 255;
+BA_DEF_ BU_  "NmJ1939ECUInstance" INT 0 3;
+BA_DEF_ BU_  "NmJ1939AAC" INT 0 1;
+BA_DEF_ BU_  "NmStationAddress" INT 0 255;
+BA_DEF_ BO_  "GenMsgSendType" ENUM  "cyclic","NotUsed","IfActive","NotUsed","NotUsed","NotUsed","NotUsed","NotUsed","noMsgSendType";
+BA_DEF_ BO_  "GenMsgRequestable" INT 0 1;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 3600000;
+BA_DEF_ SG_  "SPN" INT 0 524287;
+BA_DEF_  "DBName" STRING ;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_  "ProtocolType" STRING ;
+BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","J1939PG";
+BA_DEF_DEF_  "FsJ1939UseCrcAndCounter" "";
+BA_DEF_DEF_  "FsJ1939NeedsSHM" "No";
+BA_DEF_DEF_  "FsJ1939Delay" 0;
+BA_DEF_DEF_  "TpJ1939VarDlc" "No";
+BA_DEF_DEF_  "SigType" "Default";
+BA_DEF_DEF_  "GenSigEVName" "Env@Nodename_@Signame";
+BA_DEF_DEF_  "GenSigILSupport" "Yes";
+BA_DEF_DEF_  "GenSigSendType" "NoSigSendType";
+BA_DEF_DEF_  "GenMsgFastOnStart" 0;
+BA_DEF_DEF_  "GenSigInactiveValue" 0;
+BA_DEF_DEF_  "GenMsgCycleTimeFast" 0;
+BA_DEF_DEF_  "GenMsgNrOfRepetition" 0;
+BA_DEF_DEF_  "GenSigStartValue" 0;
+BA_DEF_DEF_  "GenMsgDelayTime" 0;
+BA_DEF_DEF_  "GenMsgILSupport" "Yes";
+BA_DEF_DEF_  "GenMsgStartDelayTime" 0;
+BA_DEF_DEF_  "NodeLayerModules" "";
+BA_DEF_DEF_  "ECU" "";
+BA_DEF_DEF_  "NmJ1939SystemInstance" 0;
+BA_DEF_DEF_  "NmJ1939System" 0;
+BA_DEF_DEF_  "NmJ1939ManufacturerCode" 0;
+BA_DEF_DEF_  "NmJ1939IndustryGroup" 0;
+BA_DEF_DEF_  "NmJ1939IdentityNumber" 0;
+BA_DEF_DEF_  "NmJ1939FunctionInstance" 0;
+BA_DEF_DEF_  "NmJ1939Function" 0;
+BA_DEF_DEF_  "NmJ1939ECUInstance" 0;
+BA_DEF_DEF_  "NmJ1939AAC" 0;
+BA_DEF_DEF_  "NmStationAddress" 254;
+BA_DEF_DEF_  "GenMsgSendType" "noMsgSendType";
+BA_DEF_DEF_  "GenMsgRequestable" 1;
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_DEF_DEF_  "SPN" 0;
+BA_DEF_DEF_  "DBName" "";
+BA_DEF_DEF_  "BusType" "CAN";
+BA_DEF_DEF_  "ProtocolType" "J1939";
+BA_DEF_DEF_  "VFrameFormat" "J1939PG";
+BA_ "DBName" "PUMA_SPEEDOMETER";
+BA_ "VFrameFormat" BO_ 2566888533 1;
+BA_ "VFrameFormat" BO_ 2566889301 1;
+BA_ "VFrameFormat" BO_ 2566844520 1;
+BA_ "VFrameFormat" BO_ 2365521928 1;
+BA_ "VFrameFormat" BO_ 2566836817 1;
+BA_ "GenMsgCycleTime" BO_ 2566836817 50;
+BA_ "VFrameFormat" BO_ 2566836561 1;
+BA_ "GenMsgCycleTime" BO_ 2566836561 50;
+BA_ "VFrameFormat" BO_ 2566000371 1;
+BA_ "GenMsgCycleTime" BO_ 2566000371 200;
+BA_ "VFrameFormat" BO_ 2565997043 1;
+BA_ "GenMsgCycleTime" BO_ 2565997043 200;
+BA_ "VFrameFormat" BO_ 2550261236 1;
+BA_ "VFrameFormat" BO_ 2550265061 1;
+BA_ "VFrameFormat" BO_ 2566876695 1;
+BA_ "VFrameFormat" BO_ 2566876951 3;
+BA_ "VFrameFormat" BO_ 2364539985 1;
+BA_ "VFrameFormat" BO_ 2566888789 1;
+BA_ "VFrameFormat" BO_ 2566843985 1;
+BA_ "VFrameFormat" BO_ 2566872913 1;
+BA_ "VFrameFormat" BO_ 2566889045 1;
+BA_ "VFrameFormat" BO_ 2566832977 1;
+BA_ "VFrameFormat" BO_ 2566844753 1;
+BA_ "GenSigStartValue" SG_ 2365521928 Motor_Torque 30000;
+BA_ "GenSigStartValue" SG_ 2365521928 MCU_Motor_Speed 15000;
+BA_ "GenSigStartValue" SG_ 2566000371 Min_battery_pack_temp 40;
+BA_ "GenSigStartValue" SG_ 2566000371 Max_battery_pack_temp 40;
+BA_ "GenSigStartValue" SG_ 2565997043 Total_Battery_Current 32000;
+BA_ "GenSigStartValue" SG_ 2364539985 Motor_Speed 32000;
+BA_ "GenSigStartValue" SG_ 2566888789 Total_battery_current 32000;
+

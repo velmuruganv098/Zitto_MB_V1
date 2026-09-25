@@ -1,0 +1,230 @@
+VERSION ""
+
+
+NS_ :
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_:
+VAL_TABLE_ ABS 1 "Fully Operational" 0 "Not fully Operational" ;
+VAL_TABLE_ Aircomp 3 "Status NA Currently" 2 "Awaiting Status " 1 "Active" 0 "Inactive" ;
+VAL_TABLE_ Brakepedalswitch 1 "Pressed" 0 "Not pressed" ;
+VAL_TABLE_ Seatbelt 5 "Description for the value '0x5'" 3 "Not fastened" 1 "Fastened" 0 "Not fastened" ;
+VAL_TABLE_ Headlight 5 "Low beam ON" 1 "Auxilary/High beam ON" 0 "Headlamp Off" ;
+VAL_TABLE_ ChargerStatus 4 "Charger Connected" 0 "Charger Disconnected" ;
+VAL_TABLE_ ChargingStatus 5 "Charging" 0 "Not charging" ;
+VAL_TABLE_ DriveSwitchMode 14 "DRIVE" 13 "NEUTRAL" 12 "REVERSE" ;
+VAL_TABLE_ TurnSignal 5 "Hazard indicator On" 4 "Right indicator On" 1 "Left indicator On" 0 "Indicators OFF" ;
+VAL_TABLE_ Handbrake 3 "Awaiting status" 2 "Awaiting status" 1 "Engaged" 0 "Disengaged" ;
+VAL_TABLE_ AppLowIdleSwitch 0 "Inactive" 3 "Inactive" 2 "Inactive" 1 "Active" ;
+
+
+BO_ 2566207476 TEMP: 8 Vector__XXX
+ SG_ OutsideTemp : 32|8@1- (1,-40) [-168|87] "Celcius" Vector__XXX
+
+BO_ 2566845949 BAROPR: 8 Vector__XXX
+ SG_ BarometricPressure_HPa : 0|8@1+ (5,-265) [-265|1010] "hPa" Vector__XXX
+
+BO_ 2565865739 ABS: 8 Vector__XXX
+ SG_ ABSstatus : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2566273524 CHRGNGPW: 8 Vector__XXX
+ SG_ ChargingPower : 48|16@1+ (0.01,0) [0|0] "Kw" Vector__XXX
+
+BO_ 2633936432 AIRPRSR: 8 Vector__XXX
+ SG_ MainBrkAirPressure2 : 32|8@1+ (0.08,0) [0|0] "Mpa" Vector__XXX
+ SG_ MainBrkAirPressure1 : 16|8@1+ (0.08,0) [0|0] "Mpa" Vector__XXX
+ SG_ AirCompStatus : 48|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 2566831883 VHLSPD: 8 Vector__XXX
+ SG_ RltvSpdFrntAxlRghtWhl : 24|8@1+ (0.0625,-7.8125) [-7.8125|7.8125] "" Vector__XXX
+ SG_ RelativeSpeedFrontAxleLeftWheel : 16|8@1+ (0.0625,-7.8125) [-7.8125|7.8125] "" Vector__XXX
+ SG_ VehicleSpeed_KMPH : 0|16@1+ (0.00390625,0) [0|250.99609375] "Km/hr" Vector__XXX
+
+BO_ 2566338036 CHRGNGTIME: 8 Vector__XXX
+ SG_ ChargingTimeMins : 8|8@1+ (1,0) [0|0] "Minutes" Vector__XXX
+ SG_ ChargingTimeHrs : 0|8@1+ (1,0) [0|0] "Hours" Vector__XXX
+
+BO_ 2566339316 ENRGY: 8 Vector__XXX
+ SG_ TotalAvgEnrgyConsmpPer100Km : 24|8@1+ (1,0) [0|255] "KWh" Vector__XXX
+ SG_ AvgEnrgyConsmpOfLatest100km : 48|8@1+ (1,0) [0|255] "KWh" Vector__XXX
+
+BO_ 2566338548 INSLRSTR: 8 Vector__XXX
+ SG_ InsulationRestistorInOhm : 16|16@1+ (1,0) [0|0] "Ohm" Vector__XXX
+
+BO_ 2633935895 STBLTMTRSPDRT: 8 Vector__XXX
+ SG_ MotorspeedRight_RPM : 15|16@0+ (0.1,0) [0|0] "rpm" Vector__XXX
+ SG_ DvrSeatbeltStatus : 0|4@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2566291743 LIGT: 8 Vector__XXX
+ SG_ HeadlightStatus : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2565865761 TEMPMTRSPDLTBRK: 8 Vector__XXX
+ SG_ HandBrakeStatus : 2|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ BrakePedalPosition : 32|8@1+ (0.4,0) [0|102] "%" Vector__XXX
+ SG_ BrakepedalSwitchStatus : 24|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ MotorspeedLeft_RPM : 15|16@0+ (0.1,0) [0|0] "rpm" Vector__XXX
+
+BO_ 2566271476 BTRYVOLT: 8 Vector__XXX
+ SG_ BatteryVoltage : 0|16@1+ (0.1,0) [0|0] "V" Vector__XXX
+
+BO_ 2566217097 CHRGR: 8 Vector__XXX
+ SG_ ChargerConnectionStatus : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 2566206708 CHRGNG: 8 Vector__XXX
+ SG_ Chargingstatus : 8|8@1+ (1,0) [0|10] "" Vector__XXX
+
+BO_ 2566271220 BTRY: 8 Vector__XXX
+ SG_ SOC : 0|8@1+ (1,0) [0|100] "%" Vector__XXX
+
+BO_ 2364539681 DRVSWCHLOD: 8 Vector__XXX
+ SG_ AcceleratorPedal1Position : 8|8@1+ (0.4,0) [0|100] "" Vector__XXX
+ SG_ AcceleratorPedal1LowIdleSwitch : 0|2@1+ (1,0) [0|2] "" Vector__XXX
+ SG_ MotorLoadAtCurrentSpd : 16|8@1+ (1,0) [0|0] "%" Vector__XXX
+ SG_ DriveSwitchMode : 24|4@1+ (1,0) [0|10] "" Vector__XXX
+
+BO_ 2566799771 TRNSGNL: 8 Vector__XXX
+ SG_ IndicatorStatus : 1|1@1+ (1,0) [0|5] "" Vector__XXX
+
+BO_ 2566832407 VD: 8 Vector__XXX
+ SG_ TripdistanceA : 32|32@1+ (0.005,0) [0|21474836.475] "Km" Vector__XXX
+ SG_ TotalOdometer : 0|32@1+ (0.005,0) [0|0] "Km" Vector__XXX
+
+
+
+CM_ SG_ 2566338036 ChargingTimeHrs "Charging time in hours:mins. Consider only while charging";
+CM_ SG_ 2566206708 Chargingstatus "Battery Charging status, Consider only while charger connected signal is there.";
+CM_ SG_ 2566271220 SOC "State of charge ";
+CM_ SG_ 2364539681 AcceleratorPedal1Position "Accelerator Pedal 1 Position: This parameter is intended for the primary accelerator control in an application.";
+CM_ SG_ 2364539681 AcceleratorPedal1LowIdleSwitch "Switch signal which indicates the state of the accelerator pedal 1 low idle switch.1 Active,2 inactive";
+CM_ SG_ 2364539681 DriveSwitchMode "DriveSwitchMode";
+CM_ SG_ 2566799771 IndicatorStatus "Turn Signal Status";
+CM_ SG_ 2566832407 TripdistanceA "Trip Distance (High Resolution): ";
+CM_ SG_ 2566832407 TotalOdometer "Total Vehicle Distance";
+BA_DEF_ SG_  "SigType" ENUM  "Default","Range","RangeSigned","ASCII","Discrete","Control","ReferencePGN","DTC","StringDelimiter","StringLength","StringLengthControl","MessageCounter","MessageChecksum";
+BA_DEF_ SG_  "GenSigEVName" STRING ;
+BA_DEF_ SG_  "GenSigILSupport" ENUM  "No","Yes";
+BA_DEF_ SG_  "GenSigSendType" ENUM  "Cyclic","OnWrite","OnWriteWithRepetition","OnChange","OnChangeWithRepetition","IfActive","IfActiveWithRepetition","NoSigSendType";
+BA_DEF_ BO_  "GenMsgFastOnStart" INT 0 100000;
+BA_DEF_ SG_  "GenSigInactiveValue" INT 0 0;
+BA_DEF_ BO_  "GenMsgCycleTimeFast" INT 0 3600000;
+BA_DEF_ BO_  "GenMsgNrOfRepetition" INT 0 1000000;
+BA_DEF_ SG_  "GenSigStartValue" INT 0 10000;
+BA_DEF_ BO_  "GenMsgDelayTime" INT 0 1000;
+BA_DEF_ BO_  "GenMsgILSupport" ENUM  "No","Yes";
+BA_DEF_ BO_  "GenMsgStartDelayTime" INT 0 100000;
+BA_DEF_ BU_  "NodeLayerModules" STRING ;
+BA_DEF_ BU_  "ECU" STRING ;
+BA_DEF_ BU_  "NmJ1939SystemInstance" INT 0 15;
+BA_DEF_ BU_  "NmJ1939System" INT 0 127;
+BA_DEF_ BU_  "NmJ1939ManufacturerCode" INT 0 2047;
+BA_DEF_ BU_  "NmJ1939IndustryGroup" INT 0 7;
+BA_DEF_ BU_  "NmJ1939IdentityNumber" INT 0 2097151;
+BA_DEF_ BU_  "NmJ1939FunctionInstance" INT 0 7;
+BA_DEF_ BU_  "NmJ1939Function" INT 0 255;
+BA_DEF_ BU_  "NmJ1939ECUInstance" INT 0 3;
+BA_DEF_ BU_  "NmJ1939AAC" INT 0 1;
+BA_DEF_ BU_  "NmStationAddress" INT 0 255;
+BA_DEF_ BO_  "GenMsgSendType" ENUM  "cyclic","NotUsed","IfActive","NotUsed","NotUsed","NotUsed","NotUsed","NotUsed","noMsgSendType";
+BA_DEF_ BO_  "GenMsgRequestable" INT 0 1;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 3600000;
+BA_DEF_ SG_  "SPN" INT 0 524287;
+BA_DEF_  "DBName" STRING ;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_  "ProtocolType" STRING ;
+BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","J1939PG";
+BA_DEF_DEF_  "SigType" "Default";
+BA_DEF_DEF_  "GenSigEVName" "Env@Nodename_@Signame";
+BA_DEF_DEF_  "GenSigILSupport" "Yes";
+BA_DEF_DEF_  "GenSigSendType" "NoSigSendType";
+BA_DEF_DEF_  "GenMsgFastOnStart" 0;
+BA_DEF_DEF_  "GenSigInactiveValue" 0;
+BA_DEF_DEF_  "GenMsgCycleTimeFast" 0;
+BA_DEF_DEF_  "GenMsgNrOfRepetition" 0;
+BA_DEF_DEF_  "GenSigStartValue" 0;
+BA_DEF_DEF_  "GenMsgDelayTime" 0;
+BA_DEF_DEF_  "GenMsgILSupport" "Yes";
+BA_DEF_DEF_  "GenMsgStartDelayTime" 0;
+BA_DEF_DEF_  "NodeLayerModules" "";
+BA_DEF_DEF_  "ECU" "";
+BA_DEF_DEF_  "NmJ1939SystemInstance" 0;
+BA_DEF_DEF_  "NmJ1939System" 0;
+BA_DEF_DEF_  "NmJ1939ManufacturerCode" 0;
+BA_DEF_DEF_  "NmJ1939IndustryGroup" 0;
+BA_DEF_DEF_  "NmJ1939IdentityNumber" 0;
+BA_DEF_DEF_  "NmJ1939FunctionInstance" 0;
+BA_DEF_DEF_  "NmJ1939Function" 0;
+BA_DEF_DEF_  "NmJ1939ECUInstance" 0;
+BA_DEF_DEF_  "NmJ1939AAC" 0;
+BA_DEF_DEF_  "NmStationAddress" 254;
+BA_DEF_DEF_  "GenMsgSendType" "noMsgSendType";
+BA_DEF_DEF_  "GenMsgRequestable" 1;
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_DEF_DEF_  "SPN" 0;
+BA_DEF_DEF_  "DBName" "";
+BA_DEF_DEF_  "BusType" "CAN";
+BA_DEF_DEF_  "ProtocolType" "J1939";
+BA_DEF_DEF_  "VFrameFormat" "J1939PG";
+BA_ "DBName" "BYDQ1";
+BA_ "VFrameFormat" BO_ 2566207476 3;
+BA_ "VFrameFormat" BO_ 2566845949 3;
+BA_ "VFrameFormat" BO_ 2565865739 3;
+BA_ "VFrameFormat" BO_ 2566273524 3;
+BA_ "VFrameFormat" BO_ 2633936432 3;
+BA_ "VFrameFormat" BO_ 2566831883 3;
+BA_ "VFrameFormat" BO_ 2566338036 3;
+BA_ "VFrameFormat" BO_ 2566339316 3;
+BA_ "VFrameFormat" BO_ 2566338548 3;
+BA_ "VFrameFormat" BO_ 2633935895 3;
+BA_ "VFrameFormat" BO_ 2566291743 3;
+BA_ "VFrameFormat" BO_ 2565865761 3;
+BA_ "VFrameFormat" BO_ 2566271476 3;
+BA_ "VFrameFormat" BO_ 2566217097 3;
+BA_ "VFrameFormat" BO_ 2566206708 3;
+BA_ "VFrameFormat" BO_ 2566271220 3;
+BA_ "VFrameFormat" BO_ 2364539681 3;
+BA_ "VFrameFormat" BO_ 2566799771 3;
+BA_ "VFrameFormat" BO_ 2566832407 3;
+BA_ "GenSigStartValue" SG_ 2566207476 OutsideTemp 0;
+BA_ "GenSigStartValue" SG_ 2566845949 BarometricPressure 106;
+BA_ "GenSigStartValue" SG_ 2566831883 RltvSpdFrntAxlRghtWhl 125;
+BA_ "GenSigStartValue" SG_ 2566831883 RelativeSpeedFrontAxleLeftWheel 125;
+VAL_ 2565865739 ABSstatus 1 "Fully Operational" 0 "Not fully Operational" ;
+VAL_ 2633936432 AirCompStatus 3 "Status NA Currently" 2 "Awaiting Status " 1 "Active" 0 "Inactive" ;
+VAL_ 2633935895 DvrSeatbeltStatus 5 "Description for the value '0x5'" 3 "Not fastened" 1 "Fastened" 0 "Not fastened" ;
+VAL_ 2566291743 HeadlightStatus 5 "Low beam ON" 1 "Auxilary/High beam ON" 0 "Headlamp Off" ;
+VAL_ 2565865761 HandBrakeStatus 1 "Engaged" 0 "Disengaged" ;
+VAL_ 2565865761 BrakepedalSwitchStatus 1 "Pressed" 0 "Not pressed" ;
+VAL_ 2566217097 ChargerConnectionStatus 4 "Charger Connected" 0 "Charger Disconnected" ;
+VAL_ 2566206708 Chargingstatus 5 "Charging" 0 "Not charging" ;
+VAL_ 2364539681 AcceleratorPedal1LowIdleSwitch 3 "Inactive" 2 "Inactive" 1 "Active" 0 "Inactive" ;
+VAL_ 2364539681 DriveSwitchMode 14 "DRIVE" 13 "NEUTRAL" 12 "REVERSE" ;
+VAL_ 2566799771 IndicatorStatus 5 "Hazard indicator On" 4 "Right indicator On" 1 "Left indicator On" 0 "Indicators OFF" ;

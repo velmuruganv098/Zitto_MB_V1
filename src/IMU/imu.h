@@ -59,9 +59,9 @@
  * Timing
  * ============================================================ */
 
-#define IMU_DT_MS                50U
+#define IMU_DT_MS                10U      /* V0.0073: 100 Hz (was 50 ms) */
 
-#define IMU_CAL_SAMPLES          40U
+#define IMU_CAL_SAMPLES          200U     /* 2 s at 10 ms */
 
 
 /* ============================================================
@@ -84,6 +84,8 @@
 void Imu_Init(void);
 
 void Imu_Calibrate(void);
+
+void Imu_ZeroPosition(void);     /* V0.0073: restart the displacement origin (CMD_IMU_ZERO) */
 
 void Imu_Task(void);
 

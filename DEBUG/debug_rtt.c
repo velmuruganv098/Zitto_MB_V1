@@ -296,34 +296,63 @@ static int rtt_uart_vformat(
  * chain skip re-entering the mirror (it still logs to RTT), which
  * breaks the cycle regardless of which internal function triggers it.
  */
-int RTT_LOG(const char *format, ...)
+/* V0.0073: RTT_LOG no longer mirrors every debug line onto the ESP32 UART by
+ * default - at CAN load that flooded the 115200 link ("TX queue full") and
+ * starved CAN data.  CMD_RTT_ENABLE (0x70) / CMD_RTT_DISABLE (0x71) switch the
+ * mirror at runtime.  EVT_LOG() always goes to RTT *and* UART (MSG_LOG): use it
+ * for commands / actions / state changes the UI must see. */
+static volatile uint8_t g_rtt_uart_mirror = 0U;
+
+void Debug_SetUartMirror(uint8_t on)
+{
+    g_rtt_uart_mirror = (on != 0U) ? 1U : 0U;
+}
+
+uint8_t Debug_GetUartMirror(void)
+{
+    return g_rtt_uart_mirror;
+}
+
+static int rtt_log_v(uint8_t to_uart, const char *format, va_list *args)
 {
     int ret;
-    va_list args;
     va_list args2;
     char buf[200];
     int len;
     static volatile uint8_t s_in_uart_mirror = 0U;
 
-    va_start(args, format);
-    va_copy(args2, args);
-
-    ret = SEGGER_RTT_vprintf(0, format, &args);
-
-    if(s_in_uart_mirror == 0U)
+    va_copy(args2, *args);
+    ret = SEGGER_RTT_vprintf(0, format, args);
+    if((to_uart != 0U) && (s_in_uart_mirror == 0U))
     {
         len = rtt_uart_vformat(buf, sizeof(buf), format, args2);
-
         if(len > 0)
         {
-            s_in_uart_mirror = 1U;
+            s_in_uart_mirror = 1U;          /* guard: Uart_Pkt_Send() may log again */
             (void)Uart_Pkt_SendLog(buf);
             s_in_uart_mirror = 0U;
         }
     }
-
-    va_end(args);
     va_end(args2);
+    return ret;
+}
 
+int RTT_LOG(const char *format, ...)
+{
+    int ret;
+    va_list args;
+    va_start(args, format);
+    ret = rtt_log_v(g_rtt_uart_mirror, format, &args);
+    va_end(args);
+    return ret;
+}
+
+int EVT_LOG(const char *format, ...)
+{
+    int ret;
+    va_list args;
+    va_start(args, format);
+    ret = rtt_log_v(1U, format, &args);
+    va_end(args);
     return ret;
 }

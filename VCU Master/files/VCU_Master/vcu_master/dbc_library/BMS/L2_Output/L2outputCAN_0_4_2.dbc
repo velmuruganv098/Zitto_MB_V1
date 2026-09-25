@@ -1,0 +1,367 @@
+VERSION "0.4.2"
+
+
+NS_ : 
+		NS_DESC_
+		CM_
+		BA_DEF_
+		BA_
+		VAL_
+		CAT_DEF_
+		CAT_
+		FILTER
+		BA_DEF_DEF_
+		EV_DATA_
+		ENVVAR_DATA_
+		SGTYPE_
+		SGTYPE_VAL_
+		BA_DEF_SGTYPE_
+		BA_SGTYPE_
+		SIG_TYPE_REF_
+		VAL_TABLE_
+		SIG_GROUP_
+		SIG_VALTYPE_
+		SIGTYPE_VALTYPE_
+		BO_TX_BU_
+		BA_DEF_REL_
+		BA_REL_
+		BA_DEF_DEF_REL_
+		BU_SG_REL_
+		BU_EV_REL_
+		BU_BO_REL_
+		SG_MUL_VAL_
+
+BS_:
+
+BU_:
+
+
+BO_ 1056 BMS1Frm1: 8 Vector__XXX
+	SG_ AvgV : 0|16@1+ (100,0) [NaN|NaN] "centi Volt" Vector__XXX
+	SG_ MinV : 16|16@1+ (100,0) [NaN|NaN] "centi Volt" Vector__XXX
+	SG_ MaxV : 32|16@1+ (100,0) [NaN|NaN] "centi Volt" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+BO_ 1057 BMS1Frm2: 8 Vector__XXX
+	SG_ AvgI : 0|16@1- (100,0) [NaN|NaN] "centi-Ampere" Vector__XXX
+	SG_ MinI : 16|16@1+ (100,0) [NaN|NaN] "centi-Ampere" Vector__XXX
+	SG_ MaxI : 32|16@1+ (100,0) [NaN|NaN] "centi-Ampere" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+BO_ 1058 BMS1Frm3: 8 Vector__XXX
+	SG_ AvgSOC : 0|8@1+ (2,0) [NaN|NaN] "%" Vector__XXX
+	SG_ AvgSOH : 8|8@1+ (2,0) [NaN|NaN] "%" Vector__XXX
+	SG_ MinSOC : 16|8@1+ (2,0) [NaN|NaN] "%" Vector__XXX
+	SG_ MinSOH : 24|8@1+ (2,0) [NaN|NaN] "%" Vector__XXX
+	SG_ MaxSOC : 32|8@1+ (2,0) [NaN|NaN] "%" Vector__XXX
+	SG_ MaxSOH : 40|8@1+ (2,0) [NaN|NaN] "%" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+BO_ 1059 BMS1Frm4: 8 Vector__XXX
+	SG_ MinTemp : 0|8@1- (1,-40) [NaN|NaN] "Celcius" Vector__XXX
+	SG_ MaxTemp : 8|8@1+ (1,-40) [NaN|NaN] "Celcius" Vector__XXX
+	SG_ intraimbalance : 24|8@1+ (100,0) [NaN|NaN] "centi-Volt" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+BO_ 1060 BMS1Frm5: 8 Vector__XXX
+	SG_ SwStat : 0|8@1+ (1,0) [NaN|NaN] "bitwise" Vector__XXX
+	SG_ opStat : 8|8@1+ (1,0) [NaN|NaN] "bitwise" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+BO_ 1061 BMS1Frm6: 8 Vector__XXX
+	SG_ L2faults : 0|16@1+ (1,0) [NaN|NaN] "bitwise" Vector__XXX
+	SG_ BB200flt : 16|16@1+ (1,0) [NaN|NaN] "bitwise" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+BO_ 1062 BMS1Frm7: 8 Vector__XXX
+	SG_ Nbat : 0|8@1+ (1,0) [NaN|NaN] "" Vector__XXX
+	SG_ PackV : 8|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ PackI : 24|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ PackSOC : 40|8@1+ (2,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+BO_ 1063 BMS1Frm8: 8 Vector__XXX
+	SG_ RemainingCpcty : 0|16@1+ (2,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (0,0) [NaN|NaN] "" Vector__XXX
+BO_ 1064 BMS1Bat1FrmA: 8 Vector__XXX
+	SG_ Voltage : 0|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ Current : 16|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ OprtnHours : 32|16@1+ (0,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (0,0) [NaN|NaN] "" Vector__XXX
+BO_ 1065 BMS1Bat2FrmA: 8 Vector__XXX
+	SG_ Voltage : 0|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ Current : 16|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ OprtnHours : 32|16@1+ (0,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (0,0) [NaN|NaN] "" Vector__XXX
+BO_ 1066 BMS1Bat3FrmA: 8 Vector__XXX
+	SG_ Voltage : 0|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ Current : 16|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ OprtnHours : 32|16@1+ (0,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (0,0) [NaN|NaN] "" Vector__XXX
+BO_ 1067 BMS1Bat4FrmA: 8 Vector__XXX
+	SG_ Voltage : 0|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ Current : 16|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ OprtnHours : 32|16@1+ (0,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (0,0) [NaN|NaN] "" Vector__XXX
+BO_ 1068 BMS1Bat5FrmA: 8 Vector__XXX
+	SG_ Voltage : 0|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ Current : 16|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ OprtnHours : 32|16@1+ (0,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (0,0) [NaN|NaN] "" Vector__XXX
+BO_ 1069 BMS1Bat6FrmA: 8 Vector__XXX
+	SG_ Voltage : 0|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ Current : 16|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ OprtnHours : 32|16@1+ (0,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (0,0) [NaN|NaN] "" Vector__XXX
+BO_ 1070 BMS1Bat7FrmA: 8 Vector__XXX
+	SG_ Voltage : 0|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ Current : 16|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ OprtnHours : 32|16@1+ (0,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (0,0) [NaN|NaN] "" Vector__XXX
+BO_ 1071 BMS1Bat8FrmA: 8 Vector__XXX
+	SG_ Voltage : 0|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ Current : 16|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ OprtnHours : 32|16@1+ (0,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (0,0) [NaN|NaN] "" Vector__XXX
+BO_ 1072 BMS1Bat1FrmB: 8 Vector__XXX
+	SG_ CellTempMin : 0|8@1+ (1,-40) [NaN|NaN] "" Vector__XXX
+	SG_ CellTempMax : 8|8@1+ (1,-40) [NaN|NaN] "" Vector__XXX
+	SG_ CellVoltMin : 16|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ CellVoltMax : 32|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+BO_ 1073 BMS1Bat2FrmB: 8 Vector__XXX
+	SG_ CellTempMin : 0|8@1+ (1,-40) [NaN|NaN] "" Vector__XXX
+	SG_ CellTempMax : 8|8@1+ (1,-40) [NaN|NaN] "" Vector__XXX
+	SG_ CellVoltMin : 16|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ CellVoltMax : 32|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+BO_ 1074 BMS1Bat3FrmB: 8 Vector__XXX
+	SG_ CellTempMin : 0|8@1+ (1,-40) [NaN|NaN] "" Vector__XXX
+	SG_ CellTempMax : 8|8@1+ (1,-40) [NaN|NaN] "" Vector__XXX
+	SG_ CellVoltMin : 16|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ CellVoltMax : 32|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+BO_ 1075 BMS1Bat4FrmB: 8 Vector__XXX
+	SG_ CellTempMin : 0|8@1+ (1,-40) [NaN|NaN] "" Vector__XXX
+	SG_ CellTempMax : 8|8@1+ (1,-40) [NaN|NaN] "" Vector__XXX
+	SG_ CellVoltMin : 16|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ CellVoltMax : 32|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+BO_ 1076 BMS1Bat5FrmB: 8 Vector__XXX
+	SG_ CellTempMin : 0|8@1+ (1,-40) [NaN|NaN] "" Vector__XXX
+	SG_ CellTempMax : 8|8@1+ (1,-40) [NaN|NaN] "" Vector__XXX
+	SG_ CellVoltMin : 16|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ CellVoltMax : 32|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+BO_ 1077 BMS1Bat6FrmB: 8 Vector__XXX
+	SG_ CellTempMin : 0|8@1+ (1,-40) [NaN|NaN] "" Vector__XXX
+	SG_ CellTempMax : 8|8@1+ (1,-40) [NaN|NaN] "" Vector__XXX
+	SG_ CellVoltMin : 16|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ CellVoltMax : 32|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+BO_ 1078 BMS1Bat7FrmB: 8 Vector__XXX
+	SG_ CellTempMin : 0|8@1+ (1,-40) [NaN|NaN] "" Vector__XXX
+	SG_ CellTempMax : 8|8@1+ (1,-40) [NaN|NaN] "" Vector__XXX
+	SG_ CellVoltMin : 16|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ CellVoltMax : 32|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+BO_ 1079 BMS1Bat8FrmB: 8 Vector__XXX
+	SG_ CellTempMin : 0|8@1+ (1,-40) [NaN|NaN] "" Vector__XXX
+	SG_ CellTempMax : 8|8@1+ (1,-40) [NaN|NaN] "" Vector__XXX
+	SG_ CellVoltMin : 16|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ CellVoltMax : 32|16@1+ (100,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+BO_ 1080 BMS1Bat1FrmC: 8 Vector__XXX
+	SG_ SOC : 0|8@1+ (2,0) [NaN|NaN] "" Vector__XXX
+	SG_ NomCpcty : 8|8@1+ (1,0) [NaN|NaN] "" Vector__XXX
+	SG_ Cpcty : 16|8@1+ (1,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+BO_ 1081 BMS1Bat2FrmC: 8 Vector__XXX
+	SG_ SOC : 0|8@1+ (2,0) [NaN|NaN] "" Vector__XXX
+	SG_ NomCpcty : 8|8@1+ (1,0) [NaN|NaN] "" Vector__XXX
+	SG_ Cpcty : 16|8@1+ (1,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+BO_ 1082 BMS1Bat3FrmC: 8 Vector__XXX
+	SG_ SOC : 0|8@1+ (2,0) [NaN|NaN] "" Vector__XXX
+	SG_ NomCpcty : 8|8@1+ (1,0) [NaN|NaN] "" Vector__XXX
+	SG_ Cpcty : 16|8@1+ (1,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+BO_ 1083 BMS1Bat4FrmC: 8 Vector__XXX
+	SG_ SOC : 0|8@1+ (2,0) [NaN|NaN] "" Vector__XXX
+	SG_ NomCpcty : 8|8@1+ (1,0) [NaN|NaN] "" Vector__XXX
+	SG_ Cpcty : 16|8@1+ (1,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+BO_ 1084 BMS1Bat5FrmC: 8 Vector__XXX
+	SG_ SOC : 0|8@1+ (2,0) [NaN|NaN] "" Vector__XXX
+	SG_ NomCpcty : 8|8@1+ (1,0) [NaN|NaN] "" Vector__XXX
+	SG_ Cpcty : 16|8@1+ (1,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+BO_ 1085 BMS1Bat6FrmC: 8 Vector__XXX
+	SG_ SOC : 0|8@1+ (2,0) [NaN|NaN] "" Vector__XXX
+	SG_ NomCpcty : 8|8@1+ (1,0) [NaN|NaN] "" Vector__XXX
+	SG_ Cpcty : 16|8@1+ (1,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+BO_ 1086 BMS1Bat7FrmC: 8 Vector__XXX
+	SG_ SOC : 0|8@1+ (2,0) [NaN|NaN] "" Vector__XXX
+	SG_ NomCpcty : 8|8@1+ (1,0) [NaN|NaN] "" Vector__XXX
+	SG_ Cpcty : 16|8@1+ (1,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+BO_ 1087 BMS1Bat8FrmC: 8 Vector__XXX
+	SG_ SOC : 0|8@1+ (2,0) [NaN|NaN] "" Vector__XXX
+	SG_ NomCpcty : 8|8@1+ (1,0) [NaN|NaN] "" Vector__XXX
+	SG_ Cpcty : 16|8@1+ (1,0) [NaN|NaN] "" Vector__XXX
+	SG_ CRC : 48|16@1+ (1,0) [NaN|NaN] "" Vector__XXX
+
+BA_DEF_ SG_  "SPN" INT 0 524287;
+BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","J1939PG";
+BA_DEF_  "DatabaseVersion" STRING ;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_  "ProtocolType" STRING ;
+BA_DEF_  "DatabaseCompiler" STRING ;
+BA_DEF_DEF_  "SPN" 0;
+BA_DEF_DEF_  "VFrameFormat" "J1939PG";
+BA_DEF_DEF_  "DatabaseVersion" "DEMO PLUS";
+BA_DEF_DEF_  "BusType" "";
+BA_DEF_DEF_  "ProtocolType" "";
+BA_DEF_DEF_  "DatabaseCompiler" "";
+BA_ "ProtocolType" "J1939";
+BA_ "BusType" "CAN";
+BA_ "DatabaseCompiler" "CSS ELECTRONICS (WWW.CSSELECTRONICS.COM)";
+BA_ "DatabaseVersion" "1.0.0";
+BA_ "VFrameFormat" BO_ 2364540158 3;
+BA_ "SPN" SG_ 2364540158 EngineSpeed 190;
+
+CM_ BO_ 1056 "Pack Voltage Information";
+CM_ SG_ 1056 AvgV "average voltage of all batteries connected to L2";
+CM_ SG_ 1056 MinV "minimum voltage of all batteries connected to L2";
+CM_ SG_ 1056 MaxV "maximum voltage of all batteries connected to L2";
+CM_ BO_ 1057 "Pack Current Information";
+CM_ SG_ 1057 AvgI "average current of all batteries connected to L2";
+CM_ SG_ 1057 MinI "minimum current of all batteries connected to L2";
+CM_ SG_ 1057 MaxI "maximum current of all batteries connected to L2";
+CM_ BO_ 1058 "Pack SOC and SOH Information";
+CM_ SG_ 1058 AvgSOC "average SOC of all batteries connected to L2";
+CM_ SG_ 1058 MinSOC "minimum SOC of all batteries connected to L2";
+CM_ SG_ 1058 MaxSOC "maximum SOC of all batteries connected to L2";
+CM_ SG_ 1058 AvgSOH "average SOH of all batteries connected to L2";
+CM_ SG_ 1058 MinSOH "minimum SOH of all batteries connected to L2";
+CM_ SG_ 1058 MaxSOH "maximum SOH of all batteries connected to L2";
+
+CM_ BO_ 1059 "Temperatures and imbalances";
+CM_ SG_ 1059 MinTemp "Minimum Temperature of any cell controlled by this L2";
+CM_ SG_ 1059 MaxTemp "Maximum Temperature of any cell controlled by this L2";
+CM_ SG_ 1059 intraimbalance "Difference between the maximum and minimum of battery voltages within the L2 pack";
+CM_ BO_ 1060 "Operational Information";
+CM_ SG_ 1060 SwStat "bitwise representation of which batteries contactors are closed. 0=open 1=close";
+CM_ SG_ 1060 opStat "representation of this BMS current operation goal";
+CM_ BO_ 1061 "Fault Information";
+CM_ SG_ 1061 L2faults "bitwise faults reported by the BMS itself";
+CM_ SG_ 1061 BB200flt "bitwise faults reported by any connected batteries";
+
+CM_ BO_ 1062 "Overall Pack Information";
+CM_ SG_ 1062 Nbat "Number of batteries controlled by this BMS";
+CM_ SG_ 1062 PackV "Voltage of the pack controlled by this BMS";
+CM_ SG_ 1062 PackI "Current flowing through this L2 pack of batteries";
+CM_ SG_ 1062 PackSOC "Average of the SOC of each battery connected to this L2";
+CM_ BO_ 1063 "Remaining Capacity";
+CM_ SG_ 1063 RemainingCpcty "AvgSOC multiplied by the of battery capacities";
+
+CM_ BO_ 1064 "Voltage Current and Age of Battery 1";
+CM_ SG_ 1064 Voltage "Voltage of Battery 1";
+CM_ SG_ 1064 Current "Current through Battery 1";
+CM_ SG_ 1064 OprtnHours "Age of Battery 1";
+CM_ BO_ 1065 "Voltage Current and Age of Battery 2";
+CM_ SG_ 1065 Voltage "Voltage of Battery 2";
+CM_ SG_ 1065 Current "Current through Battery 2";
+CM_ SG_ 1065 OprtnHours "Age of Battery 2";
+CM_ BO_ 1066 "Voltage Current and Age of Battery 3";
+CM_ SG_ 1066 Voltage "Voltage of Battery 3";
+CM_ SG_ 1066 Current "Current through Battery 3";
+CM_ SG_ 1066 OprtnHours "Age of Battery 3";
+CM_ BO_ 1067 "Voltage Current and Age of Battery 4";
+CM_ SG_ 1067 Voltage "Voltage of Battery 4";
+CM_ SG_ 1067 Current "Current through Battery 4";
+CM_ SG_ 1067 OprtnHours "Age of Battery 4";
+CM_ BO_ 1068 "Voltage Current and Age of Battery 5";
+CM_ SG_ 1068 Voltage "Voltage of Battery 5";
+CM_ SG_ 1068 Current "Current through Battery 5";
+CM_ SG_ 1068 OprtnHours "Age of Battery 5";
+CM_ BO_ 1069 "Voltage Current and Age of Battery 6";
+CM_ SG_ 1069 Voltage "Voltage of Battery 6";
+CM_ SG_ 1069 Current "Current through Battery 6";
+CM_ SG_ 1069 OprtnHours "Age of Battery 6";
+CM_ BO_ 1070 "Voltage Current and Age of Battery 7";
+CM_ SG_ 1070 Voltage "Voltage of Battery 7";
+CM_ SG_ 1070 Current "Current through Battery 7";
+CM_ SG_ 1070 OprtnHours "Age of Battery 7";
+CM_ BO_ 1071 "Voltage Current and Age of Battery 8";
+CM_ SG_ 1071 Voltage "Voltage of Battery 8";
+CM_ SG_ 1071 Current "Current through Battery 8";
+CM_ SG_ 1071 OprtnHours "Age of Battery 8";
+
+CM_ BO_ 1072 "Cell Voltage and Temperature of Battery 1";
+CM_ SG_ 1072 CellTempMin "Minimum temperature of any cell in Battery 1";
+CM_ SG_ 1072 CellTempMax "Minimum temperature of any cell in Battery 1";
+CM_ SG_ 1072 CellVoltMin "Minimum voltage of any cell in Battery 1";
+CM_ SG_ 1072 CellVoltMax "Maximum voltage of any cell in Battery 1";
+CM_ BO_ 1073 "Cell Voltage and Temperature of Battery 2";
+CM_ SG_ 1073 CellTempMin "Minimum temperature of any cell in Battery 2";
+CM_ SG_ 1073 CellTempMax "Minimum temperature of any cell in Battery 2";
+CM_ SG_ 1073 CellVoltMin "Minimum voltage of any cell in Battery 2";
+CM_ SG_ 1073 CellVoltMax "Maximum voltage of any cell in Battery 2";
+CM_ BO_ 1074 "Cell Voltage and Temperature of Battery 3";
+CM_ SG_ 1074 CellTempMin "Minimum temperature of any cell in Battery 3";
+CM_ SG_ 1074 CellTempMax "Minimum temperature of any cell in Battery 3";
+CM_ SG_ 1074 CellVoltMin "Minimum voltage of any cell in Battery 3";
+CM_ SG_ 1074 CellVoltMax "Maximum voltage of any cell in Battery 3";
+CM_ BO_ 1075 "Cell Voltage and Temperature of Battery 4";
+CM_ SG_ 1075 CellTempMin "Minimum temperature of any cell in Battery 4";
+CM_ SG_ 1075 CellTempMax "Minimum temperature of any cell in Battery 4";
+CM_ SG_ 1075 CellVoltMin "Minimum voltage of any cell in Battery 4";
+CM_ SG_ 1075 CellVoltMax "Maximum voltage of any cell in Battery 4";
+CM_ BO_ 1076 "Cell Voltage and Temperature of Battery 5";
+CM_ SG_ 1076 CellTempMin "Minimum temperature of any cell in Battery 5";
+CM_ SG_ 1076 CellTempMax "Minimum temperature of any cell in Battery 5";
+CM_ SG_ 1076 CellVoltMin "Minimum voltage of any cell in Battery 5";
+CM_ SG_ 1076 CellVoltMax "Maximum voltage of any cell in Battery 5";
+CM_ BO_ 1077 "Cell Voltage and Temperature of Battery 6";
+CM_ SG_ 1077 CellTempMin "Minimum temperature of any cell in Battery 6";
+CM_ SG_ 1077 CellTempMax "Minimum temperature of any cell in Battery 6";
+CM_ SG_ 1077 CellVoltMin "Minimum voltage of any cell in Battery 6";
+CM_ SG_ 1077 CellVoltMax "Maximum voltage of any cell in Battery 6";
+CM_ BO_ 1078 "Cell Voltage and Temperature of Battery 7";
+CM_ SG_ 1078 CellTempMin "Minimum temperature of any cell in Battery 7";
+CM_ SG_ 1078 CellTempMax "Minimum temperature of any cell in Battery 7";
+CM_ SG_ 1078 CellVoltMin "Minimum voltage of any cell in Battery 7";
+CM_ SG_ 1078 CellVoltMax "Maximum voltage of any cell in Battery 7";
+CM_ BO_ 1079 "Cell Voltage and Temperature of Battery 8";
+CM_ SG_ 1079 CellTempMin "Minimum temperature of any cell in Battery 8";
+CM_ SG_ 1079 CellTempMax "Minimum temperature of any cell in Battery 8";
+CM_ SG_ 1079 CellVoltMin "Minimum voltage of any cell in Battery 8";
+CM_ SG_ 1079 CellVoltMax "Maximum voltage of any cell in Battery 8";
+
+CM_ BO_ 1080 "SOC and Capacities of Battery 1";
+CM_ SG_ 1080 SOC "State of Charge of Battery 1";
+CM_ SG_ 1080 NomCpcty "Designed Capacity of Battery 1";
+CM_ SG_ 1080 Cpcty "Actual Capacity of Battery 1";
+CM_ BO_ 1081 "SOC and Capacities of Battery 2";
+CM_ SG_ 1081 SOC "State of Charge of Battery 2";
+CM_ SG_ 1081 NomCpcty "Designed Capacity of Battery 2";
+CM_ SG_ 1081 Cpcty "Actual Capacity of Battery 2";
+CM_ BO_ 1082 "SOC and Capacities of Battery 3";
+CM_ SG_ 1082 SOC "State of Charge of Battery 3";
+CM_ SG_ 1082 NomCpcty "Designed Capacity of Battery 3";
+CM_ SG_ 1082 Cpcty "Actual Capacity of Battery 3";
+CM_ BO_ 1083 "SOC and Capacities of Battery 4";
+CM_ SG_ 1083 SOC "State of Charge of Battery 4";
+CM_ SG_ 1083 NomCpcty "Designed Capacity of Battery 4";
+CM_ SG_ 1083 Cpcty "Actual Capacity of Battery 4";
+CM_ BO_ 1084 "SOC and Capacities of Battery 5";
+CM_ SG_ 1084 SOC "State of Charge of Battery 5";
+CM_ SG_ 1084 NomCpcty "Designed Capacity of Battery 5";
+CM_ SG_ 1084 Cpcty "Actual Capacity of Battery 5";
+CM_ BO_ 1085 "SOC and Capacities of Battery 6";
+CM_ SG_ 1085 SOC "State of Charge of Battery 6";
+CM_ SG_ 1085 NomCpcty "Designed Capacity of Battery 6";
+CM_ SG_ 1085 Cpcty "Actual Capacity of Battery 6";
+CM_ BO_ 1086 "SOC and Capacities of Battery 7";
+CM_ SG_ 1086 SOC "State of Charge of Battery 7";
+CM_ SG_ 1086 NomCpcty "Designed Capacity of Battery 7";
+CM_ SG_ 1086 Cpcty "Actual Capacity of Battery 7";
+CM_ BO_ 1087 "SOC and Capacities of Battery 8";
+CM_ SG_ 1087 SOC "State of Charge of Battery 8";
+CM_ SG_ 1087 NomCpcty "Designed Capacity of Battery 8";
+CM_ SG_ 1087 Cpcty "Actual Capacity of Battery 8";

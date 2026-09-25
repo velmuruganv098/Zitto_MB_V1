@@ -34,11 +34,25 @@ from pydantic import BaseModel
 
 from . import protocol as P
 from .dbc_engine import VEHICLE_ROLES, DbcEngine
+from .library import DbcLibrary
 from .links import BleLink, SimLink
 from .parser import parse_line
 
 APP_NAME = "VCU Master"
-APP_VERSION = "1.0.0"
+APP_VERSION = "1.1.0"
+
+
+def _build_id() -> str:
+    """Fingerprint of the code on disk, so run.py can tell a stale running copy from this one."""
+    import hashlib
+    h = hashlib.sha1()
+    pkg = Path(__file__).resolve().parent
+    for f in sorted(list(pkg.glob("*.py")) + list((pkg / "static").glob("*"))):
+        h.update(f.name.encode()); h.update(f.read_bytes())
+    return h.hexdigest()[:12]
+
+
+BUILD_ID = _build_id()
 
 ROOT = Path(__file__).resolve().parent.parent
 STATIC = Path(__file__).resolve().parent / "static"
@@ -48,6 +62,7 @@ OTA_DIR = DATA / "ota"
 LOG_DIR = DATA / "logs"
 SETTINGS = DATA / "settings.json"
 SAMPLE_DBC = ROOT / "samples" / "zitto_demo_vehicle.dbc"
+LIB_DIR = ROOT / "dbc_library"          # same tree as CAN_DBC_Simulator/dbc_library
 for d in (DATA, DBC_DIR, OTA_DIR, LOG_DIR):
     d.mkdir(parents=True, exist_ok=True)
 
@@ -105,6 +120,53 @@ class Hub:
         self.waiters: List[Dict[str, Any]] = []   # [{"pat": re, "fut": Future}]
         self.ota = OtaManager(self)
         self._ping_t: Optional[float] = None
+        self._reset_integrity()
+        self._roles_meta_sent = -1
+
+    # ------------------------------------------------------------------
+    # V0.0073 link integrity: every S32K frame carries an 8-bit UART sequence
+    # number end to end (S32K -> UART -> ESP32 -> BLE -> here), so gaps give
+    # the exact number of frames lost on the way; CAN frames received here are
+    # compared with the S32K's own CAN RX counter (CAN_STATUS rx=).
+    def _reset_integrity(self) -> None:
+        self.integ = {"s32_frames": 0, "s32_lost": 0, "last_seq": None,
+                      "can_rx": {1: 0, 2: 0}, "can_base": {1: None, 2: None}, "can_s32": {1: 0, 2: 0},
+                      "since": time.time()}
+
+    def _track_integrity(self, rec: Dict[str, Any]) -> None:
+        I = self.integ
+        seq = rec.get("seq")
+        if seq is not None:
+            if I["last_seq"] is not None:
+                gap = (seq - I["last_seq"] - 1) & 0xFF
+                if gap < 200:                    # larger = S32K reset / reconnect, not loss
+                    I["s32_lost"] += gap
+            I["last_seq"] = seq
+            I["s32_frames"] += 1
+        typ, f = rec["type"], rec["fields"]
+        if typ == "CAN":
+            b = int(f.get("bus", 0))
+            if b in (1, 2):
+                I["can_rx"][b] += 1
+        elif typ == "CAN_STATUS":
+            b = int(f.get("bus", 0))
+            if b in (1, 2) and isinstance(f.get("rx"), int):
+                if I["can_base"][b] is None or f["rx"] < (I["can_base"][b] or 0):
+                    I["can_base"][b] = f["rx"] - I["can_rx"][b]
+                I["can_s32"][b] = f["rx"] - I["can_base"][b]
+
+    def integrity(self) -> Dict[str, Any]:
+        I, B = self.integ, (self.latest.get("BRIDGE") or {})
+        tot = I["s32_frames"] + I["s32_lost"]
+        return {
+            "s32_frames": I["s32_frames"], "s32_lost": I["s32_lost"],
+            "s32_loss_pct": round(100.0 * I["s32_lost"] / tot, 2) if tot else 0.0,
+            "can": {str(b): {"received": I["can_rx"][b], "s32_counted": I["can_s32"][b],
+                             "missing": max(0, I["can_s32"][b] - I["can_rx"][b])} for b in (1, 2)},
+            "bridge": {k: B.get(k) for k in ("uart_frames", "frames", "crc_errors", "can_frames", "ble_lines",
+                                             "ble_notifies", "ble_q_drop", "notify_err_gatt") if k in B},
+            "since": I["since"],
+        }
 
     # ------------------------------------------------------------------
     def attach(self, link) -> None:
@@ -177,6 +239,7 @@ class Hub:
             if dec:
                 rec["dbc"] = dec
 
+        self._track_integrity(rec)
         self._store(rec)
 
         # resolve anyone waiting for a response line
@@ -261,7 +324,7 @@ class Hub:
     # ------------------------------------------------------------------
     def snapshot(self) -> Dict[str, Any]:
         return {
-            "app": {"name": APP_NAME, "version": APP_VERSION},
+            "app": {"name": APP_NAME, "version": APP_VERSION, "build": BUILD_ID},
             "link": self.link.info() if self.link else {"connected": False, "kind": None},
             "rate": self.rate(),
             "counts": dict(self.counts),
@@ -271,6 +334,7 @@ class Hub:
             "recording": ({k: v for k, v in self.recording.items() if k in ("name", "rows", "since")}
                           if self.recording else None),
             "dbc": self.dbc.list(),
+            "integrity": self.integrity(),
         }
 
 
@@ -439,6 +503,7 @@ async def _startup():
     for role, sig in S.settings.get("vehicle_map", {}).items():
         if role in VEHICLE_ROLES:
             S.dbc.set_map(role, sig)
+    asyncio.get_running_loop().run_in_executor(None, LIB.ensure)
     asyncio.create_task(_pump())
 
 
@@ -457,6 +522,115 @@ async def _pump():
             S.push({"t": "state", "state": S.snapshot()})
         if k % 10 == 0 and S.clients:
             S.push({"t": "signals", **S.dbc.snapshot()})
+        # V0.0073: DBC-driven Battery / Motor windows (layout once, values at 5 Hz)
+        if S.clients:
+            if S.dbc.roles_version != S._roles_meta_sent:
+                S._roles_meta_sent = S.dbc.roles_version
+                S.push({"t": "roles_meta", **S.dbc.roles_meta()})
+            if k % 2 == 0:
+                S.push({"t": "roles", **S.dbc.roles_snapshot()})
+        if k % 10 == 0:
+            S.dbc.refresh_active()
+            try:
+                await _auto_dbc()
+            except Exception as exc:                        # never stop the pump
+                log.warning("auto DBC: %s", exc)
+
+
+# ------------------------------------------------------------------ DBC library / auto-match
+LIB = DbcLibrary(LIB_DIR, DATA / "library_index.json")
+
+
+def _lib_loaded_ids() -> set:
+    return {m.get("lib") for m in S.settings.get("dbc", {}).values() if m.get("lib")}
+
+
+def _load_dbc_text(name: str, text: str, buses, lib_id: str = "") -> Dict[str, Any]:
+    desc = S.dbc.load(name, text, buses, str(DBC_DIR / name))
+    (DBC_DIR / name).write_text(text)
+    S.settings["dbc"][name] = {"buses": list(buses), **({"lib": lib_id} if lib_id else {})}
+    save_settings()
+    return desc
+
+
+def _load_from_library(lib_id: str, buses) -> Dict[str, Any]:
+    p = LIB.path(lib_id)
+    if p is None:
+        raise HTTPException(404, "That DBC is not in the library")
+    name = p.name
+    if name in S.dbc.dbcs and S.settings["dbc"].get(name, {}).get("lib") != lib_id:
+        name = f"{p.parent.name}_{p.name}"                # e.g. two vendors' can.dbc
+    return _load_dbc_text(name, p.read_text(errors="replace"), buses, lib_id)
+
+
+def _match_now() -> Dict[str, Any]:
+    unk = S.dbc.unknown_ids()
+    ranked = LIB.match(unk.keys(), exclude=_lib_loaded_ids())
+    by_id = {i["id"]: i for i in LIB.items}
+    for r in ranked:
+        buses = set()
+        for key in by_id[r["id"]]["ids"] & set(unk):
+            buses |= unk[key]
+        r["buses"] = sorted(buses)
+    return {"unknown": len(unk), "candidates": ranked,
+            "unknown_ids": sorted(f"0x{k:X}{' EXT' if e else ''} (CAN{','.join(map(str, sorted(b)))})"
+                                  for (k, e), b in unk.items())[:40]}
+
+
+async def _auto_dbc() -> None:
+    """Load the library DBC that explains the unknown frames on the bus (once per DBC)."""
+    if not S.settings.get("auto_dbc", True) or not LIB._ready or not S.dbc.unknown_ids():
+        return
+    m = _match_now()
+    if not m["candidates"]:
+        return
+    best = m["candidates"][0]
+    declined = set(S.settings.get("auto_dbc_declined", []))
+    ext_hit = any(i.endswith("EXT") for i in best["ids"])
+    strong = best["matched"] >= 3 or (best["matched"] >= 2 and best["coverage"] >= 0.2) or (ext_hit and best["matched"] >= 1)
+    # a tie means the frames do not identify one DBC: leave it to the user
+    tie = len(m["candidates"]) > 1 and m["candidates"][1]["matched"] == best["matched"]         and m["candidates"][1]["coverage"] == best["coverage"]
+    if best["id"] in declined or not strong or tie:
+        return
+    desc = _load_from_library(best["id"], best["buses"] or [1, 2])
+    msg = (f"Auto-loaded {desc['name']} from the DBC library on CAN{'/'.join(map(str, best['buses']))}: "
+           f"it defines {best['matched']} of the unknown IDs on the bus")
+    log.info(msg)
+    S.push({"t": "notice", "text": msg})
+
+
+@app.get("/api/library")
+async def api_library():
+    items = await asyncio.get_running_loop().run_in_executor(None, LIB.list)
+    return {"items": items, "loaded": sorted(_lib_loaded_ids()), "auto": S.settings.get("auto_dbc", True)}
+
+
+@app.get("/api/library/match")
+async def api_library_match():
+    await asyncio.get_running_loop().run_in_executor(None, LIB.ensure)
+    return _match_now()
+
+
+@app.post("/api/library/load")
+async def api_library_load(r: LibLoad):
+    await asyncio.get_running_loop().run_in_executor(None, LIB.ensure)
+    declined = S.settings.get("auto_dbc_declined", [])
+    if r.id in declined:
+        declined.remove(r.id)
+    try:
+        desc = _load_from_library(r.id, r.buses or [1, 2])
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise HTTPException(400, f"DBC parse error: {exc}")
+    return {"ok": True, "summary": S.dbc.list(), "dbc": {"name": desc["name"], "messages": len(desc["messages"])}}
+
+
+@app.post("/api/library/auto")
+async def api_library_auto(r: AutoDbc):
+    S.settings["auto_dbc"] = r.on
+    save_settings()
+    return {"ok": True, "auto": r.on}
 
 
 @app.get("/")
@@ -473,6 +647,8 @@ async def ws(websocket: WebSocket):
         await websocket.send_json({"t": "recs", "items": list(S.records)[-2000:], "replay": True})
         await websocket.send_json({"t": "hist", "imu": list(S.imu_hist), "csa": list(S.csa_hist)})
         await websocket.send_json({"t": "signals", **S.dbc.snapshot()})
+        await websocket.send_json({"t": "roles_meta", **S.dbc.roles_meta()})
+        await websocket.send_json({"t": "roles", **S.dbc.roles_snapshot()})
         while True:
             await websocket.receive_text()   # keepalive / ignored
     except WebSocketDisconnect:
@@ -532,6 +708,15 @@ class DbcUpload(BaseModel):
     buses: List[int] = [1, 2]
 
 
+class LibLoad(BaseModel):
+    id: str
+    buses: List[int] = [1, 2]
+
+
+class AutoDbc(BaseModel):
+    on: bool
+
+
 class BusReq(BaseModel):
     buses: List[int]
 
@@ -571,7 +756,18 @@ async def api_scan(r: ScanReq):
         devs = await BleLink.scan(r.timeout, r.name_filter, r.only_bridge)
     except Exception as exc:
         raise HTTPException(503, f"Bluetooth scan failed: {exc}. Check the adapter is on.")
-    return {"devices": devs + await SimLink.scan()}
+    note = ""
+    if not any(d["bridge"] for d in devs):
+        last = S.settings.get("last_device") or {}
+        busy = S.link is not None and S.link.connected and getattr(S.link, "address", "") != "SIM"
+        if busy:
+            note = "This VCU Master is already connected to the bridge - it does not advertise while connected."
+        else:
+            note = ("The bridge is not advertising. It accepts one BLE client at a time and stops advertising "
+                    "while connected: close any other VCU Master window/instance or phone app using it, "
+                    "or power-cycle the ESP32, then scan again."
+                    + (f" Last bridge: {last.get('name')} {last.get('address')}." if last.get("address") else ""))
+    return {"devices": devs + await SimLink.scan(), "note": note}
 
 
 @app.post("/api/connect")
@@ -712,12 +908,9 @@ async def api_dbc_upload(r: DbcUpload):
     if not name.lower().endswith(".dbc"):
         raise HTTPException(400, "Choose a .dbc file.")
     try:
-        desc = S.dbc.load(name, r.text, r.buses, str(DBC_DIR / name))
+        desc = _load_dbc_text(name, r.text, r.buses)
     except Exception as exc:
         raise HTTPException(400, f"DBC parse error: {exc}")
-    (DBC_DIR / name).write_text(r.text)
-    S.settings["dbc"][name] = {"buses": r.buses}
-    save_settings()
     return {"ok": True, "summary": S.dbc.list(), "dbc": desc}
 
 
@@ -737,7 +930,11 @@ async def api_dbc_get(name: str):
 @app.delete("/api/dbc/{name}")
 async def api_dbc_del(name: str):
     S.dbc.remove(name)
-    S.settings["dbc"].pop(name, None)
+    lib = S.settings["dbc"].pop(name, {}).get("lib")
+    if lib:
+        S.settings.setdefault("auto_dbc_declined", [])
+        if lib not in S.settings["auto_dbc_declined"]:
+            S.settings["auto_dbc_declined"].append(lib)
     save_settings()
     return {"ok": True}
 
@@ -749,6 +946,17 @@ async def api_dbc_bus(name: str, r: BusReq):
         S.settings["dbc"][name]["buses"] = r.buses
         save_settings()
     return {"ok": True}
+
+
+@app.get("/api/roles")
+async def api_roles():
+    return {"meta": S.dbc.roles_meta(), "values": S.dbc.roles_snapshot()}
+
+
+@app.post("/api/cmd/imu_zero")
+async def api_imu_zero():
+    await S.send("RAW:09")
+    return {"ok": True, "sent": "RAW:09"}
 
 
 @app.post("/api/dbc/reset_stats")
@@ -843,6 +1051,7 @@ async def api_log_file(name: str):
 async def api_clear():
     S.records.clear()
     S.counts.clear()
+    S._reset_integrity()
     S.imu_hist.clear()
     S.csa_hist.clear()
     S.dbc.reset_stats()

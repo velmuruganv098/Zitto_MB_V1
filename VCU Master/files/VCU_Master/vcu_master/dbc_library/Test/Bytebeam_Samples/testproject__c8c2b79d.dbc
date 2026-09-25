@@ -1,0 +1,158 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: 
+
+
+BO_ 2147545360 B2: 8 Vector__XXX
+ SG_ BrakePedalSwitch2 : 16|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DmnddBrkAppltnPrssr : 0|16@1+ (0.1,0) [0|6425.5] "kPa" Vector__XXX
+
+BO_ 2147545132 MSI2: 8 Vector__XXX
+ SG_ MagnetGeneratorControl : 38|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DropRelayControl : 36|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ LiftRelayControl : 34|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ MaterialDropActiveStatus : 32|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ MaterialLiftActiveStatus : 30|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ GnrtrCrrntBstAtvStts : 28|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ MaterialDropSwitch : 26|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ MaterialLiftSwitch : 24|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ MagnetReverseCurrent : 16|8@1+ (1,0) [0|250] "A" Vector__XXX
+ SG_ MagnetForwardCurrent : 0|16@1+ (1,0) [0|64255] "A" Vector__XXX
+
+BO_ 2147545133 ACCS: 8 Vector__XXX
+ SG_ SpptVTsssRpttRtFAtSs : 54|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ VrtlAlrtnFgrOfMrtExtnddRng : 52|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ LngtdnlAlrtnFgrOfMrtExtnddRng : 50|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ LtrlAlrtnFgrOfMrtExtnddRng : 48|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ VrtlAlrtnExtnddRng : 32|16@1+ (0.01,-320) [-320|322.55] "m/(s*s)" Vector__XXX
+ SG_ LngtdnlAlrtnExtnddRng : 16|16@1+ (0.01,-320) [-320|322.55] "m/(s*s)" Vector__XXX
+ SG_ LtrlAlrtnExtnddRng : 0|16@1+ (0.01,-320) [-320|322.55] "m/(s*s)" Vector__XXX
+
+BO_ 2147548782 HRW: 8 Vector__XXX
+ SG_ RearAxleRightWheelSpeed : 48|16@1+ (0.00390625,0) [0|250.99609375] "km/h" Vector__XXX
+ SG_ RearAxleLeftWheelSpeed : 32|16@1+ (0.00390625,0) [0|250.99609375] "km/h" Vector__XXX
+ SG_ FrontAxleRightWheelSpeed : 16|16@1+ (0.00390625,0) [0|250.99609375] "km/h" Vector__XXX
+ SG_ FrontAxleLeftWheelSpeed : 0|16@1+ (0.00390625,0) [0|250.99609375] "km/h" Vector__XXX
+
+
+
+
+CM_ BO_ 2147545360 "Brakes 2";
+CM_ SG_ 2147545360 BrakePedalSwitch2 "Brake Pedal Switch 2: Second switch signal instance which indicates that the driver operated brake foot pedal is being pressed. This parameter is functionally equivalent to SPN 597, but derived from a second, independent sensor and may be used where ...";
+CM_ SG_ 2147545360 DmnddBrkAppltnPrssr "Demanded Brake Application Pressure: Gage pressure of the compressed air or fluid in the vehicle braking system that is used to apply brake shoes (or pads) against the brake drums (or discs). This is the brake application pressure demanded by the veh...";
+CM_ BO_ 2147545132 "Magnet Status Information 2";
+CM_ SG_ 2147545132 MagnetGeneratorControl "Magnet Generator Control: Command signal used to Enable and Disable the Generator controlling a Magnet.00b = Off, Disable Generator01b = On, Enable Generator10b = Reserved11b = Take No Action";
+CM_ SG_ 2147545132 DropRelayControl "Drop Relay Control: Command signal used to Engage and Disengage the Drop Relay controlling a Steady-State Magnet.00b = Off, Disable Drop Relay Request01b = On, Enable Drop Relay Request10b = Reserved11b = Take No Action";
+CM_ SG_ 2147545132 LiftRelayControl "Lift Relay Control: Command signal used to Engage and Disengage the Lift Relay controlling a Steady-State Magnet.00b = Off, Disable Lift Relay Request 01b = On, Enable Lift Relay Request10b = Reserved11b = Take No Action";
+CM_ SG_ 2147545132 MaterialDropActiveStatus "Material Drop Active Status: The status of Material Drop Relay. When it is on, the generator generates reverse direction current so that the material handler machine can release material.00b = Off01b = On10b = Error11b = Not Available";
+CM_ SG_ 2147545132 MaterialLiftActiveStatus "Material Lift Active Status: The status of Material Lift Relay. When it is on, the generator generates forward direction current so that the material handler machine can pick up material.00b = Off01b = On10b = Error11b = Not Available";
+CM_ SG_ 2147545132 GnrtrCrrntBstAtvStts "Generator Current Boost Active Status: Status of generator current boost relay that can boost the generator output current for picking-up material operations. When this relay is on, the generator is generating the maximum current for the material han...";
+CM_ SG_ 2147545132 MaterialDropSwitch "Material Drop Switch: This is a switch that can be used to enable the drop functionality of the Material Handler machine.00b = Don't Drop01b = Drop10b = Error11b = Not Available";
+CM_ SG_ 2147545132 MaterialLiftSwitch "Material Lift Switch: This is a switch that can be used to enable the lift functionality of the Material Handler machine. When it is activated, the magnet is energized to pick up material.00b = Don't Lift01b = Lift10b = Error11b = Not Available...";
+CM_ SG_ 2147545132 MagnetReverseCurrent "Magnet Reverse Current: A reverse current being supplied to the electric magnet to reduce the forward current generated magnet field as quick as possible so that the magnet can release material as fast as possible.";
+CM_ SG_ 2147545132 MagnetForwardCurrent "Magnet Forward Current: The forward current being supplied by the generator to the electric magnet to create a magnet field to lift material.";
+CM_ BO_ 2147545133 "Acceleration Sensor";
+CM_ SG_ 2147545133 SpptVTsssRpttRtFAtSs "Support Variable Transmission Repetition Rate for Acceleration Sensor: Indicates which acceleration transmission rate are supported by the ECU in addition to the required 10 ms transmission rate.00b = Reserve for SAE assignment01b = Reserved for SAE ...";
+CM_ SG_ 2147545133 VrtlAlrtnFgrOfMrtExtnddRng "Vertical Acceleration Figure of Merit (Extended Range): Figure of merit for vertical acceleration measurement.00b = vertical acceleration is fully functional.  Data is within sensor specification01b = verticalacceleration is degraded.  Data is suspec...";
+CM_ SG_ 2147545133 LngtdnlAlrtnFgrOfMrtExtnddRng "Longitudinal Acceleration Figure of Merit (Extended Range): Figure of merit for longitudinal acceleration measurement.00b = longitudinal acceleration is fully functional.  Data is within sensor specification01b = longitudinal acceleration is degraded...";
+CM_ SG_ 2147545133 LtrlAlrtnFgrOfMrtExtnddRng "Lateral Acceleration Figure of Merit (Extended Range): Figure of merit for lateral acceleration measurement.00b = lateral acceleration is fully functional.  Data is within sensor specification01b = lateral acceleration is degraded.  Data is suspect d...";
+CM_ SG_ 2147545133 VrtlAlrtnExtnddRng "Vertical Acceleration (Extended Range): Indicates vertical acceleration of the vehicle and the effect of gravity (the component of vehicle acceleration vector along the Z-axis).  A positive vertical acceleration signal of 1 gravity results when the v...";
+CM_ SG_ 2147545133 LngtdnlAlrtnExtnddRng "Longitudinal Acceleration (Extended Range): Indicates longitudinal acceleration of the vehicle (the component of vehicle acceleration vector along the X-axis).  A positive longitudinal acceleration signal results when the vehicle speed increases in t...";
+CM_ SG_ 2147545133 LtrlAlrtnExtnddRng "Lateral Acceleration (Extended Range): Indicates lateral acceleration of the vehicle (the component of vehicle acceleration vector along the Y-axis).  A positive lateral acceleration signal results when the vehicle is accelerated to the left.  This p...";
+CM_ BO_ 2147548782 "High Resolution Wheel Speed";
+CM_ SG_ 2147548782 RearAxleRightWheelSpeed "Rear axle, right wheel speed: High resolution measurement of the speed of the right wheel on the rear axle.";
+CM_ SG_ 2147548782 RearAxleLeftWheelSpeed "Rear axle, left wheel speed: High resolution measurement of the speed of the left wheel on the rear axle.";
+CM_ SG_ 2147548782 FrontAxleRightWheelSpeed "Front axle, right wheel speed: High resolution measurement of the speed of the right wheel on the front axle.";
+CM_ SG_ 2147548782 FrontAxleLeftWheelSpeed "Front Axle, Left Wheel Speed: High resolution measurement of the speed of the left wheel on the front axle.";
+BA_DEF_ SG_  "SPN" INT 0 524287;
+BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","J1939PG";
+BA_DEF_  "DatabaseVersion" STRING ;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_  "ProtocolType" STRING ;
+BA_DEF_  "DatabaseCompiler" STRING ;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_DEF_  "SPN" 0;
+BA_DEF_DEF_  "VFrameFormat" "J1939PG";
+BA_DEF_DEF_  "DatabaseVersion" "1.2";
+BA_DEF_DEF_  "BusType" "";
+BA_DEF_DEF_  "ProtocolType" "";
+BA_DEF_DEF_  "DatabaseCompiler" "";
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_ "ProtocolType" "J1939";
+BA_ "BusType" "CAN";
+BA_ "DatabaseCompiler" "CSS ELECTRONICS (WWW.CSSELECTRONICS.COM)";
+BA_ "DatabaseVersion" "1.0.0";
+BA_ "VFrameFormat" BO_ 2147545360 3;
+BA_ "SPN" SG_ 2147545360 BrakePedalSwitch2 603;
+BA_ "SPN" SG_ 2147545360 DmnddBrkAppltnPrssr 8484;
+BA_ "VFrameFormat" BO_ 2147545132 3;
+BA_ "SPN" SG_ 2147545132 MagnetGeneratorControl 5551;
+BA_ "SPN" SG_ 2147545132 DropRelayControl 5403;
+BA_ "SPN" SG_ 2147545132 LiftRelayControl 5402;
+BA_ "SPN" SG_ 2147545132 MaterialDropActiveStatus 5014;
+BA_ "SPN" SG_ 2147545132 MaterialLiftActiveStatus 5013;
+BA_ "SPN" SG_ 2147545132 GnrtrCrrntBstAtvStts 5012;
+BA_ "SPN" SG_ 2147545132 MaterialDropSwitch 5011;
+BA_ "SPN" SG_ 2147545132 MaterialLiftSwitch 5010;
+BA_ "SPN" SG_ 2147545132 MagnetReverseCurrent 5009;
+BA_ "SPN" SG_ 2147545132 MagnetForwardCurrent 5008;
+BA_ "VFrameFormat" BO_ 2147545133 3;
+BA_ "SPN" SG_ 2147545133 SpptVTsssRpttRtFAtSs 5353;
+BA_ "SPN" SG_ 2147545133 VrtlAlrtnFgrOfMrtExtnddRng 5352;
+BA_ "SPN" SG_ 2147545133 LngtdnlAlrtnFgrOfMrtExtnddRng 5351;
+BA_ "SPN" SG_ 2147545133 LtrlAlrtnFgrOfMrtExtnddRng 5350;
+BA_ "SPN" SG_ 2147545133 VrtlAlrtnExtnddRng 5349;
+BA_ "SPN" SG_ 2147545133 LngtdnlAlrtnExtnddRng 5348;
+BA_ "SPN" SG_ 2147545133 LtrlAlrtnExtnddRng 5347;
+BA_ "VFrameFormat" BO_ 2147548782 3;
+BA_ "SPN" SG_ 2147548782 RearAxleRightWheelSpeed 1595;
+BA_ "SPN" SG_ 2147548782 RearAxleLeftWheelSpeed 1594;
+BA_ "SPN" SG_ 2147548782 FrontAxleRightWheelSpeed 1593;
+BA_ "SPN" SG_ 2147548782 FrontAxleLeftWheelSpeed 1592;
+VAL_ 2147545132 DropRelayControl 3 "TakeNoAction" 2 "Reserved" 1 "OnEnableDropRelayRq" 0 "OffDisableDropRelayRq" ;
+VAL_ 2147545132 LiftRelayControl 3 "TakeNoAction" 2 "Reserved" 1 "OnEnableLiftRelayRq" 0 "OffDisableLiftRelayRq" ;
+VAL_ 2147545132 MaterialDropActiveStatus 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147545132 MaterialLiftActiveStatus 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147545132 GnrtrCrrntBstAtvStts 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147545132 MaterialDropSwitch 3 "NotAvailable" 2 "Error" 1 "Drop" 0 "DontDrop" ;
+VAL_ 2147545132 MaterialLiftSwitch 3 "NotAvailable" 2 "Error" 1 "Lift" 0 "DontLift" ;
+VAL_ 2147545133 SpptVTsssRpttRtFAtSs 1 "MsTransRate" ;
+VAL_ 2147545133 VrtlAlrtnFgrOfMrtExtnddRng 3 "NotAvailable" 2 "Error" 1 "VrtclcclrtnIsDgrddDtIsSspctDTEn" 0 "VrtclAcclrtnIsFllyFnctnlDtIsWth" ;
+VAL_ 2147545133 LngtdnlAlrtnFgrOfMrtExtnddRng 3 "NotAvailable" 2 "Error" 1 "LngtdnlAcclrtnIsDgrddDtIsSspctD" 0 "LngtdnlAcclrtnIsFllyFnctnlDtIsW" ;
+VAL_ 2147545133 LtrlAlrtnFgrOfMrtExtnddRng 3 "NotAvailable" 2 "Error" 1 "LtrlAcclrtnIsDgrddDtIsSspctDTEn" 0 "LtrlAcclrtnIsFllyFnctnlDtIsWthn" ;
+
+
+

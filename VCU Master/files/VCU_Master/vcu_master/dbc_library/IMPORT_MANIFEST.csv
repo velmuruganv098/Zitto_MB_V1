@@ -1,0 +1,239 @@
+source (BB CAN DBC),library id,duplicate of,status
+0.0.6 (1).dbc,,BMS/Exponent_ePack/0.0.6.dbc,duplicate
+dbcs/dbcs/exponent/epacktgv13evpassenger/fc03bb63-3276-40dd-9470-a7e969952ebe.dbc,,BMS/Exponent_ePack/3ev.dbc,duplicate
+3ev (1).dbc,,BMS/Exponent_ePack/3ev.dbc,duplicate
+BMS_DBC_1.dbc,,BMS/Exponent_ePack/BMS_DBC.dbc,duplicate
+BMS_DBC (1).dbc,,BMS/Exponent_ePack/BMS_DBC.dbc,duplicate
+BMS_DBC_tg1_v9.1 (1).dbc,,BMS/Exponent_ePack/BMS_DBC_tg1_v9.1.dbc,duplicate
+epacktgv1.dbc,,BMS/Exponent_ePack/BMS_DBC_tg1_v9_7.dbc,duplicate
+BMS_DBC_tg1_v9x (2).dbc,,BMS/Exponent_ePack/BMS_DBC_tg1_v9x_2.dbc,duplicate
+BMS_DBC_tg1_v9_5 (1).dbc,,BMS/Exponent_ePack/can.dbc,duplicate
+can (7).dbc,,BMS/Exponent_ePack/can_4.dbc,duplicate
+can (8).dbc,,BMS/Exponent_ePack/can_5.dbc,duplicate
+lohum_v2 (1).dbc,,BMS/Lohum/lohum_v2.dbc,duplicate
+dbcs/dbcs/cloud/theenergy/58b166c3-823a-4b0f-88de-f16855b71a2c.dbc,,BMS/TEC_EnergyCompany/Tec_CAN_31Oct23_ByteWise.dbc,duplicate
+vidur.dbc,,BMS/Vidur/vidur.dbc,duplicate
+dbcs/dbcs/electorq/electorq/f4b15b33-a5b6-46fa-86b6-4011be600373.dbc,,Charger/Electorq_SwapStation/async.dbc,duplicate
+async (1).dbc,,Charger/Electorq_SwapStation/async.dbc,duplicate
+sync (1).dbc,,Charger/Electorq_SwapStation/sync.dbc,duplicate
+sync (2).dbc,,Charger/Electorq_SwapStation/sync.dbc,duplicate
+30kW_MGM_Rectifier_Test (1).dbc,,Charger/Exponent_Rectifier/30kW_MGM_Rectifier_Test.dbc,duplicate
+dbcs/dbcs/exponent/epumpp4v1dev/677b3922-7a6e-426b-8da6-b1c3c2627654.dbc,,Charger/Exponent_ePump_P4/34_4_bb.dbc,duplicate
+34_4_bb (1).dbc,,Charger/Exponent_ePump_P4/34_4_bb.dbc,duplicate
+can_v18_Interim (1).dbc,,Charger/Exponent_ePump_P4/can_v18_Interim.dbc,duplicate
+can_v22 (1).dbc,,Charger/Exponent_ePump_P4/can_v22.dbc,duplicate
+dbcs/dbcs/cloud/bosch/bea060ad-24ea-4606-a57f-c03033f1249c.dbc,,J1939_ICE/Bosch/bosch_j1939.dbc,duplicate
+dbcs/dbcs/cloud/mytvs/808f30e2-f8bd-4585-b778-20a26eba5650.dbc,,J1939_ICE/Bosch/bosch_j1939.dbc,duplicate
+dbcs/dbcs/cloud/tvs/5520a1f4-0f1f-481d-8309-b0b7aecce24a.dbc,,J1939_ICE/TVS/tvs.dbc,duplicate
+dbcs/dbcs/cloud/wimanezeecloud/8a5816b7-550e-4db1-a3c3-e99ffed22b79.dbc,,J1939_ICE/Wiman_EzeeInfo/wiman.dbc,duplicate
+AMeM_MC50_LG_V2 (1).dbc,,MCU/AMeM/AMeM_MC50_LG_V2.dbc,duplicate
+obd2_27_06_2023.dbc,,OBD2/Generic/OBD2.dbc,duplicate
+dbcs/dbcs/cloud/testproject/406f6cf5-00ea-4ded-8896-6de5f43ee84c.dbc,,Test/Bytebeam_Samples/sample.dbc,duplicate
+dbcs/dbcs/cloud/testproject/a5c0bf08-bae4-4696-aae1-6de966d0bad8.dbc,,Test/Bytebeam_Samples/sample.dbc,duplicate
+300824_N1_Gen1p1_withVCU (1).dbc,,VCU_Vehicle/EVage/300824_N1_Gen1p1_withVCU.dbc,duplicate
+dbcs/dbcs/galaxy/testenv/681dac7d-1fcb-4b72-bed1-21e304df82d9.dbc,,VCU_Vehicle/Matter/bytebeam__11ea2e24.dbc,duplicate
+dbcs/dbcs/galaxy/qa/2fad261f-a761-43d4-8ccf-fe3f543d14cb.dbc,,VCU_Vehicle/Matter/bytebeam__1d87d42e.dbc,duplicate
+dbcs/dbcs/galaxy/testenv/199467ea-dbe1-428c-8f12-0c9beeba4a99.dbc,,VCU_Vehicle/Matter/bytebeam__a749117c.dbc,duplicate
+dbcs/dbcs/galaxy-prod/prodenv/ec309194-22e9-493f-8a80-bfb4514a7417.dbc,,VCU_Vehicle/Matter/dbc_v10.dbc,duplicate
+dbcs/dbcs/galaxy/testenv/048ee13e-2bf0-4d61-ac77-aedfd86f96ce.dbc,,VCU_Vehicle/Matter/dbc_v10.dbc,duplicate
+dbc_v10_hf.dbc,,VCU_Vehicle/Matter/dbc_v10_hf.dbc,duplicate
+dbc_v12_hf.dbc,,VCU_Vehicle/Matter/dbc_v12_hf.dbc,duplicate
+dbcs/dbcs/galaxy-prod/prodenv/3872d6f5-b974-4d15-9844-b1f51135e302.dbc,,VCU_Vehicle/Matter/dbc_v7.dbc,duplicate
+dbcs/dbcs/galaxy/bytebeam/471b33fa-1c18-404c-ac5c-e194083405b0.dbc,,VCU_Vehicle/Matter/dbc_v7.dbc,duplicate
+dbcs/dbcs/galaxy/testenv/ecaa86c1-cfee-431d-b71e-0af145a8d83b.dbc,,VCU_Vehicle/Matter/dbc_v7.dbc,duplicate
+dbcs/dbcs/galaxy/testenv/0d24c134-e4af-4e61-a235-b68dbcbe9e53.dbc,,VCU_Vehicle/Matter/dbc_v8_2.dbc,duplicate
+dbcs/dbcs/galaxy/esp32c2c/437d0ce3-1a73-4abc-90a8-5ca864e63612.dbc,,VCU_Vehicle/Matter/matter_bmscan_oct30_2k24.dbc,duplicate
+matter_vehcan_jun7_2k23.dbc,,VCU_Vehicle/Matter/matter_v1.dbc,duplicate
+dbcs/dbcs/galaxy/qa/dfce781f-9710-4494-9720-73a7bd2c1cc6.dbc,,VCU_Vehicle/Matter/matter_v1.dbc,duplicate
+dbcs/dbcs/galaxy/qa/568984bd-e842-4c24-a319-e3d199fd3d04.dbc,,VCU_Vehicle/Matter/matter_v2.dbc,duplicate
+dbcs/dbcs/galaxy/bytebeam/aa06a367-479b-494e-b8e3-27aba0b4ed8c.dbc,,VCU_Vehicle/Matter/prodenv__05b1ceed.dbc,duplicate
+dbcs/dbcs/galaxy/testenv/20a0326b-0d6b-42e1-a622-72d7e29a4062.dbc,,VCU_Vehicle/Matter/prodenv__05b1ceed.dbc,duplicate
+dbcs/dbcs/galaxy/testenv/5c8081e2-f3f3-443d-a8d7-140f53875bc2.dbc,,VCU_Vehicle/Matter/prodenv__70ef1f21.dbc,duplicate
+dbcs/dbcs/galaxy/testenv/c5303ee1-77e5-4c5e-936c-d74188ea3fd2.dbc,,VCU_Vehicle/Matter/prodenv__91634035.dbc,duplicate
+dbcs/dbcs/galaxy/bytebeam/8a22faaf-3dff-4730-88b3-e7ff255daadd.dbc,,VCU_Vehicle/Matter/prodenv__a0f745e1.dbc,duplicate
+dbcs/dbcs/galaxy/testenv/87fff00a-e15d-4762-abbc-66c770a59aaf.dbc,,VCU_Vehicle/Matter/prodenv__a0f745e1.dbc,duplicate
+dbcs/dbcs/cloud/royalenfield/aa69fb5d-6361-4adf-825e-75879b920cc9.dbc,,VCU_Vehicle/Royal_Enfield/LXG2_BCM_export.dbc,duplicate
+dbcs/dbcs/cloud/royalenfield/2592b717-c18b-4fad-be35-39a806632c49.dbc,,VCU_Vehicle/Royal_Enfield/LXGv2_VCU_DASH_TCU.dbc,duplicate
+can (1).dbc,BMS/BRE_Piccolo/can.dbc,,imported
+cloud_bre_v3.dbc,BMS/BRE_Piccolo/cloud_bre_v3.dbc,,imported
+piccolobre.dbc,BMS/BRE_Piccolo/piccolobre.dbc,,imported
+can_rtr_corrit_bms_2.dbc,BMS/Corrit/can_rtr_corrit_bms_2.dbc,,imported
+dbcs/dbcs/cloud/ekaevbus/e298b2c5-df4e-4ef9-82f8-03daa0a5f887.dbc,BMS/EKA_eBus/ekaevbus__e298b2c5.dbc,,imported
+0.0.6.dbc,BMS/Exponent_ePack/0.0.6.dbc,,imported
+3ev.dbc,BMS/Exponent_ePack/3ev.dbc,,imported
+3ev_can.dbc,BMS/Exponent_ePack/3ev_can.dbc,,imported
+AEdbc_MCandBMS.dbc,BMS/Exponent_ePack/AEdbc_MCandBMS.dbc,,imported
+BMS_DBC.dbc,BMS/Exponent_ePack/BMS_DBC.dbc,,imported
+BMS_DBC_V8.dbc,BMS/Exponent_ePack/BMS_DBC_V8.dbc,,imported
+BMS_DBC_tg1_v9.1.dbc,BMS/Exponent_ePack/BMS_DBC_tg1_v9.1.dbc,,imported
+BMS_DBC_tg1_v9_5a.dbc,BMS/Exponent_ePack/BMS_DBC_tg1_v9_5a.dbc,,imported
+BMS_DBC_tg1_v9_7.dbc,BMS/Exponent_ePack/BMS_DBC_tg1_v9_7.dbc,,imported
+BMS_DBC_tg1_v9x.dbc,BMS/Exponent_ePack/BMS_DBC_tg1_v9x.dbc,,imported
+BMS_DBC_tg1_v9x (1).dbc,BMS/Exponent_ePack/BMS_DBC_tg1_v9x_2.dbc,,imported
+TI-3WC_Cloud_dbc_v1.dbc,BMS/Exponent_ePack/TI-3WC_Cloud_dbc_v1.dbc,,imported
+TI-3WC_Cloud_dbc_v1 (2).dbc,BMS/Exponent_ePack/TI-3WC_Cloud_dbc_v1_2.dbc,,imported
+dbcs/dbcs/exponent/aetgv1/02db95f8-6b52-460c-aa2f-4262d6508ccd.dbc,BMS/Exponent_ePack/aetgv1__02db95f8.dbc,,imported
+bms_v4.dbc,BMS/Exponent_ePack/bms_v4.dbc,,imported
+dbcs/dbcs/exponent/bytebeamdevice/d2408e46-51de-4665-ba96-2047423222fe.dbc,BMS/Exponent_ePack/bytebeamdevice__d2408e46.dbc,,imported
+can.dbc,BMS/Exponent_ePack/can.dbc,,imported
+can (10).dbc,BMS/Exponent_ePack/can_2.dbc,,imported
+can (3).dbc,BMS/Exponent_ePack/can_3.dbc,,imported
+can (5).dbc,BMS/Exponent_ePack/can_4.dbc,,imported
+can (6).dbc,BMS/Exponent_ePack/can_5.dbc,,imported
+can (9).dbc,BMS/Exponent_ePack/can_6.dbc,,imported
+cloud_ticm_3wc_v6.dbc,BMS/Exponent_ePack/cloud_ticm_3wc_v6.dbc,,imported
+dbcs/dbcs/exponent/epackb3v1/393ebf03-7515-48f2-958d-07f348d77151.dbc,BMS/Exponent_ePack/epackb3v1__393ebf03.dbc,,imported
+dbcs/dbcs/exponent/epacktgv1/5d525db8-66d3-449c-984e-53d815c2f84a.dbc,BMS/Exponent_ePack/epacktgv1__5d525db8.dbc,,imported
+dbcs/dbcs/exponent/epacktgv1keg/55cfeed1-4dda-421b-afba-4cf888f522d1.dbc,BMS/Exponent_ePack/epacktgv1keg__55cfeed1.dbc,,imported
+epacktgv1osm.dbc,BMS/Exponent_ePack/epacktgv1osm.dbc,,imported
+epacktgv1osm (1).dbc,BMS/Exponent_ePack/epacktgv1osm_2.dbc,,imported
+dbcs/dbcs/exponent/epacktgv1osm/50c74732-4289-4eb0-9ccf-dd2d4234e66c.dbc,BMS/Exponent_ePack/epacktgv1osm__50c74732.dbc,,imported
+dbcs/dbcs/exponent/epacktgv1ti/95381eb5-a3c3-4cb0-a5e6-05242418f6a3.dbc,BMS/Exponent_ePack/epacktgv1ti__95381eb5.dbc,,imported
+dbcs/dbcs/exponent/exponentrnd/ccadfc7a-c435-4cf2-9172-8fc9416f7f4c.dbc,BMS/Exponent_ePack/exponentrnd__ccadfc7a.dbc,,imported
+exponentrnddbc.dbc,BMS/Exponent_ePack/exponentrnddbc.dbc,,imported
+dbcs/dbcs/exponent/l3v1/282ef570-ba5a-4923-9603-f5558298ef53.dbc,BMS/Exponent_ePack/l3v1__282ef570.dbc,,imported
+dbcs/dbcs/exponent/maverickv1/91af8047-aa66-4669-ba02-3d16ecb3043e.dbc,BMS/Exponent_ePack/maverickv1__91af8047.dbc,,imported
+dbcs/dbcs/exponent/rigs/32b39a51-737d-432a-8abb-e5034bde6a1e.dbc,BMS/Exponent_ePack/rigs__32b39a51.dbc,,imported
+dbcs/dbcs/exponent/rigs/392c011e-58df-46c6-8d06-a2a56a7b05eb.dbc,BMS/Exponent_ePack/rigs__392c011e.dbc,,imported
+dbcs/dbcs/exponent/rndtgv1/63a6ca2c-47b9-4cdb-bbe7-2094a022046d.dbc,BMS/Exponent_ePack/rndtgv1__63a6ca2c.dbc,,imported
+tgv1.3.dbc,BMS/Exponent_ePack/tgv1.3.dbc,,imported
+FES_BMS_BB1.dbc,BMS/Fashmo_FES/FES_BMS_BB1.dbc,,imported
+dbcs/dbcs/cloud/fashmo/7244940b-82b7-4945-b649-9cf92692eaa1.dbc,BMS/Fashmo_FES/fashmo__7244940b.dbc,,imported
+dbcs/dbcs/cloud/fashmo/b15cc3ee-0b48-4640-bd4c-dfaa79981cb4.dbc,BMS/Fashmo_FES/fashmo__b15cc3ee.dbc,,imported
+jbm1.10 (1).dbc,BMS/JBM/jbm1.10.dbc,,imported
+dbcs/dbcs/cloud/jbm/9989948b-c5a5-443e-b98b-0c4791becc69.dbc,BMS/JBM/jbm__9989948b.dbc,,imported
+dbcs/dbcs/cloud/jbm/ff1ba26e-f2b4-46df-8622-f99ed632bfad.dbc,BMS/JBM/jbm__ff1ba26e.dbc,,imported
+L2outputCAN 0_4_2.dbc,BMS/L2_Output/L2outputCAN_0_4_2.dbc,,imported
+Log9_V1.1.dbc,BMS/Log9/Log9_V1.1.dbc,,imported
+dbcs/dbcs/cloud/lohum/24d9053d-f110-4efd-91e1-2e680763f60f.dbc,BMS/Lohum/lohum__24d9053d.dbc,,imported
+lohum_test.dbc,BMS/Lohum/lohum_test.dbc,,imported
+lohum_v2.dbc,BMS/Lohum/lohum_v2.dbc,,imported
+TEC_CAN_V3_5_1Sept23_CAN_speed_250Kbps.dbc,BMS/TEC_EnergyCompany/TEC_CAN_V3_5_1Sept23_CAN_speed_250Kbps.dbc,,imported
+TEC_Elek_bytebeam.dbc,BMS/TEC_EnergyCompany/TEC_Elek_bytebeam.dbc,,imported
+TEC_Elek_bytebeam (1).dbc,BMS/TEC_EnergyCompany/TEC_Elek_bytebeam_2.dbc,,imported
+TEC_Elek_bytebeam (2).dbc,BMS/TEC_EnergyCompany/TEC_Elek_bytebeam_3.dbc,,imported
+Tec_CAN_31Oct23_ByteWise.dbc,BMS/TEC_EnergyCompany/Tec_CAN_31Oct23_ByteWise.dbc,,imported
+energy_company.dbc,BMS/TEC_EnergyCompany/energy_company.dbc,,imported
+tec_joins.dbc,BMS/TEC_EnergyCompany/tec_joins.dbc,,imported
+dbcs/dbcs/cloud/theenergy/36230882-f873-434e-862b-cba84230c5ff.dbc,BMS/TEC_EnergyCompany/theenergy__36230882.dbc,,imported
+vidur.dbc,BMS/Vidur/vidur.dbc,,imported
+smart_charger_dbc_inverted.dbc,Charger/Daly_Smart_Charger/smart_charger_dbc_inverted.dbc,,imported
+async.dbc,Charger/Electorq_SwapStation/async.dbc,,imported
+dbcs/dbcs/electorq/electorq/f82b515a-b1e9-48d4-8416-b5c1ce668e38.dbc,Charger/Electorq_SwapStation/electorq__f82b515a.dbc,,imported
+sync.dbc,Charger/Electorq_SwapStation/sync.dbc,,imported
+CI-Telemetry_v1.21.dbc,Charger/Exponent_CI_Telemetry/CI-Telemetry_v1.21.dbc,,imported
+CI-Telemetry_v1.26.dbc,Charger/Exponent_CI_Telemetry/CI-Telemetry_v1.26.dbc,,imported
+CI-Telemetry_v2.0.dbc,Charger/Exponent_CI_Telemetry/CI-Telemetry_v2.0.dbc,,imported
+CI-Telemetry_v2.1.dbc,Charger/Exponent_CI_Telemetry/CI-Telemetry_v2.1.dbc,,imported
+CI-Telemetry_v2.2.dbc,Charger/Exponent_CI_Telemetry/CI-Telemetry_v2.2.dbc,,imported
+CI-Telemetry_v2.3.dbc,Charger/Exponent_CI_Telemetry/CI-Telemetry_v2.3.dbc,,imported
+CI-Telemetry_v2.4.dbc,Charger/Exponent_CI_Telemetry/CI-Telemetry_v2.4.dbc,,imported
+CI-Telemetry_v2.5.dbc,Charger/Exponent_CI_Telemetry/CI-Telemetry_v2.5.dbc,,imported
+CI-Telemetry_v2.6.dbc,Charger/Exponent_CI_Telemetry/CI-Telemetry_v2.6.dbc,,imported
+CI-Telemetry_v2.7.dbc,Charger/Exponent_CI_Telemetry/CI-Telemetry_v2.7.dbc,,imported
+CI-Telemetry_v2.7 (1).dbc,Charger/Exponent_CI_Telemetry/CI-Telemetry_v2.7_2.dbc,,imported
+CI-Telemetry_v2.8.dbc,Charger/Exponent_CI_Telemetry/CI-Telemetry_v2.8.dbc,,imported
+dbcs/dbcs/exponent/chargers/68f425d9-1bc6-4725-84af-02191b24ddee.dbc,Charger/Exponent_CI_Telemetry/chargers__68f425d9.dbc,,imported
+30kW_MGM_Rectifier_Test.dbc,Charger/Exponent_Rectifier/30kW_MGM_Rectifier_Test.dbc,,imported
+dbcs/dbcs/exponent/rectifiertestv1/43612b9d-88e0-4c12-b786-2fb0e0c501c4.dbc,Charger/Exponent_Rectifier/rectifiertestv1__43612b9d.dbc,,imported
+34_1_bb.dbc,Charger/Exponent_ePump_P4/34_1_bb.dbc,,imported
+34_4_bb.dbc,Charger/Exponent_ePump_P4/34_4_bb.dbc,,imported
+Canv21.dbc,Charger/Exponent_ePump_P4/Canv21.dbc,,imported
+P4_Debug_v11.dbc,Charger/Exponent_ePump_P4/P4_Debug_v11.dbc,,imported
+P4_Debug_v7.dbc,Charger/Exponent_ePump_P4/P4_Debug_v7.dbc,,imported
+can (2).dbc,Charger/Exponent_ePump_P4/can.dbc,,imported
+can (4).dbc,Charger/Exponent_ePump_P4/can_2.dbc,,imported
+can_v16.dbc,Charger/Exponent_ePump_P4/can_v16.dbc,,imported
+can_v17_Interim.dbc,Charger/Exponent_ePump_P4/can_v17_Interim.dbc,,imported
+can_v18_Interim.dbc,Charger/Exponent_ePump_P4/can_v18_Interim.dbc,,imported
+can_v22.dbc,Charger/Exponent_ePump_P4/can_v22.dbc,,imported
+can_v22 (2).dbc,Charger/Exponent_ePump_P4/can_v22_2.dbc,,imported
+can_v32_1.dbc,Charger/Exponent_ePump_P4/can_v32_1.dbc,,imported
+can_v32_3.dbc,Charger/Exponent_ePump_P4/can_v32_3.dbc,,imported
+can_v34.dbc,Charger/Exponent_ePump_P4/can_v34.dbc,,imported
+dbcs/dbcs/exponent/epumpp4v1/03c31081-f28d-44a9-94ff-222c349093d9.dbc,Charger/Exponent_ePump_P4/epumpp4v1__03c31081.dbc,,imported
+dbcs/dbcs/exponent/epumpp4v1dev/4221fa95-3465-4306-bf9c-7ff19d2d84d6.dbc,Charger/Exponent_ePump_P4/epumpp4v1dev__4221fa95.dbc,,imported
+dbcs/dbcs/exponent/epumpp4v1dev/4670063d-54f2-4be8-a06e-f81d3eac72a9.dbc,Charger/Exponent_ePump_P4/epumpp4v1dev__4670063d.dbc,,imported
+dbcs/dbcs/exponent/kaushiktest/8acafb92-40fb-4129-9ebb-38ccb912fbba.dbc,Charger/Exponent_ePump_P4/kaushiktest__8acafb92.dbc,,imported
+dbcs/dbcs/exponent/p4/8d8f2440-a82b-4761-bfc5-8c6b43bdf691.dbc,Charger/Exponent_ePump_P4/p4__8d8f2440.dbc,,imported
+dbcs/dbcs/cloud/bosch/1387afe4-a167-4baf-81e5-5f00ec8793ab.dbc,J1939_ICE/Bosch/bosch__1387afe4.dbc,,imported
+dbcs/dbcs/cloud/bosch/1509c00d-9eec-4fd9-95f9-a8146e1505d9.dbc,J1939_ICE/Bosch/bosch__1509c00d.dbc,,imported
+dbcs/dbcs/cloud/bosch/21b58381-bf35-4cbd-a598-da07f6d382b0.dbc,J1939_ICE/Bosch/bosch__21b58381.dbc,,imported
+dbcs/dbcs/cloud/bosch/866c5b8e-f9fa-45ed-9ee6-eb1fbf67d099.dbc,J1939_ICE/Bosch/bosch__866c5b8e.dbc,,imported
+dbcs/dbcs/cloud/bosch/c91eb7f9-a872-47a9-adfc-59b2136351ec.dbc,J1939_ICE/Bosch/bosch__c91eb7f9.dbc,,imported
+dbcs/dbcs/cloud/bosch/d94c747f-14be-4e5f-8e62-77b33ec0af8b.dbc,J1939_ICE/Bosch/bosch__d94c747f.dbc,,imported
+bosch_j1939.dbc,J1939_ICE/Bosch/bosch_j1939.dbc,,imported
+tvs.dbc,J1939_ICE/TVS/tvs.dbc,,imported
+wiman.dbc,J1939_ICE/Wiman_EzeeInfo/wiman.dbc,,imported
+dbcs/dbcs/cloud/mytvs/97f0a106-3524-4af9-9864-51a8fc02045a.dbc,J1939_ICE/myTVS/mytvs__97f0a106.dbc,,imported
+AMeM_MC50_LG_V2.dbc,MCU/AMeM/AMeM_MC50_LG_V2.dbc,,imported
+mc_database_scooter_can_protocol_v4_5.dbc,MCU/Scooter_MC/mc_database_scooter_can_protocol_v4_5.dbc,,imported
+OBD2.dbc,OBD2/Generic/OBD2.dbc,,imported
+bosch.dbc,OBD2/Generic/bosch.dbc,,imported
+obd.dbc,OBD2/Generic/obd.dbc,,imported
+dbcs/dbcs/galaxy-prod/testinggalaxy/346a1834-60c1-497b-9823-4e6139dd060a.dbc,OBD2/Generic/testinggalaxy__346a1834.dbc,,imported
+byte_beam_dbc.dbc,Test/Bytebeam_Samples/byte_beam_dbc.dbc,,imported
+sample.dbc,Test/Bytebeam_Samples/sample.dbc,,imported
+dbcs/dbcs/galaxy-prod/testinggalaxy/ee8a3e28-6861-4c33-900e-35945b2d59b7.dbc,Test/Bytebeam_Samples/testinggalaxy__ee8a3e28.dbc,,imported
+dbcs/dbcs/cloud/testproject/c8c2b79d-6f25-4271-b98d-28faec96a9c9.dbc,Test/Bytebeam_Samples/testproject__c8c2b79d.dbc,,imported
+2W_VCAN_DBC_Ver010008_ACK.dbc,VCU_Vehicle/2W_VCAN_Generic/2W_VCAN_DBC_Ver010008_ACK.dbc,,imported
+2W_VCAN_DBC_Ver010008_Rev1_Bounce.dbc,VCU_Vehicle/2W_VCAN_Generic/2W_VCAN_DBC_Ver010008_Rev1_Bounce.dbc,,imported
+GLX_v2_KEY1.dbc,VCU_Vehicle/Bullwork/GLX_v2_KEY1.dbc,,imported
+dbcs/dbcs/cloud/bullworkmobility/a12070c3-072d-4c67-90e2-124604f42aaa.dbc,VCU_Vehicle/Bullwork/bullworkmobility__a12070c3.dbc,,imported
+22Aug2024_N1_Gen1p0_BMS_MCU_TELEM.dbc,VCU_Vehicle/EVage/22Aug2024_N1_Gen1p0_BMS_MCU_TELEM.dbc,,imported
+300824_N1_Gen1p1_withVCU.dbc,VCU_Vehicle/EVage/300824_N1_Gen1p1_withVCU.dbc,,imported
+evage.dbc,VCU_Vehicle/EVage/evage.dbc,,imported
+evage (1).dbc,VCU_Vehicle/EVage/evage_2.dbc,,imported
+dbcs/dbcs/cloud/evage/16c80ba2-c20b-4232-96ee-693149434395.dbc,VCU_Vehicle/EVage/evage__16c80ba2.dbc,,imported
+dbcs/dbcs/cloud/evage/6adb4aec-58bd-4db1-a094-18863b7f456b.dbc,VCU_Vehicle/EVage/evage__6adb4aec.dbc,,imported
+dbcs/dbcs/cloud/evagedemo/a3b583c1-0017-4944-b9bc-d6b518a6a88c.dbc,VCU_Vehicle/EVage/evagedemo__a3b583c1.dbc,,imported
+dbcs/dbcs/cloud/evagedemo/fc408a86-8bd0-45e7-bc61-930b26786792.dbc,VCU_Vehicle/EVage/evagedemo__fc408a86.dbc,,imported
+dbcs/dbcs/cloud/freshbus/796d142d-f094-40fe-a272-884736a44d1a.dbc,VCU_Vehicle/FreshBus/freshbus__796d142d.dbc,,imported
+dbcs/dbcs/cloud/kptl/c062f9dc-8dab-4c02-b537-2ce015c7228a.dbc,VCU_Vehicle/KPTL_eBus/kptl__c062f9dc.dbc,,imported
+dbcs/dbcs/cloud/lectrix/d7ae88d2-270c-4878-aaac-68fba6c72def.dbc,VCU_Vehicle/Lectrix/lectrix__d7ae88d2.dbc,,imported
+master_dbc_ver1.10.dbc,VCU_Vehicle/Lectrix/master_dbc_ver1.10.dbc,,imported
+dbcs/dbcs/galaxy/bytebeam/11ea2e24-f8d1-4cfd-9296-8572707b0f28.dbc,VCU_Vehicle/Matter/bytebeam__11ea2e24.dbc,,imported
+dbcs/dbcs/galaxy/bytebeam/1d87d42e-c796-4ae3-9092-417c67393936.dbc,VCU_Vehicle/Matter/bytebeam__1d87d42e.dbc,,imported
+dbcs/dbcs/galaxy/bytebeam/6602a98e-e0a3-451d-97d8-00d8d038e776.dbc,VCU_Vehicle/Matter/bytebeam__6602a98e.dbc,,imported
+dbcs/dbcs/galaxy/bytebeam/a749117c-8053-4118-bf4d-bc78e5f97342.dbc,VCU_Vehicle/Matter/bytebeam__a749117c.dbc,,imported
+dbcs/dbcs/galaxy/bytebeam/b145f923-b496-45c6-8854-9cd41b57355e.dbc,VCU_Vehicle/Matter/bytebeam__b145f923.dbc,,imported
+dbcs/dbcs/galaxy/bytebeam/e9643017-26bc-4d70-8a5c-555a43ce9609.dbc,VCU_Vehicle/Matter/bytebeam__e9643017.dbc,,imported
+dbc_v10.dbc,VCU_Vehicle/Matter/dbc_v10.dbc,,imported
+dbc_files_bytebeam/dbc_v10_hf.dbc,VCU_Vehicle/Matter/dbc_v10_hf.dbc,,imported
+dbc_v11.dbc,VCU_Vehicle/Matter/dbc_v11.dbc,,imported
+dbc_files_bytebeam/dbc_v11_hf.dbc,VCU_Vehicle/Matter/dbc_v11_hf.dbc,,imported
+dbc_v11_hf.dbc,VCU_Vehicle/Matter/dbc_v11_hf_2.dbc,,imported
+dbc_v12.dbc,VCU_Vehicle/Matter/dbc_v12.dbc,,imported
+dbc_files_bytebeam/dbc_v12_hf.dbc,VCU_Vehicle/Matter/dbc_v12_hf.dbc,,imported
+dbc_v7.dbc,VCU_Vehicle/Matter/dbc_v7.dbc,,imported
+dbc_files_bytebeam/dbc_v8.dbc,VCU_Vehicle/Matter/dbc_v8.dbc,,imported
+dbc_v8.dbc,VCU_Vehicle/Matter/dbc_v8_2.dbc,,imported
+matter_bmscan_oct30_2k24.dbc,VCU_Vehicle/Matter/matter_bmscan_oct30_2k24.dbc,,imported
+matter_v1.dbc,VCU_Vehicle/Matter/matter_v1.dbc,,imported
+matter_v2.dbc,VCU_Vehicle/Matter/matter_v2.dbc,,imported
+dbcs/dbcs/galaxy-prod/prodenv/05b1ceed-c4db-4455-a31f-c34dddb5f42c.dbc,VCU_Vehicle/Matter/prodenv__05b1ceed.dbc,,imported
+dbcs/dbcs/galaxy-prod/prodenv/70ef1f21-a110-495f-8401-a0a02f76388e.dbc,VCU_Vehicle/Matter/prodenv__70ef1f21.dbc,,imported
+dbcs/dbcs/galaxy-prod/prodenv/91634035-4be3-4761-a8dd-b7524694c77e.dbc,VCU_Vehicle/Matter/prodenv__91634035.dbc,,imported
+dbcs/dbcs/galaxy-prod/prodenv/a0f745e1-e275-4540-9d19-1aadddcdf95b.dbc,VCU_Vehicle/Matter/prodenv__a0f745e1.dbc,,imported
+dbcs/dbcs/galaxy/qa/62156900-b96e-4d29-8051-3a1ec3a988d2.dbc,VCU_Vehicle/Matter/qa__62156900.dbc,,imported
+dbcs/dbcs/galaxy/qa/9eaccbcb-0353-44f8-bab8-b1d4558f2b85.dbc,VCU_Vehicle/Matter/qa__9eaccbcb.dbc,,imported
+dbcs/dbcs/galaxy/testenv/46afc9a6-2fe2-46f0-93f3-4004b3d4df2e.dbc,VCU_Vehicle/Matter/testenv__46afc9a6.dbc,,imported
+dbcs/dbcs/galaxy/testenv/a109d6ee-caf7-4d40-a51b-69d5d10e2b6a.dbc,VCU_Vehicle/Matter/testenv__a109d6ee.dbc,,imported
+dbcs/dbcs/cloud/numeros/5e4e9ba6-8d3d-4f62-acc4-c7309a829644.dbc,VCU_Vehicle/Numeros/numeros__5e4e9ba6.dbc,,imported
+dbcs/dbcs/cloud/numeros/71805864-d718-4b8c-8314-7695afeced09.dbc,VCU_Vehicle/Numeros/numeros__71805864.dbc,,imported
+dbcs/dbcs/cloud/river1/478558a1-3e98-402e-8a18-0ab7eb3eb771.dbc,VCU_Vehicle/River/river1__478558a1.dbc,,imported
+dbcs/dbcs/cloud/river1/661dc741-ba50-47e5-8bd8-22096637b5af.dbc,VCU_Vehicle/River/river1__661dc741.dbc,,imported
+dbcs/dbcs/cloud/riveriotdevice/111e7122-5a7a-4d1f-9f27-6345b2099aec.dbc,VCU_Vehicle/River/riveriotdevice__111e7122.dbc,,imported
+dbcs/dbcs/cloud/riveriotdevice/36410223-7daf-4f0b-9cca-08646dbe4b74.dbc,VCU_Vehicle/River/riveriotdevice__36410223.dbc,,imported
+dbcs/dbcs/cloud/riveriotdevice/6752a451-7729-4551-8015-02b38e3029ae.dbc,VCU_Vehicle/River/riveriotdevice__6752a451.dbc,,imported
+dbcs/dbcs/cloud/riveriotdevice/a5277bb3-c11b-4cec-aadb-5015ce6157ea.dbc,VCU_Vehicle/River/riveriotdevice__a5277bb3.dbc,,imported
+LXG2_BCM_export.dbc,VCU_Vehicle/Royal_Enfield/LXG2_BCM_export.dbc,,imported
+LXGv2_VCU_DASH_TCU.dbc,VCU_Vehicle/Royal_Enfield/LXGv2_VCU_DASH_TCU.dbc,,imported
+lxg2_bcm_export.dbc,VCU_Vehicle/Royal_Enfield/lxg2_bcm_export_2.dbc,,imported
+lxg2_bcm_export_converted_utf8.dbc,VCU_Vehicle/Royal_Enfield/lxg2_bcm_export_converted_utf8.dbc,,imported
+lxgv2_vcu_dash_tcu.dbc,VCU_Vehicle/Royal_Enfield/lxgv2_vcu_dash_tcu_2.dbc,,imported
+dbcs/dbcs/simple/bytebeam/3cd6ad8b-ea00-4140-9096-39230c2ec1cb.dbc,VCU_Vehicle/Simple_Energy/bytebeam__3cd6ad8b.dbc,,imported
+dbcs/dbcs/simple/bytebeam/3d262658-fa89-4c04-aeee-92d5f51c5a0a.dbc,VCU_Vehicle/Simple_Energy/bytebeam__3d262658.dbc,,imported
+simpleenergy.dbc,VCU_Vehicle/Simple_Energy/simpleenergy.dbc,,imported
+dbcs/dbcs/cloud/vdlpinnacle/b23c89d6-ecfd-40d4-8b9f-a5d679078bf5.dbc,VCU_Vehicle/VDL_Pinnacle/vdlpinnacle__b23c89d6.dbc,,imported
+dbcs/dbcs/cloud/ebiketest/d1f3cdf3-e2c1-479d-825c-f779dbccbe77.dbc,VCU_Vehicle/eBike_Test/ebiketest__d1f3cdf3.dbc,,imported

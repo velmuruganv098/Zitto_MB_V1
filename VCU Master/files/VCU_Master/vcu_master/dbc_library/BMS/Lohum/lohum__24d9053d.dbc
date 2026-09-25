@@ -1,0 +1,244 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: 
+
+
+BO_ 2147483904 total_voltage_current_remaining_: 8 Vector__XXX
+ SG_ crc_16 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ remaining_capacity : 39|16@0+ (10,0) [0|0] "" Vector__XXX
+ SG_ current : 23|16@0- (10,0) [0|0] "" Vector__XXX
+ SG_ total_voltage : 7|16@0+ (10,0) [0|0] "" Vector__XXX
+
+BO_ 2147483905 charging_full_capacity_cycle_tim: 8 Vector__XXX
+ SG_ crc_16 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ remaining_capacity : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ number_of_discharge_cycles : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ full_capacity : 7|16@0+ (10,0) [0|0] "" Vector__XXX
+
+BO_ 2147483906 balanced_status_protection_statu: 8 Vector__XXX
+ SG_ crc_16 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ software_lock_mos : 43|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ frontend_detection_ic_error : 44|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ short_circuit_protection : 45|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ discharge_overcurrent : 46|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ charge_overcurrent : 47|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ discharging_low_temp : 32|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ discharging_over_temp : 33|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ charging_low_temp : 34|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ charging_over_temp : 35|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ group_under_voltage : 36|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ group_over_voltage : 37|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ monomer_undervoltage : 38|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ monomer_overvoltage : 39|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_32_balance_status_flag : 24|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_31_balance_status_flag : 25|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_30_balance_status_flag : 26|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_29_balance_status_flag : 27|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_28_balance_status_flag : 28|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_27_balance_status_flag : 29|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_26_balance_status_flag : 30|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_25_balance_status_flag : 31|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_24_balance_status_flag : 16|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_23_balance_status_flag : 17|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_22_balance_status_flag : 18|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_21_balance_status_flag : 19|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_20_balance_status_flag : 20|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_19_balance_status_flag : 21|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_18_balance_status_flag : 22|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_17_balance_status_flag : 23|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_16_balance_status_flag : 8|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_15_balance_status_flag : 9|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_14_balance_status_flag : 10|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_13_balance_status_flag : 11|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_12_balance_status_flag : 12|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_11_balance_status_flag : 13|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_10_balance_status_flag : 14|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_9_balance_status_flag : 15|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_8_balance_status_flag : 0|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_7_balance_status_flag : 1|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_6_balance_status_flag : 2|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_5_balance_status_flag : 3|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_4_balance_status_flag : 4|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_3_balance_status_flag : 5|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_2_balance_status_flag : 6|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_1_balance_status_flag : 7|1@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483907 fet_control_status: 8 Vector__XXX
+ SG_ crc_16 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ production_date : 28|5@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ production_month : 16|4@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ production_year : 23|7@0+ (1,2000) [0|0] "" Vector__XXX
+ SG_ mos_discharging : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ mos_charging : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483908 ntc_number: 4 Vector__XXX
+ SG_ crc_16 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ number_of_ntc_probes : 15|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ number_of_battery_strings : 7|8@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483909 temperature_ntc1_ntc3: 8 Vector__XXX
+ SG_ crc_16 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ ntc_3_temperature : 39|16@0+ (0.1,-273.1) [0|0] "" Vector__XXX
+ SG_ ntc_2_temperature : 23|16@0+ (0.1,-273.1) [0|0] "" Vector__XXX
+ SG_ ntc_1_temperature : 7|16@0+ (0.1,-273.1) [0|0] "" Vector__XXX
+
+BO_ 2147483910 temperature_ntc4_ntc6: 8 Vector__XXX
+ SG_ crc_16 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ ntc_6_temperature : 39|16@0+ (0.1,-273.1) [0|0] "" Vector__XXX
+ SG_ ntc_5_temperature : 23|16@0+ (0.1,-273.1) [0|0] "" Vector__XXX
+ SG_ ntc_4_temperature : 7|16@0+ (0.1,-273.1) [0|0] "" Vector__XXX
+
+BO_ 2147483911 voltage_cell_1_cell_3: 8 Vector__XXX
+ SG_ crc_16 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_3_voltage : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_2_voltage : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_1_voltage : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483912 voltage_cell_4_cell_6: 8 Vector__XXX
+ SG_ crc_16 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_6_voltage : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_5_voltage : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_4_voltage : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483913 voltage_cell_7_cell_9: 8 Vector__XXX
+ SG_ crc_16 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_9_voltage : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_8_voltage : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_7_voltage : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483914 voltage_cell_10_cell_12: 8 Vector__XXX
+ SG_ crc_16 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_12_voltage : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_11_voltage : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_10_voltage : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483915 voltage_cell_13_cell_15: 8 Vector__XXX
+ SG_ crc_16 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_15_voltage : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_14_voltage : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_13_voltage : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483916 voltage_cell_16_cell_18: 8 Vector__XXX
+ SG_ crc_16 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_18_voltage : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_17_voltage : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_16_voltage : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483917 voltage_cell_19_cell_21: 8 Vector__XXX
+ SG_ crc_16 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_21_voltage : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_20_voltage : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_19_voltage : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483918 voltage_cell_22_cell_24: 8 Vector__XXX
+ SG_ crc_16 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_24_voltage : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_23_voltage : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_22_voltage : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483919 voltage_cell_25_cell_27: 8 Vector__XXX
+ SG_ crc_16 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_27_voltage : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_26_voltage : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_25_voltage : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483920 voltage_cell_28_cell_30: 8 Vector__XXX
+ SG_ crc_16 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_30_voltage : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_29_voltage : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_28_voltage : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+
+
+
+
+BA_DEF_ BO_  "SystemMessageLongSymbol" STRING ;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_DEF_  "SystemMessageLongSymbol" "";
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_ "SystemMessageLongSymbol" BO_ 2147483904 "total_voltage_current_remaining_capacity";
+BA_ "SystemMessageLongSymbol" BO_ 2147483905 "charging_full_capacity_cycle_times_RSOC";
+BA_ "SystemMessageLongSymbol" BO_ 2147483906 "balanced_status_protection_status";
+VAL_ 2147483906 software_lock_mos 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 frontend_detection_ic_error 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 short_circuit_protection 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 discharge_overcurrent 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 charge_overcurrent 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 discharging_low_temp 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 discharging_over_temp 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 charging_low_temp 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 charging_over_temp 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 group_under_voltage 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 group_over_voltage 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 monomer_undervoltage 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 monomer_overvoltage 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 Cell_32_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_31_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_30_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_29_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_28_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_27_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_26_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_25_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_24_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_23_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_22_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_21_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_20_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_19_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_18_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_17_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_16_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_15_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_14_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_13_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_12_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_11_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_10_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_9_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_8_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_7_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_6_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_5_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_4_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_3_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_2_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483906 Cell_1_balance_status_flag 0 "not on" 1 "on" ;
+VAL_ 2147483907 mos_discharging 0 "off" 1 "on" ;
+VAL_ 2147483907 mos_charging 0 "off" 1 "on" ;
+
+
+

@@ -1,0 +1,230 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_:
+
+
+BO_ 201 GPIO_Output: 8 Vector__XXX
+ SG_ s_valve_5 : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s_valve_6 : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ relay_gp_1 : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ pneumatic_sol : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s_valve_1 : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s_valve_3 : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s_valve_4 : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s_valve_2 : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ relay_gp_2 : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ precharge_rel : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ dc_contactor : 10|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ch_sol_lock_en_2 : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ch_sol_lock_en_1 : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ fan : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ coolent_motor : 14|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ac_contactor : 15|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ air_comp : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ chiller_reset : 17|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ gun_led : 18|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ bms_cc_on : 19|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ set_voltage : 32|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ set_current : 48|16@1+ (0.01,0) [0|0] "" Vector__XXX
+
+BO_ 404 ADC: 8 Vector__XXX
+ SG_ cs_ch_2 : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ ah : 48|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ gun_temp_p_1 : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ gun_temp_p_2 : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ gun_temp_n_1 : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ gun_temp_n_2 : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 769 GPIO_Input: 8 Vector__XXX
+ SG_ valve_fb_1_a : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ valve_fb_1_b : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ valve_fb_2_a : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ valve_fb_2_b : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ valve_fb_3_a : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ valve_fb_3_b : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ valve_fb_4_a : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ valve_fb_4_b : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ valve_fb_5_a : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ valve_fb_5_b : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ valve_fb_6_a : 10|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ valve_fb_6_b : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ cold_tank : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ hot_tank : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ smoke_detect : 15|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ pnuematic_solenoid_fb : 14|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ door : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ comp_pre : 17|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ stop_charging : 18|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ cp_12_v : 19|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ cp_6_v : 20|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ cp_4_v : 21|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ sol_fault : 22|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ sol_fb : 23|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ spd : 24|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ elr : 25|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ pfr : 26|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ pump_fb : 27|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ compressor_readback : 28|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ gpio_72 : 29|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ coolent_con_fb : 30|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ em_sw : 31|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ sw_gp_1 : 32|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ sw_gp_2 : 33|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ fan_con_230_v : 34|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ bms_can_status : 35|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ soc : 40|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ volt_detect_48_v : 56|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ rev_volt_detect_48 : 57|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 1282 RectifierReadback: 8 Vector__XXX
+ SG_ current_read : 16|16@1+ (0.01,-50) [0|65535] "" Vector__XXX
+ SG_ voltage_read : 0|16@1+ (0.01,0) [0|65535] "" Vector__XXX
+ SG_ battery_voltage : 32|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ max_cell_voltage : 48|16@1+ (0.001,0) [0|0] "" Vector__XXX
+
+BO_ 1288 Debug1: 8 Vector__XXX
+ SG_ solenoid_lock_retry : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ solenoid_unlock_retry : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ solenoid_lock_status : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ solenoid_unlock_status : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ wakeup_status : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ bms_interaction_status : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ drain_required : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ output_power_status : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 1289 Debug2: 8 Vector__XXX
+ SG_ batt_fluid_allowed : 0|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ charge_path_check_status : 4|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ precharge_status : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ input_power_status : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ e_plug_interaction_state : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ battery_conditioning_request : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ drain_time : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 1290 Debug3: 8 Vector__XXX
+ SG_ charging_complete_status : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ input_power_protection_ok : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ charging_algo_protection_ok : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ fcs_protections_ok : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cold_water_temperature : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ fcs_status : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 1291 BMSMessage: 8 Vector__XXX
+ SG_ max_cell_temp : 0|16@1+ (0.01,-50) [0|0] "" Vector__XXX
+ SG_ min_cell_temp : 16|16@1+ (0.01,-50) [0|0] "" Vector__XXX
+ SG_ bms_fw_version : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ bms_pack_id : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ bms_state : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 14 AlgoDebug: 8 Vector__XXX
+ SG_ algo_tab_3_c_rate : 0|9@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ algo_tab_4_c_rate : 9|9@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ algo_tab_5_c_rate : 18|9@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ algo_post_deration_c_rate : 27|9@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ algo_voltage_hysterisis : 36|9@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ algo_cut_off_voltage : 45|9@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ algo_hysterisis_time_delay : 54|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ algo_tec_trigger : 58|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ algo_tec_command : 59|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 27 AlgoDebug2: 8 Vector__XXX
+ SG_ algo_battery_conditioning_req : 0|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ algo_current : 16|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ algo_charge_completion_status : 4|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ algo_drain_request : 1|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ algo_charge_complete : 2|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ algo_successfull_complete : 3|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ algo_capacity_deration : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ fw__version_c2 : 32|10@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 28 DisplayParsing: 8 Vector__XXX
+ SG_ display_state : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ start_load_percent : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ end_load_percent : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ display_error_type : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 29 Protections1: 8 Vector__XXX
+ SG_ code_1 : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ code_2 : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ code_3 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 30 Protections2: 8 Vector__XXX
+ SG_ input_power_protection_status : 0|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ output_power_protection_status : 4|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ fluid_system_protection_status : 8|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ e_plug_protection_status : 12|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ bms_protection_status : 16|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ charging_algo_protections_status : 20|4@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 512 RectifierVoltageRead1: 8 Vector__XXX
+ SG_ rect_1_v : 0|16@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ rect_2_v : 16|16@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ rect_3_v : 32|16@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ rect_4_v : 48|16@1+ (0.01,0) [0|0] "" Vector__XXX
+
+BO_ 513 RectifierVoltageRead2: 8 Vector__XXX
+ SG_ rect_5_v : 0|16@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ rect_6_v : 16|16@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ rect_7_v : 32|16@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ rect_8_v : 48|16@1+ (0.01,0) [0|0] "" Vector__XXX
+
+BO_ 514 RectifierVoltageRead3: 8 Vector__XXX
+ SG_ rect_9_v : 0|16@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ rect_10_v : 16|16@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ rect_11_v : 32|16@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ rect_12_v : 48|16@1+ (0.01,0) [0|0] "" Vector__XXX
+
+BO_ 516 RectifierCurrentRead2: 8 Vector__XXX
+ SG_ rect_5_i : 0|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ rect_6_i : 16|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ rect_7_i : 32|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ rect_8_i : 48|16@1+ (0.1,0) [0|0] "" Vector__XXX
+
+BO_ 517 RectifierCurrentRead3: 8 Vector__XXX
+ SG_ rect_9_i : 0|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ rect_10_i : 16|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ rect_11_i : 32|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ rect_12_i : 48|16@1+ (0.1,0) [0|0] "" Vector__XXX
+
+BO_ 515 RectifierCurrentRead1: 8 Vector__XXX
+ SG_ rect_1_i : 0|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ rect_2_i : 16|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ rect_3_i : 32|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ rect_4_i : 48|16@1+ (0.1,0) [0|0] "" Vector__XXX
+
+
+
+

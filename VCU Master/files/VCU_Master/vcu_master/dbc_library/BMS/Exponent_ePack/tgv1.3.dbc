@@ -1,0 +1,369 @@
+VERSION "HIPBNYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY/4/%%%/4/'%**4YYY///"
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_:
+
+
+BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
+ SG_ current_filter_1 : 0|16@1+ (0.1,-600) [-800|800] "" Vector__XXX
+ SG_ bms_unique_key_byte7 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ bms_unique_key_byte6 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ bms_unique_key_byte5 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ bms_unique_key_byte4 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ bms_unique_key_byte3 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ bms_unique_key_byte2 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ bms_unique_key_byte1 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ bms_unique_key_byte0 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ battery_unique_key_byte7 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ battery_unique_key_byte6 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ battery_unique_key_byte5 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ battery_unique_key_byte4 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ battery_unique_key_byte3 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ battery_unique_key_byte2 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ battery_unique_key_byte1 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ battery_unique_key_byte0 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1686 gbt_ccs: 8 Vector__XXX
+ SG_ ccs_charger_voltage : 24|16@1+ (0.1,0) [0|6553.5] "V" Vector__XXX
+ SG_ ccs_charger_current : 8|16@1- (0.1,-400) [-3676.8|2876.7] "A" Vector__XXX
+ SG_ ccs_charge_permissible : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1681 gbt_bst_cst: 8 Vector__XXX
+ SG_ cst_byte3 : 56|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ cst_byte2 : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ csr_byte1 : 40|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ cst_byte0 : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ bst_voltage_error : 26|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ bst_voltage_detection_fault : 20|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ bst_soc_cause : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ bst_pack_voltage_cause : 2|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ bst_output_connector_ot_fault : 10|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ bst_other_fault : 22|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ bst_max_cell_volt_cause : 4|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ bst_insulation_fault : 8|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ bst_hv_relay_fault : 18|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ bst_current_error : 24|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ bst_cst_cause : 6|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ bst_charging_connector_fault : 14|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ bst_bms_component_fault : 12|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ bst_battery_ot_fault : 16|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 1685 gbt_internal_debugging: 8 Vector__XXX
+ SG_ gbt_slow_fast_charge_connected : 38|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ gbt_protection_fast_cov : 37|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ gbt_charge_complete_flag : 36|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ gbt_charge_and_io_protection : 35|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ gbt_bcs_ccs_logic_fault : 34|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ gbt_timeout : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ gbt_status : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ gbt_state : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ gbt_protection_flag : 26|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ gbt_detect : 24|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ gbt_cml_good : 32|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ gbt_ccs_logic_fault : 30|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ gbt_bcs_logic_fault : 28|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 1683 gbt_csd: 8 Vector__XXX
+ SG_ csd_output_energy : 16|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ csd_end_charge_number : 32|32@1+ (1,0) [0|4294967295] "" Vector__XXX
+ SG_ csd_charge_time : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 1680 gbt_crm: 8 Vector__XXX
+ SG_ crm_recognition : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ crm_charger_number : 8|32@1+ (1,0) [0|4294967295] "" Vector__XXX
+ SG_ crm_charger_location : 40|24@1+ (1,0) [0|16777215] "" Vector__XXX
+
+BO_ 1684 gbt_cem: 8 Vector__XXX
+ SG_ cem_bsd_timeout : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ cem_brm_timeout : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ cem_bcp_bro_Timeout : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ cem_bcl_bst_Timeout : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1682 gbt_bcl: 8 Vector__XXX
+ SG_ bcl_voltage_demand : 0|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ bcl_current_demand : 16|16@1+ (0.1,-40) [-40|6513.5] "" Vector__XXX
+ SG_ bcl_charging_mode : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1793 min_max_voltage_temp: 8 Vector__XXX
+ SG_ min_cell_temp_bms : 48|16@1+ (0.01,-100) [-50|150] "" Vector__XXX
+ SG_ max_cell_temp_bms : 32|16@1+ (0.01,-100) [-50|150] "" Vector__XXX
+ SG_ min_cell_voltage_bms : 16|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ max_cell_voltage_bms : 0|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+
+BO_ 1792 bms_current: 3 Vector__XXX
+ SG_ tp_alarm : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ bms_current_bms : 0|16@1+ (0.1,-600) [-800|800] "" Vector__XXX
+
+BO_ 2424406782 stecom_charger_mode_set: 8 Vector__XXX
+ SG_ dyna_out_accept_2 : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ dyna_out_accept : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 2424406654 stecom_slow_charger_readback: 8 Vector__XXX
+
+BO_ 2424406526 stecom_voltage_current_control: 8 Vector__XXX
+ SG_ dyna_out_2 : 48|16@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ stecom_signal_6 : 40|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ stecom_signal_5 : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ stecom_signal_4 : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ stecom_signal_3 : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ dyna_out_1 : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ stecom_signal_1 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1667 station_details: 8 Vector__XXX
+ SG_ bms_fw_version_exp : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ ci_hw_version : 48|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ ci_fw_version : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ ci_unique_id : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 1666 bms_hw_fw: 8 Vector__XXX
+ SG_ bms_hw_version_exp : 48|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ hardware_version_bms : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ adc_current_mcu : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ firmware_version_bms : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 1665 bms_unique_Key: 8 Vector__XXX
+ SG_ bms_unique_key : 0|64@1+ (1,0) [0|1.84467440737096E+019] "" Vector__XXX
+
+BO_ 1310 id1310: 8 Vector__XXX
+ SG_ bms_fault_2 : 48|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ bms_fault_1 : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ battery_capacity : 16|16@1+ (0.001,0) [0|65.535] "" Vector__XXX
+ SG_ used_energy : 0|16@1+ (0.001,0) [0|65.535] "" Vector__XXX
+
+BO_ 1305 id1305: 8 Vector__XXX
+ SG_ io_status : 48|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ odo_low : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ odo_high : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ vehicle_speed : 0|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+
+BO_ 1304 id1304: 8 Vector__XXX
+ SG_ brake_pedal_position : 16|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+ SG_ throttle_position : 0|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+
+BO_ 1302 id1302: 8 Vector__XXX
+ SG_ battery_current : 48|16@1+ (0.01,-300) [-300|355.55] "" Vector__XXX
+ SG_ battery_voltage : 32|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+ SG_ fault_code_1 : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ fault_code_2 : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 2418601984 amar_read_back_slow_charger: 8 Vector__XXX
+ SG_ on_off_slow_charger : 31|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 1632 debug_soc_slow_charger: 8 Vector__XXX
+ SG_ slow_charger_state_bms : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ soc_from_memory : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ soc_actual : 0|16@1+ (0.01,0) [0|150] "" Vector__XXX
+
+BO_ 1542 min_max_index: 8 Vector__XXX
+ SG_ max_temp_index : 48|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ min_temp_index : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ max_voltage_index : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ min_voltage_index : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 1543 history_of_protections: 8 Vector__XXX
+ SG_ sc_coc_bms_hist : 15|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ roc_bms_hist : 14|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ib_bms_hist : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ scf_bms_hist : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ tso_bms_hist : 12|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cso_bms_hist : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ dut_bms_hist : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cut_bms_hist : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ dot_bms_hist : 7|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cot_bms_hist : 6|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ doc_bms_hist : 5|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ coc_bms_hist : 4|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ puv_bms_hist : 3|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ pov_bms_hist : 2|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cuv_bms_hist : 1|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cov_bms_hist : 0|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2418409712 amar_slow_charger_control: 8 Vector__XXX
+ SG_ slow_charger_set_8_bms : 56|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ slow_charger_set_7_bms : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ slow_charger_set_6_bms : 40|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ slow_charger_Set_5_bms : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ slow_charger_set_4_bms : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ slow_charger_set_3_bms : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ slow_charger_set_2_bms : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ slow_charger_set_1_bms : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1664 battery_unique_key: 8 Vector__XXX
+ SG_ battery_unique_key : 0|64@1+ (1,0) [0|1.84467440737096E+019] "" Vector__XXX
+
+BO_ 1538 algos_status_bms: 8 Vector__XXX
+ SG_ soh_bms : 48|16@1+ (0.01,0) [0|150] "" Vector__XXX
+ SG_ cell_balancing_status_bms : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ sop_bms : 16|16@1+ (1,0) [0|250] "" Vector__XXX
+ SG_ soc_user : 0|16@1+ (0.01,0) [0|150] "" Vector__XXX
+
+BO_ 1537 safety_status_bms: 8 Vector__XXX
+ SG_ sc_coc_flag_bms : 47|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ sc_coc_bms : 15|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ roc_flag_bms : 46|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ roc_bms : 14|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ib_bms_flag : 43|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ib_bms : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ scf_flag_bms : 45|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ tso_flag_bms : 44|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ cso_flag_bms : 42|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ dut_flag_bms : 41|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ cut_flag_bms : 40|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ dot_flag_bms : 39|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ cot_flag_bms : 38|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ doc_flag_bms : 37|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ coc_flag_bms : 36|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ puv_flag_bms : 35|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ pov_flag_bms : 34|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ cuv_flag_bms : 33|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ cov_flag_bms : 32|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ scf_bms : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ tso_bms : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ cso_bms : 10|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ dut_bms : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ cut_bms : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ dot_bms : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ cot_bms : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ doc_bms : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ coc_bms : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ puv_bms : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ pov_bms : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ cuv_bms : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ cov_bms : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 1584 cell_voltage_1_4_bms: 8 Vector__XXX
+ SG_ cell_voltage_1 : 0|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ cell_voltage_2 : 16|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ cell_voltage_3 : 32|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ cell_voltage_4 : 48|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+
+BO_ 1585 cell_voltage_5_8_bms: 8 Vector__XXX
+ SG_ cell_voltage_5 : 0|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ cell_voltage_6 : 16|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ cell_voltage_7 : 32|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ cell_voltage_8 : 48|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+
+BO_ 1586 cell_voltage_9_12_bms: 8 Vector__XXX
+ SG_ cell_voltage_9 : 0|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ cell_voltage_10 : 16|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ cell_voltage_11 : 32|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ cell_voltage_12 : 48|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+
+BO_ 1587 cell_voltage_13_16_bms: 8 Vector__XXX
+ SG_ cell_voltage_13 : 0|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ cell_voltage_14 : 16|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ cell_voltage_15 : 32|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ cell_voltage_16 : 48|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+
+BO_ 1540 min_max_ib_pack_voltage_bms: 8 Vector__XXX
+ SG_ voltage_imbalance_bms : 48|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ min_cell_voltage_exp : 0|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ max_cell_voltage_exp : 16|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ pack_voltage_bms : 32|16@1+ (0.01,0) [0|65] "" Vector__XXX
+
+BO_ 1618 cell_temp_9_12_bms: 8 Vector__XXX
+ SG_ m4_ct3 : 48|16@1+ (0.01,-100) [-100|555.35] "C" Vector__XXX
+ SG_ m4_ct2 : 32|16@1+ (0.01,-100) [-100|555.35] "C" Vector__XXX
+ SG_ m4_ct1 : 16|16@1+ (0.01,-100) [-100|555.35] "C" Vector__XXX
+ SG_ m3_ct3 : 0|16@1+ (0.01,-100) [-100|555.35] "C" Vector__XXX
+
+BO_ 1619 cell_temp_13_16_bms: 8 Vector__XXX
+ SG_ busbar_temperature : 48|16@1+ (0.01,-100) [-100|555.35] "C" Vector__XXX
+ SG_ shunt_resistor_temperature : 32|16@1+ (0.01,-100) [-100|555.35] "C" Vector__XXX
+ SG_ discharge_contactor_temperature : 16|16@1+ (0.01,-100) [-100|555.35] "C" Vector__XXX
+ SG_ charge_contactor_temperature : 0|16@1+ (0.01,-100) [-100|555.35] "C" Vector__XXX
+
+BO_ 1616 cell_temp_1_4_bms: 8 Vector__XXX
+ SG_ m2_ct1 : 48|16@1+ (0.01,-100) [-100|555.35] "C" Vector__XXX
+ SG_ m1_ct3 : 32|16@1+ (0.01,-100) [-100|555.35] "C" Vector__XXX
+ SG_ m1_ct2 : 16|16@1+ (0.01,-100) [-100|555.35] "C" Vector__XXX
+ SG_ m1_ct1 : 0|16@1+ (0.01,-100) [-100|555.35] "C" Vector__XXX
+
+BO_ 1617 cell_temp_5_8_bms: 8 Vector__XXX
+ SG_ m3_ct2 : 48|16@1+ (0.01,-100) [-100|555.35] "C" Vector__XXX
+ SG_ m3_ct1 : 32|16@1+ (0.01,-100) [-100|555.35] "C" Vector__XXX
+ SG_ m2_ct3 : 16|16@1+ (0.01,-100) [-100|555.35] "C" Vector__XXX
+ SG_ m2_ct2 : 0|16@1+ (0.01,-100) [-100|555.35] "C" Vector__XXX
+
+BO_ 1541 min_max_ib_temp_bms: 8 Vector__XXX
+ SG_ temp_imbalance_bms : 32|16@1+ (0.01,-100) [-50|150] "" Vector__XXX
+ SG_ min_cell_temp_exp : 0|16@1+ (0.01,-100) [-50|150] "" Vector__XXX
+ SG_ max_cell_temp_exp : 16|16@1+ (0.01,-100) [-50|150] "" Vector__XXX
+
+BO_ 1539 current_ah_count_bms: 8 Vector__XXX
+ SG_ bms_current_exp : 0|16@1+ (0.1,-600) [-800|800] "" Vector__XXX
+ SG_ last_charge_ah_bms : 16|16@1+ (0.1,0) [0|250] "" Vector__XXX
+ SG_ last_discharge_ah_bms : 32|16@1+ (0.1,0) [0|250] "" Vector__XXX
+ SG_ charge_cycle_count_bms : 48|16@1+ (0.1,0) [0|5000] "" Vector__XXX
+
+BO_ 1536 sateflow_status_bms: 8 Vector__XXX
+ SG_ solenoid_feedback : 53|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ gun_unlock_status : 50|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ gun_unlock_failed : 51|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ gun_lock_status : 48|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ gun_lock_req : 52|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ gun_lock_failed : 49|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ cc_on_req : 39|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ shutdown_flag_3 : 26|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ shutdown_flag_2 : 25|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ shutdown_flag_1 : 24|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ charge_complete_status : 10|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ motor_enable_out_bms : 38|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ discharge_precharge_out_bms : 36|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ discharge_contactor_out_bms : 37|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ charge_precharge_out_bms : 34|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ charge_contactor_out_bms : 35|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ proximity_pilot_in_bms : 33|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ key_in_bms : 32|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ fast_charger_detected_bms : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ slow_charger_detected_bms : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ battery_state_bms : 16|8@1+ (1,0) [0|4] "" Vector__XXX
+ SG_ discharge_path_status_bms : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ charge_path_status_bms : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ discharge_pf_ok_bms : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ charge_pf_ok_bms : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ discharge_io_ok_bms : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ charge_io_ok_bms : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ discharge_protection_ok_bms : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ charge_protection_ok_bms : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+
+
+
+CM_ BO_ 3221225472 "This is a message for not used signals, created by Vector CANdb++ DBC OLE DB Provider.";
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "BusType" "";
+BA_ "BusType" "CAN";
+
+ 

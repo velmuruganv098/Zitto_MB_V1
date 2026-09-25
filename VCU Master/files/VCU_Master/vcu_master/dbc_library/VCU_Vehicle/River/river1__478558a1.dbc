@@ -1,0 +1,399 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: Front_BPS Rear_BPS Tester Charger TEL Display BMS VCU MotorController
+VAL_TABLE_ Tel_update 3 "failed" 2 "Compleated" 1 "in progress" 0 "NA" ;
+VAL_TABLE_ SOH_estimation_flag 7 "NA" 6 "NA" 5 "NA" 4 "NA" 3 "Both flag on" 2 "SOH estimation flag on" 1 "SOH reset trigger on" 0 "Default" ;
+VAL_TABLE_ Cell_Upnormal_Voltage 2 "UP_Normal_Min_Voltage_Fault" 1 "UP_Normal_Max_Voltage_Fault" 0 "NO_error" ;
+VAL_TABLE_ BMS_State 6 "BMS_Calibration" 5 "BMS_Critical_Fault" 4 "BMS_Charging_Fault" 3 "BMS_Discharging_Fault" 2 "BMS_Charging" 1 "BMS_Discharging" 0 "Idle" ;
+VAL_TABLE_ VCU_Trip_status 1 "Trip 2" 0 "Trip 1" ;
+VAL_TABLE_ Rare_BPS_Timeout 1 "Rare_BPS_Timeout" 0 "No error" ;
+VAL_TABLE_ Front_BPS_TimeOut 2 "reserved" 1 "Front_BPS_Timeout" 0 "No_error" ;
+VAL_TABLE_ VehicleModeStatus 6 "Traction disable" 5 "Linphome mode while traction" 4 "Charge" 3 "Traction" 2 "Idle" 1 "Authentication" 0 "Lock" ;
+VAL_TABLE_ BootStatus 1 "Boot_opean" 0 "Boot_locked" ;
+VAL_TABLE_ ECUErrorCode 326 "Cell Under Voltage Fault" 325 "Cell Over Voltage Fault" 322 "BrakeLamp_Fault" 318 "BMS_CANMSG_Timeout" 315 "Battery_Thermal_Runaway_Fault" 314 "BatteryDisSortCircuitFault" 312 "Charging_under_temp" 310 "Discharging_under_temp" 309 " Charging_over_current_fault" 308 "Discharging_over_current_fault" 307 "Charging_over_temp" 306 "Discharging_over_temp" 305 "DFET under temperature" 304 "DFET over temperature" 303 "CFET under temperature" 302 "CFET over temperature" 301 "Fuse_Fault" 203 "BMS_SCD" 142 "Throttle_2_Low_Voltage" 140 "Motor_Control_Error" 139 "Application_parameters_Fault" 137 "Kill_switch_SRO" 136 "Max_speed_exceeded" 135 "Controller_logic_supply_error" 134 "Throttle channel mismatch " 133 "Motor Stalled" 132 "Throttle SRO" 131 "Contactor_Coil_Overcurrent" 130 "Parameter_Limitation" 129 "Throttle_2_High_Voltage" 128 "High Motor Temperature" 127 "High Controller Temperature" 126 "Corrupted_Position_Sensor_Cal" 125 "Corrupted_Persis_Para" 124 "Corrupted_Comm_Parameters" 123 "Corrupted_Throttle_Calibration" 122 "Corrupted V&I Sensor Calibration" 121 "Motor_Temperature_Sensor" 120 "Controller_Temperature_Sensor" 119 "Motor over temperature" 118 "Controller over temperature" 117 "Charging_Of_Capacitors_Failed" 116 "Throttle 1 Low Voltage" 115 "Throttle 1 High Voltage" 114 "Encoder_Fault" 113 "Throttle_Pedal_Cal_Error" 112 "Corrupted_Application_Parameters" 111 "Contactor_Welded" 110 "Contactor_Bridge_Fault" 109 "Over_Current" 108 "Current_Sensor_Fault" 107 "Sensor_Calibration_Error_V&I" 106 "12V_Failure" 105 "5V_Failure" 104 "Under_Voltage" 103 "Over_Voltage" 102 "Low_Battery_Voltage" 101 "High_Battery_Voltage" ;
+VAL_TABLE_ SolenoidFeedbackStatus 1 "solenoid latched" 0 "solenoid unlatched" ;
+VAL_TABLE_ RegenFlag 1 "Enable" 0 "Disable" ;
+VAL_TABLE_ CalibrationDataSetNumber 4 "Cell 13,14 data" 3 "Cell 10,11,12 data" 2 "Cell 7,8,9 data" 1 "Cell 4,5,6 data" 0 "Cell 1,2,3 data" ;
+VAL_TABLE_ CalibrationDescription 171 "Current Mode" 170 "Voltage Mode  " 34 "Current Calibration Third Point" 33 "Voltage Calibration Third Point" 18 "Current Calibration Second Point" 17 "Voltage Calibration Second Point" 2 "Current Calibration First Point" 1 "Voltage Calibration First Point" ;
+VAL_TABLE_ CalibrationAckStatus 171 "Current Mode" 170 "Voltage Mode" 17 "Second Voltage point read" 3 "FinalCurrentPointReadCalibrated" 2 "Current point read" 1 "First Voltage point read" ;
+VAL_TABLE_ AFESrecWriteStatus 1 "afe_srec written" 0 "afe_srec_not_written" ;
+VAL_TABLE_ AFEDataFlashMemoryWriteFaultCode 7 " FAULT_BIT_READ_SBS_CONFIG" 6 "FAULT_BIT_READ_CALIBRATION" 5 "FAULT_BIT_READ_POWER" 4 "FAULT_BIT_READ_FUEL_GAUGING" 3 " FAULT_BIT_READ_ADV_CHRG_ALGO" 2 "FAULT_BIT_READ_PERM_FAIL" 1 "FAULT_BIT_READ_SETTINGS" 0 "FAULT_BIT_READ_PROTECTION" ;
+VAL_TABLE_ I2c_Status 517 "STATUS_I2C_BUS_BUSY" 516 "STATUS_I2C_ABORTED" 515 "STATUS_I2C_ARBITRATION_LOST " 514 "STATUS_I2C_RX_OVERRUN " 513 "STATUS_I2C_TX_UNDERRUN" 512 "STATUS_I2C_RECEIVED_NACK " ;
+VAL_TABLE_ SystemDiagInitFaultCode 30 "FaultBitReadAFEHistoryFaultData" 29 "FAULTBIT_READ_AFE_LIFE_TIME_DATA" 28 "FAULT_BIT_INT_FLASH_WRITE_FAILED" 27 "FAULT_BIT_INT_FLASH_READ_FAILED" 26 "AULT_BIT_ADC_READ" 25 "FAULT_BIT_AFE_READ " 24 "FAULT_BIT_POST_OS_INIT_FAILED" 23 "FAULT_BIT_OS_CREATE_INTRPTS" 22 "FAULT_BIT_OS_CREATE_TASK" 21 "FAULT_BIT_OS_CREATE_QUEUE" 20 "FAULT_BIT_OS_CREATE_SEMPR" 19 "FAULT_BIT_CAN_TX" 18 "FAULT_BIT_INTERNAL_FLASH_INIT" 17 "FAULT_BIT_I2C_CRC_ERROR" 16 "FAULT_BIT_I2C_RX_ERROR" 15 "FAULT_BIT_I2C_TX_ERROR" 14 "FAULT_BIT_I2C_INIT" 13 "FAULT_BIT_ADC_INIT" 12 "FAULT_BIT_TIMER_FTM1" 11 "FAULT_BIT_TIMER_FTM0" 10 "FAULT_BIT_CAN_INIT_1" 9 "FAULT_BIT_GPIO_INIT" 8 "FAULT_BIT_CLOCK_UPDATE" 7 "FAULT_BIT_BOOT_CLOCK_INIT" 6 "FAULT_BIT_RESET_SOFT" 5 "FAULT_BIT_RESET_NRST_EXT" 4 "FAULT_BIT_RESET_ACK_ERR" 3 "FAULT_BIT_RESET_LV_DETECT" 2 "FAULT_BIT_RESET_SJTAG" 1 "FAULT_BIT_RESET_POWER_ON" 0 "FAULT_BIT_RESET_WDG" ;
+VAL_TABLE_ BatteryAFETempWarning 4 "CHARGING_UNDER_TEMP_FAULT" 3 "DISCHARGING_UNDER_TEMPE_FAULT" 2 "CHARGING_OVER_TEMP_FAULT" 1 "DISCHARGING_OVER_TEMPE_FAULT" 0 "NO_TEMP_FAULT" ;
+VAL_TABLE_ BatteryMDFETTempWarning 2 "FET_UNDER_TEMP" 1 "FET_OVER_TEMP" 0 "NO_FET_TEMP_FAULT" ;
+VAL_TABLE_ BatteryCellVoltageWarning 2 "UNDER_VOLTAGE_FAULT" 1 "OVER_VOLTAGE_FAULT" 0 "NO_VOLTAGE_FAULT" ;
+VAL_TABLE_ BatteryCFETTempWarning 2 "CHARG_UNDER_TEMP_FAULT" 1 "CHARG_OVER_TEMP_FAULT" 0 "NO_CHG_TEMP_FAULT" ;
+VAL_TABLE_ BatteryTempWarning 4 "CHARGING_UNDER_TEMP_FAULT" 3 "DISCHARGING_UNDER_TEMPE_FAULT" 2 "CHARGING_OVER_TEMP_FAULT" 1 "DISCHARGING_OVER_TEMPE_FAULT" 0 "NO_TEMP_FAULT" ;
+VAL_TABLE_ BatteryCurrentWarning 3 "RESERVED" 2 " CHARGING_OVER_CURRENT_FAULT" 1 "DISCHARGING_OVER_CURRENT_FAULT" 0 "NO_CURRENT_FAULT" ;
+VAL_TABLE_ ParkArrowBlink 3 "Top and Bottom Arrow Blink" 2 "Top Arrow Blink" 1 "Bottom Arrow Blink" 0 "No Blink" ;
+VAL_TABLE_ On_Off 1 "ON" 0 "OFF" ;
+VAL_TABLE_ Charger_TX 1 "Disable" 0 "Enable" ;
+VAL_TABLE_ LED_Color 3 "Reserved" 2 "Green" 1 "Red" 0 "Disable" ;
+VAL_TABLE_ BatteryChargingTempFault 4 "Reserved" 3 "Reserved" 2 "Charging Under Temperature" 1 "Charging Over Temperature" 0 "No Fault" ;
+VAL_TABLE_ BatteryFull 1 "Battery Full" 0 "Default" ;
+VAL_TABLE_ Latch 1 "Latch" 0 "Default" ;
+VAL_TABLE_ DFET_Status 1 "DFET On" 0 "DFET Off" ;
+VAL_TABLE_ Gauge_TemperatureFault 3 "Reserved" 2 "Gauge UT Fault" 1 "Gauge OT Fault" 0 "Gauge Temperature Normal" ;
+VAL_TABLE_ Auth_Fault 1 "Auth Fault" 0 "No Auth Fault" ;
+VAL_TABLE_ SpeedMode 3 "Rush" 2 "Sport" 1 "Ride" 0 "Default" ;
+VAL_TABLE_ Fuse 1 "Fuse Blown" 0 "Normal" ;
+VAL_TABLE_ Reset_Display 7 "Reserved" 6 "Reserved" 5 "Reserved" 4 "Reserved" 3 "Clear Service Icon" 2 "Reset Trip 2" 1 "Reset Trip1" 0 "Default" ;
+VAL_TABLE_ CFET_Status 1 "CFET On" 0 "CFET Off" ;
+VAL_TABLE_ Charger_Enable 1 "Disable" 0 "Enable" ;
+VAL_TABLE_ DrivenMode 7 "Reserved" 6 "Reserved" 5 "Reserved" 4 "Reserved" 3 "Reserved" 2 "Rush" 1 "Sport" 0 "Ride" ;
+VAL_TABLE_ Park_Mode_Direction 1 "Forward" 0 "Reverse" ;
+VAL_TABLE_ Park_Mode_Enable 1 "Park Enabled" 0 "Park Disabled" ;
+VAL_TABLE_ DriveMode_Req 7 "Reserved" 6 "Reserved" 5 "Reserved" 4 "Reserved" 3 "Limphome" 2 "Park Reverse" 1 "Foward" 0 "Default" ;
+VAL_TABLE_ Version_Req 1 "Update Version" 0 "Default" ;
+VAL_TABLE_ VehicleMode 9 "Reserved" 8 "Reserved" 7 "Reserved" 6 "Hibernation" 5 "Cloud Update Mode" 4 "Charging" 3 "Reverse" 2 "Forward" 1 "Idle" 0 "Sleep/Lock" ;
+VAL_TABLE_ FET_Fault 3 "Reserved" 2 "Reserved" 1 "Over Temperature " 0 "No Fault" ;
+VAL_TABLE_ Precharging_Status 3 "Precharging Failed" 2 "Precharging Successful" 1 "Precharging In-progress" 0 "Default" ;
+VAL_TABLE_ Drive_Manoeuvre 4 "Acceleration Backward" 3 "Direction Transition" 2 "Service Braking " 1 "Neutral braking" 0 "Accelartion Forward  " ;
+VAL_TABLE_ Motor_ErrorCodes 94 "Kill switch Off" 93 "Kill switch SRO" 83 "Motor stalled " 82 "Throttle SRO" 52 "High motor temperature " 51 "High controller temperature " 97 "Motor control error " 96 "Application parameters fault" 92 "Max. speed exceeded " 90 "Controller logicsupply error " 85 "Throttle channel mismatch " 66 "Contactor coil overcurrent" 56 "Parameter limitation" 54 "Throttle 1 Low Voltage" 53 "Throttle 2 High Voltage" 49 "Corrupted positionsensor cal" 48 "Corrupted Persis Para" 47 "Corrupted Comm parameters 
+" 46 "Corrupted throttle calibration" 45 "Corrupted V&I sensor calibration" 44 "Motor temperature sensor" 43 "Controller temperature sensor" 42 "Motor over temperature" 36 "Charging of capacitors failed " 34 "Throttle 1 Low Voltage" 32 "Encoder Fault" 41 "Controller over temperature" 33 "Throttle 1 High Voltage" 31 "Throttle Pedal Cal Error" 26 "Corrupted Application Parameters" 25 "Contactor  Welded" 24 "Contactor Bridge Fault" 21 "Over Current" 18 "Current Sensor Fault" 17 "Sensor Calibration Error V&I" 16 "12V Failure" 15 "5V Failure" 14 "Under Voltage V<32" 13 "Over Voltage V>62" 12 "Low Battery Voltage V<28" 11 "High Battery Voltage V>100" ;
+VAL_TABLE_ Am_Pm 1 "pm" 0 "am" ;
+VAL_TABLE_ Blink 1 "Blinking" 0 "No Blinking" ;
+VAL_TABLE_ Trip 1 "Trip 2" 0 "Trip 1" ;
+VAL_TABLE_ Enable_Disable 1 "Enabled" 0 "Disabled" ;
+VAL_TABLE_ Direction 3 "Reserved" 2 "Reverse" 1 "Forward" 0 "Neutral" ;
+VAL_TABLE_ KillSwitch 1 "Kill Switch Off" 0 "Kill Switch On" ;
+VAL_TABLE_ PowerStage 3 "Not Used" 2 "On" 1 "Active Short" 0 "Off" ;
+VAL_TABLE_ MotorMode 7 "Reserved" 6 "Reserved" 5 "Reserved" 4 "Reserved" 3 "Rush" 2 "Ride" 1 "Eco" 0 "Reserved" ;
+VAL_TABLE_ BrakeStatus 1 "Pressed" 0 "Not Pressed" ;
+VAL_TABLE_ SideStandStatus 1 "Up" 0 "Down" ;
+VAL_TABLE_ ServiceIndication 1 "Enable" 0 "Disable" ;
+VAL_TABLE_ ChargePlugStatus 1 "Connected" 0 "Not Connected" ;
+VAL_TABLE_ RegenStatus 1 "Enabled" 0 "Disabled" ;
+VAL_TABLE_ VCU_DisplayMode 9 "Reserved" 8 "Reserved" 7 "Reserved" 6 "Factory Mode" 5 "Charging" 4 "Park Forward" 3 "Park Reverse" 2 "Forward" 1 "Idle" 0 "Sleep" ;
+VAL_TABLE_ Green_Red 3 "Green&Red" 2 "Red" 1 "Green" 0 "Default" ;
+VAL_TABLE_ CurrentFaults 3 "Reserved" 2 "Charging Over Current Fault" 1 "Discharging Over Current Fault" 0 "No Fault" ;
+VAL_TABLE_ VoltageFaults 3 "Reserved " 2 "Under Voltage Fault" 1 "Over Voltage Fault" 0 "No Fault" ;
+VAL_TABLE_ BatteryDischargingTempFault 4 "Reserved" 3 "Reserved" 2 "Discharging Under Temperature" 1 "Discharging Over Temperature" 0 "No Fault" ;
+VAL_TABLE_ Fault 1 "Fault" 0 "No Fault" ;
+VAL_TABLE_ Authentication 3 "Fail" 2 "Pass" 1 "InProgress" 0 "Default" ;
+VAL_TABLE_ BalancingStatus 1 "Balancing" 0 "Not Balancing" ;
+VAL_TABLE_ BMS_Status 10 "Reserved" 9 "Reserved" 8 "Reserved" 7 "Charge Recovery Fault" 6 "Discharge Recovery Fault" 5 "Critical Fault" 4 "Hibernate" 3 "Charging" 2 "Discharging" 1 "Precharging" 0 "Sleep" ;
+VAL_TABLE_ charger_status_msg 1 "Error" 0 "Normal" ;
+VAL_TABLE_ SECURITY_Mode_OP_sts 3 "Sealed" 2 "Unsealed" 1 "Full_Access" 0 "Reserved" ;
+VAL_TABLE_ Error_Code_BT_Sts 7 "Unknown_Error" 6 "Bad_Size" 5 "Overflow/UnderFlow" 4 "AccessDenied" 3 "unsupported_Command" 2 "Reserved_Command" 1 "Busy" 0 "OK" ;
+
+
+BO_ 311 TEL_Data_3: 8 VCU
+ SG_ BMS_KalmanFilter_SOC_TEL_data : 49|10@1+ (0.1,0) [0|102.3] "%"  TEL
+ SG_ VCU_MTDischargeCurLim_TELData : 44|5@1+ (5,0) [0|155] "A"  TEL
+ SG_ BMS_Dereted_Charge_Tel_Data : 39|5@1+ (5,0) [0|155] "A"  TEL
+ SG_ BMS_DeratedDischarge_Tel_Data : 26|5@1+ (5,0) [0|155] "A"  TEL
+ SG_ MCU_MotorTemp_TEL_Data : 31|8@1+ (1,-40) [-40|215] ""  TEL
+ SG_ VCU_VehicleModeStatus_TEL_data : 23|3@1+ (1,0) [0|7] ""  TEL
+ SG_ VCU_Predicted_Temp_Cell_TEL : 18|5@1+ (3,0) [0|93] ""  TEL
+ SG_ VCU_MTPredictedMotorTemp_TEL : 12|6@1+ (3,0) [0|189] ""  TEL
+ SG_ VCU_MT_EstimetedAmbientTemp_TEL : 7|5@1+ (2,0) [0|62] ""  TEL
+ SG_ VCU_EstimetedMass_TEL_Data : 0|7@1+ (5,100) [100|735] ""  TEL
+
+BO_ 1280 BMS_Precharge_Permanent_Short: 8 BMS
+ SG_ PreCharge_SC_Counter : 32|32@1+ (1,0) [0|4294967295] ""  VCU
+ SG_ PreCharge_SC_Second : 26|6@1+ (1,0) [0|63] ""  VCU
+ SG_ PreCharge_SC_Minute : 20|6@1+ (1,0) [0|63] ""  VCU
+ SG_ PreCharge_SC_Hour : 15|5@1+ (1,0) [0|31] ""  VCU
+ SG_ PreCharge_SC_Date : 10|5@1+ (1,0) [0|31] ""  VCU
+ SG_ PreCharge_SC_Month : 6|4@1+ (1,0) [0|15] ""  VCU
+ SG_ Precharge_SC_Year : 0|6@1+ (1,0) [0|63] ""  VCU
+
+BO_ 1296 VCU_MCU_RESET: 6 VCU
+ SG_ VCU_MCU_Program_Counter : 16|32@1+ (1,0) [0|255] ""  TEL
+ SG_ VCU_MCU_Fault_Type : 8|8@1+ (1,0) [0|255] ""  TEL
+ SG_ VCU_MCU_Reset_Type : 0|8@1+ (1,0) [0|255] ""  TEL
+
+BO_ 1288 BMS_MCU_RESET: 8 BMS
+ SG_ Precharge_Perm_Fail_Counter : 56|8@1+ (1,0) [-128|127] "" Vector__XXX
+ SG_ EKF_SOH : 40|16@1+ (1,0) [0|65535] ""  Tester
+ SG_ MCU_Program_Counter : 8|32@1+ (1,0) [0|4294967295] ""  Tester
+ SG_ MCU_Reset_Flag : 0|8@1+ (1,0) [0|255] ""  Tester
+
+BO_ 88 BMS_ShortcircuitFault: 8 BMS
+ SG_ SC_Counter : 32|32@1+ (1,0) [0|4294967295] ""  TEL
+ SG_ SC_Date : 10|5@1+ (1,0) [0|31] ""  TEL
+ SG_ SC_Month : 6|4@1+ (1,0) [0|15] ""  TEL
+ SG_ SC_Year : 0|6@1+ (1,0) [0|63] ""  TEL
+ SG_ SC_Second : 26|6@1+ (1,0) [0|63] ""  TEL
+ SG_ SC_Minute : 20|6@1+ (1,0) [0|63] ""  TEL
+ SG_ SC_Hour : 15|5@1+ (1,0) [0|31] ""  TEL
+
+BO_ 98 BatteryLimits: 8 BMS
+ SG_ MaxVoltage : 24|16@1+ (0.001,0) [0|65.535] ""  TEL,VCU
+ SG_ ChargingLimit : 11|7@1+ (1,0) [0|127] ""  TEL,VCU
+ SG_ Discharge_Limit_bms : 0|11@1+ (1,0) [0|2047] ""  TEL,VCU
+
+BO_ 86 BMS_VoltageSensing: 8 BMS
+ SG_ BMS_DCDC_InputCurrent : 48|8@1+ (0.01,0) [0|2.55] "A"  TEL
+ SG_ BMS_ChargerVoltSensing : 32|16@1+ (0.001,0) [0|65.535] "V"  TEL
+ SG_ Fuse_Out : 16|16@1+ (0.001,0) [0|65.535] "V"  TEL
+ SG_ MDFET_Out : 0|16@1+ (0.001,0) [0|65.535] "V"  TEL
+
+BO_ 1057 Battery_ChargeData: 8 BMS
+ SG_ ChargeAh : 40|24@1+ (0.1,0) [0|1677721.5] "Ah"  TEL
+ SG_ Charge_KWh : 16|24@1+ (0.1,0) [0|1677721.5] "Kwh"  TEL
+ SG_ ChargingCounter : 0|16@1+ (1,0) [0|65535] ""  TEL
+
+BO_ 1557 Mode_Odo: 8 VCU
+ SG_ Eco_Odo : 42|21@1+ (0.1,0) [0|209715.1] "Km"  TEL
+ SG_ Rush_Odo : 21|21@1+ (0.1,0) [0|209715.1] "Km"  TEL
+ SG_ Ride_Odo : 0|21@1+ (0.1,0) [0|209715.1] "Km"  TEL
+
+BO_ 85 BatteryCapacityData: 8 BMS
+ SG_ RemainingCapacity_Wh : 24|16@1+ (0.001,0) [0|6.5535] "Wh"  TEL,VCU
+ SG_ RemainingCapacity_Ah : 0|24@1+ (0.01,0) [0|167772.15] "Ah"  TEL,VCU
+
+BO_ 1555 VCU_Display_Info3: 8 VCU
+ SG_ Ride_Range : 52|7@1+ (1,0) [0|127] "" Vector__XXX
+ SG_ Selected_Trip_Status : 51|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ParkArrowBlink : 49|2@1+ (1,0) [0|3] ""  Display
+ SG_ ParkBlink : 16|1@1+ (1,0) [0|1] ""  Display
+ SG_ Trip2_Blink : 47|1@1+ (1,0) [0|1] ""  TEL,Display
+ SG_ Trip1_Blink : 48|1@1+ (1,0) [0|1] ""  TEL,Display
+ SG_ Odo_Reset : 23|1@1+ (1,0) [0|1] ""  TEL,Display
+ SG_ Service_Blink : 22|1@1+ (1,0) [0|1] ""  TEL,Display
+ SG_ PowerBar : 27|20@1+ (1,0) [0|1048575] ""  TEL,Display
+ SG_ Reset : 24|3@1+ (1,0) [0|7] ""  Display,TEL
+ SG_ Hibernation : 19|2@1+ (1,0) [0|3] ""  TEL,Display
+ SG_ SpeedMode : 17|2@1+ (1,0) [0|0] ""  TEL,Display
+ SG_ Am_Pm : 7|1@1+ (1,0) [0|1] ""  TEL,Display
+ SG_ Time_Minutes : 8|8@1+ (1,0) [0|255] ""  TEL,Display
+ SG_ Time_Hours : 3|4@1+ (1,0) [0|15] ""  TEL,Display
+ SG_ Mode_Blink : 2|1@1+ (1,0) [0|1] ""  TEL,Display
+ SG_ SOC_Blink : 1|1@1+ (1,0) [0|1] ""  TEL,Display
+ SG_ Speed_Blink : 0|1@1+ (1,0) [0|1] ""  TEL,Display
+
+BO_ 336 VCU_Avg_Data: 8 VCU
+ SG_ Rush_Range : 56|7@1+ (1,0) [0|127] "" Vector__XXX
+ SG_ AvgThrottle : 48|8@1+ (1,0) [0|255] ""  TEL
+ SG_ AvgPower : 32|16@1+ (1,0) [0|65535] "Watt"  TEL
+ SG_ AvgCurrent : 16|16@1+ (0.01,0) [0|655.35] "A"  TEL
+ SG_ AvgSpeed : 0|16@1+ (0.01,0) [0|655.35] "Kmph"  TEL
+
+BO_ 1061 Battery_DischargeData: 8 BMS
+ SG_ Discharge_KWh : 24|24@1+ (0.1,0) [0|1677721.5] "Kwh"  TEL
+ SG_ DischargeAh : 0|24@1+ (0.1,0) [0|1677721.5] "Ah"  TEL
+
+BO_ 1045 Battery_Max_Min: 8 BMS
+ SG_ min_cell_temp_no : 44|4@1+ (1,0) [0|15] ""  TEL
+ SG_ min_cell_temperature : 56|8@1- (1,0) [-128|127] ""  TEL
+ SG_ max_cell_temperature_no : 40|4@1+ (1,0) [0|15] ""  TEL
+ SG_ max_cell_temperature : 48|8@1- (1,0) [-128|127] ""  TEL
+ SG_ max_cell_voltage : 24|16@1+ (0.001,0) [0|0] ""  TEL
+ SG_ max_cell_voltage_number : 4|4@1+ (1,0) [0|15] ""  TEL
+ SG_ min_cell_voltage : 8|16@1+ (0.001,0) [0|0] ""  TEL
+ SG_ min_cell_voltage_number : 0|4@1+ (1,0) [0|15] ""  TEL
+
+BO_ 1051 VCU_REQUEST_CHG_CUR_VOL: 7 VCU
+ SG_ Charger_Disable : 48|8@1+ (1,0) [0|0] ""  TEL,Charger
+ SG_ TimetoCharge : 32|16@1+ (1,0) [0|0] "min"  TEL
+ SG_ Charging_Voltage_Limit : 16|16@1+ (0.01,0) [0|0] ""  TEL,Charger
+ SG_ Charging_Current_Limit : 0|16@1+ (0.1,0) [0|65535] ""  TEL,Charger
+
+BO_ 1056 Charger_Status: 8 Charger
+ SG_ Charger_Type : 40|8@1+ (1,0) [0|0] ""  TEL
+ SG_ StatusofChargerCOMError : 36|1@1+ (1,0) [0|0] ""  TEL,BMS,VCU
+ SG_ StatusofChargerBatError : 35|1@1+ (1,0) [0|0] ""  TEL,BMS,VCU
+ SG_ StatusofChargerInput_Error : 34|1@1+ (1,0) [0|0] ""  TEL,BMS,VCU
+ SG_ StatusofChargerTempError : 33|1@1+ (1,0) [0|0] ""  TEL,BMS,VCU
+ SG_ StatusChargerHWError : 32|1@1+ (1,0) [0|0] ""  TEL,BMS,VCU
+ SG_ charger_output_voltage : 16|16@1+ (0.01,0) [0|0] ""  TEL,BMS,VCU
+ SG_ Output_Current : 0|16@1+ (0.1,0) [0|0] ""  TEL,BMS,VCU
+
+BO_ 1553 VCU_Display_Info1: 8 VCU
+ SG_ Trip2 : 16|14@1+ (0.1,0) [0|1638.3] "Km"  Display
+ SG_ Display_Range : 56|8@1+ (1,0) [0|255] ""  TEL,Display
+ SG_ Total_Odo : 32|24@1+ (0.1,0) [0|1677721.5] "Km"  TEL,Display
+ SG_ Vehicle_Speed : 0|16@1+ (0.01,0) [0|655.35] "kph"  TEL,Display
+
+BO_ 1034 Battery_FET_Temp: 8 BMS
+ SG_ MDFET_Temperature : 32|16@1- (0.01,0) [-327.68|327.67] "" Vector__XXX
+ SG_ Gauge_Temp : 0|16@1- (0.01,0) [-327.68|327.67] "°C"  TEL
+ SG_ CFET_Temperature : 16|16@1- (0.01,0) [-327.68|327.67] "°C"  TEL
+
+BO_ 1164 Motor_Status_4: 8 MotorController
+ SG_ SM_Trac_Dir : 58|3@1+ (1,0) [0|3] ""  TEL
+ SG_ SM_Trac : 55|3@1+ (1,0) [0|7] ""  TEL
+ SG_ SM_Pow_Sub : 51|4@1+ (1,0) [0|9] ""  TEL
+ SG_ SM_Pow : 48|3@1+ (1,0) [0|3] ""  TEL
+ SG_ Torque_Act : 37|11@1- (0.1,0) [-102.4|102.3] "Nm"  TEL
+ SG_ Torque_Ref : 26|11@1- (0.1,0) [-102.4|102.3] "Nm"  TEL
+ SG_ Throttle_Volt_2 : 13|13@1+ (1,0) [0|5500] "mV"  TEL,Tester
+ SG_ Throttle_Volt_1 : 0|13@1+ (1,0) [0|5500] "mV"  TEL,Tester
+
+BO_ 908 Motor_Status_3: 8 MotorController
+ SG_ Error_Actions : 40|16@1+ (1,0) [0|255] ""  TEL
+ SG_ Error_Code_4 : 32|8@1+ (1,0) [0|255] ""  TEL
+ SG_ Error_Code_3 : 24|8@1+ (1,0) [0|255] ""  TEL
+ SG_ Error_Code_2 : 16|8@1+ (1,0) [0|255] ""  TEL
+ SG_ Error_Code_1 : 8|8@1+ (1,0) [0|255] ""  TEL
+ SG_ Error_Code_0 : 0|8@1+ (1,0) [0|255] ""  VCU,TEL
+
+
+
+CM_ SG_ 1296 VCU_MCU_Program_Counter "if a watchdog reset, then which program counter caused this issue";
+CM_ SG_ 1296 VCU_MCU_Fault_Type "denotes the type of program fault in vcu";
+CM_ SG_ 1296 VCU_MCU_Reset_Type "denotes the reset type of the vcu	";
+CM_ BO_ 88 "ShortCircuit Microcontroller History Data";
+CM_ SG_ 88 SC_Counter "SC Counter";
+CM_ SG_ 88 SC_Date "Short Circuit Month";
+CM_ SG_ 88 SC_Month "Short Circuit Month";
+CM_ SG_ 88 SC_Year "Short Circuit Year";
+CM_ SG_ 88 SC_Second "Short Circuit Second";
+CM_ SG_ 88 SC_Minute "Short Circuit Minute";
+CM_ SG_ 88 SC_Hour "Short Circuit Fault Hour";
+CM_ SG_ 98 Discharge_Limit_bms "Maximum discharging battery current.
+Relevant if parameter Battery Control is set to Closed loop battery current control with limits transmitted over CAN";
+CM_ SG_ 1057 ChargeAh "Ah Discharged by the battery in Lifetime";
+CM_ SG_ 1057 Charge_KWh "Wh Discharged by the Battery in Lifetime";
+CM_ SG_ 1057 ChargingCounter "When Battery is connected for charging and continuously charged for x-hours, counter to be incremented.";
+CM_ BO_ 1557 "Kms Driven in Ride Mode";
+CM_ SG_ 1557 Eco_Odo "Kms driven in Sport Mode";
+CM_ SG_ 1557 Rush_Odo "Kms driven in Ride Mode";
+CM_ SG_ 1557 Ride_Odo "Kms driven in Ride Mode";
+CM_ SG_ 1555 ParkArrowBlink "For Enabling the Park Arrows Blinking ";
+CM_ SG_ 1555 ParkBlink "Park Blink Enable CAN signal";
+CM_ BO_ 1061 "Battery Life Time Discharge Data";
+CM_ SG_ 1061 Discharge_KWh "Wh Discharged by the Battery in Lifetime";
+CM_ SG_ 1061 DischargeAh "Ah Discharged by the battery in Lifetime";
+CM_ SG_ 1056 Charger_Type "AA for Public Charger
+
+00 for Private Charger";
+CM_ SG_ 1553 Display_Range "Conservative Range Value for Display";
+CM_ SG_ 1034 CFET_Temperature "CFET Temperature";
+CM_ SG_ 1164 SM_Trac_Dir "State Machine Handling the direction of travel";
+CM_ SG_ 1164 SM_Trac "Traction State Machine
+";
+CM_ SG_ 1164 SM_Pow_Sub "Sub-State Machine for the power stage";
+CM_ SG_ 1164 SM_Pow "State machine for power stage";
+CM_ SG_ 1164 Torque_Act "Actual motor torque";
+CM_ SG_ 1164 Torque_Ref "Reference torque for motor control";
+CM_ SG_ 1164 Throttle_Volt_2 "Second Throttle Output
+";
+CM_ SG_ 1164 Throttle_Volt_1 "First Throttle Output";
+CM_ SG_ 908 Error_Code_4 "Actions which are being performed due to active error codes.";
+CM_ SG_ 908 Error_Code_3 "An active error code";
+CM_ SG_ 908 Error_Code_2 "An active error code";
+CM_ SG_ 908 Error_Code_1 "An active error code";
+CM_ SG_ 908 Error_Code_0 "An active error code";
+BA_DEF_ SG_  "SPN" INT 0 524287;
+BA_DEF_ SG_  "SigType" ENUM  "Default","Range","RangeSigned","ASCII","Discrete","Control","ReferencePGN","DTC","StringDelimiter","StringLength","StringLengthControl","MessageCounter","MessageChecksum";
+BA_DEF_ BO_  "GenMsgRequestable" INT 0 1;
+BA_DEF_ BO_  "TpJ1939VarDlc" ENUM  "No","Yes";
+BA_DEF_ BO_  "GenMsgSendType" ENUM  "Fixed Periodic","Event","Event Periodic";
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 1000000;
+BA_DEF_ BU_  "UDSResponseID" HEX 0 2047;
+BA_DEF_ BU_  "UDSRequestID" HEX 0 2047;
+BA_DEF_ BU_  "UDSEnabled" STRING ;
+BA_DEF_ BU_  "NmNode" ENUM  "No","Yes";
+BA_DEF_ BU_  "NodeLayerModules" STRING ;
+BA_DEF_ BU_  "ECU" STRING ;
+BA_DEF_  "ProtocolType" STRING ;
+BA_DEF_  "DBName" STRING ;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "SPN" 0;
+BA_DEF_DEF_  "SigType" "Default";
+BA_DEF_DEF_  "GenMsgRequestable" 1;
+BA_DEF_DEF_  "TpJ1939VarDlc" "No";
+BA_DEF_DEF_  "GenMsgSendType" "Fixed Periodic";
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_DEF_DEF_  "UDSResponseID" 0;
+BA_DEF_DEF_  "UDSRequestID" 0;
+BA_DEF_DEF_  "UDSEnabled" "NO";
+BA_DEF_DEF_  "NmNode" "No";
+BA_DEF_DEF_  "NodeLayerModules" "";
+BA_DEF_DEF_  "ECU" "";
+BA_DEF_DEF_  "ProtocolType" "CAN Standard";
+BA_DEF_DEF_  "DBName" "";
+BA_DEF_DEF_  "BusType" "CAN";
+BA_ "BusType" "CAN";
+BA_ "DBName" "RX1_VehicleDBC";
+BA_ "GenMsgCycleTime" BO_ 311 15000;
+BA_ "GenMsgCycleTime" BO_ 1280 1000;
+BA_ "GenMsgCycleTime" BO_ 1296 1000;
+BA_ "GenMsgCycleTime" BO_ 1288 1000;
+BA_ "GenMsgCycleTime" BO_ 88 1000;
+BA_ "GenMsgRequestable" BO_ 88 1;
+BA_ "GenMsgCycleTime" BO_ 98 50;
+BA_ "GenMsgCycleTime" BO_ 86 1000;
+BA_ "GenMsgCycleTime" BO_ 1057 1000;
+BA_ "GenMsgCycleTime" BO_ 1557 1000;
+BA_ "GenMsgCycleTime" BO_ 85 1000;
+BA_ "GenMsgCycleTime" BO_ 1555 100;
+BA_ "GenMsgCycleTime" BO_ 336 200;
+BA_ "GenMsgCycleTime" BO_ 1061 10000;
+BA_ "GenMsgCycleTime" BO_ 1045 250;
+BA_ "GenMsgCycleTime" BO_ 1051 200;
+BA_ "GenMsgCycleTime" BO_ 1056 1000;
+BA_ "GenMsgCycleTime" BO_ 1553 100;
+BA_ "GenMsgCycleTime" BO_ 1034 1000;
+BA_ "GenMsgCycleTime" BO_ 1164 10;
+BA_ "GenMsgCycleTime" BO_ 908 10;
+VAL_ 311 VCU_VehicleModeStatus_TEL_data 6 "Traction disable" 5 "Linphome mode while traction" 4 "Charge" 3 "Traction" 2 "Idle" 1 "Authentication" 0 "Lock" ;
+VAL_ 1555 Selected_Trip_Status 1 "Trip 2" 0 "Trip 1" ;
+VAL_ 1555 ParkArrowBlink 3 "Top and Bottom Arrow Blink" 2 "Top Arrow Blink" 1 "Bottom Arrow Blink" 0 "No Blink" ;
+VAL_ 1555 ParkBlink 1 "Blinking" 0 "No Blinking" ;
+VAL_ 1555 Trip2_Blink 1 "Blinking" 0 "No Blinking" ;
+VAL_ 1555 Trip1_Blink 1 "Blinking" 0 "No Blinking" ;
+VAL_ 1555 Odo_Reset 1 "Enabled" 0 "Disabled" ;
+VAL_ 1555 Service_Blink 1 "Blinking" 0 "No Blinking" ;
+VAL_ 1555 Reset 7 "Reserved" 6 "Reserved" 5 "Reserved" 4 "Reserved" 3 "Clear Service Icon" 2 "Reset Trip 2" 1 "Reset Trip1" 0 "Default" ;
+VAL_ 1555 Hibernation 2 "Blink" 1 "Enabled" 0 "Disabled" ;
+VAL_ 1555 SpeedMode 3 "Rush" 2 "Ride" 1 "Eco" 0 "Default" ;
+VAL_ 1555 Am_Pm 1 "pm" 0 "am" ;
+VAL_ 1555 Mode_Blink 1 "Blinking" 0 "No Blinking" ;
+VAL_ 1555 SOC_Blink 1 "Blinking" 0 "No Blinking" ;
+VAL_ 1555 Speed_Blink 1 "Blinking" 0 "No Blinking" ;
+VAL_ 1051 Charger_Disable 1 "Disable" 0 "Enable" ;
+VAL_ 1056 StatusofChargerCOMError 1 "Error" 0 "Normal" ;
+VAL_ 1056 StatusofChargerBatError 1 "Error" 0 "Normal" ;
+VAL_ 1056 StatusofChargerInput_Error 1 "Error" 0 "Normal" ;
+VAL_ 1056 StatusofChargerTempError 1 "Error" 0 "Normal" ;
+VAL_ 1056 StatusChargerHWError 1 "Error" 0 "Normal" ;
+VAL_ 908 Error_Code_4 94 "Kill switch Off" 93 "Kill switch SRO" 83 "Motor stalled " 82 "Throttle SRO" 52 "High motor temperature " 51 "High controller temperature " 97 "Motor control error " 96 "Application parameters fault" 92 "Max. speed exceeded " 90 "Controller logicsupply error " 85 "Throttle channel mismatch " 66 "Contactor coil overcurrent" 56 "Parameter limitation" 54 "Throttle 1 Low Voltage" 53 "Throttle 2 High Voltage" 49 "Corrupted positionsensor cal" 48 "Corrupted Persis Para" 47 "Corrupted Comm parameters 
+" 46 "Corrupted throttle calibration" 45 "Corrupted V&I sensor calibration" 44 "Motor temperature sensor" 43 "Controller temperature sensor" 42 "Motor over temperature" 36 "Charging of capacitors failed " 34 "Throttle 1 Low Voltage" 32 "Encoder Fault" 41 "Controller over temperature" 33 "Throttle 1 High Voltage" 31 "Throttle Pedal Cal Error" 26 "Corrupted Application Parameters" 25 "Contactor  Welded" 24 "Contactor Bridge Fault" 21 "Over Current" 18 "Current Sensor Fault" 17 "Sensor Calibration Error V&I" 16 "12V Failure" 15 "5V Failure" 14 "Under Voltage V<32" 13 "Over Voltage V>62" 12 "Low Battery Voltage V<28" 11 "High Battery Voltage V>100" ;
+VAL_ 908 Error_Code_3 94 "Kill switch Off" 93 "Kill switch SRO" 83 "Motor stalled " 82 "Throttle SRO" 52 "High motor temperature " 51 "High controller temperature " 97 "Motor control error " 96 "Application parameters fault" 92 "Max. speed exceeded " 90 "Controller logicsupply error " 85 "Throttle channel mismatch " 66 "Contactor coil overcurrent" 56 "Parameter limitation" 54 "Throttle 1 Low Voltage" 53 "Throttle 2 High Voltage" 49 "Corrupted positionsensor cal" 48 "Corrupted Persis Para" 47 "Corrupted Comm parameters 
+" 46 "Corrupted throttle calibration" 45 "Corrupted V&I sensor calibration" 44 "Motor temperature sensor" 43 "Controller temperature sensor" 42 "Motor over temperature" 36 "Charging of capacitors failed " 34 "Throttle 1 Low Voltage" 32 "Encoder Fault" 41 "Controller over temperature" 33 "Throttle 1 High Voltage" 31 "Throttle Pedal Cal Error" 26 "Corrupted Application Parameters" 25 "Contactor  Welded" 24 "Contactor Bridge Fault" 21 "Over Current" 18 "Current Sensor Fault" 17 "Sensor Calibration Error V&I" 16 "12V Failure" 15 "5V Failure" 14 "Under Voltage V<32" 13 "Over Voltage V>62" 12 "Low Battery Voltage V<28" 11 "High Battery Voltage V>100" ;
+VAL_ 908 Error_Code_2 94 "Kill switch Off" 93 "Kill switch SRO" 83 "Motor stalled " 82 "Throttle SRO" 52 "High motor temperature " 51 "High controller temperature " 97 "Motor control error " 96 "Application parameters fault" 92 "Max. speed exceeded " 90 "Controller logicsupply error " 85 "Throttle channel mismatch " 66 "Contactor coil overcurrent" 56 "Parameter limitation" 54 "Throttle 1 Low Voltage" 53 "Throttle 2 High Voltage" 49 "Corrupted positionsensor cal" 48 "Corrupted Persis Para" 47 "Corrupted Comm parameters 
+" 46 "Corrupted throttle calibration" 45 "Corrupted V&I sensor calibration" 44 "Motor temperature sensor" 43 "Controller temperature sensor" 42 "Motor over temperature" 36 "Charging of capacitors failed " 34 "Throttle 1 Low Voltage" 32 "Encoder Fault" 41 "Controller over temperature" 33 "Throttle 1 High Voltage" 31 "Throttle Pedal Cal Error" 26 "Corrupted Application Parameters" 25 "Contactor  Welded" 24 "Contactor Bridge Fault" 21 "Over Current" 18 "Current Sensor Fault" 17 "Sensor Calibration Error V&I" 16 "12V Failure" 15 "5V Failure" 14 "Under Voltage V<32" 13 "Over Voltage V>62" 12 "Low Battery Voltage V<28" 11 "High Battery Voltage V>100" ;
+VAL_ 908 Error_Code_1 94 "Kill switch Off" 93 "Kill switch SRO" 83 "Motor stalled " 82 "Throttle SRO" 52 "High motor temperature " 51 "High controller temperature " 97 "Motor control error " 96 "Application parameters fault" 92 "Max. speed exceeded " 90 "Controller logicsupply error " 85 "Throttle channel mismatch " 66 "Contactor coil overcurrent" 56 "Parameter limitation" 54 "Throttle 1 Low Voltage" 53 "Throttle 2 High Voltage" 49 "Corrupted positionsensor cal" 48 "Corrupted Persis Para" 47 "Corrupted Comm parameters 
+" 46 "Corrupted throttle calibration" 45 "Corrupted V&I sensor calibration" 44 "Motor temperature sensor" 43 "Controller temperature sensor" 42 "Motor over temperature" 36 "Charging of capacitors failed " 34 "Throttle 1 Low Voltage" 32 "Encoder Fault" 41 "Controller over temperature" 33 "Throttle 1 High Voltage" 31 "Throttle Pedal Cal Error" 26 "Corrupted Application Parameters" 25 "Contactor  Welded" 24 "Contactor Bridge Fault" 21 "Over Current" 18 "Current Sensor Fault" 17 "Sensor Calibration Error V&I" 16 "12V Failure" 15 "5V Failure" 14 "Under Voltage V<32" 13 "Over Voltage V>62" 12 "Low Battery Voltage V<28" 11 "High Battery Voltage V>100" ;
+VAL_ 908 Error_Code_0 94 "Kill switch Off" 93 "Kill switch SRO" 83 "Motor stalled " 82 "Throttle SRO" 52 "High motor temperature " 51 "High controller temperature " 97 "Motor control error " 96 "Application parameters fault" 92 "Max. speed exceeded " 90 "Controller logicsupply error " 85 "Throttle channel mismatch " 66 "Contactor coil overcurrent" 56 "Parameter limitation" 54 "Throttle 1 Low Voltage" 53 "Throttle 2 High Voltage" 49 "Corrupted positionsensor cal" 48 "Corrupted Persis Para" 47 "Corrupted Comm parameters 
+" 46 "Corrupted throttle calibration" 45 "Corrupted V&I sensor calibration" 44 "Motor temperature sensor" 43 "Controller temperature sensor" 42 "Motor over temperature" 36 "Charging of capacitors failed " 34 "Throttle 1 Low Voltage" 32 "Encoder Fault" 41 "Controller over temperature" 33 "Throttle 1 High Voltage" 31 "Throttle Pedal Cal Error" 26 "Corrupted Application Parameters" 25 "Contactor  Welded" 24 "Contactor Bridge Fault" 21 "Over Current" 18 "Current Sensor Fault" 17 "Sensor Calibration Error V&I" 16 "12V Failure" 15 "5V Failure" 14 "Under Voltage V<32" 13 "Over Voltage V>62" 12 "Low Battery Voltage V<28" 11 "High Battery Voltage V>100" ;
+
+

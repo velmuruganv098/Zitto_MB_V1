@@ -1,0 +1,231 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_:
+
+
+BO_ 2399861482 SohPkt02: 8 Vector__XXX
+ SG_ CellSoh09 : 0|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoh10 : 8|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoh11 : 16|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoh12 : 24|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoh13 : 32|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoh14 : 40|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoh15 : 48|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoh16 : 56|8@1+ (1,0) [0|255] "%" Vector__XXX
+
+BO_ 2383084266 SohPkt01: 8 Vector__XXX
+ SG_ CellSoh01 : 0|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoh02 : 8|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoh03 : 16|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoh04 : 24|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoh05 : 32|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoh06 : 40|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoh07 : 48|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoh08 : 56|8@1+ (1,0) [0|255] "%" Vector__XXX
+
+BO_ 2366307050 EkfSocPkt02: 8 Vector__XXX
+ SG_ CellSoc09 : 0|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoc10 : 8|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoc11 : 16|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoc12 : 24|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoc13 : 32|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoc14 : 40|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoc15 : 48|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoc16 : 56|8@1+ (1,0) [0|255] "%" Vector__XXX
+
+BO_ 2349529834 EkfSocPkt01: 8 Vector__XXX
+ SG_ CellSoc01 : 0|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoc02 : 8|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoc03 : 16|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoc04 : 24|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoc05 : 32|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoc06 : 40|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoc07 : 48|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CellSoc08 : 56|8@1+ (1,0) [0|255] "%" Vector__XXX
+
+BO_ 2516777706 AlgoStastus: 8 Vector__XXX
+ SG_ CellBalancing : 0|32@1+ (1,0) [0|65535] "None" Vector__XXX
+ SG_ FeatureAdaptiveCharging : 40|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ FeatureEkfSoc : 32|8@1+ (1,0) [0|255] "%" Vector__XXX
+
+BO_ 2500000490 BalancingCapacityPkt02: 8 Vector__XXX
+ SG_ CellImbCapacity09 : 0|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity10 : 8|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity11 : 16|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity12 : 24|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity13 : 32|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity14 : 40|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity15 : 48|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity16 : 56|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+
+BO_ 2483223274 BalancingCapacityPkt01: 8 Vector__XXX
+ SG_ CellImbCapacity01 : 0|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity02 : 8|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity03 : 16|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity04 : 24|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity05 : 32|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity06 : 40|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity07 : 48|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity08 : 56|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+
+BO_ 2216688362 CellVoltagePkt01: 8 Vector__XXX
+ SG_ CellVoltage04 : 48|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ CellVoltage03 : 32|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ CellVoltage02 : 16|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ CellVoltage01 : 0|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+
+BO_ 2233465578 CellVoltagePkt02: 8 Vector__XXX
+ SG_ CellVoltage08 : 48|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ CellVoltage07 : 32|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ CellVoltage06 : 16|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ CellVoltage05 : 0|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+
+BO_ 2250242794 CellVoltagePkt03: 8 Vector__XXX
+ SG_ CellVoltage12 : 48|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ CellVoltage11 : 32|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ CellVoltage10 : 16|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ CellVoltage09 : 0|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+
+BO_ 2267020010 CellVoltagePkt04: 8 Vector__XXX
+ SG_ CellVoltage16 : 48|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ CellVoltage15 : 32|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ CellVoltage14 : 16|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ CellVoltage13 : 0|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+
+BO_ 2233531114 CellVoltagePkt06: 8 Vector__XXX
+ SG_ MaxCellVoltage : 48|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ MinCellVoltage : 32|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ PackVoltageAfe : 16|16@1+ (0.01,0) [0|65.535] "Volts" Vector__XXX
+ SG_ CellAvgVoltage : 0|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+
+BO_ 2283928298 Current: 8 Vector__XXX
+ SG_ PackSoc : 48|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ PackCurrentAfe : 16|16@1- (0.1,0) [-3276.8|3276.7] "Amps" Vector__XXX
+ SG_ PackCurrentCsa : 0|16@1- (0.1,0) [-3276.8|3276.7] "Amps" Vector__XXX
+ SG_ PackSoh : 56|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ PackCurrentAux : 32|16@1- (0.1,0) [-3276.8|3276.7] "Amps" Vector__XXX
+
+BO_ 2485320426 TemperaturePkt01: 8 Vector__XXX
+ SG_ CellTemp04 : 48|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ CellTemp03 : 32|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ CellTemp02 : 16|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ CellTemp01 : 0|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+
+BO_ 2351168234 BmsState: 8 Vector__XXX
+ SG_ BatteryFault : 0|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ BatteryWarning : 8|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ BatteryState : 16|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ MiscWarning : 24|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ SdCardLastLogNum : 32|16@1+ (1,0) [0|65535] "None" Vector__XXX
+ SG_ FanStatus : 48|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ PackCycleCount : 56|8@1+ (1,0) [0|255] "None" Vector__XXX
+
+BO_ 2485451498 TemperaturePkt02: 8 Vector__XXX
+ SG_ CellTemp08 : 48|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ CellTemp07 : 32|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ CellTemp06 : 16|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ CellTemp05 : 0|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+
+BO_ 2485517034 TemperaturePkt03: 8 Vector__XXX
+ SG_ CellTemp12 : 48|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ CellTemp11 : 32|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ CellTemp10 : 16|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ CellTemp09 : 0|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+
+BO_ 2485582570 TemperaturePkt04: 8 Vector__XXX
+ SG_ MaxCellTemp : 48|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ MinCellTemp : 32|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ CellTemp14 : 16|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ CellTemp13 : 0|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+
+BO_ 2383739883 ChargeParameters: 8 Vector__XXX
+ SG_ PackLastActiveCapacity : 48|16@1+ (0.01,0) [0|655.35] "Ah" Vector__XXX
+ SG_ ErrChargerFaultCode : 31|16@0+ (1,0) [0|65535] "None" Vector__XXX
+ SG_ ChargeCurrentDemand : 0|16@1+ (1,0) [0|65535] "Amps" Vector__XXX
+ SG_ ReserveStatus : 16|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ PackChargeEta : 40|8@1+ (1,0) [0|255] "Min" Vector__XXX
+
+BO_ 2585066475 Authentication: 8 Vector__XXX
+ SG_ InfoCustomerId : 56|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ InfoBatteryRatedCapacity : 48|8@1+ (1,0) [0|255] "Ah" Vector__XXX
+ SG_ InfoCellType : 40|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ BootFwVersionMinor : 32|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ BootFwVersionMajor : 24|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ FwVersionMinor : 16|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ FwVersionMajor : 8|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ FwVersionSub : 0|8@1+ (1,0) [0|255] "None" Vector__XXX
+
+BO_ 2568284922 BatteryId: 8 Vector__XXX
+ SG_ InfoBatteryId : 0|64@1+ (1,0) [0|9.22337E+018] "None" Vector__XXX
+
+BO_ 2216753898 CellVoltagePkt05: 8 Vector__XXX
+ SG_ CellVoltage20 : 48|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ CellVoltage19 : 32|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ CellVoltage18 : 16|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ CellVoltage17 : 0|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+
+BO_ 2250308330 CellVoltagePkt07: 8 Vector__XXX
+ SG_ CellVoltage24 : 48|16@1+ (0.001,0) [0|65.535] "Volt" Vector__XXX
+ SG_ CellVoltage23 : 32|16@1+ (0.001,0) [0|65.535] "Volt" Vector__XXX
+ SG_ CellVoltage22 : 16|16@1+ (0.001,0) [0|65.535] "Volt" Vector__XXX
+ SG_ CellVoltage21 : 0|16@1+ (0.001,0) [0|65.535] "Volt" Vector__XXX
+
+BO_ 2199976682 CellVoltagePkt08: 8 Vector__XXX
+ SG_ CellVoltage28 : 48|16@1+ (0.001,0) [0|65.535] "Volt" Vector__XXX
+ SG_ CellVoltage27 : 32|16@1+ (0.001,0) [0|65.535] "Volt" Vector__XXX
+ SG_ CellVoltage26 : 16|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ CellVoltage25 : 0|16@1+ (0.001,0) [0|65.535] "Volt" Vector__XXX
+
+BO_ 2516843242 BalancingCapacityPkt03: 8 Vector__XXX
+ SG_ CellImbCapacity24 : 56|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity23 : 48|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity22 : 40|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity21 : 32|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity20 : 24|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity19 : 16|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity18 : 8|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity17 : 0|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+
+BO_ 2533554922 BalancingCapacityPkt04: 8 Vector__XXX
+ SG_ CellImbCapacityMax : 32|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity28 : 24|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity27 : 16|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity26 : 8|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+ SG_ CellImbCapacity25 : 0|8@1+ (0.01,0) [0|2.55] "Ah" Vector__XXX
+
+
+
+

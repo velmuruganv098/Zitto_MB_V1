@@ -1,0 +1,1366 @@
+VERSION "created by canmatrix"
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: DTU OBC ESL ABS VIU PKE BMS BCU
+
+
+BO_ 768 BMS_Pack_Voltg_Curr_MSG1: 8 BMS
+ SG_ BMS_pack_vtg : 0|16@1+ (0.01,0) [0|65535] "V"  DTU,OBC,VIU
+ SG_ BMS_pack_current : 16|32@1- (1,0) [-2147483648|2147483647] "mA"  DTU,OBC,VIU
+ SG_ BMS_fet_temp : 48|8@1- (1,0) [-128|127] "degC"  DTU,OBC,VIU
+ SG_ BMS_pchgres_temp : 56|8@1- (1,0) [-128|127] "degC"  DTU,OBC,VIU
+
+BO_ 769 BMS_Battery_Tempr_MSG2: 8 BMS
+ SG_ BMS_bat_highest_cell_temp : 0|16@1- (0.01,0) [-32768|32767] "degC"  DTU,VIU
+ SG_ BMS_bat_highest_cell_temp_mod_no : 16|8@1+ (1,0) [0|255] ""  DTU,VIU
+ SG_ BMS_bat_highest_cell_temp_no : 24|8@1+ (1,0) [0|255] ""  DTU,VIU
+ SG_ BMS_bat_lowest_cell_temp : 32|16@1- (0.01,0) [-32768|32767] "degC"  DTU,VIU
+ SG_ BMS_bat_lowest_cell_temp_mod_no : 48|8@1+ (1,0) [0|255] ""  DTU,VIU
+ SG_ BMS_bat_lowest_cell_temp_no : 56|8@1+ (1,0) [0|255] ""  DTU,VIU
+
+BO_ 770 BMS_Battery_CS_Tempr_MSG3: 8 BMS
+ SG_ BMS_min_cstemp : 0|16@1- (0.01,0) [-32768|32767] "degC"  DTU,VIU
+ SG_ BMS_max_cstemp : 16|16@1- (0.01,0) [-32768|32767] "degC"  DTU,VIU
+ SG_ BMS_delta_temp_cs : 32|16@1- (0.01,0) [-32768|32767] "degC"  DTU,VIU
+ SG_ BMS_min_csT_no : 48|8@1+ (1,0) [0|255] ""  DTU,VIU
+ SG_ BMS_max_csT_no : 56|8@1+ (1,0) [0|255] ""  DTU,VIU
+
+BO_ 771 BMS_Battery_Voltg_MSG4: 8 BMS
+ SG_ BMS_bat_highest_cell_vtg : 0|16@1+ (0.001,0) [0|65535] "V"  DTU,OBC,VIU
+ SG_ BMS_bat_highest_cell_vtg_mod_no : 16|8@1+ (1,0) [0|255] ""  DTU,OBC,VIU
+ SG_ BMS_bat_highest_cell_vtg_no : 24|8@1+ (1,0) [0|255] ""  DTU,OBC,VIU
+ SG_ BMS_bat_lowest_cell_vtg : 32|16@1+ (0.001,0) [0|65535] "V"  DTU,OBC,VIU
+ SG_ BMS_bat_lowest_cell_vtg_mod_no : 48|8@1+ (1,0) [0|255] ""  DTU,OBC,VIU
+ SG_ BMS_bat_lowest_cell_vtg_no : 56|8@1+ (1,0) [0|255] ""  DTU,OBC,VIU
+
+BO_ 772 BMS_Battery_Param__MSG5: 8 BMS
+ SG_ BMS_delta_cell_vtg : 0|16@1+ (0.001,0) [0|65535] "V"  DTU,OBC,VIU
+ SG_ BMS_delta_cell_temp : 16|16@1+ (0.01,0) [0|65535] "degC"  DTU,OBC,VIU
+ SG_ BMS_bat_remaining_capacity : 32|16@1+ (1,0) [0|65535] "mAh"  DTU,OBC,VIU
+ SG_ BMS_bat_no_of_cycle : 48|16@1+ (1,0) [0|65535] ""  DTU,OBC,VIU
+
+BO_ 773 BMS_Battery_State_MSG6: 8 BMS
+ SG_ BMS_state : 0|6@1+ (1,0) [0|63] "State"  BCU,DTU,OBC,VIU
+ SG_ BMS_scd_fb_status : 6|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_charger_detect_status : 7|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_fet_state : 8|3@1+ (1,0) [0|7] "State"  BCU,DTU,OBC,VIU
+ SG_ BMS_CS_state : 11|2@1+ (1,0) [0|3] "State"  BCU,DTU,OBC,VIU
+ SG_ BMS_chg_mcu_status : 13|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_dchg_mcu_status : 14|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_dchg_fb_status : 15|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_calib_start_status : 16|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_SOP_limp_flag : 17|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_charger_plugged_status : 18|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_cstemp_warn_status : 19|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_Battery_status : 24|2@1+ (1,0) [0|3] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_Battery_temp : 26|2@1+ (1,0) [0|3] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_Battery_voltage : 28|2@1+ (1,0) [0|3] "Status"  BCU,DTU,OBC,VIU
+ SG_ Coolant_temp : 30|2@1+ (1,0) [0|3] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_cantx_status : 32|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_bcucanrx_status : 33|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_dtucanrx_status : 34|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_obccanrx_status : 35|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_viucanrx_status : 36|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_abscanrx_status : 37|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_pkecanrx_status : 38|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_esclcanrx_status : 39|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_can_state : 40|2@1+ (1,0) [0|3] "x"  BCU,DTU,OBC,VIU
+
+BO_ 774 BMS_Battery_Param_MSG7: 8 BMS
+ SG_ BMS_soc_percentage : 0|8@1+ (1,0) [0|255] "%"  DTU,OBC,VIU
+ SG_ BMS_soh_percentage : 8|8@1+ (1,0) [0|255] "%"  DTU,OBC,VIU
+ SG_ BMS_sop_watt : 16|16@1+ (1,0) [0|65535] "W"  DTU,OBC,VIU
+ SG_ BMS_bat_available_dchg_power : 32|16@1+ (1,0) [0|65535] "W"  DTU,OBC,VIU
+ SG_ BMS_bat_available_chg_power : 48|16@1+ (1,0) [0|65535] "W"  DTU,OBC,VIU
+
+BO_ 775 BMS_Cell_Bal_Status_MSG8: 8 BMS
+ SG_ BMS_cell_balancing_status_cell1 : 0|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell2 : 1|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell3 : 2|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell4 : 3|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell5 : 4|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell6 : 5|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell7 : 6|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell8 : 7|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell9 : 8|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell10 : 9|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell11 : 10|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell12 : 11|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell13 : 12|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell14 : 13|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell15 : 14|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell16 : 15|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell17 : 16|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell18 : 17|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell19 : 18|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell20 : 19|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell21 : 20|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell22 : 21|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell23 : 22|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell24 : 23|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell25 : 24|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell26 : 25|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell27 : 26|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BMS_cell_balancing_status_cell28 : 27|1@1+ (1,0) [0|1] "Status"  VIU
+
+BO_ 512 BMS_AFE_MCU_Faults_MSG9: 8 BMS
+ SG_ BMS_afe_cov_fault : 0|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_afe_cuv_fault : 1|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_afe_cot_chg_fault : 2|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_afe_cot_dchg_fault : 3|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_afe_cut_chg_fault : 4|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_afe_cut_dchg_fault : 5|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_afe_oc_chg_fault : 6|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_afe_oc_dchg_fault : 7|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_afe_sc_detetction_fault : 8|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_afe_overload_detect_fault : 9|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_afe_fet_off_fault : 10|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_afe_oc_fault : 11|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_afe_otf_fault : 12|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_chgfetoff_fault : 13|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_dsgfetoff_fault : 14|1@1+ (1,0) [0|1] ""  BCU,DTU,OBC,VIU
+ SG_ BMS_cov_fault : 16|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_cuv_fault : 17|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_ddsg_fault : 18|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_del_cv_fault : 19|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_pchg_tout_fault : 20|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_del_ct_fault : 21|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_hostl_i2c_fault : 22|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_hostu_i2c_fault : 23|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_cot_chg_fault : 24|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_cot_dsg_fault : 25|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_cut_chg_fault : 26|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_cut_dsg_fault : 27|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_fot_fault : 28|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_csot_fault : 29|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_afedieot_fault : 30|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_imd_fault : 31|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_hostl_fail_fault : 32|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_hostu_fail_fault : 33|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_afel_fail_fault : 34|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_afeu_fail_fault : 35|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_cs_ic_fail_fault : 36|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_imd_ic_fail_fault : 37|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_adc_ic_fail_fault : 38|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_can_ic_fail_fault : 39|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_aps_scd_fault : 40|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_aps_ot_fault : 41|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_aps_ov_fault : 42|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_aps_oc_fault : 43|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_opp_cchg_fault : 44|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_opp_cdsg_fault : 45|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_pchg_pk_fault : 46|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_crit_rel_fault : 47|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_pchg_rot_fault : 48|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_pchg_rtow_fault : 49|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_chg_hb_fault : 50|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_hvil_fault : 51|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_dsgoff_rel_fault : 52|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_hazard_fault : 53|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_hw_scd_fault : 54|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_sysfail_fault : 55|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+
+BO_ 513 BMS_Warning_MSG10: 8 BMS
+ SG_ BMS_bat_cov_warning : 0|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_bat_cuv_warning : 1|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_bat_del_v_warning : 2|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_bat_cot_warning : 3|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_bat_cut_warning : 4|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_bat_del_ct_warning : 5|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_bat_fot_warning : 6|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_bat_csot_warning : 7|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_bat_afedieot_warning : 8|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_bat_occ_warning : 9|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_bat_ocd_warning : 10|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_bat_pusoc_warning : 11|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_false_chgr_warning : 12|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_bat_imd_warning : 13|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_bat_dbg_warning : 14|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+ SG_ BMS_bat_crit_warning : 15|1@1+ (1,0) [0|1] "Status"  BCU,DTU,OBC,VIU
+
+BO_ 514 BMS_Iso_Resist_MSG11: 8 BMS
+ SG_ BMS_iso_res_pcgnd : 0|32@1- (0.001,0) [-2147483648|2147483647] "Ohm"  DTU,OBC,VIU
+ SG_ BMS_iso_res_ncgnd : 32|32@1- (0.001,0) [-2147483648|2147483647] "Ohm"  DTU,OBC,VIU
+
+BO_ 776 BMS_TX_Auth_Resp_Msg12: 8 BMS
+ SG_ BMS_ECU_Name : 0|8@1+ (1,0) [0|255] "ECU"  VIU
+ SG_ BMS_time_OTP_msg : 8|32@1+ (1,0) [0|4294967295] ""  VIU
+
+BO_ 777 BMS_Tx_Diag_Resp_Msg13: 8 BMS
+ SG_ System_Fault_Status : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  VIU
+
+BO_ 778 BMS_TX_INTVerNo_Resp_Msg14: 8 BMS
+ SG_ S_W_Version_No : 0|16@1+ (1,0) [0|65535] ""  VIU
+ SG_ H_W_Version_No_ : 16|16@1+ (1,0) [0|65535] ""  VIU
+ SG_ Comm_Protcol_Version_No_ : 32|16@1+ (1,0) [0|65535] ""  VIU
+ SG_ ECU_Name : 48|8@1+ (1,0) [0|255] "ECUs"  VIU
+
+BO_ 779 BMS_TX_Mode_Ack_Msg15: 8 BMS
+ SG_ BMS_ECU_Name : 0|8@1+ (1,0) [0|255] "ECUs"  BCU,DTU,OBC,VIU
+ SG_ BMS_Vacation_Mode_Command : 8|1@1+ (1,0) [0|1] "Cmd_Ack"  BCU,DTU,OBC,VIU
+ SG_ BMS_S_W_Update_Command : 9|1@1+ (1,0) [0|1] "Cmd_Ack"  BCU,DTU,OBC,VIU
+ SG_ Limp_mode : 10|1@1+ (1,0) [0|1] "Cmd_Ack"  BCU,DTU,OBC,VIU
+ SG_ Charger_Disconnect_Command : 11|1@1+ (1,0) [0|1] "Cmd_Ack"  BCU,DTU,OBC,VIU
+ SG_ Sleep_Cmd : 12|1@1+ (1,0) [0|1] "Cmd_Ack"  BCU,DTU,OBC,VIU
+ SG_ operation_disable_cmd : 13|1@1+ (1,0) [0|1] "Cmd_Ack"  BCU,DTU,OBC,VIU
+
+BO_ 780 BMS_Bootloader_Enable_ACK_Msg16: 8 BMS
+ SG_ BMS_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] "Status"  VIU
+ SG_ BMS_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 781 BMS_Erase_Application_Ack_Msg17: 8 BMS
+ SG_ BMS_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] "Status"  VIU
+ SG_ BMS_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 782 BMS_Data_CRC_Ack_Msg18: 8 BMS
+ SG_ BMS_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  VIU
+
+BO_ 783 BMS_EOF_ACK_Msg19: 8 BMS
+ SG_ BMS_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  VIU
+
+BO_ 784 BMS_Whole_CRC_Ack_Msg20: 8 BMS
+ SG_ BMS_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  VIU
+
+BO_ 785 BMS_Jumping_App_Ack_Msg21: 8 BMS
+ SG_ BMS_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ BMS_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 786 BMS_Bootloader_Timeout_Err_Msg22: 8 BMS
+ SG_ BMS_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ BMS_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 787 BMS_Bootloader_CRC_Err_Msg23: 8 BMS
+ SG_ BMS_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ BMS_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 788 BMS_Booloader_version_no_Msg_11: 8 BMS
+ SG_ BMS_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ BMS_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+ SG_ BMS_firmware_ver_no : 16|16@1+ (1,0) [0|65535] ""  VIU
+
+BO_ 793 BMS_DmdVI_fromOBC_Msg24: 8 BMS
+ SG_ BMS_Demand_Voltage : 0|16@1+ (0.1,0) [0|65535] "V"  OBC,VIU
+ SG_ BMS_Demand_Current : 16|16@1- (0.01,0) [-32768|32767] "A"  OBC,VIU
+ SG_ BMS_Default_Mode : 32|1@1+ (1,0) [0|1] ""  OBC,VIU
+ SG_ BMS_DPS_Status : 33|1@1+ (1,0) [0|1] ""  OBC,VIU
+ SG_ BMS_ChargMode_Status : 34|1@1+ (1,0) [0|1] "Status"  OBC,VIU
+ SG_ BMS_Charger_Conn_Status : 35|1@1+ (1,0) [0|1] "Status"  OBC,VIU
+ SG_ BMS_Charger_Start_stp_Cmd : 36|1@1+ (1,0) [0|1] "Cmd"  OBC,VIU
+ SG_ BMS_CV_Mode_Sw_Cmd : 37|1@1+ (1,0) [0|1] "Mode"  OBC,VIU
+
+BO_ 794 BMS_Heart_beat_Msg25: 8 BMS
+ SG_ BMS_ECU_Name : 0|8@1+ (1,0) [0|255] "ECUs"  BCU,DTU,OBC,VIU
+ SG_ BMS_Rolling_Counter : 8|8@1+ (1,0) [0|255] ""  BCU,DTU,OBC,VIU
+
+BO_ 795 BMS_Thermal_Mgmt_Sys_Msg26: 8 BMS
+ SG_ BMS_pump_duty_cycle : 0|8@1+ (1,0) [0|255] "count"  BCU,DTU,OBC,VIU
+ SG_ BMS_fan_duty_cycle : 8|8@1+ (1,0) [0|255] "%"  BCU,DTU,OBC,VIU
+ SG_ BMS_pump_flow_rate : 16|32@1+ (1,0) [0|4294967295] "lpm"  BCU,DTU,OBC,VIU
+ SG_ BMS_pump_fbcurr : 48|16@1- (0.001,0) [-32768|32767] "A"  BCU,DTU,OBC,VIU
+
+BO_ 796 BMS_TrigcmdBCU_AckMsg27: 8 BMS
+ SG_ ECU_Signal_Name : 0|8@1+ (1,0) [0|255] ""  BCU,DTU,OBC,VIU
+ SG_ BMS_Vac_Mode_ack : 8|1@1+ (1,0) [0|1] ""  BCU,DTU,OBC,VIU
+ SG_ BMS_Oper_Dis_ack : 9|1@1+ (1,0) [0|1] ""  BCU,DTU,OBC,VIU
+
+BO_ 797 AFE_Bootloader_Enable_ACK_Msg_05: 8 BMS
+ SG_ AFE_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] "Status"  VIU
+ SG_ AFE_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 798 AFE_Erase_Application_Ack_Msg_06: 8 BMS
+ SG_ AFE_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] "Status"  VIU
+ SG_ AFE_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 799 AFE_Data_CRC_Ack_Msg_07: 8 BMS
+ SG_ AFE_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  VIU
+
+BO_ 800 AFE_EOF_ACK_Msg_08: 8 BMS
+ SG_ AFE_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  VIU
+
+BO_ 801 AFE_Whole_CRC_Ack_Msg_09: 8 BMS
+ SG_ AFE_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  VIU
+
+BO_ 802 AFE_Jumping_App_Ack_Msg_10: 8 BMS
+ SG_ AFE_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ AFE_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 803 AFE_Bootloader_Timeout_Err_Msg_1: 8 BMS
+ SG_ AFE_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ AFE_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 804 AFE_Bootloader_CRC_Err_Msg_2: 8 BMS
+ SG_ AFE_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ AFE_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 805 BMS_TrigBCUcmd_Msg28: 8 BMS
+ SG_ ECU_Signal_Name : 0|8@1+ (1,0) [0|255] ""  BCU,DTU,OBC,VIU
+ SG_ BMS_chgstart_cmd : 8|1@1+ (1,0) [0|1] ""  BCU,DTU,OBC,VIU
+ SG_ BMS_ext_wakeup_cmd : 9|1@1+ (1,0) [0|1] ""  BCU,DTU,OBC,VIU
+
+BO_ 2028 BMS_Phy_RespMsg29: 8 BMS
+ SG_ UDS_ISOTP_frame : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  VIU
+
+BO_ 806 BMS_ExtVerNo_Resp_Msg30: 8 BMS
+ SG_ S_W_Version_No : 0|16@1+ (1,0) [0|65535] ""  VIU
+ SG_ H_W_Version_No_ : 16|16@1+ (1,0) [0|65535] ""  VIU
+ SG_ Comm_Protcol_Version_No_ : 32|16@1+ (1,0) [0|65535] ""  VIU
+ SG_ ECU_Name : 48|8@1+ (1,0) [0|255] "ECUs"  VIU
+
+BO_ 807 BMS_ExtVerName_Resp1_Msg31: 8 BMS
+ SG_ Frame_0_7 : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  VIU
+
+BO_ 808 BMS_ExtVerName_Resp2_Msg32: 8 BMS
+ SG_ Frame_8_15 : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  VIU
+
+BO_ 848 BCU_IO_status_MSG1: 8 BCU
+ SG_ BCU_power_switch_status : 0|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_horn_switch_status : 1|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_side_stand_status : 2|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_pwr_swled_status : 3|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ Kill_switch_out : 4|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ USB_enable_status : 5|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_drl_pwr_status : 6|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_highbeam_pwr_status : 7|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ PKE_Switch_Status : 8|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_dpad_centre_switch_press : 9|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_Dimmer_High_Switch_Status : 10|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_Dimmer_Low_Switch_Status : 11|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_Pass_Light_Switch_Status : 12|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_Right_Signal_Switch_Status : 13|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_Left_Signal_Switch_Status : 14|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_dualsig_sw_sts : 15|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_dpad_up_switch_long_press : 16|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_dpad_up_switch_status : 17|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_dpad_down_switch_status : 18|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_dpad_down_switch_long_press : 19|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_dpad_left_switch_status : 20|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_dpad_right_switch_status : 21|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ Charger_Solenoid_lock_Status : 22|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_keyfob_missing_status : 23|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_left_signal_pwr_status : 24|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_right_signal_pwr_status : 25|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ VIU_pwr_status : 26|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_dimmer_lo_pwr_status : 27|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_horn_pwr_status : 28|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_tlamp_pwr_status : 29|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_bootlamp_pwr_status : 30|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_veh_dbc_verno : 32|8@1+ (1,0) [0|255] "x"  BMS,DTU,OBC,VIU
+ SG_ BCU_buzzer_pwr_status : 40|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_tsl_pwr_status : 41|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_dualsig_sw_lngpres_sts : 42|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_storage_loc_sw_sts : 43|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_dpadcen_sw_lngpress : 44|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_left_sig_blink_pwr_sts : 45|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_right_sig_blink_pwr_sts : 46|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_chgrloc_pwr_sts : 47|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ Gear_position : 48|3@1+ (1,0) [0|7] ""  BMS,DTU,OBC,VIU
+ SG_ PKE_pwr_status : 51|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_fan1_pwr_status : 52|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_stoplp_pwr_status : 53|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ Vehicle_Mode : 56|4@1+ (1,0) [0|15] ""  BMS,DTU,OBC,VIU
+ SG_ Ride_sub_modes : 60|2@1+ (1,0) [0|3] "Mode"  BMS,DTU,OBC,VIU
+ SG_ Parkassist_sub_modes : 62|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+ SG_ BCU_handle_loc_sts : 63|1@1+ (1,0) [0|1] ""  BMS,DTU,OBC,VIU
+
+BO_ 849 BCU_parameters_MSG2: 8 BCU
+ SG_ BCU_Peripheral_Current : 0|16@1- (0.001,0) [-32768|32767] "A"  VIU
+ SG_ BCU_Voltage : 16|16@1+ (0.001,0) [0|65535] "V"  VIU
+ SG_ BCU_onboard_tempr_1 : 32|16@1- (1,0) [-32768|32767] "C"  VIU
+ SG_ BCU_bmscanrx_status : 48|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BCU_cantx_status : 49|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BCU_dtucanrx_status : 50|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BCU_obccanrx_status : 51|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BCU_viucanrx_status : 52|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BCU_abscanrx_status : 53|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BCU_pkecanrx_status : 54|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BCU_esclcanrx_status : 55|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ BCU_can_state : 56|2@1+ (1,0) [0|3] "x"  VIU
+
+BO_ 850 BCU_Parameters_MSG3: 8 Vector__XXX
+ SG_ BCU_onboard_tempr_2 : 0|16@1- (1,0) [-32768|32767] "C" Vector__XXX
+ SG_ BCU_onboard_tempr_3 : 16|16@1- (1,0) [-32768|32767] "C" Vector__XXX
+ SG_ BCU_ext_tempr_1 : 32|16@1- (1,0) [-32768|32767] "C" Vector__XXX
+ SG_ BCU_ext_tempr_2 : 48|16@1- (1,0) [-32768|32767] "C" Vector__XXX
+
+BO_ 851 BCU_Parameters_MSG4: 8 Vector__XXX
+ SG_ BCU_pwr_cyc_cnt : 0|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ BCU_ride_cyc_cnt : 16|16@1- (1,0) [-32768|32767] "" Vector__XXX
+
+BO_ 515 BCU_Fault_Message_MSG4: 8 Vector__XXX
+ SG_ BCU_leftsig_fault : 0|1@1+ (1,0) [0|1] "x" Vector__XXX
+ SG_ BCU_rightsig_fault : 1|1@1+ (1,0) [0|1] "x" Vector__XXX
+ SG_ BCU_bothsig_fault : 2|1@1+ (1,0) [0|1] "x" Vector__XXX
+ SG_ BCU_horn_fault : 3|1@1+ (1,0) [0|1] "x" Vector__XXX
+ SG_ BCU_hlamp_fault : 4|1@1+ (1,0) [0|1] "x" Vector__XXX
+ SG_ BCU_buzz_fault : 5|1@1+ (1,0) [0|1] "x" Vector__XXX
+ SG_ BCU_tsl_fault : 6|1@1+ (1,0) [0|1] "x" Vector__XXX
+ SG_ BCU_chglock_fault : 7|1@1+ (1,0) [0|1] "x" Vector__XXX
+ SG_ BCU_fan_fault : 8|1@1+ (1,0) [0|1] "x" Vector__XXX
+ SG_ BCU_isns_vshort_fault : 9|1@1+ (1,0) [0|1] "x" Vector__XXX
+ SG_ BCU_isns_gshort_fault : 10|1@1+ (1,0) [0|1] "x" Vector__XXX
+ SG_ BCU_viu_rstfail_fault : 11|1@1+ (1,0) [0|1] "x" Vector__XXX
+ SG_ BCU_msdi_spi_fault : 12|1@1+ (1,0) [0|1] "x" Vector__XXX
+ SG_ BCU_ioexp_i2c_fault : 13|1@1+ (1,0) [0|1] "x" Vector__XXX
+ SG_ BCU_ican_busoff_fault : 14|1@1+ (1,0) [0|1] "x" Vector__XXX
+ SG_ BCU_brakesig_fault : 15|1@1+ (1,0) [0|1] "x" Vector__XXX
+ SG_ BCU_short_cir_fault : 16|1@1+ (1,0) [0|1] "x" Vector__XXX
+ SG_ BCU_otemp_fault : 17|1@1+ (1,0) [0|1] "x" Vector__XXX
+ SG_ BCU_ovtg_fault : 18|1@1+ (1,0) [0|1] "x" Vector__XXX
+ SG_ BCU_under_voltg_fault : 19|1@1+ (1,0) [0|1] "x" Vector__XXX
+
+BO_ 852 BCU_TX_Auth_Response_Msg_02: 8 BCU
+ SG_ BCU_ECU_Name : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ BCU_time_OTP_msg : 8|32@1+ (1,0) [0|4294967295] ""  VIU
+
+BO_ 853 BCU_TX_Ver_No_Response_MSg_04: 8 BCU
+ SG_ S_W_Version_No : 0|16@1+ (1,0) [0|65535] ""  VIU
+ SG_ H_W_Version_No_ : 16|16@1+ (1,0) [0|65535] ""  VIU
+ SG_ Comm_Protcol_Version_No_ : 32|16@1+ (1,0) [0|65535] ""  VIU
+
+BO_ 854 BCU_TX_Mode_Ack: 8 BCU
+ SG_ BCU_ECU_Name : 0|8@1+ (1,0) [0|255] ""  ABS,BMS,DTU,ESL,OBC,PKE,VIU
+ SG_ BCU_Vacation_Mode_Command : 8|1@1+ (1,0) [0|1] ""  ABS,BMS,DTU,ESL,OBC,PKE,VIU
+ SG_ BCU_S_W_Update_Command : 9|1@1+ (1,0) [0|1] ""  ABS,BMS,DTU,ESL,OBC,PKE,VIU
+ SG_ Limp_mode : 10|1@1+ (1,0) [0|1] ""  ABS,BMS,DTU,ESL,OBC,PKE,VIU
+ SG_ Charger_Disconnect_Command : 11|1@1+ (1,0) [0|1] ""  ABS,BMS,DTU,ESL,OBC,PKE,VIU
+ SG_ Sleep_Cmd : 12|1@1+ (1,0) [0|1] ""  ABS,BMS,DTU,ESL,OBC,PKE,VIU
+ SG_ operation_disable_cmd : 13|1@1+ (1,0) [0|1] ""  ABS,BMS,DTU,ESL,OBC,PKE,VIU
+
+BO_ 855 BCU_Bootloader_Enable_ACK: 8 BCU
+ SG_ BCU_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ BCU_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 856 BCU_Erase_Application_Ack: 8 BCU
+ SG_ BCU_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ BCU_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 857 BCU_Data_CRC_Ack: 8 BCU
+ SG_ BCU_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  VIU
+
+BO_ 858 BCU_EOF_ACK: 8 BCU
+ SG_ BCU_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  VIU
+
+BO_ 859 BCU_Whole_CRC_Ack: 8 BCU
+ SG_ BCU_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  VIU
+
+BO_ 860 BCU_Jumping_App_Ack: 8 BCU
+ SG_ BCU_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ BCU_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 861 BCU_Bootloader_Timeout_Error: 8 BCU
+ SG_ BCU_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ BCU_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 862 BCU_Bootloader_CRC_Error: 8 BCU
+ SG_ BCU_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ BCU_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 863 BCU_Tx_Diag_Response_Msg_03: 8 BCU
+ SG_ System_Fault_Status : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  VIU
+
+BO_ 368 BCU_TX_PKE_Veh_Lock_Unlock_Cmd: 8 BCU
+ SG_ ECU_Signal_Name : 0|8@1+ (1,0) [0|255] ""  PKE,VIU
+ SG_ PKE_commands : 8|8@1+ (1,0) [0|255] ""  PKE,VIU
+
+BO_ 869 BCU_TrigECUCmd_Msg: 8 BCU
+ SG_ ECU_Signal_Name : 0|8@1+ (1,0) [0|255] ""  BMS
+ SG_ BCU_Vac_Cmd_BMS : 8|1@1+ (1,0) [0|1] ""  BMS
+ SG_ BCU_OperDis_Cmd_BMS : 9|1@1+ (1,0) [0|1] ""  BMS
+
+BO_ 870 BCU_Diagnostic_Status_Ext_Sensor: 8 BCU
+ SG_ Ext_Sensor_vehicle_speed_u16 : 0|16@1+ (1,0) [0|65535] ""  DTU,VIU
+
+BO_ 871 BCU_Heart_beat_Msg: 8 DTU
+ SG_ ECU_Name : 0|8@1+ (1,0) [0|255] ""  BMS,OBC,PKE,VIU
+ SG_ Rolling_Counter : 8|8@1+ (1,0) [0|255] ""  BMS,OBC,PKE,VIU
+
+BO_ 872 BCU_debug_Msg1: 8 Vector__XXX
+ SG_ dtu_rx_data_counter : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ bms_rx_data_counter_1 : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ bms_rx_data_counter_2 : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ rx_bms_fan_duty : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ rx_start_sw_status : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 873 BCU_VIU_Msg1: 8 BCU
+ SG_ EDTU_motor_rpm : 0|16@1+ (1,0) [0|65535] "RPM"  VIU
+ SG_ EDTU_vehspd_kmhr : 16|16@1+ (1,0) [0|65535] ""  VIU
+ SG_ EDTU_throt_pos : 32|8@1+ (1,0) [0|255] "%"  VIU
+ SG_ EDTU_regen_sts : 40|1@1+ (1,0) [0|1] "STS"  VIU
+ SG_ EDTU_acc_act_sts : 41|1@1+ (1,0) [0|1] "STS"  VIU
+ SG_ EABS_warnlamp_sts : 42|2@1+ (1,0) [0|3] "STS"  VIU
+ SG_ EBMS_chgcon_sts : 44|1@1+ (1,0) [0|1] "STS"  VIU
+ SG_ EBMS_soc_pc : 48|8@1+ (1,0) [0|255] "%"  VIU
+ SG_ EBMS_soh_pc : 56|8@1+ (1,0) [0|255] "%"  VIU
+
+BO_ 874 BCU_VIU_Msg2: 8 BCU
+ SG_ EBMS_ctemp_max_cc : 0|16@1+ (0.01,0) [0|65535] "degC"  VIU
+ SG_ EDTU_postq_dmd : 16|16@1+ (1,0) [0|65535] ""  VIU
+ SG_ EBMS_packcurr_mA : 32|32@1+ (1,0) [0|4294967295] "mA"  VIU
+
+BO_ 875 BCU_VIU_Msg3: 8 BCU
+ SG_ EBMS_packvtg_mV : 0|16@1+ (0.01,0) [0|65535] "V"  VIU
+
+BO_ 882 BCU_TrigfromBMS_Ack: 8 BCU
+ SG_ ECU_Signal_Name : 0|8@1+ (1,0) [0|255] ""  BMS
+ SG_ BCU_Chgstart_ack : 8|1@1+ (1,0) [0|1] ""  BMS
+ SG_ BCU_ext_wakeup_ack : 9|1@1+ (1,0) [0|1] ""  BMS
+
+BO_ 2026 BCU_Phy_RespMsg12: 8 BCU
+ SG_ UDS_ISOTP_frame : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  VIU
+
+BO_ 883 BCU_ExtVerName_Resp1_Msg13: 8 BCU
+ SG_ Frame_0_7 : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  VIU
+
+BO_ 884 BCU_ExtVerName_Resp2_Msg14: 8 BCU
+ SG_ Frame_8_15 : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  VIU
+
+BO_ 1280 VIU_AuthRqt_Msg1: 8 VIU
+ SG_ VIU_ECU_Name : 0|8@1+ (1,0) [0|255] ""  BCU,BMS,DTU,OBC
+ SG_ VIU_TOTP_msg : 8|32@1+ (1,0) [0|4294967295] ""  BCU,BMS,DTU,OBC
+
+BO_ 1281 VIU_DiagRqt_Msg2: 8 Vector__XXX
+ SG_ VIU_ECU_Name : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Diagnostic_Respond : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1282 VIU_VerNo_Msg3: 8 VIU
+ SG_ VIU_ECU_Name : 0|8@1+ (1,0) [0|255] ""  BCU,BMS,DTU,OBC
+
+BO_ 1283 VIU_TrigCmd_Msg4: 8 VIU
+ SG_ VIU_ECU_Name : 0|8@1+ (1,0) [0|255] ""  BCU,BMS,DTU,OBC
+ SG_ S_W_Update_Command : 9|1@1+ (1,0) [0|1] ""  BCU,BMS,DTU,OBC
+ SG_ Limp_mode : 10|1@1+ (1,0) [0|1] ""  BCU,BMS,DTU,OBC
+ SG_ Charger_Disconnect_Command : 11|1@1+ (1,0) [0|1] ""  BCU,BMS,DTU,OBC
+ SG_ Sleep_Cmd : 12|1@1+ (1,0) [0|1] ""  BCU,BMS,DTU,OBC
+ SG_ operation_disable_cmd : 13|1@1+ (1,0) [0|1] ""  BCU,BMS,DTU,OBC
+
+BO_ 1284 VIU_getECUName_Msg5: 8 VIU
+ SG_ VIU_ECU_Name : 0|8@1+ (1,0) [0|255] ""  BCU,BMS,DTU,OBC
+
+BO_ 1328 VIU_OBCBootldr_EnMsg6: 8 VIU
+ SG_ OBC_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  OBC
+ SG_ OBC_firmware_bin_size : 8|32@1+ (1,0) [0|4294967295] ""  OBC
+
+BO_ 1329 VIU_OBCEraseApp_Msg7: 8 VIU
+ SG_ OBC_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  OBC
+ SG_ OBC_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  OBC
+
+BO_ 1330 VIU_OBCData_Msg8: 8 VIU
+ SG_ OBC_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  OBC
+
+BO_ 1331 VIU_OBC_EOF_Msg9: 8 VIU
+ SG_ OBC_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  OBC
+
+BO_ 1332 VIU_OBCWholeCRC_Msg10: 8 VIU
+ SG_ OBC_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  OBC
+
+BO_ 1333 VIU_OBCJumpApp_Msg11: 8 VIU
+ SG_ OBC_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  OBC
+ SG_ OBC_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  OBC
+
+BO_ 1334 VIU_OBCBootTout_Msg12: 8 VIU
+ SG_ OBC_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  OBC
+ SG_ OBC_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  OBC
+
+BO_ 1335 VIU_OBCBootCRCErr_Msg13: 8 VIU
+ SG_ OBC_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  OBC
+ SG_ OBC_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  OBC
+
+BO_ 1344 VIU_BMSBootldr_EnMsg14: 8 VIU
+ SG_ BMS_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  BMS
+ SG_ BMS_firmware_bin_size : 8|32@1+ (1,0) [0|4294967295] ""  BMS
+
+BO_ 1345 VIU_BMSEraseApp_Msg15: 8 VIU
+ SG_ BMS_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  BMS
+ SG_ BMS_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  BMS
+
+BO_ 1346 VIU_BMSData_Msg16: 8 VIU
+ SG_ BMS_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  BMS
+
+BO_ 1347 VIU_BMS_EOF_Msg17: 8 VIU
+ SG_ BMS_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  BMS
+
+BO_ 1348 VIU_BMSWholeCRC_Msg18: 8 VIU
+ SG_ BMS_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  BMS
+
+BO_ 1349 VIU_BMSJumpApp_Msg19: 8 VIU
+ SG_ BMS_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  BMS
+ SG_ BMS_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  BMS
+
+BO_ 1350 VIU_BMSBootTout_Msg20: 8 VIU
+ SG_ BMS_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  BMS
+ SG_ BMS_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  BMS
+
+BO_ 1351 VIU_BMSBootCRCErr_Msg21: 8 VIU
+ SG_ BMS_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  BMS
+ SG_ BMS_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  BMS
+
+BO_ 1360 VIU_BCU_Bootldr_EnMsg22: 8 VIU
+ SG_ BCU_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  BCU
+ SG_ BCU_firmware_bin_size : 8|32@1+ (1,0) [0|4294967295] ""  BCU
+
+BO_ 1361 VIU_BCUEraseApp_Msg23: 8 VIU
+ SG_ BCU_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  BCU
+ SG_ BCU_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  BCU
+
+BO_ 1362 VIU_BCUData_Msg24: 8 VIU
+ SG_ BCU_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  BCU
+
+BO_ 1363 VIU_BCU_EOF_Msg25: 8 VIU
+ SG_ BCU_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  BCU
+
+BO_ 1364 VIU_BCUWholeCRC_Msg26: 8 VIU
+ SG_ BCU_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  BCU
+
+BO_ 1365 VIU_BCUJumpApp_Msg27: 8 VIU
+ SG_ BCU_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  BCU
+ SG_ BCU_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  BCU
+
+BO_ 1366 VIU_BCUBootTout_Msg28: 8 VIU
+ SG_ BCU_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  BCU
+ SG_ BCU_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  BCU
+
+BO_ 1367 VIU_BCUBootCRCErr_Msg29: 8 VIU
+ SG_ BCU_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  BCU
+ SG_ BCU_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  BCU
+
+BO_ 1376 VIU_DTU_Bootldr_EnMsg30: 8 VIU
+ SG_ DTU_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  DTU
+ SG_ DTU_firmware_bin_size : 8|32@1+ (1,0) [0|4294967295] ""  DTU
+
+BO_ 1377 VIU_DTUEraseApp_Msg31: 8 VIU
+ SG_ DTU_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  DTU
+ SG_ DTU_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  DTU
+
+BO_ 1378 VIU_DTUData_Msg32: 8 VIU
+ SG_ DTU_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  DTU
+
+BO_ 1379 VIU_DTU_EOF_Msg33: 8 VIU
+ SG_ DTU_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  DTU
+
+BO_ 1380 VIU_DTUWholeCRC_Msg34: 8 VIU
+ SG_ DTU_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  DTU
+
+BO_ 1381 VIU_DTUJumpApp_Msg35: 8 VIU
+ SG_ DTU_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  DTU
+ SG_ DTU_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  DTU
+
+BO_ 1382 VIU_DTUBootTout_Msg36: 8 VIU
+ SG_ DTU_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  DTU
+ SG_ DTU_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  DTU
+
+BO_ 1383 VIU_DTUBootCRCErr_Msg37: 8 VIU
+ SG_ DTU_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  DTU
+ SG_ DTU_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  DTU
+
+BO_ 1392 VIU_Periodic_Msg39: 8 VIU
+ SG_ Odometer_dist : 0|32@1+ (1,0) [0|4294967295] "km"  BCU
+ SG_ Trip_a_dist : 32|16@1+ (1,0) [0|65535] "km"  BCU
+ SG_ Trip_b_dist : 48|16@1+ (1,0) [0|65535] "km"  BCU
+
+BO_ 1393 VIU_Event_Msg40: 8 VIU
+ SG_ VIU_ride_mode_cmd : 0|2@1+ (1,0) [0|3] ""  BCU,BMS,DTU,OBC
+ SG_ VIU_park_assist_cmd : 2|2@1+ (1,0) [0|3] ""  BCU,BMS,DTU,OBC
+ SG_ VIU_park_assist_sub_mode_cmd : 4|2@1+ (1,0) [0|3] ""  BCU,BMS,DTU,OBC
+ SG_ VIU_default_ridemode_cmd : 6|2@1+ (1,0) [0|3] ""  BCU,BMS,DTU,OBC
+ SG_ VIU_minThreshold_SOC : 8|8@1+ (1,0) [0|255] ""  BCU,BMS,DTU,OBC
+ SG_ VIU_Battery_saving_mode_cmd : 16|1@1+ (1,0) [0|1] ""  BCU,BMS,DTU,OBC
+ SG_ VIU_park_assist_buzz_off_cmd : 17|1@1+ (1,0) [0|1] ""  BCU,BMS,DTU,OBC
+ SG_ VIU_indicator_buzz_off_cmd : 18|1@1+ (1,0) [0|1] ""  BCU,BMS,DTU,OBC
+ SG_ VIU_follow_me_hlamp_cmd : 19|1@1+ (1,0) [0|1] ""  BCU,BMS,DTU,OBC
+ SG_ VIU_usb_en_cmd : 20|1@1+ (1,0) [0|1] ""  BCU,BMS,DTU,OBC
+ SG_ VIU_auto_ind_off_cmd : 21|1@1+ (1,0) [0|1] ""  BCU,BMS,DTU,OBC
+ SG_ VIU_turn_completed_cmd : 22|1@1+ (1,0) [0|1] ""  BCU,BMS,DTU,OBC
+ SG_ VIU_sidestd_ignor_cmd : 23|1@1+ (1,0) [0|1] ""  BCU,BMS,DTU,OBC
+ SG_ VIU_veh_bootup_lght_cmd : 24|1@1+ (1,0) [0|1] ""  BCU,BMS,DTU,OBC
+ SG_ VIU_stop_charging_cmd : 25|1@1+ (1,0) [0|1] ""  BCU,BMS,DTU,OBC
+ SG_ VIU_vacation_mode_cmd : 26|1@1+ (1,0) [0|1] ""  BCU,BMS,DTU,OBC
+ SG_ VIU_loc_kfobvis_cmd : 27|1@1+ (1,0) [0|1] ""  BCU,BMS,DTU,OBC
+ SG_ VIU_veh_bootup_buz_cmd : 28|1@1+ (1,0) [0|1] ""  BCU,BMS,DTU,OBC
+ SG_ VIU_veh_health_check_cmd : 29|1@1+ (1,0) [0|1] "Status"  BCU,BMS,DTU,OBC
+
+BO_ 1408 VIU_AFEBootldr_EnMsg41: 8 VIU
+ SG_ AFE_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  OBC
+ SG_ AFE_firmware_bin_size : 8|32@1+ (1,0) [0|4294967295] ""  OBC
+
+BO_ 1409 VIU_AFEEraseApp_Msg42: 8 VIU
+ SG_ AFE_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  OBC
+ SG_ AFE_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  OBC
+
+BO_ 1410 VIU_AFEData_Msg43: 8 VIU
+ SG_ AFE_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  OBC
+
+BO_ 1411 VIU_AFE_EOF_Msg44: 8 VIU
+ SG_ AFE_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  OBC
+
+BO_ 1412 VIU_AFEWholeCRC_Msg45: 8 VIU
+ SG_ AFE_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  OBC
+
+BO_ 1413 VIU_AFEJumpApp_Msg46: 8 VIU
+ SG_ AFE_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  OBC
+ SG_ AFE_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  OBC
+
+BO_ 1414 VIU_AFEBootTout_Msg47: 8 VIU
+ SG_ AFE_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  OBC
+ SG_ AFE_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  OBC
+
+BO_ 1415 VIU_AFEBootCRCErr_Msg48: 8 VIU
+ SG_ AFE_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  OBC
+ SG_ AFE_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  OBC
+
+BO_ 2031 VIU_Phy_RespMsg49: 8 VIU
+ SG_ UDS_ISOTP_frame : 0|64@1+ (1,0) [0|1.84467440737096E+019] "" Vector__XXX
+
+BO_ 2017 VIU_PhyABS_RqtMsg50: 8 VIU
+ SG_ UDS_ISOTP_frame : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  ABS
+
+BO_ 2018 VIU_PhyBCU_RqtMsg51: 8 VIU
+ SG_ UDS_ISOTP_frame : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  BCU
+
+BO_ 2019 VIU_PhyPKE_RqtMsg52: 8 VIU
+ SG_ UDS_ISOTP_frame : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  PKE
+
+BO_ 2020 VIU_PhyBMS_RqtMsg53: 8 VIU
+ SG_ UDS_ISOTP_frame : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  BMS
+
+BO_ 2021 VIU_PhyDTU_RqtMsg54: 8 VIU
+ SG_ UDS_ISOTP_frame : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  DTU
+
+BO_ 2022 VIU_PhyOBC_RqtMsg55: 8 VIU
+ SG_ UDS_ISOTP_frame : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  OBC
+
+BO_ 896 DTU_pha_cur_Msg1: 8 DTU
+ SG_ DTU_Phase_A_Current : 0|16@1- (0.01,0) [-32768|32767] "A"  BMS,VIU
+ SG_ DTU_Phase_B_Current : 16|16@1- (0.01,0) [-32768|32767] "A"  BMS,VIU
+ SG_ DTU_Phase_C_Current : 32|16@1- (0.01,0) [-32768|32767] "A"  BMS,VIU
+ SG_ DTU_Resultant_Current : 48|16@1- (0.01,0) [-32768|32767] "A"  BMS,VIU
+
+BO_ 897 DTU_sensors_Msg2: 8 Vector__XXX
+ SG_ DTU_throttle_position : 8|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ DTU_dc_link_voltg : 16|16@1+ (0.01,0) [0|65535] "V" Vector__XXX
+ SG_ DTU_Motor_RPM : 32|16@1+ (1,0) [0|65535] "RPM" Vector__XXX
+ SG_ DTU_kill_switch_status : 48|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DTU_brake_switch_status : 49|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DTU_clutch_switch_status : 50|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DTU_regen_status : 51|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DTU_vac_mode_activation_status : 52|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DTU_start_switch_status : 53|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ reserved0 : 54|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ reserved1 : 55|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DTU_launch_act_status : 56|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DTU_pam_act_status : 57|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DTU_deacc_act_status : 58|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DTU_acc_act_status : 59|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DTU_limp_act_status : 60|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DTU_halt_act_status : 61|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DTU_stop_vehicle_status : 62|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DTU_standby_act_status : 63|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 898 DTU_tempr_Msg3: 8 DTU
+ SG_ DTU_ctrl_board_tempr_1 : 0|16@1- (1,0) [-32768|32767] "C"  VIU
+ SG_ DTU_ctrl_board_tempr_2 : 16|16@1- (1,0) [-32768|32767] "C"  VIU
+ SG_ DTU_pwr_board_tempr_1 : 32|16@1- (1,0) [-32768|32767] "C"  VIU
+ SG_ DTU_pwr_board_tempr_2 : 48|16@1- (1,0) [-32768|32767] "C"  VIU
+
+BO_ 899 DTU_tempr_Msg4: 8 Vector__XXX
+ SG_ DTU_motor_tempr_1 : 0|16@1- (1,0) [-32768|32767] "C" Vector__XXX
+ SG_ DTU_motor_tempr_2 : 16|16@1- (1,0) [-32768|32767] "C" Vector__XXX
+ SG_ DTU_mcu_tempr : 32|16@1- (1,0) [-32768|32767] "C" Vector__XXX
+
+BO_ 516 DTU_fault_Msg5: 8 DTU
+ SG_ DTU_under_voltg_fault : 0|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ DTU_over_voltg_fault : 1|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ DTU_motor_over_tempr_fault : 2|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ DTU_over_tempr_fault : 3|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ DTU_high_rpm_fault : 4|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ DTU_over_curr_fault : 5|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ DTU_short_circuit_fault : 6|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ DTU_position_sensor_fault : 7|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ DTU_brake_failure_status : 8|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ DTU_gate_driver_failure_status : 9|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ DTU_curr_sensor_failure_status : 10|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ DTU_mot_tempr_sensor_fail_status : 11|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ DTU_throttle_failure_status : 12|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ DTU_motor_winding_fault : 13|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ DTU_dc_voltg_sensor_fail_status : 14|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ DTU_clutch_switch_failure_status : 15|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ DTU_throttle_offset_status : 16|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ DTU_current_sensor_offset_status : 17|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ DTU_pos_sensor_offset_status : 18|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ DTU_motor_halt_cause : 20|4@1+ (1,0) [0|15] ""  BMS,VIU
+ SG_ DTU_plausibility : 24|8@1+ (1,0) [0|255] ""  BMS,VIU
+ SG_ sop_derating_flag : 40|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ dtu_derating_flag : 41|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ DTU_controller_status : 48|2@1+ (1,0) [0|3] "Status"  BMS,VIU
+ SG_ Motor_status : 50|2@1+ (1,0) [0|3] "Status"  BMS,VIU
+ SG_ Motor_temp : 52|2@1+ (1,0) [0|3] "Status"  BMS,VIU
+
+BO_ 900 DTU_elect_params_Msg6: 8 DTU
+ SG_ DTU_pha_A_voltg : 0|8@1+ (1,0) [0|255] "V"  VIU
+ SG_ DTU_pha_B_voltg : 8|8@1+ (1,0) [0|255] "V"  VIU
+ SG_ DTU_pha_C_voltg : 16|8@1+ (1,0) [0|255] "V"  VIU
+ SG_ DTU_q_axis_voltg : 24|16@1- (0.01,0) [-32768|32767] "V"  VIU
+ SG_ DTU_d_axis_voltg : 40|16@1- (0.01,0) [-32768|32767] "V"  VIU
+ SG_ DTU_controlmode : 56|8@1+ (1,0) [0|255] "count"  VIU
+
+BO_ 901 DTU_elect_params_Msg7: 8 DTU
+ SG_ DTU_q_axis_curr : 0|16@1- (0.01,0) [-32768|32767] "A"  VIU
+ SG_ DTU_d_axis_curr : 16|16@1- (0.01,0) [-32768|32767] "A"  VIU
+ SG_ DTU_Rotor_Angle : 32|16@1+ (1,0) [0|65535] "degree"  VIU
+ SG_ DTU_Motor_RPM_Limit : 48|16@1- (1,0) [-32768|32767] "RPM"  VIU
+
+BO_ 902 DTU_Heart_beat_Msg8: 8 DTU
+ SG_ ECU_Name : 0|8@1+ (1,0) [0|255] "ECUs"  BCU,BMS,OBC,PKE,VIU
+ SG_ Rolling_Counter : 8|8@1+ (1,0) [0|255] "count"  BCU,BMS,OBC,PKE,VIU
+
+BO_ 903 DTU_Auth_RespMsg9: 8 DTU
+ SG_ DTU_ECU_Name : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ DTU_time_OTP_msg : 8|32@1+ (1,0) [0|4294967295] ""  VIU
+
+BO_ 904 DTU_Diag_RespMsg10: 8 DTU
+ SG_ System_Fault_Status : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  VIU
+
+BO_ 905 DTU_VerNo_RespMsg11: 8 DTU
+ SG_ S_W_Version_No : 0|16@1+ (1,0) [0|65535] ""  VIU
+ SG_ H_W_Version_No_ : 16|16@1+ (1,0) [0|65535] ""  VIU
+ SG_ Comm_Protcol_Version_No_ : 32|16@1+ (1,0) [0|65535] ""  VIU
+
+BO_ 906 DTU_Mode_Ack_Msg12: 8 DTU
+ SG_ DTU_ECU_Name : 0|8@1+ (1,0) [0|255] ""  ABS,BCU,BMS,ESL,OBC,PKE,VIU
+ SG_ DTU_Vacation_Mode_Command : 8|1@1+ (1,0) [0|1] ""  ABS,BCU,BMS,ESL,OBC,PKE,VIU
+ SG_ DTU_S_W_Update_Command : 9|1@1+ (1,0) [0|1] ""  ABS,BCU,BMS,ESL,OBC,PKE,VIU
+ SG_ Limp_mode : 10|1@1+ (1,0) [0|1] ""  ABS,BCU,BMS,ESL,OBC,PKE,VIU
+ SG_ Charger_Disconnect_Command : 11|1@1+ (1,0) [0|1] ""  ABS,BCU,BMS,ESL,OBC,PKE,VIU
+ SG_ Sleep_Cmd : 12|1@1+ (1,0) [0|1] ""  ABS,BCU,BMS,ESL,OBC,PKE,VIU
+ SG_ operation_disable_cmd : 13|1@1+ (1,0) [0|1] ""  ABS,BCU,BMS,ESL,OBC,PKE,VIU
+
+BO_ 907 DTU_Bootloader_Enable_AckMsg13: 8 DTU
+ SG_ DTU_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ DTU_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 908 DTU_Erase_Application_AckMsg14: 8 DTU
+ SG_ DTU_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ DTU_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 909 DTU_Data_CRC_AckMsg15: 8 DTU
+ SG_ DTU_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  VIU
+
+BO_ 910 DTU_EOF_AckMsg16: 8 DTU
+ SG_ DTU_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  VIU
+
+BO_ 911 DTU_Whole_CRC_AckMsg17: 8 DTU
+ SG_ DTU_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  VIU
+
+BO_ 912 DTU_Jumping_App_AckMsg18: 8 DTU
+ SG_ DTU_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ DTU_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 913 DTU_BootloaderTout_ErrMsg19: 8 DTU
+ SG_ DTU_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ DTU_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 914 DTU_BootloaderCRC_ErrMsg20: 8 DTU
+ SG_ DTU_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ DTU_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 917 DTU_Calib_data1_Msg21: 8 Vector__XXX
+ SG_ DTU_ride_mode_trq_dmd : 0|16@1- (0.01,0) [-32768|32767] "Nm" Vector__XXX
+ SG_ DTU_Derating : 16|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ reserved : 32|32@1- (1,0) [-2147483648|2147483647] "" Vector__XXX
+
+BO_ 918 DTU_Calib_data2_Msg22: 8 Vector__XXX
+ SG_ DTU_pam_trq_dmd : 0|16@1- (0.01,0) [-32768|32767] "Nm" Vector__XXX
+ SG_ DTU_positive_trq_dmd : 16|16@1- (0.01,0) [-32768|32767] "Nm" Vector__XXX
+ SG_ DTU_drag_trq_dmd : 32|16@1- (0.01,0) [-32768|32767] "Nm" Vector__XXX
+ SG_ DTU_brake_trq_dmd : 48|16@1- (0.01,0) [-32768|32767] "Nm" Vector__XXX
+
+BO_ 919 DTU_Calib_data3_Msg23: 8 Vector__XXX
+ SG_ DTU_neg_trq_dmd : 0|16@1- (0.01,0) [-32768|32767] "Nm" Vector__XXX
+ SG_ set_bit_4 : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ vsl_relay_status : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ DTU_max_spd_lmt : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ DTU_internal_version_number : 40|16@1+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 920 DTU_dbg_data1_Msg24: 8 Vector__XXX
+ SG_ abs_data_rx_counter : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ bcu_data_rx_counter : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ rx_veh_mode : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ rx_gear_position : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ rx_veh_speed : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 921 Odometer_data1_Msg25: 8 Vector__XXX
+ SG_ Veh_accel : 0|16@1- (1,0) [-32768|32767] "ms2" Vector__XXX
+ SG_ Vehicle_Speed_actual : 16|16@1+ (0.01,0) [0|65535] "km" Vector__XXX
+ SG_ Vehicle_spd_cluster_display : 32|16@1+ (1,0) [0|65535] "km" Vector__XXX
+
+BO_ 922 DTU_dbg_data2_Msg26: 8 Vector__XXX
+ SG_ Throttle_voltage_1 : 0|16@1+ (1,0) [0|65535] "mV" Vector__XXX
+ SG_ Throttle_voltage_2 : 16|16@1+ (1,0) [0|65535] "mV" Vector__XXX
+ SG_ Id_reference : 32|16@1- (0.01,0) [-32768|32767] "A" Vector__XXX
+ SG_ Iq_reference : 48|16@1- (0.01,0) [-32768|32767] "A" Vector__XXX
+
+BO_ 923 DTU_Calib_data4_Msg27: 8 Vector__XXX
+ SG_ Bat_derating_flag : 0|8@1+ (1,0) [0|255] "Nm" Vector__XXX
+ SG_ DTU_max_allowable_der_curr : 16|16@1+ (1,0) [0|65535] "A" Vector__XXX
+ SG_ Pos_demand_ref_curr : 32|16@1+ (1,0) [0|65535] "A" Vector__XXX
+ SG_ Neg_demand_ref_curr : 48|16@1- (1,0) [-32768|32767] "-" Vector__XXX
+
+BO_ 924 DTU_Calib_data5_Msg28: 8 Vector__XXX
+ SG_ bat_de_curr_amp_f32 : 0|16@1- (1,0) [-32768|32767] "mA" Vector__XXX
+ SG_ brake_fault_status : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ brake_lamp_status : 17|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Clutch_switch_counter : 18|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Counter_brake_switch : 19|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Clutch_status_changing : 20|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Brake_Throttle_Plaus_check : 21|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Set_Clutch_fault : 22|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Brake_Throttle_Plausibility : 23|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Positive_torq_dmd_pedalmap : 24|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ Derating_current_inv_mo_batt : 40|16@1- (1,0) [-32768|32767] "mA" Vector__XXX
+
+BO_ 925 DTU_Calib_data6_Msg29: 8 DTU
+ SG_ Id_safe : 0|16@1- (1,0) [-32768|32767] "A"  BMS,VIU
+ SG_ Id_mtpa : 16|16@1- (1,0) [-32768|32767] "A"  BMS,VIU
+ SG_ Id_fw : 32|16@1- (1,0) [-32768|32767] "A"  BMS,VIU
+
+BO_ 926 DTU_cal_trq_Msg30: 8 Vector__XXX
+ SG_ load_trq : 0|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ electrical_trq : 16|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ reserved : 32|32@1- (1,0) [-2147483648|2147483647] "" Vector__XXX
+
+BO_ 2029 DTU_Phy_RespMsg31: 8 DTU
+ SG_ UDS_ISOTP_frame : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  VIU
+
+BO_ 1025 DTU_ExtVerName_Msg31: 8 DTU
+ SG_ Frame_0_7 : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  VIU
+
+BO_ 1026 DTU_ExtVerName_Msg32: 8 DTU
+ SG_ Frame_8_15 : 0|64@1+ (1,0) [0|1.84467440737096E+019] "" Vector__XXX
+
+BO_ 1040 OBC_TX_Msg1: 8 OBC
+ SG_ OBC_V_out : 0|16@1+ (0.1,0) [0|65535] "Volts"  BCU,BMS,VIU
+ SG_ OBC_I_out : 16|16@1+ (1,0) [0|65535] "mAmp."  BCU,BMS,VIU
+ SG_ OBC_Batt_FullChged_sts : 32|1@1+ (1,0) [0|1] ""  BCU,BMS,VIU
+ SG_ OBC_CC_Mode_Status : 33|1@1+ (1,0) [0|1] ""  BCU,BMS,VIU
+ SG_ OBC_CV_Mode_Status : 34|1@1+ (1,0) [0|1] ""  BCU,BMS,VIU
+ SG_ OBC_CAN_ready_status : 35|1@1+ (1,0) [0|1] ""  BCU,BMS,VIU
+ SG_ Chg_con_Sts : 36|1@1+ (1,0) [0|1] ""  BCU,BMS,VIU
+ SG_ Chg_Con_LockUnlock_Cmd : 37|1@1+ (1,0) [0|1] ""  BCU,BMS,VIU
+ SG_ OBC_DmdVtg_mismatch_sts : 38|1@1+ (1,0) [0|1] ""  BCU,BMS,VIU
+ SG_ OBC_DmdCurr_mismatch_sts : 39|1@1+ (1,0) [0|1] ""  BCU,BMS,VIU
+
+BO_ 1041 OBC_TX_Msg2: 8 OBC
+ SG_ OBC_input_vtg : 0|16@1+ (0.1,0) [0|65535] "Volts"  BMS,VIU
+ SG_ OBC_input_curr : 16|16@1+ (1,0) [0|65535] "mAmps"  BMS,VIU
+ SG_ LLC_Temperature : 32|16@1- (1,0) [-32768|32767] "Deg C"  BMS,VIU
+ SG_ pfc_Temperature : 48|16@1- (1,0) [-32768|32767] "Deg C"  BMS,VIU
+
+BO_ 1042 OBC_Auth_RespMsg3: 8 OBC
+ SG_ OBC_ECU_Name : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ OBC_time_OTP_msg : 8|32@1+ (1,0) [0|4294967295] ""  VIU
+
+BO_ 1043 OBC_Diag_RespMsg4: 8 OBC
+ SG_ System_Fault_Status : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  VIU
+
+BO_ 1044 OBC_VerNo_RespMsg5: 8 OBC
+ SG_ S_W_Version_No : 0|16@1+ (1,0) [0|65535] ""  VIU
+ SG_ H_W_Version_No_ : 16|16@1+ (1,0) [0|65535] ""  VIU
+ SG_ Comm_Protcol_Version_No_ : 32|16@1+ (1,0) [0|65535] ""  VIU
+
+BO_ 1045 OBC_Mode_AckMsg6: 8 OBC
+ SG_ OBC_ECU_Name : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ OBC_Vacation_Mode_Command : 8|1@1+ (1,0) [0|1] ""  VIU
+ SG_ OBC_S_W_Update_Command : 9|1@1+ (1,0) [0|1] ""  VIU
+ SG_ Limp_mode : 10|1@1+ (1,0) [0|1] ""  VIU
+ SG_ Chrgr_Disconnect_Cmd : 11|1@1+ (1,0) [0|1] ""  VIU
+ SG_ Sleep_Cmd : 12|1@1+ (1,0) [0|1] ""  VIU
+ SG_ Operation_disable_cmd : 13|1@1+ (1,0) [0|1] ""  VIU
+
+BO_ 1046 OBC_Bootloader_Enable_ACK_Msg_07: 8 OBC
+ SG_ OBC_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ OBC_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 1047 OBC_Erase_Application_Ack_Msg_08: 8 OBC
+ SG_ OBC_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ OBC_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 1048 OBC_Data_CRC_Ack_Msg_09: 8 OBC
+ SG_ OBC_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  VIU
+
+BO_ 1049 OBC_EOF_ACK_Msg_10: 8 OBC
+ SG_ OBC_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  VIU
+
+BO_ 1050 OBC_Whole_CRC_Ack_Msg_11: 8 OBC
+ SG_ OBC_Boot_CRC_Data : 0|32@1+ (1,0) [0|4294967295] ""  VIU
+
+BO_ 1051 OBC_Jumping_App_Ack_Msg_12: 8 OBC
+ SG_ OBC_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ OBC_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 1052 OBC_Bootldr_Tout_Err_Msg_13: 8 OBC
+ SG_ OBC_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ OBC_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 1053 OBC_Bootloader_CRC_Error_Msg_14: 8 OBC
+ SG_ OBC_bootloader_cmd_sts : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ OBC_bootloader_error_type : 8|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 517 OBC_Fault_Evt_Msg15: 8 OBC
+ SG_ OBC_Hardware_Failure_Short_Ckt : 0|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ OBC_Temperature_fault : 1|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ OBC_Input_Over_Voltage : 2|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ OBC_Input_Under_Voltage : 3|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ OBC_Output_Voltage_high : 4|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ OBC_Line_Neutral_Interchange : 6|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ OBC_Earth_open : 7|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ OBC_Input_Over_Voltage_Alarm : 8|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ OBC_Input_Under_Voltage_Alarm : 9|1@1+ (1,0) [0|1] ""  BMS,VIU
+ SG_ OBC_PFC_Currnet_Peak : 10|1@1+ (1,0) [0|1] ""  BMS,VIU
+
+BO_ 1056 OBC_Heart_beat_Msg16: 8 DTU
+ SG_ ECU_Name : 0|8@1+ (1,0) [0|255] ""  BMS,OBC,PKE,VIU
+ SG_ Rolling_Counter : 8|8@1+ (1,0) [0|255] ""  BMS,OBC,PKE,VIU
+
+BO_ 2030 OBC_Phy_RespMsg17: 8 OBC
+ SG_ UDS_ISOTP_frame : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  VIU
+
+BO_ 1057 OBC_ExtVerName_Msg18: 8 DTU
+ SG_ Frame_0_7 : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  VIU
+
+BO_ 1058 OBC_ExtVerName_Msg19: 8 DTU
+ SG_ Frame_8_15 : 0|64@1+ (1,0) [0|1.84467440737096E+019] "" Vector__XXX
+
+BO_ 352 PKE_All_Comm_Msg: 8 PKE
+ SG_ ECU_Signal_Name : 0|8@1+ (1,0) [0|255] ""  BCU
+ SG_ Authentication_Status : 8|8@1+ (1,0) [0|255] ""  BCU
+ SG_ Keyfob_BattVtg_Hi_byte : 24|8@1+ (1,0) [0|255] ""  BCU
+ SG_ Keyfob_BattVtg_Lo_byte : 32|8@1+ (1,0) [0|255] ""  BCU
+
+BO_ 1072 PKE_TX_Auth_Response_Msg_07: 8 PKE
+ SG_ PKE_ECU_Name : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ PKE_time_OTP_msg : 8|24@1+ (1,0) [0|16777215] ""  VIU
+
+BO_ 1073 PKE_Tx_Diag_Response_Msg_08: 8 PKE
+ SG_ System_Fault_Status : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  VIU
+
+BO_ 1074 PKE_TX_Verion_No_Response_Msg_09: 8 PKE
+ SG_ S_W_Version_No : 0|16@1+ (1,0) [0|65535] ""  VIU
+ SG_ H_W_Version_No_ : 16|16@1+ (1,0) [0|65535] ""  VIU
+ SG_ Comm_Protcol_Version_No_ : 32|16@1+ (1,0) [0|65535] ""  VIU
+
+BO_ 1075 PKE_TX_Mode_Ack_Msg_10: 8 PKE
+ SG_ PKE_ECU_Name : 0|8@1+ (1,0) [0|255] ""  VIU
+ SG_ PKE_Vacation_Mode_Command : 8|1@1+ (1,0) [0|1] ""  VIU
+ SG_ PKE_S_W_Update_Command : 9|1@1+ (1,0) [0|1] ""  VIU
+
+BO_ 1078 PKE_Heart_beat_Msg11: 8 PKE
+ SG_ ECU_Name : 0|8@1+ (1,0) [0|255] ""  DTU,ESL,OBC,VIU
+ SG_ Rolling_Counter : 8|8@1+ (1,0) [0|255] ""  DTU,ESL,OBC,VIU
+
+BO_ 2027 PKE_Phy_RespMsg12: 8 PKE
+ SG_ UDS_ISOTP_frame : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  VIU
+
+BO_ 320 ESCL_Handle_Status_Msg_01: 8 ESL
+ SG_ ECU_Signal_Name : 0|8@1+ (1,0) [0|255] ""  PKE
+ SG_ Handle_Status : 8|8@1+ (1,0) [0|255] ""  PKE
+
+BO_ 299 ABS_Info_Msg_01: 8 ABS
+ SG_ Front_Speed : 7|16@0+ (0.05625,0) [0|65535] "kph"  BCU,BMS,DTU,VIU
+ SG_ Rear_Speed : 23|16@0+ (0.05625,0) [0|65535] "kph"  BCU,BMS,DTU,VIU
+ SG_ ABSWarningLamp : 35|2@0+ (1,0) [0|3] "State"  BCU,BMS,DTU,VIU
+ SG_ FrontWheelSpeedValidity : 36|1@0+ (1,0) [0|1] "Status"  BCU,BMS,DTU,VIU
+ SG_ RearWheelSpeedValidity : 37|1@0+ (1,0) [0|1] "Status"  BCU,BMS,DTU,VIU
+ SG_ ABSEventActive : 39|1@0+ (1,0) [0|1] "Status"  BCU,BMS,DTU,VIU
+
+BO_ 2025 ABS_Phy_RespMsg_02: 8 ABS
+ SG_ UDS_ISOTP_frame : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  VIU
+
+
+
+VAL_ 773 BMS_state 0 "NA" 1 "DEAD" 2 "INIT" 3 "PCHG" 4 "CHG_TRICKLE" 5 "CHG_UV" 6 "CHG_NORMAL" 7 "DSG_NORMAL" 8 "DSG_NOCHG" 9 "DSG_LIMP" 10 "BOOT" 11 "SLEEP_UV" 12 "SLEEP_DPDSG" 13 "FAULT_NOCHG" 14 "FAULT_CRITICAL" 15 "VACATION" ;
+VAL_ 773 BMS_scd_fb_status 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 773 BMS_charger_detect_status 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 773 BMS_chg_mcu_status 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 773 BMS_dchg_mcu_status 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 773 BMS_dchg_fb_status 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 773 BMS_calib_start_status 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 773 BMS_SOP_limp_flag 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 773 BMS_charger_plugged_status 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 773 BMS_cstemp_warn_status 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 773 BMS_Battery_status 0 "Default/NA" 1 "GREEN" 2 "ORANGE" 3 "RED" ;
+VAL_ 773 BMS_Battery_temp 0 "Default/NA" 1 "GREEN" 2 "ORANGE" 3 "RED" ;
+VAL_ 773 BMS_Battery_voltage 0 "Default/NA" 1 "GREEN" 2 "ORANGE" 3 "RED" ;
+VAL_ 773 Coolant_temp 0 "Default/NA" 1 "GREEN" 2 "ORANGE" 3 "RED" ;
+VAL_ 773 BMS_can_state 0 "NA" 1 "WAKEUP" 2 "NORMAL" 3 "FAIL" ;
+VAL_ 775 BMS_cell_balancing_status_cell1 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell2 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell3 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell4 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell5 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell6 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell7 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell8 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell9 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell10 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell11 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell12 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell13 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell14 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell15 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell16 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell17 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell18 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell19 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell20 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell21 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell22 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell23 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell24 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell25 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell26 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell27 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 775 BMS_cell_balancing_status_cell28 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_afe_cov_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_afe_cuv_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_afe_cot_chg_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_afe_cot_dchg_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_afe_cut_chg_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_afe_cut_dchg_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_afe_oc_chg_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_afe_oc_dchg_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_afe_sc_detetction_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_afe_overload_detect_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_afe_fet_off_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_afe_oc_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_afe_otf_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_chgfetoff_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_cov_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_cuv_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_ddsg_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_del_cv_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_pchg_tout_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_del_ct_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_hostl_i2c_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_hostu_i2c_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_cot_chg_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_cot_dsg_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_cut_chg_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_cut_dsg_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_fot_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_csot_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_afedieot_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_imd_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_hostl_fail_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_hostu_fail_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_afel_fail_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_afeu_fail_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_cs_ic_fail_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_imd_ic_fail_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_adc_ic_fail_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_can_ic_fail_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_aps_scd_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_aps_ot_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_aps_ov_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_aps_oc_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_opp_cchg_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_opp_cdsg_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_pchg_pk_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_crit_rel_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_pchg_rot_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_pchg_rtow_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_chg_hb_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_hvil_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_dsgoff_rel_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_hazard_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_hw_scd_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 512 BMS_sysfail_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 513 BMS_bat_cov_warning 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 513 BMS_bat_cuv_warning 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 513 BMS_bat_del_v_warning 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 513 BMS_bat_cot_warning 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 513 BMS_bat_cut_warning 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 513 BMS_bat_del_ct_warning 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 513 BMS_bat_fot_warning 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 513 BMS_bat_csot_warning 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 513 BMS_bat_afedieot_warning 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 513 BMS_bat_occ_warning 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 513 BMS_bat_ocd_warning 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 513 BMS_bat_pusoc_warning 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 513 BMS_false_chgr_warning 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 513 BMS_bat_imd_warning 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 513 BMS_bat_dbg_warning 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 513 BMS_bat_crit_warning 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 776 BMS_ECU_Name 0 "BMS" 1 "BCU" 2 "DTU" 3 "OBC" ;
+VAL_ 778 ECU_Name 0 "BMS" 1 "BCU" 2 "DTU" 3 "OBC" ;
+VAL_ 779 BMS_ECU_Name 0 "BMS" 1 "BCU" 2 "DTU" 3 "OBC" ;
+VAL_ 779 BMS_Vacation_Mode_Command 0 "FAIL" 1 "SUCCESS" ;
+VAL_ 779 BMS_S_W_Update_Command 0 "FAIL" 1 "SUCCESS" ;
+VAL_ 779 Limp_mode 0 "FAIL" 1 "SUCCESS" ;
+VAL_ 779 Charger_Disconnect_Command 0 "FAIL" 1 "SUCCESS" ;
+VAL_ 779 Sleep_Cmd 0 "FAIL" 1 "SUCCESS" ;
+VAL_ 779 operation_disable_cmd 0 "FAIL" 1 "SUCCESS" ;
+VAL_ 793 BMS_ChargMode_Status 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 793 BMS_Charger_Conn_Status 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 793 BMS_Charger_Start_stp_Cmd 0 "Stop" 1 "Start" ;
+VAL_ 793 BMS_CV_Mode_Sw_Cmd 0 "CC" 1 "CV" ;
+VAL_ 794 BMS_ECU_Name 0 "BMS" 1 "BCU" 2 "DTU" 3 "OBC" ;
+VAL_ 806 ECU_Name 0 "BMS" 1 "BCU" 2 "DTU" 3 "OBC" ;
+VAL_ 848 BCU_power_switch_status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_horn_switch_status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_side_stand_status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_pwr_swled_status 0 "OFF" 1 "ON" ;
+VAL_ 848 Kill_switch_out 0 "OFF" 1 "ON" ;
+VAL_ 848 USB_enable_status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_drl_pwr_status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_highbeam_pwr_status 0 "OFF" 1 "ON" ;
+VAL_ 848 PKE_Switch_Status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_dpad_centre_switch_press 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_Dimmer_High_Switch_Status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_Dimmer_Low_Switch_Status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_Pass_Light_Switch_Status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_Right_Signal_Switch_Status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_Left_Signal_Switch_Status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_dualsig_sw_sts 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_dpad_up_switch_long_press 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_dpad_up_switch_status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_dpad_down_switch_status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_dpad_down_switch_long_press 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_dpad_left_switch_status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_dpad_right_switch_status 0 "OFF" 1 "ON" ;
+VAL_ 848 Charger_Solenoid_lock_Status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_keyfob_missing_status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_left_signal_pwr_status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_right_signal_pwr_status 0 "OFF" 1 "ON" ;
+VAL_ 848 VIU_pwr_status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_dimmer_lo_pwr_status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_horn_pwr_status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_tlamp_pwr_status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_bootlamp_pwr_status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_buzzer_pwr_status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_tsl_pwr_status 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_dualsig_sw_lngpres_sts 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_storage_loc_sw_sts 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_dpadcen_sw_lngpress 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_left_sig_blink_pwr_sts 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_right_sig_blink_pwr_sts 0 "OFF" 1 "ON" ;
+VAL_ 848 BCU_chgrloc_pwr_sts 0 "OFF" 1 "ON" ;
+VAL_ 848 Vehicle_Mode 0 "DEFAULT" 1 "LOCK" 2 "PARK" 3 "RIDE" 4 "PARK_ASSIST" 5 "CHARGING" 6 "SW_UPDATE" 7 "VACATION" 8 "THEFT" 9 "LIMP" 10 "CRITICAL" ;
+VAL_ 848 Ride_sub_modes 1 "ECO" 2 "CITY" 3 "SPORT" ;
+VAL_ 848 Parkassist_sub_modes 0 "REV" 1 "FWD" ;
+VAL_ 848 BCU_handle_loc_sts 0 "OFF" 1 "ON" ;
+VAL_ 849 BCU_can_state 0 "NA" 1 "WAKEUP" 2 "NORMAL" 3 "FAIL" ;
+VAL_ 515 BCU_leftsig_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 515 BCU_rightsig_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 515 BCU_bothsig_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 515 BCU_horn_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 515 BCU_hlamp_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 515 BCU_buzz_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 515 BCU_tsl_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 515 BCU_chglock_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 515 BCU_fan_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 515 BCU_isns_vshort_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 515 BCU_isns_gshort_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 515 BCU_viu_rstfail_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 515 BCU_msdi_spi_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 515 BCU_ioexp_i2c_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 515 BCU_ican_busoff_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 515 BCU_brakesig_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 515 BCU_short_cir_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 515 BCU_otemp_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 515 BCU_ovtg_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 515 BCU_under_voltg_fault 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 873 EABS_warnlamp_sts 0 "ABS_OK" 1 "ABS_FAULT" 2 "NA" 3 "NA" ;
+VAL_ 1282 VIU_ECU_Name 5 "BMS" 6 "BCU" 7 "DTU" 8 "OBC" ;
+VAL_ 1284 VIU_ECU_Name 5 "BMS" 6 "BCU" 7 "DTU" 8 "OBC" ;
+VAL_ 1393 VIU_park_assist_cmd 0 "NA" 1 "Exit" 2 "Enter" ;
+VAL_ 1393 VIU_park_assist_sub_mode_cmd 0 "NA" 1 "Rev" 2 "Fwd" ;
+VAL_ 897 DTU_kill_switch_status 0 "OFF" 1 "ON" ;
+VAL_ 897 DTU_brake_switch_status 0 "OFF" 1 "ON" ;
+VAL_ 897 DTU_clutch_switch_status 0 "OFF" 1 "ON" ;
+VAL_ 897 DTU_regen_status 0 "OFF" 1 "ON" ;
+VAL_ 897 DTU_vac_mode_activation_status 0 "OFF" 1 "ON" ;
+VAL_ 897 DTU_start_switch_status 0 "OFF" 1 "ON" ;
+VAL_ 897 DTU_launch_act_status 0 "OFF" 1 "ON" ;
+VAL_ 897 DTU_pam_act_status 0 "OFF" 1 "ON" ;
+VAL_ 897 DTU_deacc_act_status 0 "OFF" 1 "ON" ;
+VAL_ 897 DTU_acc_act_status 0 "OFF" 1 "ON" ;
+VAL_ 897 DTU_limp_act_status 0 "OFF" 1 "ON" ;
+VAL_ 897 DTU_halt_act_status 0 "OFF" 1 "ON" ;
+VAL_ 897 DTU_stop_vehicle_status 0 "OFF" 1 "ON" ;
+VAL_ 897 DTU_standby_act_status 0 "OFF" 1 "ON" ;
+VAL_ 516 DTU_under_voltg_fault 0 "OFF" 1 "ON" ;
+VAL_ 516 DTU_over_voltg_fault 0 "OFF" 1 "ON" ;
+VAL_ 516 DTU_motor_over_tempr_fault 0 "OFF" 1 "ON" ;
+VAL_ 516 DTU_over_tempr_fault 0 "OFF" 1 "ON" ;
+VAL_ 516 DTU_high_rpm_fault 0 "OFF" 1 "ON" ;
+VAL_ 516 DTU_over_curr_fault 0 "OFF" 1 "ON" ;
+VAL_ 516 DTU_short_circuit_fault 0 "OFF" 1 "ON" ;
+VAL_ 516 DTU_position_sensor_fault 0 "OFF" 1 "ON" ;
+VAL_ 516 DTU_brake_failure_status 0 "OFF" 1 "ON" ;
+VAL_ 516 DTU_gate_driver_failure_status 0 "OFF" 1 "ON" ;
+VAL_ 516 DTU_curr_sensor_failure_status 0 "OFF" 1 "ON" ;
+VAL_ 516 DTU_mot_tempr_sensor_fail_status 0 "OFF" 1 "ON" ;
+VAL_ 516 DTU_throttle_failure_status 0 "OFF" 1 "ON" ;
+VAL_ 516 DTU_motor_winding_fault 0 "OFF" 1 "ON" ;
+VAL_ 516 DTU_dc_voltg_sensor_fail_status 0 "OFF" 1 "ON" ;
+VAL_ 516 DTU_clutch_switch_failure_status 0 "OFF" 1 "ON" ;
+VAL_ 516 DTU_throttle_offset_status 0 "OFF" 1 "ON" ;
+VAL_ 516 DTU_current_sensor_offset_status 0 "OFF" 1 "ON" ;
+VAL_ 516 DTU_pos_sensor_offset_status 0 "OFF" 1 "ON" ;
+VAL_ 516 DTU_controller_status 0 "Default/NA" 1 "GREEN" 2 "ORANGE" 3 "RED" ;
+VAL_ 516 Motor_status 0 "Default/NA" 1 "GREEN" 2 "ORANGE" 3 "RED" ;
+VAL_ 516 Motor_temp 0 "Default/NA" 1 "GREEN" 2 "ORANGE" 3 "RED" ;
+VAL_ 1040 OBC_Batt_FullChged_sts 0 "Normal" 1 "Failure" ;
+VAL_ 1040 OBC_CC_Mode_Status 0 "Normal" 1 "Failure" ;
+VAL_ 1040 OBC_CV_Mode_Status 0 "Normal" 1 "Failure" ;
+VAL_ 1040 OBC_CAN_ready_status 0 "Normal" 1 "Failure" ;
+VAL_ 1040 Chg_con_Sts 0 "Normal" 1 "Failure" ;
+VAL_ 1040 Chg_Con_LockUnlock_Cmd 0 "Normal" 1 "Failure" ;
+VAL_ 1040 OBC_DmdVtg_mismatch_sts 0 "Normal" 1 "Failure" ;
+VAL_ 1040 OBC_DmdCurr_mismatch_sts 0 "Normal" 1 "Failure" ;
+VAL_ 517 OBC_Hardware_Failure_Short_Ckt 0 "Normal" 1 "Failure" ;
+VAL_ 517 OBC_Temperature_fault 0 "Normal" 1 "Failure" ;
+VAL_ 517 OBC_Input_Over_Voltage 0 "Normal" 1 "Failure" ;
+VAL_ 517 OBC_Input_Under_Voltage 0 "Normal" 1 "Failure" ;
+VAL_ 517 OBC_Output_Voltage_high 0 "Normal" 1 "Failure" ;
+VAL_ 517 OBC_Line_Neutral_Interchange 0 "Normal" 1 "Failure" ;
+VAL_ 517 OBC_Earth_open 0 "Normal" 1 "Failure" ;
+VAL_ 517 OBC_Input_Over_Voltage_Alarm 0 "Normal" 1 "Failure" ;
+VAL_ 517 OBC_Input_Under_Voltage_Alarm 0 "Normal" 1 "Failure" ;
+VAL_ 517 OBC_PFC_Currnet_Peak 0 "Normal" 1 "Failure" ;
+VAL_ 299 ABSWarningLamp 0 "ABS_OK" 1 "ABS_FAULT" 2 "NA" 3 "NA" ;
+VAL_ 299 FrontWheelSpeedValidity 0 "Normal" 1 "Failure" ;
+VAL_ 299 RearWheelSpeedValidity 0 "Normal" 1 "Failure" ;
+VAL_ 299 ABSEventActive 0 "Inactive" 1 "Active" ;
+

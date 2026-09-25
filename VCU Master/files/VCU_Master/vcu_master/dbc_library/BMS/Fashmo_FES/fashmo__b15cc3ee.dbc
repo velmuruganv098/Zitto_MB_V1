@@ -1,0 +1,149 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_:
+
+
+BO_ 2536833314 CellVoltageInfo_4: 8 Vector__XXX
+ SG_ CellVoltage16 : 55|16@0+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ CellVoltage15 : 39|16@0+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ CellVoltage14 : 23|16@0+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ CellVoltage13 : 7|16@0+ (0.001,0) [0|65.535] "V" Vector__XXX
+
+BO_ 2583626849 BMS_FETStatus: 6 Vector__XXX
+ SG_ UARTStatus : 47|8@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ LoggerStatus : 39|8@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ I2CStatus : 31|8@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ CANStatus : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ DischargeFETStatus : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ ChargeFETStatus : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2566849376 CellVoltageInfo_3: 8 Vector__XXX
+ SG_ CellVoltage12 : 55|16@0+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ CellVoltage11 : 39|16@0+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ CellVoltage10 : 23|16@0+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ CellVoltage09 : 7|16@0+ (0.001,0) [0|65.535] "V" Vector__XXX
+
+BO_ 2486108048 CellVoltageInfo_2: 8 Vector__XXX
+ SG_ CellVoltage08 : 55|16@0+ (0.001,0) [0|65.535] "v" Vector__XXX
+ SG_ CellVoltage07 : 39|16@0+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ CellVoltage06 : 23|16@0+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ CellVoltage05 : 7|16@0+ (0.001,0) [0|65.535] "V" Vector__XXX
+
+BO_ 2485403728 CellVoltageInfo_1: 8 Vector__XXX
+ SG_ CellVoltage04 : 55|16@0+ (0.001,0) [2.7|4.2] "V" Vector__XXX
+ SG_ CellVoltage03 : 39|16@0+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ CellVoltage02 : 23|16@0+ (0.001,0) [0|65.535] "V" Vector__XXX
+ SG_ CellVoltage01 : 7|16@0+ (0.001,0) [2.7|4.2] "V" Vector__XXX
+
+BO_ 2485338192 BatteryFaults: 8 Vector__XXX
+ SG_ UnderTemperature : 63|8@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ OverTemperature_Cell : 55|8@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ OverTemperature_FET : 47|8@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ OverCurrent_Discharge : 39|8@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ CellUnderVoltage : 31|8@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ CellOverVoltage : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ OverCurrent_charging : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Short_Circuit : 7|8@0+ (1,0) [0|1] " " Vector__XXX
+
+BO_ 2419654480 BatteryData2: 8 Vector__XXX
+ SG_ CellTemperature07 : 55|8@0- (1,0) [0|70] "degC" Vector__XXX
+ SG_ CellTemperature06 : 47|8@0- (1,0) [0|70] "degC" Vector__XXX
+ SG_ CellTemperature05 : 39|8@0- (1,0) [0|70] "degC" Vector__XXX
+ SG_ DieTemperature : 63|8@0- (1,0) [0|90] "degC" Vector__XXX
+ SG_ CellTemperature04 : 31|8@0- (1,0) [0|70] "degC" Vector__XXX
+ SG_ CellTemperature03 : 23|8@0- (1,0) [0|70] "degC" Vector__XXX
+ SG_ CellTemperature02 : 15|8@0- (1,0) [0|70] "degC" Vector__XXX
+ SG_ CellTemperature01 : 7|8@0- (1,0) [0|70] "degC" Vector__XXX
+
+BO_ 2418544720 BatteryData1: 6 Vector__XXX
+ SG_ StateOfCharge : 47|8@0+ (1,0) [0|100] "%" Vector__XXX
+ SG_ BatteryCapacity : 39|8@0+ (1,0) [0|45] "Ah" Vector__XXX
+ SG_ PackVoltage : 23|16@0+ (0.001,0) [0|60] "Volt" Vector__XXX
+ SG_ PackCurrent : 7|16@0- (0.01,0) [-327.68|327.67] "A" Vector__XXX
+
+
+
+CM_ SG_ 2536833314 CellVoltage16 "16 bit voltgae value of cell 13";
+CM_ SG_ 2536833314 CellVoltage15 "16 bit voltgae value of cell 13";
+CM_ SG_ 2536833314 CellVoltage14 "16 bit voltgae value of cell 13";
+CM_ SG_ 2536833314 CellVoltage13 "16 bit voltgae value of cell 13";
+CM_ SG_ 2583626849 UARTStatus "0 = Charge FET is in ON state
+1 = Charge FET is in OFF state";
+CM_ SG_ 2583626849 LoggerStatus "0 = Charge FET is in ON state
+1 = Charge FET is in OFF state";
+CM_ SG_ 2583626849 I2CStatus "0 = Charge FET is in ON state
+1 = Charge FET is in OFF state";
+CM_ SG_ 2583626849 CANStatus "0 = Charge FET is in ON state
+1 = Charge FET is in OFF state";
+CM_ SG_ 2583626849 DischargeFETStatus "0 = Discharge FET is in ON state
+1 = Discharge FET is in OFF state";
+CM_ SG_ 2583626849 ChargeFETStatus "0 = Charge FET is in ON state
+1 = Charge FET is in OFF state";
+CM_ SG_ 2566849376 CellVoltage12 "16 bit voltage value of cell 12";
+CM_ SG_ 2566849376 CellVoltage11 "16 bit voltage value of cell 11";
+CM_ SG_ 2566849376 CellVoltage10 "16 bit voltage value of cell 10
+";
+CM_ SG_ 2566849376 CellVoltage09 "16 bit voltage value of cell 9";
+CM_ SG_ 2486108048 CellVoltage08 "16 bit voltage value of cell 8";
+CM_ SG_ 2486108048 CellVoltage07 "16 bit voltage value of cell 7";
+CM_ SG_ 2486108048 CellVoltage06 "16 bit voltage value of cell 6";
+CM_ SG_ 2486108048 CellVoltage05 "16 bit voltage value of cell 5";
+CM_ SG_ 2485403728 CellVoltage04 "16 bit voltage value of cell 4";
+CM_ SG_ 2485403728 CellVoltage03 "16 bit voltage value of cell 3
+";
+CM_ SG_ 2485403728 CellVoltage02 "16 bit voltage value of cell 2";
+CM_ SG_ 2485403728 CellVoltage01 "16 bit voltage value of cell 1";
+CM_ SG_ 2485338192 UnderTemperature "0 = No UT fault
+1 = UT fault has occured";
+CM_ SG_ 2485338192 OverTemperature_Cell "0 = No OT (CELL) fault
+1 = OT (CELL) fault has occured";
+CM_ SG_ 2485338192 OverTemperature_FET "0 = No OT (FET) fault
+1 = OT (FET) fault has occured";
+CM_ SG_ 2485338192 OverCurrent_Discharge "0 = No OC (discharging) fault
+1 = OC (discharging) fault has occured";
+CM_ SG_ 2485338192 CellUnderVoltage "0 = No UV fault
+1 = UV fault has occured";
+CM_ SG_ 2485338192 CellOverVoltage "0 = No OV fault
+1 = OV fault has occured";
+CM_ SG_ 2485338192 OverCurrent_charging "0 = No OC (charging) fault
+1 = OC (charging) fault has occured";
+CM_ SG_ 2485338192 Short_Circuit "0 = No short circuit fault
+1 = Short circuit fault has occured";
+BA_DEF_  "MultiplexExtEnabled" ENUM  "No","Yes";
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "MultiplexExtEnabled" "No";
+BA_DEF_DEF_  "BusType" "CAN";
+

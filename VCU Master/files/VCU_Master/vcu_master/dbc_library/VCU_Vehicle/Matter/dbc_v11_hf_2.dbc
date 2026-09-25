@@ -1,0 +1,58 @@
+VERSION "created by canmatrix"
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: BMS BCU ABS DTU PKE ESL OBC VIU
+
+
+BO_ 1858 DBGdtu_CMD1_MSG4: 8 DTU
+ SG_ DTU_regen_EB_flag : 16|8@1+ (1,0) [0|255] "count"  VIU
+ SG_ DTU_Engine_brake_foc : 24|8@1+ (1,0) [0|255] "count"  VIU
+ SG_ DTU_EB_entry_limit : 32|16@1+ (1,0) [0|65535] "rpm"  VIU
+ SG_ DTU_EB_exit_limit : 48|16@1+ (1,0) [0|65535] "rpm"  VIU
+
+BO_ 299 ABS_Info_Msg_01: 8 ABS
+ SG_ Front_Speed : 7|16@0+ (0.05625,0) [0|65535] "kph"  BCU,BMS,DTU,VIU
+ SG_ Rear_Speed : 23|16@0+ (0.05625,0) [0|65535] "kph"  BCU,BMS,DTU,VIU
+ SG_ ABSWarningLamp : 35|2@0+ (1,0) [0|3] "State"  BCU,BMS,DTU,VIU
+ SG_ FrontWheelSpeedValidity : 36|1@0+ (1,0) [0|1] "Status"  BCU,BMS,DTU,VIU
+ SG_ RearWheelSpeedValidity : 37|1@0+ (1,0) [0|1] "Status"  BCU,BMS,DTU,VIU
+ SG_ ABSEventActive : 39|1@0+ (1,0) [0|1] "Status"  BCU,BMS,DTU,VIU
+
+
+VAL_ 299 ABSWarningLamp 0 "ABS_OK" 1 "ABS_FAULT" 2 "NA" 3 "NA" ;
+VAL_ 299 FrontWheelSpeedValidity 0 "Normal" 1 "Failure" ;
+VAL_ 299 RearWheelSpeedValidity 0 "Normal" 1 "Failure" ;
+VAL_ 299 ABSEventActive 0 "Inactive" 1 "Active" ;
+
