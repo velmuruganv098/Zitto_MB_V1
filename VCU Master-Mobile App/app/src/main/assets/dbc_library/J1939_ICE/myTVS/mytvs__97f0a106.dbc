@@ -1,0 +1,824 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: 
+
+
+BO_ 2147545091 EEC2: 8 Vector__XXX
+ SG_ EstimatedPumpingPercentTorque : 56|8@1+ (1,-125) [-125|125] "%" Vector__XXX
+ SG_ AtlMxmmAvllEngnPrntTrq : 48|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ ScrThermalManagementActive : 46|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DpfThermalManagementActive : 44|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ MmntrEngnMxmmPwrEnlFdk : 42|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ VhlAlrtnRtLmtStts : 40|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ AcceleratorPedal2Position : 32|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ RemoteAcceleratorPedalPosition : 24|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ EnginePercentLoadAtCurrentSpeed : 16|8@1+ (1,0) [0|250] "%" Vector__XXX
+ SG_ AcceleratorPedal1Position : 8|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ AcceleratorPedal2LowIdleSwitch : 6|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ RoadSpeedLimitStatus : 4|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ AcceleratorPedalKickdownSwitch : 2|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ AcceleratorPedal1LowIdleSwitch : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 2147545092 EEC1: 8 Vector__XXX
+ SG_ EngineDemandPercentTorque : 56|8@1+ (1,-125) [-125|125] "%" Vector__XXX
+ SG_ EngineStarterMode : 48|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ SrAddrssOfCntrllngDvFrEngnCntrl : 40|8@1+ (1,0) [0|255] "sourceadr" Vector__XXX
+ SG_ EngineSpeed : 24|16@1+ (0.125,0) [0|8031.875] "rpm" Vector__XXX
+ SG_ ActualEnginePercentTorque : 16|8@1+ (1,-125) [-125|125] "%" Vector__XXX
+ SG_ DrvrSDmndEngnPrntTrq : 8|8@1+ (1,-125) [-125|125] "%" Vector__XXX
+ SG_ AtlEngnPrntTrqFrtnl : 4|4@1+ (0.125,0) [0|1.625] "%" Vector__XXX
+ SG_ EngineTorqueMode : 0|4@1+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 2147545098 EGF1: 8 Vector__XXX
+ SG_ TargetFreshAirMassFlow : 48|16@1+ (0.05,0) [0|3212.75] "kg/h" Vector__XXX
+ SG_ EngnExhstGsRrltn2MssFlwRt : 32|16@1+ (0.05,0) [0|3212.75] "kg/h" Vector__XXX
+ SG_ EngineIntakeAirMassFlowRate : 16|16@1+ (0.05,0) [0|3212.75] "kg/h" Vector__XXX
+ SG_ EngnExhstGsRrltn1MssFlwRt : 0|16@1+ (0.05,0) [0|3212.75] "kg/h" Vector__XXX
+
+BO_ 2147545124 A1SCRDSR1: 8 Vector__XXX
+ SG_ Atttt1DsExstFdDsRqstdQttHR : 40|16@1+ (0.05,0) [0|3212.75] "g/min" Vector__XXX
+ SG_ Atttt1DsExstFdRqstdQttOItt : 24|16@1+ (0.1,0) [0|6425.5] "g" Vector__XXX
+ SG_ Atttt1DsExstFdDsTstItPssStts : 22|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Atttt1DsExstFdHdStssCPssStts : 20|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Aftrtrtmnt1SrSstmRqstdStt : 16|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ Atttt1DsExstFdDsRqstdQtt : 0|16@1+ (0.3,0) [0|19276.5] "g/h" Vector__XXX
+
+BO_ 2147548562 EOI: 8 Vector__XXX
+ SG_ EngineDerateRequest : 56|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ EngineDesiredTorqueRequest : 48|8@1+ (1,-125) [-125|125] "%" Vector__XXX
+ SG_ EngnCldAmntElvtdIdlStts : 46|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngnEmrgnImmdtShtdwnIndtn : 44|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngineControlledShutdownRequest : 42|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngineCoolantPumpControl : 40|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EnginePreHeaterControl : 38|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngnEltrlSstmPwrCnsrvtnCntrl : 36|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngineOilPreHeaterControl : 34|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngineOilPrimingPumpControl : 32|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngnFlShtffVlvLkTstCntrl : 30|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngineFuelShutoff2Control : 28|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngineFuelShutoff1Control : 26|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngineFuelShutoffVentControl : 24|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ TmRmnngInEngnOprtngStt : 8|16@1+ (1,0) [0|64255] "s" Vector__XXX
+ SG_ EngineStarterMotorRelayControl : 6|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ FuelPumpPrimerControl : 4|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngineOperatingState : 0|4@1+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 2147548780 TCO1: 8 Vector__XXX
+ SG_ TachographVehicleSpeed : 48|16@1+ (0.00390625,0) [0|250.99609375] "km/h" Vector__XXX
+ SG_ TachographOutputShaftSpeed : 32|16@1+ (0.125,0) [0|8031.875] "rpm" Vector__XXX
+ SG_ DirectionIndicator : 30|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ TachographPerformance : 28|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ HandlingInformation : 26|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ SystemEvent : 24|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DriverCardDriver2 : 20|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Driver2TimeRelatedStates : 16|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ VehicleOverspeed : 14|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DriverCardDriver1 : 12|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Driver1TimeRelatedStates : 8|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ VehicleMotion : 6|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Driver2WorkingState : 3|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ Driver1WorkingState : 0|3@1+ (1,0) [0|7] "" Vector__XXX
+
+BO_ 2147548478 A1SCREGT1: 8 Vector__XXX
+ SG_ Aftrtrtmnt1SrOtltTmprtrPrlmnrFm : 40|5@1+ (1,0) [0|31] "" Vector__XXX
+ SG_ Aftrtrtmnt1SrOtltTmprtr : 24|16@1+ (0.03125,-273) [-273|1734.96875] "degC" Vector__XXX
+ SG_ Aftrtrtmnt1SrIntkTmprtrPrlmnrFm : 16|5@1+ (1,0) [0|31] "" Vector__XXX
+ SG_ Aftrtrtmnt1SrIntkTmprtr : 0|16@1+ (0.03125,-273) [-273|1734.96875] "degC" Vector__XXX
+
+BO_ 2147545089 EBC1: 8 Vector__XXX
+ SG_ TrtrMntdTrlrAsWrnngSgnl : 62|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ TrailerAbsStatus : 60|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ HaltBrakeSwitch : 58|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ RailroadModeSwitch : 56|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ SrAddrssOfCntrllngDvFrBrkCntrl : 48|8@1+ (1,0) [0|255] "sourceadr" Vector__XXX
+ SG_ AtcAsrInformationSignal : 46|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ AsEsAmrWrnngSgnlPwrdVhl : 44|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EbsRedWarningSignal : 42|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ AbsFullyOperational : 40|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngineRetarderSelection : 32|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ RemoteAcceleratorEnableSwitch : 30|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngineAuxiliaryShutdownSwitch : 28|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngineDerateSwitch : 26|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ AcceleratorInterlockSwitch : 24|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ TractionControlOverrideSwitch : 22|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ AsrHillHolderSwitch : 20|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ AsrOffRoadSwitch : 18|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ AbsOffRoadSwitch : 16|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ BrakePedalPosition : 8|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ EbsBrakeSwitch : 6|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ AntiLockBrakingAbsActive : 4|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ AsrBrakeControlActive : 2|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ AsrEngineControlActive : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 2147545093 ETC2: 8 Vector__XXX
+ SG_ TransmissionCurrentRange : 48|16@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ TransmissionRequestedRange : 32|16@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ TransmissionCurrentGear : 24|8@1+ (1,-125) [-125|125] "gear value" Vector__XXX
+ SG_ TransmissionActualGearRatio : 8|16@1+ (0.001,0) [0|64.255] "" Vector__XXX
+ SG_ TransmissionSelectedGear : 0|8@1+ (1,-125) [-125|125] "gear value" Vector__XXX
+
+BO_ 2147548448 A1DOC1: 8 Vector__XXX
+ SG_ Atttt1DsOxdtCtstDtPssPF : 58|5@1+ (1,0) [0|31] "" Vector__XXX
+ SG_ Atttt1DsOxdtCtstOttTptPF : 53|5@1+ (1,0) [0|31] "" Vector__XXX
+ SG_ Atttt1DsOxdtCtstItTptPF : 48|5@1+ (1,0) [0|31] "" Vector__XXX
+ SG_ Atttt1DsOxdtCtstDtPss : 32|16@1+ (0.1,0) [0|6425.5] "kPa" Vector__XXX
+ SG_ Atttt1DsOxdtCtstOttTpt : 16|16@1+ (0.03125,-273) [-273|1734.96875] "degC" Vector__XXX
+ SG_ Atttt1DsOxdtCtstItTpt : 0|16@1+ (0.03125,-273) [-273|1734.96875] "degC" Vector__XXX
+
+BO_ 2147548540 DPFC1: 8 Vector__XXX
+ SG_ DsPttFtAtvRtItdDTTs : 62|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Atttt1DsPttFtCdtsNtMtFAtvRt : 60|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DsPttFtAtvRtItdDTLwExstPss : 58|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ HydrocarbonDoserPurgingEnable : 56|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DslPrtltFltrAtvRgnrtnFrdStts : 53|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ ExhstSstmHghTmprtrLmpCmmnd : 50|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ DsPttFtAttAtvRtIttCt : 48|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DsPttFtAtvRtItdDTVSpdBwAwdSpd : 46|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DsPttFtAtvRtItdDTENtWdUp : 44|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DsPttFtAtvRtItdDTPtSstLt : 42|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DsPttFtAtvRtItdDTTpSstLt : 40|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DsPttFtAtvRtItdDTSstTt : 38|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DsPttFtAtvRtItdDTSstFtAtv : 36|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DsPttFtAtvRtItdDTLwExstTpt : 34|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DsPttFtAtvRtItdDTPBNtSt : 32|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DsPttFtAtvRtItdDTVSpdAvAwdSpd : 30|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DsPttFtAtvRtItdDTOtONt : 28|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DsPttFtAtvRtItdDTAtPdOId : 26|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DsPttFtAtvRtItdDTPtAtv : 24|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DsPttFtAtvRtItdDTSvBAtv : 22|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DsPttFtAtvRtItdDTCtDsd : 20|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DsPttFtAtvRtItdDTItSwt : 18|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DslPrtltFltrAtvRgnrtnInhtdStts : 16|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ AftrtrtmntDslPrtltFltrStts : 12|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ AttttDsPttFtAtvRtStts : 10|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ AttttDsPttFtPssvRtStts : 8|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DslPrtltFltrAtvRgnrtnAvlltStts : 3|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DslPrtltFltrLmpCmmnd : 0|3@1+ (1,0) [0|7] "" Vector__XXX
+
+BO_ 2147548577 AT1FC1: 8 Vector__XXX
+ SG_ Aftrtrtmnt1FlInjtr1HtrCntrl : 56|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ Aftrtrtmnt1FlEnlAttr : 54|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Aftrtrtmnt1RgnrtnStts : 52|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Aftertreatment1Ignition : 50|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Aftrtrtmnt1FlDrnAttr : 48|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Aftrtrtmnt1FlPrssr1Cntrl : 32|16@1+ (0.0025,0) [0|160.6375] "%" Vector__XXX
+ SG_ Aftertreatment1FuelRate : 16|16@1+ (0.05,0) [0|3212.75] "l/h" Vector__XXX
+ SG_ Aftertreatment1FuelPressure1 : 0|16@1+ (0.1,0) [0|6425.5] "kPa" Vector__XXX
+
+BO_ 2147548594 AT1IMG: 8 Vector__XXX
+ SG_ Atttt1DsPttFtItdtTptPF : 58|5@1+ (1,0) [0|31] "" Vector__XXX
+ SG_ Atttt1DsPttFtDtPssPF : 53|5@1+ (1,0) [0|31] "" Vector__XXX
+ SG_ Aftrtrtmnt1ExhstTmprtr2PrlmnrFm : 48|5@1+ (1,0) [0|31] "" Vector__XXX
+ SG_ Atttt1DsPttFtDtPss : 32|16@1+ (0.1,0) [0|6425.5] "kPa" Vector__XXX
+ SG_ Atttt1DsPttFtItdtTpt : 16|16@1+ (0.03125,-273) [-273|1734.96875] "degC" Vector__XXX
+ SG_ Aftrtrtmnt1ExhstTmprtr2 : 0|16@1+ (0.03125,-273) [-273|1734.96875] "degC" Vector__XXX
+
+BO_ 2147548758 AT1T1I1: 8 Vector__XXX
+ SG_ Atttt1DsExstFdT1HtPF : 56|5@1+ (1,0) [0|31] "" Vector__XXX
+ SG_ Aftrtrtmnt1DslExhstFldTnkHtr : 48|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ AftrtrtmntSrOprtrIndmntSvrt : 45|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ Atttt1DsExstFdT1TptPF : 40|5@1+ (1,0) [0|31] "" Vector__XXX
+ SG_ AttttDsExstFdTLwLvIdt : 37|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ Atttt1DsExstFdTLvVPF : 32|5@1+ (1,0) [0|31] "" Vector__XXX
+ SG_ Aftrtrtmnt1DslExhstFldTnkLvl : 16|16@1+ (0.1,0) [0|6425.5] "mm" Vector__XXX
+ SG_ Atttt1DsExstFdTTpt1 : 8|8@1+ (1,-40) [-40|210] "degC" Vector__XXX
+ SG_ Aftrtrtmnt1DslExhstFldTnkVlm : 0|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+
+BO_ 2147548836 ET2: 8 Vector__XXX
+ SG_ EngnExhstGsRrltn1Tmprtr : 48|16@1+ (0.03125,-273) [-273|1734.96875] "degC" Vector__XXX
+ SG_ EngnExhstGsRrltn1DffrntlPrssr : 32|16@1+ (0.0078125,-250) [-250|251.9921875] "kPa" Vector__XXX
+ SG_ EngineEcuTemperature : 16|16@1+ (0.03125,-273) [-273|1734.96875] "degC" Vector__XXX
+ SG_ EngineOilTemperature2 : 0|16@1+ (0.03125,-273) [-273|1734.96875] "degC" Vector__XXX
+
+BO_ 2147548861 FD1: 8 Vector__XXX
+ SG_ FanDriveBypassCommandStatus : 48|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ HydraulicFanMotorPressure : 32|16@1+ (0.5,0) [0|32127.5] "kPa" Vector__XXX
+ SG_ FanSpeed : 16|16@1+ (0.125,0) [0|8031.875] "rpm" Vector__XXX
+ SG_ EngineFanBypassSwitch : 14|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngineFanReverseSwitch : 12|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ FanDriveState : 8|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ EngineFan1EstimatedPercentSpeed : 0|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+
+BO_ 2147548863 EBC2: 8 Vector__XXX
+ SG_ RltvSpdRrAxl2RghtWhl : 56|8@1+ (0.0625,-7.8125) [-7.8125|7.8125] "km/h" Vector__XXX
+ SG_ RelativeSpeedRearAxle2LeftWheel : 48|8@1+ (0.0625,-7.8125) [-7.8125|7.8125] "km/h" Vector__XXX
+ SG_ RltvSpdRrAxl1RghtWhl : 40|8@1+ (0.0625,-7.8125) [-7.8125|7.8125] "km/h" Vector__XXX
+ SG_ RelativeSpeedRearAxle1LeftWheel : 32|8@1+ (0.0625,-7.8125) [-7.8125|7.8125] "km/h" Vector__XXX
+ SG_ RltvSpdFrntAxlRghtWhl : 24|8@1+ (0.0625,-7.8125) [-7.8125|7.8125] "km/h" Vector__XXX
+ SG_ RelativeSpeedFrontAxleLeftWheel : 16|8@1+ (0.0625,-7.8125) [-7.8125|7.8125] "km/h" Vector__XXX
+ SG_ FrontAxleSpeed : 0|16@1+ (0.00390625,0) [0|250.99609375] "km/h" Vector__XXX
+
+BO_ 2147548865 VDHR: 8 Vector__XXX
+ SG_ TripDistanceHighResolution : 32|32@1+ (5,0) [0|21055406075] "m" Vector__XXX
+ SG_ TtlVhlDstnHghRsltn : 0|32@1+ (5,0) [0|21055406075] "m" Vector__XXX
+
+BO_ 2147548895 EEC3: 8 Vector__XXX
+ SG_ Aftertreatment2ExhaustDewPoint : 62|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngineExhaust2DewPoint : 60|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Aftertreatment1ExhaustDewPoint : 58|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngineExhaust1DewPoint : 56|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Aftrtrtmnt1ExhstGsMssFlwRt : 40|16@1+ (0.2,0) [0|12851] "kg/h" Vector__XXX
+ SG_ EstmtdEngnPrstLsssPrntTrq : 32|8@1+ (1,-125) [-125|125] "%" Vector__XXX
+ SG_ ESDsdOptSpdAstAdstt : 24|8@1+ (1,0) [0|250] "" Vector__XXX
+ SG_ EngineSDesiredOperatingSpeed : 8|16@1+ (0.125,0) [0|8031.875] "rpm" Vector__XXX
+ SG_ NominalFrictionPercentTorque : 0|8@1+ (1,-125) [-125|125] "%" Vector__XXX
+
+BO_ 2147548896 VD: 8 Vector__XXX
+ SG_ TotalVehicleDistance : 32|32@1+ (0.125,0) [0|526385151.875] "km" Vector__XXX
+ SG_ TripDistance : 0|32@1+ (0.125,0) [0|526385151.875] "km" Vector__XXX
+
+BO_ 2147548901 HOURS: 8 Vector__XXX
+ SG_ EngineTotalRevolutions : 32|32@1+ (1000,0) [0|4211081215000] "r" Vector__XXX
+ SG_ EngineTotalHoursOfOperation : 0|32@1+ (0.05,0) [0|210554060.75] "h" Vector__XXX
+
+BO_ 2147548903 VH: 8 Vector__XXX
+ SG_ TotalPowerTakeoffHours : 32|32@1+ (0.05,0) [0|210554060.75] "h" Vector__XXX
+ SG_ TotalVehicleHours : 0|32@1+ (0.05,0) [0|210554060.75] "h" Vector__XXX
+
+BO_ 2147548905 LFC1: 8 Vector__XXX
+ SG_ EngineTotalFuelUsed : 32|32@1+ (0.5,0) [0|2105540607.5] "l" Vector__XXX
+ SG_ EngineTripFuel : 0|32@1+ (0.5,0) [0|2105540607.5] "l" Vector__XXX
+
+BO_ 2147548909 CCSS: 8 Vector__XXX
+ SG_ PwrtrnAdptvCrsCntrlTp : 56|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ CruiseControlSetCommandSupport : 54|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ CrsCntrlPsCmmndSpprt : 52|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ CrsCntrlRsmCmmndSpprt : 50|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ CrsCntrlDslCmmndSpprt : 48|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ CrsCntrlSstmLwStLmtSpd : 40|8@1+ (1,0) [0|250] "km/h" Vector__XXX
+ SG_ MxmmVhlSpdLmtHghRsltn : 24|16@1+ (0.00390625,0) [0|250.99609375] "km/h" Vector__XXX
+ SG_ CrsCntrlOprtrLwStLmtSpd : 16|8@1+ (1,0) [0|250] "km/h" Vector__XXX
+ SG_ CruiseControlHighSetLimitSpeed : 8|8@1+ (1,0) [0|250] "km/h" Vector__XXX
+ SG_ MaximumVehicleSpeedLimit : 0|8@1+ (1,0) [0|250] "km/h" Vector__XXX
+
+BO_ 2147548910 ET1: 8 Vector__XXX
+ SG_ EngnChrgArClrThrmsttOpnng : 56|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ EngineIntercoolerTemperature : 48|8@1+ (1,-40) [-40|210] "degC" Vector__XXX
+ SG_ EngnTrhrgr1OlTmprtr : 32|16@1+ (0.03125,-273) [-273|1734.96875] "degC" Vector__XXX
+ SG_ EngineOilTemperature1 : 16|16@1+ (0.03125,-273) [-273|1734.96875] "degC" Vector__XXX
+ SG_ EngineFuel1Temperature1 : 8|8@1+ (1,-40) [-40|210] "degC" Vector__XXX
+ SG_ EngineCoolantTemperature : 0|8@1+ (1,-40) [-40|210] "degC" Vector__XXX
+
+BO_ 2147548911 EFLP1: 8 Vector__XXX
+ SG_ EngineCoolantLevel1 : 56|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ EngineCoolantPressure1 : 48|8@1+ (2,0) [0|500] "kPa" Vector__XXX
+ SG_ EngineCrankcasePressure1 : 32|16@1+ (0.0078125,-250) [-250|251.9921875] "kPa" Vector__XXX
+ SG_ EngineOilPressure1 : 24|8@1+ (4,0) [0|1000] "kPa" Vector__XXX
+ SG_ EngineOilLevel : 16|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ EngnExtnddCrnksBlwBPrssr : 8|8@1+ (0.05,0) [0|12.5] "kPa" Vector__XXX
+ SG_ EngineFuelDeliveryPressure : 0|8@1+ (4,0) [0|1000] "kPa" Vector__XXX
+
+BO_ 2147548912 PTO1: 8 Vector__XXX
+ SG_ EnginePtoGovernorDisableSwitch : 62|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ AuxiliaryInputIgnoreSwitch : 60|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ RtPtGvPpdSpdCtSwt2 : 58|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ OprtrEngnPtGvrnrMmrSltSwth : 56|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngnPtGvrnrAlrtSwth : 54|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EnginePtoGovernorResumeSwitch : 52|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngnPtGvrnrCstDlrtSwth : 50|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EnginePtoGovernorSetSwitch : 48|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngnRmtPtGvrnrVrlSpdCntrlSwth : 44|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ ERtPtGvPpdSpdCtSwt : 42|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EnginePtoGovernorEnableSwitch : 40|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ PowerTakeoffSetSpeed : 24|16@1+ (0.125,0) [0|8031.875] "rpm" Vector__XXX
+ SG_ PowerTakeoffSpeed : 8|16@1+ (0.125,0) [0|8031.875] "rpm" Vector__XXX
+ SG_ PowerTakeoffOilTemperature : 0|8@1+ (1,-40) [-40|210] "degC" Vector__XXX
+
+BO_ 2147548913 CCVS1: 8 Vector__XXX
+ SG_ EngineShutdownOverrideSwitch : 62|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngineDiagnosticTestModeSwitch : 60|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngineIdleDecrementSwitch : 58|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngineIdleIncrementSwitch : 56|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ CruiseControlStates : 53|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ PtoGovernorState : 48|5@1+ (1,0) [0|31] "" Vector__XXX
+ SG_ CruiseControlSetSpeed : 40|8@1+ (1,0) [0|250] "km/h" Vector__XXX
+ SG_ CruiseControlAccelerateSwitch : 38|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ CruiseControlResumeSwitch : 36|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ CrsCntrlCstDlrtSwth : 34|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ CruiseControlSetSwitch : 32|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ ClutchSwitch : 30|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ BrakeSwitch : 28|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ CruiseControlEnableSwitch : 26|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ CruiseControlActive : 24|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ WheelBasedVehicleSpeed : 8|16@1+ (0.00390625,0) [0|250.99609375] "km/h" Vector__XXX
+ SG_ ParkBrakeReleaseInhibitRequest : 6|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ CruiseControlPauseSwitch : 4|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ ParkingBrakeSwitch : 2|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ TwoSpeedAxleSwitch : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 2147548914 LFE1: 8 Vector__XXX
+ SG_ EngineThrottleValve2Position : 56|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ EngineThrottleValve1Position1 : 48|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ EngineAverageFuelEconomy : 32|16@1+ (0.001953125,0) [0|125.498046875] "km/L" Vector__XXX
+ SG_ EngineInstantaneousFuelEconomy : 16|16@1+ (0.001953125,0) [0|125.498046875] "km/L" Vector__XXX
+ SG_ EngineFuelRate : 0|16@1+ (0.05,0) [0|3212.75] "l/h" Vector__XXX
+
+BO_ 2147548917 AMB: 8 Vector__XXX
+ SG_ RoadSurfaceTemperature : 48|16@1+ (0.03125,-273) [-273|1734.96875] "degC" Vector__XXX
+ SG_ EngineIntake1AirTemperature : 40|8@1+ (1,-40) [-40|210] "degC" Vector__XXX
+ SG_ AmbientAirTemperature : 24|16@1+ (0.03125,-273) [-273|1734.96875] "degC" Vector__XXX
+ SG_ CabInteriorTemperature : 8|16@1+ (0.03125,-273) [-273|1734.96875] "degC" Vector__XXX
+ SG_ BarometricPressure : 0|8@1+ (0.5,0) [0|125] "kPa" Vector__XXX
+
+BO_ 2147548918 IC1: 8 Vector__XXX
+ SG_ EngnClntFltrDffrntlPrssr : 56|8@1+ (0.5,0) [0|125] "kPa" Vector__XXX
+ SG_ EngineExhaustTemperature : 40|16@1+ (0.03125,-273) [-273|1734.96875] "degC" Vector__XXX
+ SG_ EngnArFltr1DffrntlPrssr : 32|8@1+ (0.05,0) [0|12.5] "kPa" Vector__XXX
+ SG_ EngineIntakeAirPressure : 24|8@1+ (2,0) [0|500] "kPa" Vector__XXX
+ SG_ EngnIntkMnfld1Tmprtr : 16|8@1+ (1,-40) [-40|210] "degC" Vector__XXX
+ SG_ EngineIntakeManifold1Pressure : 8|8@1+ (2,0) [0|500] "kPa" Vector__XXX
+ SG_ Atttt1DsPttFtItPssUsSp3609 : 0|8@1+ (0.5,0) [0|125] "kPa" Vector__XXX
+
+BO_ 2147548927 OI: 8 Vector__XXX
+ SG_ EngineServiceIndicator : 56|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ EssCtSstOptSpdIdtSvt : 51|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ EssCtSstOptTqIdtSvt : 48|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ EngineOilLifeRemaining : 40|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ OprtrStrtRqstInhtIndtr : 38|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ RecommendedNumberOfGearsToShift : 34|4@1+ (1,0) [0|13] "count" Vector__XXX
+ SG_ AtmtStrtRqstInhtIndtr : 32|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ FlSpplEstmtdRmnngDstn : 16|16@1+ (1,0) [0|64255] "km" Vector__XXX
+ SG_ WtrInChrgArDtAftrChrgArClrIndtr : 14|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EmssnCntrlSstmOprtrIndmntSvrt : 11|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ DrvrWrnngSstmIndtrStts : 8|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ EngineOverloadedIndicator : 6|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ WaterInFuelIndicator2 : 4|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ OperatorShiftPrompt : 2|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ WaterInFuelIndicator1 : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 2147548851 LFI1: 8 Vector__XXX
+ SG_ FlexibleFuelPercentage : 48|16@1+ (0.0025,0) [0|160.6375] "%" Vector__XXX
+ SG_ TripAverageFuelRate : 32|16@1+ (0.05,0) [0|3212.75] "l/h" Vector__XXX
+ SG_ TotalEnginePtoGovernorFuelUsed : 0|32@1+ (0.5,0) [0|2105540607.5] "l" Vector__XXX
+
+
+
+
+CM_ BO_ 2147545091 "Electronic Engine Controller 2";
+CM_ SG_ 2147545091 EstimatedPumpingPercentTorque "Estimated Pumping - Percent Torque: The calculated torque that indicates the estimated amount of torque loss due to the engine air handling system. The value transmitted in this parameter is included in SPN 514 (Nominal Friction - Percent Torque).  T...";
+CM_ SG_ 2147545091 AtlMxmmAvllEngnPrntTrq "Actual Maximum Available Engine - Percent Torque: This is the maximum amount of torque that the engine can immediately deliver as a percentage of the reference engine torque (SPN 544).  The Actual Maximum Available Engine - Percent Torque shall take ...";
+CM_ SG_ 2147545091 ScrThermalManagementActive "SCR Thermal Management Active: Indicates that the exhaust temperatures have been elevated for regeneration of the SCR aftertreatment system or in preparation of regeneration of the SCR aftertreatment system.00b = SCR Thermal Management is not active0...";
+CM_ SG_ 2147545091 DpfThermalManagementActive "DPF Thermal Management Active: Indicates that the exhaust temperatures have been elevated for regeneration of the diesel particulate filter aftertreatment system or in preparation of regeneration of the diesel particulate aftertreatment system.00b = ...";
+CM_ SG_ 2147545091 MmntrEngnMxmmPwrEnlFdk "Momentary Engine Maximum Power Enable Feedback: Momentarily requesting Engine Maximum Power Enable - feature support feedback00b = disabled01b = supported 10b = reserved11b = don't care";
+CM_ SG_ 2147545091 VhlAlrtnRtLmtStts "Vehicle Acceleration Rate Limit Status: Status (active or not active) of the system used to limit maximum forward vehicle acceleration.00b = Limit not active01b = Limit active10b = Reserved11b = Not availableNOTE:  The effects of emission control lim...";
+CM_ SG_ 2147545091 AcceleratorPedal2Position "Accelerator Pedal 2 Position: The ratio of actual position of the second analog engine speed/torque request input device (such as an accelerator pedal or throttle lever) to the maximum position of the input device.  This parameter is intended for sec...";
+CM_ SG_ 2147545091 RemoteAcceleratorPedalPosition "Remote Accelerator Pedal Position: The ratio of actual position of the remote analog engine speed/torque request input device (such as an accelerator pedal or throttle lever) to the maximum position of the input device.     For example, in on-highway...";
+CM_ SG_ 2147545091 EnginePercentLoadAtCurrentSpeed "Engine Percent Load At Current Speed: The ratio of actual engine percent torque (indicated) to maximum indicated torque available at the current engine speed, clipped to zero torque during engine braking.";
+CM_ SG_ 2147545091 AcceleratorPedal1Position "Accelerator Pedal 1 Position: This parameter is intended for the primary accelerator control in an application. SPN 91 is the calculated ratio of actual position of the operator's [engine] speed request or [engine] torque request input device (most c...";
+CM_ SG_ 2147545091 AcceleratorPedal2LowIdleSwitch "Accelerator Pedal 2 Low Idle Switch: Switch signal which indicates the state of the accelerator pedal 2 low idle switch.  The low idle switch is defined in SAE J1843.00b = Accelerator pedal 2 not in low idle condition01b = Accelerator pedal 2 in low ...";
+CM_ SG_ 2147545091 RoadSpeedLimitStatus "Road Speed Limit Status: Status (active or not active) of the system used to limit maximum vehicle velocity.00b = Active01b = Not Active10b = Error11b = Not availableNOTE - While somewhat inconsistent with other J1939 status parameters, the states de...";
+CM_ SG_ 2147545091 AcceleratorPedalKickdownSwitch "Accelerator Pedal Kickdown Switch: Switch signal which indicates whether the accelerator pedal kickdown switch is opened or closed.  The kickdown switch is defined in SAE J1843.00b = Kickdown passive01b = Kickdown active10b = Error11b = Not available...";
+CM_ SG_ 2147545091 AcceleratorPedal1LowIdleSwitch "Accelerator Pedal 1 Low Idle Switch: Switch signal which indicates the state of the accelerator pedal 1 low idle switch.  The low idle switch is defined in SAE Recommended Practice J1843.00b = Accelerator pedal 1 not in low idle condition01b = Accele...";
+CM_ BO_ 2147545092 "Electronic Engine Controller 1";
+CM_ SG_ 2147545092 EngineDemandPercentTorque "Engine Demand â€“ Percent Torque: The requested torque output of the engine by all dynamic internal inputs, including smoke control, noise control and low and high speed governing.";
+CM_ SG_ 2147545092 EngineStarterMode "Engine Starter Mode: There are several phases in a starting action and different reasons why a start cannot take place.0000b = start not requested0001b = starter active but not engaged0010b = starter active and engaged0011b = start finished; starter ...";
+CM_ SG_ 2147545092 SrAddrssOfCntrllngDvFrEngnCntrl "Source Address of Controlling Device for Engine Control: The source address of the SAE J1939 device currently controlling the engine.  It is used to expand the torque mode parameter (see SPN 899) in cases where control is in response to an ECU that i...";
+CM_ SG_ 2147545092 EngineSpeed "Engine Speed: Actual engine speed which is calculated over a minimum crankshaft angle of 720 degrees divided by the number of cylinders.";
+CM_ SG_ 2147545092 ActualEnginePercentTorque "Actual Engine - Percent Torque: The calculated output torque of the engine.  The data is transmitted in indicated torque as a percent of reference engine torque (see the engine configuration message, PGN 65251).  The engine percent torque value will ...";
+CM_ SG_ 2147545092 DrvrSDmndEngnPrntTrq "Driver's Demand Engine - Percent Torque: The requested torque output of the engine by the driver. It is based on input from the following requestors external to the powertrain: operator (via the accelerator pedal), cruise control and/or road speed li...";
+CM_ SG_ 2147545092 AtlEngnPrntTrqFrtnl "Actual Engine - Percent Torque (Fractional): This parameter displays an additional torque in percent of the reference engine torque. When the MSB is set to 1, this parameter is not available.  When the MSB is set to 0, bits 1 to 3 indicate the desire...";
+CM_ SG_ 2147545092 EngineTorqueMode "Engine Torque Mode: State signal which indicates which engine torque mode is currently generating, limiting, or controlling the torque.  Note that the modes are not in prioritized order. Not all modes may be relevant for a given device.  Some devices...";
+CM_ BO_ 2147545098 "Engine Gas Flow Rate";
+CM_ SG_ 2147545098 TargetFreshAirMassFlow "Target Fresh Air Mass Flow: The intended mass flow rate of fresh air entering the engine air intake, before any EGR mixer, if used.";
+CM_ SG_ 2147545098 EngnExhstGsRrltn2MssFlwRt "Engine Exhaust Gas Recirculation 2 Mass Flow Rate: Flow rate of gas through the second EGR system. Flow rate of the exhaust gas being recirculated from the 2nd EGR system into combustion air.";
+CM_ SG_ 2147545098 EngineIntakeAirMassFlowRate "Engine Intake Air Mass Flow Rate: Mass flow rate of fresh air entering the engine air intake, before any EGR mixer, if used.  Flow rate of fresh air conducted to the engine cylinders to support combustion.";
+CM_ SG_ 2147545098 EngnExhstGsRrltn1MssFlwRt "Engine Exhaust Gas Recirculation 1 Mass Flow Rate: Flow rate of gas through the EGR system. Flow rate of the exhaust gas being recirculated into the combustion air.";
+CM_ BO_ 2147545124 "Aftertreatment 1 SCR Dosing System Requests 1";
+CM_ SG_ 2147545124 Atttt1DsExstFdDsRqstdQttHR "Aftertreatment 1 Diesel Exhaust Fluid Dosing Requested Quantity (High Range): Requested dosing quantity of diesel exhaust fluid. This SP is a high range measurement. See SPN 4348 if high range is not needed.";
+CM_ SG_ 2147545124 Atttt1DsExstFdRqstdQttOItt "Aftertreatment 1 Diesel Exhaust Fluid Requested Quantity of Integrator: Represents the command for the diesel exhaust fluid quantity integrator in the dosing control unit.  See SPN 7783 for alternate resolution.";
+CM_ SG_ 2147545124 Atttt1DsExstFdDsTstItPssStts "Aftertreatment 1 Diesel Exhaust Fluid Dosing Test Injection Permission Status: After a request to permit the DEF dosing test injection has been indicated, this permission status is expected by the DEF control unit for aftertreatment system 1.00b = no...";
+CM_ SG_ 2147545124 Atttt1DsExstFdHdStssCPssStts "Aftertreatment 1 Diesel Exhaust Fluid Hydraulic Stiffness Check Permission Status: After a request to permit the DEF hydraulic stiffness check has been indicated, this permission status is expected by the DEF control unit for aftertreatment system 1....";
+CM_ SG_ 2147545124 Aftrtrtmnt1SrSstmRqstdStt "Aftertreatment 1 SCR System Requested State: Requested state of SCR system for aftertreatment system 1 (exhaust bank 1).0000b = Dormant (sleep mode) 0001b = Preparing dosing readiness (wake up; prepare to operate; wait for start) 0010b = Normal dosin...";
+CM_ SG_ 2147545124 Atttt1DsExstFdDsRqstdQtt "Aftertreatment 1 Diesel Exhaust Fluid Dosing Requested Quantity: Actual requested dosing quantity of diesel exhaust fluid.";
+CM_ BO_ 2147548562 "Engine Operating Information";
+CM_ SG_ 2147548562 EngineDerateRequest "Engine Derate Request: This parameter is a derate request made from the engine control system to an external system, where the engine is requesting an external device to reduce the load being applied.  A zero value indicates that there is no derate b...";
+CM_ SG_ 2147548562 EngineDesiredTorqueRequest "Engine Desired Torque Request: This is the torque that the ECM desires to provide. It is a request made from the ECM to an external system. A valid value within the operating range indicates the engine is requesting an external controller to change t...";
+CM_ SG_ 2147548562 EngnCldAmntElvtdIdlStts "Engine Cold Ambient Elevated Idle Status: Indicates that the engine is elevating the idle speed due to cold strategies.00b = No Idle Elevation Active - standard idle speed01b = Idle Elevation Active10b = Reserved for SAE assignment11b = Unavailable...";
+CM_ SG_ 2147548562 EngnEmrgnImmdtShtdwnIndtn "Engine Emergency (Immediate) Shutdown Indication: A signal issued by the engine control system to a user or external system indicating that it is immediately shutting the engine down.  This indication is made when engine protection diagnostics determ...";
+CM_ SG_ 2147548562 EngineControlledShutdownRequest "Engine Controlled Shutdown Request: A signal issued by the engine control system to a user or external system requesting for a controlled shutdown.  This request is made when engine protection diagnostics determine a condition warrants a shutdown soo...";
+CM_ SG_ 2147548562 EngineCoolantPumpControl "Engine Coolant Pump Control: Control setting for an electrically actuated engine coolant circulating pump. 00b = Off01b = On10b = Reserved11b = Don't care / take no action.";
+CM_ SG_ 2147548562 EnginePreHeaterControl "Engine Pre-Heater Control: Control setting for an electrically actuated engine block or coolant pre-heating device.00b = Off 01b = On10b = Reserved11b = Unavailable";
+CM_ SG_ 2147548562 EngnEltrlSstmPwrCnsrvtnCntrl "Engine Electrical System Power Conservation Control: Control setting for cutting power to various devices when the engine is not in use.  Useful if it is desired to keep the engine in standby, with main control ECU still powered on and communictaing ...";
+CM_ SG_ 2147548562 EngineOilPreHeaterControl "Engine Oil Pre-heater Control: Control setting for an electrically actuated oil pre-heating device.00b = Off01b = On10b = Reserved11b = Don't care / take no actionIn addition to communicating desired action of the electrically actuated oil pre-heater...";
+CM_ SG_ 2147548562 EngineOilPrimingPumpControl "Engine Oil Priming Pump Control: This control is used to activate a pump that lubricates the engine, particularly prior to initial engine startup.00b = Off01b = On10b = Reserved11b = unavailable";
+CM_ SG_ 2147548562 EngnFlShtffVlvLkTstCntrl "Engine Fuel Shutoff Valve Leak Test Control: Control setting for fuel shutoff valve proving system test.  Typically, this type of system can only be used with a dual fuel shutoff system.  The test consists of a small pump to pressurize the chamber be...";
+CM_ SG_ 2147548562 EngineFuelShutoff2Control "Engine Fuel Shutoff 2 Control: Control setting for fuel shutoff 2.  First instance is SPN 632.  For a dual fuel shutoff system, this SP is representative of the downstream fuel shutoff commanded position.  When fuel (gas) is desired at the engine, th...";
+CM_ SG_ 2147548562 EngineFuelShutoff1Control "Engine Fuel Shutoff 1 Control: Control setting for fuel shutoff 1.  The second instance is SPN 2807.  For a single fuel shutoff system, this represents its commanded position.  For a dual fuel shutoff system, this SP is representative of the upstream...";
+CM_ SG_ 2147548562 EngineFuelShutoffVentControl "Engine Fuel Shutoff Vent Control: Control setting for a fuel shutoff vent.  Typically, for a dual fuel shutoff system, the vent line is located between them and is plumbed to vent outside to atmosphere.  The vent control typically always actuates opp...";
+CM_ SG_ 2147548562 TmRmnngInEngnOprtngStt "Time Remaining in Engine Operating State: This parameter is used to indicate the time remaining in the current engine operating state, based on the state defined in the SP Engine Operating State (SPN 3543). For the states in which time remaining is n...";
+CM_ SG_ 2147548562 EngineStarterMotorRelayControl "Engine Starter Motor Relay Control: Command signal used to energize or de-energize the engine starter motor relay.00b = Off01b = On10b = Reserved for SAE assignment11b = Don't care/take no action";
+CM_ SG_ 2147548562 FuelPumpPrimerControl "Fuel Pump Primer Control: Parameter used to activate or deactivate a priming system on the fuel transfer system. The fuel priming system is a system that purges air in the fuel lines and may assist fuel delivery to a second pump at lower speeds.00b =...";
+CM_ SG_ 2147548562 EngineOperatingState "Engine Operating State: This parameter is used to indicate the current state, or mode, of operation by the engine.  This is a status parameter.0000b = Engine Stopped0001b = Pre-Start0010b = Starting0011b = Warm-Up0100b = Running0101b = Cool-down0110b...";
+CM_ BO_ 2147548780 "Tachograph";
+CM_ SG_ 2147548780 TachographVehicleSpeed "Tachograph vehicle speed: Speed of the vehicle registered by the tachograph.";
+CM_ SG_ 2147548780 TachographOutputShaftSpeed "Tachograph output shaft speed: Calculated speed of the transmission output shaft.";
+CM_ SG_ 2147548780 DirectionIndicator "Direction indicator: Indicates the direction of the vehicle.00b = Forward01b = Reverse10b = Error11b = Not available";
+CM_ SG_ 2147548780 TachographPerformance "Tachograph performance: Indicates the tachograph performance; including electronic or mechanical analysis, instrument analysis, speed sensor analysis, mass storage analysis, and printer analysis.00b = Normal performance01b = Performance analysis10b =...";
+CM_ SG_ 2147548780 HandlingInformation "Handling information: Indicates that handling information is present.  Information could include no printer paper, no driver card, etc.00b = No handling information01b = Handling information10b = Error11b = Not available";
+CM_ SG_ 2147548780 SystemEvent "System event: Indicates that a tachograph event has occurred.  This may include power supply interruption, interruption of the speed sensor, incorrect data on the driver card, driving without a driver card, illegal removal of a driver card, insertion...";
+CM_ SG_ 2147548780 DriverCardDriver2 "Driver card, driver 2: Indicates the presence of a driver card00b = Driver card not present01b = Driver card present10b = Error11b = Not available";
+CM_ SG_ 2147548780 Driver2TimeRelatedStates "Driver 2 Time Related States: Indicates if the driver approaches or exceeds working time limits (or other limits).  0000b = Normal/No limits reached0001b = Limit #1 â€“ 15 min before 4 Â½ h0010b = Limit #2 â€“ 4 Â½ h reached0011b = Limit #3 â€“ 15 min before...";
+CM_ SG_ 2147548780 VehicleOverspeed "Vehicle Overspeed: Indicates whether the vehicle is exceeding the legal speed limit set in the tachograph.00b = No overspeed01b = Overspeed10b = Error11b = Not available";
+CM_ SG_ 2147548780 DriverCardDriver1 "Driver card, driver 1: Indicates the presence of a driver card00b = Driver card not present01b = Driver card present10b = Error11b = Not available";
+CM_ SG_ 2147548780 Driver1TimeRelatedStates "Driver 1 Time Related States: Indicates if the driver approaches or exceeds working time limits (or other limits).  0000b = Normal/No limits reached0001b = Limit #1 â€“ 15 min before 4 Â½ h0010b = Limit #2 â€“ 4 Â½ h reached0011b = Limit #3 â€“ 15 min before...";
+CM_ SG_ 2147548780 VehicleMotion "Vehicle motion: Indicates whether motion of the vehicle is detected or not.00b = Vehicle motion not detected01b = Vehicle motion detected10b = Error11b = Not available";
+CM_ SG_ 2147548780 Driver2WorkingState "Driver 2 working state: State of work of the driver.  000b = Rest - sleeping001b = Driver available â€“ short break010b = Work â€“ loading, unloading, working in an office011b = Drive â€“ behind wheel 100b = Reserved101b = Reserved110b = Error111b = Not av...";
+CM_ SG_ 2147548780 Driver1WorkingState "Driver 1 working state: State of work of the driver.  000b = Rest - sleeping001b = Driver available â€“ short break010b = Work â€“ loading, unloading, working in an office011b = Drive â€“ behind wheel 100b = Reserved101b = Reserved110b = Error111b = Not av...";
+CM_ BO_ 2147548478 "Aftertreatment 1 SCR Exhaust Gas Temperature 1";
+CM_ SG_ 2147548478 Aftrtrtmnt1SrOtltTmprtrPrlmnrFm "Aftertreatment 1 SCR Outlet Temperature Preliminary FMI: Used to identify the applicable J1939-73 FMI detected in the SCR outlet temperature sensor by the manufacturerâ€™s sensor control software in exhaust bank 1. In the case of multiple failures the ...";
+CM_ SG_ 2147548478 Aftrtrtmnt1SrOtltTmprtr "Aftertreatment 1 SCR Outlet Temperature: Temperature of engine combustion byproducts leaving the SCR outlet in exhaust bank 1.";
+CM_ SG_ 2147548478 Aftrtrtmnt1SrIntkTmprtrPrlmnrFm "Aftertreatment 1 SCR Intake Temperature Preliminary FMI: Used to identify the applicable J1939-73 FMI detected in the SCR intake temperature sensor by the manufacturerâ€™s sensor control software in exhaust bank 1.  In the case of multiple failures the...";
+CM_ SG_ 2147548478 Aftrtrtmnt1SrIntkTmprtr "Aftertreatment 1 SCR Intake Temperature: Temperature of engine combustion byproducts entering the SCR in exhaust bank 1.";
+CM_ BO_ 2147545089 "Electronic Brake Controller 1";
+CM_ SG_ 2147545089 TrtrMntdTrlrAsWrnngSgnl "Tractor-Mounted Trailer ABS Warning Signal: This parameter commands the tractor-mounted trailer ABS optical warning signal.00b = Off01b = On 10b = Reserved11b = Take no action";
+CM_ SG_ 2147545089 TrailerAbsStatus "Trailer ABS Status: State signal which indicates that ABS in the trailer is actively controlling the brakes.  A message is sent to the tractor from the trailer (i.e. by PLC). The receiving device in the tractor transfers this information to the J1939...";
+CM_ SG_ 2147545089 HaltBrakeSwitch "Halt brake switch: Switch signal which indicates the position of the halt brake switch.00b = Halt brake switch passive01b = Halt brake switch active10b = Error11b = Not available";
+CM_ SG_ 2147545089 RailroadModeSwitch "Railroad Mode Switch: Switch signal which indicates the position of the Railroad mode switch.00b = Railroad mode switch passive (City/Highway mode)01b = Railroad mode switch active (Railroad mode)10b = Error11b = Not availableNote:  This switch signa...";
+CM_ SG_ 2147545089 SrAddrssOfCntrllngDvFrBrkCntrl "Source Address of Controlling Device for Brake Control: The source address of the SAE J1939 device currently controlling the brake system. Its value may be the source address of the ECU transmitting the message (which means that no external SAE J1939...";
+CM_ SG_ 2147545089 AtcAsrInformationSignal "ATC/ASR Information Signal: This parameter commands the ATC/ASR driver information signal, for example a dash lamp.00b = Off01b = On 10b = Reserved11b = Take no action";
+CM_ SG_ 2147545089 AsEsAmrWrnngSgnlPwrdVhl "ABS/EBS Amber Warning Signal (Powered Vehicle): This parameter commands the ABS/EBS amber/yellow optical warning signal00b = Off01b = On10b = Reserved11b = Take no action";
+CM_ SG_ 2147545089 EbsRedWarningSignal "EBS Red Warning Signal: This parameter commands the EBS red optical warning signal00b = Off01b = On10b = Reserved11b = Take no action";
+CM_ SG_ 2147545089 AbsFullyOperational "ABS Fully Operational: Signal which indicates whether an ABS system is fully operational or whether its functionality is reduced by a defect or by an intended action (e.g., by activation of an ABS-off-road switch or during special diagnostic procedur...";
+CM_ SG_ 2147545089 EngineRetarderSelection "Engine Retarder Selection: The position of the operator controlled selector, expressed as a percentage and determined by the ratio of the current position of the selector to its maximum possible position. Zero percent means no braking torque is reque...";
+CM_ SG_ 2147545089 RemoteAcceleratorEnableSwitch "Remote Accelerator Enable Switch: Switch signal which indicates that the remote accelerator has been enabled and controls the engine.  00b = Off01b = On10b = Error11b = Not availableNOTEâ€”The accelerator interlock switch (see SPN 972) must be disabled...";
+CM_ SG_ 2147545089 EngineAuxiliaryShutdownSwitch "Engine Auxiliary Shutdown Switch: Switch signal which requests that all engine fueling stop.00b = Off01b = On10b = Error11b = Not available";
+CM_ SG_ 2147545089 EngineDerateSwitch "Engine Derate Switch: Switch signal used to activate the torque limiting feature of the engine.  The specific nature of torque limiting should be verified with the manufacturer.00b = Off01b = On10b = Error11b = Not available";
+CM_ SG_ 2147545089 AcceleratorInterlockSwitch "Accelerator Interlock Switch: Switch signal used to disable the accelerator and remote accelerator inputs, causing the engine to return to idle.00b = Off01b = On10b = Error11b = Not available";
+CM_ SG_ 2147545089 TractionControlOverrideSwitch "Traction Control Override Switch: Switch signal which indicates the position of the traction control override switch.  The traction control override signal disables the automatic traction control function allowing the wheels to spin.00b = Off01b = On...";
+CM_ SG_ 2147545089 AsrHillHolderSwitch "ASR Hill Holder Switch: Switch signal which indicates the position of the ASR hill holder switch.00b = ASR hill holder switch passive01b = ASR hill holder switch active10b = Error11b = Not available";
+CM_ SG_ 2147545089 AsrOffRoadSwitch "ASR Off-road Switch: Switch signal which indicates the position of the ASR off-road switch.00b = ASR off-road switch passive01b = ASR off-road switch active10b = Error11b = Not available";
+CM_ SG_ 2147545089 AbsOffRoadSwitch "ABS Off-road Switch: Switch signal which indicates the position of the ABS off-road switch.00b = ABS off-road switch passive01b = ABS off-road switch active10b = Error11b = Not available";
+CM_ SG_ 2147545089 BrakePedalPosition "Brake Pedal Position: Ratio of brake pedal position to maximum pedal position.  Used for electric brake applications. 0% means no braking. Also when there are two brake pedals on the machine (Left Brake Pedal Position SPN 3033 and Right Brake Pedal P...";
+CM_ SG_ 2147545089 EbsBrakeSwitch "EBS Brake Switch: Switch signal which indicates that the brake pedal is being pressed.  The EBS brake switch is independent of the brake light switch and has no provisions for external connections.00b = Brake pedal is not being pressed01b = Brake ped...";
+CM_ SG_ 2147545089 AntiLockBrakingAbsActive "Anti-Lock Braking (ABS) Active: State signal which indicates that the ABS is active.  The signal is set active when wheel brake pressure actually starts to be modulated by ABS and is reset to passive when all wheels are in a stable condition for a ce...";
+CM_ SG_ 2147545089 AsrBrakeControlActive "ASR Brake Control Active: State signal which indicates that ASR brake control is active. Active means that ASR actually controls wheel brake pressure at one or more wheels of the driven axle(s).00b = ASR brake control passive but installed01b = ASR b...";
+CM_ SG_ 2147545089 AsrEngineControlActive "ASR Engine Control Active: State signal which indicates that ASR engine control has been commanded to be active. Active means that ASR actually tries to control the engine. This state signal is independent of other control commands to the engine (e.g...";
+CM_ BO_ 2147545093 "Electronic Transmission Controller 2";
+CM_ SG_ 2147545093 TransmissionCurrentRange "Transmission Current Range: Range currently being commanded by the transmission control system. Characters may include P, Rx, Rx-1...R2, R1, R, Nx, Nx-1...N2, N1, N, D, D1, D2..., Dx, L, L1, L2..., Lx-1, 1, 2, 3,... If only one displayed character is...";
+CM_ SG_ 2147545093 TransmissionRequestedRange "Transmission Requested Range: Range selected by the operator.  Characters may include P, Rx, Rx-1...R2, R1, R, Nx, Nx-1...N2, N1, N, D, D1, D2..., Dx, L, L1, L2..., Lx-1, 1, 2, 3,...  If only one displayed character is required, the second character ...";
+CM_ SG_ 2147545093 TransmissionCurrentGear "Transmission Current Gear: The gear currently engaged in the transmission or the last gear engaged while the transmission is in the process of shifting to the new or selected gear.  Transitions toward a destination gear will not be indicated.  Once t...";
+CM_ SG_ 2147545093 TransmissionActualGearRatio "Transmission Actual Gear Ratio: Actual ratio of input shaft speed to output shaft speed.";
+CM_ SG_ 2147545093 TransmissionSelectedGear "Transmission Selected Gear: The gear that the transmission will attempt to achieve during the current shift if a shift is in progress, or the next shift if one is pending (i.e., waiting for torque reduction to initiate the shift).Negative values are ...";
+CM_ BO_ 2147548448 "Aftertreatment 1 Diesel Oxidation Catalyst 1";
+CM_ SG_ 2147548448 Atttt1DsOxdtCtstDtPssPF "Aftertreatment 1 Diesel Oxidation Catalyst Differential Pressure Preliminary FMI: Used to identify the applicable J1939-73 FMI detected in the diesel oxidation catalyst differential pressure sensor by the manufacturerâ€™s sensor control software in exh...";
+CM_ SG_ 2147548448 Atttt1DsOxdtCtstOttTptPF "Aftertreatment 1 Diesel Oxidation Catalyst Outlet Temperature Preliminary FMI: Used to identify the applicable J1939-73 FMI detected in the diesel oxidation catalyst outlet gas temperature sensor by the manufacturerâ€™s sensor control software in exhau...";
+CM_ SG_ 2147548448 Atttt1DsOxdtCtstItTptPF "Aftertreatment 1 Diesel Oxidation Catalyst Intake Temperature Preliminary FMI: Used to identify the applicable J1939-73 FMI detected in the diesel oxidation catalyst intake temperature sensor by the manufacturerâ€™s sensor control software in exhaust b...";
+CM_ SG_ 2147548448 Atttt1DsOxdtCtstDtPss "Aftertreatment 1 Diesel Oxidation Catalyst Differential Pressure: Exhaust differential pressure measured between the intake and exhaust of a diesel oxidation catalyst in exhaust bank 1.  This parameter should be used with engines fueled by diesel fue...";
+CM_ SG_ 2147548448 Atttt1DsOxdtCtstOttTpt "Aftertreatment 1 Diesel Oxidation Catalyst Outlet Temperature: Temperature of engine combustion byproducts leaving the diesel oxidation catalyst exhaust in exhaust bank 1.  This parameter should be used with engines fueled by diesel fuel (not gaseous...";
+CM_ SG_ 2147548448 Atttt1DsOxdtCtstItTpt "Aftertreatment 1 Diesel Oxidation Catalyst Intake Temperature: Temperature of engine combustion byproducts entering the diesel oxidation catalyst in exhaust bank 1.  This parameter should be used with engines fueled by diesel fuel (not gaseous fuel l...";
+CM_ BO_ 2147548540 "Diesel Particulate Filter Control 1";
+CM_ SG_ 2147548540 DsPttFtAtvRtItdDTTs "Diesel Particulate Filter Active Regeneration Inhibited Due to Thresher: Indicates the state of diesel particulate filter active regeneration inhibition due to a combine thresher being active/engaged.This parameter indicates the reason for the diesel...";
+CM_ SG_ 2147548540 Atttt1DsPttFtCdtsNtMtFAtvRt "Aftertreatment 1 Diesel Particulate Filter Conditions Not Met for Active Regeneration: Indicates that diesel particulate filter 1 is not able to begin or continue an active regenerate event at the current engine operating conditions.00b = active DPF ...";
+CM_ SG_ 2147548540 DsPttFtAtvRtItdDTLwExstPss "Diesel Particulate Filter Active Regeneration Inhibited Due to Low Exhaust Pressure: Indicates the state of diesel particulate filter active regeneration inhibition due to low exhaust pressure.00b = not inhibited01b = inhibited10b = reserved for SAE ...";
+CM_ SG_ 2147548540 HydrocarbonDoserPurgingEnable "Hydrocarbon Doser Purging Enable: Purging enable of the Hydrocarbon Doser (HCD).00b = Purging not enabled01b = Purging enabled - less urgent10b = Purging enabled - urgent11b = Not available";
+CM_ SG_ 2147548540 DslPrtltFltrAtvRgnrtnFrdStts "Diesel Particulate Filter Active Regeneration Forced Status: Indicates the forced execution status of diesel particulate filter regeneration.000b = Not Active001b = Active â€“ Forced by Switch (See SPN 3696)010b = Active â€“ Forced by Service Tool 011b =...";
+CM_ SG_ 2147548540 ExhstSstmHghTmprtrLmpCmmnd "Exhaust System High Temperature Lamp Command: Command to control the exhaust system high temperature lamp.  This lamp indicates that the exhaust system temperature is high.000b = Off001b = On â€“ solid 010b = reserved for SAE assignment 011b = reserved...";
+CM_ SG_ 2147548540 DsPttFtAttAtvRtIttCt "Diesel Particulate Filter Automatic Active Regeneration Initiation Configuration: Indicates the configuration of diesel particulate filter active regeneration automatic initiation.00b = not enabled01b = enabled10b = reserved for SAE assignment11b = n...";
+CM_ SG_ 2147548540 DsPttFtAtvRtItdDTVSpdBwAwdSpd "Diesel Particulate Filter Active Regeneration Inhibited Due to Vehicle Speed Below Allowed Speed: Indicates the state of diesel particulate filter active regeneration inhibition due to vehicle speed being less than the allowed vehicle speed.00b = not...";
+CM_ SG_ 2147548540 DsPttFtAtvRtItdDTENtWdUp "Diesel Particulate Filter Active Regeneration Inhibited Due to Engine Not Warmed Up: Indicates the state of diesel particulate filter active regeneration inhibition due to the engine not being warmed up.00b = not inhibited01b = inhibited10b = reserve...";
+CM_ SG_ 2147548540 DsPttFtAtvRtItdDTPtSstLt "Diesel Particulate Filter Active Regeneration Inhibited Due to Permanent System Lockout: Indicates the state of diesel particulate filter active regeneration inhibition due to a permanent system lockout.00b = not inhibited01b = inhibited10b = reserve...";
+CM_ SG_ 2147548540 DsPttFtAtvRtItdDTTpSstLt "Diesel Particulate Filter Active Regeneration Inhibited Due to Temporary System Lockout: Indicates the state of diesel particulate filter active regeneration inhibition due to a temporary system lockout.00b = not inhibited01b = inhibited10b = reserve...";
+CM_ SG_ 2147548540 DsPttFtAtvRtItdDTSstTt "Diesel Particulate Filter Active Regeneration Inhibited Due to System Timeout: Indicates the state of diesel particulate filter active regeneration inhibition due to a system timeout.00b = not inhibited01b = inhibited10b = reserved for SAE assignment...";
+CM_ SG_ 2147548540 DsPttFtAtvRtItdDTSstFtAtv "Diesel Particulate Filter Active Regeneration Inhibited Due to System Fault Active: Indicates the state of diesel particulate filter active regeneration inhibition due to a system fault being active.00b = not inhibited01b = inhibited10b = reserved fo...";
+CM_ SG_ 2147548540 DsPttFtAtvRtItdDTLwExstTpt "Diesel Particulate Filter Active Regeneration Inhibited Due to Low Exhaust Temperature: Indicates the state of diesel particulate filter active regeneration inhibition due to the exhaust temperature being too low.  This implies that the diesel partic...";
+CM_ SG_ 2147548540 DsPttFtAtvRtItdDTPBNtSt "Diesel Particulate Filter Active Regeneration Inhibited Due to Parking Brake Not Set: Indicates the state of diesel particulate filter active regeneration inhibition due to the parking brake being not set.00b = not inhibited01b = inhibited10b = reser...";
+CM_ SG_ 2147548540 DsPttFtAtvRtItdDTVSpdAvAwdSpd "Diesel Particulate Filter Active Regeneration Inhibited Due to Vehicle Speed Above Allowed Speed: Indicates the state of diesel particulate filter active regeneration inhibition due to the vehicle speed being above an allowed limit.00b = not inhibite...";
+CM_ SG_ 2147548540 DsPttFtAtvRtItdDTOtONt "Diesel Particulate Filter Active Regeneration Inhibited Due to Out of Neutral: Indicates the state of diesel particulate filter active regeneration inhibition due to the transmission being out of neutral.00b = not inhibited01b = inhibited10b = reserv...";
+CM_ SG_ 2147548540 DsPttFtAtvRtItdDTAtPdOId "Diesel Particulate Filter Active Regeneration Inhibited Due to Accelerator Pedal Off Idle: Indicates the state of diesel particulate filter active regeneration inhibition due to the accelerator pedal being off idle.00b = not inhibited01b = inhibited1...";
+CM_ SG_ 2147548540 DsPttFtAtvRtItdDTPtAtv "Diesel Particulate Filter Active Regeneration Inhibited Due to PTO Active: Indicates the state of diesel particulate filter active regeneration inhibition due to the PTO being active.00b = not inhibited01b = inhibited10b = reserved for SAE assignment...";
+CM_ SG_ 2147548540 DsPttFtAtvRtItdDTSvBAtv "Diesel Particulate Filter Active Regeneration Inhibited Due to Service Brake Active: Indicates the state of diesel particulate filter active regeneration inhibition due to the service brake being active.00b = not inhibited01b = inhibited10b = reserve...";
+CM_ SG_ 2147548540 DsPttFtAtvRtItdDTCtDsd "Diesel Particulate Filter Active Regeneration Inhibited Due to Clutch Disengaged: Indicates the state of diesel particulate filter active regeneration inhibition due to the clutch being disengaged.00b = not inhibited01b = inhibited10b = reserved for ...";
+CM_ SG_ 2147548540 DsPttFtAtvRtItdDTItSwt "Diesel Particulate Filter Active Regeneration Inhibited Due to Inhibit Switch: Indicates the state of diesel particulate filter active regeneration inhibition due to the Diesel Particulate Filter Regeneration Inhibit Switch.00b = not inhibited01b = i...";
+CM_ SG_ 2147548540 DslPrtltFltrAtvRgnrtnInhtdStts "Diesel Particulate Filter Active Regeneration Inhibited Status: Indicates the state of diesel particulate filter active regeneration inhibition.00b = not inhibited01b = inhibited10b = reserved for SAE assignment11b = not availableThis SP indicates th...";
+CM_ SG_ 2147548540 AftrtrtmntDslPrtltFltrStts "Aftertreatment Diesel Particulate Filter Status: Indicates the state of the diesel particulate filter regeneration need and urgency.  This is an aggregate of bank 1 and bank 2.  It is a system status and not individual bank status.000b = Regeneration...";
+CM_ SG_ 2147548540 AttttDsPttFtAtvRtStts "Aftertreatment Diesel Particulate Filter Active Regeneration Status: Indicates the state of diesel particulate filter active regeneration.  This is an aggregate of bank 1 and bank 2.  It is a system status and not individual bank status.00b = not act...";
+CM_ SG_ 2147548540 AttttDsPttFtPssvRtStts "Aftertreatment Diesel Particulate Filter Passive Regeneration Status: Indicates the state of diesel particulate filter passive regeneration.  This is an aggregate of bank 1 and bank 2.  It is a system status and not individual bank status.00b = not a...";
+CM_ SG_ 2147548540 DslPrtltFltrAtvRgnrtnAvlltStts "Diesel Particulate Filter Active Regeneration Availability Status: Indicates that diesel particulate filter active regeneration is available for initiation through Aftertreatment Regeneration Force Switch (SPN 3696).00b = Not ready for initiation01b ...";
+CM_ SG_ 2147548540 DslPrtltFltrLmpCmmnd "Diesel Particulate Filter Lamp Command: Command to control the diesel particulate filter lamp.000b = Off001b = On â€“ solid010b = reserved for SAE assignment 011b = reserved for SAE assignment100b = On â€“ fast blink (1 Hz)101b = On â€“ very fast blink110b...";
+CM_ BO_ 2147548577 "Aftertreatment 1 Fuel Control 1";
+CM_ SG_ 2147548577 Aftrtrtmnt1FlInjtr1HtrCntrl "Aftertreatment 1 Fuel Injector 1 Heater Control: Heating level that the controller is commanding the aftertreatment 1 fuel injector 1 heater control to maintain. 0% = off, 100% = maximum.";
+CM_ SG_ 2147548577 Aftrtrtmnt1FlEnlAttr "Aftertreatment 1 Fuel Enable Actuator: Indicates whether aftertreatment 1 fuel enable actuator is on or off00b = not active01b = active10b = reserved for SAE assignment11b = not available";
+CM_ SG_ 2147548577 Aftrtrtmnt1RgnrtnStts "Aftertreatment 1 Regeneration Status: Indicates whether regeneration is active or inactive in aftertreatment 1.  00b = not active01b = active10b = reserved for SAE assignment11b = not available";
+CM_ SG_ 2147548577 Aftertreatment1Ignition "Aftertreatment 1 Ignition: Indicates whether aftertreatment 1 ignition circuit is energized by the ECU.00b = not active01b = active10b = reserved for SAE assignment11b = not available";
+CM_ SG_ 2147548577 Aftrtrtmnt1FlDrnAttr "Aftertreatment 1 Fuel Drain Actuator: Indicates whether aftertreatment 1 fuel drain actuator is on or off00b = not active01b = active10b = reserved for SAE assignment11b = not available";
+CM_ SG_ 2147548577 Aftrtrtmnt1FlPrssr1Cntrl "Aftertreatment 1 Fuel Pressure 1 Control: Position that the controller is commanding the aftertreatment 1 fuel pressure control to maintain.  0% = fully closed, 100% = fully open.";
+CM_ SG_ 2147548577 Aftertreatment1FuelRate "Aftertreatment 1 Fuel Rate: Rate of fuel being delivered to aftertreatment 1 for regeneration";
+CM_ SG_ 2147548577 Aftertreatment1FuelPressure1 "Aftertreatment 1 Fuel Pressure 1: First fuel pressure measurement for the aftertreatment 1 system";
+CM_ BO_ 2147548594 "Aftertreatment 1 Intermediate Gas";
+CM_ SG_ 2147548594 Atttt1DsPttFtItdtTptPF "Aftertreatment 1 Diesel Particulate Filter Intermediate Temperature Preliminary FMI: Used to identify the applicable J1939-73 FMI detected in the diesel particulate filter intermediate temperature sensor by the manufacturerâ€™s sensor control software ...";
+CM_ SG_ 2147548594 Atttt1DsPttFtDtPssPF "Aftertreatment 1 Diesel Particulate Filter Differential Pressure Preliminary FMI: Used to identify the applicable J1939-73 FMI detected in the diesel particulate filter differential pressure sensor by the manufacturerâ€™s sensor control software in exh...";
+CM_ SG_ 2147548594 Aftrtrtmnt1ExhstTmprtr2PrlmnrFm "Aftertreatment 1 Exhaust Temperature 2 Preliminary FMI: Used to identify the applicable J1939-73 FMI detected in the exhaust temperature 2 sensor by the manufacturerâ€™s sensor control software in exhaust bank 1.  In the case of multiple failures the m...";
+CM_ SG_ 2147548594 Atttt1DsPttFtDtPss "Aftertreatment 1 Diesel Particulate Filter Differential Pressure: Exhaust differential pressure measured between the intake and exhaust of a diesel particulate filter in exhaust bank 1.";
+CM_ SG_ 2147548594 Atttt1DsPttFtItdtTpt "Aftertreatment 1 Diesel Particulate Filter Intermediate Temperature: Temperature of engine combustion byproducts at a mid-point in the diesel particulate filter in exhaust bank 1.";
+CM_ SG_ 2147548594 Aftrtrtmnt1ExhstTmprtr2 "Aftertreatment 1 Exhaust Temperature 2: The reading from the exhaust temperature sensor located midstream of the other two temperature sensors in the aftertreatment system in exhaust bank 1.";
+CM_ BO_ 2147548758 "Aftertreatment 1 Diesel Exhaust Fluid Tank 1 Information 1";
+CM_ SG_ 2147548758 Atttt1DsExstFdT1HtPF "Aftertreatment 1 Diesel Exhaust Fluid Tank 1 Heater Preliminary FMI: Used to identify the applicable J1939-73 FMI detected for the heater of the diesel exhaust fluid tank for aftertreatment system 1 (exhaust bank 1), as detected by the manufacturer's...";
+CM_ SG_ 2147548758 Aftrtrtmnt1DslExhstFldTnkHtr "Aftertreatment 1 Diesel Exhaust Fluid Tank Heater: Percentage of heating applied to the aftertreatment 1 diesel exhaust fluid tank heater.  A value of 0% means no heating applied, a value of 100% means full heating applied.  The diesel exhaust fluid ...";
+CM_ SG_ 2147548758 AftrtrtmntSrOprtrIndmntSvrt "Aftertreatment SCR Operator Inducement Severity: Severity status of the operator inducement system for anomalies with the SCR system, such as tampering, low DEF quality, and DEF tank level.  Higher numerical levels indicate more severe levels of indu...";
+CM_ SG_ 2147548758 Atttt1DsExstFdT1TptPF "Aftertreatment 1 Diesel Exhaust Fluid Tank 1 Temperature Preliminary FMI: Used to identify the applicable J1939-73 FMI detected for the diesel exhaust fluid tank temperature for aftertreatment system 1 (exhaust bank 1), as detected by the manufacture...";
+CM_ SG_ 2147548758 AttttDsExstFdTLwLvIdt "Aftertreatment Diesel Exhaust Fluid Tank Low Level Indicator: The desired illumination of the driver's warning indicator for diesel exhaust fluid (DEF) tank low level.000b = Off -  indicates adequate DEF level   e.g., for Euro VI this is used to indi...";
+CM_ SG_ 2147548758 Atttt1DsExstFdTLvVPF "Aftertreatment 1 Diesel Exhaust Fluid Tank Level/Volume Preliminary FMI: Used to identify the applicable J1939-73 FMI detected in the diesel exhaust fluid tank level sensor by the manufacturer's sensor control software.  This FMI is applicable to eit...";
+CM_ SG_ 2147548758 Aftrtrtmnt1DslExhstFldTnkLvl "Aftertreatment 1 Diesel Exhaust Fluid Tank Level: The diesel exhaust fluid level height in mm in the diesel exhaust fluid storage container for aftertreatment system 1 (exhaust bank 1).  See SPN 1761 and SPN 7530 for alternate measurements. Parameter...";
+CM_ SG_ 2147548758 Atttt1DsExstFdTTpt1 "Aftertreatment 1 Diesel Exhaust Fluid Tank Temperature 1: Temperature of the diesel exhaust fluid in the storage tank.";
+CM_ SG_ 2147548758 Aftrtrtmnt1DslExhstFldTnkVlm "Aftertreatment 1 Diesel Exhaust Fluid Tank Volume: Ratio of volume of diesel exhaust fluid to the total volume of diesel exhaust fluid storage container for aftertreatment system 1 (exhaust bank 1).  0% is empty and 100% is full.  See SPN 3517 and SP...";
+CM_ BO_ 2147548836 "Engine Temperature 2";
+CM_ SG_ 2147548836 EngnExhstGsRrltn1Tmprtr "Engine Exhaust Gas Recirculation 1 Temperature: Temperature of Recirculated Exhaust Gas.  This should not be used for Exhaust Gas Recirculation Mixer Intake Temperature.  See SPN 5020.";
+CM_ SG_ 2147548836 EngnExhstGsRrltn1DffrntlPrssr "Engine Exhaust Gas Recirculation 1 Differential Pressure: Differential pressure across the Exhaust Gas Recirculation (EGR) system";
+CM_ SG_ 2147548836 EngineEcuTemperature "Engine ECU Temperature: Temperature of the engine electronic control unit.";
+CM_ SG_ 2147548836 EngineOilTemperature2 "Engine Oil Temperature 2: Temperature of the engine lubricant.Note:  If there is only one engine oil temperature measurement, SPN 175 should be used. See also SPNs 175 and 5925 for additional engine oil temperature measurements.";
+CM_ BO_ 2147548861 "Fan Drive #1";
+CM_ SG_ 2147548861 FanDriveBypassCommandStatus "Fan Drive Bypass Command Status: Status of the Fan Drive Bypass Command as being commanded by the ECU.  The fan drive bypass diverts pump pressure away from the hydraulic motor to maintain the fan drive pressure.  0% is defined as no bypass (i.e. div...";
+CM_ SG_ 2147548861 HydraulicFanMotorPressure "Hydraulic Fan Motor Pressure: The hydraulic pressure used to drive the fan system, sensed before the hydraulic fan motor.";
+CM_ SG_ 2147548861 FanSpeed "Fan Speed: The speed of the fan associated with engine coolant system.";
+CM_ SG_ 2147548861 EngineFanBypassSwitch "Engine Fan Bypass Switch: Switch signal used to activate the engine fan bypass. On indicates the fan bypass is commanded active.00b = Off01b = On10b = Error11b = Not available";
+CM_ SG_ 2147548861 EngineFanReverseSwitch "Engine Fan Reverse Switch: Switch signal used to drive the engine fan in the reverse direction. Off indicates the fan is commanded in the normal direction.00b = Off01b = On10b = Error11b = Not available";
+CM_ SG_ 2147548861 FanDriveState "Fan Drive State: This parameter is used to indicate the current state or mode of operation by the fan drive.0000b = Fan off0001b = Engine systemâ€“General0010b = Excessive engine air temperature0011b = Excessive engine oil temperature0100b = Excessive ...";
+CM_ SG_ 2147548861 EngineFan1EstimatedPercentSpeed "Engine Fan 1 Estimated Percent Speed: Estimated fan speed as a ratio of the fan drive (current speed) to the fully engaged fan drive (maximum fan speed).  A two state fan (off/on) will use 0% and 100% respectively.  A three state fan (off/intermediat...";
+CM_ BO_ 2147548863 "Wheel Speed Information";
+CM_ SG_ 2147548863 RltvSpdRrAxl2RghtWhl "Relative Speed; Rear Axle #2, Right Wheel: The speed of the rear axle #2, right wheel relative to the front axle speed, SPN 904.";
+CM_ SG_ 2147548863 RelativeSpeedRearAxle2LeftWheel "Relative Speed; Rear Axle #2, Left Wheel: The speed of the rear axle #2, left wheel relative to the front axle speed, SPN 904.";
+CM_ SG_ 2147548863 RltvSpdRrAxl1RghtWhl "Relative Speed; Rear Axle #1, Right Wheel: The speed of the rear axle #1, right wheel relative to the front axle speed, SPN 904.";
+CM_ SG_ 2147548863 RelativeSpeedRearAxle1LeftWheel "Relative Speed; Rear Axle #1, Left Wheel: The speed of the rear axle #1, left wheel relative to the front axle speed, SPN 904.";
+CM_ SG_ 2147548863 RltvSpdFrntAxlRghtWhl "Relative Speed; Front Axle, Right Wheel: The speed of the front axle, right wheel relative to the front axle speed, SPN 904.";
+CM_ SG_ 2147548863 RelativeSpeedFrontAxleLeftWheel "Relative Speed; Front Axle, Left Wheel: The speed of the front axle, left wheel relative to the front axle speed, SPN 904.";
+CM_ SG_ 2147548863 FrontAxleSpeed "Front Axle Speed: The average speed of the two front wheels.";
+CM_ BO_ 2147548865 "High Resolution Vehicle Distance";
+CM_ SG_ 2147548865 TripDistanceHighResolution "Trip Distance (High Resolution): Distance traveled during all or part of a journey.NOTE - See SPN 244 for alternate resolution.";
+CM_ SG_ 2147548865 TtlVhlDstnHghRsltn "Total Vehicle Distance (High Resolution): Accumulated distance traveled by the vehicle during its operation.NOTE - See SPN 245 for alternate resolution.";
+CM_ BO_ 2147548895 "Electronic Engine Controller 3";
+CM_ SG_ 2147548895 Aftertreatment2ExhaustDewPoint "Aftertreatment 2 Exhaust Dew Point: Indicates that the temperature on the exhaust side of the aftertreatment has exceeded the dew point, as estimated by the ECU in exhaust bank 2.00b = Not exceeded the dew point01b = Exceeded the dew point10b = Error...";
+CM_ SG_ 2147548895 EngineExhaust2DewPoint "Engine Exhaust 2 Dew Point: Indicates that the temperature on the intake side of the aftertreatment system has exceeded the dew point, as estimated by the ECU in exhaust bank 2.00b = Not exceeded the dew point01b = Exceeded the dew point10b = Error11...";
+CM_ SG_ 2147548895 Aftertreatment1ExhaustDewPoint "Aftertreatment 1 Exhaust Dew Point: Indicates that the temperature on the exhaust side of the aftertreatment has exceeded the dew point, as estimated by the ECU in exhaust bank 1.00b = Not exceeded the dew point01b = Exceeded the dew point10b = Error...";
+CM_ SG_ 2147548895 EngineExhaust1DewPoint "Engine Exhaust 1 Dew Point: Indicates that the temperature on the intake side of the aftertreatment system has exceeded the dew point, as estimated by the ECU in exhaust bank 1.00b = Not exceeded the dew point01b = Exceeded the dew point10b = Error11...";
+CM_ SG_ 2147548895 Aftrtrtmnt1ExhstGsMssFlwRt "Aftertreatment 1 Exhaust Gas Mass Flow Rate: Measured/calculated exhaust gas mass upstream of the aftertreatmentÂ system in exhaust bank 1 and 2.";
+CM_ SG_ 2147548895 EstmtdEngnPrstLsssPrntTrq "Estimated Engine Parasitic Losses - Percent Torque: The calculated torque that indicates the estimated amount of torque loss due to engine parasitics, such as cooling fan, air compressor, air conditioning, etc. It is expressed as a percent of Engine ...";
+CM_ SG_ 2147548895 ESDsdOptSpdAstAdstt "Engine's Desired Operating Speed Asymmetry Adjustment: This byte is utilized in transmission gear selection routines and indicates the engine's preference of lower versus higher engine speeds should its desired speed not be achievable.  This is a sca...";
+CM_ SG_ 2147548895 EngineSDesiredOperatingSpeed "Engine's Desired Operating Speed: An indication by the engine of the optimal operating speed of the engine for the current existing conditions.  These conditions may include the torque generated to accommodate powertrain demands from the operator (vi...";
+CM_ SG_ 2147548895 NominalFrictionPercentTorque "Nominal Friction - Percent Torque: The calculated torque that indicates the amount of torque required by the basic engine itself added by the loss torque of accessories.  It contains the frictional and thermodynamic loss of the engine itself, pumping...";
+CM_ BO_ 2147548896 "Vehicle Distance";
+CM_ SG_ 2147548896 TotalVehicleDistance "Total Vehicle Distance: Accumulated distance traveled by vehicle during its operation.NOTE See SPN 917 for alternate resolution.";
+CM_ SG_ 2147548896 TripDistance "Trip Distance: Distance traveled during all or part of a journey.NOTE See SPN 918 for alternate resolution.";
+CM_ BO_ 2147548901 "Engine Hours, Revolutions";
+CM_ SG_ 2147548901 EngineTotalRevolutions "Engine Total Revolutions: Accumulated number of revolutions of engine crankshaft during its operation.";
+CM_ SG_ 2147548901 EngineTotalHoursOfOperation "Engine Total Hours of Operation: Accumulated time of operation of engine.";
+CM_ BO_ 2147548903 "Vehicle Hours";
+CM_ SG_ 2147548903 TotalPowerTakeoffHours "Total Power Takeoff Hours: Accumulated time of operation of power takeoff device.";
+CM_ SG_ 2147548903 TotalVehicleHours "Total Vehicle Hours: Accumulated time of operation of vehicle.";
+CM_ BO_ 2147548905 "Fuel Consumption (Liquid) 1";
+CM_ SG_ 2147548905 EngineTotalFuelUsed "Engine Total Fuel Used: Accumulated amount of fuel used during vehicle operation.  See SPN 5054 for alternate resolution.";
+CM_ SG_ 2147548905 EngineTripFuel "Engine Trip Fuel: Fuel consumed during all or part of a journey.  See SPN 5053 for alternate resolution.";
+CM_ BO_ 2147548909 "Cruise Control/Vehicle Speed Setup";
+CM_ SG_ 2147548909 PwrtrnAdptvCrsCntrlTp "Powertrain Adaptive Cruise Control Type: Status to indicate the type of adaptive cruise control that is supported by the powertrain and the controller that manages cruise control and its ability to support the Cruise Control Pause/Resume Command para...";
+CM_ SG_ 2147548909 CruiseControlSetCommandSupport "Cruise Control Set Command Support: Indicates support for SPN 9843 Cruise Control Set Command by the system that manages cruise control.00b = System does not support the â€œCruise Control Set Commandâ€� feature01b = System does support the Cruise Control...";
+CM_ SG_ 2147548909 CrsCntrlPsCmmndSpprt "Cruise Control Pause Command Support: Indicates support for SPN 5605 Cruise Control Pause Command by the system that manages cruise control.00b = System does not support the â€œCruise Control Pause Commandâ€� feature01b = System does support the Cruise C...";
+CM_ SG_ 2147548909 CrsCntrlRsmCmmndSpprt "Cruise Control Resume Command Support: Indicates support for SPN 5604 Cruise Control Resume Command by the system that manages cruise control.00b = System does not support the â€œCruise Control Resume Commandâ€� feature01b = System does support the Cruis...";
+CM_ SG_ 2147548909 CrsCntrlDslCmmndSpprt "Cruise Control Disable Command Support: Indicates support for SPN 5603 Cruise Control Disable Command by the system that manages cruise control.00b = System does not support the â€œCruise Control Disable Commandâ€�01b = System does support the Cruise Con...";
+CM_ SG_ 2147548909 CrsCntrlSstmLwStLmtSpd "Cruise Control System Low Set Limit Speed: Minimum vehicle velocity at which cruise can be set or resumed by a source other than the operator.Associated with the CCVS2 signals SPN 5604 - Cruise Control Resume Command and SPN 9843 - Cruise Control Set...";
+CM_ SG_ 2147548909 MxmmVhlSpdLmtHghRsltn "Maximum Vehicle Speed Limit (High Resolution): Maximum vehicle velocity allowed. See SPN 74 for an alternate resolution.";
+CM_ SG_ 2147548909 CrsCntrlOprtrLwStLmtSpd "Cruise Control Operator Low Set Limit Speed: Minimum vehicle velocity at which cruise can be set by the operator or minimum vehicle velocity for cruise operation before it will exit cruise control operation.Associated with the CCVS1 signals SPN 599 -...";
+CM_ SG_ 2147548909 CruiseControlHighSetLimitSpeed "Cruise Control High Set Limit Speed: Maximum vehicle velocity at which cruise can be set.If Cruise Control Adjusted Maximum Speed (SPN 7495) is supported, then SPN 7495 has priority over SPN 87. See the definition for SPN 7495 for more details.";
+CM_ SG_ 2147548909 MaximumVehicleSpeedLimit "Maximum Vehicle Speed Limit: Maximum vehicle velocity allowed.   See SPN 6808 for an alternate resolution.";
+CM_ BO_ 2147548910 "Engine Temperature 1";
+CM_ SG_ 2147548910 EngnChrgArClrThrmsttOpnng "Engine Charge Air Cooler Thermostat Opening: The current position of the thermostat used to regulate the temperature of the engine charge air cooler.  A value of 0% represents the thermostat being completely closed and 100% represents the thermostat ...";
+CM_ SG_ 2147548910 EngineIntercoolerTemperature "Engine Intercooler Temperature: Temperature of liquid found in the intercooler located after the turbocharger.";
+CM_ SG_ 2147548910 EngnTrhrgr1OlTmprtr "Engine Turbocharger 1 Oil Temperature: Temperature of the turbocharger lubricant.";
+CM_ SG_ 2147548910 EngineOilTemperature1 "Engine Oil Temperature 1: Temperature of the engine lubricant.Note:  If there is only one engine oil temperature measurement, this SP should be used.  This is the SP that is typically displayed on an on-highway truck instrument cluster.See also SPNs ...";
+CM_ SG_ 2147548910 EngineFuel1Temperature1 "Engine Fuel 1 Temperature 1: Temperature of fuel (or gas) of the first fuel type. See SPN 3468 for a second temperature measurement of the first fuel type.";
+CM_ SG_ 2147548910 EngineCoolantTemperature "Engine Coolant Temperature: Temperature of liquid found in engine cooling system.";
+CM_ BO_ 2147548911 "Engine Fluid Level/Pressure 1";
+CM_ SG_ 2147548911 EngineCoolantLevel1 "Engine Coolant Level 1: Ratio of volume of liquid found in engine cooling system to total cooling system volume.  Typical monitoring location is in the coolant expansion tank.";
+CM_ SG_ 2147548911 EngineCoolantPressure1 "Engine Coolant Pressure 1: Gage pressure of liquid found in engine cooling system.See SPN 20 for alternate range and resolution.";
+CM_ SG_ 2147548911 EngineCrankcasePressure1 "Engine Crankcase Pressure 1: First instance of the gage pressure inside engine crankcase.";
+CM_ SG_ 2147548911 EngineOilPressure1 "Engine Oil Pressure 1: Gage pressure of oil in engine lubrication system as provided by oil pump.  See SPN 7468 for alternate resolution.";
+CM_ SG_ 2147548911 EngineOilLevel "Engine Oil Level: Ratio of current volume of engine sump oil to maximum required volume.";
+CM_ SG_ 2147548911 EngnExtnddCrnksBlwBPrssr "Engine Extended Crankcase Blow-by Pressure: Differential crankcase blow-by pressure as measured through a tube with a venturi. (SPN 1264 is not to be used â€“ obsolete)";
+CM_ SG_ 2147548911 EngineFuelDeliveryPressure "Engine Fuel Delivery Pressure: Gage pressure of fuel in system as delivered from supply pump to the injection pump.  See SPN 7469 for alternate resolution.See also SPN 5578 for Fuel Delivery Absolute Pressure.";
+CM_ BO_ 2147548912 "Power Takeoff Information 1";
+CM_ SG_ 2147548912 EnginePtoGovernorDisableSwitch "Engine PTO Governor Disable Switch: Customer or body builder installed switch to prevent operation of engine in PTO mode.00b = Off (PTO mode allowed)01b = On (PTO mode is not allowed)10b = Error11b = Not Available";
+CM_ SG_ 2147548912 AuxiliaryInputIgnoreSwitch "Auxiliary Input Ignore Switch: Switch signal which overrides other switch input's ability to disable an engine's operating condition.00b = Off01b = On10b = Error11b = Not AvailableThis switch input can be used to prevent the PTO from disengaging if a...";
+CM_ SG_ 2147548912 RtPtGvPpdSpdCtSwt2 "Remote PTO Governor Preprogrammed Speed Control Switch #2: Switch signal which indicates that the remote PTO governor toggle switch #2 is in the enabled (ON) position. If the toggle switch is enabled and other conditions are satisfied then the remote...";
+CM_ SG_ 2147548912 OprtrEngnPtGvrnrMmrSltSwth "Operator Engine PTO Governor Memory Select Switch: Measured state of the operator's engine PTO governor memory select switch. This switch selects which of the two available memory locations is to be used to store the dynamically assigned value. This ...";
+CM_ SG_ 2147548912 EngnPtGvrnrAlrtSwth "Engine PTO Governor Accelerate Switch: Switch signal of the PTO control activator which indicates that the activator is in the position to accelerate the PTO governor set speed.00b = Off01b = On10b = Error11b = Not available";
+CM_ SG_ 2147548912 EnginePtoGovernorResumeSwitch "Engine PTO Governor Resume Switch: Switch signal of the PTO control activator which indicates that the activator is in the position to resume a previously established PTO governor set speed.00b = Off01b = On10b = Error11b = Not available";
+CM_ SG_ 2147548912 EngnPtGvrnrCstDlrtSwth "Engine PTO Governor Coast/Decelerate Switch: Switch signal of the PTO control activator which indicates that the activator is in the position to coast/decelerate the PTO governor set speed.00b = Off01b = On10b = Error11b = Not available";
+CM_ SG_ 2147548912 EnginePtoGovernorSetSwitch "Engine PTO Governor Set Switch: Switch signal of the PTO control activator which indicates that the activator is in the position to set the engine PTO governor set speed.00b = Off01b = On10b = Error11b = Not available";
+CM_ SG_ 2147548912 EngnRmtPtGvrnrVrlSpdCntrlSwth "Engine Remote PTO Governor Variable Speed Control Switch: Switch signal which indicates that the remote PTO governor toggle switch is in the enabled (ON) position.  If the toggle switch is enabled and other conditions are satisfied then the remote PT...";
+CM_ SG_ 2147548912 ERtPtGvPpdSpdCtSwt "Engine Remote PTO Governor Preprogrammed Speed Control Switch: Switch signal which indicates that the remote PTO governor  toggle switch is in the enabled (ON) position.  If the toggle switch is enabled and other conditions are satisfied then the rem...";
+CM_ SG_ 2147548912 EnginePtoGovernorEnableSwitch "Engine PTO Governor Enable Switch: Switch signal which indicates that the PTO governor toggle switch is in the enabled (ON) position and therefore it is possible to manage the PTO control function.00b = Off01b = On10b = Error11b = Not available...";
+CM_ SG_ 2147548912 PowerTakeoffSetSpeed "Power Takeoff Set Speed: Rotational velocity selected by operator for device used to transmit engine power to auxiliary equipment.";
+CM_ SG_ 2147548912 PowerTakeoffSpeed "Power Takeoff Speed: Rotational velocity of device used to transmit engine power to auxiliary equipment.";
+CM_ SG_ 2147548912 PowerTakeoffOilTemperature "Power Takeoff Oil Temperature: Temperature of lubricant in device used to transmit engine power to auxiliary equipment.";
+CM_ BO_ 2147548913 "Cruise Control/Vehicle Speed 1";
+CM_ SG_ 2147548913 EngineShutdownOverrideSwitch "Engine Shutdown Override Switch: Switch signal which indicates the position of the engine shutdown override switch.  This switch function allows the operator to override an impending engine shutdown.00b = Off01b = On10b = Error11b = Not available...";
+CM_ SG_ 2147548913 EngineDiagnosticTestModeSwitch "Engine Diagnostic Test Mode Switch: Switch signal which indicates the position of the engine diagnostic test mode switch.00b = Off01b = On10b = Error11b = Not available";
+CM_ SG_ 2147548913 EngineIdleDecrementSwitch "Engine Idle Decrement Switch: Switch signal which indicates the position of the idle decrement switch.00b = Off01b = On10b = Error11b = Not available";
+CM_ SG_ 2147548913 EngineIdleIncrementSwitch "Engine Idle Increment Switch: Switch signal which indicates the position of the idle increment switch.00b = Off01b = On10b = Error11b = Not available";
+CM_ SG_ 2147548913 CruiseControlStates "Cruise Control States: This parameter is used to indicate the current state, or mode, of operation by the cruise control device.  This is a status parameter.000b = Off/Disabled001b = Hold010b = Accelerate011b = Decelerate100b = Resume101b = Set110b =...";
+CM_ SG_ 2147548913 PtoGovernorState "PTO Governor State: This parameter is used to indicate the current state or mode of operation by the power takeoff (PTO) governor.  In lieu of support for PTO Drive Engagement parameters, this parameter may represent the status of a PTO drive.  The b...";
+CM_ SG_ 2147548913 CruiseControlSetSpeed "Cruise Control Set Speed: Value of set (chosen) velocity of velocity control system.  See SPN 6809 for an alternate resolution.If an algorithm that can modify the cruise control set point exists in the system, such as Predictive Cruise Control or Ada...";
+CM_ SG_ 2147548913 CruiseControlAccelerateSwitch "Cruise Control Accelerate Switch: Switch signal of the cruise control activator which indicates that the activator is in the position accelerate.00b = Cruise control activator not in the position accelerate01b = Cruise control activator in position a...";
+CM_ SG_ 2147548913 CruiseControlResumeSwitch "Cruise Control Resume Switch: Switch signal of the cruise control activator which indicates that the activator is in the position resume.00b = Cruise control activator not in the position resume01b = Cruise control activator in position resume10b = E...";
+CM_ SG_ 2147548913 CrsCntrlCstDlrtSwth "Cruise Control Coast (Decelerate) Switch: Switch signal of the cruise control activator which indicates that the activator is in the position coast (decelerate).00b = Cruise control activator not in the position coast01b = Cruise control activator in...";
+CM_ SG_ 2147548913 CruiseControlSetSwitch "Cruise Control Set Switch: Switch signal of the cruise control activator which indicates that the activator is in the position set.00b = Cruise control activator not in the position set01b = Cruise control activator in position set10b = Error11b = No...";
+CM_ SG_ 2147548913 ClutchSwitch "Clutch Switch: Switch signal which indicates that the clutch pedal is being pressed. It is necessary for a safe drivetrain behavior that the clutch switch is set before the clutch is opened (cruise control function).00b = Clutch pedal released01b = C...";
+CM_ SG_ 2147548913 BrakeSwitch "Brake Switch: Switch signal which indicates that the driver operated brake foot pedal is being pressed.  This brake foot pedal is controlling the vehicles' service brake (total vehicle braking application, not park brakes).  It is necessary for safe ...";
+CM_ SG_ 2147548913 CruiseControlEnableSwitch "Cruise Control Enable Switch: Switch signal which indicates that it is possible to manage the cruise control function.00b = Cruise control disabled01b = Cruise control enabled10b = Error11b = Not available";
+CM_ SG_ 2147548913 CruiseControlActive "Cruise Control Active: Cruise control is switched on.  It is not ensured that the engine is controlled by cruise control, as in the case of a large driver's demand the engine is controlled by the driver while cruise control is active (maximum selecti...";
+CM_ SG_ 2147548913 WheelBasedVehicleSpeed "Wheel-Based Vehicle Speed: Speed of the vehicle as calculated from wheel or tailshaft speed.";
+CM_ SG_ 2147548913 ParkBrakeReleaseInhibitRequest "Park Brake Release Inhibit Request: Park Brake Release Inhibit Request signals the desire that an applied park brake remain applied and limit the ability of the vehicle to be moved.  00b = Park Brake Release Inhibit not requested01b = Park Brake Rele...";
+CM_ SG_ 2147548913 CruiseControlPauseSwitch "Cruise Control Pause Switch: Switch signal which indicates the position of the Cruise Control Pause Switch used on Remote Cruise Control applications. The Cruise Control Pause Switch signal temporarily disables the Cruise Control function.00b = Off01...";
+CM_ SG_ 2147548913 ParkingBrakeSwitch "Parking Brake Switch: Switch signal which indicates when the parking brake is set. In general the switch actuated by the operator's park brake control, whether a pedal, lever or other control mechanism  (see also SPN 619 and 5275).00b = Parking brake...";
+CM_ SG_ 2147548913 TwoSpeedAxleSwitch "Two Speed Axle Switch: Switch signal which indicates the current axle range.00b = Low speed range01b = High speed range10b = Error11b = Not available";
+CM_ BO_ 2147548914 "Fuel Economy (Liquid)";
+CM_ SG_ 2147548914 EngineThrottleValve2Position "Engine Throttle Valve 2 Position: The sensed position feedback of the valve, coming from a second electrical actuator for a second throttle plate, used to regulate the supply of a fluid, usually air or fuel//air mixture.  0% represents no supply and ...";
+CM_ SG_ 2147548914 EngineThrottleValve1Position1 "Engine Throttle Valve 1 Position 1: The position of the valve used to regulate the supply of a fluid, usually air or fuel/air mixture, to an engine.  0% represents no supply and 100% is full supply.";
+CM_ SG_ 2147548914 EngineAverageFuelEconomy "Engine Average Fuel Economy: Average of instantaneous fuel economy for that segment of vehicle operation of interest.";
+CM_ SG_ 2147548914 EngineInstantaneousFuelEconomy "Engine Instantaneous Fuel Economy: Current fuel economy at current vehicle velocity.FB00h = Infinite (for example, during engine motoring)";
+CM_ SG_ 2147548914 EngineFuelRate "Engine Fuel Rate: Amount of fuel consumed by engine per unit of time.NOTE - See SPN 1600 for alternate resolution.";
+CM_ BO_ 2147548917 "Ambient Conditions";
+CM_ SG_ 2147548917 RoadSurfaceTemperature "Road Surface Temperature: Indicated temperature of road surface over which vehicle is operating.";
+CM_ SG_ 2147548917 EngineIntake1AirTemperature "Engine Intake 1 Air Temperature: Temperature of air entering vehicle air induction system.";
+CM_ SG_ 2147548917 AmbientAirTemperature "Ambient Air Temperature: Temperature of air surrounding vehicle.";
+CM_ SG_ 2147548917 CabInteriorTemperature "Cab Interior Temperature: Temperature of air inside the part of the vehicle that encloses the driver and vehicle operating controls.Note: See also SPN 1691.  SPN 1662 is an additional diagnostic SP associated with cab temperature.";
+CM_ SG_ 2147548917 BarometricPressure "Barometric Pressure: Absolute air pressure of the atmosphere.";
+CM_ BO_ 2147548918 "Intake/Exhaust Conditions 1";
+CM_ SG_ 2147548918 EngnClntFltrDffrntlPrssr "Engine Coolant Filter Differential Pressure: Change in coolant pressure, measured across the filter, due to the filter and any accumulation of solid or semisolid matter on or in the filter.";
+CM_ SG_ 2147548918 EngineExhaustTemperature "Engine Exhaust Temperature: Temperature of combustion byproducts leaving the engine.  See SPNs 2433, 2434, 5969 and 5970 for engines with more than one exhaust temperature measurement.";
+CM_ SG_ 2147548918 EngnArFltr1DffrntlPrssr "Engine Air Filter 1 Differential Pressure: Change in engine air system pressure, measured across the filter, due to the filter and any accumulation of solid foreign matter on or in the filter.This is the measurement of the first filter in a multiple ...";
+CM_ SG_ 2147548918 EngineIntakeAirPressure "Engine Intake Air Pressure: Absolute air pressure at input port to intake manifold.";
+CM_ SG_ 2147548918 EngnIntkMnfld1Tmprtr "Engine Intake Manifold 1 Temperature: Temperature of pre-combustion air found in intake manifold of engine air supply system.";
+CM_ SG_ 2147548918 EngineIntakeManifold1Pressure "Engine Intake Manifold #1 Pressure: The gage pressure measurement of the air intake manifold. If there are multiple air pressure sensors in the intake stream, this is the last one in flow direction before entering the combustion chamber.  This should...";
+CM_ SG_ 2147548918 Atttt1DsPttFtItPssUsSp3609 "Aftertreatment 1 Diesel Particulate Filter Intake Pressure (use SPN 3609): Exhaust pressure as a result of particle accumulation on filter media placed in the exhaust stream.  It is recommended that SPN 3609 be used as it has better resolution.";
+CM_ BO_ 2147548927 "Operator indicators";
+CM_ SG_ 2147548927 EngineServiceIndicator "Engine Service Indicator: Indicates the service need of the engine.000b = No service needed001b = Service engine soon010b = Service engine now011b = Reserved100b = Reserved101b = Reserved110b = Reserved111b = Not Available";
+CM_ SG_ 2147548927 EssCtSstOptSpdIdtSvt "Emission Control System Operator Speed Inducement Severity: Indicates that an operator speed Inducement due to the emission control system will be applied to the engine operation.  Higher numerical levels indicate more severe levels of inducement.  L...";
+CM_ SG_ 2147548927 EssCtSstOptTqIdtSvt "Emission Control System Operator Torque Inducement Severity: Indicates that an operator torque Inducement due to the emission control system will be applied to the engine operation. Higher numerical levels indicate more severe levels of inducement.  ...";
+CM_ SG_ 2147548927 EngineOilLifeRemaining "Engine Oil Life Remaining: Signal which indicates the actual oil life remaining in percent. 100% means the engine oil is brand new, and 0% means the engine oil is at the end of its life.";
+CM_ SG_ 2147548927 OprtrStrtRqstInhtIndtr "Operator Start Request Inhibit Indicator: State signal indicating a start request from the operator to the engine to be active or inactive. The start inhibit indicator can be of lamp or text form, located on (but not limited to) the shift console, in...";
+CM_ SG_ 2147548927 RecommendedNumberOfGearsToShift "Recommended Number of Gears to Shift: Recommended number of gears to shift relative to current gear. Operator Shift Prompt (SPN 5675) indicates whether to shift up or down.";
+CM_ SG_ 2147548927 AtmtStrtRqstInhtIndtr "Automatic Start Request Inhibit Indicator: State signal indicating an engine request for the Automatic Start Request Inhibit Indicator to be active or inactive. The start inhibit indicator can be of lamp or text form, located on (but not limited to) ...";
+CM_ SG_ 2147548927 FlSpplEstmtdRmnngDstn "Fuel Supply Estimated Remaining Distance: Estimated remaining distance based on existing fuel supply.";
+CM_ SG_ 2147548927 WtrInChrgArDtAftrChrgArClrIndtr "Water In Charge Air Duct After Charge Air Cooler Indicator: Signal which indicates the presence of water in charge air duct after charge air cooler.00b = No01b = Yes10b = Error11b = Not available";
+CM_ SG_ 2147548927 EmssnCntrlSstmOprtrIndmntSvrt "Emission Control System Operator Inducement Severity: Severity status of the operator inducement system for anomalies with the emission control system, such as tampering, low diesel exhaust fluid (reagent) quality, diesel exhaust fluid (reagent) tank...";
+CM_ SG_ 2147548927 DrvrWrnngSstmIndtrStts "Driver Warning System Indicator Status: The desired illumination of the Euro VI defined driver warning system indicator for relevant malfunctions and diesel exhaust fluid (reagent) tank low level.  Used for Euro VI implementations.  See Euro VI imple...";
+CM_ SG_ 2147548927 EngineOverloadedIndicator "Engine Overloaded Indicator: Signal which indicates that the engine is overloaded.00b = No01b = Yes10b = Error11b = Not available";
+CM_ SG_ 2147548927 WaterInFuelIndicator2 "Water in Fuel Indicator 2: A second indicator of the presense of water in the fuel.  See also SPN 97.00b = No01b = Yes10b = Error11b = Not available";
+CM_ SG_ 2147548927 OperatorShiftPrompt "Operator Shift Prompt: Command to activate an indicator that advises the operator to shift to a different gear.  Typically this would be used as part of a fuel economy improvement or drivability aid.00b = indicator(s) inactive01b = upshift indicator ...";
+CM_ SG_ 2147548927 WaterInFuelIndicator1 "Water In Fuel Indicator 1: Signal which indicates the presence of water in the fuel.00b = No01b = Yes10b = Error11b = Not available";
+CM_ BO_ 2147548851 "Fuel Information 1 (Liquid)";
+CM_ SG_ 2147548851 FlexibleFuelPercentage "Flexible Fuel Percentage: Measured signal that indicates the percentage of alcohol in the fuel currently being used.  0% means no alcohol in fuel, 100% means alcohol as fuel and nothing else.EXAMPLE: If a Bi-fuel vehicle has less than 10% ethanol in ...";
+CM_ SG_ 2147548851 TripAverageFuelRate "Trip Average Fuel Rate: Average fuel rate, equal to trip fuel divided by trip time while the engine speed is above zero, since the last trip reset.  This includes idle, engine PTO governor (both moving and non-moving) and drive operation but excludes...";
+CM_ SG_ 2147548851 TotalEnginePtoGovernorFuelUsed "Total Engine PTO Governor Fuel Used: Total fuel used while the PTO or remote PTO governors are in the hold state and engine speed is above zero, over the life of the engine.NOTEâ€”This parameter is intended for liquid fueled engines.  See SPN 1030 for ...";
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+VAL_ 2147545091 ScrThermalManagementActive 3 "DontCare" 2 "Reserved" 1 "SCRThermalManagementIsActive" 0 "SCRThermalManagementIsNotActive" ;
+VAL_ 2147545091 DpfThermalManagementActive 3 "DontCare" 2 "Reserved" 1 "DPFThermalManagementIsActive" 0 "DPFThermalManagementIsNotActive" ;
+VAL_ 2147545091 MmntrEngnMxmmPwrEnlFdk 3 "dontCare" 2 "reserved" 1 "supported" 0 "disabled" ;
+VAL_ 2147545091 VhlAlrtnRtLmtStts 3 "NotAvailable" 2 "Reserved" 1 "LimitActive" 0 "LimitNotActive" ;
+VAL_ 2147545091 AcceleratorPedal2LowIdleSwitch 3 "NotAvailable" 2 "Error" 1 "AccelPedal2InLowIdleCondition" 0 "AcclPedal2NotInLowIdleCondition" ;
+VAL_ 2147545091 RoadSpeedLimitStatus 3 "NotAvailable" 2 "Error" 1 "NotActive" 0 "Active" ;
+VAL_ 2147545091 AcceleratorPedalKickdownSwitch 3 "NotAvailable" 2 "Error" 1 "KickdownActive" 0 "KickdownPassive" ;
+VAL_ 2147545091 AcceleratorPedal1LowIdleSwitch 3 "NotAvailable" 2 "Error" 1 "AccelPedal1InLowIdleCondition" 0 "AcclPedal1NotInLowIdleCondition" ;
+VAL_ 2147545092 EngineStarterMode 15 "notAvailable" 14 "error" 12 "starterInhibitedReasonUnknown" 9 "1011Reserved" 8 "strtrInhbtdDueToStarterOvertemp" 7 "strtrInhbtdDToActiveImmobilizer" 6 "strtrInhbtdDTDrvlnEnggdOthrTrns" 5 "strtrInhbtdDTEngNtReadyForStart" 4 "strtrInhbtdDToEngAlreadyRunning" 3 "strtFnshdStrtrNtActvAftrHvngBnA" 2 "starterActiveGearEngaged" 1 "starterActiveGearNotEngaged" 0 "startNotRqed" ;
+VAL_ 2147545092 EngineTorqueMode 15 "Not available" 11 "Remote accelerator" 10 "Braking system" 9 "High speed governor" 8 "Torque limiting" 7 "ABS control" 6 "Transmission control" 5 "ASR control" 4 "Road speed governor" 3 "PTO governor" 2 "Cruise control" 1 "Accelerator pedal/operator selec" 0 "Low idle governor/no request (de" ;
+VAL_ 2147545124 Aftrtrtmnt1SrSstmRqstdStt 15 "NotAvailable" 14 "Error" 11 "1101RsrvdFrFtureAssignmentBySAE" 10 "ServiceTestModeDosingNotAllowed" 9 "ServiceTestModeDosingAllowed" 8 "Diagnosis" 7 "Shutoff" 6 "ProtectModeAgainstCold" 5 "ProtectModeAgainstHeat" 4 "RservedForFutureAssignmentBySAE" 3 "SystemErrorPending" 2 "NormalDosingOperation" 1 "PreparingDosingReadiness" 0 "Dormant" ;
+VAL_ 2147548562 EngnEmrgnImmdtShtdwnIndtn 3 "DontCare_TakeNoAction" 2 "Reserved" 1 "On" 0 "Off" ;
+VAL_ 2147548562 EngineControlledShutdownRequest 3 "DontCare_TakeNoAction" 2 "Reserved" 1 "On" 0 "Off" ;
+VAL_ 2147548562 EngineCoolantPumpControl 3 "DontCare_TakeNoAction" 2 "Reserved" 1 "On" 0 "Off" ;
+VAL_ 2147548562 EnginePreHeaterControl 3 "Unavailable" 2 "Reserved" 1 "On" 0 "Off" ;
+VAL_ 2147548562 EngnEltrlSstmPwrCnsrvtnCntrl 3 "Unavailable" 2 "Reserved" 1 "On" 0 "Off" ;
+VAL_ 2147548562 EngineOilPreHeaterControl 3 "DontCare_TakeNoAction" 2 "Reserved" 1 "On" 0 "Off" ;
+VAL_ 2147548562 EngineOilPrimingPumpControl 3 "Unavailable" 2 "Reserved" 1 "On" 0 "Off" ;
+VAL_ 2147548562 EngnFlShtffVlvLkTstCntrl 3 "DontCare_TakeNoAction" 2 "Reserved" 1 "On" 0 "Off" ;
+VAL_ 2147548562 EngineFuelShutoff2Control 3 "DontCare_TakeNoAction" 2 "Reserved" 1 "Closed" 0 "Open" ;
+VAL_ 2147548562 EngineFuelShutoff1Control 3 "DontCare_TakeNoAction" 2 "Reserved" 1 "Closed" 0 "Open" ;
+VAL_ 2147548562 EngineFuelShutoffVentControl 3 "DontCare_TakeNoAction" 2 "Reserved" 1 "Open" 0 "Closed" ;
+VAL_ 2147548562 FuelPumpPrimerControl 3 "Unavailable" 2 "Reserved" 1 "Activate" 0 "Deactivate" ;
+VAL_ 2147548780 DirectionIndicator 3 "NotAvailable" 2 "Error" 1 "Reverse" 0 "Forward" ;
+VAL_ 2147548780 TachographPerformance 3 "NotAvailable" 2 "Error" 1 "PerformanceAnalysis" 0 "NormalPerformance" ;
+VAL_ 2147548780 HandlingInformation 3 "NotAvailable" 2 "Error" 1 "HandlingInformation" 0 "NoHandlingInformation" ;
+VAL_ 2147548780 SystemEvent 3 "NotAvailable" 2 "Error" 1 "TachographEvent" 0 "NoTachographEvent" ;
+VAL_ 2147548780 DriverCardDriver2 3 "NotAvailable" 2 "Error" 1 "DriverCardPresent" 0 "DriverCardNotPresent" ;
+VAL_ 2147548780 Driver2TimeRelatedStates 15 "NotAvailable" 14 "Error" 13 "Other" 7 "1100Reserved" 6 "Limit616HReached" 5 "Limit515MinBefore16H" 4 "Limit49HReached" 3 "Limit315MinBefore9H" 2 "Limit24HReached" 1 "Limit115MinBefore4H" 0 "Normal_NoLimitsReached" ;
+VAL_ 2147548780 VehicleOverspeed 3 "NotAvailable" 2 "Error" 1 "Overspeed" 0 "NoOverspeed" ;
+VAL_ 2147548780 DriverCardDriver1 3 "NotAvailable" 2 "Error" 1 "DriverCardPresent" 0 "DriverCardNotPresent" ;
+VAL_ 2147548780 Driver1TimeRelatedStates 15 "NotAvailable" 14 "Error" 13 "Other" 7 "1100Reserved" 6 "Limit616HReached" 5 "Limit515MinBefore16H" 4 "Limit49HReached" 3 "Limit315MinBefore9H" 2 "Limit24HReached" 1 "Limit115MinBefore4H" 0 "Normal_NoLimitsReached" ;
+VAL_ 2147548780 VehicleMotion 3 "NotAvailable" 2 "Error" 1 "VehicleMotionDetected" 0 "VehicleMotionNotDetected" ;
+VAL_ 2147548780 Driver2WorkingState 7 "NotAvailable" 6 "Error" 4 "101Reserved" 3 "DriveBehindWheel" 2 "WrkLdngUnldingWorkingInAnOffice" 1 "DriverAvailableShortBreak" 0 "RestSleeping" ;
+VAL_ 2147548780 Driver1WorkingState 7 "NotAvailable" 6 "Error" 4 "101Reserved" 3 "DriveBehindWheel" 2 "WrkLdngUnldingWorkingInAnOffice" 1 "DriverAvailableShortBreak" 0 "RestSleeping" ;
+VAL_ 2147545089 TrtrMntdTrlrAsWrnngSgnl 3 "TakeNoAction" 2 "Reserved" 1 "On" 0 "Off" ;
+VAL_ 2147545089 TrailerAbsStatus 3 "NotAvailableOrNotSupported" 2 "Reserved" 1 "TrailerABSActive" 0 "InformationAvailableButNotActive" ;
+VAL_ 2147545089 HaltBrakeSwitch 3 "NotAvailable" 2 "Error" 1 "HaltBrakeSwitchActive" 0 "HaltBrakeSwitchPassive" ;
+VAL_ 2147545089 AtcAsrInformationSignal 3 "TakeNoAction" 2 "Reserved" 1 "On" 0 "Off" ;
+VAL_ 2147545089 AsEsAmrWrnngSgnlPwrdVhl 3 "TakeNoAction" 2 "Reserved" 1 "On" 0 "Off" ;
+VAL_ 2147545089 EbsRedWarningSignal 3 "TakeNoAction" 2 "Reserved" 1 "On" 0 "Off" ;
+VAL_ 2147545089 AbsFullyOperational 3 "NotAvailable" 2 "Reserved" 1 "FullyOperational" 0 "NotFullyOperational" ;
+VAL_ 2147545089 RemoteAcceleratorEnableSwitch 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147545089 EngineAuxiliaryShutdownSwitch 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147545089 EngineDerateSwitch 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147545089 AcceleratorInterlockSwitch 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147545089 TractionControlOverrideSwitch 3 "NotAvailableNotInstalled" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147545089 AsrHillHolderSwitch 3 "NotAvailable" 2 "Error" 1 "ASRHillHolderSwitchActive" 0 "ASRHillHolderSwitchPassive" ;
+VAL_ 2147545089 AsrOffRoadSwitch 2 "Error" 1 "ASROffroadSwitchActive" 0 "ASROffroadSwitchPassive" 3 "NotAvailable" ;
+VAL_ 2147545089 AbsOffRoadSwitch 3 "NotAvailable" 2 "Error" 1 "ABSOffroadSwitchActive" 0 "ABSOffroadSwitchPassive" ;
+VAL_ 2147545089 EbsBrakeSwitch 3 "NotAvailable" 2 "Error" 1 "BrakePedalIsBeingPressed" 0 "BrakePedalIsNotBeingPressed" ;
+VAL_ 2147545089 AntiLockBrakingAbsActive 3 "NotAvailable" 2 "Reserved" 1 "ABSActive" 0 "ABSPassiveButInstalled" ;
+VAL_ 2147545089 AsrBrakeControlActive 3 "NotAvailable" 2 "Reserved" 1 "ASRBrakeCtrlActive" 0 "ASRBrakeCtrlPassiveButInstalled" ;
+VAL_ 2147545089 AsrEngineControlActive 3 "NotAvailable" 2 "Reserved" 1 "ASREngCtrlActive" 0 "ASREngCtrlPassiveButInstalled" ;
+VAL_ 2147548540 DslPrtltFltrAtvRgnrtnFrdStts 7 "notAvailable" 6 "ReservedForSAEAssignment" 2 "ActiveForcedByServiceTool" 1 "ActiveForcedBySwitch" 0 "NotActive" ;
+VAL_ 2147548540 ExhstSstmHghTmprtrLmpCmmnd 7 "notAvailable" 6 "reservedForSAEAssignment" 1 "OnSolid" 0 "Off" ;
+VAL_ 2147548540 DsPttFtAttAtvRtIttCt 3 "notAvailable" 2 "reservedForSAEAssignment" 1 "enabled" 0 "notEnabled" ;
+VAL_ 2147548540 DsPttFtAtvRtItdDTVSpdBwAwdSpd 3 "notAvailable" 2 "reservedForSAEAssignment" 1 "inhibited" 0 "notInhibited" ;
+VAL_ 2147548540 DsPttFtAtvRtItdDTENtWdUp 3 "notAvailable" 2 "reservedForSAEAssignment" 1 "inhibited" 0 "notInhibited" ;
+VAL_ 2147548540 DsPttFtAtvRtItdDTPtSstLt 3 "notAvailable" 2 "reservedForSAEAssignment" 1 "inhibited" 0 "notInhibited" ;
+VAL_ 2147548540 DsPttFtAtvRtItdDTTpSstLt 3 "notAvailable" 2 "reservedForSAEAssignment" 1 "inhibited" 0 "notInhibited" ;
+VAL_ 2147548540 DsPttFtAtvRtItdDTSstTt 3 "notAvailable" 2 "reservedForSAEAssignment" 1 "inhibited" 0 "notInhibited" ;
+VAL_ 2147548540 DsPttFtAtvRtItdDTSstFtAtv 3 "notAvailable" 2 "reservedForSAEAssignment" 1 "inhibited" 0 "notInhibited" ;
+VAL_ 2147548540 DsPttFtAtvRtItdDTLwExstTpt 3 "notAvailable" 2 "reservedForSAEAssignment" 1 "inhibited" 0 "notInhibited" ;
+VAL_ 2147548540 DsPttFtAtvRtItdDTPBNtSt 3 "notAvailable" 2 "reservedForSAEAssignment" 1 "inhibited" 0 "notInhibited" ;
+VAL_ 2147548540 DsPttFtAtvRtItdDTVSpdAvAwdSpd 3 "notAvailable" 2 "reservedForSAEAssignment" 1 "inhibited" 0 "notInhibited" ;
+VAL_ 2147548540 DsPttFtAtvRtItdDTOtONt 3 "notAvailable" 2 "reservedForSAEAssignment" 1 "inhibited" 0 "notInhibited" ;
+VAL_ 2147548540 DsPttFtAtvRtItdDTAtPdOId 3 "notAvailable" 2 "reservedForSAEAssignment" 1 "inhibited" 0 "notInhibited" ;
+VAL_ 2147548540 DsPttFtAtvRtItdDTPtAtv 3 "notAvailable" 2 "reservedForSAEAssignment" 1 "inhibited" 0 "notInhibited" ;
+VAL_ 2147548540 DsPttFtAtvRtItdDTSvBAtv 3 "notAvailable" 2 "reservedForSAEAssignment" 1 "inhibited" 0 "notInhibited" ;
+VAL_ 2147548540 DsPttFtAtvRtItdDTCtDsd 3 "notAvailable" 2 "reservedForSAEAssignment" 1 "inhibited" 0 "notInhibited" ;
+VAL_ 2147548540 DsPttFtAtvRtItdDTItSwt 3 "notAvailable" 2 "reservedForSAEAssignment" 1 "inhibited" 0 "notInhibited" ;
+VAL_ 2147548540 DslPrtltFltrAtvRgnrtnInhtdStts 3 "notAvailable" 2 "reservedForSAEAssignment" 1 "inhibited" 0 "notInhibited" ;
+VAL_ 2147548540 AftrtrtmntDslPrtltFltrStts 7 "notAvailable" 6 "reservedForSAEAssignment" 3 "RegenerationNeededHighestLevel" 2 "RegenerationNeededModerateLevel" 1 "RegenerationNeededLowestLevel" 0 "RegenerationNotNeeded" ;
+VAL_ 2147548540 AttttDsPttFtAtvRtStts 3 "notAvailable" 2 "rgnrtnNddAtmtcllyInttdActvRgnrt" 1 "active" 0 "notActive" ;
+VAL_ 2147548540 AttttDsPttFtPssvRtStts 3 "notAvailable" 2 "reservedForSAEAssignment" 1 "active" 0 "notActive" ;
+VAL_ 2147548540 DslPrtltFltrLmpCmmnd 7 "notAvailable" 4 "OnFastBlink" 6 "reservedForSAEAssignment" 1 "OnSolid" 0 "Off" ;
+VAL_ 2147548577 Aftrtrtmnt1FlEnlAttr 3 "notAvailable" 2 "reservedForSAEAssignment" 1 "active" 0 "notActive" ;
+VAL_ 2147548577 Aftrtrtmnt1RgnrtnStts 3 "notAvailable" 2 "reservedForSAEAssignment" 1 "active" 0 "notActive" ;
+VAL_ 2147548577 Aftertreatment1Ignition 3 "notAvailable" 2 "reservedForSAEAssignment" 1 "active" 0 "notActive" ;
+VAL_ 2147548577 Aftrtrtmnt1FlDrnAttr 3 "notAvailable" 2 "reservedForSAEAssignment" 1 "active" 0 "notActive" ;
+VAL_ 2147548758 AftrtrtmntSrOprtrIndmntSvrt 7 "NotAvailable_NotSupported" 6 "Reserved" 5 "InducementLevel5" 4 "InducementLevel4" 3 "InducementLevel3" 2 "InducementLevel2" 1 "InducementLevel1" 0 "NoInducementActive" ;
+VAL_ 2147548758 AttttDsExstFdTLwLvIdt 7 "notAvailable" 4 "OnFastBlink" 6 "reservedForSAEAssignment" 1 "OnSolid" 0 "Off" ;
+VAL_ 2147548861 FanDriveState 15 "NotAvailable" 14 "Other" 13 "EngBrake" 12 "Timer" 11 "A_CSystem" 10 "TransRetarder" 9 "ManualCtrl" 8 "ReverseOperation" 7 "DefaultOperation" 6 "ExcessiveHydOilTemp" 5 "ExcessiveTransOilTemp" 4 "ExcessiveEngCoolantTemp" 3 "ExcessiveEngOilTemp" 2 "ExcessiveEngAirTemp" 1 "EngSystemGeneral" 0 "FanOff" ;
+VAL_ 2147548895 Aftertreatment2ExhaustDewPoint 3 "NotAvailable" 2 "Error" 1 "ExceededDewPoint" 0 "NotExceededDewPoint" ;
+VAL_ 2147548895 Aftertreatment1ExhaustDewPoint 3 "NotAvailable" 2 "Error" 1 "ExceededDewPoint" 0 "NotExceededDewPoint" ;
+VAL_ 2147548912 AuxiliaryInputIgnoreSwitch 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147548912 RtPtGvPpdSpdCtSwt2 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147548912 OprtrEngnPtGvrnrMmrSltSwth 3 "notAvailable" 2 "error" 1 "PTOSetSpeedMemory2Selected" 0 "PTOSetSpeedMemory1Selected" ;
+VAL_ 2147548912 EngnPtGvrnrAlrtSwth 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147548912 EnginePtoGovernorResumeSwitch 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147548912 EngnPtGvrnrCstDlrtSwth 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147548912 EnginePtoGovernorSetSwitch 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147548912 EngnRmtPtGvrnrVrlSpdCntrlSwth 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147548912 ERtPtGvPpdSpdCtSwt 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147548912 EnginePtoGovernorEnableSwitch 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147548913 EngineShutdownOverrideSwitch 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147548913 EngineDiagnosticTestModeSwitch 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147548913 EngineIdleDecrementSwitch 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147548913 EngineIdleIncrementSwitch 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147548913 CruiseControlStates 7 "NotAvailable" 6 "AccelOverride" 5 "Set" 4 "Resume" 3 "Decelerate" 2 "Accelerate" 1 "Hold" 0 "Off_Disabled" ;
+VAL_ 2147548913 PtoGovernorState 31 "NotAvailable" 20 "11110NotDefined" 19 "PTOSetSpeedMemory2" 18 "PTOSetSpeedMemory1" 17 "PreprogrammedSetSpeed8" 16 "PreprogrammedSetSpeed7" 15 "PreprogrammedSetSpeed6" 14 "PreprogrammedSetSpeed5" 13 "PreprogrammedSetSpeed4" 12 "PreprogrammedSetSpeed3" 11 "PreprogrammedSetSpeed2" 10 "PreprogrammedSetSpeed1" 9 "AccelOverride" 8 "Accelerate" 7 "Resume" 6 "Decelerate_Coast" 5 "Set" 4 "RemoteStandby" 3 "Standby" 2 "RemoteHold" 1 "Hold" 0 "Off_Disabled" ;
+VAL_ 2147548913 CruiseControlAccelerateSwitch 3 "NotAvailable" 2 "Error" 1 "CrsCtrlActivatorInPosAccelerate" 0 "CrsCtrlActvtrNotInPosAccelerate" ;
+VAL_ 2147548913 CruiseControlResumeSwitch 3 "NotAvailable" 2 "Error" 1 "CruiseCtrlActivatorInPosResume" 0 "CrseCtrlActivatorNotInPosResume" ;
+VAL_ 2147548913 CrsCntrlCstDlrtSwth 3 "NotAvailable" 2 "Error" 1 "CruiseCtrlActivatorInPosCoast" 0 "CriseCtrlActivatorNotInPosCoast" ;
+VAL_ 2147548913 CruiseControlSetSwitch 3 "NotAvailable" 2 "Error" 1 "CruiseCtrlActivatorInPosSet" 0 "CruiseCtrlActivatorNotInPosSet" ;
+VAL_ 2147548913 ClutchSwitch 3 "NotAvailable" 2 "Error" 1 "ClutchPedalDepressed" 0 "ClutchPedalReleased" ;
+VAL_ 2147548913 BrakeSwitch 3 "NotAvailable" 2 "Error" 1 "BrakePedalDepressed" 0 "BrakePedalReleased" ;
+VAL_ 2147548913 CruiseControlEnableSwitch 3 "NotAvailable" 2 "Error" 1 "CruiseCtrlEnabled" 0 "CruiseCtrlDisabled" ;
+VAL_ 2147548913 CruiseControlActive 3 "NotAvailable" 2 "Error" 1 "CruiseCtrlSwitchedOn" 0 "CruiseCtrlSwitchedOff" ;
+VAL_ 2147548913 ParkBrakeReleaseInhibitRequest 3 "Unavailable" 2 "SAEReserved" 1 "ParkBrakeReleaseInhibitRqed" 0 "ParkBrakeReleaseInhibitNotRqed" ;
+VAL_ 2147548913 CruiseControlPauseSwitch 3 "TakeNoAction" 2 "ErrorIndicator" 1 "On" 0 "Off" ;
+VAL_ 2147548913 ParkingBrakeSwitch 3 "NotAvailable" 2 "Error" 1 "ParkingBrakeSet" 0 "ParkingBrakeNotSet" ;
+VAL_ 2147548913 TwoSpeedAxleSwitch 3 "NotAvailable" 2 "Error" 1 "HighSpeedRange" 0 "LowSpeedRange" ;
+VAL_ 2147548927 WaterInFuelIndicator1 3 "NotAvailable" 2 "Error" 1 "Yes" 0 "No" ;
+
+
+

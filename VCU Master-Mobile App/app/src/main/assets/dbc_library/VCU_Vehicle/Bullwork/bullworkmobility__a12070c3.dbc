@@ -1,0 +1,105 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_:
+
+
+BO_ 774 ID_0x306: 8 Vector__XXX
+ SG_ MCU_46_TEMP : 23|8@0+ (1,0) [0|255] "Celsius" Vector__XXX
+ SG_ MCU_42_TEMP : 15|8@0+ (1,0) [0|255] "Celsius" Vector__XXX
+ SG_ MCU_41_TEMP : 7|8@0+ (1,0) [0|255] "Celsius" Vector__XXX
+
+BO_ 773 ID_0x305: 8 Vector__XXX
+ SG_ BATTERY_NTC_2 : 63|8@0+ (1,0) [0|255] "Celsius" Vector__XXX
+ SG_ BATTERY_NTC_1 : 55|8@0+ (1,0) [0|255] "Celsius" Vector__XXX
+ SG_ MOTOR_46_PHASE_CURRENT : 39|16@0+ (1,0) [0|65535] "Amp" Vector__XXX
+ SG_ MOTOR_42_PHASE_CURRENT : 23|16@0+ (1,0) [0|65535] "Amp" Vector__XXX
+ SG_ MOTOR_41_PHASE_CURRENT : 7|16@0+ (1,0) [0|65535] "Amp" Vector__XXX
+
+BO_ 772 ID_0x304: 8 Vector__XXX
+ SG_ THROTTLE_LEFT : 63|8@0- (1,0) [-128|127] "" Vector__XXX
+ SG_ THROTTLE_RIGHT : 55|8@0- (1,0) [-128|127] "" Vector__XXX
+ SG_ MOTOR_46_POWER : 39|16@0- (1,0) [-32768|32767] "watt" Vector__XXX
+ SG_ MOTOR_42_POWER : 23|16@0- (1,0) [-32768|32767] "watt" Vector__XXX
+ SG_ MOTOR_41_POWER : 7|16@0- (1,0) [-32768|32767] "watt" Vector__XXX
+
+BO_ 771 ID_0x303: 8 Vector__XXX
+ SG_ JOY_Y : 63|8@0- (1,0) [-128|127] "" Vector__XXX
+ SG_ JOY_X : 55|8@0- (1,0) [-128|127] "" Vector__XXX
+ SG_ FAULTS_46 : 39|16@0+ (1,0) [0|65535] "" Vector__XXX
+ SG_ FAULTS_42 : 23|16@0+ (1,0) [0|65535] "" Vector__XXX
+ SG_ FAULTS_41 : 7|16@0+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 770 ID_0x302: 8 Vector__XXX
+ SG_ HOUR_METER : 55|16@0+ (1,0) [0|65535] "Hours" Vector__XXX
+ SG_ MOTOR_46_RPM : 39|16@0- (1,0) [-32768|32767] "RPM" Vector__XXX
+ SG_ MOTOR_42_RPM : 23|16@0- (1,0) [-32768|32767] "RPM" Vector__XXX
+ SG_ MOTOR_41_RPM : 7|16@0- (1,0) [-32768|32767] "RPM" Vector__XXX
+
+BO_ 769 ID_0x301: 8 Vector__XXX
+ SG_ VEHICLE_SPEED : 55|8@0+ (1,0) [0|255] "kmph" Vector__XXX
+ SG_ BATTERY_1_SOH : 47|8@0+ (1,0) [0|255] "%" Vector__XXX
+ SG_ DWIN_CAN_ERROR : 37|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ POWER_MODE : 31|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HIGH_SPEED : 30|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HYDRAULIC_SWITCH : 36|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ ARM_STATE : 35|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ KILL_SWITCH : 34|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ EM_BRAKE : 33|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ EM_SWITCH : 32|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ CAN_ERROR_46 : 29|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ CAN_ERROR_42 : 28|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ CAN_ERROR_41 : 27|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ JOYSTICK_ERROR : 26|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ BATTERY_1_CAN_ERROR : 25|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ BATTERY_1_CHARGING : 24|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ BATTERY_1_POWER : 15|16@0- (1,0) [-32768|32767] "watt" Vector__XXX
+ SG_ BATTERY_1_SOC : 7|8@0+ (1,0) [0|255] "%" Vector__XXX
+
+BO_ 768 ID_0x300_METADATA: 8 Vector__XXX
+ SG_ VCU_SW_VERSION_Z : 47|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_SW_VERSION_Y : 39|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_SW_VERSION_X : 31|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ CAN_MATRIX_KEY_VERSION : 23|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ VEHICLE_VERSION : 15|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ VEHICLE_IDENTITY : 7|8@0+ (1,0) [0|255] "" Vector__XXX
+
+
+
+BA_DEF_  "MultiplexExtEnabled" ENUM  "No","Yes";
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "MultiplexExtEnabled" "No";
+BA_DEF_DEF_  "BusType" "CAN";
+

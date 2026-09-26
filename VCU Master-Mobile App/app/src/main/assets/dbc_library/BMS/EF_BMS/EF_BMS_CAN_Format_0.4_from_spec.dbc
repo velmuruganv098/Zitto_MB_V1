@@ -1,0 +1,223 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: BMS Host
+
+
+BO_ 2158743023 EF_BMS_Broadcast: 8 BMS
+ SG_ Alert2_Pack_OV_Fault : 63|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Alert2_Cell_Diff_Fault : 62|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Alert2_PRL_Fault : 61|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Alert2_Cell_Conn_Broken : 60|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Alert2_Board_Under_Temp : 59|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Alert2_Board_Over_Temp : 58|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Alert2_Under_Temp : 57|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Alert2_Over_Current_Cont_Dischar : 56|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Alert1_Over_Current_Charging : 53|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Alert1_Over_Temp : 52|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Alert1_Over_Current_Discharging : 51|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Alert1_Cell_Under_Volt : 50|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Alert1_Cell_Over_Volt : 49|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Alert1_Short_Circuit : 48|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Pack_Voltage : 32|16@1+ (0.01,0) [0|655.35] "V" Vector__XXX
+ SG_ Current : 16|16@1- (0.01,0) [-327.68|327.67] "A" Vector__XXX
+ SG_ CHG_Switch : 7|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DSG_Switch : 6|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Load_Status : 3|3@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2209074671 EF_BMS_Response: 8 BMS
+ SG_ Temp_T6 m6 : 56|8@1- (1,0) [-128|127] "degC" Vector__XXX
+ SG_ Cell_21_Voltage m7 : 48|16@1+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_18_Voltage m6 : 48|16@1+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_15_Voltage m5 : 48|16@1+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_12_Voltage m4 : 48|16@1+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_9_Voltage m3 : 48|16@1+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_6_Voltage m2 : 48|16@1+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_3_Voltage m1 : 48|16@1+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Temp_T5 m6 : 48|8@1- (1,0) [-128|127] "degC" Vector__XXX
+ SG_ Cycle_Count m14 : 48|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_32_Balancing m54 : 47|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_31_Balancing m54 : 46|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_30_Balancing m54 : 45|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_29_Balancing m54 : 44|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_28_Balancing m54 : 43|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_27_Balancing m54 : 42|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_26_Balancing m54 : 41|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_25_Balancing m54 : 40|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Temp_T4 m6 : 40|8@1- (1,0) [-128|127] "degC" Vector__XXX
+ SG_ Cell_24_Balancing m54 : 39|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_23_Balancing m54 : 38|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_22_Balancing m54 : 37|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_21_Balancing m54 : 36|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_20_Balancing m54 : 35|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_19_Balancing m54 : 34|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_18_Balancing m54 : 33|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_17_Balancing m54 : 32|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_20_Voltage m7 : 32|16@1+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_17_Voltage m6 : 32|16@1+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_14_Voltage m5 : 32|16@1+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_11_Voltage m4 : 32|16@1+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_8_Voltage m3 : 32|16@1+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_5_Voltage m2 : 32|16@1+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_2_Voltage m1 : 32|16@1+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Temp_T3 m6 : 32|8@1- (1,0) [-128|127] "degC" Vector__XXX
+ SG_ Cell_16_Balancing m54 : 31|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_15_Balancing m54 : 30|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_14_Balancing m54 : 29|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_13_Balancing m54 : 28|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_12_Balancing m54 : 27|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_11_Balancing m54 : 26|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_10_Balancing m54 : 25|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_9_Balancing m54 : 24|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_Count m0 : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Temp_T2 m6 : 24|8@1- (1,0) [-128|127] "degC" Vector__XXX
+ SG_ Cell_8_Balancing m54 : 23|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_7_Balancing m54 : 22|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_6_Balancing m54 : 21|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_5_Balancing m54 : 20|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_4_Balancing m54 : 19|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_3_Balancing m54 : 18|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_2_Balancing m54 : 17|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Capacity m20 : 16|16@1+ (0.1,0) [0|0] "Ah" Vector__XXX
+ SG_ Cell_1_Balancing m54 : 16|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_19_Voltage m7 : 16|16@1+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_16_Voltage m6 : 16|16@1+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_13_Voltage m5 : 16|16@1+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_10_Voltage m4 : 16|16@1+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_7_Voltage m3 : 16|16@1+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_4_Voltage m2 : 16|16@1+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Cell_1_Voltage m1 : 16|16@1+ (1,0) [0|5000] "mV" Vector__XXX
+ SG_ Temp_T1 m6 : 16|8@1- (1,0) [-128|127] "degC" Vector__XXX
+ SG_ SOC m14 : 16|8@1+ (1,0) [0|100] "%" Vector__XXX
+ SG_ FET_Control_State m57 : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chemistry m20 : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Balancing_Config m54 : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_Packet_No m10M : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Temp_Info_D1 m6 : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SOH m14 : 8|8@1+ (1,0) [0|100] "%" Vector__XXX
+ SG_ Command M : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+
+
+
+CM_ BO_ 2158743023 "Packet 1: pack voltage, current, state, alerts. Id = BMS id (example ABCDEF).";
+CM_ SG_ 2158743023 Load_Status "Spec: 'Load Status = State & 0x28' - modelled as bits 3..5 of D0; verify with the BMS.";
+CM_ BO_ 2209074671 "Packets 2-7: responses on the request id, D0 = command. Requests (DLC 1, D0 = command) and the FET control request (D1 Dsg FET, D2 Chg FET: 0 no change / 1 off / 2 on) use the same id. SOH/SOC byte positions follow the spec table order (D1, D2).";
+CM_ SG_ 2209074671 Temp_Info_D1 "D1 of the temperature response (01 in the spec example).";
+BA_DEF_ SG_  "SystemSignalLongSymbol" STRING ;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_DEF_  "SystemSignalLongSymbol" "";
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_ "GenMsgCycleTime" BO_ 2158743023 500;
+BA_ "SystemSignalLongSymbol" SG_ 2158743023 Alert2_Over_Current_Cont_Dischar "Alert2_Over_Current_Cont_Discharging";
+BA_ "GenMsgCycleTime" BO_ 2209074671 200;
+VAL_ 2158743023 CHG_Switch 0 "OFF" 1 "ON" ;
+VAL_ 2158743023 DSG_Switch 0 "OFF" 1 "ON" ;
+VAL_ 2158743023 Load_Status 0 "No Load" 1 "Load connected" 2 "Charger connected" 3 "Discharging" 4 "Charging" ;
+VAL_ 2209074671 FET_Control_State 0 "Error" 1 "OK" ;
+VAL_ 2209074671 Chemistry 0 "NMC" 1 "NMC" 2 "LFP" ;
+VAL_ 2209074671 Balancing_Config 0 "Disabled" 1 "Charging only" 2 "Charging and idle" ;
+VAL_ 2209074671 Command 6 "Temperatures" 10 "Cell voltages" 14 "SOH SOC cycles" 20 "Chemistry capacity" 54 "Balancing" 57 "FET control" ;
+
+
+SG_MUL_VAL_ 2209074671 SOH Command 14-14;
+SG_MUL_VAL_ 2209074671 Temp_Info_D1 Command 6-6;
+SG_MUL_VAL_ 2209074671 Cell_Packet_No Command 10-10;
+SG_MUL_VAL_ 2209074671 Balancing_Config Command 54-54;
+SG_MUL_VAL_ 2209074671 Chemistry Command 20-20;
+SG_MUL_VAL_ 2209074671 FET_Control_State Command 57-57;
+SG_MUL_VAL_ 2209074671 SOC Command 14-14;
+SG_MUL_VAL_ 2209074671 Temp_T1 Command 6-6;
+SG_MUL_VAL_ 2209074671 Cell_1_Voltage Cell_Packet_No 1-1;
+SG_MUL_VAL_ 2209074671 Cell_4_Voltage Cell_Packet_No 2-2;
+SG_MUL_VAL_ 2209074671 Cell_7_Voltage Cell_Packet_No 3-3;
+SG_MUL_VAL_ 2209074671 Cell_10_Voltage Cell_Packet_No 4-4;
+SG_MUL_VAL_ 2209074671 Cell_13_Voltage Cell_Packet_No 5-5;
+SG_MUL_VAL_ 2209074671 Cell_16_Voltage Cell_Packet_No 6-6;
+SG_MUL_VAL_ 2209074671 Cell_19_Voltage Cell_Packet_No 7-7;
+SG_MUL_VAL_ 2209074671 Cell_1_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Capacity Command 20-20;
+SG_MUL_VAL_ 2209074671 Cell_2_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_3_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_4_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_5_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_6_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_7_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_8_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Temp_T2 Command 6-6;
+SG_MUL_VAL_ 2209074671 Cell_Count Cell_Packet_No 0-0;
+SG_MUL_VAL_ 2209074671 Cell_9_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_10_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_11_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_12_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_13_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_14_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_15_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_16_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Temp_T3 Command 6-6;
+SG_MUL_VAL_ 2209074671 Cell_2_Voltage Cell_Packet_No 1-1;
+SG_MUL_VAL_ 2209074671 Cell_5_Voltage Cell_Packet_No 2-2;
+SG_MUL_VAL_ 2209074671 Cell_8_Voltage Cell_Packet_No 3-3;
+SG_MUL_VAL_ 2209074671 Cell_11_Voltage Cell_Packet_No 4-4;
+SG_MUL_VAL_ 2209074671 Cell_14_Voltage Cell_Packet_No 5-5;
+SG_MUL_VAL_ 2209074671 Cell_17_Voltage Cell_Packet_No 6-6;
+SG_MUL_VAL_ 2209074671 Cell_20_Voltage Cell_Packet_No 7-7;
+SG_MUL_VAL_ 2209074671 Cell_17_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_18_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_19_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_20_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_21_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_22_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_23_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_24_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Temp_T4 Command 6-6;
+SG_MUL_VAL_ 2209074671 Cell_25_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_26_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_27_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_28_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_29_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_30_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_31_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cell_32_Balancing Command 54-54;
+SG_MUL_VAL_ 2209074671 Cycle_Count Command 14-14;
+SG_MUL_VAL_ 2209074671 Temp_T5 Command 6-6;
+SG_MUL_VAL_ 2209074671 Cell_3_Voltage Cell_Packet_No 1-1;
+SG_MUL_VAL_ 2209074671 Cell_6_Voltage Cell_Packet_No 2-2;
+SG_MUL_VAL_ 2209074671 Cell_9_Voltage Cell_Packet_No 3-3;
+SG_MUL_VAL_ 2209074671 Cell_12_Voltage Cell_Packet_No 4-4;
+SG_MUL_VAL_ 2209074671 Cell_15_Voltage Cell_Packet_No 5-5;
+SG_MUL_VAL_ 2209074671 Cell_18_Voltage Cell_Packet_No 6-6;
+SG_MUL_VAL_ 2209074671 Cell_21_Voltage Cell_Packet_No 7-7;
+SG_MUL_VAL_ 2209074671 Temp_T6 Command 6-6;

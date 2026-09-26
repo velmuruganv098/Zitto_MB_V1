@@ -55,6 +55,8 @@ import com.zitto.vcumaster.core.HubState
 import com.zitto.vcumaster.link.SIM_ADDRESS
 import com.zitto.vcumaster.link.ScanDev
 import com.zitto.vcumaster.ui.UiPrefs
+import com.zitto.vcumaster.ui.components.Badge
+import com.zitto.vcumaster.ui.components.BadgeKind
 import com.zitto.vcumaster.ui.components.ConsoleBox
 import com.zitto.vcumaster.ui.components.EmptyNote
 import com.zitto.vcumaster.ui.components.KvList
@@ -115,6 +117,7 @@ fun ConnectScreen(st: HubState, hub: Hub, prefs: UiPrefs, gate: ((() -> Unit) ->
             SwitchRow("Only Zitto bridges", prefs.onlyBridge) { prefs.setOnly(it) }
             SwitchRow("Reconnect automatically", prefs.autoRe) { prefs.setAuto(it) }
             val devs = scan.devices
+            scan.note?.let { Text(it, fontSize = 12.5.sp, lineHeight = 17.sp, color = v.warn, modifier = Modifier.padding(horizontal = 14.dp, vertical = 6.dp)) }
             if (devs == null) {
                 EmptyNote("Run a scan to list nearby BLE devices. The simulator is always available for testing without hardware.")
                 DeviceRow(com.zitto.vcumaster.link.BleScanner.simDevice(), connectingAddr) { doConnect(it) }
@@ -178,7 +181,35 @@ fun ConnectScreen(st: HubState, hub: Hub, prefs: UiPrefs, gate: ((() -> Unit) ->
             }
         }
 
+        IntegrityPanel(st)
+
         BridgeConsole(st, hub, prefs)
+    }
+}
+
+/** V0.0073: frames lost between the S32K and this phone, from the S32K frame sequence numbers. */
+@Composable
+private fun IntegrityPanel(st: HubState) {
+    val I = st.integrity
+    val badge = when {
+        I.s32Frames == 0L -> "NO DATA" to BadgeKind.NONE
+        I.bad -> "LOSS DETECTED" to BadgeKind.ERR
+        else -> "NO LOSS" to BadgeKind.OK
+    }
+    Panel(
+        "Data integrity", sub = "S32K → UART → ESP32 → BLE → phone, counted from the S32K frame sequence numbers since connect / clear",
+        actions = { Badge(badge.first, badge.second) },
+    ) {
+        fun can(c: com.zitto.vcumaster.core.CanInteg) = "${c.received} / ${c.s32Counted}" + if (c.missing > 0) " (missing ${c.missing})" else ""
+        val rows = mutableListOf(
+            "S32K frames received" to Fmt.thousands(I.s32Frames),
+            "S32K frames lost (sequence gaps)" to "${I.s32Lost} (${I.lossPct} %)",
+            "CAN1 received / S32K counted" to can(I.can1),
+            "CAN2 received / S32K counted" to can(I.can2),
+        )
+        for ((k, x) in I.bridge) rows += "ESP32 ${k.replace('_', ' ')}" to x
+        KvList(rows, columns = 2)
+        Spacer(Modifier.height(6.dp))
     }
 }
 

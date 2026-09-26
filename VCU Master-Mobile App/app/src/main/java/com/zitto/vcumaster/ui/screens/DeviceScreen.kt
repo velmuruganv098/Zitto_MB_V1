@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -94,7 +96,8 @@ private fun S32Side(st: HubState, hub: Hub, prefs: UiPrefs) {
     val hb = L.heartbeat
     var confirmReset by remember { mutableStateOf(false) }
     var confirmDel by remember { mutableStateOf(false) }
-    val modPend = remember { mutableStateMapOf<String, Double>() }
+
+    CommandLogPanel(st)
 
     Panel("System status", actions = {
         SmallButton("Request") { hub.statusReq() }
@@ -120,9 +123,11 @@ private fun S32Side(st: HubState, hub: Hub, prefs: UiPrefs) {
         for (m in MODS) {
             val c = v.channel(m.name.replace("FLM", "FLASH"))
             val on = s?.long(m.key) == 1L
-            val pend = modPend[m.name]?.let { now - it < 1.5 } == true
+            val p = st.pend["mod:${m.name}"]?.state
+            val pend = p == "pending"
             Row(
-                Modifier.fillMaxWidth().height(IntrinsicSize.Min).padding(horizontal = 12.dp, vertical = 3.dp),
+                Modifier.fillMaxWidth().height(IntrinsicSize.Min).padding(horizontal = 8.dp, vertical = 2.dp)
+                    .then(cmdGlow(p)).padding(horizontal = 4.dp, vertical = 1.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Box(Modifier.width(4.dp).fillMaxHeight().background(c, RoundedCornerShape(2.dp)))
@@ -134,10 +139,7 @@ private fun S32Side(st: HubState, hub: Hub, prefs: UiPrefs) {
                 if (pend) CircularProgressIndicator(Modifier.padding(end = 8.dp).width(18.dp).height(18.dp), strokeWidth = 2.dp)
                 Switch(
                     checked = on,
-                    onCheckedChange = { want ->
-                        modPend[m.name] = Fmt.nowS()
-                        hub.module(m.name, want)
-                    },
+                    onCheckedChange = { want -> hub.module(m.name, want) },
                     colors = SwitchDefaults.colors(checkedTrackColor = v.ok, checkedThumbColor = Color.White),
                 )
             }
@@ -250,7 +252,10 @@ private fun GpioPanel(st: HubState, hub: Hub, prefs: UiPrefs) {
             val d = draft[id] ?: (0 to 0)
             val rep = st.latest.gpio[id]
             HorizontalDivider(color = v.rule2)
-            Row(Modifier.fillMaxWidth().padding(start = 12.dp, end = 8.dp, top = 6.dp, bottom = 6.dp), verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                Modifier.fillMaxWidth().then(cmdGlow(st.pend["gpio:$id"]?.state)).padding(start = 12.dp, end = 8.dp, top = 6.dp, bottom = 6.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 Column(Modifier.width(78.dp)) {
                     Text("#$id  $port", fontFamily = Mono, fontSize = 13.sp, fontWeight = FontWeight.Medium)
                     Text("pin ${Protocol.S32_GPIO_PKG_PIN[id]}", fontSize = 11.sp, color = v.ink3)
@@ -379,4 +384,37 @@ private fun LevelButton(text: String, active: Boolean, color: Color, modifier: M
         ),
         border = androidx.compose.foundation.BorderStroke(1.dp, if (active) color else v.rule),
     ) { Text(text, fontSize = 10.5.sp, fontFamily = Mono, color = if (active) color else v.ink2) }
+}
+
+/** Command feedback colours: glow while waiting, green on the S32K ACK, red on failure / no ACK. */
+@Composable
+private fun cmdGlow(state: String?): Modifier {
+    val v = LocalVcu.current
+    val c = when (state) {
+        "pending" -> v.focus
+        "confirmed" -> v.ok
+        "failed", "timeout" -> v.err
+        else -> return Modifier
+    }
+    return Modifier.background(c.copy(alpha = 0.10f), RoundedCornerShape(8.dp)).border(1.dp, c.copy(alpha = 0.7f), RoundedCornerShape(8.dp))
+}
+
+@Composable
+private fun CommandLogPanel(st: HubState) {
+    val v = LocalVcu.current
+    Panel("Command log", sub = "sent → S32K log → ACK (green = confirmed by the S32K)") {
+        if (st.cmdLog.isEmpty()) {
+            Text("  Module, GPIO and LED commands and the S32K's replies appear here.", fontSize = 12.sp, color = v.ink3, modifier = Modifier.padding(10.dp))
+        }
+        Column(Modifier.fillMaxWidth().heightIn(max = 220.dp).verticalScroll(rememberScrollState()).padding(horizontal = 12.dp)) {
+            for (e in st.cmdLog) {
+                val c = when (e.cls) { "ok" -> v.ok; "err" -> v.err; "pend" -> v.focus; else -> v.ink2 }
+                Row(Modifier.padding(vertical = 2.dp)) {
+                    Text(e.ts, fontFamily = Mono, fontSize = 10.5.sp, color = v.ink3, modifier = Modifier.width(92.dp))
+                    Text(e.text, fontFamily = Mono, fontSize = 11.5.sp, lineHeight = 15.sp, color = c)
+                }
+            }
+        }
+        Spacer(Modifier.height(8.dp))
+    }
 }

@@ -1,0 +1,366 @@
+VERSION ""
+
+
+NS_ : 
+		NS_DESC_
+		CM_
+		BA_DEF_
+		BA_
+		VAL_
+		CAT_DEF_
+		CAT_
+		FILTER
+		BA_DEF_DEF_
+		EV_DATA_
+		ENVVAR_DATA_
+		SGTYPE_
+		SGTYPE_VAL_
+		BA_DEF_SGTYPE_
+		BA_SGTYPE_
+		SIG_TYPE_REF_
+		VAL_TABLE_
+		SIG_GROUP_
+		SIG_VALTYPE_
+		SIGTYPE_VALTYPE_
+		BO_TX_BU_
+		BA_DEF_REL_
+		BA_REL_
+		BA_DEF_DEF_REL_
+		BU_SG_REL_
+		BU_EV_REL_
+		BU_BO_REL_
+		SG_MUL_VAL_
+
+BS_:
+
+BU_:
+
+BO_ 2555578626 MCU1: 8 Vector__XXX
+	SG_ Throttle : 0|8@1+ (1,0) [0|100] "%" Vector__XXX
+	SG_ Mode_Ack  : 8|3@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ Side_Stand_Ack  : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ Direction_Ack  : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ Ride_Ack  : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ Hill_hold_Ack  : 14|1@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ Wakeup_Ack  : 15|1@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ DriveError_Motor_hall  : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ Motor_Stalling  : 17|1@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ Motor_Phase_loss  : 18|1@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ Controller_Over_Temeprature  : 19|1@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ Motor_Over_Temeprature  : 20|1@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ Throttle_Error  : 21|1@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ MOSFET_Protection  : 22|1@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ DriveStatus_Regenerative_Braking  : 24|1@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ ModeR_Pulse  : 25|1@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ ModeL_Pulse  : 26|1@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ Brake_Pulse  : 27|1@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ Park_Pulse  : 28|1@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ Reverse_Pulse  : 29|1@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ SideStand_Pulse  : 30|1@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ ForwardParking_Mode_Ack  : 31|1@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ DriveError_Controller_OverVoltag  : 32|1@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ Controller_Undervoltage  : 33|1@1+ (1,0) [0|1] "" Vector__XXX
+	SG_ Overcurrent_Fault  : 34|1@1+ (1,0) [0|1] "" Vector__XXX
+	
+BO_ 2488404226 MCU2: 8 Vector__XXX
+
+	SG_ MotorSpeed  : 0|16@1+ (1,0) [0|65535] "Rpm" Vector__XXX
+	SG_ BatteryVoltage : 16|8@1+ (1,0) [0|255] "V" Vector__XXX
+	SG_ BatteryCurrent  : 24|16@1+ (1,0) [-3276.8|3275.7] "A" Vector__XXX
+
+BO_ 2565997321 VCU1: 8 Vector__XXX
+	SG_ DriveStatus1_Ride  : 0|1@1+ (0,0) [0|0] "" Vector__XXX
+	SG_ WakeUp_Request  : 2|1@1+ (0,0) [0|0] "" Vector__XXX
+	SG_ Hill_Hold  : 3|1@1+ (0,0) [0|0] "" Vector__XXX
+	SG_ Mode_Request  : 4|4@1+ (0,0) [0|0] "" Vector__XXX
+	SG_ DriveStatus2_Reverse_Request  : 8|1@1+ (0,0) [0|0] "" Vector__XXX
+	SG_ ForwardPark_Request  : 9|1@1+ (0,0) [0|0] "" Vector__XXX
+	SG_ Set_Regen  : 16|8@1+ (1,0) [0|255] "A" Vector__XXX
+	SG_ DC_Current_Limit  : 24|8@1+ (1,0) [0|255] "A" Vector__XXX
+	SG_ Motor_Frequency_custom : 40|16@1+ (1,0) [0|65535] "Rpm" Vector__XXX
+	SG_ Torque_Setting_of_custom_mode : 56|8@1+ (1,0) [0|200] "%" Vector__XXX
+       
+	
+BO_ 2565997329 Custom_mode: 8 Vector__XXX
+	SG_ torque_buffer_speed_range : 0|16@1+ (10,0) [0|1000] "rpm" Vector__XXX
+        SG_ torq_limit initial_speed_point : 16|16@1+ (10,0) [0|1000] "rpm" Vector__XXX
+	
+
+BO_ 2565997330 Custome_mode1: 8 Vector__XXX
+	SG_ Torq_before_profilspeed_thresh : 0|8@1+ (1,0) [0|200] "%" Vector__XXX
+
+BO_ 2565997331 Custom_mode2: 8 Vector__XXX
+	SG_ torq_after profile_speed_thresho : 0|8@1+ (1,0) [0|200] "%" Vector__XXX
+	
+BO_ 2565997333 HeartBeatofCluster: 8 Vector__XXX  // From Cluster to MCU
+	SG_ Heartbeat : 0|8@1+ (1,0) [0|1] "" Vector__XXX
+
+
+BO_ 2566258945 SystemInteraction: 8 Vector__XXX
+ SG_ MCU_ModeLimit : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Geo_Fence_Buzzer : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Holiday_Mode : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Service_Reset : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Remote_Cut_off : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2147484058 MCUtoIOT: 8 Vector__XXX
+	SG_ Query0to7 : 0|64@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147485458 ResponsefromBMS: 8 Vector__XXX
+	SG_ BATTSN : 0|64@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2147485459 ResponsefromBMS1: 8 Vector__XXX
+	SG_ BATTSN : 0|56@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2555578627 MCU3: 8 Vector__XXX
+	SG_ MCU_Temperature  : 0|16@1+ (1,0) [-40|200] "C" Vector__XXX
+	SG_ Motor_Temperature  : 16|8@1+ (1,0) [-40|200] "C" Vector__XXX
+	SG_ MCU_Fault_Code  : 24|8@1+ (1,0) [0|200] "" Vector__XXX
+	SG_ MCU_ID  : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+	
+BO_ 2147483649 CellVol01_04: 8 Vector__XXX
+ 	SG_ CellVol01 : 7|16@0+ (0.0001,0) [0.0000|4.2] "V" Vector__XXX
+ 	SG_ CellVol02 : 23|16@0+ (0.0001,0) [0.0000|4.2] "V" Vector__XXX
+ 	SG_ CellVol03 : 39|16@0+ (0.0001,0) [0.0000|4.2] "V" Vector__XXX
+ 	SG_ CellVol04 : 55|16@0+ (0.0001,0) [0.0000|4.2] "V" Vector__XXX
+
+BO_ 2147483650 CellVol05_08: 8 Vector__XXX
+	 SG_ CellVol05 : 7|16@0+ (0.0001,0) [0.0000|4.2] "V" Vector__XXX
+	 SG_ CellVol06 : 23|16@0+ (0.0001,0) [0.0000|4.2] "V" Vector__XXX
+	 SG_ CellVol07 : 39|16@0+ (0.0001,0) [0.0000|4.2] "V" Vector__XXX
+	 SG_ CellVol08 : 55|16@0+ (0.0001,0) [0.0000|4.2] "V" Vector__XXX
+
+BO_ 2147483651 CellVol09_12: 8 Vector__XXX
+	 SG_ CellVol09 : 7|16@0+ (0.0001,0) [0.0000|4.2] "V" Vector__XXX
+	 SG_ CellVol10 : 23|16@0+ (0.0001,0) [0.0000|4.2] "V" Vector__XXX
+	 SG_ CellVol11 : 39|16@0+ (0.0001,0) [0.0000|4.2] "V" Vector__XXX
+	 SG_ CellVol12 : 55|16@0+ (0.0001,0) [0.0000|4.2] "V" Vector__XXX
+
+BO_ 2147483652 CellVol13_16: 8 Vector__XXX
+	 SG_ CellVol13 : 7|16@0+ (0.0001,0) [0.0000|4.2] "V" Vector__XXX
+	 SG_ CellVol14 : 23|16@0+ (0.0001,0) [0.0000|4.2] "V" Vector__XXX
+	 SG_ CellVol15 : 39|16@0+ (0.0001,0) [0.0000|4.2] "V" Vector__XXX
+	 SG_ CellVol16 : 55|16@0+ (0.0001,0) [0.0000|4.2] "V" Vector__XXX
+
+BO_ 2147483653 VolMinMaxAvg: 8 Vector__XXX
+	 SG_ AvgCellVol : 39|16@0+ (0.001,0) [0.000|4.2] "V" Vector__XXX
+	 SG_ MaxCellVol : 7|16@0+ (0.001,0) [0.000|4.2] "V" Vector__XXX
+	 SG_ MinCellVol : 23|16@0+ (0.001,0) [0.000|4.2] "V" Vector__XXX
+	 SG_ MaxVoltId : 55|8@0+ (1,0) [0|16] "" Vector__XXX
+	 SG_ MinVoltId : 63|8@0+ (1,0) [0|16] "" Vector__XXX
+
+BO_ 2147483654 VolCurr: 8 Vector__XXX
+	 SG_ PackCurr : 7|32@0- (0.001,0) [-500|500] "A" Vector__XXX
+	 SG_ PackVol : 39|32@0+ (0.001,0) [0.000|65.535] "V" Vector__XXX
+
+BO_ 2147483655 MaxMinTempCellDev: 8 Vector__XXX
+	 SG_ MaxTemp : 23|8@0- (1,0) [-40|110] "°C" Vector__XXX
+	 SG_ MinTemp : 31|8@0- (1,0) [-40|110] "°C" Vector__XXX
+	 SG_ MaxTempId : 32|8@1+ (1,0) [0|8] "" Vector__XXX
+	 SG_ MinTempId : 40|8@1+ (1,0) [0|8] "" Vector__XXX
+	 SG_ CellVolMinMaxDev : 55|16@0+ (0.001,0) [0.000|4.2] "V" Vector__XXX
+	 SG_ CycleCount : 7|16@0+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 2147483656 SocSohStatus: 8 Vector__XXX
+	 SG_ SOC : 7|8@0+ (1,0) [0|100] "%" Vector__XXX
+	 SG_ SOCAh : 15|32@0+ (0.001,0) [0.000|500] "AH" Vector__XXX
+	 SG_ SOH : 47|8@0+ (1,0) [0|255] "%" Vector__XXX
+	 SG_ FetTemp : 55|8@0- (1,0) [-128|127] "°C" Vector__XXX
+	 SG_ BmsStatus : 56|8@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2147483657 ProtectionsAndWarnings: 8 Vector__XXX
+	 SG_ CellUnderVolProt : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ CellOverVolProt : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ PackUnderVolProt : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ PackOverVolProt : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ ChgUnderTempProt : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ ChgOverTempProt : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ DchgUnderTempProt : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ DchgOverTempProt : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ CellOverDevProt : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ BattLowSocWarn : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ ChgOverCurrProt : 10|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ DchgOverCurrProt : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ CellUnderVolWarn : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ CellOverVolWarn : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ FetTempProt : 14|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ ResSocProt : 15|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ FetFailure : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ TempSenseFault : 17|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ PackUnderVolWarn : 18|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ PackOverVolWarn : 19|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ ChgUnderTempWarn : 20|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ ChgOverTempWarn : 21|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ DchgUnderTempWarn : 22|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ DchgOverTempWarn : 23|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ LedStatus : 31|8@0+ (1,0) [0|31] "" Vector__XXX
+	 SG_ PreChgFetStatus : 56|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ ChgFetStatus : 57|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ DchgFetStatus : 58|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ ResStatus : 59|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ ShortCktProt : 63|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ DschgPeakProt : 62|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ ActiveCellBalStatus : 39|24@0+ (1,0) [0|1] "" Vector__XXX
+	 SG_ ChgAuth : 60|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ ChgPeakProt : 61|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2147483661 VersionInfo: 8 Vector__XXX
+	 SG_ HwVer : 7|24@0+ (1,0) [0|16777215] "" Vector__XXX
+	 SG_ FwVer : 31|24@0+ (1,0) [0|16777215] "" Vector__XXX
+	 SG_ FWSubVer : 55|16@0+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 2147483658 Temperatures: 8 Vector__XXX
+	 SG_ Temp1 : 7|8@0- (1,0) [-128|127] "°C" Vector__XXX
+	 SG_ Temp2 : 15|8@0- (1,0) [-128|127] "°C" Vector__XXX
+	 SG_ Temp3 : 23|8@0- (1,0) [-128|127] "°C" Vector__XXX
+	 SG_ Temp4 : 31|8@0- (1,0) [-128|127] "°C" Vector__XXX
+	 SG_ Temp5 : 39|8@0- (1,0) [-128|127] "°C" Vector__XXX
+	 SG_ Temp6 : 47|8@0- (1,0) [-128|127] "°C" Vector__XXX
+	 SG_ Temp7 : 55|8@0- (1,0) [-128|127] "°C" Vector__XXX
+	 SG_ Temp8 : 56|8@1- (1,0) [-128|127] "°C" Vector__XXX
+
+BO_ 2147483662 Accumulative_Ah: 8 Vector__XXX
+	 SG_ Chg_Accumulative_Ah : 7|32@0+ (0.001,0) [0.000|1] "AH" Vector__XXX
+	 SG_ Dchg_Accumulative_Ah : 39|32@0+ (1,0) [0|1] "AH" Vector__XXX
+
+BO_ 2147483663 PowerSupply: 8 Vector__XXX
+	 SG_ RefVol : 7|16@0+ (0.001,0) [0.000|1] "V" Vector__XXX
+	 SG_ _3v3Vol : 23|16@0+ (0.001,0) [0.000|1] "V" Vector__XXX
+	 SG_ _5vVol : 39|16@0+ (0.001,0) [0.000|1] "V" Vector__XXX
+	 SG_ _12vVol : 55|16@0+ (0.001,0) [0.000|1] "V" Vector__XXX
+
+BO_ 2147483669 AdditionalVerInfo: 8 Vector__XXX
+	 SG_ ConfigVer : 7|24@0+ (1,0) [0|16777215] "" Vector__XXX
+	 SG_ InternalFWVer : 31|24@0+ (1,0) [0|16777215] "" Vector__XXX
+	 SG_ InternalFWSubVer : 55|16@0+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 2147483660 CellBalStatus: 8 Vector__XXX
+	 SG_ DI1 : 57|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ DI2 : 58|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ DO1 : 59|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ DO2 : 60|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ ChargerDetection : 61|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ LoadDetection : 62|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ CanCommDetection : 63|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ IgnitionStatus : 56|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ LatchProtection : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+	 SG_ LatchType : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+	 SG_ ChargerType : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+	 SG_ PcbTemp : 31|8@0- (1,0) [0|1] "°C" Vector__XXX
+	 SG_ AfeTemp : 39|8@0- (1,0) [0|1] "°C" Vector__XXX
+	 SG_ CellChemType : 47|8@0+ (1,0) [0|1] "" Vector__XXX
+	 SG_ CellBalFeatureStatus : 48|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ ImmoChg : 49|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ ImmoDchg : 50|1@1+ (1,0) [0|1] "" Vector__XXX
+	 SG_ BuzzerStatus : 51|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 16 SOP_Info: 8 Vector__XXX
+	 SG_ ChargeSOP : 7|32@0+ (1,0) [0|1] "" Vector__XXX
+	 SG_ DchgSOP : 39|32@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2147483666 Ah_Limit: 8 Vector__XXX
+	 SG_ Actual_SoC : 7|32@0+ (0.01,0) [0.00|1] "%" Vector__XXX
+	 SG_ Usable_Capacity_Ah : 39|32@0+ (0.001,0) [0.000|1] "AH" Vector__XXX
+
+BO_ 2147483659 BMS_Serial_No: 8 Vector__XXX
+	 SG_ BMS_Serial_No_MUX M : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+	 SG_ BMS_Serial_No__1_7 m1 : 15|56@0+ (1,0) [0|1] "" Vector__XXX
+	 SG_ BMS_Serial_No_Bytes_8_14 m2 : 15|56@0+ (1,0) [0|1] "" Vector__XXX
+	 SG_ BMS_Serial_No__15 m3 : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+
+
+BO_ 2488404227 AC_Current: 8 Vector__XXX
+	SG_ AC_Current : 40|16@1+ (0.1,0) [-3276.28|3275.7] "A" Vector__XXX
+
+BO_ 2488404228 AC_Voltage: 8 Vector__XXX
+	SG_ AC_Voltage : 56|8@1+ (1,0) [0|255] "V" Vector__XXX
+
+BO_ 2147484672 BHB_Response: 8 Vector__XXX
+ SG_ BHB_66049 : 7|24@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484673 Bt_live_msg1: 8 Vector__XXX
+ SG_ BtStatus_NC0PSM1CC2CV3Finish4 : 7|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Bt_liveMsg1Temp : 15|8@0+ (1,-40) [0|0] "" Vector__XXX
+ SG_ Bt_liveMsg_soc : 23|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ BMS_status : 31|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Demand_voltage : 39|16@0+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ Demand_Current : 55|16@0+ (0.01,0) [0|0] "" Vector__XXX
+
+BO_ 2147484674 Bt_live_msg2: 8 Vector__XXX
+ SG_ MaxChgVoltgae : 7|16@0+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ MaxChgCurrent : 23|16@0+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ ActualChgVoltage : 39|16@0+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ ActualChgCurrent : 55|16@0- (0.01,0) [0|0] "" Vector__XXX
+
+BO_ 2147484688 ChgBroadcast: 8 Vector__XXX
+ SG_ CHB_258 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147484689 Chg_live_msg1: 8 Vector__XXX
+ SG_ ChgrNC0PSM1CC2CV3Finsh4 : 7|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ chgr_msg_temp : 15|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ chgStatus_chg_idle : 31|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ chgrLiveMsgChgVolt : 39|16@0+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ chgrLiveMsgChgCurrent : 55|16@0+ (0.01,0) [0|0] "" Vector__XXX
+
+
+BO_ 2147484677 Chg_end_cut_off: 8 Vector__XXX
+ SG_ Charging_end_cutoff_Curr : 7|16@0+ (0.01,0) [0|0] "" Vector__XXX
+
+BO_ 2565997334 ODOMETER: 8 Vector__XXX
+ SG_ ODO : 0|24@1+ (1,0) [0|150000] "km" Vector__XXX
+
+BO_ 418513680 IgnitionKey: 8 Vector__XXX
+ SG_ Keystatus : 0|1@1+ (0,0) [0|1] "" Vector__XXX
+
+BO_ 418513684 KeyEvents: 8 Vector__XXX
+ SG_ keyevents : 1|1@1+ (0,0) [0|1] "" Vector__XXX
+
+
+
+
+
+
+CM_ BO_ 2555578626 "MCU ";
+CM_ SG_ 2166014550 Throttle "Throttle signal to MCU";
+CM_ BO_ 2488404226 "MCU ";
+CM_ SG_ 2162004550 MotorSpeed "Motor Speed";
+CM_ SG_ 2162004550 BatteryVoltage "Battery Voltage";
+CM_ SG_ 2162004550 BatteryCurrent "Battery Current";
+CM_ SG_ 2162004550 AC_Current "AC Current";
+CM_ SG_ 2162004550 AC_Voltage "AC Voltage";
+CM_ BO_ 2565997321 "MCU";
+CM_ SG_ 2565997321 DriveStatus1_Ride "Ride Status Request";
+CM_ BO_ 2555578627 "MCU";
+CM_ SG_ 2555578627 MCU_Temperature "MCU Temperature";
+CM_ SG_ 2555578627 Motor_Temperature "Motor Temperature";
+CM_ SG_ 2555578627 MCU_Fault_Code "MCU Fault Code";
+CM_ SG_ 2555578627 MCU_ID "MCU Id";
+CM_ BO_ 2488404227 "MCU";
+CM_ BO_ 2488404228 "MCU";
+CM_ BO_ 2565997333 "HeartBeat Signal of Cluster going to MCU";
+CM_ BO_ 2566258945 "Interaction between IOT-MCU-Battery";
+CM_ BO_ 2565997334 "Odometer meter values to the cluster";
+CM_ BO_ 418513680 "Ignition key status";
+BA_DEF_ SG_  "SPN" INT 0 524287;
+BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","J1939PG";
+BA_DEF_  "DatabaseVersion" STRING ;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_  "ProtocolType" STRING ;
+BA_DEF_  "DatabaseCompiler" STRING ;
+BA_DEF_DEF_  "SPN" 0;
+BA_DEF_DEF_  "VFrameFormat" "J1939PG";
+BA_DEF_DEF_  "DatabaseVersion" "DEMO PLUS";
+BA_DEF_DEF_  "BusType" "";
+BA_DEF_DEF_  "ProtocolType" "";
+BA_DEF_DEF_  "DatabaseCompiler" "";
+BA_ "ProtocolType" "J1939";
+BA_ "BusType" "CAN";
+BA_ "DatabaseCompiler" "CSS ELECTRONICS (WWW.CSSELECTRONICS.COM)";
+BA_ "DatabaseVersion" "1.0.0";
+BA_ "VFrameFormat" BO_ 2364540158 3;
+BA_ "SPN" SG_ 2364540158 EngineSpeed 190;
+
+
+
+
+

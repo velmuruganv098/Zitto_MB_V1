@@ -19,6 +19,9 @@ object Protocol {
     const val CMD_FLASH_RD = 0x06
     const val CMD_FLASH_WR = 0x07
     const val CMD_FLASH_DEL = 0x08
+    const val CMD_IMU_ZERO = 0x09        // V0.0073: restart the IMU displacement origin
+    const val CMD_RTT_ENABLE = 0x70
+    const val CMD_RTT_DISABLE = 0x71
     const val CMD_OTA_START = 0x10
     const val CMD_OTA_DATA = 0x11
     const val CMD_OTA_FINISH = 0x12
@@ -79,6 +82,7 @@ object Protocol {
         return raw(CMD_FLASH_WR, data)
     }
     fun flashDelete() = raw(CMD_FLASH_DEL)
+    fun imuZero() = raw(CMD_IMU_ZERO)
 
     /** Native bridge path. Stock bridge only accepts IDs 0..12. */
     fun s32Gpio(id: Int, dir: Int, state: Int) = "S32:$id:$dir:$state"
@@ -108,7 +112,7 @@ object Protocol {
         return (b[0].toInt() and 0xFF) to b.copyOfRange(1, b.size)
     }
 
-    const val REFERENCE = """UART frame (S32K144 <-> ESP32, 115200 8N1)
+    const val REFERENCE = """UART frame (S32K144 <-> ESP32, 500000 8N1)
   AA 55 | VER 01 | TYPE | LEN_L LEN_H | SEQ | PAYLOAD | CRC16_L CRC16_H
   CRC16 Modbus (poly 0xA001, init 0xFFFF) over VER..PAYLOAD
 
@@ -119,6 +123,8 @@ Commands to S32K144 (via bridge RAW:<TT><hex>)
   04 MCU_RESET   (AIRCR 0x05FA0004 after 100 ms)
   05 LED_CTRL    period u16 LE, duty %, 0
   06 FLASH_RD   07 FLASH_WR data   08 FLASH_DEL
+  09 IMU_ZERO    restart the displacement origin
+  70 RTT_ENABLE  71 RTT_DISABLE   (mirror RTT debug text to UART)
   10 OTA_START   size u32 BE, crc32 u32 BE
   11 OTA_DATA    chunk   12 OTA_FINISH   13 OTA_ABORT
 
@@ -131,5 +137,5 @@ Bridge text commands (BLE RX 6e400002)
   PING  INFO  GPIO  STATS
   ESP:<pin>:<0|1>
   S32:<id>:<dir>:<state>
-  RAW:<TT><payload hex>   (VCU Master bridge patch)"""
+  RAW:<TT><payload hex>      (VCU Master bridge patch)"""
 }

@@ -38,6 +38,9 @@ object Parser {
     private fun tuple(tok: String): List<Long> =
         tok.trim('(', ')').split(",").mapNotNull { it.trim().toLongOrNull() }
 
+    private fun dtuple(tok: String): List<Double> =
+        tok.trim('(', ')').split(",").map { it.trim().toDouble() }
+
     fun decodeResetCause(v: Long): String {
         val names = RESET_BITS.filter { (b, _) -> v and (1L shl b) != 0L }.values
         return when {
@@ -89,6 +92,18 @@ object Parser {
                     f["gx_mdps"] = g[0]; f["gy_mdps"] = g[1]; f["gz_mdps"] = g[2]
                     f["temp_c"] = num(k["temp"] ?: "0C")
                     f["ts_ms"] = num(k["ts"] ?: "0ms")
+                    // V0.0073 firmware: displacement since power-on / tracking start
+                    k["pos_mm"]?.let { pos ->
+                        val p = dtuple(pos)
+                        val rpy = dtuple(k["rpy_deg"] ?: "(0,0,0)")
+                        f["pos_x_mm"] = p[0]; f["pos_y_mm"] = p[1]; f["pos_z_mm"] = p[2]
+                        f["dist_mm"] = (k["dist_mm"] ?: "0").toDouble()
+                        f["roll_fw"] = rpy[0]; f["pitch_fw"] = rpy[1]; f["yaw_fw"] = rpy[2]
+                        f["moving"] = (k["moving"] ?: "0").toLong()
+                        f["imu_flags"] = (k["imu_flags"] ?: "0").toLong()
+                        f["imu_up_ms"] = (k["imu_up_ms"] ?: "0").toLong()
+                        f["speed_mms"] = (k["speed_mms"] ?: "0").toLong()
+                    }
                     r.tags = listOf("IMU")
                 }
                 "CSA" -> {
@@ -141,6 +156,9 @@ object Parser {
                     f["text"] = body
                     val up = body.uppercase()
                     val tags = mutableListOf("LOG")
+                    // V0.0073 firmware events: "[CMD] ...", "[GPIO] ...", "[IMU] ..."
+                    if (up.startsWith("[CMD]")) tags += "CMD"
+                    if (up.startsWith("[GPIO]")) tags += "GPIO"
                     if (up.startsWith("FLASH")) tags += "FLASH"
                     if (up.startsWith("OTA")) tags += "OTA"
                     if (up.startsWith("GPIO")) tags += "GPIO"

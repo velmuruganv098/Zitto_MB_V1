@@ -1,0 +1,122 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: 
+
+
+BO_ 2147548914 LFE1: 8 Vector__XXX
+ SG_ EngineThrottleValve2Position : 56|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ EngineThrottleValve1Position1 : 48|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ EngineAverageFuelEconomy : 32|16@1+ (0.001953125,0) [0|125.498046875] "km/L" Vector__XXX
+ SG_ EngineInstantaneousFuelEconomy : 16|16@1+ (0.001953125,0) [0|125.498046875] "km/L" Vector__XXX
+ SG_ EngineFuelRate : 0|16@1+ (0.05,0) [0|3212.75] "l/h" Vector__XXX
+
+BO_ 2147548892 IO: 8 Vector__XXX
+ SG_ EngineTotalIdleHours : 32|32@1+ (0.05,0) [0|210554060.75] "h" Vector__XXX
+ SG_ EngineTotalIdleFuelUsed : 0|32@1+ (0.5,0) [0|2105540607.5] "l" Vector__XXX
+
+BO_ 2147545093 ETC2: 8 Vector__XXX
+ SG_ TransmissionCurrentRange : 48|16@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ TransmissionRequestedRange : 32|16@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ TransmissionCurrentGear : 24|8@1+ (1,-125) [-125|125] "gear value" Vector__XXX
+ SG_ TransmissionActualGearRatio : 8|16@1+ (0.001,0) [0|64.255] "" Vector__XXX
+ SG_ TransmissionSelectedGear : 0|8@1+ (1,-125) [-125|125] "gear value" Vector__XXX
+
+BO_ 2147548918 IC1: 8 Vector__XXX
+ SG_ EngnClntFltrDffrntlPrssr : 56|8@1+ (0.5,0) [0|125] "kPa" Vector__XXX
+ SG_ EngineExhaustTemperature : 40|16@1+ (0.03125,-273) [-273|1734.96875] "degC" Vector__XXX
+ SG_ EngnArFltr1DffrntlPrssr : 32|8@1+ (0.05,0) [0|12.5] "kPa" Vector__XXX
+ SG_ EngineIntakeAirPressure : 24|8@1+ (2,0) [0|500] "kPa" Vector__XXX
+ SG_ EngnIntkMnfld1Tmprtr : 16|8@1+ (1,-40) [-40|210] "degC" Vector__XXX
+ SG_ EngineIntakeManifold1Pressure : 8|8@1+ (2,0) [0|500] "kPa" Vector__XXX
+ SG_ Atttt1DsPttFtItPssUsSp3609 : 0|8@1+ (0.5,0) [0|125] "kPa" Vector__XXX
+
+BO_ 2147548526 A1SCRSI1: 8 Vector__XXX
+ SG_ Aftrtrtmnt1SrSstmSlftnLvl : 56|8@1+ (1,0) [0|250] "%" Vector__XXX
+ SG_ AttttSOptIdtAtvTvdDst : 40|16@1+ (1,0) [0|64255] "km" Vector__XXX
+ SG_ Aftrtrtmnt1SrCnvrsnEffn : 32|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ Atttt1SCddDsExstFdCspt : 16|16@1+ (0.05,0) [0|3212.75] "l/h" Vector__XXX
+ SG_ Atttt1DsExstFdAvCspt : 0|16@1+ (0.05,0) [0|3212.75] "l/h" Vector__XXX
+
+BO_ 2147548838 IMT1: 8 Vector__XXX
+ SG_ EngnTrhrgr4BstPrssr : 48|16@1+ (0.125,0) [0|8031.875] "kPa" Vector__XXX
+ SG_ EngnTrhrgr3BstPrssr : 32|16@1+ (0.125,0) [0|8031.875] "kPa" Vector__XXX
+ SG_ EngnTrhrgr2BstPrssr : 16|16@1+ (0.125,0) [0|8031.875] "kPa" Vector__XXX
+ SG_ EngnTrhrgr1BstPrssr : 0|16@1+ (0.125,0) [0|8031.875] "kPa" Vector__XXX
+
+
+
+
+CM_ BO_ 2147548914 "EzeeInfo parameter: KMPL / Mileage (LFE1). PGN 65266. Layout copied from the library J1939 DBCs.";
+CM_ SG_ 2147548914 EngineThrottleValve2Position "Engine Throttle Valve 2 Position: The sensed position feedback of the valve, coming from a second electrical actuator for a second throttle plate, used to regulate the supply of a fluid, usually air or fuel//air mixture.  0% represents no supply and ...";
+CM_ SG_ 2147548914 EngineThrottleValve1Position1 "Engine Throttle Valve 1 Position 1: The position of the valve used to regulate the supply of a fluid, usually air or fuel/air mixture, to an engine.  0% represents no supply and 100% is full supply.";
+CM_ SG_ 2147548914 EngineAverageFuelEconomy "Engine Average Fuel Economy: Average of instantaneous fuel economy for that segment of vehicle operation of interest.";
+CM_ SG_ 2147548914 EngineInstantaneousFuelEconomy "Engine Instantaneous Fuel Economy: Current fuel economy at current vehicle velocity.FB00h = Infinite (for example, during engine motoring)";
+CM_ SG_ 2147548914 EngineFuelRate "Engine Fuel Rate: Amount of fuel consumed by engine per unit of time.NOTE - See SPN 1600 for alternate resolution.";
+CM_ BO_ 2147548892 "EzeeInfo parameter: Idling instances (IO). PGN 65244. Layout copied from the library J1939 DBCs.";
+CM_ SG_ 2147548892 EngineTotalIdleHours "Engine Total Idle Hours: Accumulated time of operation of the engine while under idle conditions.";
+CM_ SG_ 2147548892 EngineTotalIdleFuelUsed "Engine Total Idle Fuel Used: Accumulated amount of fuel used during vehicle operation while under idle conditions.";
+CM_ BO_ 2147545093 "EzeeInfo parameter: Gear utilization (ETC2). PGN 61445. Layout copied from the library J1939 DBCs.";
+CM_ SG_ 2147545093 TransmissionCurrentRange "Transmission Current Range: Range currently being commanded by the transmission control system. Characters may include P, Rx, Rx-1...R2, R1, R, Nx, Nx-1...N2, N1, N, D, D1, D2..., Dx, L, L1, L2..., Lx-1, 1, 2, 3,... If only one displayed character is...";
+CM_ SG_ 2147545093 TransmissionRequestedRange "Transmission Requested Range: Range selected by the operator.  Characters may include P, Rx, Rx-1...R2, R1, R, Nx, Nx-1...N2, N1, N, D, D1, D2..., Dx, L, L1, L2..., Lx-1, 1, 2, 3,...  If only one displayed character is required, the second character ...";
+CM_ SG_ 2147545093 TransmissionCurrentGear "Transmission Current Gear: The gear currently engaged in the transmission or the last gear engaged while the transmission is in the process of shifting to the new or selected gear.  Transitions toward a destination gear will not be indicated.  Once t...";
+CM_ SG_ 2147545093 TransmissionActualGearRatio "Transmission Actual Gear Ratio: Actual ratio of input shaft speed to output shaft speed.";
+CM_ SG_ 2147545093 TransmissionSelectedGear "Transmission Selected Gear: The gear that the transmission will attempt to achieve during the current shift if a shift is in progress, or the next shift if one is pending (i.e., waiting for torque reduction to initiate the shift).Negative values are ...";
+CM_ BO_ 2147548918 "EzeeInfo parameter: Air filter dP / intake manifold temp (IC1). PGN 65270. Layout copied from the library J1939 DBCs.";
+CM_ SG_ 2147548918 EngnClntFltrDffrntlPrssr "Engine Coolant Filter Differential Pressure: Change in coolant pressure, measured across the filter, due to the filter and any accumulation of solid or semisolid matter on or in the filter.";
+CM_ SG_ 2147548918 EngineExhaustTemperature "Engine Exhaust Temperature: Temperature of combustion byproducts leaving the engine.  See SPNs 2433, 2434, 5969 and 5970 for engines with more than one exhaust temperature measurement.";
+CM_ SG_ 2147548918 EngnArFltr1DffrntlPrssr "Engine Air Filter 1 Differential Pressure: Change in engine air system pressure, measured across the filter, due to the filter and any accumulation of solid foreign matter on or in the filter.This is the measurement of the first filter in a multiple ...";
+CM_ SG_ 2147548918 EngineIntakeAirPressure "Engine Intake Air Pressure: Absolute air pressure at input port to intake manifold.";
+CM_ SG_ 2147548918 EngnIntkMnfld1Tmprtr "Engine Intake Manifold 1 Temperature: Temperature of pre-combustion air found in intake manifold of engine air supply system.";
+CM_ SG_ 2147548918 EngineIntakeManifold1Pressure "Engine Intake Manifold #1 Pressure: The gage pressure measurement of the air intake manifold. If there are multiple air pressure sensors in the intake stream, this is the last one in flow direction before entering the combustion chamber.  This should...";
+CM_ SG_ 2147548918 Atttt1DsPttFtItPssUsSp3609 "Aftertreatment 1 Diesel Particulate Filter Intake Pressure (use SPN 3609): Exhaust pressure as a result of particle accumulation on filter media placed in the exhaust stream.  It is recommended that SPN 3609 be used as it has better resolution.";
+CM_ BO_ 2147548526 "EzeeInfo parameter: DEF consumption. PGN 64878. Layout copied from the library J1939 DBCs.";
+CM_ SG_ 2147548526 Aftrtrtmnt1SrSstmSlftnLvl "Aftertreatment 1 SCR System Sulfation Level: Indicates the sulfur level in the SCR system for aftertreatment 1..100% level could be the regeneration trigger level (and if conditions are not favorable for regeneration, sulfation loading can continue b...";
+CM_ SG_ 2147548526 AttttSOptIdtAtvTvdDst "Aftertreatment SCR Operator Inducement Active Traveled Distance: The distance traveled while SCR inducement (SPN 5246 is equal to level 1 to 5) is active.  Distance is reset once inducement is no longer active for SCR (SPN 5246 = 0).Emission Control ...";
+CM_ SG_ 2147548526 Aftrtrtmnt1SrCnvrsnEffn "Aftertreatment 1 SCR Conversion Efficiency: The SCR conversion efficiency percentage.  Calculated as 100 times the catalyst intake NOx minus the catalyst outlet NOx divided by the catalyst intake NOx.  The catalyst conversion efficiency number in its...";
+CM_ SG_ 2147548526 Atttt1SCddDsExstFdCspt "Aftertreatment 1 SCR Commanded Diesel Exhaust Fluid Consumption: This parameter transmits the amount of diesel exhaust fluid that the emissions control system has requested to be used, averaged over the past 15 hours of engine operation.Used to deter...";
+CM_ SG_ 2147548526 Atttt1DsExstFdAvCspt "Aftertreatment 1 Diesel Exhaust Fluid Average Consumption: Measured use of diesel exhaust fluid by a Selective Catalytic Reduction system for exhaust emission control, averaged over the previous 15 hours of engine operation.Used to determine whether ...";
+CM_ BO_ 2147548838 "EzeeInfo parameter: Turbo boost pressure. PGN 65190. Layout copied from the library J1939 DBCs.";
+CM_ SG_ 2147548838 EngnTrhrgr4BstPrssr "Engine Turbocharger 4 Boost Pressure: Gage pressure of air measured downstream of the compressor discharge side of the turbocharger.  See also SPN 102 for alternate range and resolution. If there is only one boost pressure to report and the range and...";
+CM_ SG_ 2147548838 EngnTrhrgr3BstPrssr "Engine Turbocharger 3 Boost Pressure: Gage pressure of air measured downstream of the compressor discharge side of the turbocharger.  See also SPN 102 for alternate range and resolution. If there is only one boost pressure to report and the range and...";
+CM_ SG_ 2147548838 EngnTrhrgr2BstPrssr "Engine Turbocharger 2 Boost Pressure: Gage pressure of air measured downstream of the compressor discharge side of the turbocharger.  See also SPN 102 for alternate range and resolution. If there is only one boost pressure to report and the range and...";
+CM_ SG_ 2147548838 EngnTrhrgr1BstPrssr "Engine Turbocharger 1 Boost Pressure: Gage pressure of air measured downstream of the compressor discharge side of the turbocharger.  See also SPN 102 for alternate range and resolution. If there is only one boost pressure to report and the range and...";
+
+
+
+
+
+
+

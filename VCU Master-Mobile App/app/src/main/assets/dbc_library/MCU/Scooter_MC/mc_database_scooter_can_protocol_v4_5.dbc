@@ -1,0 +1,138 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_:
+
+
+BO_ 1164 Motor_Status_4: 8 Vector__XXX
+ SG_ SM_Trac_Dir : 58|3@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ SM_Trac : 55|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ SM_Pow_Sub : 51|4@1+ (1,0) [0|9] "" Vector__XXX
+ SG_ SM_Pow : 48|3@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Torque_Act : 37|11@1- (0.1,0) [-102.4|102.3] "Nm" Vector__XXX
+ SG_ Torque_Ref : 26|11@1- (0.1,0) [-102.4|102.3] "Nm" Vector__XXX
+ SG_ Throttle_Volt_2 : 13|13@1+ (1,0) [0|5500] "mV" Vector__XXX
+ SG_ Throttle_Volt_1 : 0|13@1+ (1,0) [0|5500] "mV" Vector__XXX
+
+BO_ 908 Motor_Status_3: 8 Vector__XXX
+ SG_ Error_Actions : 40|16@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Error_Code_4 : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Error_Code_3 : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Error_Code_2 : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Error_Code_1 : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Error_Code_0 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 652 Motor_Status_2: 8 Vector__XXX
+ SG_ Dig_Out : 48|5@1+ (1,0) [0|31] "" Vector__XXX
+ SG_ Dig_In : 38|10@1+ (1,0) [0|1023] "" Vector__XXX
+ SG_ Controller_Temperature : 30|8@1+ (1,-40) [-40|215] "°C" Vector__XXX
+ SG_ Motor_Temperature : 22|8@1+ (1,-40) [-40|215] "°C" Vector__XXX
+ SG_ Volt_DC : 12|10@1+ (0.1,0) [0|102.3] "V" Vector__XXX
+ SG_ Curr_DC : 0|12@1- (1,0) [-2048|2047] "A" Vector__XXX
+
+BO_ 396 Motor_Status_1: 8 Vector__XXX
+ SG_ Deratings : 34|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Drive_Maneuvre : 31|3@1+ (1,0) [0|4] "" Vector__XXX
+ SG_ Speed : 16|15@1- (1,0) [-16384|16383] "rpm" Vector__XXX
+ SG_ Throttle : 8|8@1- (1,0) [-100|100] "%" Vector__XXX
+ SG_ Direction : 6|2@1+ (1,0) [0|2] "" Vector__XXX
+ SG_ Kill_Switch : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Power_Stage : 3|2@1+ (1,0) [0|2] "" Vector__XXX
+ SG_ Mode : 0|3@1+ (1,0) [0|3] "" Vector__XXX
+
+
+
+CM_ SG_ 1164 SM_Trac_Dir "State Machine handling the direction of travel.";
+CM_ SG_ 1164 SM_Trac "Traction State Machine.";
+CM_ SG_ 1164 SM_Pow_Sub "Sub-State Machine for the power stage.";
+CM_ SG_ 1164 SM_Pow "State machine for power stage.";
+CM_ SG_ 1164 Torque_Act "Actual motor torque.";
+CM_ SG_ 1164 Torque_Ref "Reference torque for motor control.";
+CM_ SG_ 1164 Throttle_Volt_2 "Second Throttle Output.";
+CM_ SG_ 1164 Throttle_Volt_1 "First Throttle Output.";
+CM_ SG_ 908 Error_Actions "Actions which are being performed due to active error codes.";
+CM_ SG_ 908 Error_Code_4 "An active error code.";
+CM_ SG_ 908 Error_Code_3 "An active error code.";
+CM_ SG_ 908 Error_Code_2 "An active error code.";
+CM_ SG_ 908 Error_Code_1 "An active error code.";
+CM_ SG_ 908 Error_Code_0 "An active error code.";
+CM_ SG_ 652 Dig_Out "State of the digital outputs of the motor controller.
+
+bit 0 (LSB)… state of dig. out. 1
+bit 4 (MSB)… state of dig. out. 5
+
+0 .. digital output off
+1 … digital outut active";
+CM_ SG_ 652 Dig_In "State of the digital outputs of the motor controller.
+
+bit 0 (LSB)… state of dig. in. 1
+bit 9 (MSB)… state of dig. in. 10
+
+0 .. digital input passive
+1 … digital input active";
+CM_ SG_ 652 Controller_Temperature "Temperature of the controller's power stage.";
+CM_ SG_ 652 Motor_Temperature "Temperature of the motor winding.";
+CM_ SG_ 652 Volt_DC "Battery voltage read by the motor controller.";
+CM_ SG_ 652 Curr_DC "Battery current drawn by the motor controller.";
+CM_ SG_ 396 Deratings "Active deratings of motor performance.
+
+bit 0 … derating due to high controller temperature
+bit 1 … derating due to high motor temperature
+bit 2 - bit 7 (MSB) … reserved
+";
+CM_ SG_ 396 Drive_Maneuvre "Drive maneuvre which is being performed.
+0 --> acceleration forward
+1 --> neutral braking
+2 --> service braking
+3 --> direction transition
+4 --> acceleration backward";
+CM_ SG_ 396 Speed "Actual Motor Speed";
+CM_ SG_ 396 Throttle "Throttle position";
+CM_ SG_ 396 Direction "Commanded direction of travel
+0 .. neutral
+1 .. forward travel
+2 .. reverse travel
+";
+CM_ SG_ 396 Kill_Switch "State of the kill switch
+0 .. kill switch OFF
+1 .. kill switch ON";
+CM_ SG_ 396 Power_Stage "State of the power bridge";
+CM_ SG_ 396 Mode "Actual driving mode
+0 .. reserved
+1 .. Eco
+2 .. Performance";
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "BusType" "";
+

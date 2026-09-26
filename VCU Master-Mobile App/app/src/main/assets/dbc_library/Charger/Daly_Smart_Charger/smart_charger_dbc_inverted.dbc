@@ -1,0 +1,262 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: AS_Send_SOC AS_Min_Max_Volt AS_Min_Max_temp AS_MOS_Ch_Dis AS_Status_Info AS_Cell_voltages AS_Cell_Temperatures AS_S_Battery_Failure_Status Switch_Status_node MOSFET_Control Charger_Authorization AS_send_read_parameter BP_send_sum_volt BP_send_discharge_charge_current BP_send_cell_voltage_cutoff BP_send_volt_diff_large BP_send_set_soc BP_send_temperature BP_send_balance_start BP_send_battery_type_production
+
+
+BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
+ SG_ NewSignal_0005 : 39|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0006 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0011 : 47|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0012 : 55|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0014 : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0013 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0015 : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0034 : 39|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0088 : 31|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0090 : 47|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0089 : 39|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0003 : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0007 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0004 : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0008 : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0002 : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0018 : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0019 : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0020 : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0024 : 7|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0025 : 15|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0038 : 31|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0001 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2559590401 SOC_Total_Voltage_Current: 8 Vector__XXX
+ SG_ BATTERY_VOLTAGE : 7|16@0+ (0.1,0) [0|0] "V" Vector__XXX
+ SG_ BATTERY_CURRENT : 39|16@0+ (1,-27000) [0|0] "A" Vector__XXX
+ SG_ SOC : 55|16@0+ (0.1,0) [0|0] "%" Vector__XXX
+
+BO_ 2559655937 Max_Min_Voltage: 8 Vector__XXX
+ SG_ MAX_CELL_VOLTAGE : 7|16@0+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ No_Of_Max_Cell_Voltage : 23|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ MIN_CELL_VOLTAGE : 31|16@0+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ No_Of_Min_Cell_Voltage : 47|8@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2559721473 Max_Min_Temp: 8 Vector__XXX
+ SG_ MAX_CELL_TEMPERATURE : 7|8@0+ (1,-40) [0|0] "°C" Vector__XXX
+ SG_ Max_Temp_CellNo : 15|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ MIN_CELL_TEMPERATURE : 23|8@0+ (1,-40) [0|0] "°C" Vector__XXX
+ SG_ Min_Temp_CellNo : 31|8@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2559787009 Charge_Discharg_MOS_Status: 8 Vector__XXX
+ SG_ Charge_Discharge_Status : 7|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Charge_MOS_Tube_Status : 15|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Discharge_MOS_Tube_Status : 23|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ BMS_Life : 31|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Residual_Capacity : 39|32@0+ (0.001,0) [0|0] "mAH" Vector__XXX
+
+BO_ 2559852545 Status_Information_1: 8 Vector__XXX
+ SG_ NUMBER_OF_CELLS : 7|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ NUMBER_OF_TEMPERATURE_SENSORS : 15|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Charger_Status : 23|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Load_Status : 31|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Charge_Discharge_Cycles : 47|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2559918081 Cell_Voltages: 8 Vector__XXX
+ SG_ Frame_Number M : 7|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ CELL_1_VOLTAGE m1 : 15|16@0+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ CELL_2_VOLTAGE m1 : 31|16@0+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ CELL_3_VOLTAGE m1 : 47|16@0+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ CELL_4_VOLTAGE m2 : 15|16@0+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ CELL_5_VOLTAGE m2 : 31|16@0+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ CELL_6_VOLTAGE m2 : 47|16@0+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ CELL_7_VOLTAGE m3 : 15|16@0+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ CELL_8_VOLTAGE m3 : 31|16@0+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ CELL_9_VOLTAGE m3 : 47|16@0+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ CELL_10_VOLTAGE m4 : 15|16@0+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ CELL_11_VOLTAGE m4 : 31|16@0+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ CELL_12_VOLTAGE m4 : 47|16@0+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ CELL_13_VOLTAGE m5 : 15|16@0+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ CELL_14_VOLTAGE m5 : 31|16@0+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ CELL_15_VOLTAGE m5 : 47|16@0+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ CELL_16_VOLTAGE m6 : 15|16@0+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ CELL_17_VOLTAGE m6 : 31|16@0+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ CELL_18_VOLTAGE m6 : 47|16@0+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ CELL_19_VOLTAGE m7 : 15|16@0+ (1,0) [0|0] "mV" Vector__XXX
+ SG_ CELL_20_VOLTAGE m7 : 31|16@0+ (1,0) [0|0] "mV" Vector__XXX
+
+BO_ 2559983617 Cell_Temperature: 8 Vector__XXX
+ SG_ Temp_Frame_No M : 7|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ TEMPERATURE_SENSOR_1 m1 : 15|8@0+ (1,-40) [0|0] "°C" Vector__XXX
+ SG_ TEMPERATURE_SENSOR_2 m1 : 23|8@0+ (1,-40) [0|0] "°C" Vector__XXX
+ SG_ TEMPERATURE_SENSOR_3 m1 : 31|8@0+ (1,-40) [0|0] "°C" Vector__XXX
+ SG_ TEMPERATURE_SENSOR_4 m1 : 39|8@0+ (1,-40) [0|0] "°C" Vector__XXX
+
+BO_ 2560114689 Battery_Failure_Status: 8 Vector__XXX
+ SG_ Cell_Volt_High_Level_1 : 0|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_Volt_High_Level_2 : 1|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_Volt_Low_Level_1 : 2|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_Volt_Low_Level_2 : 3|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Sum_Volt_High_Level_1 : 4|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Sum_Volt_High_Level_2 : 5|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Sum_Volt_Low_Level_1 : 6|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Sum_Volt_Low_Level_2 : 7|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_Temp_High_Level_1 : 8|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_Temp_High_Level_2 : 9|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_Temp_Low_Level_1 : 10|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_Temp_Low_Level_2 : 11|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_Temp_High_Level_1 : 12|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_Temp_High_Level_2 : 13|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_Temp_Low_Level_1 : 14|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_Temp_Low_Level_2 : 15|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_Overcurrent_Level_1 : 16|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_Overcurrent_Level_2 : 17|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_Overcurrent_Level_1 : 18|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_Overcurrent_Level_2 : 19|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ SOC_High_Level_1 : 20|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ SOC_High_Level_2 : 21|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ SOC_Low_Level_1 : 22|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ SOC_Low_Level_2 : 23|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Diff_Volt_Level_1 : 24|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Diff_Volt_Level_2 : 25|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Diff_Temp_Level_1 : 26|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Diff_Temp_Level_2 : 27|1@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 440 Switch_Status: 8 Vector__XXX
+ SG_ Discharge_Switch_Status : 7|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Charging_Switch_Status : 15|8@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2559574336 Send_Soc: 8 AS_Send_SOC
+
+BO_ 2559639872 Send_Min_Max_Volt: 8 AS_Min_Max_Volt
+
+BO_ 2559705408 Send_Min_Max_temp: 8 AS_Min_Max_temp
+
+BO_ 2559770944 Send_MOS_Ch_Dis: 8 AS_MOS_Ch_Dis
+
+BO_ 2559836480 Send_Status_Info: 8 AS_Status_Info
+
+BO_ 2559902016 Send_Cell_voltages: 8 AS_Cell_voltages
+
+BO_ 2559967552 Send_Cell_Temperatures: 8 AS_Cell_Temperatures
+
+BO_ 2560098624 Send_Battery_Failure_Status: 8 AS_S_Battery_Failure_Status
+
+BO_ 440 Send_Switch_Status: 8 Switch_Status_node
+
+BO_ 480 Send_MOSFET_Control: 3 MOSFET_Control
+
+BO_ 481 Send_Charger_Authorization: 2 Charger_Authorization
+
+BO_ 2551201793 Response_Capacity_Voltage: 8 Vector__XXX
+ SG_ Response_capacity : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Response_voltage : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2555396097 Read_capacity_voltage: 8 Vector__XXX
+ SG_ Read_capacity : 23|16@0+ (0.001,0) [0|0] "" Vector__XXX
+ SG_ Read_voltage : 55|16@0+ (0.001,0) [0|0] "" Vector__XXX
+
+BO_ 2555380032 send_Read_capacity_Voltage: 8 AS_send_read_parameter
+
+BO_ 2556051457 sum_volt_highandlow: 8 Vector__XXX
+ SG_ sum_volt_high_l1 : 7|16@0+ (1,0.1) [0|0] "" Vector__XXX
+ SG_ sum_volt_high_l2 : 23|16@0+ (1,0.1) [0|0] "" Vector__XXX
+ SG_ sum_volt_low_l1 : 39|16@0+ (1,0.1) [0|0] "" Vector__XXX
+ SG_ sum_volt_low_l2 : 55|16@0+ (1,0.1) [0|0] "" Vector__XXX
+
+BO_ 2556116993 discharge_charge_current: 8 Vector__XXX
+ SG_ discharge_current_l1 : 7|16@0+ (1,0.1) [0|0] "" Vector__XXX
+ SG_ discharge_current_l2 : 23|16@0+ (1,0.1) [0|0] "" Vector__XXX
+ SG_ charge_current_l1 : 39|16@0+ (1,0.1) [0|0] "" Vector__XXX
+ SG_ charge_current_l2 : 55|16@0+ (1,0.1) [0|0] "" Vector__XXX
+
+BO_ 2555985921 cell_voltage_cutoff_high_low: 8 Vector__XXX
+ SG_ cell_volt_high_l1 : 7|16@0+ (1,0.001) [0|0] "" Vector__XXX
+ SG_ cell_volt_high_l2 : 23|16@0+ (1,0.001) [0|0] "" Vector__XXX
+ SG_ cell_volt_low_l1 : 39|16@0+ (1,0.001) [0|0] "" Vector__XXX
+ SG_ cell_high_low_l2 : 55|16@0+ (1,0.001) [0|0] "" Vector__XXX
+
+BO_ 2556313601 volt_diff_large: 8 Vector__XXX
+ SG_ volt_diff_large_l1 : 7|16@0+ (1,0.001) [0|0] "" Vector__XXX
+ SG_ volt_diff_large_l2 : 23|16@0+ (1,0.001) [0|0] "" Vector__XXX
+ SG_ temp_diff_large_l1 : 39|8@0+ (1,0.001) [0|0] "" Vector__XXX
+ SG_ temp_diff_large_l2 : 47|8@0+ (1,0.001) [0|0] "" Vector__XXX
+
+BO_ 2556248065 read_set_soc: 8 Vector__XXX
+ SG_ soc_high_l1 : 7|16@0+ (1,0.1) [0|0] "" Vector__XXX
+ SG_ soc_high_l2 : 23|16@0+ (1,0.1) [0|0] "" Vector__XXX
+ SG_ soc_low_l1 : 39|16@0+ (1,0.1) [0|0] "" Vector__XXX
+ SG_ soc_low_l2 : 55|16@0+ (1,0.1) [0|0] "" Vector__XXX
+
+BO_ 2556182529 read_temperature: 8 Vector__XXX
+ SG_ charge_temp_high_l1 : 0|8@1+ (40,0) [0|0] "" Vector__XXX
+ SG_ charge_temp_high_l2 : 8|8@1+ (40,0) [0|0] "" Vector__XXX
+ SG_ charge_temp_low_l1 : 16|8@1+ (40,0) [0|0] "" Vector__XXX
+ SG_ charge_temp_low_l2 : 24|8@1+ (40,0) [0|0] "" Vector__XXX
+ SG_ discharge_temp_high_l1 : 32|8@1+ (40,0) [0|0] "" Vector__XXX
+ SG_ discharge_temp_high_l2 : 40|8@1+ (40,0) [0|0] "" Vector__XXX
+ SG_ discharge_temp_low_l1 : 48|8@1+ (40,0) [0|0] "" Vector__XXX
+ SG_ discharge_temp_low_l2 : 56|8@1+ (40,0) [0|0] "" Vector__XXX
+
+BO_ 2556379137 read_balance_start: 8 Vector__XXX
+ SG_ balance_start_volt : 7|16@0+ (0.001,0) [0|0] "" Vector__XXX
+ SG_ balance_start_diff_volt : 23|16@0+ (0.001,0) [0|0] "" Vector__XXX
+
+BO_ 2555592705 battery_type_production: 8 Vector__XXX
+ SG_ battery_type : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ year : 23|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ month : 31|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ date : 39|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ time_sleep : 47|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2556035392 send_sum_volt_highandlow: 8 BP_send_sum_volt
+
+BO_ 2556100928 send_discharge_charge_current: 8 BP_send_discharge_charge_current
+
+BO_ 2555969856 send_cell_voltage_cutoff: 8 BP_send_cell_voltage_cutoff
+
+BO_ 2556297536 send_volt_diff_large: 8 BP_send_volt_diff_large
+
+BO_ 2556232000 send_set_soc: 8 BP_send_set_soc
+
+BO_ 2556166464 send_temperature: 8 BP_send_temperature
+
+BO_ 2556363072 send_balance_start: 8 BP_send_balance_start
+
+BO_ 2555576640 send_battery_type_production: 8 BP_send_battery_type_production
+
+
+
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "BusType" "CAN";
+

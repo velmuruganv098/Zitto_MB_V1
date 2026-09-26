@@ -1,0 +1,164 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: 
+
+
+BO_ 2216688362 cell_voltage_1_to_4: 8 Vector__XXX
+ SG_ cell_4_voltage : 48|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_3_voltage : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_2_voltage : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_1_voltage : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2233465578 cell_voltage_5_to_8: 8 Vector__XXX
+ SG_ cell_8_voltage : 48|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_7_voltage : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_6_voltage : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_5_voltage : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2250242794 cell_voltage_9_to_12: 8 Vector__XXX
+ SG_ cell_12_voltage : 48|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_11_voltage : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_10_voltage : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_9_voltage : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2267020010 cell_voltage_13_to_16: 8 Vector__XXX
+ SG_ cell_16_voltage : 48|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_15_voltage : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_14_voltage : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_13_voltage : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2216753898 cell_voltage_17_to_20: 8 Vector__XXX
+ SG_ cell_20_voltage : 48|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_19_voltage : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_18_voltage : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_17_voltage : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2233531114 cell_voltage: 8 Vector__XXX
+ SG_ cell_max_voltage : 48|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_min_voltage : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_stack_voltage : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_avg_voltage : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2283928298 current: 8 Vector__XXX
+ SG_ soh : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ soc : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ shunt_current : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ hall_sensor_low : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ hall_sensor : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2485320426 temperature1_4: 8 Vector__XXX
+ SG_ temperature_4 : 48|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ temperature_3 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ temperature_2 : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ temperature_1 : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2485451498 temperature5_8: 8 Vector__XXX
+ SG_ temperature_8 : 48|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ temperature_7 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ temperature_6 : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ temperature_5 : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2485517034 temperature9_12: 8 Vector__XXX
+ SG_ temperature_12 : 48|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ temperature_11 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ temperature_10 : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ temperature_9 : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2485582570 temperature13_16: 8 Vector__XXX
+ SG_ temperature_16 : 48|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ temperature_15 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ temperature_14 : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ temperature_13 : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2585066475 authentication: 8 Vector__XXX
+ SG_ customer_id : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ capacity : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_type : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ hw_version_minor : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ hw_version_major : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ sw_version_minor : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ sw_version_major : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ battery_id : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2517305578 time: 8 Vector__XXX
+ SG_ second : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ minute : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ hour : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ year : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ month : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ day : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2383739883 charge_parameter: 8 Vector__XXX
+ SG_ charge_current_status : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ charge_current_on_off_status : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ charge_current_demand : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2351168234 state: 8 Vector__XXX
+ SG_ fan_status : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ sd_card_no : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ fuse_failure_2 : 29|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ sd_card_err_2 : 27|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ fetot : 26|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ feterr : 25|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ccomoer_2 : 24|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ vehicle_status : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ fuse_failure_1 : 13|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ contractor_failure : 12|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ sd_card_err_1 : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ccomer_1 : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RDY : 7|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CTO : 6|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SCE : 5|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ OT : 4|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ PCF : 3|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ OC : 2|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ UV : 1|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ OV : 0|1@1+ (1,0) [0|0] "" Vector__XXX
+
+
+
+
+
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+
+VAL_ 2383739883 charge_current_status 1 "end" 2 "going on" 3 "idle" ;
+VAL_ 2383739883 charge_current_on_off_status 1 "ON" 2 "OFF" ;
+VAL_ 2351168234 fan_status 0 "no fan" 1 "fan on" 2 "fan off" ;
+VAL_ 2351168234 vehicle_status 0 "idle" 1 "discharge" 2 "charge_0" 3 "balancing" 4 "error" 5 "charging_1" 6 "charging_2" 7 "charging_3" ;
+
+
+

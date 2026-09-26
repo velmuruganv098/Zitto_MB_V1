@@ -144,7 +144,15 @@ class CoreTest {
         }
         assertTrue("LOG OTA:start_ok" in all.map { it.substringAfter(' ') })
         assertTrue(all.any { it.endsWith("LOG OTA:ok") })
-        assertTrue(all.any { it.endsWith("LOG LED:period=250 duty=30") })
+        assertTrue(all.any { it.endsWith("LOG [CMD] LED period=250 ms duty=30 %  OK") })
+        // V0.0073: module command -> "[CMD]" event (tagged CMD) + CMD_ACK cmd=0x1 with the module id and new state
+        val modAck = recs.last { it.type == "CMD_ACK" && it.fields.long("cmd") == 1L }
+        assertEquals(0L, modAck.fields["result"]); assertEquals(0L, modAck.fields["gpio_id"]); assertEquals(0L, modAck.fields["state"])
+        assertTrue(recs.any { it.type == "LOG" && "CMD" in it.tags && (it.fields["text"] as String).startsWith("[CMD] MODULE IMU -> DISABLED") })
+        // V0.0073: IMU displacement fields every 100 ms
+        val imu = recs.filter { it.type == "IMU" }
+        assertTrue("imu ${imu.size}", imu.size >= 40)
+        assertTrue(imu.all { it.fields["pos_x_mm"] is Double && it.fields["moving"] is Long && it.fields["imu_up_ms"] is Long })
         assertEquals("68656C6C6F", recs.last { it.type == "FLASH_DATA" }.fields["hex"])
         assertEquals(0L, recs.last { it.type == "STATUS" }.fields["imu"])
         assertEquals(1, (recs.last { it.type == "GPIO_STATUS" }.fields["pins"] as List<*>).map { it as GpioPin }.first { it.id == 13 }.state)
@@ -152,7 +160,7 @@ class CoreTest {
         val eng = DbcEngine()
         eng.load("d.dbc", res("zitto_demo_vehicle.dbc"), listOf(1, 2))
         var decoded = 0
-        for (r in recs.filter { it.type == "CAN" }) {
+        for (r in recs.filter { it.type == "CAN" && eng.dbcs.getValue("d.dbc").db.byId.containsKey(it.fields.long("id")) }) {
             @Suppress("UNCHECKED_CAST")
             val d = eng.decode(r.fields.long("bus").toInt(), r.fields.long("id"), r.fields["ext"] == true, r.fields["data"] as List<Int>, r.t)
             assertNotNull(d)
@@ -167,5 +175,31 @@ class CoreTest {
         assertTrue("soc $soc", soc in 80.0..90.0)
         assertEquals("D", veh.getValue("gear").text)
         assertTrue(eng.messages.keys.any { it == "2:0x18FF5010" })
+
+        // V0.0073: the simulated Daly BMS on CAN2 is unknown to the demo DBC -> library auto-match -> Battery roles
+        fun feed() {
+            for (r in recs.filter { it.type == "CAN" }) {
+                @Suppress("UNCHECKED_CAST")
+                eng.decode(r.fields.long("bus").toInt(), r.fields.long("id"), r.fields["ext"] == true, r.fields["data"] as List<Int>, Fmt.nowS())
+            }
+        }
+        feed()
+        val unk = eng.unknownIds(Fmt.nowS())
+        assertTrue(unk.keys.toString(), (0x18954001L to true) in unk.keys && unk.values.all { it == setOf(2) })
+        val lib = DbcLibrary(java.io.File("src/main/assets/library_index.json").readText())
+        val best = lib.match(unk.keys).first()
+        assertEquals("BMS/Daly/Daly_BMS_CAN_V1.0_from_spec.dbc", best.id)
+        eng.load("daly.dbc", java.io.File("src/main/assets/dbc_library/${best.id}").readText(Charsets.ISO_8859_1), listOf(2))
+        feed()
+        assertTrue(eng.unknownIds(Fmt.nowS()).isEmpty())
+        val meta = eng.rolesMeta()
+        assertTrue("battery" in meta.panels && "motor" in meta.panels)
+        assertEquals(16.0, eng.roleValues.getValue("bms.cell_count"), 0.0)
+        assertEquals(4.0, eng.roleValues.getValue("bms.temp_count"), 0.0)
+        for (k in meta.cells.take(16)) assertTrue(k, eng.roleValues.getValue(k) in 3.2..3.4)
+        assertTrue(meta.cells.drop(16).all { (eng.roleValues[it] ?: 0.0) == 0.0 })     // unfitted: absent or 0 mV
+        assertTrue(eng.roleValues.getValue("bms.soc") in 80.0..90.0)
+        assertEquals(1.0, eng.roleValues.getValue("bms.charge_mos"), 0.0)
+        assertTrue(eng.roleValues.getValue(meta.temps[0]) in 20.0..40.0)
     }
 }

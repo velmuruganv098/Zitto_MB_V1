@@ -1,0 +1,405 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: MCU BMS VCU
+
+
+BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
+ SG_ VCU_AirconOn : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_Cont_Chr2 : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_Cont_Chr1 : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_Cont_MainN : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_Cont_MainP : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_Cont_MCU2 : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_Cont_MCU1 : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_BattHeat : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_AUX : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_Cont_Aircon : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_Cont_Defrost : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_ContMCUCharge2 : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_ContMCUCharge1 : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_AUXRely : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_HVACRely : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_DefrostRely : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_MotorRely1 : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_MotorRely2 : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_PreChargeRely1 : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_PreChargeRely2 : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU4_OtherErrCode : 0|8@1+ (1,0) [0|25] "" Vector__XXX
+ SG_ MVCU4_SKAIErrCode : 0|16@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ MVCU4_P2ErrCode : 0|16@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ MVCU4_GTKErrCode : 0|16@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 2565865739 ABS_0x18F0010B: 8 Vector__XXX
+ SG_ ABS_State : 0|2@1+ (1,0) [0|4] "" Vector__XXX
+
+BO_ 2565933299 BMS_0x18F108F3: 8 Vector__XXX
+ SG_ BMS1_MAXTEMP : 0|8@1+ (1,-40) [-1000|1000] "" Vector__XXX
+
+BO_ 2566851075 TCU_0x18FF0A03: 8 Vector__XXX
+ SG_ TCU_Speed : 16|16@1+ (0.125,0) [0|60000] "" Vector__XXX
+
+BO_ 2364801489 PDCU_0x0CF401D1: 8 Vector__XXX
+ SG_ PDCU_SelfCheck : 32|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ PDCU_PreChrgRelyFault : 23|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDCU_DefrostRelyFault : 21|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDCU_HVACRelyFault : 20|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDCU_MotorRelyFault : 17|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDCU_HVACRelyState : 14|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDCU_DefrostRelyState : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDCU_MotorRelyState : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDU_PreChrgeState : 10|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2365522696 MVCU4_0xCFF0308: 8 Vector__XXX
+ SG_ MVCU4_LifeCnt : 60|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ MVCU4_OTT_MOT : 27|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU4_OTT_IGBTW : 20|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU4_OTT_IGBTV : 19|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU4_OTT_IGBTU : 18|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU4_GDF_WUV : 17|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU4_GDF_VUV : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU4_GDF_UUV : 15|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU4_GDF_WF : 14|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU4_GDF_VF : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU4_GDF_UF : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU4_HOC_ICS : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU4_HOC_IBS : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU4_HOC_IAS : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU4_OOS_ICS : 10|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU4_OOS_IBS : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU4_OOS_IAS : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU4_UV_DCP : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU4_OV_DCP : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU4_OC_ICS : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU4_OC_IBS : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU4_OC_IAS : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2365522440 MVCU3_0xCFF0208: 8 Vector__XXX
+ SG_ MCU3_TransformerFail : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MCU3_MotSenFail : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MCU3_MotRpmOverFail : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MCU3_MotOverTemp : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MCU3_McuOTFail : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MCU3_McuHardWareFail : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MCU3_McuDcLinkUV : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MCU3_McuBatUV : 10|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MCU3_DClinkOV : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MCU3_CanCommFail : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MCU3_AlternatingCurrentOCFail : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU3_LifeCnt : 60|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ MVCU3_MotorRotationCnt : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ MVCU3_DCLinkV : 32|16@1+ (0.1,0) [0|1000] "" Vector__XXX
+ SG_ MVCU3_Idc : 16|16@1+ (1,-1000) [-1000|1000] "" Vector__XXX
+
+BO_ 2365522184 MVCU2_0xCFF0108: 8 Vector__XXX
+ SG_ MVCU2_LifeCnt : 60|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ MVCU2_FltGrade : 48|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ MVCU2_TorqueLimitNeg : 32|16@1+ (1,-5000) [-5000|0] "" Vector__XXX
+ SG_ MVCU2_TorqueLimitPos : 16|16@1+ (1,0) [0|5000] "" Vector__XXX
+ SG_ MVCU2_MCUTemp : 8|8@1+ (1,-40) [-40|215] "" Vector__XXX
+ SG_ MVCU2_MotorTemp : 0|8@1+ (1,-40) [-40|215] "" Vector__XXX
+
+BO_ 2365521928 MVCU1_0xCFF0008: 8 Vector__XXX
+ SG_ MVCU1_LifeCnt : 60|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ MVCU1_IGBTEnable : 54|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU1_ActiveDischarge : 53|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU1_PrechargeAllow : 52|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MVCU1_Iout : 32|16@1+ (0.1,0) [0|1500] "" Vector__XXX
+ SG_ VMCU_MotorTorque : 16|16@1+ (1,-5000) [-5000|5000] "" Vector__XXX
+ SG_ MVCU1_MotorRpm : 0|16@1+ (1,-15000) [-15000|15000] "" Vector__XXX
+
+BO_ 2365524207 VMCU_0xCFF08EF: 8 Vector__XXX
+ SG_ VMCU_DemandSpeed : 48|16@1+ (1,-15000) [-15000|15000] "" Vector__XXX
+ SG_ VMCU_DemandTorque : 32|16@1+ (1,-5000) [-5000|5000] "" Vector__XXX
+ SG_ VMCU_DemandLimitNeg : 20|12@1+ (0.25,0) [0|4096] "" Vector__XXX
+ SG_ VMCU_DemandLimitPos : 8|12@1+ (0.25,0) [0|4096] "" Vector__XXX
+ SG_ VMCU_HandBrake : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VMCU_FootBrake : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VMCU_GearState : 4|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ VMCU_ControlMode : 2|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ VMCU_FaultReset : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VMCU_MCUEnable : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2566859593 INS_0x18FF2B49: 8 Vector__XXX
+ SG_ INS_LifeCnt : 56|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ INS_BattV : 24|16@1+ (1,0) [-65535|65535] "" Vector__XXX
+ SG_ INS_ResVal : 8|16@1+ (1,0) [-65535|65535] "" Vector__XXX
+ SG_ INS_AL : 4|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ INS_State : 0|4@1+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 2566259877 LCK_0x18F604A5: 8 Vector__XXX
+ SG_ LCK_PowerLimit : 8|8@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ LCK_LockRef : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 2566193687 MET2_0x18F50217: 8 Vector__XXX
+ SG_ MET2_Version : 56|8@1+ (0.1,0) [0|100] "" Vector__XXX
+ SG_ MET2_TotalMile : 0|32@1+ (0.125,0) [-65535|65535] "" Vector__XXX
+
+BO_ 2566193431 MET1_0x18F50117: 8 Vector__XXX
+ SG_ MET1_LeftSeatAlarm : 39|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MET1_LowLight : 38|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MET1_HighLight : 37|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MET1_BrakeLamp : 36|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MET1_Stop : 35|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MET1_HandBrake : 34|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MET1_AirPumpQ1_AL : 33|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MET1_AirPumpQ2_AL : 32|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MET1_Right : 31|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MET1_Left : 30|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MET1_BusLamp : 29|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MET1_ST : 28|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MET1_On : 27|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MET1_Hatch : 26|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MET1_FrontDoor : 25|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MET1_MidDoor : 24|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MET1_RearAirPressure : 16|8@1+ (5,0) [-65535|65535] "" Vector__XXX
+ SG_ MET1_FrontAirPressure : 8|8@1+ (5,0) [-65535|65535] "" Vector__XXX
+ SG_ MET1_AuxBatt : 0|8@1+ (0.2,0) [-65535|65535] "" Vector__XXX
+
+BO_ 2566129060 SCR_0x18F405A4: 8 Vector__XXX
+ SG_ SCR_WindSpeed : 46|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ SCR_WindMode : 38|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ SCR_CycleMode : 30|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ SCR_Run : 22|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ SCR_LifeCnt : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ SCR_TempSet : 0|8@1+ (0.5,-40) [-65535|65535] "" Vector__XXX
+
+BO_ 2364802211 HVAC_0x0CF404A3: 8 Vector__XXX
+ SG_ HVAC_LifeCnt : 56|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ HVAC_FltCode : 48|8@1+ (1,0) [0|25] "" Vector__XXX
+ SG_ HVAC_CycleTemp : 40|8@1+ (0.5,-40) [-65535|65535] "" Vector__XXX
+ SG_ HVAC_OutTemp : 32|8@1+ (0.5,-40) [-65535|65535] "" Vector__XXX
+ SG_ HVAC_WindMode : 30|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ HVAC_CycleMode : 22|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ HVAC_WindSpeed : 14|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ HVAC_State : 6|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ HVAC_HV_Request : 4|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 2566128546 LDC_0x18F403A2: 8 Vector__XXX
+ SG_ LDC_LifeCnt : 56|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ LDC_OC : 55|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ LDC_OP : 54|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ LDC_UV : 53|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ LDC_OV : 52|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ LDC_OT : 51|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ LDC_CanFlit : 50|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ LDC_SelfDiag : 48|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ LDC_FaultLevel : 46|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ LDC_DCLinkV : 24|16@1+ (0.1,0) [-65535|65535] "" Vector__XXX
+ SG_ LDC_Temp : 16|8@1+ (1,-40) [-65535|65535] "" Vector__XXX
+ SG_ LDC_Vout : 8|8@1+ (0.5,0) [-65535|65535] "" Vector__XXX
+ SG_ LDC_Iout : 0|8@1+ (0.7,0) [-65535|65535] "" Vector__XXX
+
+BO_ 2364801697 AIRP_0x0CF402A1: 8 Vector__XXX
+ SG_ AIRP_FaultLevel : 62|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ AIRP_State : 60|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ AIRP_LifeCnt : 56|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ AIRP_PhaseFail : 55|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ AIRP_InputDcUV : 54|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ AIRP_InputDcOV : 53|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ AIRP_OutputOC : 52|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ AIRP_ControllerOT : 51|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ AIRP_PumpMotorOT : 50|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ AIRP_TempSensorFail : 49|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ AIRP_CanFail : 48|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ AIRP_MotRpm : 32|16@1+ (0.5,-16000) [-65535|65535] "" Vector__XXX
+ SG_ AIRP_Iout : 16|16@1+ (0.1,0) [-65535|65535] "" Vector__XXX
+ SG_ AIRP_DCLinkV : 0|16@1+ (0.1,0) [-65535|65535] "" Vector__XXX
+
+BO_ 2364801440 STP_0x0CF401A0: 8 Vector__XXX
+ SG_ STP_FaultLevel : 62|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ STP_State : 60|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ STP_LifeCnt : 56|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ STP_PhaseFail : 55|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ STP_InputDcUV : 54|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ STP_InputDcOV : 53|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ STP_OutputOC : 52|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ STP_ControllerOT : 51|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ STP_PumpMotorOT : 50|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ STP_TempSensorFail : 49|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ STP_CanFail : 48|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ STP_MotRpm : 32|16@1+ (0.5,-16000) [-65535|65535] "" Vector__XXX
+ SG_ STP_Iout : 16|16@1+ (0.1,0) [-65535|65535] "" Vector__XXX
+ SG_ STP_DCLinkV : 0|16@1+ (0.1,0) [-65535|65535] "" Vector__XXX
+
+BO_ 2566063056 VCU_0x18F303D0: 8 VCU
+ SG_ VCUA_MCUIdc_Scaled : 48|16@1+ (0.1,-3200) [-65535|65535] "" Vector__XXX
+ SG_ VCUA_DCLinkV : 32|16@1+ (1,0) [-65535|65535] "" Vector__XXX
+ SG_ VCUA_MotIout_Scaled : 16|16@1+ (0.1,0) [-65535|65535] "" Vector__XXX
+ SG_ VCUA_MotVout : 0|16@1+ (1,0) [-65535|65535] "" Vector__XXX
+
+BO_ 2566062800 VCU_0x18F302D0: 8 VCU
+ SG_ VCUA_MCUTemp_Scaled : 56|8@1+ (1,-40) [-65535|65535] "" Vector__XXX
+ SG_ VCUA_MotTemp_Scaled : 48|8@1+ (1,-40) [-65535|65535] "" Vector__XXX
+ SG_ VCUA_MotPower_Scaled : 32|16@1+ (1,-200) [-200|200] "" Vector__XXX
+ SG_ VCUA_MotTorque_Scaled : 16|16@1+ (1,-2000) [-65535|65535] "" Vector__XXX
+ SG_ VCUA_MotRpm : 0|16@1+ (1,0) [-65535|65535] "" Vector__XXX
+
+BO_ 2566062544 VCU_0x18F301D0: 8 VCU
+ SG_ VCUA_MCUSelfCheck : 40|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ VCUA_MCUFltState : 54|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ VCUA_CommFail_AL : 53|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCUA_MotTemp_AL : 52|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCUA_MCUTemp_AL : 51|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCUA_MCUOC_AL : 50|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCUA_MCUUV_AL : 49|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCUA_MCUOV_AL : 48|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCUA_MotorSystemState : 42|4@1+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 2364671184 VCU_0x0CF204D0: 8 VCU
+ SG_ VCU_BMSPowerUpCmd : 56|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ VCU_AUXRely : 15|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_HVACRely : 14|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_DefrostRely : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_MotorRely1 : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_MotorRely2 : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_PreRely1 : 10|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_PreRely2 : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_MainPosRely : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_MainNegRely : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_PosChargeRely1 : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_NegChargeRely1 : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_PosChargeRely2 : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_NegChargeRely2 : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_BattHeatPosRely : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_BattHeatNegRely : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2364670928 VCU_0x0CF203D0: 8 VCU
+ SG_ VPUD_SUBSYSTEM : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_HVACEN : 24|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_LDCOn : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_AirPumpOn : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_STPOilPumpOn : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2565997264 VCU_0x18F202D0: 8 VCU
+ SG_ VCU_LifeCnt : 56|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_VehicleSpeed : 40|16@1+ (0.00390625,0) [0|120] "" Vector__XXX
+ SG_ VCU_BrakePct : 32|8@1+ (0.4,0) [0|100] "" Vector__XXX
+ SG_ VCU_AccelPct : 24|8@1+ (0.4,0) [0|100] "" Vector__XXX
+ SG_ VCU_RemainRange : 8|16@1+ (0.125,0) [0|65535] "" Vector__XXX
+ SG_ VCU_Version : 0|8@1+ (0.1,0) [0|65535] "" Vector__XXX
+
+BO_ 2565997008 VCU_0x18F201D0: 8 VCU
+ SG_ SnowModeReq : 38|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ShutDownInterLockReq : 37|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PlzRturnN : 29|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_VehicleState : 6|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ VCU_SystemInterLock : 3|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ VCU_ShiftPositionState : 12|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ VCU_FltCode : 48|16@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_CoolingFan : 46|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_AirPumpFan : 45|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_WaterPumpRely : 44|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_MainMotorPreRely : 43|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_MainMotorRely : 42|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_DefrostRely : 41|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_HVACRely : 40|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_KeyStart : 36|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_ChargeWakeUp : 35|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_KeyOn : 34|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_DefrostRequest : 33|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_HVACRequest : 32|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VCU_CoolingSysFault : 30|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ VCU_SystemFault : 22|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ VCU_ChargeAllowState : 20|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ VCU_BrakeSysFlt : 18|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ VCU_EPSSysFlt : 16|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ VCU_VehicleRunMode : 9|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ VCU_SelfCheckState : 1|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 2565932019 BMS_0x18F103F3: 8 Vector__XXX
+ SG_ BMS_FltCode : 56|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ BMS_ContChr2 : 39|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_SelfProtect_AL : 38|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_Fire_AL : 37|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_BattOV_AL : 36|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_BattUV_AL : 35|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_BattOT_AL : 34|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_BattDischr_AL : 33|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_BattLock_AL : 31|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_InnerCommFail_AL : 30|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_ChrCommFail_AL : 29|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_VCUCommFail_AL : 28|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_ContWelding_AL : 27|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_ContBattP_AL : 26|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_ContBattN_AL : 25|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_ContChr1_AL : 24|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_SOCHigh_AL : 22|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ BMS_SOCLow_AL : 20|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ BMS_SOCJump_AL : 18|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ BMS_Batt_AL : 16|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ BMS_PackUV_AL : 14|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ BMS_CellVoltDiff_AL : 12|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ BMS_TempDiff_AL : 10|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ BMS_PackTune_AL : 8|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ BMS_HighTemp_AL : 6|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ BMS_CellOV_AL : 4|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ BMS_CellUV_AL : 2|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ BMS_PackOV_AL : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 2565931763 BMS_0x18F102F3: 8 Vector__XXX
+ SG_ BMS_HeatMangeCmd : 48|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ BMS_SelfCheckState : 62|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ BMS_ChargeState : 59|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ BMS_BattCoolingState : 58|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_ChargeLineConnect : 57|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_PowerDownReq : 56|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_MainPosRely : 39|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_MainNegRely : 38|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_PosChargeRely1 : 37|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_NegChargeRely1 : 36|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_PosChargeRely2 : 35|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_NegChargeRely2 : 34|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_BatHeatRely2 : 33|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_BatHeatRely1 : 32|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_DisChrCurr30s : 24|8@1+ (5,0) [-65535|65535] "" Vector__XXX
+ SG_ BMS_DisChrCurr5m : 16|8@1+ (5,0) [-65535|65535] "" Vector__XXX
+ SG_ BMS_ChrCurr30s : 8|8@1+ (5,-1000) [-65535|65535] "" Vector__XXX
+ SG_ BMS_ChrCurr5m : 0|8@1+ (5,-1000) [-65535|65535] "" Vector__XXX
+
+BO_ 2565931507 BMS_0x18F101F3: 8 Vector__XXX
+ SG_ BMS_LifeCnt : 56|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ BMS_String : 40|16@1+ (1,0) [-65535|65535] "" Vector__XXX
+ SG_ BMS_Current : 24|16@1+ (0.1,-3200) [-3200|3353.5] "" Vector__XXX
+ SG_ BMS_Voltage : 8|16@1+ (0.02,0) [-65535|65535] "" Vector__XXX
+ SG_ BMS_SOC : 0|8@1+ (0.4,0) [0|100] "" Vector__XXX
+
+
+
+CM_ BO_ 3221225472 "This is a message for not used signals, created by Vector CANdb++ DBC OLE DB Provider.";
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "BusType" "CAN";
+
+

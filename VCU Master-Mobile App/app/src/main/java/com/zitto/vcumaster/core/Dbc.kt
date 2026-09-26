@@ -4,11 +4,12 @@ import kotlin.math.roundToLong
 
 /**
  * Minimal DBC reader + codec (replaces cantools on the phone).
- * Supports BO_, SG_ (Intel/Motorola, signed/unsigned, simple multiplexing), VAL_, CM_ and
- * BA_ "GenMsgCycleTime".
+ * Supports BO_, SG_ (Intel/Motorola, signed/unsigned, simple multiplexing), VAL_, CM_,
+ * BA_ "GenMsgCycleTime" and the System*LongSymbol long names. Like cantools, signals are ordered by
+ * start bit (stable) and Vector's VECTOR__INDEPENDENT_SIG_MSG is dropped.
  */
 class DbcSignal(
-    val name: String,
+    name: String,
     val start: Int,
     val length: Int,
     val littleEndian: Boolean,
@@ -22,8 +23,13 @@ class DbcSignal(
     val muxSwitch: Boolean,
     val muxId: Long?,
 ) {
+    var name: String = name
+        internal set
     val choices = LinkedHashMap<Long, String>()
     var comment = ""
+
+    /** cantools utils.start_bit(): sort key for the signal order. */
+    val sortBit: Int get() = if (littleEndian) start else 8 * (start / 8) + (7 - start % 8)
 
     fun extract(data: IntArray): Long {
         var raw = 0L
@@ -86,10 +92,12 @@ class DbcSignal(
 class DbcMessage(
     val frameId: Long,
     val ext: Boolean,
-    val name: String,
+    name: String,
     val length: Int,
     val senders: List<String>,
 ) {
+    var name: String = name
+        internal set
     val signals = mutableListOf<DbcSignal>()
     var cycleMs: Int? = null
     var comment = ""
@@ -131,9 +139,11 @@ object DbcParser {
     private val CM_RE = Regex(
         """\bCM_\s+(?:(BO_)\s+(\d+)\s+|(SG_)\s+(\d+)\s+(\w+)\s+|(?:BU_|EV_)\s+\w+\s+)?"([^"]*)"\s*;""",
     )
-    private val VAL_RE = Regex("""\bVAL_\s+(\d+)\s+(\w+)\s+((?:-?\d+\s+"[^"]*"\s*)*);""")
+    private val VAL_RE = Regex("""\bVAL_\s+(\d+)\s+(\w+)\s+""")
     private val VAL_PAIR = Regex("""(-?\d+)\s+"([^"]*)"""")
     private val CYCLE_RE = Regex("""\bBA_\s+"GenMsgCycleTime"\s+BO_\s+(\d+)\s+(\d+)\s*;""")
+    private val SIG_LONG_RE = Regex("""\bBA_\s+"SystemSignalLongSymbol"\s+SG_\s+(\d+)\s+(\w+)\s+"([^"]*)"\s*;""")
+    private val MSG_LONG_RE = Regex("""\bBA_\s+"SystemMessageLongSymbol"\s+BO_\s+(\d+)\s+"([^"]*)"\s*;""")
 
     fun parse(text: String): DbcDatabase {
         val msgs = mutableListOf<DbcMessage>()
@@ -143,6 +153,10 @@ object DbcParser {
             val bo = BO_RE.find(line)
             if (bo != null) {
                 val rawId = bo.groupValues[1].toLong()
+                if (bo.groupValues[2] == "VECTOR__INDEPENDENT_SIG_MSG") {
+                    cur = null            // Vector's container for unplaced signals, not a frame (cantools skips it)
+                    continue
+                }
                 val ext = rawId and 0x80000000L != 0L
                 val m = DbcMessage(
                     frameId = rawId and 0x1FFFFFFFL,
@@ -194,10 +208,26 @@ object DbcParser {
             }
         }
         for (m in VAL_RE.findAll(text)) {
+            // value table body: scan to the ';' outside quotes (a repeated-group regex overflows the stack on long tables)
+            var i = m.range.last + 1
+            var quoted = false
+            while (i < text.length && (quoted || text[i] != ';')) {
+                if (text[i] == '"') quoted = !quoted
+                i++
+            }
             val sig = byRaw[m.groupValues[1].toLong()]?.signals?.firstOrNull { it.name == m.groupValues[2] } ?: continue
-            for (p in VAL_PAIR.findAll(m.groupValues[3])) sig.choices[p.groupValues[1].toLong()] = p.groupValues[2]
+            for (p in VAL_PAIR.findAll(text.substring(m.range.last + 1, i))) sig.choices[p.groupValues[1].toLong()] = p.groupValues[2]
         }
         for (m in CYCLE_RE.findAll(text)) byRaw[m.groupValues[1].toLong()]?.cycleMs = m.groupValues[2].toIntOrNull()
+        for (m in SIG_LONG_RE.findAll(text)) {
+            byRaw[m.groupValues[1].toLong()]?.signals?.firstOrNull { it.name == m.groupValues[2] }?.name = m.groupValues[3]
+        }
+        for (m in MSG_LONG_RE.findAll(text)) byRaw[m.groupValues[1].toLong()]?.name = m.groupValues[2]
+        for (m in msgs) {
+            val sorted = m.signals.sortedBy { it.sortBit }
+            m.signals.clear()
+            m.signals.addAll(sorted)
+        }
 
         if (msgs.isEmpty()) throw IllegalArgumentException("no BO_ message definitions found")
         return DbcDatabase(msgs)

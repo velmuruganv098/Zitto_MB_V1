@@ -1,0 +1,215 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_:
+
+
+BO_ 11 CI_Message_5: 8 Vector__XXX
+ SG_ MHW_ID : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ MSW_ID : 8|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DSW_ID : 24|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Code3 : 40|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 1 BMS_Message_1: 8 Vector__XXX
+ SG_ FMS : 0|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CellOverVoltage : 1|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ PackOvervoltage : 2|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BMS_PP_Detect : 3|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BMS_State : 4|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BMS_Contactor_State : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BMS_Current : 9|16@1+ (0.1,-600) [0|0] "" Vector__XXX
+ SG_ GunLockStat : 25|7@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ LastChargeAH : 32|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ LastDischargeAH : 48|16@1+ (0.1,0) [0|0] "" Vector__XXX
+
+BO_ 2 BMS_Message_2: 8 Vector__XXX
+ SG_ Max_Cell_Temp : 0|16@1+ (0.01,-100) [0|0] "" Vector__XXX
+ SG_ Max_Cell_Voltage : 16|16@1+ (0.0001,0) [0|0] "" Vector__XXX
+ SG_ Pack_Voltage : 32|16@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ SOC_Scaled : 48|16@1+ (1.0,0) [0|0] "" Vector__XXX
+
+BO_ 3 BMS_Message_3: 8 Vector__XXX
+ SG_ BatteryUniqueId_v2 : 0|64@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 4 BMS_Message_4: 8 Vector__XXX
+ SG_ BMS_Firmware_Version : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BMS_Hardware_Version : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Min_Cell_Voltage : 32|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ Min_Cell_Temp : 48|16@1+ (0.01,-100) [-50|100] "" Vector__XXX
+
+BO_ 13 Slave_Message_1: 8 Vector__XXX
+ SG_ VoltageRead : 0|16@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ CurrentRead : 16|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ SHW_ID : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SSW_ID : 40|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 9 CI_Message_3: 8 Vector__XXX
+ SG_ ProtectionState : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BMS_OK : 16|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BMS_flagCheck : 17|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BMS_Detect : 18|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BMS_Alive_Status : 19|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ChillerState : 20|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ FluidResponse : 24|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ GunLockRetry : 28|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ GunUnLockRetry : 36|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Code2 : 44|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BMS_ChargeProtectionOK : 60|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BMS_ChargeProtectionFlagOK : 61|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 7 CI_Message_1: 8 Vector__XXX
+ SG_ EM_SW : 0|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Gun_Contact_Temp1 : 1|16@1+ (0.01,-100) [0|0] "" Vector__XXX
+ SG_ Gun_Contact_Temp2 : 17|16@1+ (0.01,-100) [0|0] "" Vector__XXX
+ SG_ Contact_Temp1_Open : 33|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Contact_Temp2_Open : 34|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ MasterHearBeat : 35|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ OverallState : 36|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Code1 : 40|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ VFD_status : 56|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Energy_meter_status : 57|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chiller_status : 58|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Pi_Status : 59|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SlaveHeartBeat : 60|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SolenoidA1 : 61|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SolenoidB1 : 62|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 8 CI_Message_2: 8 Vector__XXX
+ SG_ VoltageRef : 0|16@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ CurrentRef : 16|16@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ CC_ON : 32|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DrainPump : 33|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SolenoidA : 34|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SolenoidB : 35|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ PositiveCont : 36|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ GunLock : 37|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SolenoidC : 38|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Precharge : 39|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RectifierFan : 40|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ VFD_On : 41|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Override : 42|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ AC_Cont : 43|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DrainTime : 44|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CurrentState : 52|6@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SPD : 58|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ELR : 59|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ VoltageRelay : 60|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ GunLockFB : 61|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CompressorReadback : 62|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DisplayAlive : 63|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 10 CI_Message_4: 8 Vector__XXX
+ SG_ WaterTempInlet : 0|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ WaterTempOutlet : 16|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ Pressure : 32|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ Flowmeter : 48|16@1+ (0.1,0) [0|0] "" Vector__XXX
+
+BO_ 5 BMS_Message_5: 8 Vector__XXX
+ SG_ Charge_Cycle_Count : 0|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ HistoryOfProtection : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SOC_Actual : 32|16@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ Vehicle_Key_Stat : 48|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 6 BMS_Message_6: 8 Vector__XXX
+ SG_ Odo_low : 48|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ Odo_high : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ Apl_faultcode2 : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ Apl_faultcode1 : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 20 Pi_Message_1: 8 Vector__XXX
+ SG_ StationUniqueId : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ PiOS_Version : 32|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ PiApp_MajorVersion : 36|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ PiApp_MinorVersion : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 12 CI_Message_6: 8 Vector__XXX
+ SG_ Charger_Current : 32|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ Ah : 48|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ Gun_Contact_Temp3 : 0|16@1+ (0.01,-100) [0|0] "" Vector__XXX
+ SG_ Gun_Contact_Temp4 : 16|16@1+ (0.01,-100) [0|0] "" Vector__XXX
+
+BO_ 17 VFDTelemetry: 8 Vector__XXX
+ SG_ Running_Freq : 48|16@1+ (0.01,0) [0|0] "Hz" Vector__XXX
+ SG_ Output_Power : 32|16@1+ (0.1,0) [0|0] "kW" Vector__XXX
+ SG_ Output_Current : 16|16@1+ (0.1,0) [0|0] "A" Vector__XXX
+ SG_ Set_Freq : 0|16@1+ (0.01,0) [0|0] "Hz" Vector__XXX
+
+BO_ 18 EnergyMeterTelemetry: 8 Vector__XXX
+ SG_ Voltage_YN : 8|8@1+ (2,0) [0|0] "V" Vector__XXX
+ SG_ Voltage_RN : 0|8@1+ (2,0) [0|0] "V" Vector__XXX
+ SG_ Voltage_BN : 16|8@1+ (2,0) [0|0] "V" Vector__XXX
+ SG_ Power_Factor_Overall : 32|8@1- (0.01,0) [0|0] "" Vector__XXX
+ SG_ Frequency : 40|8@1- (0.01,50) [0|0] "Hz" Vector__XXX
+ SG_ Current_Overall : 24|8@1+ (1,0) [0|0] "A" Vector__XXX
+ SG_ Active_Energy_Counter : 48|16@1- (1,0) [0|0] "kWh" Vector__XXX
+
+BO_ 19 ChillerTelemetry: 8 Vector__XXX
+ SG_ SV_On : 58|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Pump_On : 57|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cond_On : 60|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Compressor_On : 56|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Alarm_On : 59|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ System_Standby : 52|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Low_Liquid_Level_Fault : 48|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Liquid_Line_High_Temp_Fault : 49|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ High_Temp_Trip_Fault : 50|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ AFT_Fault : 51|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Single_Phase_Prevention_Fault : 41|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Remote_Fault : 46|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Pump_Overload_Fault : 40|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Low_Pressure_Fault : 44|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ High_Pressure_Fault : 43|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ FLS_Fault : 45|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Compressor_Overload_Fault : 42|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Room_Temp_Probe_LT_Fault : 35|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Room_Temp_Probe_HT_Fault : 34|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Room_Temp_Probe_Fail : 32|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Liquid_Line_Probe_Fail : 36|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ AFT_Probe_Fail : 33|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Liquid_Temp : 0|16@1- (0.1,0) [0|0] "C" Vector__XXX
+ SG_ AFT_Temp : 16|16@1- (0.1,0) [0|0] "C" Vector__XXX
+
+BO_ 111 Depricated1: 8 Vector__XXX
+ SG_ ChillerFaultCount : 36|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ VfdFaultCount : 32|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Battery_Unique_ID : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Charger_Ah : 40|16@1+ (0.1,0) [0|0] "" Vector__XXX
+
+
+
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "BusType" "";
+BA_ "BusType" "CAN";
+

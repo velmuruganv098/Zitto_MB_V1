@@ -1,0 +1,601 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: 
+
+
+BO_ 513 M1: 8 Vector__XXX
+ SG_ ac_current : 48|10@1- (0.1,0) [0|0] "" Vector__XXX
+ SG_ ac_voltage : 32|10@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ dc_voltage : 16|10@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ dc_current : 0|10@1- (0.1,0) [0|0] "" Vector__XXX
+
+BO_ 529 M2: 8 Vector__XXX
+ SG_ vehicle_speed : 40|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ motor_speed : 31|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ motor_torque : 8|16@1- (0.1,0) [0|0] "" Vector__XXX
+ SG_ throttle_percentage : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 545 M3: 8 Vector__XXX
+ SG_ motor_status_motor_stalling : 47|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ motor_status_motor_overtemperatu : 46|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ motor_status_controller_self_che : 45|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ motor_status_throttle_not_zeroin : 44|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ motor_status_power_status : 43|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ motor_status_speed_limit : 42|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ motor_status_energy_regenerating : 41|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ mcu_status_mosfet_protection : 39|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ mcu_status_overcurrent : 38|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ mcu_status_controller_overtemper : 37|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ mcu_status_controller_overvoltag : 36|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ mcu_status_controller_undervolta : 35|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ mcu_status_throttle_galloping_fa : 34|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ mcu_status_motor_hall_input_abno : 33|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ mcu_status_motor_phase_loss : 32|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ overall_status : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ fault_codes : 16|8@1- (1,0) [0|0] "" Vector__XXX
+ SG_ motor_temperature : 8|8@1- (1,0) [0|0] "" Vector__XXX
+ SG_ mcu_temperature : 0|8@1- (1,0) [0|0] "" Vector__XXX
+
+BO_ 561 M4: 8 Vector__XXX
+ SG_ wheel_perimeter : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ gear_ratio : 8|8@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ drive_mode : 3|3@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ motor_direction : 0|3@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 769 BMS1_SOC_Voltage_Current: 8 Vector__XXX
+ SG_ soc : 48|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ current : 32|16@1+ (0.1,30000) [0|0] "" Vector__XXX
+ SG_ gather_total_voltage : 16|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ cumulative_total_voltage : 0|16@1+ (0.1,0) [0|0] "" Vector__XXX
+
+BO_ 770 BMS1_Max_and_Min_Voltage: 8 Vector__XXX
+ SG_ no_of_cell_with_min_voltage : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ min_cell_voltage : 24|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ no_of_cell_with_max_voltage : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ max_cell_voltage : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 771 BMS1_Max_and_Min_Temperature: 8 Vector__XXX
+ SG_ min_temp_cell_no : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ min_temp : 24|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ max_temp_cell_no : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ max_temp : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 772 BMS1_Charge_Discharge_MOS_Status: 8 Vector__XXX
+ SG_ remain_capacity : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BMS_life : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ discharge_MOS_status : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ charge_MOS_state : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ state : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 773 BMS1_Status_Information_1: 8 Vector__XXX
+ SG_ DO4_state : 39|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DO3_state : 38|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DO2_state : 37|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DO1_state : 36|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DI4_state : 35|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DI3_state : 34|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DI2_state : 33|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DI1_state : 32|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ load_status : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ charger_status : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ no_of_temperature : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ no_of_battery : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 776 BMS1_Cell_Balance_State: 8 Vector__XXX
+ SG_ cell_48_balance_state : 47|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_47_balance_state : 46|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_46_balance_state : 45|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_45_balance_state : 44|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_44_balance_state : 43|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_43_balance_state : 42|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_42_balance_state : 41|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_41_balance_state : 40|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_40_balance_state : 39|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_39_balance_state : 38|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_38_balance_state : 37|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_37_balance_state : 36|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_36_balance_state : 35|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_35_balance_state : 34|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_34_balance_state : 33|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_33_balance_state : 32|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_32_balance_state : 31|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_31_balance_state : 30|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_30_balance_state : 29|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_29_balance_state : 28|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_28_balance_state : 27|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_27_balance_state : 26|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_26_balance_state : 25|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_25_balance_state : 24|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_24_balance_state : 23|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_23_balance_state : 22|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_22_balance_state : 21|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_21_balance_state : 20|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_20_balance_state : 19|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_19_balance_state : 18|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_18_balance_state : 17|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_17_balance_state : 16|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_16_balance_state : 15|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_15_balance_state : 14|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_14_balance_state : 13|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_13_balance_state : 12|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_12_balance_state : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_11_balance_state : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_10_balance_state : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_9_balance_state : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_8_balance_state : 7|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_7_balance_state : 6|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_6_balance_state : 5|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_5_balance_state : 4|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_4_balance_state : 3|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_3_balance_state : 2|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_2_balance_state : 1|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_1_balance_state : 0|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 777 BMS1_Battery_Failure_Status: 8 Vector__XXX
+ SG_ Low_volt_forbidden_chg_fault : 51|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Short_circuit_protect_fault : 50|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Sum_voltage_detect_fault : 49|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Current_module_fault : 48|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Internal_communication_failure : 47|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Communication_failure : 46|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Precharge_failure : 45|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTC_err : 44|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ EEPROM_err : 43|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_temp_sensor_err : 42|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Voltage_collect_dropped : 41|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ AFE_collect_chip_err : 40|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Discrg_MOS_open_circuit_err : 39|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_MOS_open_circuit_err : 38|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_MOS_adhesion_err : 37|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_MOS_adhesion_err : 36|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_MOS_temp_sensor_err : 35|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_MOS_temp_sensor_err : 34|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_MOS_temp_high_alarm : 33|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_MOS_temp_high_alarm : 32|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Diff_temp_level_2 : 27|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Diff_temp_level_1 : 26|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Diff_volt_level_2 : 25|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Diff_volt_level_1 : 24|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SOC_Low_level_2 : 23|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SOC_Low_level_1 : 22|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SOC_high_level_2 : 21|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SOC_high_level_1 : 20|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_overcurrent_level_2 : 19|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_overcurrent_level_1 : 18|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_overcurrent_level_2 : 17|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_overcurrent_level_1 : 16|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_temp_low_level_2 : 15|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_temp_low_level_1 : 14|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_temp_high_level_2 : 13|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_temp_high_level_1 : 12|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_temp_low_level_2 : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_temp_low_level_1 : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_temp_high_level_2 : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_temp_high_level_1 : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Sum_volt_low_level_2 : 7|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Sum_volt_low_level_1 : 6|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Sum_volt_high_level_2 : 5|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Sum_volt_high_level_1 : 4|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_volt_low_level_2 : 3|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_volt_low_level_1 : 2|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_volt_high_level_2 : 1|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_volt_high_level_1 : 0|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 785 BMS2_SOC_Voltage_Current: 8 Vector__XXX
+ SG_ soc : 48|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ current : 32|16@1+ (0.1,30000) [0|0] "" Vector__XXX
+ SG_ gather_total_voltage : 16|16@1+ (0.1,0) [0|0] "" Vector__XXX
+ SG_ cumulative_total_voltage : 0|16@1+ (0.1,0) [0|0] "" Vector__XXX
+
+BO_ 786 BMS2_Max_and_Min_Voltage: 8 Vector__XXX
+ SG_ no_of_cell_with_min_voltage : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ min_cell_voltage : 24|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ no_of_cell_with_max_voltage : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ max_cell_voltage : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 787 BMS2_Max_and_Min_Temperature: 8 Vector__XXX
+ SG_ min_temp_cell_no : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ min_temp : 24|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ max_temp_cell_no : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ max_temp : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 788 BMS2_Charge_Discharge_MOS_Status: 8 Vector__XXX
+ SG_ remain_capacity : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BMS_life : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ discharge_MOS_status : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ charge_MOS_state : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ state : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 789 BMS2_Status_Information_1: 8 Vector__XXX
+ SG_ DO4_state : 39|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DO3_state : 38|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DO2_state : 37|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DO1_state : 36|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DI4_state : 35|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DI3_state : 34|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DI2_state : 33|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DI1_state : 32|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ load_status : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ charger_status : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ no_of_temperature : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ no_of_battery : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 792 BMS2_Cell_Balance_State: 8 Vector__XXX
+ SG_ cell_48_balance_state : 47|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_47_balance_state : 46|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_46_balance_state : 45|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_45_balance_state : 44|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_44_balance_state : 43|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_43_balance_state : 42|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_42_balance_state : 41|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_41_balance_state : 40|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_40_balance_state : 39|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_39_balance_state : 38|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_38_balance_state : 37|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_37_balance_state : 36|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_36_balance_state : 35|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_35_balance_state : 34|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_34_balance_state : 33|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_33_balance_state : 32|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_32_balance_state : 31|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_31_balance_state : 30|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_30_balance_state : 29|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_29_balance_state : 28|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_28_balance_state : 27|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_27_balance_state : 26|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_26_balance_state : 25|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_25_balance_state : 24|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_24_balance_state : 23|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_23_balance_state : 22|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_22_balance_state : 21|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_21_balance_state : 20|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_20_balance_state : 19|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_19_balance_state : 18|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_18_balance_state : 17|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_17_balance_state : 16|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_16_balance_state : 15|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_15_balance_state : 14|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_14_balance_state : 13|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_13_balance_state : 12|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_12_balance_state : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_11_balance_state : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_10_balance_state : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_9_balance_state : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_8_balance_state : 7|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_7_balance_state : 6|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_6_balance_state : 5|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_5_balance_state : 4|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_4_balance_state : 3|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_3_balance_state : 2|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_2_balance_state : 1|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_1_balance_state : 0|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 793 BMS2_Battery_Failure_Status: 8 Vector__XXX
+ SG_ Low_volt_forbidden_chg_fault : 51|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Short_circuit_protect_fault : 50|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Sum_voltage_detect_fault : 49|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Current_module_fault : 48|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Internal_communication_failure : 47|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Communication_failure : 46|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Precharge_failure : 45|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ RTC_err : 44|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ EEPROM_err : 43|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_temp_sensor_err : 42|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Voltage_collect_dropped : 41|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ AFE_collect_chip_err : 40|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Discrg_MOS_open_circuit_err : 39|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_MOS_open_circuit_err : 38|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_MOS_adhesion_err : 37|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_MOS_adhesion_err : 36|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_MOS_temp_sensor_err : 35|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_MOS_temp_sensor_err : 34|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_MOS_temp_high_alarm : 33|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_MOS_temp_high_alarm : 32|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Diff_temp_level_2 : 27|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Diff_temp_level_1 : 26|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Diff_volt_level_2 : 25|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Diff_volt_level_1 : 24|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SOC_Low_level_2 : 23|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SOC_Low_level_1 : 22|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SOC_high_level_2 : 21|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SOC_high_level_1 : 20|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_overcurrent_level_2 : 19|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_overcurrent_level_1 : 18|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_overcurrent_level_2 : 17|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_overcurrent_level_1 : 16|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_temp_low_level_2 : 15|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_temp_low_level_1 : 14|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_temp_high_level_2 : 13|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Dischg_temp_high_level_1 : 12|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_temp_low_level_2 : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_temp_low_level_1 : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_temp_high_level_2 : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Chg_temp_high_level_1 : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Sum_volt_low_level_2 : 7|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Sum_volt_low_level_1 : 6|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Sum_volt_high_level_2 : 5|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Sum_volt_high_level_1 : 4|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_volt_low_level_2 : 3|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_volt_low_level_1 : 2|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_volt_high_level_2 : 1|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cell_volt_high_level_1 : 0|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 369 VCU: 8 Vector__XXX
+ SG_ vcu_diagnostics : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ vcu_status : 32|3@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ drive_mode_fault : 25|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ direction_fault : 24|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ average_soc : 16|8@1+ (0.5,0) [0|0] "" Vector__XXX
+ SG_ vehicle_speed : 0|16@1+ (0.1,0) [0|0] "" Vector__XXX
+
+
+
+
+
+BA_DEF_ SG_  "SystemSignalLongSymbol" STRING ;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_DEF_  "SystemSignalLongSymbol" "";
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_ "SystemSignalLongSymbol" SG_ 545 motor_status_motor_overtemperatu "motor_status_motor_overtemperature";
+BA_ "SystemSignalLongSymbol" SG_ 545 motor_status_controller_self_che "motor_status_controller_self_checking_error";
+BA_ "SystemSignalLongSymbol" SG_ 545 motor_status_throttle_not_zeroin "motor_status_throttle_not_zeroing_when_controller_is_powered_on";
+BA_ "SystemSignalLongSymbol" SG_ 545 mcu_status_controller_overtemper "mcu_status_controller_overtemperature";
+BA_ "SystemSignalLongSymbol" SG_ 545 mcu_status_controller_overvoltag "mcu_status_controller_overvoltage";
+BA_ "SystemSignalLongSymbol" SG_ 545 mcu_status_controller_undervolta "mcu_status_controller_undervoltage";
+BA_ "SystemSignalLongSymbol" SG_ 545 mcu_status_throttle_galloping_fa "mcu_status_throttle_galloping_fault";
+BA_ "SystemSignalLongSymbol" SG_ 545 mcu_status_motor_hall_input_abno "mcu_status_motor_hall_input_abnormal";
+VAL_ 545 motor_status_motor_stalling 0 "not happen" 1 "happen" ;
+VAL_ 545 motor_status_motor_overtemperatu 0 "not happen" 1 "happen" ;
+VAL_ 545 motor_status_controller_self_che 0 "not happen" 1 "happen" ;
+VAL_ 545 motor_status_throttle_not_zeroin 0 "not happen" 1 "happen" ;
+VAL_ 545 motor_status_power_status 0 "assistance status" 1 "power status" ;
+VAL_ 545 motor_status_speed_limit 0 "not speed limit mode" 1 "speed limit mode" ;
+VAL_ 545 motor_status_energy_regenerating 0 "regenerating" 1 "not regenerating" ;
+VAL_ 545 mcu_status_mosfet_protection 0 "No Fault" 1 "Fault" ;
+VAL_ 545 mcu_status_overcurrent 0 "No Fault" 1 "Fault" ;
+VAL_ 545 mcu_status_controller_overtemper 0 "No Fault" 1 "Fault" ;
+VAL_ 545 mcu_status_controller_overvoltag 0 "No Fault" 1 "Fault" ;
+VAL_ 545 mcu_status_controller_undervolta 0 "No Fault" 1 "Fault" ;
+VAL_ 545 mcu_status_throttle_galloping_fa 0 "No Fault" 1 "Fault" ;
+VAL_ 545 mcu_status_motor_hall_input_abno 0 "No Fault" 1 "Fault" ;
+VAL_ 545 mcu_status_motor_phase_loss 0 "No Fault" 1 "Fault" ;
+VAL_ 545 overall_status 0 "No Fault" 1 "Fault" ;
+VAL_ 561 drive_mode 0 "stop command" 1 "power mode" 2 "normal mode" 3 "eco mode" 4 "limphome mode" ;
+VAL_ 561 motor_direction 0 "FWD" 1 "REV" ;
+VAL_ 772 state 0 "stationary" 1 "charge" 2 "discharge" ;
+VAL_ 773 load_status 0 "disconnect" 1 "access" ;
+VAL_ 773 charger_status 0 "disconnect" 1 "access" ;
+VAL_ 776 cell_48_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_47_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_46_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_45_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_44_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_43_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_42_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_41_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_40_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_39_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_38_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_37_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_36_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_35_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_34_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_33_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_32_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_31_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_30_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_29_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_28_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_27_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_26_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_25_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_24_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_23_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_22_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_21_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_20_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_19_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_18_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_17_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_16_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_15_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_14_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_13_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_12_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_11_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_10_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_9_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_8_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_7_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_6_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_5_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_4_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_3_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_2_balance_state 0 "closed" 1 "open" ;
+VAL_ 776 cell_1_balance_state 0 "closed" 1 "open" ;
+VAL_ 777 Low_volt_forbidden_chg_fault 0 "no error" 1 "error" ;
+VAL_ 777 Short_circuit_protect_fault 0 "no error" 1 "error" ;
+VAL_ 777 Sum_voltage_detect_fault 0 "no error" 1 "error" ;
+VAL_ 777 Current_module_fault 0 "no error" 1 "error" ;
+VAL_ 777 Internal_communication_failure 0 "no error" 1 "error" ;
+VAL_ 777 Communication_failure 0 "no error" 1 "error" ;
+VAL_ 777 Precharge_failure 0 "no error" 1 "error" ;
+VAL_ 777 RTC_err 0 "no error" 1 "error" ;
+VAL_ 777 EEPROM_err 0 "no error" 1 "error" ;
+VAL_ 777 Cell_temp_sensor_err 0 "no error" 1 "error" ;
+VAL_ 777 Voltage_collect_dropped 0 "no error" 1 "error" ;
+VAL_ 777 AFE_collect_chip_err 0 "no error" 1 "error" ;
+VAL_ 777 Discrg_MOS_open_circuit_err 0 "no error" 1 "error" ;
+VAL_ 777 Chg_MOS_open_circuit_err 0 "no error" 1 "error" ;
+VAL_ 777 Dischg_MOS_adhesion_err 0 "no error" 1 "error" ;
+VAL_ 777 Chg_MOS_adhesion_err 0 "no error" 1 "error" ;
+VAL_ 777 Dischg_MOS_temp_sensor_err 0 "no error" 1 "error" ;
+VAL_ 777 Chg_MOS_temp_sensor_err 0 "no error" 1 "error" ;
+VAL_ 777 Dischg_MOS_temp_high_alarm 0 "no error" 1 "error" ;
+VAL_ 777 Chg_MOS_temp_high_alarm 0 "no error" 1 "error" ;
+VAL_ 777 Diff_temp_level_2 0 "no error" 1 "error" ;
+VAL_ 777 Diff_temp_level_1 0 "no error" 1 "error" ;
+VAL_ 777 Diff_volt_level_2 0 "no error" 1 "error" ;
+VAL_ 777 Diff_volt_level_1 0 "no error" 1 "error" ;
+VAL_ 777 SOC_Low_level_2 0 "no error" 1 "error" ;
+VAL_ 777 SOC_Low_level_1 0 "no error" 1 "error" ;
+VAL_ 777 SOC_high_level_2 0 "no error" 1 "error" ;
+VAL_ 777 SOC_high_level_1 0 "no error" 1 "error" ;
+VAL_ 777 Dischg_overcurrent_level_2 0 "no error" 1 "error" ;
+VAL_ 777 Dischg_overcurrent_level_1 0 "no error" 1 "error" ;
+VAL_ 777 Chg_overcurrent_level_2 0 "no error" 1 "error" ;
+VAL_ 777 Chg_overcurrent_level_1 0 "no error" 1 "error" ;
+VAL_ 777 Dischg_temp_low_level_2 0 "no error" 1 "error" ;
+VAL_ 777 Dischg_temp_low_level_1 0 "no error" 1 "error" ;
+VAL_ 777 Dischg_temp_high_level_2 0 "no error" 1 "error" ;
+VAL_ 777 Dischg_temp_high_level_1 0 "no error" 1 "error" ;
+VAL_ 777 Chg_temp_low_level_2 0 "no error" 1 "error" ;
+VAL_ 777 Chg_temp_low_level_1 0 "no error" 1 "error" ;
+VAL_ 777 Chg_temp_high_level_2 0 "no error" 1 "error" ;
+VAL_ 777 Chg_temp_high_level_1 0 "no error" 1 "error" ;
+VAL_ 777 Sum_volt_low_level_2 0 "no error" 1 "error" ;
+VAL_ 777 Sum_volt_low_level_1 0 "no error" 1 "error" ;
+VAL_ 777 Sum_volt_high_level_2 0 "no error" 1 "error" ;
+VAL_ 777 Sum_volt_high_level_1 0 "no error" 1 "error" ;
+VAL_ 777 Cell_volt_low_level_2 0 "no error" 1 "error" ;
+VAL_ 777 Cell_volt_low_level_1 0 "no error" 1 "error" ;
+VAL_ 777 Cell_volt_high_level_2 0 "no error" 1 "error" ;
+VAL_ 777 Cell_volt_high_level_1 0 "no error" 1 "error" ;
+VAL_ 788 state 0 "stationary" 1 "charge" 2 "discharge" ;
+VAL_ 789 load_status 0 "disconnect" 1 "access" ;
+VAL_ 789 charger_status 0 "disconnect" 1 "access" ;
+VAL_ 792 cell_48_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_47_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_46_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_45_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_44_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_43_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_42_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_41_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_40_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_39_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_38_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_37_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_36_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_35_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_34_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_33_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_32_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_31_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_30_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_29_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_28_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_27_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_26_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_25_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_24_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_23_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_22_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_21_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_20_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_19_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_18_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_17_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_16_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_15_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_14_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_13_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_12_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_11_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_10_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_9_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_8_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_7_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_6_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_5_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_4_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_3_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_2_balance_state 0 "closed" 1 "open" ;
+VAL_ 792 cell_1_balance_state 0 "closed" 1 "open" ;
+VAL_ 793 Low_volt_forbidden_chg_fault 0 "no error" 1 "error" ;
+VAL_ 793 Short_circuit_protect_fault 0 "no error" 1 "error" ;
+VAL_ 793 Sum_voltage_detect_fault 0 "no error" 1 "error" ;
+VAL_ 793 Current_module_fault 0 "no error" 1 "error" ;
+VAL_ 793 Internal_communication_failure 0 "no error" 1 "error" ;
+VAL_ 793 Communication_failure 0 "no error" 1 "error" ;
+VAL_ 793 Precharge_failure 0 "no error" 1 "error" ;
+VAL_ 793 RTC_err 0 "no error" 1 "error" ;
+VAL_ 793 EEPROM_err 0 "no error" 1 "error" ;
+VAL_ 793 Cell_temp_sensor_err 0 "no error" 1 "error" ;
+VAL_ 793 Voltage_collect_dropped 0 "no error" 1 "error" ;
+VAL_ 793 AFE_collect_chip_err 0 "no error" 1 "error" ;
+VAL_ 793 Discrg_MOS_open_circuit_err 0 "no error" 1 "error" ;
+VAL_ 793 Chg_MOS_open_circuit_err 0 "no error" 1 "error" ;
+VAL_ 793 Dischg_MOS_adhesion_err 0 "no error" 1 "error" ;
+VAL_ 793 Chg_MOS_adhesion_err 0 "no error" 1 "error" ;
+VAL_ 793 Dischg_MOS_temp_sensor_err 0 "no error" 1 "error" ;
+VAL_ 793 Chg_MOS_temp_sensor_err 0 "no error" 1 "error" ;
+VAL_ 793 Dischg_MOS_temp_high_alarm 0 "no error" 1 "error" ;
+VAL_ 793 Chg_MOS_temp_high_alarm 0 "no error" 1 "error" ;
+VAL_ 793 Diff_temp_level_2 0 "no error" 1 "error" ;
+VAL_ 793 Diff_temp_level_1 0 "no error" 1 "error" ;
+VAL_ 793 Diff_volt_level_2 0 "no error" 1 "error" ;
+VAL_ 793 Diff_volt_level_1 0 "no error" 1 "error" ;
+VAL_ 793 SOC_Low_level_2 0 "no error" 1 "error" ;
+VAL_ 793 SOC_Low_level_1 0 "no error" 1 "error" ;
+VAL_ 793 SOC_high_level_2 0 "no error" 1 "error" ;
+VAL_ 793 SOC_high_level_1 0 "no error" 1 "error" ;
+VAL_ 793 Dischg_overcurrent_level_2 0 "no error" 1 "error" ;
+VAL_ 793 Dischg_overcurrent_level_1 0 "no error" 1 "error" ;
+VAL_ 793 Chg_overcurrent_level_2 0 "no error" 1 "error" ;
+VAL_ 793 Chg_overcurrent_level_1 0 "no error" 1 "error" ;
+VAL_ 793 Dischg_temp_low_level_2 0 "no error" 1 "error" ;
+VAL_ 793 Dischg_temp_low_level_1 0 "no error" 1 "error" ;
+VAL_ 793 Dischg_temp_high_level_2 0 "no error" 1 "error" ;
+VAL_ 793 Dischg_temp_high_level_1 0 "no error" 1 "error" ;
+VAL_ 793 Chg_temp_low_level_2 0 "no error" 1 "error" ;
+VAL_ 793 Chg_temp_low_level_1 0 "no error" 1 "error" ;
+VAL_ 793 Chg_temp_high_level_2 0 "no error" 1 "error" ;
+VAL_ 793 Chg_temp_high_level_1 0 "no error" 1 "error" ;
+VAL_ 793 Sum_volt_low_level_2 0 "no error" 1 "error" ;
+VAL_ 793 Sum_volt_low_level_1 0 "no error" 1 "error" ;
+VAL_ 793 Sum_volt_high_level_2 0 "no error" 1 "error" ;
+VAL_ 793 Sum_volt_high_level_1 0 "no error" 1 "error" ;
+VAL_ 793 Cell_volt_low_level_2 0 "no error" 1 "error" ;
+VAL_ 793 Cell_volt_low_level_1 0 "no error" 1 "error" ;
+VAL_ 793 Cell_volt_high_level_2 0 "no error" 1 "error" ;
+VAL_ 793 Cell_volt_high_level_1 0 "no error" 1 "error" ;
+VAL_ 369 vcu_status 0 "sleep state" 2 "ready state" 3 "running state" ;
+VAL_ 369 drive_mode_fault 0 "no fault" 1 "drive mode is wrong" ;
+VAL_ 369 direction_fault 0 "no fault" 1 "vehicle or motor direction is wrong" ;
+
+
+

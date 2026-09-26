@@ -1,0 +1,775 @@
+VERSION "v0.1"
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: 
+
+
+
+BO_ 2147483658 StationData1: 8 Vector__XXX
+ SG_ Thermistor_1 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SMPS_ADC : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ AC1Output : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ AC2Output : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Thermistor_2 : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SmokeLvlSensor : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ WaterLvlSensor : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483659 StationData2: 8 Vector__XXX
+ SG_ Row3_door_status : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Row2_door_status : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Row1_door_status : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Meter_Reading : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483660 StationData3: 8 Vector__XXX
+ SG_ CB_Firmware_version : 32|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CB_PCB_version : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CB_PCB_id : 0|24@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483664 C1_M1: 8 Vector__XXX
+ SG_ C1_BMS_Firmware_version : 39|24@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_Battery_ID : 7|32@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483665 C1_M2: 8 Vector__XXX
+ SG_ C1_BatteryState : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_GpIO_Val : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_T5 : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_T4 : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_T3 : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_T2 : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_T1 : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_NumTempVals : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483666 C1_M3: 8 Vector__XXX
+ SG_ C1_IC3 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_IC2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_IC1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_NumCurrentVals : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483667 C1_M4: 8 Vector__XXX
+ SG_ C1_IC7 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_IC6 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_IC5 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_IC4 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483668 C1_M5: 8 Vector__XXX
+ SG_ C1_IC11 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_IC10 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_IC9 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_IC8 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483669 C1_M6: 8 Vector__XXX
+ SG_ C1_IC15 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_IC14 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_IC13 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_IC12 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483670 C1_M7: 8 Vector__XXX
+ SG_ C1_IC19 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_IC18 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_IC17 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_IC16 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483671 C1_M8: 8 Vector__XXX
+ SG_ C1_SOC : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_auxData2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_Temp_auxdata1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_IC20 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483672 C1_M9: 8 Vector__XXX
+ SG_ C1_VC3 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_VC2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_VC1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_NumCells : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483673 C1_M10: 8 Vector__XXX
+ SG_ C1_VC7 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_VC6 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_VC5 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_VC4 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483674 C1_M11: 8 Vector__XXX
+ SG_ C1_VC11 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_VC10 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_VC9 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_VC8 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483675 C1_M12: 8 Vector__XXX
+ SG_ C1_BMS_PCB_version : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_BatteryAlertBits : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_VC14 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_VC13 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C1_VC12 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483688 C1_M25: 8 Vector__XXX
+ SG_ C1_DumbBattery_or_EmptyCompartme : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483689 C2_M1: 8 Vector__XXX
+ SG_ C2_BMS_Firmware_version : 39|24@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_Battery_ID : 7|32@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483690 C2_M2: 8 Vector__XXX
+ SG_ C2_BatteryState : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_GpIO_Val : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_T5 : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_T4 : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_T3 : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_T2 : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_T1 : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_NumTempVals : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483691 C2_M3: 8 Vector__XXX
+ SG_ C2_IC3 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_IC2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_IC1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_NumCurrentVals : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483692 C2_M4: 8 Vector__XXX
+ SG_ C2_IC7 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_IC6 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_IC5 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_IC4 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483693 C2_M5: 8 Vector__XXX
+ SG_ C2_IC11 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_IC10 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_IC9 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_IC8 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483694 C2_M6: 8 Vector__XXX
+ SG_ C2_IC15 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_IC14 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_IC13 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_IC12 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483695 C2_M7: 8 Vector__XXX
+ SG_ C2_IC19 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_IC18 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_IC17 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_IC16 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483696 C2_M8: 8 Vector__XXX
+ SG_ C2_SOC : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_auxData2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_Temp_auxdata1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_IC20 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483697 C2_M9: 8 Vector__XXX
+ SG_ C2_VC3 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_VC2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_VC1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_NumCells : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483698 C2_M10: 8 Vector__XXX
+ SG_ C2_VC7 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_VC6 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_VC5 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_VC4 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483699 C2_M11: 8 Vector__XXX
+ SG_ C2_VC11 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_VC10 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_VC9 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_VC8 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483700 C2_M12: 8 Vector__XXX
+ SG_ C2_BMS_PCB_version : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_BatteryAlertBits : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_VC14 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_VC13 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C2_VC12 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483713 C2_M25: 8 Vector__XXX
+ SG_ C2_DumbBattery_or_EmptyCompartme : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483714 C3_M1: 8 Vector__XXX
+ SG_ C3_BMS_Firmware_version : 39|24@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_Battery_ID : 7|32@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483715 C3_M2: 8 Vector__XXX
+ SG_ C3_BatteryState : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_GpIO_Val : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_T5 : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_T4 : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_T3 : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_T2 : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_T1 : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_NumTempVals : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483716 C3_M3: 8 Vector__XXX
+ SG_ C3_IC3 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_IC2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_IC1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_NumCurrentVals : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483717 C3_M4: 8 Vector__XXX
+ SG_ C3_IC7 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_IC6 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_IC5 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_IC4 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483718 C3_M5: 8 Vector__XXX
+ SG_ C3_IC11 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_IC10 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_IC9 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_IC8 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483719 C3_M6: 8 Vector__XXX
+ SG_ C3_IC15 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_IC14 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_IC13 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_IC12 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483720 C3_M7: 8 Vector__XXX
+ SG_ C3_IC19 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_IC18 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_IC17 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_IC16 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483721 C3_M8: 8 Vector__XXX
+ SG_ C3_SOC : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_auxData2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_Temp_auxdata1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_IC20 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483722 C3_M9: 8 Vector__XXX
+ SG_ C3_VC3 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_VC2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_VC1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_NumCells : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483723 C3_M10: 8 Vector__XXX
+ SG_ C3_VC7 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_VC6 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_VC5 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_VC4 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483724 C3_M11: 8 Vector__XXX
+ SG_ C3_VC11 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_VC10 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_VC9 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_VC8 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483725 C3_M12: 8 Vector__XXX
+ SG_ C3_BMS_PCB_version : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_BatteryAlertBits : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_VC14 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_VC13 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C3_VC12 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483738 C3_M25: 8 Vector__XXX
+ SG_ C3_DumbBattery_or_EmptyCompartme : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483739 C4_M1: 8 Vector__XXX
+ SG_ C4_BMS_Firmware_version : 39|24@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_Battery_ID : 7|32@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483740 C4_M2: 8 Vector__XXX
+ SG_ C4_BatteryState : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_GpIO_Val : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_T5 : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_T4 : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_T3 : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_T2 : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_T1 : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_NumTempVals : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483741 C4_M3: 8 Vector__XXX
+ SG_ C4_IC3 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_IC2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_IC1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_NumCurrentVals : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483742 C4_M4: 8 Vector__XXX
+ SG_ C4_IC7 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_IC6 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_IC5 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_IC4 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483743 C4_M5: 8 Vector__XXX
+ SG_ C4_IC11 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_IC10 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_IC9 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_IC8 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483744 C4_M6: 8 Vector__XXX
+ SG_ C4_IC15 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_IC14 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_IC13 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_IC12 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483745 C4_M7: 8 Vector__XXX
+ SG_ C4_IC19 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_IC18 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_IC17 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_IC16 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483746 C4_M8: 8 Vector__XXX
+ SG_ C4_SOC : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_auxData2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_Temp_auxdata1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_IC20 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483747 C4_M9: 8 Vector__XXX
+ SG_ C4_VC3 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_VC2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_VC1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_NumCells : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483748 C4_M10: 8 Vector__XXX
+ SG_ C4_VC7 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_VC6 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_VC5 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_VC4 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483749 C4_M11: 8 Vector__XXX
+ SG_ C4_VC11 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_VC10 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_VC9 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_VC8 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483750 C4_M12: 8 Vector__XXX
+ SG_ C4_BMS_PCB_version : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_BatteryAlertBits : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_VC14 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_VC13 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C4_VC12 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483763 C4_M25: 8 Vector__XXX
+ SG_ C4_DumbBattery_or_EmptyCompartme : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483764 C5_M1: 8 Vector__XXX
+ SG_ C5_BMS_Firmware_version : 39|24@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_Battery_ID : 7|32@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483765 C5_M2: 8 Vector__XXX
+ SG_ C5_BatteryState : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_GpIO_Val : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_T5 : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_T4 : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_T3 : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_T2 : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_T1 : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_NumTempVals : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483766 C5_M3: 8 Vector__XXX
+ SG_ C5_IC3 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_IC2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_IC1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_NumCurrentVals : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483767 C5_M4: 8 Vector__XXX
+ SG_ C5_IC7 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_IC6 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_IC5 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_IC4 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483768 C5_M5: 8 Vector__XXX
+ SG_ C5_IC11 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_IC10 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_IC9 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_IC8 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483769 C5_M6: 8 Vector__XXX
+ SG_ C5_IC15 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_IC14 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_IC13 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_IC12 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483770 C5_M7: 8 Vector__XXX
+ SG_ C5_IC19 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_IC18 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_IC17 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_IC16 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483771 C5_M8: 8 Vector__XXX
+ SG_ C5_SOC : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_auxData2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_Temp_auxdata1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_IC20 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483772 C5_M9: 8 Vector__XXX
+ SG_ C5_VC3 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_VC2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_VC1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_NumCells : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483773 C5_M10: 8 Vector__XXX
+ SG_ C5_VC7 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_VC6 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_VC5 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_VC4 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483774 C5_M11: 8 Vector__XXX
+ SG_ C5_VC11 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_VC10 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_VC9 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_VC8 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483775 C5_M12: 8 Vector__XXX
+ SG_ C5_BMS_PCB_version : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_BatteryAlertBits : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_VC14 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_VC13 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C5_VC12 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483788 C5_M25: 8 Vector__XXX
+ SG_ C5_DumbBattery_or_EmptyCompartme : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483789 C6_M1: 8 Vector__XXX
+ SG_ C6_BMS_Firmware_version : 39|24@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_Battery_ID : 7|32@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483790 C6_M2: 8 Vector__XXX
+ SG_ C6_BatteryState : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_GpIO_Val : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_T5 : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_T4 : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_T3 : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_T2 : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_T1 : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_NumTempVals : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483791 C6_M3: 8 Vector__XXX
+ SG_ C6_IC3 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_IC2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_IC1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_NumCurrentVals : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483792 C6_M4: 8 Vector__XXX
+ SG_ C6_IC7 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_IC6 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_IC5 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_IC4 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483793 C6_M5: 8 Vector__XXX
+ SG_ C6_IC11 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_IC10 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_IC9 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_IC8 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483794 C6_M6: 8 Vector__XXX
+ SG_ C6_IC15 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_IC14 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_IC13 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_IC12 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483795 C6_M7: 8 Vector__XXX
+ SG_ C6_IC19 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_IC18 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_IC17 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_IC16 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483796 C6_M8: 8 Vector__XXX
+ SG_ C6_SOC : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_auxData2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_Temp_auxdata1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_IC20 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483797 C6_M9: 8 Vector__XXX
+ SG_ C6_VC3 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_VC2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_VC1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_NumCells : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483798 C6_M10: 8 Vector__XXX
+ SG_ C6_VC7 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_VC6 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_VC5 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_VC4 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483799 C6_M11: 8 Vector__XXX
+ SG_ C6_VC11 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_VC10 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_VC9 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_VC8 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483800 C6_M12: 8 Vector__XXX
+ SG_ C6_BMS_PCB_version : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_BatteryAlertBits : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_VC14 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_VC13 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C6_VC12 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483813 C6_M25: 8 Vector__XXX
+ SG_ C6_DumbBattery_or_EmptyCompartme : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483814 C7_M1: 8 Vector__XXX
+ SG_ C7_BMS_Firmware_version : 39|24@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_Battery_ID : 7|32@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483815 C7_M2: 8 Vector__XXX
+ SG_ C7_BatteryState : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_GpIO_Val : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_T5 : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_T4 : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_T3 : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_T2 : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_T1 : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_NumTempVals : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483816 C7_M3: 8 Vector__XXX
+ SG_ C7_IC3 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_IC2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_IC1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_NumCurrentVals : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483817 C7_M4: 8 Vector__XXX
+ SG_ C7_IC7 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_IC6 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_IC5 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_IC4 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483818 C7_M5: 8 Vector__XXX
+ SG_ C7_IC11 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_IC10 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_IC9 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_IC8 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483819 C7_M6: 8 Vector__XXX
+ SG_ C7_IC15 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_IC14 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_IC13 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_IC12 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483820 C7_M7: 8 Vector__XXX
+ SG_ C7_IC19 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_IC18 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_IC17 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_IC16 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483821 C7_M8: 8 Vector__XXX
+ SG_ C7_SOC : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_auxData2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_Temp_auxdata1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_IC20 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483822 C7_M9: 8 Vector__XXX
+ SG_ C7_VC3 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_VC2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_VC1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_NumCells : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483823 C7_M10: 8 Vector__XXX
+ SG_ C7_VC7 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_VC6 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_VC5 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_VC4 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483824 C7_M11: 8 Vector__XXX
+ SG_ C7_VC11 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_VC10 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_VC9 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_VC8 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483825 C7_M12: 8 Vector__XXX
+ SG_ C7_BMS_PCB_version : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_BatteryAlertBits : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_VC14 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_VC13 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C7_VC12 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483838 C7_M25: 8 Vector__XXX
+ SG_ C7_DumbBattery_or_EmptyCompartme : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483839 C8_M1: 8 Vector__XXX
+ SG_ C8_BMS_Firmware_version : 39|24@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_Battery_ID : 7|32@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483840 C8_M2: 8 Vector__XXX
+ SG_ C8_BatteryState : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_GpIO_Val : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_T5 : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_T4 : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_T3 : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_T2 : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_T1 : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_NumTempVals : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483841 C8_M3: 8 Vector__XXX
+ SG_ C8_IC3 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_IC2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_IC1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_NumCurrentVals : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483842 C8_M4: 8 Vector__XXX
+ SG_ C8_IC7 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_IC6 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_IC5 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_IC4 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483843 C8_M5: 8 Vector__XXX
+ SG_ C8_IC11 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_IC10 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_IC9 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_IC8 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483844 C8_M6: 8 Vector__XXX
+ SG_ C8_IC15 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_IC14 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_IC13 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_IC12 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483845 C8_M7: 8 Vector__XXX
+ SG_ C8_IC19 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_IC18 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_IC17 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_IC16 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483846 C8_M8: 8 Vector__XXX
+ SG_ C8_SOC : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_auxData2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_Temp_auxdata1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_IC20 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483847 C8_M9: 8 Vector__XXX
+ SG_ C8_VC3 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_VC2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_VC1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_NumCells : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483848 C8_M10: 8 Vector__XXX
+ SG_ C8_VC7 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_VC6 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_VC5 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_VC4 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483849 C8_M11: 8 Vector__XXX
+ SG_ C8_VC11 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_VC10 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_VC9 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_VC8 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483850 C8_M12: 8 Vector__XXX
+ SG_ C8_BMS_PCB_version : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_BatteryAlertBits : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_VC14 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_VC13 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C8_VC12 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483863 C8_M25: 8 Vector__XXX
+ SG_ C8_DumbBattery_or_EmptyCompartme : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483864 C9_M1: 8 Vector__XXX
+ SG_ C9_BMS_Firmware_version : 39|24@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_Battery_ID : 7|32@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483865 C9_M2: 8 Vector__XXX
+ SG_ C9_BatteryState : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_GpIO_Val : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_T5 : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_T4 : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_T3 : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_T2 : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_T1 : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_NumTempVals : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483866 C9_M3: 8 Vector__XXX
+ SG_ C9_IC3 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_IC2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_IC1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_NumCurrentVals : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483867 C9_M4: 8 Vector__XXX
+ SG_ C9_IC7 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_IC6 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_IC5 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_IC4 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483868 C9_M5: 8 Vector__XXX
+ SG_ C9_IC11 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_IC10 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_IC9 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_IC8 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483869 C9_M6: 8 Vector__XXX
+ SG_ C9_IC15 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_IC14 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_IC13 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_IC12 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483870 C9_M7: 8 Vector__XXX
+ SG_ C9_IC19 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_IC18 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_IC17 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_IC16 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483871 C9_M8: 8 Vector__XXX
+ SG_ C9_SOC : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_auxData2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_Temp_auxdata1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_IC20 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483872 C9_M9: 8 Vector__XXX
+ SG_ C9_VC3 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_VC2 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_VC1 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_NumCells : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483873 C9_M10: 8 Vector__XXX
+ SG_ C9_VC7 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_VC6 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_VC5 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_VC4 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483874 C9_M11: 8 Vector__XXX
+ SG_ C9_VC11 : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_VC10 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_VC9 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_VC8 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483875 C9_M12: 8 Vector__XXX
+ SG_ C9_BMS_PCB_version : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_BatteryAlertBits : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_VC14 : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_VC13 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ C9_VC12 : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483888 C9_M25: 8 Vector__XXX
+ SG_ C9_DumbBattery_or_EmptyCompartme : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+
+BA_DEF_ SG_  "SystemSignalLongSymbol" STRING ;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_DEF_  "SystemSignalLongSymbol" "";
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_ "SystemSignalLongSymbol" SG_ 2147483688 C1_DumbBattery_or_EmptyCompartme "C1_DumbBattery_or_EmptyCompartment";
+BA_ "SystemSignalLongSymbol" SG_ 2147483713 C2_DumbBattery_or_EmptyCompartme "C2_DumbBattery_or_EmptyCompartment";
+BA_ "SystemSignalLongSymbol" SG_ 2147483738 C3_DumbBattery_or_EmptyCompartme "C3_DumbBattery_or_EmptyCompartment";
+BA_ "SystemSignalLongSymbol" SG_ 2147483763 C4_DumbBattery_or_EmptyCompartme "C4_DumbBattery_or_EmptyCompartment";
+BA_ "SystemSignalLongSymbol" SG_ 2147483788 C5_DumbBattery_or_EmptyCompartme "C5_DumbBattery_or_EmptyCompartment";
+BA_ "SystemSignalLongSymbol" SG_ 2147483813 C6_DumbBattery_or_EmptyCompartme "C6_DumbBattery_or_EmptyCompartment";
+BA_ "SystemSignalLongSymbol" SG_ 2147483838 C7_DumbBattery_or_EmptyCompartme "C7_DumbBattery_or_EmptyCompartment";
+BA_ "SystemSignalLongSymbol" SG_ 2147483863 C8_DumbBattery_or_EmptyCompartme "C8_DumbBattery_or_EmptyCompartment";
+BA_ "SystemSignalLongSymbol" SG_ 2147483888 C9_DumbBattery_or_EmptyCompartme "C9_DumbBattery_or_EmptyCompartment";

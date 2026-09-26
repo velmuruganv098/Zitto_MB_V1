@@ -55,6 +55,28 @@ data class DbcSummary(val name: String, val buses: List<Int>, val messages: Int,
 
 class LoadedDbc(val db: DbcDatabase, var buses: Set<Int>)
 
+/** Signals that report how many cells / temperature sensors the pack really has (Daly "No_Of_Battery_String"). */
+private val COUNT_PAT = linkedMapOf(
+    "bms.cell_count" to Regex("""(no|num|number)_?of_?(battery_?)?(string|cell|series)s?$|cell_?(count|num|qty)$|num_?cells?$|series_?(count|num)$""", RegexOption.IGNORE_CASE),
+    "bms.temp_count" to Regex("""(no|num|number)_?of_?(temp|temperature|ntc)s?(_sensors?)?$|(temp|ntc)_?(count|num|qty)$""", RegexOption.IGNORE_CASE),
+)
+
+/** Fault / status flag of a Battery or Motor window: a bool or enum signal no role uses. */
+data class FlagRef(val dbc: String, val msg: String, val sig: String, val kind: String, val choices: Map<Long, String>)
+
+/** Everything the Battery / Motor windows need to lay themselves out (dbc_engine.roles_meta). */
+data class RolesMeta(
+    val version: Int = 0,
+    val panels: List<String> = emptyList(),
+    val roles: Map<String, Role> = emptyMap(),
+    val cells: List<String> = emptyList(),
+    val temps: List<String> = emptyList(),
+    val balance: Map<Int, String> = emptyMap(),
+    val flags: Map<String, List<FlagRef>> = emptyMap(),
+    val dbcs: List<String> = emptyList(),
+    val active: List<String> = emptyList(),
+)
+
 class DbcEngine {
     val dbcs = LinkedHashMap<String, LoadedDbc>()
     val signals = LinkedHashMap<String, SignalStat>()   // "bus:Msg.Sig"
@@ -62,17 +84,34 @@ class DbcEngine {
     val vehicleMap = LinkedHashMap<String, String?>().apply { VEHICLE_ROLES.keys.forEach { put(it, null) } }
     private val mapOverrides = HashMap<String, String?>()
 
+    // DBC-driven product roles (same analyzer as CAN_DBC_Simulator)
+    val analyses = LinkedHashMap<String, Analysis>()
+    private var roleIndex = HashMap<Triple<String, String, String>, MutableList<Pair<String, Binding>>>()
+    val roleValues = HashMap<String, Double>()
+    val roleT = HashMap<String, Double>()
+    var rolesVersion = 0
+        private set
+
+    // frames no loaded DBC explains (library auto-match) and per-DBC activity
+    private val unknown = HashMap<Triple<Int, Long, Boolean>, Double>()
+    private val dbcLast = HashMap<String, Double>()
+    private var active: List<String> = emptyList()
+
     fun load(name: String, text: String, buses: Collection<Int>): DbcDatabase {
         val db = DbcParser.parse(text)
         dbcs[name] = LoadedDbc(db, buses.toSet())
         automap()
+        analyze(name)
         return db
     }
 
     fun remove(name: String) {
         dbcs.remove(name)
+        dbcLast.remove(name)
         signals.entries.removeAll { it.value.dbc == name }
         automap()
+        analyses.remove(name)
+        rebuildRoleIndex()
     }
 
     fun setBuses(name: String, buses: Collection<Int>) {
@@ -108,10 +147,13 @@ class DbcEngine {
 
         val hit = find(bus, id, ext)
         if (hit == null) {
-            messages[mkey] = ms
+            messages[mkey] = ms.copy(name = null, dbc = null)
+            if (unknown.size < 4096) unknown[Triple(bus, id, ext)] = t
             return null
         }
         val (dbcName, msg) = hit
+        unknown.remove(Triple(bus, id, ext))
+        dbcLast[dbcName] = t
         messages[mkey] = ms.copy(name = msg.name, dbc = dbcName)
 
         val phys = try {
@@ -134,6 +176,12 @@ class DbcEngine {
                 )
             }
             out[s.name] = SigVal(num, label, s.unit)
+            roleIndex[Triple(dbcName, msg.name, s.name)]?.let { lst ->
+                for ((roleKey, b) in lst) {
+                    roleValues[roleKey] = b.toRole(num)
+                    roleT[roleKey] = t
+                }
+            }
         }
         return DbcDecode(msg.name, dbcName, out)
     }
@@ -180,5 +228,111 @@ class DbcEngine {
     fun resetStats() {
         signals.clear()
         messages.clear()
+        roleValues.clear()
+        roleT.clear()
+    }
+
+    // ------------------------------------------------------------ product roles
+    private fun analyze(name: String) {
+        val db = dbcs.getValue(name).db
+        try {
+            // The DBC's product is unknown here: analyze it as each product type, keep the reading with most roles.
+            var best: Analysis? = null
+            for (hint in listOf("BMS", "MCU", "VCU_Vehicle", "Charger")) {
+                val a = Analyzer.analyze(db, hint)
+                if (best == null || a.roles.size > best.roles.size) best = a
+            }
+            val a = best!!
+            for ((key, pat) in COUNT_PAT) {
+                if (key in a.roles) continue
+                for (m in db.messages) {
+                    val sg = m.signals.firstOrNull { pat.containsMatchIn(it.name) } ?: continue
+                    a.roles[key] = Role(
+                        key, if (key == "bms.cell_count") "Cells in pack" else "Temperature sensors", "", "number",
+                        "battery", "count", bindings = mutableListOf(Binding(m.name, sg.name)), source = "${m.name}.${sg.name}",
+                    )
+                    break
+                }
+            }
+            analyses[name] = a
+        } catch (_: Exception) {
+            analyses.remove(name)                 // never break DBC loading
+        }
+        rebuildRoleIndex()
+    }
+
+    private fun rebuildRoleIndex() {
+        val idx = HashMap<Triple<String, String, String>, MutableList<Pair<String, Binding>>>()
+        for ((name, a) in analyses) {
+            for ((key, role) in a.roles) {
+                for (b in role.bindings) idx.getOrPut(Triple(name, b.msg, b.sig)) { ArrayList() } += key to b
+            }
+        }
+        roleIndex = idx
+        rolesVersion++
+    }
+
+    /** {(id, ext): buses} of recent frames that no loaded DBC decodes. */
+    fun unknownIds(now: Double, withinS: Double = 15.0): Map<Pair<Long, Boolean>, Set<Int>> {
+        val cut = now - withinS
+        val out = LinkedHashMap<Pair<Long, Boolean>, MutableSet<Int>>()
+        for ((k, t) in unknown) if (t >= cut) out.getOrPut(k.second to k.third) { sortedSetOf() } += k.first
+        return out
+    }
+
+    /** Re-order the Battery / Motor windows when a different DBC starts receiving frames. */
+    fun refreshActive(now: Double, withinS: Double = 10.0) {
+        val cut = now - withinS
+        val act = dbcLast.filter { it.value >= cut && it.key in analyses }.keys.sorted()
+        if (act != active) {
+            active = act
+            rolesVersion++
+        }
+    }
+
+    /** Analyses of DBCs that are receiving frames first, so their layout wins. */
+    private fun orderedAnalyses(): List<Pair<String, Analysis>> =
+        analyses.entries.map { it.key to it.value }.sortedBy { it.first !in active }
+
+    private fun primaryAnalysis(sel: (Analysis) -> Int): Analysis? {
+        val pool = orderedAnalyses().filter { it.first in active }.ifEmpty { analyses.entries.map { it.key to it.value } }
+        var best: Analysis? = null
+        for ((_, a) in pool) if (best == null || sel(a) > sel(best)) best = a
+        return best
+    }
+
+    fun rolesMeta(): RolesMeta {
+        val roles = LinkedHashMap<String, Role>()
+        val panels = ArrayList<String>()
+        val flags = linkedMapOf<String, MutableList<FlagRef>>(
+            "battery" to ArrayList(), "motor" to ArrayList(), "vehicle" to ArrayList(), "charger" to ArrayList(),
+        )
+        for ((name, a) in orderedAnalyses()) {
+            if (active.isNotEmpty() && name !in active) continue      // windows follow the DBCs receiving frames
+            for ((key, r) in a.roles) if (key !in roles) roles[key] = r
+            for (p in a.panels) if (p !in panels) panels += p
+            val db = dbcs[name]?.db ?: continue
+            for (m in db.messages) {
+                val list = flags[a.msgSystem[m.name]] ?: continue
+                for (sg in m.signals) {
+                    if ((m.name to sg.name) in a.sigRole || sg.muxSwitch) continue
+                    val kind = Analyzer.signalKind(sg)
+                    if (kind == "bool" || kind == "enum") list += FlagRef(name, m.name, sg.name, kind, LinkedHashMap(sg.choices))
+                }
+            }
+        }
+        val cells = primaryAnalysis { it.cells.size }
+        val temps = primaryAnalysis { it.temps.size }
+        return RolesMeta(
+            version = rolesVersion,
+            panels = panels,
+            roles = roles,
+            cells = cells?.cells ?: emptyList(),
+            temps = temps?.temps ?: emptyList(),
+            balance = cells?.balance ?: emptyMap(),
+            flags = flags,
+            dbcs = orderedAnalyses().map { it.first }.filter { active.isEmpty() || it in active },
+            active = active,
+        )
     }
 }

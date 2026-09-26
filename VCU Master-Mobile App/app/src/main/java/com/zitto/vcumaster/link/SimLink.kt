@@ -13,7 +13,12 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sin
 
-/** Emulates the S32K144 firmware + ESP32 bridge text output (port of links.py SimLink). */
+/**
+ * Emulates the S32K144 firmware + ESP32 bridge text output (port of links.py SimLink), plus the
+ * V0.0073 firmware additions: IMU displacement fields every 100 ms, CMD_ACK + "[CMD]" event logs for
+ * module / GPIO / LED commands, CMD_IMU_ZERO, and a Daly BMS (16 cells, 4 NTC) on CAN2 whose frames are
+ * not in the demo DBC - so the DBC library auto-match and the Battery window can be tried without hardware.
+ */
 class SimLink(private val scope: CoroutineScope, private val db: DbcDatabase?) : Link() {
     override val kind = "sim"
 
@@ -32,6 +37,15 @@ class SimLink(private val scope: CoroutineScope, private val db: DbcDatabase?) :
     private var hb = 0
     private var frames = 0
     private val rnd = Random()
+
+    // IMU displacement (V0.0073): moves for 6 s, rests for 4 s
+    private var posX = 0.0
+    private var posY = 0.0
+    private var posZ = 0.0
+    private var dist = 0.0
+    private var yaw = 0.0
+    private var imuT0 = now()
+    private val canRx = longArrayOf(0, 0, 0)       // frames the "S32K" received per bus (CAN_STATUS rx=)
 
     init { mtu = 247 }
 
@@ -58,7 +72,7 @@ class SimLink(private val scope: CoroutineScope, private val db: DbcDatabase?) :
         emitState()
         job = scope.launch { run() }
         pub("BLE_CONNECTED", framed = false)
-        pub("INFO Zitto_MB_V1_Bridge UART2=115200 BLE=ON", framed = false)
+        pub("INFO Zitto_MB_V1_Bridge UART2=500000 BLE=ON", framed = false)
     }
 
     override suspend fun disconnect(user: Boolean) {
@@ -95,6 +109,7 @@ class SimLink(private val scope: CoroutineScope, private val db: DbcDatabase?) :
         val data = m.encode(full)
         val ext = if (m.ext) " EXT" else " STD"
         val hexd = data.joinToString(" ") { "%02x".format(it) }
+        canRx[bus]++
         pub("CAN bus=$bus id=0x${m.frameId.toString(16)}$ext DATA dlc=${data.size} data=[$hexd] ts=${up()}ms")
     }
 
@@ -112,7 +127,15 @@ class SimLink(private val scope: CoroutineScope, private val db: DbcDatabase?) :
             soc = max(5.0, soc - current * 0.000015)
             odo += speed / 3600 * 0.05
 
-            if (mods["IMU"] == 1 && k % 10 == 0) {
+            val moving = (t % 10.0) < 6.0
+            val vx = if (moving) 70 * cos(t * 0.9) else 0.0
+            val vy = if (moving) 50 * sin(t * 0.6) else 0.0
+            val vz = if (moving) 4 * sin(t * 1.7) else 0.0
+            posX += vx * 0.05; posY += vy * 0.05; posZ += vz * 0.05
+            dist += kotlin.math.sqrt(vx * vx + vy * vy + vz * vz) * 0.05
+            if (moving) yaw += 3 * sin(t * 0.4) * 0.05
+
+            if (mods["IMU"] == 1 && k % 2 == 0) {
                 val ax = (35 * sin(t * 1.3) + gauss(6.0)).toInt()
                 val ay = (-20 + 25 * cos(t * 0.9) + gauss(6.0)).toInt()
                 val az = (1000 + gauss(8.0)).toInt()
@@ -120,7 +143,15 @@ class SimLink(private val scope: CoroutineScope, private val db: DbcDatabase?) :
                 val gy = (800 * cos(t * 1.1) + gauss(60.0)).toInt()
                 val gz = (2500 * sin(t / 3.0) + gauss(60.0)).toInt()
                 val tc = 31.0 + 1.5 * sin(t / 60)
-                pub("IMU accel_mg=($ax,$ay,$az) gyro_mdps=($gx,$gy,$gz) temp=${"%.1f".format(java.util.Locale.US, tc)}C ts=${up()}ms")
+                val us = java.util.Locale.US
+                pub(
+                    "IMU accel_mg=($ax,$ay,$az) gyro_mdps=($gx,$gy,$gz) temp=${"%.1f".format(us, tc)}C ts=${up()}ms" +
+                        " pos_mm=(${"%.1f".format(us, posX)},${"%.1f".format(us, posY)},${"%.1f".format(us, posZ)})" +
+                        " dist_mm=${"%.1f".format(us, dist)}" +
+                        " rpy_deg=(${"%.1f".format(us, ax / 17.5)},${"%.1f".format(us, -ay / 17.5)},${"%.1f".format(us, yaw)})" +
+                        " moving=${if (moving) 1 else 0} imu_flags=1 imu_up_ms=${((now() - imuT0) * 1000).toLong()}" +
+                        " speed_mms=${kotlin.math.sqrt(vx * vx + vy * vy).toInt()}",
+                )
             }
             if (mods["CSA"] == 1 && k % 4 == 0) {
                 val ma = (420 + 60 * sin(t / 5) + gauss(8.0)).toInt()
@@ -153,14 +184,15 @@ class SimLink(private val scope: CoroutineScope, private val db: DbcDatabase?) :
                 }
                 if (k % 20 == 7) can(2, "Dash_Odometer", mapOf("Odometer" to odo, "TripA" to odo - 1200))
             }
+            if (mods["CAN2"] == 1 && k % 20 == 11) daly(t, current, soc)
             if (k % 20 == 0) {
                 val u = up()
                 if (mods["CAN1"] == 1) pub(
-                    "CAN_STATUS bus=1 state=1 ready=1 bus_off=0 baud=500 rx=$rxLines err=0 tx_err=0 " +
+                    "CAN_STATUS bus=1 state=1 ready=1 bus_off=0 baud=500 rx=${canRx[1]} err=0 tx_err=0 " +
                         "rx_err=0 irq=${k * 3} err_irq=0 mb_irq=${k * 3} ts=${u}ms",
                 )
                 if (mods["CAN2"] == 1) pub(
-                    "CAN_STATUS bus=2 state=3 ready=1 bus_off=0 baud=250 rx=${k / 4} err=0 tx_err=0 " +
+                    "CAN_STATUS bus=2 state=3 ready=1 bus_off=0 baud=250 rx=${canRx[2]} err=0 tx_err=0 " +
                         "rx_err=0 irq=$k err_irq=0 mb_irq=$k ts=${u}ms",
                 )
             }
@@ -168,11 +200,65 @@ class SimLink(private val scope: CoroutineScope, private val db: DbcDatabase?) :
                 hb++
                 pub("HEARTBEAT uptime=${up()}ms")
                 status()
-                pub("BRIDGE_STATUS uart_frames=$frames crc_errors=0 ble=1", framed = false)
+                pub("BRIDGE_STATUS uart_frames=$frames crc_errors=0 ble=1 ble_lines=$frames ble_q_drop=0", framed = false)
             }
             if (k % 200 == 50 && mods["FLM"] == 1) flm()
         }
     }
+
+    // ------------------------------------------------------------ Daly BMS (library DBC BMS/Daly)
+    private fun rawCan(bus: Int, id: Long, ext: Boolean, data: IntArray) {
+        val hexd = data.joinToString(" ") { "%02x".format(it and 0xFF) }
+        canRx[bus]++
+        pub("CAN bus=$bus id=0x${id.toString(16)} ${if (ext) "EXT" else "STD"} DATA dlc=${data.size} data=[$hexd] ts=${up()}ms")
+    }
+
+    private fun be16(d: IntArray, i: Int, v: Int) { d[i] = (v shr 8) and 0xFF; d[i + 1] = v and 0xFF }
+
+    private fun daly(t: Double, current: Double, soc: Double) {
+        val cells = DoubleArray(16) { i -> 3.32 + 0.012 * sin(i * 1.7 + t / 20) - current * 0.0003 + if (i == 6) -0.018 else 0.0 }
+        val temps = intArrayOf(29, 30, 31, 28).map { it + (current * 0.03).toInt() }
+        val packV = cells.sum()
+        var d = IntArray(8)
+        be16(d, 0, (packV * 10).toInt()); be16(d, 2, (packV * 10).toInt())
+        be16(d, 4, (current * 10 + 30000).toInt()); be16(d, 6, (soc * 10).toInt())
+        rawCan(2, 0x18904001, true, d)
+        val iMax = cells.indices.maxBy { cells[it] }
+        val iMin = cells.indices.minBy { cells[it] }
+        d = IntArray(8)
+        be16(d, 0, (cells[iMax] * 1000).toInt()); d[2] = iMax + 1
+        be16(d, 3, (cells[iMin] * 1000).toInt()); d[5] = iMin + 1
+        rawCan(2, 0x18914001, true, d)
+        d = IntArray(8)
+        d[0] = temps.max() + 40; d[1] = temps.indexOf(temps.max()) + 1; d[2] = temps.min() + 40; d[3] = temps.indexOf(temps.min()) + 1
+        rawCan(2, 0x18924001, true, d)
+        d = IntArray(8)
+        d[0] = 2; d[1] = 1; d[2] = 1; d[3] = 42
+        val mah = (soc / 100 * 100_000).toLong()
+        d[4] = ((mah shr 24) and 0xFF).toInt(); d[5] = ((mah shr 16) and 0xFF).toInt(); d[6] = ((mah shr 8) and 0xFF).toInt(); d[7] = (mah and 0xFF).toInt()
+        rawCan(2, 0x18934001, true, d)
+        d = IntArray(8)
+        d[0] = 16; d[1] = 4
+        rawCan(2, 0x18944001, true, d)
+        for (f in 0 until 6) {
+            d = IntArray(8)
+            d[0] = f
+            for (j in 0 until 3) {
+                val c = f * 3 + j
+                if (c < 16) be16(d, 1 + 2 * j, (cells[c] * 1000).toInt())
+            }
+            rawCan(2, 0x18954001, true, d)
+        }
+        d = IntArray(8)
+        d[0] = 0
+        temps.forEachIndexed { i, v -> d[1 + i] = v + 40 }
+        rawCan(2, 0x18964001, true, d)
+        d = IntArray(8)
+        d[0] = if (((t / 5).toInt() % 2) == 0) 0x40 else 0     // cell 7 balancing on and off
+        rawCan(2, 0x18974001, true, d)
+    }
+
+    private fun ack(cmd: Int, result: Int, id: Int, state: Int) = pub("CMD_ACK cmd=0x${cmd.toString(16)} result=$result gpio_id=$id state=$state")
 
     private fun flm() {
         val used = flash.size
@@ -188,7 +274,7 @@ class SimLink(private val scope: CoroutineScope, private val db: DbcDatabase?) :
         val u = c.uppercase()
         when {
             u == "PING" -> pub("PONG", framed = false)
-            u == "INFO" -> pub("INFO Zitto_MB_V1_Bridge UART2=115200 BLE=ON RAW=1 FW=VCUMASTER", framed = false)
+            u == "INFO" -> pub("INFO Zitto_MB_V1_Bridge UART2=500000 BLE=ON RAW=1 FW=VCUMASTER", framed = false)
             u == "GPIO" -> listOf(
                 "S32_GPIO_IDS=1..13", "1=PTD1 2=PTD0 3=PTE5 4=PTE4 5=PTE9",
                 "6=PTE8 7=PTD5 8=PTC1 9=PTC15 10=PTC14", "11=PTB3 12=PTB1 13=PTB0",
@@ -227,7 +313,9 @@ class SimLink(private val scope: CoroutineScope, private val db: DbcDatabase?) :
         }
         g[0] = d
         g[1] = if (d != 0) st else 0
-        pub("CMD_ACK cmd=0x2 result=0 gpio_id=$id state=${g[1]}")
+        val req = if (d != 0) (if (st != 0) "HIGH" else "LOW") else "-"
+        pub("LOG [CMD] GPIO id=$id dir=${if (d != 0) "OUT" else "IN"} req=$req -> actual=${if (g[1] != 0) "HIGH" else "LOW"}  OK")
+        ack(0x2, 0, id, g[1])
         gpioStatus()
     }
 
@@ -238,6 +326,8 @@ class SimLink(private val scope: CoroutineScope, private val db: DbcDatabase?) :
             0x01 -> {
                 if (pl.size < 2 || u(0) !in names) { pub("LOG CMD_MODULE_EN:bad_module"); return }
                 mods[names.getValue(u(0))] = if (u(1) != 0) 1 else 0
+                pub("LOG [CMD] MODULE ${names.getValue(u(0))} -> ${if (u(1) != 0) "ENABLED" else "DISABLED"}  OK")
+                ack(0x1, 0, u(0), if (u(1) != 0) 1 else 0)
                 status()
             }
             0x02 -> if (pl.size >= 3) gpioSet(u(0), u(1), u(2))
@@ -251,7 +341,15 @@ class SimLink(private val scope: CoroutineScope, private val db: DbcDatabase?) :
                     status()
                 }
             }
-            0x05 -> if (pl.size >= 4) pub("LOG LED:period=${u(0) or (u(1) shl 8)} duty=${u(2)}")
+            0x05 -> if (pl.size >= 4) {
+                pub("LOG [CMD] LED period=${u(0) or (u(1) shl 8)} ms duty=${u(2)} %  OK")
+                ack(0x5, 0, 0, 0)
+            }
+            0x09 -> {
+                posX = 0.0; posY = 0.0; posZ = 0.0; dist = 0.0; yaw = 0.0; imuT0 = now()
+                pub("LOG [IMU] position zeroed")
+                ack(0x9, 0, 0, 0)
+            }
             0x06 -> {
                 val last = flash.lastOrNull()
                 if (last == null) pub("FLASH_DATA len=0 empty")

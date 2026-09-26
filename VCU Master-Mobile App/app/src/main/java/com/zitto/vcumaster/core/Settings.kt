@@ -19,6 +19,9 @@ class Settings(private val file: File) {
     val filters = mutableListOf<CustomFilter>()
     val vehicleMap = LinkedHashMap<String, String?>()
     val dbc = LinkedHashMap<String, List<Int>>()
+    val dbcLib = LinkedHashMap<String, String>()          // loaded DBC name -> library id it came from
+    var autoDbc = true                                     // load a matching library DBC when unknown frames arrive
+    val autoDbcDeclined = LinkedHashSet<String>()          // library ids the user removed: never auto-load again
     var lastAddress: String? = null
     var lastName: String? = null
 
@@ -48,8 +51,11 @@ class Settings(private val file: File) {
             for (k in o.keys()) {
                 val b = o.getJSONObject(k).optJSONArray("buses") ?: JSONArray("[1,2]")
                 dbc[k] = (0 until b.length()).map { b.getInt(it) }
+                o.getJSONObject(k).optString("lib").ifEmpty { null }?.let { dbcLib[k] = it }
             }
         }
+        autoDbc = j.optBoolean("auto_dbc", true)
+        j.optJSONArray("auto_dbc_declined")?.let { a -> for (i in 0 until a.length()) autoDbcDeclined += a.getString(i) }
         j.optJSONObject("last_device")?.let {
             lastAddress = it.optString("address").ifEmpty { null }
             lastName = if (it.isNull("name")) null else it.optString("name")
@@ -62,7 +68,11 @@ class Settings(private val file: File) {
             filters.forEach { put(JSONObject().put("name", it.name).put("expr", it.expr).put("regex", it.regex).put("tag", it.tag)) }
         })
         j.put("vehicle_map", JSONObject().apply { vehicleMap.forEach { (k, v) -> put(k, v ?: JSONObject.NULL) } })
-        j.put("dbc", JSONObject().apply { dbc.forEach { (k, v) -> put(k, JSONObject().put("buses", JSONArray(v))) } })
+        j.put("dbc", JSONObject().apply {
+            dbc.forEach { (k, v) -> put(k, JSONObject().put("buses", JSONArray(v)).apply { dbcLib[k]?.let { put("lib", it) } }) }
+        })
+        j.put("auto_dbc", autoDbc)
+        j.put("auto_dbc_declined", JSONArray(autoDbcDeclined.toList()))
         if (lastAddress != null) {
             j.put("last_device", JSONObject().put("address", lastAddress).put("name", lastName ?: JSONObject.NULL))
         }

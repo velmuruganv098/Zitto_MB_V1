@@ -1,20 +1,33 @@
 package com.zitto.vcumaster.ui.screens
 
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.drawText
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.zitto.vcumaster.core.Fmt
+import com.zitto.vcumaster.core.Hub
 import com.zitto.vcumaster.core.HubState
 import com.zitto.vcumaster.core.SeriesSnap
 import com.zitto.vcumaster.core.dbl
+import com.zitto.vcumaster.core.long
 import com.zitto.vcumaster.core.str
 import com.zitto.vcumaster.ui.UiPrefs
 import com.zitto.vcumaster.ui.components.ChartSeries
 import com.zitto.vcumaster.ui.components.Horizon
 import com.zitto.vcumaster.ui.components.KvList
+import com.zitto.vcumaster.ui.components.Note
+import com.zitto.vcumaster.ui.components.SmallButton
 import com.zitto.vcumaster.ui.components.Panel
 import com.zitto.vcumaster.ui.components.Seg
 import com.zitto.vcumaster.ui.components.StripChart
@@ -24,7 +37,7 @@ import com.zitto.vcumaster.ui.components.rememberNow
 import com.zitto.vcumaster.ui.theme.LocalVcu
 
 @Composable
-fun SensorsScreen(st: HubState, prefs: UiPrefs) {
+fun SensorsScreen(st: HubState, hub: Hub, prefs: UiPrefs) {
     val v = LocalVcu.current
     val now by rememberNow(100)
     val L = st.latest
@@ -48,7 +61,7 @@ fun SensorsScreen(st: HubState, prefs: UiPrefs) {
             sub = when {
                 imu == null -> "No IMU data yet. Enable the IMU module on the Device tab."
                 staleI -> "Last sample ${Fmt.ago(L.imuT)} ago"
-                else -> "Live, every 500 ms"
+                else -> "Live, every 100 ms"
             },
         ) {
             if (imu != null) {
@@ -85,6 +98,8 @@ fun SensorsScreen(st: HubState, prefs: UiPrefs) {
             )
         }
 
+        MovementPanel(st, hub)
+
         Panel(
             "Current sense amplifier", accent = v.csa,
             sub = when {
@@ -110,5 +125,77 @@ fun SensorsScreen(st: HubState, prefs: UiPrefs) {
             StripChart("Voltage (mV)", listOf(ChartSeries("", v.csa, s("vol"))), win, now, height = 120.dp)
             StripChart("Power (mW)", listOf(ChartSeries("", v.csa, s("pow"))), win, now, height = 120.dp)
         }
+    }
+}
+
+/** V0.0073: board displacement since the IMU started (or the last CMD_IMU_ZERO) and the X/Y path. */
+@Composable
+private fun MovementPanel(st: HubState, hub: Hub) {
+    val v = LocalVcu.current
+    val imu = st.latest.imu
+    val has = imu != null && imu.containsKey("pos_x_mm")
+    Panel(
+        "Board movement since IMU start", accent = v.imu,
+        sub = if (has) "${if (imu!!.long("moving") != 0L) "MOVING" else "STILL"} · tracking for ${fmtDur(imu.long("imu_up_ms"))}" else null,
+        actions = { SmallButton("Zero position") { hub.imuZero() } },
+    ) {
+        if (!has) {
+            Note("Needs S32K firmware V0.0073 or newer (IMU displacement fields).")
+            return@Panel
+        }
+        val m = imu!!
+        TileGrid(
+            listOf(
+                TileData("X", Fmt.fix(m.dbl("pos_x_mm"), 1), "mm"),
+                TileData("Y", Fmt.fix(m.dbl("pos_y_mm"), 1), "mm"),
+                TileData("Z (up)", Fmt.fix(m.dbl("pos_z_mm"), 1), "mm"),
+                TileData("Distance", Fmt.fix(m.dbl("dist_mm"), 1), "mm"),
+                TileData("Speed", Fmt.fix(m.dbl("speed_mms"), 1), "mm/s"),
+                TileData("Roll", Fmt.fix(m.dbl("roll_fw"), 1), "°"),
+                TileData("Pitch", Fmt.fix(m.dbl("pitch_fw"), 1), "°"),
+                TileData("Yaw", Fmt.fix(m.dbl("yaw_fw"), 1), "°"),
+            ),
+            columns = 4,
+        )
+        MoveTrack(st.track, Modifier.fillMaxWidth().padding(horizontal = 40.dp, vertical = 6.dp))
+        Note(
+            "Double-integrated accelerometer with orientation tracking and zero-velocity updates: short moves with pauses " +
+                "are tracked to about centimetre level; error grows the longer the board keeps moving without a pause.",
+        )
+    }
+}
+
+private fun fmtDur(ms: Long): String {
+    if (ms <= 0) return "0 s"
+    val s = ms / 1000
+    val h = s / 3600
+    val m = (s % 3600) / 60
+    return if (h > 0) "$h h $m min" else if (m > 0) "$m min ${s % 60} s" else "$s s"
+}
+
+/** Top view of the X/Y path since the last zero, auto-scaled (at least ±50 mm). */
+@Composable
+private fun MoveTrack(track: List<Pair<Double, Double>>, modifier: Modifier) {
+    val v = LocalVcu.current
+    val tm = rememberTextMeasurer()
+    Canvas(modifier.aspectRatio(1f)) {
+        val c = Offset(size.width / 2, size.height / 2)
+        val k = size.width / 200f
+        drawLine(v.rule, Offset(5 * k, c.y), Offset(195 * k, c.y), 1f)
+        drawLine(v.rule, Offset(c.x, 5 * k), Offset(c.x, 195 * k), 1f)
+        var span = 50.0
+        for ((x, y) in track) span = maxOf(span, kotlin.math.abs(x), kotlin.math.abs(y))
+        span *= 1.15
+        fun pt(x: Double, y: Double) = Offset(c.x + (x / span * 90 * k).toFloat(), c.y - (y / span * 90 * k).toFloat())
+        val lb = TextStyle(fontSize = 10.sp, color = v.ink3)
+        drawText(tm.measure("+X", lb), topLeft = Offset(185 * k, c.y - 16 * k))
+        drawText(tm.measure("+Y", lb), topLeft = Offset(c.x + 4 * k, 4 * k))
+        drawText(tm.measure("scale ±${span.toInt()} mm", lb), topLeft = Offset(4 * k, 186 * k))
+        if (track.size > 1) {
+            val path = Path()
+            track.forEachIndexed { i, (x, y) -> val p = pt(x, y); if (i == 0) path.moveTo(p.x, p.y) else path.lineTo(p.x, p.y) }
+            drawPath(path, v.imu, style = Stroke(2f * k / 1.2f))
+        }
+        track.lastOrNull()?.let { (x, y) -> drawCircle(v.err, 3.5f * k, pt(x, y)) }
     }
 }

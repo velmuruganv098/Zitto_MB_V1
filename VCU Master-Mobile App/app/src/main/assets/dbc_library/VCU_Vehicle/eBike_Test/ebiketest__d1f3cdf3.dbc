@@ -1,0 +1,544 @@
+VERSION "0.8"
+
+NS_ :
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+
+BS_:
+
+BU_: 
+VAL_TABLE_ JS_Left 1 "ON" 0 "OFF" ;
+VAL_TABLE_ JS_Right 0 "OFF" 1 "ON" ;
+VAL_TABLE_ JS_Up 0 "OFF" 1 "ON" ;
+VAL_TABLE_ JS_Down 0 "OFF" 1 "ON" ;
+VAL_TABLE_ JS_Centre 0 "OFF" 1 "ON" ;
+VAL_TABLE_ Drive_Mode 0 "Eco" 1 "Sport" 2 "Reverse" 4 "City" 8 "Mode Disable" 16 "Crawl/Turtle Mode" ;
+VAL_TABLE_ Over_RPM 0 "NO" 1 "YES" ;
+VAL_TABLE_ Low_Battery 0 "NO" 1 "YES" ;
+VAL_TABLE_ TconStopCan 0 "OFF" 1 "ON" ;
+VAL_TABLE_ Stand_up 0 "NO" 1 "YES" ;
+VAL_TABLE_ Horn 0 "OFF" 1 "ON" ;
+VAL_TABLE_ High_Beam 0 "OFF" 1 "ON" ;
+VAL_TABLE_ Head_Lamp__low_Beam_ 0 "OFF" 1 "ON" ;
+VAL_TABLE_ Ignition 0 "OFF" 1 "ON" ;
+VAL_TABLE_ Vehicle_Ready 0 "NO" 1 "YES" ;
+VAL_TABLE_ Charging 0 "NO" 1 "YES" ;
+VAL_TABLE_ Light_Switch 0 "OFF" 1 "ON" ;
+VAL_TABLE_ Brake_Lamp 0 "OFF" 1 "ON" ;
+VAL_TABLE_ Rear_Brake_Switch 0 "OFF" 1 "ON" ;
+VAL_TABLE_ Front_Brake_Switch 0 "OFF" 1 "ON" ;
+VAL_TABLE_ Regeneration 0 "OFF" 1 "ON" ;
+VAL_TABLE_ Throttle_Switch 0 "OFF" 1 "ON" ;
+VAL_TABLE_ Charger_Connection 0 "NO" 1 "YES" ;
+VAL_TABLE_ Crawl_Mode 0 "OFF" 1 "ON" ;
+VAL_TABLE_ Service_Indication 0 "OFF" 1 "ON" ;
+VAL_TABLE_ Starter_Sw 0 "OFF" 1 "ON" ;
+VAL_TABLE_ Pass_By_Switch 0 "OFF" 1 "ON" ;
+VAL_TABLE_ TSL_Right 0 "OFF" 1 "ON" ;
+VAL_TABLE_ TSL_Left 0 "OFF" 1 "ON" ;
+VAL_TABLE_ Hard_error 0 "NO" 1 "YES" ;
+VAL_TABLE_ High_Beam_Open_Circuit 0 "NO" 1 "YES" ;
+VAL_TABLE_ High_Beam_Short_circuit 0 "NO" 1 "YES" ;
+VAL_TABLE_ Aux_Charging 0 "OFF" 1 "ON" ;
+VAL_TABLE_ BatteryPackOverTemp 0 "No" 1 "Yes" ;
+VAL_TABLE_ Low_beam_Open_Circuit 0 "NO" 1 "YES" ;
+VAL_TABLE_ LOw_Beam_Short_circuit 0 "OFF" 1 "ON" ;
+VAL_TABLE_ ChargerTypeChademo 0 "No" 1 "Yes" ;
+VAL_TABLE_ ChargerTypeTork 0 "No" 1 "Yes" ;
+VAL_TABLE_ Brake_lamp_Open_circuit 0 "OFF" 1 "ON" ;
+VAL_TABLE_ Brake_lamp_short_circuit 0 "OFF" 1 "ON" ;
+VAL_TABLE_ PremiumMode 0 "Inactive" 1 "Active" ;
+VAL_TABLE_ Horn_Opencircuit 0 "NO" 1 "YES" ;
+VAL_TABLE_ Horn_short_circuit 0 "NO" 1 "YES" ;
+VAL_TABLE_ Cluster_Open_circuit 0 "NO" 1 "YES" ;
+VAL_TABLE_ Cluster_short_circuit 0 "OFF" 1 "ON" ;
+VAL_TABLE_ Mode_lock 0 "OFF" 1 "ON" ;
+VAL_TABLE_ TSL_Left_Open_circuit 0 "OFF" 1 "ON" ;
+VAL_TABLE_ TSL_Left_short_circuit 0 "NO" 1 "YES" ;
+VAL_TABLE_ TSL_Right_Open_circuit 0 "NO" 1 "YES" ;
+VAL_TABLE_ TSL_Right_Short_circuit 0 "NO" 1 "YES" ;
+VAL_TABLE_ BMS_Charge_Sw 0 "OFF" 1 "ON" ;
+VAL_TABLE_ BMS_Disch_Sw 0 "OFF" 1 "ON" ;
+VAL_TABLE_ Plug_Sense 0 "NO" 1 "YES" ;
+VAL_TABLE_ Low_SOC_warning 0 "NO" 1 "YES" ;
+VAL_TABLE_ Hazard_Lamp 0 "OFF" 1 "ON" ;
+VAL_TABLE_ Motor_Ready 0 "NO" 1 "YES" ;
+VAL_TABLE_ ECU_EEPROM_fault 0 "NO" 1 "YES" ;
+VAL_TABLE_ BMS_CAN_Active 0 "NO" 1 "YES" ;
+VAL_TABLE_ T_controller_error 0 "NO" 1 "YES" ;
+VAL_TABLE_ Kil_Switch 0 "OFF" 1 "ON" ;
+VAL_TABLE_ HolidayMode 0 "Inactive" 1 "Active" ;
+VAL_TABLE_ StorageMode 0 "Inactive" 1 "Active" ;
+VAL_TABLE_ Gear_Status 0 "Park" 1 "1 Gear" 2 "2 Gear" 3 "3 Gear" 4 "S Gear" ;
+VAL_TABLE_ Left_LED 0 "OFF" 1 "ON" ;
+VAL_TABLE_ Right_LED 0 "OFF" 1 "ON" ;
+VAL_TABLE_ Ready 0 "NO" 1 "YES" ;
+VAL_TABLE_ Power_Mode 0 "Level 1" 1 "Level 2" 2 "Level 3" 3 "Level 4" 4 "Level 5" 5 "Level 6" 6 "Level 7" 7 "Level 8" ;
+VAL_TABLE_ OVERVOLTAGE 0 "No" 1 "Yes" ;
+VAL_TABLE_ UNDERVOLTAGE 0 "No" 1 "Yes" ;
+VAL_TABLE_ OVER_TEMPERATURE 0 "No" 1 "Yes" ;
+VAL_TABLE_ UNDER_TEMPERATURE 0 "No" 1 "Yes" ;
+VAL_TABLE_ OVERLOAD 0 "No" 1 "YES" ;
+VAL_TABLE_ CURRENT_SHORTCIRCUIT 0 "No" 1 "Yes" ;
+VAL_TABLE_ BATTERY_PARAM_TIMEOUT 0 "No" 1 "Yes" ;
+VAL_TABLE_ BOARD_VALUES_UPTODATE 0 "No" 1 "Yes" ;
+VAL_TABLE_ CURRENT_UPTODATE 0 "No" 1 "Yes" ;
+VAL_TABLE_ FREESB_SHUTDOWN 0 "No" 1 "Yes" ;
+VAL_TABLE_ OPEN_CONNECTION 0 "No" 1 "Yes" ;
+VAL_TABLE_ PDU_FAILURE 0 "No" 1 "Yes" ;
+VAL_TABLE_ PDU_OVERTEMPERATURE 0 "No" 1 "Yes" ;
+VAL_TABLE_ ENCRYPTION_KEY_NOT_VALID 0 "No" 1 "Yes" ;
+VAL_TABLE_ PDU_LOCK 0 "No" 1 "Yes" ;
+VAL_TABLE_ BMS_AUTHENTICATION 0 "No" 1 "Yes" ;
+VAL_TABLE_ DATA_CORRUPTED 0 "No" 1 "Yes" ;
+VAL_TABLE_ PRECHARGE_ERROR 0 "No" 1 "Yes" ;
+VAL_TABLE_ INTERLOCK 0 "No" 1 "Yes" ;
+VAL_TABLE_ VAR_TYPE_MISMATCH 0 "No" 1 "Yes" ;
+VAL_TABLE_ IMD 0 "No" 1 "Yes" ;
+VAL_TABLE_ OV_SAFETY_FUSE_TRIGGERED 0 "No" 1 "Yes" ;
+VAL_TABLE_ ERROR_ASSOCIATION 0 "No" 1 "Yes" ;
+VAL_TABLE_ MSD 0 "No" 1 "Yes" ;
+VAL_TABLE_ HIGH_HUMIDITY 0 "No" 1 "Yes" ;
+VAL_TABLE_ CELL_TEMP_IMBALANCE 0 "No" 1 "Yes" ;
+VAL_TABLE_ PRECHARGE_LOAD_NOT_DETECTED 0 "No" 1 "Yes" ;
+VAL_TABLE_ PRECHARGE_INCOMPLETE 0 "No" 1 "Yes" ;
+VAL_TABLE_ UNAUTHORISED_CHARGER_DETECTED 0 "No" 1 "Yes" ;
+VAL_TABLE_ CHARGER_AUTHENTICATION_FAILURE 0 "No" 1 "Yes" ;
+VAL_TABLE_ DISCHARGE_WELD_DETECTED 0 "No" 1 "Yes" ;
+VAL_TABLE_ CHARGE_WELD_DETECTED 0 "No" 1 "Yes" ;
+VAL_TABLE_ DISCHARGE_OPEN_DETECTED 0 "No" 1 "Yes" ;
+VAL_TABLE_ CHARGE_OPEN_DETECTED 0 "No" 1 "Yes" ;
+VAL_TABLE_ THERMAL_RUNAWAY 0 "No" 1 "Yes" ;
+
+
+BO_ 256 Vehicle_Information_100: 8 Vector__XXX
+ SG_ BMS_Voltage : 0|32@1+ (0.001,0) [0|100] "Volt" Vector__XXX
+ SG_ ODO : 40|20@1+ (0.1,0) [0|104857.5] "Km" Vector__XXX
+ SG_ JS_Left : 32|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ JS_Right : 33|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ JS_Up : 34|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ JS_Down : 35|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ JS_Centre : 36|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 257 Vehicle_Information_101: 8 Vector__XXX
+ SG_ Motor_Temperature : 0|8@1+ (1,0) [0|255] "�C" Vector__XXX
+ SG_ Controller_Temperature : 8|8@1+ (1,0) [0|255] "�C" Vector__XXX
+ SG_ DTE : 23|8@0+ (1,0) [0|255] "KM" Vector__XXX
+ SG_ Vehicle_Speed : 24|8@1+ (1,-55) [-55|200] "KMph" Vector__XXX
+ SG_ Throttle_Percentage : 32|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ Drive_Mode : 54|10@1+ (1,0) [0|16] "" Vector__XXX
+ SG_ The_Fun_dv_dt_ : 40|12@1+ (1,0) [0|4095] "" Vector__XXX
+
+BO_ 258 Vehicle_Information_102: 8 Vector__XXX
+ SG_ Over_RPM : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Low_Battery : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ TconStopCan : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Stand_up : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Horn : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ High_Beam : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Head_Lamp__low_Beam_ : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Ignition : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Vehicle_Ready : 15|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Charging : 14|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Light_Switch : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Brake_Lamp : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Rear_Brake_Switch : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Front_Brake_Switch : 10|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Regeneration : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Throttle_Switch : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Charger_Connection : 23|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Crawl_Mode : 22|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Service_Indication : 21|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Starter_Sw : 20|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Pass_By_Switch : 19|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ TSL_Right : 18|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ TSL_Left : 17|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Hard_error : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ High_Beam_Open_Circuit : 31|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ High_Beam_Short_circuit : 30|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Aux_Charging : 29|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BatteryPackOverTemp : 28|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Low_beam_Open_Circuit : 27|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ LOw_Beam_Short_circuit : 26|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ChargerTypeChademo : 25|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ChargerTypeTork : 24|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Brake_lamp_Open_circuit : 39|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Brake_lamp_short_circuit : 38|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PremiumMode : 37|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Horn_Opencircuit : 35|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Horn_short_circuit : 34|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Cluster_Open_circuit : 47|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Cluster_short_circuit : 46|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Mode_lock : 41|3@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ TSL_Left_Open_circuit : 55|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ TSL_Left_short_circuit : 54|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ TSL_Right_Open_circuit : 51|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ TSL_Right_Short_circuit : 50|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_Charge_Sw : 49|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_Disch_Sw : 48|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Plug_Sense : 63|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Low_SOC_warning : 62|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Hazard_Lamp : 61|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Motor_Ready : 60|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ECU_EEPROM_fault : 59|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_CAN_Active : 58|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ T_controller_error : 57|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Kil_Switch : 56|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ HolidayMode : 32|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ StorageMode : 33|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 259 Vehicle_Information_103: 8 Vector__XXX
+ SG_ SOC : 0|10@1+ (0.1,0) [0|100] "%" Vector__XXX
+ SG_ SOH : 10|10@1+ (0.1,0) [0|100] "%" Vector__XXX
+ SG_ Cumulative_Temperature : 20|12@1+ (1,0) [-50|200] "�C" Vector__XXX
+ SG_ Cell_1_Voltage : 32|14@1+ (0.001,0) [0|5] "V" Vector__XXX
+ SG_ Cell_2_Voltage : 46|14@1+ (0.001,0) [0|5] "V" Vector__XXX
+
+BO_ 260 Vehicle_Information_104: 8 Vector__XXX
+ SG_ Cluster_Brightness_Control : 0|8@1+ (1,0) [0|100] "" Vector__XXX
+ SG_ Cell_3_Volt : 32|14@1+ (0.001,0) [0|16.383] "V" Vector__XXX
+ SG_ Cell_4_Volt : 46|14@1+ (0.001,0) [0|16.383] "V" Vector__XXX
+ SG_ BMS_Temperature_Sensor_4 : 8|10@1+ (0.1,0) [-50|200] "�C" Vector__XXX
+
+BO_ 261 Vehicle_Information_105: 8 Vector__XXX
+ SG_ Battery_Current : 0|32@1- (0.01,0) [-150|600] "Amp" Vector__XXX
+ SG_ Wh_Km : 32|10@1+ (1,0) [0|100] "Wh/Km" Vector__XXX
+ SG_ On_Board_BMS_Temperature : 42|9@1+ (1,0) [-50|200] "�C" Vector__XXX
+ SG_ Bat_Discharge___Regeneration : 51|9@1+ (1,-100) [-150|600] "A" Vector__XXX
+
+BO_ 262 Vehicle_Information_106: 8 Vector__XXX
+ SG_ Motor_Speed : 0|16@1+ (1,0) [0|65535] "RPM" Vector__XXX
+ SG_ Gear_Status : 23|3@0+ (1,0) [0|4] "" Vector__XXX
+ SG_ Left_LED : 20|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Right_LED : 19|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Ready : 31|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Side_Suport_power_off : 30|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Brake : 29|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Reverse : 28|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Cruise : 27|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Lock_Motor : 26|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Limit_power : 25|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Mosfet_Protection : 39|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Over_Current_Motor_hase_wire_sho : 38|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Controller_Over_Temp : 37|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Controller_Over_Voltage : 36|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Controller_Under_Voltage : 35|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Throttle_Galloping_Fault : 34|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Motor_Hall_Error : 33|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Motor_Phase_loss : 32|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Motor_Stalling : 47|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Motor_Over_Temperature : 46|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Controller_self_check_error : 45|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Throttle_not_Zero_on_power_ON : 44|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Power_Status : 43|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Speed_Limit_Mode : 42|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Regeneration : 41|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Plug_Sense__Duplicate_ : 40|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Charge_Err : 54|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Charge_Flt : 53|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ LimpHome : 52|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Power_Mode : 50|3@0+ (1,0) [0|7] "" Vector__XXX
+ SG_ TTC : 55|9@1+ (1,0) [0|511] "Minutes" Vector__XXX
+
+BO_ 263 Vehicle_Information_107: 8 Vector__XXX
+ SG_ Max_Cell_Voltage : 0|12@1+ (0.001,0) [0|5] "V" Vector__XXX
+ SG_ Cell_Delta : 12|12@1+ (1,0) [0|5] "V" Vector__XXX
+ SG_ DC_DC_Voltage : 24|8@1+ (0.1,0) [0|25] "V" Vector__XXX
+ SG_ MCU_Fault_Code : 32|8@1+ (1,0) [0|255] "DTC" Vector__XXX
+
+BO_ 264 Vehicle_Information_108: 8 Vector__XXX
+ SG_ DC_Current : 0|16@1+ (1,-3200) [-150|600] "A" Vector__XXX
+ SG_ DC_Voltage : 16|8@1+ (1,0) [0|255] "V" Vector__XXX
+ SG_ AC_Voltage : 24|8@1+ (1,0) [0|255] "V" Vector__XXX
+ SG_ AC_Current : 32|16@1+ (1,0) [-1000|1000] "A" Vector__XXX
+ SG_ Motor_Speed : 48|16@1+ (1,0) [0|65535] "RPM" Vector__XXX
+
+BO_ 265 Vehicle_Information_109: 8 Vector__XXX
+ SG_ Cell_9_Voltage : 0|14@1+ (0.001,0) [0|5] "V" Vector__XXX
+ SG_ Cell_10_Voltage : 14|14@1+ (0.001,0) [0|5] "V" Vector__XXX
+ SG_ Cell_11_Voltage : 32|14@1+ (0.001,0) [0|5] "V" Vector__XXX
+ SG_ Cell_12_Voltage : 46|14@1+ (0.001,0) [0|5] "V" Vector__XXX
+
+BO_ 272 Vehicle_Information_110: 8 Vector__XXX
+ SG_ Cell_5_Voltage : 0|14@1+ (0.001,0) [0|5] "V" Vector__XXX
+ SG_ Cell_6_Voltage : 14|14@1+ (0.001,0) [0|5] "V" Vector__XXX
+ SG_ Cell_7_Voltage : 32|14@1+ (0.001,0) [0|5] "V" Vector__XXX
+ SG_ Cell_8_Voltage : 46|14@1+ (0.001,0) [0|5] "V" Vector__XXX
+
+BO_ 273 Vehicle_Information_111: 8 Vector__XXX
+ SG_ BMS_Temperature_sensor_1 : 0|10@1+ (0.1,0) [-50|200] "�C" Vector__XXX
+ SG_ BMS_Temperature_sensor_2 : 10|10@1+ (0.1,0) [-50|200] "�C" Vector__XXX
+ SG_ BMS_Temperature_sensoe_3 : 20|10@1+ (0.1,0) [-50|200] "�C" Vector__XXX
+ SG_ Cell_13_Voltage : 32|14@1+ (0.001,0) [0|5] "V" Vector__XXX
+ SG_ Cell_14_Voltage : 46|14@1+ (0.001,0) [0|5] "V" Vector__XXX
+
+BO_ 289 Vehicle_Information_121__BMS_Err: 8 Vector__XXX
+ SG_ OVERVOLTAGE : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ UNDERVOLTAGE : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ OVER_TEMPERATURE : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ UNDER_TEMPERATURE : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ OVERLOAD : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ CURRENT_SHORTCIRCUIT : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BATTERY_PARAM_TIMEOUT : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BOARD_VALUES_UPTODATE : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ CURRENT_UPTODATE : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ FREESB_SHUTDOWN : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ OPEN_CONNECTION : 10|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDU_FAILURE : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDU_OVERTEMPERATURE : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ENCRYPTION_KEY_NOT_VALID : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDU_LOCK : 14|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ BMS_AUTHENTICATION : 15|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DATA_CORRUPTED : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PRECHARGE_ERROR : 17|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ INTERLOCK : 18|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ VAR_TYPE_MISMATCH : 19|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ IMD : 20|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ OV_SAFETY_FUSE_TRIGGERED : 21|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ERROR_ASSOCIATION : 22|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MSD : 23|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ HIGH_HUMIDITY : 24|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ CELL_TEMP_IMBALANCE : 25|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PRECHARGE_LOAD_NOT_DETECTED : 26|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PRECHARGE_INCOMPLETE : 27|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ UNAUTHORISED_CHARGER_DETECTED : 28|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ CHARGER_AUTHENTICATION_FAILURE : 29|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DISCHARGE_WELD_DETECTED : 30|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ CHARGE_WELD_DETECTED : 31|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ DISCHARGE_OPEN_DETECTED : 32|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ CHARGE_OPEN_DETECTED : 33|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ THERMAL_RUNAWAY : 34|1@1+ (1,0) [0|1] "" Vector__XXX
+
+
+BA_DEF_ SG_  "SignalType" STRING ;
+BA_DEF_DEF_  "SignalType" "";
+BA_ "SignalType" SG_ 256 JS_Left "ENM";
+BA_ "SignalType" SG_ 256 JS_Right "ENM";
+BA_ "SignalType" SG_ 256 JS_Up "ENM";
+BA_ "SignalType" SG_ 256 JS_Down "ENM";
+BA_ "SignalType" SG_ 256 JS_Centre "ENM";
+BA_ "SignalType" SG_ 257 Drive_Mode "ENM";
+BA_ "SignalType" SG_ 258 Over_RPM "ENM";
+BA_ "SignalType" SG_ 258 Low_Battery "ENM";
+BA_ "SignalType" SG_ 258 TconStopCan "ENM";
+BA_ "SignalType" SG_ 258 Stand_up "ENM";
+BA_ "SignalType" SG_ 258 Horn "ENM";
+BA_ "SignalType" SG_ 258 High_Beam "ENM";
+BA_ "SignalType" SG_ 258 Head_Lamp__low_Beam_ "ENM";
+BA_ "SignalType" SG_ 258 Ignition "ENM";
+BA_ "SignalType" SG_ 258 Vehicle_Ready "ENM";
+BA_ "SignalType" SG_ 258 Charging "ENM";
+BA_ "SignalType" SG_ 258 Light_Switch "ENM";
+BA_ "SignalType" SG_ 258 Brake_Lamp "ENM";
+BA_ "SignalType" SG_ 258 Rear_Brake_Switch "ENM";
+BA_ "SignalType" SG_ 258 Front_Brake_Switch "ENM";
+BA_ "SignalType" SG_ 258 Regeneration "ENM";
+BA_ "SignalType" SG_ 258 Throttle_Switch "ENM";
+BA_ "SignalType" SG_ 258 Charger_Connection "ENM";
+BA_ "SignalType" SG_ 258 Crawl_Mode "ENM";
+BA_ "SignalType" SG_ 258 Service_Indication "ENM";
+BA_ "SignalType" SG_ 258 Starter_Sw "ENM";
+BA_ "SignalType" SG_ 258 Pass_By_Switch "ENM";
+BA_ "SignalType" SG_ 258 TSL_Right "ENM";
+BA_ "SignalType" SG_ 258 TSL_Left "ENM";
+BA_ "SignalType" SG_ 258 Hard_error "ENM";
+BA_ "SignalType" SG_ 258 High_Beam_Open_Circuit "ENM";
+BA_ "SignalType" SG_ 258 High_Beam_Short_circuit "ENM";
+BA_ "SignalType" SG_ 258 Aux_Charging "ENM";
+BA_ "SignalType" SG_ 258 BatteryPackOverTemp "ENM";
+BA_ "SignalType" SG_ 258 Low_beam_Open_Circuit "ENM";
+BA_ "SignalType" SG_ 258 LOw_Beam_Short_circuit "ENM";
+BA_ "SignalType" SG_ 258 ChargerTypeChademo "ENM";
+BA_ "SignalType" SG_ 258 ChargerTypeTork "ENM";
+BA_ "SignalType" SG_ 258 Brake_lamp_Open_circuit "ENM";
+BA_ "SignalType" SG_ 258 Brake_lamp_short_circuit "ENM";
+BA_ "SignalType" SG_ 258 PremiumMode "ENM";
+BA_ "SignalType" SG_ 258 Horn_Opencircuit "ENM";
+BA_ "SignalType" SG_ 258 Horn_short_circuit "ENM";
+BA_ "SignalType" SG_ 258 Cluster_Open_circuit "ENM";
+BA_ "SignalType" SG_ 258 Cluster_short_circuit "ENM";
+BA_ "SignalType" SG_ 258 Mode_lock "ENM";
+BA_ "SignalType" SG_ 258 TSL_Left_Open_circuit "ENM";
+BA_ "SignalType" SG_ 258 TSL_Left_short_circuit "ENM";
+BA_ "SignalType" SG_ 258 TSL_Right_Open_circuit "ENM";
+BA_ "SignalType" SG_ 258 TSL_Right_Short_circuit "ENM";
+BA_ "SignalType" SG_ 258 BMS_Charge_Sw "ENM";
+BA_ "SignalType" SG_ 258 BMS_Disch_Sw "ENM";
+BA_ "SignalType" SG_ 258 Plug_Sense "ENM";
+BA_ "SignalType" SG_ 258 Low_SOC_warning "ENM";
+BA_ "SignalType" SG_ 258 Hazard_Lamp "ENM";
+BA_ "SignalType" SG_ 258 Motor_Ready "ENM";
+BA_ "SignalType" SG_ 258 ECU_EEPROM_fault "ENM";
+BA_ "SignalType" SG_ 258 BMS_CAN_Active "ENM";
+BA_ "SignalType" SG_ 258 T_controller_error "ENM";
+BA_ "SignalType" SG_ 258 Kil_Switch "ENM";
+BA_ "SignalType" SG_ 258 HolidayMode "ENM";
+BA_ "SignalType" SG_ 258 StorageMode "ENM";
+BA_ "SignalType" SG_ 262 Gear_Status "ENM";
+BA_ "SignalType" SG_ 262 Left_LED "ENM";
+BA_ "SignalType" SG_ 262 Right_LED "ENM";
+BA_ "SignalType" SG_ 262 Ready "ENM";
+BA_ "SignalType" SG_ 262 Power_Mode "ENM";
+BA_ "SignalType" SG_ 289 OVERVOLTAGE "ENM";
+BA_ "SignalType" SG_ 289 UNDERVOLTAGE "ENM";
+BA_ "SignalType" SG_ 289 OVER_TEMPERATURE "ENM";
+BA_ "SignalType" SG_ 289 UNDER_TEMPERATURE "ENM";
+BA_ "SignalType" SG_ 289 OVERLOAD "ENM";
+BA_ "SignalType" SG_ 289 CURRENT_SHORTCIRCUIT "ENM";
+BA_ "SignalType" SG_ 289 BATTERY_PARAM_TIMEOUT "ENM";
+BA_ "SignalType" SG_ 289 BOARD_VALUES_UPTODATE "ENM";
+BA_ "SignalType" SG_ 289 CURRENT_UPTODATE "ENM";
+BA_ "SignalType" SG_ 289 FREESB_SHUTDOWN "ENM";
+BA_ "SignalType" SG_ 289 OPEN_CONNECTION "ENM";
+BA_ "SignalType" SG_ 289 PDU_FAILURE "ENM";
+BA_ "SignalType" SG_ 289 PDU_OVERTEMPERATURE "ENM";
+BA_ "SignalType" SG_ 289 ENCRYPTION_KEY_NOT_VALID "ENM";
+BA_ "SignalType" SG_ 289 PDU_LOCK "ENM";
+BA_ "SignalType" SG_ 289 BMS_AUTHENTICATION "ENM";
+BA_ "SignalType" SG_ 289 DATA_CORRUPTED "ENM";
+BA_ "SignalType" SG_ 289 PRECHARGE_ERROR "ENM";
+BA_ "SignalType" SG_ 289 INTERLOCK "ENM";
+BA_ "SignalType" SG_ 289 VAR_TYPE_MISMATCH "ENM";
+BA_ "SignalType" SG_ 289 IMD "ENM";
+BA_ "SignalType" SG_ 289 OV_SAFETY_FUSE_TRIGGERED "ENM";
+BA_ "SignalType" SG_ 289 ERROR_ASSOCIATION "ENM";
+BA_ "SignalType" SG_ 289 MSD "ENM";
+BA_ "SignalType" SG_ 289 HIGH_HUMIDITY "ENM";
+BA_ "SignalType" SG_ 289 CELL_TEMP_IMBALANCE "ENM";
+BA_ "SignalType" SG_ 289 PRECHARGE_LOAD_NOT_DETECTED "ENM";
+BA_ "SignalType" SG_ 289 PRECHARGE_INCOMPLETE "ENM";
+BA_ "SignalType" SG_ 289 UNAUTHORISED_CHARGER_DETECTED "ENM";
+BA_ "SignalType" SG_ 289 CHARGER_AUTHENTICATION_FAILURE "ENM";
+BA_ "SignalType" SG_ 289 DISCHARGE_WELD_DETECTED "ENM";
+BA_ "SignalType" SG_ 289 CHARGE_WELD_DETECTED "ENM";
+BA_ "SignalType" SG_ 289 DISCHARGE_OPEN_DETECTED "ENM";
+BA_ "SignalType" SG_ 289 CHARGE_OPEN_DETECTED "ENM";
+BA_ "SignalType" SG_ 289 THERMAL_RUNAWAY "ENM";
+VAL_ 256 JS_Left 1 "ON" 0 "OFF" ;
+VAL_ 256 JS_Right 0 "OFF" 1 "ON" ;
+VAL_ 256 JS_Up 0 "OFF" 1 "ON" ;
+VAL_ 256 JS_Down 0 "OFF" 1 "ON" ;
+VAL_ 256 JS_Centre 0 "OFF" 1 "ON" ;
+VAL_ 257 Drive_Mode 0 "Eco" 1 "Sport" 2 "Reverse" 4 "City" 8 "Mode Disable" 16 "Crawl/Turtle Mode" ;
+VAL_ 258 Over_RPM 0 "NO" 1 "YES" ;
+VAL_ 258 Low_Battery 0 "NO" 1 "YES" ;
+VAL_ 258 TconStopCan 0 "OFF" 1 "ON" ;
+VAL_ 258 Stand_up 0 "NO" 1 "YES" ;
+VAL_ 258 Horn 0 "OFF" 1 "ON" ;
+VAL_ 258 High_Beam 0 "OFF" 1 "ON" ;
+VAL_ 258 Head_Lamp__low_Beam_ 0 "OFF" 1 "ON" ;
+VAL_ 258 Ignition 0 "OFF" 1 "ON" ;
+VAL_ 258 Vehicle_Ready 0 "NO" 1 "YES" ;
+VAL_ 258 Charging 0 "NO" 1 "YES" ;
+VAL_ 258 Light_Switch 0 "OFF" 1 "ON" ;
+VAL_ 258 Brake_Lamp 0 "OFF" 1 "ON" ;
+VAL_ 258 Rear_Brake_Switch 0 "OFF" 1 "ON" ;
+VAL_ 258 Front_Brake_Switch 0 "OFF" 1 "ON" ;
+VAL_ 258 Regeneration 0 "OFF" 1 "ON" ;
+VAL_ 258 Throttle_Switch 0 "OFF" 1 "ON" ;
+VAL_ 258 Charger_Connection 0 "NO" 1 "YES" ;
+VAL_ 258 Crawl_Mode 0 "OFF" 1 "ON" ;
+VAL_ 258 Service_Indication 0 "OFF" 1 "ON" ;
+VAL_ 258 Starter_Sw 0 "OFF" 1 "ON" ;
+VAL_ 258 Pass_By_Switch 0 "OFF" 1 "ON" ;
+VAL_ 258 TSL_Right 0 "OFF" 1 "ON" ;
+VAL_ 258 TSL_Left 0 "OFF" 1 "ON" ;
+VAL_ 258 Hard_error 0 "NO" 1 "YES" ;
+VAL_ 258 High_Beam_Open_Circuit 0 "NO" 1 "YES" ;
+VAL_ 258 High_Beam_Short_circuit 0 "NO" 1 "YES" ;
+VAL_ 258 Aux_Charging 0 "OFF" 1 "ON" ;
+VAL_ 258 BatteryPackOverTemp 0 "No" 1 "Yes" ;
+VAL_ 258 Low_beam_Open_Circuit 0 "NO" 1 "YES" ;
+VAL_ 258 LOw_Beam_Short_circuit 0 "OFF" 1 "ON" ;
+VAL_ 258 ChargerTypeChademo 0 "No" 1 "Yes" ;
+VAL_ 258 ChargerTypeTork 0 "No" 1 "Yes" ;
+VAL_ 258 Brake_lamp_Open_circuit 0 "OFF" 1 "ON" ;
+VAL_ 258 Brake_lamp_short_circuit 0 "OFF" 1 "ON" ;
+VAL_ 258 PremiumMode 0 "Inactive" 1 "Active" ;
+VAL_ 258 Horn_Opencircuit 0 "NO" 1 "YES" ;
+VAL_ 258 Horn_short_circuit 0 "NO" 1 "YES" ;
+VAL_ 258 Cluster_Open_circuit 0 "NO" 1 "YES" ;
+VAL_ 258 Cluster_short_circuit 0 "OFF" 1 "ON" ;
+VAL_ 258 Mode_lock 0 "OFF" 1 "ON" ;
+VAL_ 258 TSL_Left_Open_circuit 0 "OFF" 1 "ON" ;
+VAL_ 258 TSL_Left_short_circuit 0 "NO" 1 "YES" ;
+VAL_ 258 TSL_Right_Open_circuit 0 "NO" 1 "YES" ;
+VAL_ 258 TSL_Right_Short_circuit 0 "NO" 1 "YES" ;
+VAL_ 258 BMS_Charge_Sw 0 "OFF" 1 "ON" ;
+VAL_ 258 BMS_Disch_Sw 0 "OFF" 1 "ON" ;
+VAL_ 258 Plug_Sense 0 "NO" 1 "YES" ;
+VAL_ 258 Low_SOC_warning 0 "NO" 1 "YES" ;
+VAL_ 258 Hazard_Lamp 0 "OFF" 1 "ON" ;
+VAL_ 258 Motor_Ready 0 "NO" 1 "YES" ;
+VAL_ 258 ECU_EEPROM_fault 0 "NO" 1 "YES" ;
+VAL_ 258 BMS_CAN_Active 0 "NO" 1 "YES" ;
+VAL_ 258 T_controller_error 0 "NO" 1 "YES" ;
+VAL_ 258 Kil_Switch 0 "OFF" 1 "ON" ;
+VAL_ 258 HolidayMode 0 "Inactive" 1 "Active" ;
+VAL_ 258 StorageMode 0 "Inactive" 1 "Active" ;
+VAL_ 262 Gear_Status 0 "Park" 1 "1 Gear" 2 "2 Gear" 3 "3 Gear" 4 "S Gear" ;
+VAL_ 262 Left_LED 0 "OFF" 1 "ON" ;
+VAL_ 262 Right_LED 0 "OFF" 1 "ON" ;
+VAL_ 262 Ready 0 "NO" 1 "YES" ;
+VAL_ 262 Power_Mode 0 "Level 1" 1 "Level 2" 2 "Level 3" 3 "Level 4" 4 "Level 5" 5 "Level 6" 6 "Level 7" 7 "Level 8" ;
+VAL_ 289 OVERVOLTAGE 0 "No" 1 "Yes" ;
+VAL_ 289 UNDERVOLTAGE 0 "No" 1 "Yes" ;
+VAL_ 289 OVER_TEMPERATURE 0 "No" 1 "Yes" ;
+VAL_ 289 UNDER_TEMPERATURE 0 "No" 1 "Yes" ;
+VAL_ 289 OVERLOAD 0 "No" 1 "YES" ;
+VAL_ 289 CURRENT_SHORTCIRCUIT 0 "No" 1 "Yes" ;
+VAL_ 289 BATTERY_PARAM_TIMEOUT 0 "No" 1 "Yes" ;
+VAL_ 289 BOARD_VALUES_UPTODATE 0 "No" 1 "Yes" ;
+VAL_ 289 CURRENT_UPTODATE 0 "No" 1 "Yes" ;
+VAL_ 289 FREESB_SHUTDOWN 0 "No" 1 "Yes" ;
+VAL_ 289 OPEN_CONNECTION 0 "No" 1 "Yes" ;
+VAL_ 289 PDU_FAILURE 0 "No" 1 "Yes" ;
+VAL_ 289 PDU_OVERTEMPERATURE 0 "No" 1 "Yes" ;
+VAL_ 289 ENCRYPTION_KEY_NOT_VALID 0 "No" 1 "Yes" ;
+VAL_ 289 PDU_LOCK 0 "No" 1 "Yes" ;
+VAL_ 289 BMS_AUTHENTICATION 0 "No" 1 "Yes" ;
+VAL_ 289 DATA_CORRUPTED 0 "No" 1 "Yes" ;
+VAL_ 289 PRECHARGE_ERROR 0 "No" 1 "Yes" ;
+VAL_ 289 INTERLOCK 0 "No" 1 "Yes" ;
+VAL_ 289 VAR_TYPE_MISMATCH 0 "No" 1 "Yes" ;
+VAL_ 289 IMD 0 "No" 1 "Yes" ;
+VAL_ 289 OV_SAFETY_FUSE_TRIGGERED 0 "No" 1 "Yes" ;
+VAL_ 289 ERROR_ASSOCIATION 0 "No" 1 "Yes" ;
+VAL_ 289 MSD 0 "No" 1 "Yes" ;
+VAL_ 289 HIGH_HUMIDITY 0 "No" 1 "Yes" ;
+VAL_ 289 CELL_TEMP_IMBALANCE 0 "No" 1 "Yes" ;
+VAL_ 289 PRECHARGE_LOAD_NOT_DETECTED 0 "No" 1 "Yes" ;
+VAL_ 289 PRECHARGE_INCOMPLETE 0 "No" 1 "Yes" ;
+VAL_ 289 UNAUTHORISED_CHARGER_DETECTED 0 "No" 1 "Yes" ;
+VAL_ 289 CHARGER_AUTHENTICATION_FAILURE 0 "No" 1 "Yes" ;
+VAL_ 289 DISCHARGE_WELD_DETECTED 0 "No" 1 "Yes" ;
+VAL_ 289 CHARGE_WELD_DETECTED 0 "No" 1 "Yes" ;
+VAL_ 289 DISCHARGE_OPEN_DETECTED 0 "No" 1 "Yes" ;
+VAL_ 289 CHARGE_OPEN_DETECTED 0 "No" 1 "Yes" ;
+VAL_ 289 THERMAL_RUNAWAY 0 "No" 1 "Yes" ;
+

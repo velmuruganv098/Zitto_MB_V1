@@ -12,8 +12,8 @@ android {
         applicationId = "com.zitto.vcumaster"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "2.0.0"
     }
 
     buildTypes {
@@ -40,6 +40,9 @@ android {
     packaging {
         resources.excludes += "/META-INF/{AL2.0,LGPL2.1}"
     }
+    testOptions {
+        unitTests.isIncludeAndroidResources = true     // Robolectric UI render tests read the assets (DBC library)
+    }
 }
 
 dependencies {
@@ -57,4 +60,9 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
 
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.json:json:20240303")   // real org.json for JVM unit tests (android.jar only has stubs)
+    // UI tests on the JVM (Robolectric): compose + lay out every window of the real app with the simulator
+    testImplementation("org.robolectric:robolectric:4.13")
+    testImplementation("androidx.compose.ui:ui-test-junit4")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
 }

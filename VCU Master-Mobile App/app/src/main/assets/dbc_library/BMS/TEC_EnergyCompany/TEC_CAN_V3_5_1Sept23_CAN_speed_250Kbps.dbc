@@ -1,0 +1,121 @@
+VERSION ""
+
+
+BS_:
+
+BU_:
+
+
+BO_ 2216688362 CellVoltage1: 8 Vector__XXX
+ SG_ C1 : 0|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C2 : 16|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C3 : 32|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C4 : 48|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+
+BO_ 2233465578 CellVoltage2: 8 Vector__XXX
+ SG_ C5 : 0|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C6 : 16|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C7 : 32|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C8 : 48|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+
+BO_ 2250242794 CellVoltage3: 8 Vector__XXX
+ SG_ C9 : 0|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C10 : 16|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C11 : 32|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C12 : 48|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+
+BO_ 2267020010 CellVoltage4: 8 Vector__XXX
+ SG_ C13 : 0|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C14 : 16|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C15 : 32|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C16 : 48|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+
+BO_ 2216753898 CellVoltage5: 8 Vector__XXX
+ SG_ C17 : 0|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C18 : 16|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C19 : 32|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ C20 : 48|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+
+BO_ 2233531114 CellVoltage6: 8 Vector__XXX
+ SG_ Cavg : 0|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ Vstack : 16|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ Cmin : 32|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+ SG_ Cmax : 48|16@1+ (0.001,0) [0|65.535] "Volts" Vector__XXX
+
+BO_ 2283928298 Current: 8 Vector__XXX
+ SG_ SOH : 56|8@1+ (1,0) [0|255] "%" Vector__XXX
+ SG_ CurrentCSA : 0|16@1- (0.1,0) [-3276.8|3276.7] "Amps" Vector__XXX
+ SG_ CurrentAFE : 16|16@1- (0.1,0) [-3276.8|3276.7] "Amps" Vector__XXX
+ SG_ SOC : 48|8@1+ (1,0) [0|255] "%" Vector__XXX
+
+BO_ 2485320426 Temperature1: 8 Vector__XXX
+ SG_ T1 : 0|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ T2 : 16|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ T3 : 32|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ T4 : 48|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+
+BO_ 2351168234 State: 8 Vector__XXX
+ SG_ FuseFailure : 29|1@1- (1,0) [0|1] "None" Vector__XXX
+ SG_ SDCardErr3 : 27|1@1- (1,0) [0|1] "None" Vector__XXX
+ SG_ FETOT : 26|1@1- (1,0) [0|1] "None" Vector__XXX
+ SG_ FETERR : 25|1@1- (1,0) [0|1] "None" Vector__XXX
+ SG_ CCOMER : 24|1@1- (1,0) [0|1] "None" Vector__XXX
+ SG_ DeepDischargeWarning : 14|1@1- (1,0) [0|1] "None" Vector__XXX
+ SG_ ShuntOffsetError : 13|1@1- (1,0) [0|1] "None" Vector__XXX
+ SG_ NTCFailure : 12|1@1- (1,0) [0|1] "None" Vector__XXX
+ SG_ SDCardErr : 11|1@1- (1,0) [0|1] "None" Vector__XXX
+ SG_ ChargerTimeOutCutOff : 10|1@1- (1,0) [0|1] "None" Vector__XXX
+ SG_ VoltageGraderr : 9|1@1- (1,0) [0|1] "None" Vector__XXX
+ SG_ TempGraderr : 8|1@1- (1,0) [0|1] "None" Vector__XXX
+ SG_ Ready : 7|1@1- (1,0) [0|1] "None" Vector__XXX
+ SG_ ChargerTimeOut : 6|1@1- (1,0) [0|1] "None" Vector__XXX
+ SG_ ShortCircuitError : 5|1@1- (1,0) [0|1] "None" Vector__XXX
+ SG_ OverTemperature : 4|1@1- (1,0) [0|1] "None" Vector__XXX
+ SG_ RegenErr : 3|1@1- (1,0) [0|1] "None" Vector__XXX
+ SG_ OverCurrent : 2|1@1- (1,0) [0|1] "None" Vector__XXX
+ SG_ UnderVoltage : 1|1@1- (1,0) [0|1] "None" Vector__XXX
+ SG_ FullCharge_OV : 0|1@1- (1,0) [0|1] "None" Vector__XXX
+ SG_ FANStatus : 48|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ SdcardFilno : 32|16@1+ (1,0) [0|65535] "None" Vector__XXX
+ SG_ VehicleState : 16|8@1+ (1,0) [0|255] "None" Vector__XXX
+
+BO_ 2485451498 Temperature2: 8 Vector__XXX
+ SG_ T5 : 0|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ T6 : 16|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ T7 : 32|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ T8 : 48|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+
+BO_ 2485517034 Temperature3: 8 Vector__XXX
+ SG_ T9 : 0|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ T10 : 16|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ T11 : 32|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ T12 : 48|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+
+BO_ 2485582570 Temperature4: 8 Vector__XXX
+ SG_ T13 : 0|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ T14 : 16|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ Tmin : 32|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+ SG_ Tmax : 48|16@1+ (0.01,0) [0|655.35] "DegC" Vector__XXX
+
+BO_ 2383739883 Charge_parameters: 8 Vector__XXX
+ SG_ ReserveSwitch : 16|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ ChargeCurrentDemand : 0|16@1+ (1,0) [0|65535] "amp" Vector__XXX
+ SG_ ChargerError1 : 24|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ ChargerError2 : 32|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ CapacityActive : 48|16@1+ (0.01,0) [0|655.35] "ah" Vector__XXX
+
+BO_ 2585066475 Authentication: 8 Vector__XXX
+ SG_ SWVersionMajor : 8|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ SWVersionMinor : 16|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ HWVersionMajor : 24|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ HWVersionMinor : 32|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ CellType : 40|8@1+ (1,0) [0|255] "None" Vector__XXX
+ SG_ RatedCapacity : 48|8@1+ (1,0) [0|255] "Ah" Vector__XXX
+ SG_ CustomeID : 56|8@1+ (1,0) [0|255] "None" Vector__XXX
+
+BO_ 2568284922 BatteryID: 8 Vector__XXX
+ SG_ BatteryID : 0|64@1+ (1,0) [0|1.84467e+019] "None" Vector__XXX
+
+
+
+

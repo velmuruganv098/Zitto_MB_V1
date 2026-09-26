@@ -28,6 +28,8 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -40,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zitto.vcumaster.core.ConLine
@@ -64,6 +67,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.math.ceil
+import kotlin.math.roundToInt
 
 private fun displayName(ctx: Context, uri: Uri): String {
     ctx.contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)?.use { c ->
@@ -219,6 +223,8 @@ fun UpdatesScreen(st: HubState, hub: Hub, prefs: UiPrefs) {
             Spacer(Modifier.height(8.dp))
         }
 
+        LibraryPanel(st, hub, prefs)
+
         DbcBrowser(st)
     }
 
@@ -315,6 +321,96 @@ private fun DbcBrowser(st: HubState) {
                 Spacer(Modifier.height(6.dp))
             }
         }
+        Spacer(Modifier.height(8.dp))
+    }
+}
+
+/** V0.0073 DBC library: the same dbc_library/ tree as the desktop tool, with automatic matching of the bus traffic. */
+@Composable
+private fun LibraryPanel(st: HubState, hub: Hub, prefs: UiPrefs) {
+    val v = LocalVcu.current
+    var q by remember { mutableStateOf("") }
+    var product by remember { mutableStateOf("") }
+    var prodMenu by remember { mutableStateOf(false) }
+    val items = hub.library.items
+    val products = remember(items) { items.map { it.product }.distinct().sorted() }
+
+    Panel("DBC library", sub = "${items.size} DBC files, same tree as CAN_DBC_Simulator", actions = {
+        SmallButton("Match now") { hub.libRefreshMatch() }
+    }) {
+        Row(Modifier.fillMaxWidth().padding(horizontal = 14.dp), verticalAlignment = Alignment.CenterVertically) {
+            Text("Load a matching DBC automatically when unknown frames arrive", fontSize = 13.sp, modifier = Modifier.weight(1f))
+            Switch(checked = st.autoDbc, onCheckedChange = { hub.setAutoDbc(it) })
+        }
+        val m = st.libMatch
+        if (m == null || m.unknown == 0) {
+            Note("Every CAN frame received in the last 15 s is decoded by a loaded DBC.")
+        } else {
+            Note(
+                "${m.unknown} identifier(s) on the bus are not in any loaded DBC: " +
+                    m.unknownIds.take(8).joinToString(", ") + if (m.unknownIds.size > 8) " …" else "",
+            )
+            if (m.candidates.isEmpty()) Note("No library DBC defines these identifiers. Upload the right DBC above.")
+            m.candidates.take(5).forEachIndexed { i, c ->
+                Row(
+                    Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 3.dp)
+                        .background(if (i == 0) v.ok.copy(alpha = 0.08f) else v.rule2.copy(alpha = 0.5f), RoundedCornerShape(8.dp))
+                        .padding(horizontal = 10.dp, vertical = 6.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Column(Modifier.weight(1f)) {
+                        Text("${c.vendor.ifEmpty { c.product }} / ${c.file}", fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+                        Text(
+                            "defines ${c.matched} of these IDs (${(c.coverage * 100).roundToInt()} % of its ${c.messages} messages seen) " +
+                                "on CAN${c.buses.joinToString("/")}",
+                            fontSize = 11.5.sp, color = v.ink3,
+                        )
+                    }
+                    if (i == 0) PrimaryButton("Load") { hub.libLoad(c.id, c.buses.ifEmpty { listOf(1, 2) }) }
+                    else SmallButton("Load") { hub.libLoad(c.id, c.buses.ifEmpty { listOf(1, 2) }) }
+                }
+            }
+        }
+        OutlinedTextField(
+            q, { q = it }, singleLine = true, label = { Text("Search vendor or file, e.g. Daly") },
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 4.dp),
+        )
+        Row(Modifier.fillMaxWidth().padding(horizontal = 6.dp), verticalAlignment = Alignment.CenterVertically) {
+            Box {
+                TextButton(onClick = { prodMenu = true }) {
+                    Text(if (product.isEmpty()) "All products" else product, fontSize = 12.5.sp)
+                    Icon(Icons.Filled.ExpandMore, null)
+                }
+                DropdownMenu(expanded = prodMenu, onDismissRequest = { prodMenu = false }) {
+                    DropdownMenuItem(text = { Text("All products") }, onClick = { product = ""; prodMenu = false })
+                    for (p in products) DropdownMenuItem(text = { Text(p) }, onClick = { product = p; prodMenu = false })
+                }
+            }
+            Spacer(Modifier.weight(1f))
+            Text("Load on", fontSize = 12.5.sp, color = v.ink2)
+            Checkbox(prefs.libB1, { prefs.setLibBuses(it, prefs.libB2) }); Text("CAN1", fontSize = 12.5.sp)
+            Checkbox(prefs.libB2, { prefs.setLibBuses(prefs.libB1, it) }); Text("CAN2", fontSize = 12.5.sp)
+        }
+        val ql = q.trim().lowercase()
+        val rows = items.filter { (product.isEmpty() || it.product == product) && (ql.isEmpty() || ql in it.id.lowercase()) }
+        if (rows.isEmpty()) EmptyNote("No DBC matches that search.")
+        for (i in rows.take(120)) {
+            HorizontalDivider(color = v.rule2)
+            Row(Modifier.fillMaxWidth().padding(start = 14.dp, end = 8.dp, top = 4.dp, bottom = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    Text(i.file, fontFamily = Mono, fontSize = 12.5.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text("${i.product} · ${i.vendor} · ${i.messages} messages", fontSize = 11.5.sp, color = v.ink3)
+                }
+                if (i.id in st.libLoaded) {
+                    Text("Loaded", fontSize = 12.sp, color = v.ok, modifier = Modifier.padding(horizontal = 8.dp))
+                } else {
+                    SmallButton("Load", enabled = i.messages > 0) {
+                        hub.libLoad(i.id, listOfNotNull(if (prefs.libB1) 1 else null, if (prefs.libB2) 2 else null))
+                    }
+                }
+            }
+        }
+        if (rows.size > 120) Note("Showing 120 of ${rows.size}. Search to narrow the list.")
         Spacer(Modifier.height(8.dp))
     }
 }

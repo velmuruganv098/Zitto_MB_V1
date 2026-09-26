@@ -1,0 +1,168 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: Motor_Controller BCM BMS_Portable_battery BMS_Fixed_battery HMI
+
+
+BO_ 2350376692 BCM_HMI_StatusCommands_23: 8 BCM
+ SG_ BCM_OTA_NACK : 41|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_OTA_ACK : 40|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BCM_H_KeyOnoff_Command : 28|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BCM_Sw_KIllSwitch_Status : 13|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BCM_Sw_Standsensor_status : 11|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BCM_L_RightIndicator_Status : 10|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BCM_L_Leftindicator_status : 9|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BCM_L_HighBeam_Status : 8|1@1+ (1,0) [0|1] "Boolean"  HMI
+
+BO_ 2349721332 BCM_HMI_Range_13: 8 BCM
+ SG_ BCM_RangeDisplay : 0|16@1+ (0.01,0) [0|655.35] "Km"  HMI
+
+BO_ 2348941299 MC_All_Telemetry_1: 8 Motor_Controller
+ SG_ Current_Mode_Status : 32|8@1+ (1,0) [0|5] "Mode"  HMI,BCM
+ SG_ Motor_OnOff_status : 24|1@1+ (1,0) [0|1] "Boolean"  HMI,BCM
+
+BO_ 2350448628 BCM_All_Status_24: 8 BCM
+ SG_ BCM_ChargerDocked : 25|1@1+ (1,0) [0|0] "Boolean"  HMI
+
+BO_ 2350507764 BCM_HMI_Display_25: 8 BCM
+ SG_ EffectiveSOC : 40|8@1+ (1,0) [0|100] "%"  HMI
+ SG_ Calibrated_VehicleSpeed : 32|8@1+ (1,0) [0|255] "Km"  HMI
+ SG_ ODO_MeterReading : 0|32@1+ (0.1,0) [0|429496729.5] "Km"  HMI
+
+BO_ 2350710769 BMSF_All_Telemetry_28: 8 BMS_Fixed_battery
+ SG_ BMSF_U_SOC : 8|8@1+ (1,0) [0|100] "%"  HMI
+ SG_ BMSF_A_SOC : 0|8@1+ (1,0) [0|100] "%"  BCM,HMI
+
+BO_ 2350579697 BMSF_All_Status_26: 8 BMS_Fixed_battery
+ SG_ BMSF_SoftwareState : 56|8@1+ (1,0) [0|0] ""  BCM
+
+BO_ 2350776306 BMSP_All_Telemetry_29: 8 BMS_Portable_battery
+ SG_ BMSP_U_SOC : 8|8@1+ (1,0) [0|100] "%"  HMI
+ SG_ BMSP_A_SOC : 0|8@1+ (1,0) [0|100] "%"  BCM,HMI
+
+BO_ 2350645234 BMSP_All_Status_27: 8 BMS_Portable_battery
+ SG_ BMSP_SoftwareState : 56|8@1+ (1,0) [0|255] ""  BCM
+
+BO_ 2349593574 HMI_BCM_Input_11: 8 HMI
+ SG_ OTA_Command : 48|8@1+ (1,0) [0|3] "Init"  BCM
+
+
+CM_ BO_ 2350376692 "send by BCM to HMI every 100ms
+includes the information on switches connected to bcm";
+CM_ SG_ 2350376692 BCM_H_KeyOnoff_Command "Stand sensor status from BCM to HMI.
+0 - stand lifted
+1 = stand not lifted";
+CM_ SG_ 2350376692 BCM_Sw_Standsensor_status "Stand sensor status from BCM to HMI.
+0 - stand lifted
+1 = stand not lifted";
+CM_ SG_ 2350376692 BCM_L_RightIndicator_Status "Right indicator status. This denotes if the light is on or off
+0 - Off
+1 - On
+When an indicator is on, this bit will be toggling high and low
+";
+CM_ SG_ 2350376692 BCM_L_Leftindicator_status "Left indicator status. This denotes if the light is on or off
+0 - Off
+1 - On
+When an indicator is on, this bit will be toggling high and low
+";
+CM_ SG_ 2350376692 BCM_L_HighBeam_Status "HIgh beam status from BCM
+1 - high beam on
+0 - hig beam off";
+CM_ BO_ 2348941299 "Contains all the telemetry of motor controller
+";
+CM_ SG_ 2348941299 Current_Mode_Status "Status of mode from the motor controller.
+";
+CM_ SG_ 2348941299 Motor_OnOff_status "Status from motorcontroller if the motor is started or off state
+0 -  motor stopped (off)
+1  - motor started (on)";
+CM_ BO_ 2350507764 "ODO meter reading from BCM is send to HMI for display
+";
+CM_ SG_ 2350507764 ODO_MeterReading "ODO meter reading from BCM
+4 bytes is alloted";
+CM_ BO_ 2350710769 "Fixed battery telemetry. 
+";
+CM_ SG_ 2350710769 BMSF_U_SOC "Fixed battery - SOC";
+CM_ SG_ 2350710769 BMSF_A_SOC "Fixed battery - SOC";
+CM_ SG_ 2350776306 BMSP_U_SOC "Portable battery - SOC";
+CM_ SG_ 2350776306 BMSP_A_SOC "Portable battery - SOC";
+CM_ BO_ 2350645234 "portable battery status";
+BA_DEF_ BO_  "TpJ1939VarDlc" ENUM  "No","Yes";
+BA_DEF_ SG_  "SigType" ENUM  "Default","Range","RangeSigned","ASCII","Discrete","Control","ReferencePGN","DTC","StringDelimiter","StringLength","StringLengthControl","MessageCounter","MessageChecksum";
+BA_DEF_ SG_  "GenSigEVName" STRING ;
+BA_DEF_ SG_  "GenSigILSupport" ENUM  "No","Yes";
+BA_DEF_ SG_  "GenSigSendType" ENUM  "Cyclic","OnWrite","OnWriteWithRepetition","OnChange","OnChangeWithRepetition","IfActive","IfActiveWithRepetition","NoSigSendType";
+BA_DEF_ BO_  "GenMsgSendType" ENUM  "cyclic","NotUsed","IfActive","NotUsed","NotUsed","NotUsed","NotUsed","NotUsed","noMsgSendType";
+BA_DEF_ BO_  "GenMsgCycleTimeFast" INT 0 3600000;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 3600000;
+BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","J1939PG";
+BA_DEF_DEF_  "GenMsgCycleTimeFast" 0;
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_DEF_DEF_  "VFrameFormat" "J1939PG";
+BA_ "GenMsgCycleTime" BO_ 2350376692 100;
+BA_ "GenMsgSendType" BO_ 2350376692 0;
+BA_ "VFrameFormat" BO_ 2350376692 3;
+BA_ "GenMsgSendType" BO_ 2348941299 0;
+BA_ "GenMsgCycleTime" BO_ 2348941299 100;
+BA_ "VFrameFormat" BO_ 2348941299 3;
+BA_ "GenMsgSendType" BO_ 2350448628 0;
+BA_ "GenMsgCycleTime" BO_ 2350448628 100;
+BA_ "VFrameFormat" BO_ 2350448628 3;
+BA_ "GenMsgSendType" BO_ 2350507764 0;
+BA_ "GenMsgCycleTime" BO_ 2350507764 250;
+BA_ "VFrameFormat" BO_ 2350507764 3;
+BA_ "GenMsgSendType" BO_ 2350710769 0;
+BA_ "GenMsgCycleTime" BO_ 2350710769 200;
+BA_ "VFrameFormat" BO_ 2350710769 3;
+BA_ "GenMsgSendType" BO_ 2350776306 0;
+BA_ "GenMsgCycleTime" BO_ 2350776306 200;
+BA_ "VFrameFormat" BO_ 2350776306 3;
+BA_ "GenMsgSendType" BO_ 2350645234 0;
+BA_ "GenMsgCycleTime" BO_ 2350645234 200;
+BA_ "VFrameFormat" BO_ 2350645234 3;
+VAL_ 2350376692 BCM_H_KeyOnoff_Command 1 "Enabled" 0 "Disabled" ;
+VAL_ 2350376692 BCM_Sw_KIllSwitch_Status 1 "Switch pressed" 0 "switch not pressed" ;
+VAL_ 2350376692 BCM_Sw_Standsensor_status 1 "Stand is lifted" 0 "Stand is not lifted" ;
+VAL_ 2350376692 BCM_L_RightIndicator_Status 1 "Light On" 0 "Light off" ;
+VAL_ 2350376692 BCM_L_Leftindicator_status 1 "Light On" 0 "Light off" ;
+VAL_ 2350376692 BCM_L_HighBeam_Status 1 "Light On" 0 "Light off" ;
+VAL_ 2348941299 Current_Mode_Status 7 "Crawl" 6 "Reverse" 5 "Park" 4 "Sonic" 3 "Dash" 2 "Ride" 1 "Eco" ;
+VAL_ 2348941299 Motor_OnOff_status 1 "Motor_on" 0 "Motor_off" ;
+VAL_ 2350448628 BCM_ChargerDocked 1 "Enabled" 0 "Disabled" ;
+VAL_ 2350579697 BMSF_SoftwareState 9 "Calibration" 8 "FOTA" 7 "Shutdown" 6 "Standby" 5 "Fault" 4 "BP_Transition" 3 "Discharging" 2 "Charging" 1 "Idle" 0 "POST" ;
+VAL_ 2350645234 BMSP_SoftwareState 9 "Calibration" 8 "FOTA" 7 "Shutdown" 6 "Standby" 5 "Fault" 4 "BP_Transition" 3 "Discharging" 2 "Charging" 1 "Idle" 0 "POST" ;
+VAL_ 2350376692 BCM_OTA_NACK 1 "Negative" 0 "IDEAL" ;
+VAL_ 2350376692 BCM_OTA_ACK 1 "Positive" 0 "IDEAL" ;
+VAL_ 2349593574 OTA_Command 3 "Completion" 2 "In Progress" 1 "Initialization" 0 "Default (Ignore)" ;
+

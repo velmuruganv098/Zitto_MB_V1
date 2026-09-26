@@ -1,0 +1,86 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_:
+
+
+BO_ 260 Rectifier_Status_Faults: 3 Vector__XXX
+ SG_ Warning_Status : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Standby_Protection_Status : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Running_Status : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Radiator_Over_Temprature : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PFC_Abnormal : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Parallel_Address_Conflict : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Output_Short : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Output_Over_Voltage : 15|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Output_Over_Current : 14|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Input_Mode : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Inpur_Power_Abnormal : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Inpur_Phase_Loss : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Fault_Status : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Fan_Abnormal : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Discharge_Abnormal : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Communication_Abnormal : 10|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Ambient_Over_Temperature : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 259 Rectifier_Output_Parameters: 8 Vector__XXX
+ SG_ Module_DC_Power : 48|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ Module_Temp_FB : 32|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+ SG_ DC_Output_Voltage : 16|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ DC_Output_Current : 0|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+
+BO_ 258 Rectifier_Input_Current: 8 Vector__XXX
+ SG_ Module_AC_Power : 48|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ Current_C_Phase : 32|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+ SG_ Current_B_Phase : 16|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+ SG_ Current_A_Phase : 0|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+
+BO_ 257 Rectifier_Input_Voltage: 6 Vector__XXX
+ SG_ CA_Line_Voltage : 32|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+ SG_ BC_Line_Voltage : 16|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+ SG_ AB_Line_Voltage : 0|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+
+BO_ 256 External_Control_Parameters: 5 Vector__XXX
+ SG_ Ext_Current_Ctrl : 24|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+ SG_ Ext_Voltage_Ctrl : 8|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ Ext_Module_Ctrl : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+
+
+
+BA_DEF_  "MultiplexExtEnabled" ENUM  "No","Yes";
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "MultiplexExtEnabled" "No";
+BA_DEF_DEF_  "BusType" "CAN";
+

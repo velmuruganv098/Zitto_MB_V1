@@ -1,0 +1,114 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: VCU BCM
+
+
+BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
+ SG_ Output_Indicator_Left_Copy_9 : 0|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Output_Indicator_Left_Copy_8 : 0|1@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 1329 BCM_GPS_531: 8 Vector__XXX
+ SG_ GPS_Status : 43|4@0+ (1,0) [0|15] "" Vector__XXX
+ SG_ GPS_Speed : 7|16@0- (0.036,0) [0|300] "kph" Vector__XXX
+ SG_ GPS_Satellites : 39|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ GPS_Height : 23|16@0- (1,0) [-10000|10000] "m" Vector__XXX
+
+BO_ 1328 BCM_GPS_530: 8 Vector__XXX
+ SG_ GPS_Latitude : 39|32@0- (1E-007,0) [-90|90] "°" Vector__XXX
+ SG_ GPS_Longitude : 7|32@0- (1E-007,0) [-180|180] "°" Vector__XXX
+
+BO_ 1313 BCM_OUT_521: 8 Vector__XXX
+
+BO_ 1281 BCM_IN_501: 8 Vector__XXX
+ SG_ BCM_CombinedStatus : 58|3@0+ (1,0) [0|7] "" Vector__XXX
+ SG_ BCM_Current_Total : 47|8@0+ (1,0) [0|255] "A" Vector__XXX
+ SG_ Temperature_Coolant_RawV : 31|8@0+ (0.02,0) [0|5.1] "V" Vector__XXX
+ SG_ Temperature_Coolant : 23|8@0+ (1,-40) [-40|215] "degC" Vector__XXX
+ SG_ Temperature_Ambient_RawV : 15|8@0+ (0.02,0) [0|5.1] "V" Vector__XXX
+ SG_ Temperature_Ambient : 7|8@0+ (1,-40) [-40|215] "degC" Vector__XXX
+ SG_ BCM_Voltage : 39|8@0+ (0.1,0) [0|25.5] "V" Vector__XXX
+ SG_ BCM_Temperature : 55|8@0+ (1,0) [0|255] "A" Vector__XXX
+
+BO_ 1312 BCM_OUT_520: 8 Vector__XXX
+ SG_ BCM_Temperature : 55|8@0+ (1,0) [0|255] "A" Vector__XXX
+ SG_ BCM_CombinedStatus : 58|3@0+ (1,0) [0|7] "" Vector__XXX
+ SG_ BCM_Voltage : 39|8@0+ (0.1,0) [0|25.5] "V" Vector__XXX
+ SG_ Output_Suspension : 9|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Output_Seat_Vibrator : 12|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Output_PanelRelease_Right : 14|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Output_PanelRelease_Left : 13|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Output_Lighting_Rear : 4|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Output_Instruments : 8|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Output_Indicator_Right : 7|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Output_Indicator_Left : 6|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Output_Horn : 10|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Output_Heated_Grips : 16|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Output_Heated_Grip_State : 19|3@0+ (1,0) [0|5] "" Vector__XXX
+ SG_ Output_Headlamp_Main : 0|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Output_Headlamp_DRL : 2|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Output_Headlamp_Dip : 1|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Output_Headlamp_Aux : 3|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ BCM_Current_Total : 47|8@0+ (1,0) [0|255] "A" Vector__XXX
+ SG_ Output_Brake_Lamp : 5|1@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 1280 BCM_IN_500: 8 Vector__XXX
+ SG_ Switch_PanelRelease_Right : 13|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Switch_PanelRelease_Left : 12|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Switch_RH_Indicator : 5|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Switch_LH_Indicator : 4|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Switch_Horn : 8|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Switch_Home : 10|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Switch_Heated_Grips : 9|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Switch_Headlamp_Main : 0|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Switch_Headlamp_Aux : 1|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Switch_Hazard_Indicator : 6|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Switch_Brake_Rear : 3|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Switch_Brake_Front : 2|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Joystick_Up : 48|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Joystick_Right : 51|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Joystick_RawV : 63|8@0+ (0.02,0) [0|5.1] "V" Vector__XXX
+ SG_ Joystick_Left : 50|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Joystick_Idle : 53|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Joystick_Fault : 55|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Joystick_Down : 49|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ Joystick_Centre : 52|1@0+ (1,0) [0|1] "" Vector__XXX
+
+
+
+CM_ BO_ 3221225472 "This is a message for not used signals, created by Vector CANdb++ DBC OLE DB Provider.";
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "BusType" "CAN";
+

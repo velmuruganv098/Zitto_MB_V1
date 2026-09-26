@@ -1,0 +1,270 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: 
+
+
+BO_ 2147545091 EEC2: 8 Vector__XXX
+ SG_ EstimatedPumpingPercentTorque : 56|8@1+ (1,-125) [-125|125] "%" Vector__XXX
+ SG_ AtlMxmmAvllEngnPrntTrq : 48|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ ScrThermalManagementActive : 46|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ DpfThermalManagementActive : 44|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ MmntrEngnMxmmPwrEnlFdk : 42|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ VhlAlrtnRtLmtStts : 40|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ AcceleratorPedal2Position : 32|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ RemoteAcceleratorPedalPosition : 24|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ EnginePercentLoadAtCurrentSpeed : 16|8@1+ (1,0) [0|250] "%" Vector__XXX
+ SG_ AcceleratorPedal1Position : 8|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ AcceleratorPedal2LowIdleSwitch : 6|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ RoadSpeedLimitStatus : 4|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ AcceleratorPedalKickdownSwitch : 2|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ AcceleratorPedal1LowIdleSwitch : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 2147545092 EEC1: 8 Vector__XXX
+ SG_ EngineDemandPercentTorque : 56|8@1+ (1,-125) [-125|125] "%" Vector__XXX
+ SG_ EngineStarterMode : 48|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ SrAddrssOfCntrllngDvFrEngnCntrl : 40|8@1+ (1,0) [0|255] "sourceadr" Vector__XXX
+ SG_ EngineSpeed : 24|16@1+ (0.125,0) [0|8031.875] "rpm" Vector__XXX
+ SG_ ActualEnginePercentTorque : 16|8@1+ (1,-125) [-125|125] "%" Vector__XXX
+ SG_ DrvrSDmndEngnPrntTrq : 8|8@1+ (1,-125) [-125|125] "%" Vector__XXX
+ SG_ AtlEngnPrntTrqFrtnl : 4|4@1+ (0.125,0) [0|1.625] "%" Vector__XXX
+ SG_ EngineTorqueMode : 0|4@1+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 2147548911 EFLP1: 8 Vector__XXX
+ SG_ EngineCoolantLevel1 : 56|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ EngineCoolantPressure1 : 48|8@1+ (2,0) [0|500] "kPa" Vector__XXX
+ SG_ EngineCrankcasePressure1 : 32|16@1+ (0.0078125,-250) [-250|251.9921875] "kPa" Vector__XXX
+ SG_ EngineOilPressure1 : 24|8@1+ (4,0) [0|1000] "kPa" Vector__XXX
+ SG_ EngineOilLevel : 16|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ EngnExtnddCrnksBlwBPrssr : 8|8@1+ (0.05,0) [0|12.5] "kPa" Vector__XXX
+ SG_ EngineFuelDeliveryPressure : 0|8@1+ (4,0) [0|1000] "kPa" Vector__XXX
+
+BO_ 2147548913 CCVS1: 8 Vector__XXX
+ SG_ EngineShutdownOverrideSwitch : 62|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngineDiagnosticTestModeSwitch : 60|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngineIdleDecrementSwitch : 58|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ EngineIdleIncrementSwitch : 56|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ CruiseControlStates : 53|3@1+ (1,0) [0|7] "" Vector__XXX
+ SG_ PtoGovernorState : 48|5@1+ (1,0) [0|31] "" Vector__XXX
+ SG_ CruiseControlSetSpeed : 40|8@1+ (1,0) [0|250] "km/h" Vector__XXX
+ SG_ CruiseControlAccelerateSwitch : 38|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ CruiseControlResumeSwitch : 36|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ CrsCntrlCstDlrtSwth : 34|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ CruiseControlSetSwitch : 32|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ ClutchSwitch : 30|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ BrakeSwitch : 28|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ CruiseControlEnableSwitch : 26|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ CruiseControlActive : 24|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ WheelBasedVehicleSpeed : 8|16@1+ (0.00390625,0) [0|250.99609375] "km/h" Vector__XXX
+ SG_ ParkBrakeReleaseInhibitRequest : 6|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ CruiseControlPauseSwitch : 4|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ ParkingBrakeSwitch : 2|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ TwoSpeedAxleSwitch : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 2147548914 LFE1: 8 Vector__XXX
+ SG_ EngineThrottleValve2Position : 56|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ EngineThrottleValve1Position1 : 48|8@1+ (0.4,0) [0|100] "%" Vector__XXX
+ SG_ EngineAverageFuelEconomy : 32|16@1+ (0.001953125,0) [0|125.498046875] "km/L" Vector__XXX
+ SG_ EngineInstantaneousFuelEconomy : 16|16@1+ (0.001953125,0) [0|125.498046875] "km/L" Vector__XXX
+ SG_ EngineFuelRate : 0|16@1+ (0.05,0) [0|3212.75] "l/h" Vector__XXX
+
+
+
+
+CM_ BO_ 2147545091 "Electronic Engine Controller 2";
+CM_ SG_ 2147545091 EstimatedPumpingPercentTorque "Estimated Pumping - Percent Torque: The calculated torque that indicates the estimated amount of torque loss due to the engine air handling system. The value transmitted in this parameter is included in SPN 514 (Nominal Friction - Percent Torque).  T...";
+CM_ SG_ 2147545091 AtlMxmmAvllEngnPrntTrq "Actual Maximum Available Engine - Percent Torque: This is the maximum amount of torque that the engine can immediately deliver as a percentage of the reference engine torque (SPN 544).  The Actual Maximum Available Engine - Percent Torque shall take ...";
+CM_ SG_ 2147545091 ScrThermalManagementActive "SCR Thermal Management Active: Indicates that the exhaust temperatures have been elevated for regeneration of the SCR aftertreatment system or in preparation of regeneration of the SCR aftertreatment system.00b = SCR Thermal Management is not active0...";
+CM_ SG_ 2147545091 DpfThermalManagementActive "DPF Thermal Management Active: Indicates that the exhaust temperatures have been elevated for regeneration of the diesel particulate filter aftertreatment system or in preparation of regeneration of the diesel particulate aftertreatment system.00b = ...";
+CM_ SG_ 2147545091 MmntrEngnMxmmPwrEnlFdk "Momentary Engine Maximum Power Enable Feedback: Momentarily requesting Engine Maximum Power Enable - feature support feedback00b = disabled01b = supported 10b = reserved11b = don't care";
+CM_ SG_ 2147545091 VhlAlrtnRtLmtStts "Vehicle Acceleration Rate Limit Status: Status (active or not active) of the system used to limit maximum forward vehicle acceleration.00b = Limit not active01b = Limit active10b = Reserved11b = Not availableNOTE:  The effects of emission control lim...";
+CM_ SG_ 2147545091 AcceleratorPedal2Position "Accelerator Pedal 2 Position: The ratio of actual position of the second analog engine speed/torque request input device (such as an accelerator pedal or throttle lever) to the maximum position of the input device.  This parameter is intended for sec...";
+CM_ SG_ 2147545091 RemoteAcceleratorPedalPosition "Remote Accelerator Pedal Position: The ratio of actual position of the remote analog engine speed/torque request input device (such as an accelerator pedal or throttle lever) to the maximum position of the input device.     For example, in on-highway...";
+CM_ SG_ 2147545091 EnginePercentLoadAtCurrentSpeed "Engine Percent Load At Current Speed: The ratio of actual engine percent torque (indicated) to maximum indicated torque available at the current engine speed, clipped to zero torque during engine braking.";
+CM_ SG_ 2147545091 AcceleratorPedal1Position "Accelerator Pedal 1 Position: This parameter is intended for the primary accelerator control in an application. SPN 91 is the calculated ratio of actual position of the operator's [engine] speed request or [engine] torque request input device (most c...";
+CM_ SG_ 2147545091 AcceleratorPedal2LowIdleSwitch "Accelerator Pedal 2 Low Idle Switch: Switch signal which indicates the state of the accelerator pedal 2 low idle switch.  The low idle switch is defined in SAE J1843.00b = Accelerator pedal 2 not in low idle condition01b = Accelerator pedal 2 in low ...";
+CM_ SG_ 2147545091 RoadSpeedLimitStatus "Road Speed Limit Status: Status (active or not active) of the system used to limit maximum vehicle velocity.00b = Active01b = Not Active10b = Error11b = Not availableNOTE - While somewhat inconsistent with other J1939 status parameters, the states de...";
+CM_ SG_ 2147545091 AcceleratorPedalKickdownSwitch "Accelerator Pedal Kickdown Switch: Switch signal which indicates whether the accelerator pedal kickdown switch is opened or closed.  The kickdown switch is defined in SAE J1843.00b = Kickdown passive01b = Kickdown active10b = Error11b = Not available...";
+CM_ SG_ 2147545091 AcceleratorPedal1LowIdleSwitch "Accelerator Pedal 1 Low Idle Switch: Switch signal which indicates the state of the accelerator pedal 1 low idle switch.  The low idle switch is defined in SAE Recommended Practice J1843.00b = Accelerator pedal 1 not in low idle condition01b = Accele...";
+CM_ BO_ 2147545092 "Electronic Engine Controller 1";
+CM_ SG_ 2147545092 EngineDemandPercentTorque "Engine Demand â€“ Percent Torque: The requested torque output of the engine by all dynamic internal inputs, including smoke control, noise control and low and high speed governing.";
+CM_ SG_ 2147545092 EngineStarterMode "Engine Starter Mode: There are several phases in a starting action and different reasons why a start cannot take place.0000b = start not requested0001b = starter active but not engaged0010b = starter active and engaged0011b = start finished; starter ...";
+CM_ SG_ 2147545092 SrAddrssOfCntrllngDvFrEngnCntrl "Source Address of Controlling Device for Engine Control: The source address of the SAE J1939 device currently controlling the engine.  It is used to expand the torque mode parameter (see SPN 899) in cases where control is in response to an ECU that i...";
+CM_ SG_ 2147545092 EngineSpeed "Engine Speed: Actual engine speed which is calculated over a minimum crankshaft angle of 720 degrees divided by the number of cylinders.";
+CM_ SG_ 2147545092 ActualEnginePercentTorque "Actual Engine - Percent Torque: The calculated output torque of the engine.  The data is transmitted in indicated torque as a percent of reference engine torque (see the engine configuration message, PGN 65251).  The engine percent torque value will ...";
+CM_ SG_ 2147545092 DrvrSDmndEngnPrntTrq "Driver's Demand Engine - Percent Torque: The requested torque output of the engine by the driver. It is based on input from the following requestors external to the powertrain: operator (via the accelerator pedal), cruise control and/or road speed li...";
+CM_ SG_ 2147545092 AtlEngnPrntTrqFrtnl "Actual Engine - Percent Torque (Fractional): This parameter displays an additional torque in percent of the reference engine torque. When the MSB is set to 1, this parameter is not available.  When the MSB is set to 0, bits 1 to 3 indicate the desire...";
+CM_ SG_ 2147545092 EngineTorqueMode "Engine Torque Mode: State signal which indicates which engine torque mode is currently generating, limiting, or controlling the torque.  Note that the modes are not in prioritized order. Not all modes may be relevant for a given device.  Some devices...";
+CM_ BO_ 2147548911 "Engine Fluid Level/Pressure 1";
+CM_ SG_ 2147548911 EngineCoolantLevel1 "Engine Coolant Level 1: Ratio of volume of liquid found in engine cooling system to total cooling system volume.  Typical monitoring location is in the coolant expansion tank.";
+CM_ SG_ 2147548911 EngineCoolantPressure1 "Engine Coolant Pressure 1: Gage pressure of liquid found in engine cooling system.See SPN 20 for alternate range and resolution.";
+CM_ SG_ 2147548911 EngineCrankcasePressure1 "Engine Crankcase Pressure 1: First instance of the gage pressure inside engine crankcase.";
+CM_ SG_ 2147548911 EngineOilPressure1 "Engine Oil Pressure 1: Gage pressure of oil in engine lubrication system as provided by oil pump.  See SPN 7468 for alternate resolution.";
+CM_ SG_ 2147548911 EngineOilLevel "Engine Oil Level: Ratio of current volume of engine sump oil to maximum required volume.";
+CM_ SG_ 2147548911 EngnExtnddCrnksBlwBPrssr "Engine Extended Crankcase Blow-by Pressure: Differential crankcase blow-by pressure as measured through a tube with a venturi. (SPN 1264 is not to be used â€“ obsolete)";
+CM_ SG_ 2147548911 EngineFuelDeliveryPressure "Engine Fuel Delivery Pressure: Gage pressure of fuel in system as delivered from supply pump to the injection pump.  See SPN 7469 for alternate resolution.See also SPN 5578 for Fuel Delivery Absolute Pressure.";
+CM_ BO_ 2147548913 "Cruise Control/Vehicle Speed 1";
+CM_ SG_ 2147548913 EngineShutdownOverrideSwitch "Engine Shutdown Override Switch: Switch signal which indicates the position of the engine shutdown override switch.  This switch function allows the operator to override an impending engine shutdown.00b = Off01b = On10b = Error11b = Not available...";
+CM_ SG_ 2147548913 EngineDiagnosticTestModeSwitch "Engine Diagnostic Test Mode Switch: Switch signal which indicates the position of the engine diagnostic test mode switch.00b = Off01b = On10b = Error11b = Not available";
+CM_ SG_ 2147548913 EngineIdleDecrementSwitch "Engine Idle Decrement Switch: Switch signal which indicates the position of the idle decrement switch.00b = Off01b = On10b = Error11b = Not available";
+CM_ SG_ 2147548913 EngineIdleIncrementSwitch "Engine Idle Increment Switch: Switch signal which indicates the position of the idle increment switch.00b = Off01b = On10b = Error11b = Not available";
+CM_ SG_ 2147548913 CruiseControlStates "Cruise Control States: This parameter is used to indicate the current state, or mode, of operation by the cruise control device.  This is a status parameter.000b = Off/Disabled001b = Hold010b = Accelerate011b = Decelerate100b = Resume101b = Set110b =...";
+CM_ SG_ 2147548913 PtoGovernorState "PTO Governor State: This parameter is used to indicate the current state or mode of operation by the power takeoff (PTO) governor.  In lieu of support for PTO Drive Engagement parameters, this parameter may represent the status of a PTO drive.  The b...";
+CM_ SG_ 2147548913 CruiseControlSetSpeed "Cruise Control Set Speed: Value of set (chosen) velocity of velocity control system.  See SPN 6809 for an alternate resolution.If an algorithm that can modify the cruise control set point exists in the system, such as Predictive Cruise Control or Ada...";
+CM_ SG_ 2147548913 CruiseControlAccelerateSwitch "Cruise Control Accelerate Switch: Switch signal of the cruise control activator which indicates that the activator is in the position accelerate.00b = Cruise control activator not in the position accelerate01b = Cruise control activator in position a...";
+CM_ SG_ 2147548913 CruiseControlResumeSwitch "Cruise Control Resume Switch: Switch signal of the cruise control activator which indicates that the activator is in the position resume.00b = Cruise control activator not in the position resume01b = Cruise control activator in position resume10b = E...";
+CM_ SG_ 2147548913 CrsCntrlCstDlrtSwth "Cruise Control Coast (Decelerate) Switch: Switch signal of the cruise control activator which indicates that the activator is in the position coast (decelerate).00b = Cruise control activator not in the position coast01b = Cruise control activator in...";
+CM_ SG_ 2147548913 CruiseControlSetSwitch "Cruise Control Set Switch: Switch signal of the cruise control activator which indicates that the activator is in the position set.00b = Cruise control activator not in the position set01b = Cruise control activator in position set10b = Error11b = No...";
+CM_ SG_ 2147548913 ClutchSwitch "Clutch Switch: Switch signal which indicates that the clutch pedal is being pressed. It is necessary for a safe drivetrain behavior that the clutch switch is set before the clutch is opened (cruise control function).00b = Clutch pedal released01b = C...";
+CM_ SG_ 2147548913 BrakeSwitch "Brake Switch: Switch signal which indicates that the driver operated brake foot pedal is being pressed.  This brake foot pedal is controlling the vehicles' service brake (total vehicle braking application, not park brakes).  It is necessary for safe ...";
+CM_ SG_ 2147548913 CruiseControlEnableSwitch "Cruise Control Enable Switch: Switch signal which indicates that it is possible to manage the cruise control function.00b = Cruise control disabled01b = Cruise control enabled10b = Error11b = Not available";
+CM_ SG_ 2147548913 CruiseControlActive "Cruise Control Active: Cruise control is switched on.  It is not ensured that the engine is controlled by cruise control, as in the case of a large driver's demand the engine is controlled by the driver while cruise control is active (maximum selecti...";
+CM_ SG_ 2147548913 WheelBasedVehicleSpeed "Wheel-Based Vehicle Speed: Speed of the vehicle as calculated from wheel or tailshaft speed.";
+CM_ SG_ 2147548913 ParkBrakeReleaseInhibitRequest "Park Brake Release Inhibit Request: Park Brake Release Inhibit Request signals the desire that an applied park brake remain applied and limit the ability of the vehicle to be moved.  00b = Park Brake Release Inhibit not requested01b = Park Brake Rele...";
+CM_ SG_ 2147548913 CruiseControlPauseSwitch "Cruise Control Pause Switch: Switch signal which indicates the position of the Cruise Control Pause Switch used on Remote Cruise Control applications. The Cruise Control Pause Switch signal temporarily disables the Cruise Control function.00b = Off01...";
+CM_ SG_ 2147548913 ParkingBrakeSwitch "Parking Brake Switch: Switch signal which indicates when the parking brake is set. In general the switch actuated by the operator's park brake control, whether a pedal, lever or other control mechanism  (see also SPN 619 and 5275).00b = Parking brake...";
+CM_ SG_ 2147548913 TwoSpeedAxleSwitch "Two Speed Axle Switch: Switch signal which indicates the current axle range.00b = Low speed range01b = High speed range10b = Error11b = Not available";
+CM_ BO_ 2147548914 "Fuel Economy (Liquid)";
+CM_ SG_ 2147548914 EngineThrottleValve2Position "Engine Throttle Valve 2 Position: The sensed position feedback of the valve, coming from a second electrical actuator for a second throttle plate, used to regulate the supply of a fluid, usually air or fuel//air mixture.  0% represents no supply and ...";
+CM_ SG_ 2147548914 EngineThrottleValve1Position1 "Engine Throttle Valve 1 Position 1: The position of the valve used to regulate the supply of a fluid, usually air or fuel/air mixture, to an engine.  0% represents no supply and 100% is full supply.";
+CM_ SG_ 2147548914 EngineAverageFuelEconomy "Engine Average Fuel Economy: Average of instantaneous fuel economy for that segment of vehicle operation of interest.";
+CM_ SG_ 2147548914 EngineInstantaneousFuelEconomy "Engine Instantaneous Fuel Economy: Current fuel economy at current vehicle velocity.FB00h = Infinite (for example, during engine motoring)";
+CM_ SG_ 2147548914 EngineFuelRate "Engine Fuel Rate: Amount of fuel consumed by engine per unit of time.NOTE - See SPN 1600 for alternate resolution.";
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_DEF_ SG_  "SPN" INT 0 524287;
+BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","J1939PG";
+BA_DEF_  "DatabaseVersion" STRING ;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_  "ProtocolType" STRING ;
+BA_DEF_  "DatabaseCompiler" STRING ;
+BA_DEF_DEF_  "SPN" 0;
+BA_DEF_DEF_  "VFrameFormat" "J1939PG";
+BA_DEF_DEF_  "DatabaseVersion" "1.2";
+BA_DEF_DEF_  "BusType" "";
+BA_DEF_DEF_  "ProtocolType" "";
+BA_DEF_DEF_  "DatabaseCompiler" "";
+BA_ "ProtocolType" "J1939";
+BA_ "BusType" "CAN";
+BA_ "VFrameFormat" BO_ 2147545091 3;
+BA_ "SPN" SG_ 2147545091 EstimatedPumpingPercentTorque 5398;
+BA_ "SPN" SG_ 2147545091 AtlMxmmAvllEngnPrntTrq 3357;
+BA_ "SPN" SG_ 2147545091 ScrThermalManagementActive 5400;
+BA_ "SPN" SG_ 2147545091 DpfThermalManagementActive 5399;
+BA_ "SPN" SG_ 2147545091 MmntrEngnMxmmPwrEnlFdk 5021;
+BA_ "SPN" SG_ 2147545091 VhlAlrtnRtLmtStts 2979;
+BA_ "SPN" SG_ 2147545091 AcceleratorPedal2Position 29;
+BA_ "SPN" SG_ 2147545091 RemoteAcceleratorPedalPosition 974;
+BA_ "SPN" SG_ 2147545091 EnginePercentLoadAtCurrentSpeed 92;
+BA_ "SPN" SG_ 2147545091 AcceleratorPedal1Position 91;
+BA_ "SPN" SG_ 2147545091 AcceleratorPedal2LowIdleSwitch 2970;
+BA_ "SPN" SG_ 2147545091 RoadSpeedLimitStatus 1437;
+BA_ "SPN" SG_ 2147545091 AcceleratorPedalKickdownSwitch 559;
+BA_ "SPN" SG_ 2147545091 AcceleratorPedal1LowIdleSwitch 558;
+BA_ "VFrameFormat" BO_ 2147545092 3;
+BA_ "SPN" SG_ 2147545092 EngineDemandPercentTorque 2432;
+BA_ "SPN" SG_ 2147545092 EngineStarterMode 1675;
+BA_ "SPN" SG_ 2147545092 SrAddrssOfCntrllngDvFrEngnCntrl 1483;
+BA_ "SPN" SG_ 2147545092 EngineSpeed 190;
+BA_ "SPN" SG_ 2147545092 ActualEnginePercentTorque 513;
+BA_ "SPN" SG_ 2147545092 DrvrSDmndEngnPrntTrq 512;
+BA_ "SPN" SG_ 2147545092 AtlEngnPrntTrqFrtnl 4154;
+BA_ "SPN" SG_ 2147545092 EngineTorqueMode 899;
+BA_ "VFrameFormat" BO_ 2147548911 3;
+BA_ "SPN" SG_ 2147548911 EngineCoolantLevel1 111;
+BA_ "SPN" SG_ 2147548911 EngineCoolantPressure1 109;
+BA_ "SPN" SG_ 2147548911 EngineCrankcasePressure1 101;
+BA_ "SPN" SG_ 2147548911 EngineOilPressure1 100;
+BA_ "SPN" SG_ 2147548911 EngineOilLevel 98;
+BA_ "SPN" SG_ 2147548911 EngnExtnddCrnksBlwBPrssr 22;
+BA_ "SPN" SG_ 2147548911 EngineFuelDeliveryPressure 94;
+BA_ "VFrameFormat" BO_ 2147548913 3;
+BA_ "SPN" SG_ 2147548913 EngineShutdownOverrideSwitch 1237;
+BA_ "SPN" SG_ 2147548913 EngineDiagnosticTestModeSwitch 966;
+BA_ "SPN" SG_ 2147548913 EngineIdleDecrementSwitch 967;
+BA_ "SPN" SG_ 2147548913 EngineIdleIncrementSwitch 968;
+BA_ "SPN" SG_ 2147548913 CruiseControlStates 527;
+BA_ "SPN" SG_ 2147548913 PtoGovernorState 976;
+BA_ "SPN" SG_ 2147548913 CruiseControlSetSpeed 86;
+BA_ "SPN" SG_ 2147548913 CruiseControlAccelerateSwitch 602;
+BA_ "SPN" SG_ 2147548913 CruiseControlResumeSwitch 601;
+BA_ "SPN" SG_ 2147548913 CrsCntrlCstDlrtSwth 600;
+BA_ "SPN" SG_ 2147548913 CruiseControlSetSwitch 599;
+BA_ "SPN" SG_ 2147548913 ClutchSwitch 598;
+BA_ "SPN" SG_ 2147548913 BrakeSwitch 597;
+BA_ "SPN" SG_ 2147548913 CruiseControlEnableSwitch 596;
+BA_ "SPN" SG_ 2147548913 CruiseControlActive 595;
+BA_ "SPN" SG_ 2147548913 WheelBasedVehicleSpeed 84;
+BA_ "SPN" SG_ 2147548913 ParkBrakeReleaseInhibitRequest 3807;
+BA_ "SPN" SG_ 2147548913 CruiseControlPauseSwitch 1633;
+BA_ "SPN" SG_ 2147548913 ParkingBrakeSwitch 70;
+BA_ "SPN" SG_ 2147548913 TwoSpeedAxleSwitch 69;
+BA_ "VFrameFormat" BO_ 2147548914 3;
+BA_ "SPN" SG_ 2147548914 EngineThrottleValve2Position 3673;
+BA_ "SPN" SG_ 2147548914 EngineThrottleValve1Position1 51;
+BA_ "SPN" SG_ 2147548914 EngineAverageFuelEconomy 185;
+BA_ "SPN" SG_ 2147548914 EngineInstantaneousFuelEconomy 184;
+BA_ "SPN" SG_ 2147548914 EngineFuelRate 183;
+VAL_ 2147545091 ScrThermalManagementActive 3 "DontCare" 2 "Reserved" 1 "SCRThermalManagementIsActive" 0 "SCRThermalManagementIsNotActive" ;
+VAL_ 2147545091 DpfThermalManagementActive 3 "DontCare" 2 "Reserved" 1 "DPFThermalManagementIsActive" 0 "DPFThermalManagementIsNotActive" ;
+VAL_ 2147545091 MmntrEngnMxmmPwrEnlFdk 3 "dontCare" 2 "reserved" 1 "supported" 0 "disabled" ;
+VAL_ 2147545091 VhlAlrtnRtLmtStts 3 "NotAvailable" 2 "Reserved" 1 "LimitActive" 0 "LimitNotActive" ;
+VAL_ 2147545091 AcceleratorPedal2LowIdleSwitch 3 "NotAvailable" 2 "Error" 1 "AccelPedal2InLowIdleCondition" 0 "AcclPedal2NotInLowIdleCondition" ;
+VAL_ 2147545091 RoadSpeedLimitStatus 3 "NotAvailable" 2 "Error" 1 "NotActive" 0 "Active" ;
+VAL_ 2147545091 AcceleratorPedalKickdownSwitch 3 "NotAvailable" 2 "Error" 1 "KickdownActive" 0 "KickdownPassive" ;
+VAL_ 2147545091 AcceleratorPedal1LowIdleSwitch 3 "NotAvailable" 2 "Error" 1 "AccelPedal1InLowIdleCondition" 0 "AcclPedal1NotInLowIdleCondition" ;
+VAL_ 2147545092 EngineStarterMode 15 "notAvailable" 14 "error" 12 "starterInhibitedReasonUnknown" 9 "1011Reserved" 8 "strtrInhbtdDueToStarterOvertemp" 7 "strtrInhbtdDToActiveImmobilizer" 6 "strtrInhbtdDTDrvlnEnggdOthrTrns" 5 "strtrInhbtdDTEngNtReadyForStart" 4 "strtrInhbtdDToEngAlreadyRunning" 3 "strtFnshdStrtrNtActvAftrHvngBnA" 2 "starterActiveGearEngaged" 1 "starterActiveGearNotEngaged" 0 "startNotRqed" ;
+VAL_ 2147545092 EngineTorqueMode 15 "Not available" 11 "Remote accelerator" 10 "Braking system" 9 "High speed governor" 8 "Torque limiting" 7 "ABS control" 6 "Transmission control" 5 "ASR control" 4 "Road speed governor" 3 "PTO governor" 2 "Cruise control" 1 "Accelerator pedal/operator selec" 0 "Low idle governor/no request (de" ;
+VAL_ 2147548913 EngineShutdownOverrideSwitch 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147548913 EngineDiagnosticTestModeSwitch 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147548913 EngineIdleDecrementSwitch 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147548913 EngineIdleIncrementSwitch 3 "NotAvailable" 2 "Error" 1 "On" 0 "Off" ;
+VAL_ 2147548913 CruiseControlStates 7 "NotAvailable" 6 "AccelOverride" 5 "Set" 4 "Resume" 3 "Decelerate" 2 "Accelerate" 1 "Hold" 0 "Off_Disabled" ;
+VAL_ 2147548913 PtoGovernorState 31 "NotAvailable" 20 "11110NotDefined" 19 "PTOSetSpeedMemory2" 18 "PTOSetSpeedMemory1" 17 "PreprogrammedSetSpeed8" 16 "PreprogrammedSetSpeed7" 15 "PreprogrammedSetSpeed6" 14 "PreprogrammedSetSpeed5" 13 "PreprogrammedSetSpeed4" 12 "PreprogrammedSetSpeed3" 11 "PreprogrammedSetSpeed2" 10 "PreprogrammedSetSpeed1" 9 "AccelOverride" 8 "Accelerate" 7 "Resume" 6 "Decelerate_Coast" 5 "Set" 4 "RemoteStandby" 3 "Standby" 2 "RemoteHold" 1 "Hold" 0 "Off_Disabled" ;
+VAL_ 2147548913 CruiseControlAccelerateSwitch 3 "NotAvailable" 2 "Error" 1 "CrsCtrlActivatorInPosAccelerate" 0 "CrsCtrlActvtrNotInPosAccelerate" ;
+VAL_ 2147548913 CruiseControlResumeSwitch 3 "NotAvailable" 2 "Error" 1 "CruiseCtrlActivatorInPosResume" 0 "CrseCtrlActivatorNotInPosResume" ;
+VAL_ 2147548913 CrsCntrlCstDlrtSwth 3 "NotAvailable" 2 "Error" 1 "CruiseCtrlActivatorInPosCoast" 0 "CriseCtrlActivatorNotInPosCoast" ;
+VAL_ 2147548913 CruiseControlSetSwitch 3 "NotAvailable" 2 "Error" 1 "CruiseCtrlActivatorInPosSet" 0 "CruiseCtrlActivatorNotInPosSet" ;
+VAL_ 2147548913 ClutchSwitch 3 "NotAvailable" 2 "Error" 1 "ClutchPedalDepressed" 0 "ClutchPedalReleased" ;
+VAL_ 2147548913 BrakeSwitch 3 "NotAvailable" 2 "Error" 1 "BrakePedalDepressed" 0 "BrakePedalReleased" ;
+VAL_ 2147548913 CruiseControlEnableSwitch 3 "NotAvailable" 2 "Error" 1 "CruiseCtrlEnabled" 0 "CruiseCtrlDisabled" ;
+VAL_ 2147548913 CruiseControlActive 3 "NotAvailable" 2 "Error" 1 "CruiseCtrlSwitchedOn" 0 "CruiseCtrlSwitchedOff" ;
+VAL_ 2147548913 ParkBrakeReleaseInhibitRequest 3 "Unavailable" 2 "SAEReserved" 1 "ParkBrakeReleaseInhibitRqed" 0 "ParkBrakeReleaseInhibitNotRqed" ;
+VAL_ 2147548913 CruiseControlPauseSwitch 3 "TakeNoAction" 2 "ErrorIndicator" 1 "On" 0 "Off" ;
+VAL_ 2147548913 ParkingBrakeSwitch 3 "NotAvailable" 2 "Error" 1 "ParkingBrakeSet" 0 "ParkingBrakeNotSet" ;
+VAL_ 2147548913 TwoSpeedAxleSwitch 3 "NotAvailable" 2 "Error" 1 "HighSpeedRange" 0 "LowSpeedRange" ;
+
+
+

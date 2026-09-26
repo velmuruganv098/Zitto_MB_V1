@@ -1,0 +1,677 @@
+VERSION "created by canmatrix"
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: VIU ABS BCU PKE ESL OBC BMS DTU
+
+
+BO_ 1794 DBGbms_CoolSysTemp_MSG1: 8 BMS
+ SG_ CS_Temperature : 0|16@1- (0.01,0) [-32768|32767] "Deg C"  VIU
+ SG_ Temperature10 : 16|16@1- (0.01,0) [-32768|32767] "Deg C"  VIU
+ SG_ Temperature11 : 32|16@1- (0.01,0) [-32768|32767] "Deg C"  VIU
+ SG_ Temperature12 : 48|16@1- (0.01,0) [-32768|32767] "Deg C"  VIU
+
+BO_ 1795 DBGbms_Isovtg_MSG2: 8 BMS
+ SG_ Iso_Vtg_1 : 0|32@1- (1,0) [-2147483648|2147483647] "mV"  VIU
+ SG_ Iso_Vtg_2 : 32|32@1- (1,0) [-2147483648|2147483647] "mV"  VIU
+
+BO_ 1796 DBGbms_Cellvtg1_MSG3: 8 BMS
+ SG_ Cell_1 : 0|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Cell_2 : 16|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Cell_3 : 32|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Cell_4 : 48|16@1+ (1,0) [0|65535] "mV"  VIU
+
+BO_ 1797 DBGbms_Cellvtg2_MSG4: 8 BMS
+ SG_ Cell_5 : 0|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Cell_6 : 16|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Cell_7 : 32|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Cell_8 : 48|16@1+ (1,0) [0|65535] "mV"  VIU
+
+BO_ 1798 DBGbms_Cellvtg3_MSG5: 8 BMS
+ SG_ Cell_9 : 0|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Cell_10 : 16|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Cell_11 : 32|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Cell_12 : 48|16@1+ (1,0) [0|65535] "mV"  VIU
+
+BO_ 1799 DBGbms_Cellvtg4_MSG6: 8 BMS
+ SG_ Cell_13 : 0|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Cell_14 : 16|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Cell_15 : 32|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Cell_16 : 48|16@1+ (1,0) [0|65535] "mV"  VIU
+
+BO_ 1800 DBGbms_Cellvtg5_MSG7: 8 BMS
+ SG_ Cell_17 : 0|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Cell_18 : 16|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Cell_19 : 32|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Cell_20 : 48|16@1+ (1,0) [0|65535] "mV"  VIU
+
+BO_ 1801 DBGbms_Cellvtg6_MSG8: 8 BMS
+ SG_ Cell_21 : 0|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Cell_22 : 16|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Cell_23 : 32|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Cell_24 : 48|16@1+ (1,0) [0|65535] "mV"  VIU
+
+BO_ 1802 DBGbms_Cellvtg7_MSG9: 8 BMS
+ SG_ Cell_25 : 0|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Cell_26 : 16|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Cell_27 : 32|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Cell_28 : 48|16@1+ (1,0) [0|65535] "mV"  VIU
+
+BO_ 1803 DBGbms_Temp1_MSG10: 8 BMS
+ SG_ Temperature_1 : 0|16@1- (0.01,0) [-32768|32767] "Deg C"  VIU
+ SG_ Temperature_2 : 16|16@1- (0.01,0) [-32768|32767] "Deg C"  VIU
+ SG_ Temperature_3 : 32|16@1- (0.01,0) [-32768|32767] "Deg C"  VIU
+ SG_ Temperature_4 : 48|16@1- (0.01,0) [-32768|32767] "Deg C"  VIU
+
+BO_ 1804 DBGbms_Temp2_MSG11: 8 BMS
+ SG_ Temperature_5 : 0|16@1- (0.01,0) [-32768|32767] "Deg C"  VIU
+ SG_ Temperature_6 : 16|16@1- (0.01,0) [-32768|32767] "Deg C"  VIU
+ SG_ Temperature_7 : 32|16@1- (0.01,0) [-32768|32767] "Deg C"  VIU
+ SG_ Temperature_8 : 48|16@1- (0.01,0) [-32768|32767] "Deg C"  VIU
+
+BO_ 1805 DBGbms_Temp3_MSG12: 8 BMS
+ SG_ Temperature_9 : 0|16@1- (0.01,0) [-32768|32767] "Deg C"  VIU
+ SG_ FET_Temp : 16|16@1- (0.01,0) [-32768|32767] "Deg C"  VIU
+ SG_ Pchg_Resistor_Temp : 32|16@1- (0.01,0) [-32768|32767] "Deg C"  VIU
+ SG_ LFE_Temp : 48|8@1- (1,0) [-128|127] "Deg C"  VIU
+ SG_ HFE_Temp : 56|8@1- (1,0) [-128|127] "Deg C"  VIU
+
+BO_ 1806 DBGbms_stateP2_MSG13: 8 BMS
+ SG_ Remaining_Capacity : 0|16@1+ (1,0) [0|65535] "mAh"  VIU
+ SG_ Pump_duty : 16|8@1+ (1,0) [0|255] "percent"  VIU
+ SG_ MCU_Internal_Temp : 24|8@1+ (1,0) [0|255] "Deg C"  VIU
+ SG_ BMSstate : 32|8@1+ (1,0) [0|255] "Enum"  VIU
+ SG_ FET_State_pchg : 40|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ FET_State_chg : 41|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ FET_State_dsg : 42|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ FET_State_resvd : 43|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ PumpSysState : 44|4@1+ (1,0) [0|15] "x"  VIU
+ SG_ Avail_chg_curr : 48|16@1+ (0.01,0) [0|65535] "A"  VIU
+
+BO_ 1807 DBGbms_CellTinfoP5_MSG14: 8 BMS
+ SG_ OBC_init_debounce_cnt : 0|16@1- (1,0) [-32768|32767] "x"  VIU
+ SG_ FChgr_rx_opvtg : 16|16@1- (0.1,0) [-32768|32767] "V"  VIU
+ SG_ Last_Fullchg_pkvtg : 32|16@1+ (0.1,0) [0|65535] "V"  VIU
+ SG_ CC_CV_state : 48|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ Wdog_rst_cnt : 56|8@1+ (1,0) [0|255] "x"  VIU
+
+BO_ 1808 DBGbms_AFEVtgcurr_MSG15: 8 BMS
+ SG_ LowHost_Current : 0|16@1- (1,0) [-32768|32767] "cA"  VIU
+ SG_ UppHost_Current : 16|16@1- (1,0) [-32768|32767] "cA"  VIU
+ SG_ LowHost_Voltage : 32|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ UppHost_Voltage : 48|16@1+ (1,0) [0|65535] "mV"  VIU
+
+BO_ 1809 DBGbms_LAFE_CvtgMinMax_MSG16: 8 BMS
+ SG_ LowHost_Min_CellVoltage : 0|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ LowHost_Max_CellVoltage : 16|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Delta_CellV_Low : 32|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Low_Min_Cell_No : 48|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ Low_Max_Cell_No : 56|8@1+ (1,0) [0|255] "x"  VIU
+
+BO_ 1810 DBGbms_UAFE_CvtgMinMax_MSG17: 8 BMS
+ SG_ UppHost_Min_CellVoltage : 0|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ UppHost_Max_CellVoltage : 16|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Delta_CellV_Upp : 32|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Upp_Min_Cell_No : 48|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ Upp_Max_Cell_No : 56|8@1+ (1,0) [0|255] "x"  VIU
+
+BO_ 1811 DBGbms_AFECtempInfo_MSG18: 8 BMS
+ SG_ LowHost_PendEDV : 0|16@1+ (0.001,0) [0|65535] "V"  VIU
+ SG_ PumpFb_curr : 16|16@1- (1,0) [-32768|32767] "mA"  VIU
+ SG_ UppHost_PendEDV : 32|16@1+ (0.001,0) [0|65535] "V"  VIU
+ SG_ Hvil_debug_param1 : 48|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ AFE_MaxT_Ctemp_No : 56|8@1+ (1,0) [0|255] "x"  VIU
+
+BO_ 1812 DBGbms_AFECapacityInfo_MSG19: 8 BMS
+ SG_ LowHost_RemCap : 0|16@1+ (0.01,0) [0|65535] "Ah"  VIU
+ SG_ UppHost_RemCap : 16|16@1+ (0.01,0) [0|65535] "Ah"  VIU
+ SG_ LowHost_Full_Chg_Cap : 32|16@1+ (0.01,0) [0|65535] "Ah"  VIU
+ SG_ UppHost_Full_Chg_Cap : 48|16@1+ (0.01,0) [0|65535] "Ah"  VIU
+
+BO_ 1813 DBGbms_AFESOCInfo_MSG20: 8 BMS
+ SG_ LowHost_relSOC : 0|8@1+ (1,0) [0|255] "percent"  VIU
+ SG_ UppHost_relSOC : 8|8@1+ (1,0) [0|255] "percent"  VIU
+ SG_ LowHost_Abs_SOC : 16|8@1+ (1,0) [0|255] "percent"  VIU
+ SG_ UppHost_Abs_SOC : 24|8@1+ (1,0) [0|255] "percent"  VIU
+ SG_ SOC : 32|16@1+ (1,0) [0|65535] "percent"  VIU
+ SG_ SOP : 48|16@1+ (1,0) [0|65535] "Watts"  VIU
+
+BO_ 1814 DBGbms_OPstsAFE_MSG21: 8 BMS
+ SG_ LFE_OP_Status_1 : 0|8@1+ (1,0) [0|255] "Binary Data"  VIU
+ SG_ LFE_OP_Status_2 : 8|8@1+ (1,0) [0|255] "Binary Data"  VIU
+ SG_ LFE_OP_Status_3 : 16|8@1+ (1,0) [0|255] "Binary Data"  VIU
+ SG_ LFE_OP_Status_4_0 : 24|4@1+ (1,0) [0|15] "Binary Data"  VIU
+ SG_ LFE_OP_Status_cb : 28|1@1+ (1,0) [0|1] "Binary Data"  VIU
+ SG_ LFE_OP_Status_4_1 : 29|3@1+ (1,0) [0|7] "Binary Data"  VIU
+ SG_ HFE_OP_Status_1 : 32|8@1+ (1,0) [0|255] "Binary Data"  VIU
+ SG_ HFE_OP_Status_2 : 40|8@1+ (1,0) [0|255] "Binary Data"  VIU
+ SG_ HFE_OP_Status_3 : 48|8@1+ (1,0) [0|255] "Binary Data"  VIU
+ SG_ HFE_OP_Status_4_0 : 56|4@1+ (1,0) [0|15] "Binary Data"  VIU
+ SG_ HFE_OP_Status_cb : 60|1@1+ (1,0) [0|1] "Binary Data"  VIU
+ SG_ HFE_OP_Status_4 : 61|3@1+ (1,0) [0|7] "Binary Data"  VIU
+
+BO_ 1815 DBGbms_SafeStsAFE_MSG22: 8 BMS
+ SG_ LFE_Safe_Status_1 : 0|8@1+ (1,0) [0|255] "Binary Data"  VIU
+ SG_ LFE_Safe_Status_2 : 8|8@1+ (1,0) [0|255] "Binary Data"  VIU
+ SG_ LFE_Safe_Status_3 : 16|8@1+ (1,0) [0|255] "Binary Data"  VIU
+ SG_ LFE_Safe_Status_4 : 24|8@1+ (1,0) [0|255] "Binary Data"  VIU
+ SG_ HFE_Safe_Status_1 : 32|8@1+ (1,0) [0|255] "Binary Data"  VIU
+ SG_ HFE_Safe_Status_2 : 40|8@1+ (1,0) [0|255] "Binary Data"  VIU
+ SG_ HFE_Safe_Status_3 : 48|8@1+ (1,0) [0|255] "Binary Data"  VIU
+ SG_ HFE_Safe_Status_4 : 56|8@1+ (1,0) [0|255] "Binary Data"  VIU
+
+BO_ 1816 DBGbms_MCUsts_MSG23: 8 BMS
+ SG_ chg_mcufet_inv : 0|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ dsg_mcufet_inv : 1|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ dsgfet_ovrlfb : 2|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ scd_in_inv_fb : 3|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ calib_mode_flg : 4|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ state_crit_bmsInd : 5|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ trip_action_bmsInd : 6|2@1+ (1,0) [0|3] "x"  VIU
+ SG_ chg_detect_bmsInd : 8|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ aps_state_bmsInd : 9|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ prodmode_bmsInd : 10|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ lh_cb_act_bmsInd : 11|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ uh_cb_act_bmsInd : 12|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ pb_lpk_bmsInd : 13|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ pb_upk_bmsInd : 14|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ prevcyc_mcu_shutdwn : 15|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ PchgHit_PK_Current : 16|16@1- (0.01,0) [-32768|32767] "A"  VIU
+ SG_ Pchg_allowed_pk_current : 32|32@1- (0.001,0) [-2147483648|2147483647] "A"  VIU
+
+BO_ 1817 DBGbms_execTimeTasks_MSG24: 8 BMS
+ SG_ ExecTime_UDSTsk : 0|16@1+ (2.5,0) [0|65535] "us"  VIU
+ SG_ ExecTime_AFETsk : 16|16@1+ (0.01,0) [0|65535] "ms"  VIU
+ SG_ ExecTime_TransTsk : 32|16@1+ (2.5,0) [0|65535] "us"  VIU
+ SG_ ExecTime_SOCTsk : 48|16@1+ (0.01,0) [0|65535] "ms"  VIU
+
+BO_ 1818 DBGbms_StackPk1_MSG25: 8 BMS
+ SG_ StackPk_DiagTsk : 0|16@1+ (1,0) [0|65535] "bytes"  VIU
+ SG_ StackPk_StateTransTsk : 16|16@1+ (1,0) [0|65535] "bytes"  VIU
+ SG_ CAN_Tx_Failcnt : 32|16@1+ (1,0) [0|65535] "bytes"  VIU
+ SG_ i2c1_pk_tout : 48|16@1+ (1,0) [0|65535] "bytes"  VIU
+
+BO_ 1819 DBGbms_StackPk2_MSG26: 8 BMS
+ SG_ StackPk_CANTsk : 0|16@1+ (1,0) [0|65535] "bytes"  VIU
+ SG_ StackPk_AFETsk : 16|16@1+ (1,0) [0|65535] "bytes"  VIU
+ SG_ StackPk_ADCTsk : 32|16@1+ (1,0) [0|65535] "bytes"  VIU
+ SG_ dtdt_1c_flag : 48|16@1+ (1,0) [0|65535] "bytes"  VIU
+
+BO_ 1820 DBGbms_RuntimeCnt_MSG27: 8 BMS
+ SG_ RunCounter_UDSTsk : 0|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ RunCounter_AFETsk : 8|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ RunCounter_StateTranTsk : 16|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ RunCounter_SOCTsk : 24|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ RunCounter_CANTsk : 32|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ NMcan_obc_nfail_cnt : 40|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ ExecTime_CANTsk : 48|16@1+ (0.01,0) [0|65535] "ms"  VIU
+
+BO_ 1821 DBGbms_WarnGaugeSts_MSG28: 8 BMS
+ SG_ cov_warnbms : 0|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ cuv_warnbms : 1|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ del_v_warnbms : 2|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ cot_warnbms : 3|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ cut_warnbms : 4|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ del_ct_warnbms : 5|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ fot_warnbms : 6|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ csot_warnbms : 7|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ afedieot_warnbms : 8|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ occ_warnbms : 9|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ ocd_warnbms : 10|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ pusoc_warnbms : 11|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ hvil_warnbms : 12|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ imd_warnbms : 13|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ crit_lvl1_warnbms : 14|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ crit_lvl2_warnbms : 15|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ hostl_i2c_warnbms : 16|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ hostu_i2c_warnbms : 17|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ pump_oload_warnbms : 18|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ Reset_cause_bms : 24|8@1+ (1,0) [0|255] "Status"  VIU
+ SG_ LFE_GaugeSts_1 : 32|8@1+ (1,0) [0|255] "Binary Data"  VIU
+ SG_ LFE_GaugeSts_2 : 40|8@1+ (1,0) [0|255] "Binary Data"  VIU
+ SG_ HFE_GaugeSts_1 : 48|8@1+ (1,0) [0|255] "Binary Data"  VIU
+ SG_ HFE_GaugeSts_2 : 56|8@1+ (1,0) [0|255] "Binary Data"  VIU
+
+BO_ 1822 DBGbms_Faults_MSG29: 8 BMS
+ SG_ afe_cov_fltbms : 0|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ afe_cuv_fltbms : 1|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ afe_cot_chg_fltbms : 2|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ afe_cot_dchg_fltbms : 3|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ afe_cut_chg_fltbms : 4|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ afe_cut_dchg_fltbms : 5|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ afe_oc_chg_fltbms : 6|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ afe_oc_dchg_fltbms : 7|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ afe_sc_detect_fltbms : 8|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ afe_oload_detect_fltbms : 9|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ afe_fet_off_fltbms : 10|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ afe_oc_fltbms : 11|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ afe_otf_fltbms : 12|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ afe_chgfoff_fltbms : 13|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ afe_dsgfoff_fltbms : 14|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ ddsg_fltbms : 18|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ del_cv_fltbms : 19|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ pchg_tout_fltbms : 20|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ del_ct_fltbms : 21|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ hostl_i2c_fltbms : 22|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ hostu_i2c_fltbms : 23|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ cot_chg_fltbms : 24|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ cot_dsg_fltbms : 25|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ cut_chg_fltbms : 26|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ cut_dsg_fltbms : 27|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ fot_fltbms : 28|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ csot_fltbms : 29|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ afedieot_fltbms : 30|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ imd_fltbms : 31|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ hostl_fail_fltbms : 32|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ hostu_fail_fltbms : 33|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ afel_fail_fltbms : 34|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ afeu_fail_fltbms : 35|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ cs_ic_fail_fltbms : 36|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ imd_ic_fail_fltbms : 37|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ adc_ic_fail_fltbms : 38|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ can_ic_fail_fltbms : 39|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ aps_scd_fltbms : 40|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ aps_ot_fltbms : 41|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ aps_ov_fltbms : 42|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ aps_oc_fltbms : 43|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ opp_cchg_fltbms : 44|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ opp_cdsg_fltbms : 45|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ pchg_pk_fltbms : 46|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ crit_rel_fltbms : 47|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ pchg_rot_fltbms : 48|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ pchg_rtow_fltbms : 49|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ chg_hb_fltbms : 50|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ hvil_fltbms : 51|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ dsgoff_rel_fltbms : 52|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ hazard_fltbms : 53|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ hw_scd_fltbms : 54|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ sysfail_fltbms : 55|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ other_i2c_fail_fltbms : 56|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ aps_oc_lat_fltbms : 57|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ aps_oc_permlat_fltbms : 58|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ ext_opdis_fltbms : 59|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ false_chgr_fltbms : 60|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ occ1_fltbms : 61|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ occ2_fltbms : 62|1@1+ (1,0) [0|1] "Status"  VIU
+ SG_ occ3_fltbms : 63|1@1+ (1,0) [0|1] "Status"  VIU
+
+BO_ 1823 DBGbms_CsFlowRate_MSG30: 8 BMS
+ SG_ perphcan_tx_errcnt : 0|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ perphcan_rx_errcnt : 8|7@1+ (1,0) [0|127] "x"  VIU
+ SG_ perphcan_errpass : 15|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ LowHost_SOH : 16|8@1+ (1,0) [0|255] "percent"  VIU
+ SG_ UppHost_SOH : 24|8@1+ (1,0) [0|255] "percent"  VIU
+ SG_ Ext_Avg_Vtg_LowHost : 32|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ Ext_Avg_Vtg_UppHost : 48|16@1+ (1,0) [0|65535] "mV"  VIU
+
+BO_ 1840 DBGbms_RawAFE1_MSG41: 8 BMS
+ SG_ AFE1_t1_adc_cnt : 0|16@1+ (1,0) [0|65535] "W"  VIU
+ SG_ AFE1_t2_adc_cnt : 16|16@1+ (1,0) [0|65535] "W"  VIU
+ SG_ AFE1_t3_adc_cnt : 32|16@1+ (1,0) [0|65535] "W"  VIU
+ SG_ AFE1_gt_adc_cnt : 48|16@1+ (1,0) [0|65535] "W"  VIU
+
+BO_ 1841 DBGbms_RawAdc1_MSG42: 8 BMS
+ SG_ NTC1_adc_cnt : 0|16@1+ (1,0) [0|65535] "W"  VIU
+ SG_ NTC2_adc_cnt : 16|16@1+ (1,0) [0|65535] "W"  VIU
+ SG_ NTC3_adc_cnt : 32|16@1+ (1,0) [0|65535] "W"  VIU
+ SG_ NTC4_adc_cnt : 48|16@1+ (1,0) [0|65535] "W"  VIU
+
+BO_ 1842 DBGbms_RawAdc2_MSG43: 8 BMS
+ SG_ NTC5_adc_cnt : 0|16@1+ (1,0) [0|65535] "W"  VIU
+ SG_ Pump_adc_cnt : 16|16@1+ (1,0) [0|65535] "W"  VIU
+ SG_ CAN_err_info : 32|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ ADC_fail_cnt : 40|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ LowHost_resetcnt : 48|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ UppHost_resetcnt : 56|8@1+ (1,0) [0|255] "x"  VIU
+
+BO_ 1843 DBGbms_RawCSAdc_MSG44: 8 BMS
+ SG_ CS1_adc_cnt : 0|16@1+ (1,0) [0|65535] "W"  VIU
+ SG_ CS2_adc_cnt : 16|16@1+ (1,0) [0|65535] "W"  VIU
+ SG_ CS3_adc_cnt : 32|16@1+ (1,0) [0|65535] "W"  VIU
+ SG_ CS4_adc_cnt : 48|16@1+ (1,0) [0|65535] "W"  VIU
+
+BO_ 1844 DBGbms_RawAFE2_MSG45: 8 BMS
+ SG_ AFE2_t1_adc_cnt : 0|16@1+ (1,0) [0|65535] "W"  VIU
+ SG_ AFE2_t2_adc_cnt : 16|16@1+ (1,0) [0|65535] "W"  VIU
+ SG_ AFE2_t3_adc_cnt : 32|16@1+ (1,0) [0|65535] "W"  VIU
+ SG_ AFE2_gt_adc_cnt : 48|16@1+ (1,0) [0|65535] "W"  VIU
+
+BO_ 1845 DBGbms_OpnCT_Fcnt3_MSG46: 8 BMS
+ SG_ open_ct1_flg : 0|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ open_ct2_flg : 1|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ open_ct3_flg : 2|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ open_ct4_flg : 3|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ open_ct5_flg : 4|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ open_ct6_flg : 5|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ open_ct7_flg : 6|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ open_ct8_flg : 7|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ open_ct9_flg : 8|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ open_ct10_flg : 9|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ open_ct11_flg : 10|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ open_ct12_flg : 11|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ imd_coff_flt_cnt : 16|16@1+ (1,0) [0|65535] "x"  VIU
+ SG_ Hvil_debug_param2 : 32|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ Hvil_debug_param3 : 40|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ Hvil_debug_param4 : 48|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ canrx_veh_mode : 56|4@1+ (1,0) [0|15] "x"  VIU
+ SG_ pack_bal_meas_b : 60|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ pack_bal_en_b : 61|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ afecfg_reset_state : 62|2@1+ (1,0) [0|3] "x"  VIU
+
+BO_ 1846 DBGbms_Fltcnt2_MSG48: 8 BMS
+ SG_ hvil_det_flt_cnt : 0|16@1+ (1,0) [0|65535] "x"  VIU
+ SG_ hvil_coff_flt_cnt : 16|16@1+ (1,0) [0|65535] "x"  VIU
+ SG_ LAFE_p1_rdsts : 32|2@1+ (1,0) [0|3] "x"  VIU
+ SG_ LAFE_p2_rdsts : 34|2@1+ (1,0) [0|3] "x"  VIU
+ SG_ LAFE_p3_rdsts : 36|2@1+ (1,0) [0|3] "x"  VIU
+ SG_ LAFE_p4_rdsts : 38|2@1+ (1,0) [0|3] "x"  VIU
+ SG_ LAFE_p5_rdsts : 40|2@1+ (1,0) [0|3] "x"  VIU
+ SG_ LAFE_p1_wrsts : 42|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ LAFE_p2_wrsts : 43|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ LAFE_p3_wrsts : 44|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ LAFE_p4_wrsts : 45|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ LAFE_p5_wrsts : 46|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ reserved_b10 : 47|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ UAFE_p1_rdsts : 48|2@1+ (1,0) [0|3] "x"  VIU
+ SG_ UAFE_p2_rdsts : 50|2@1+ (1,0) [0|3] "x"  VIU
+ SG_ UAFE_p3_rdsts : 52|2@1+ (1,0) [0|3] "x"  VIU
+ SG_ UAFE_p4_rdsts : 54|2@1+ (1,0) [0|3] "x"  VIU
+ SG_ UAFE_p5_rdsts : 56|2@1+ (1,0) [0|3] "x"  VIU
+ SG_ UAFE_p1_wrsts : 58|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ UAFE_p2_wrsts : 59|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ UAFE_p3_wrsts : 60|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ UAFE_p4_wrsts : 61|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ UAFE_p5_wrsts : 62|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ reserved_b11 : 63|1@1+ (1,0) [0|1] "x"  VIU
+
+BO_ 1847 DBGbms_FltCnt1_MSG49: 8 BMS
+ SG_ hvil_flt_cnt : 0|32@1+ (1,0) [0|4294967295] "x"  VIU
+ SG_ imd_flt_cnt : 32|32@1+ (1,0) [0|4294967295] "x"  VIU
+
+BO_ 778 DBGbms_INTVerNo_Resp_Msg14: 8 BMS
+ SG_ BMS_isw_calib_verNo : 0|6@1+ (1,0) [0|63] ""  VIU
+ SG_ BMS_isw_bugfix_verNo : 6|6@1+ (1,0) [0|63] ""  VIU
+ SG_ BMS_isw_min_verNo : 12|6@1+ (1,0) [0|63] ""  VIU
+ SG_ BMS_isw_major_verNo : 18|6@1+ (1,0) [0|63] ""  VIU
+ SG_ BMS_iecu_no : 24|4@1+ (1,0) [0|15] ""  VIU
+ SG_ BMS_ivariant_no : 28|3@1+ (1,0) [0|7] ""  VIU
+ SG_ BMS_imodel_no : 31|6@1+ (1,0) [0|63] ""  VIU
+ SG_ BMS_icompany_no : 37|3@1+ (1,0) [0|7] ""  VIU
+ SG_ BMS_ihw_verNo : 40|16@1+ (1,0) [0|65535] ""  VIU
+ SG_ BMS_icommProtcol_verNo : 56|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 1889 DBGbms_BTR25_MSG73: 8 BMS
+ SG_ DeltaV_grad : 0|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ DeltaT_grad : 16|16@1+ (1,0) [0|65535] "mV"  VIU
+ SG_ flg_dcvtg_grad : 32|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ flg_del_cvtg : 33|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ flg_dtemp_grad : 34|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ flg_err_temp : 35|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ flg_stddev_cvtg : 36|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ flg_stddev_ctemp : 37|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ flg_brkmax_dcvtg : 38|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ flg_bmax_dctemp : 39|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ flg_del_ctemp : 40|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ flg_120C_est : 41|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ flg_ot : 42|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ flg_bm7_delcv : 43|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ flg_bm8_delct : 44|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ i2c0_pk_tout : 48|16@1+ (1,0) [0|65535] "x"  VIU
+
+BO_ 1824 DBGbms_CMD1_MSG31: 8 VIU
+ SG_ ShutdownAFE_L : 0|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  BCU,BMS
+ SG_ ShutdownAFE_H : 8|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  BCU,BMS
+ SG_ FDis_BCU_viu_off : 16|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  BCU,BMS
+ SG_ BMS_OFF : 24|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  BCU,BMS
+ SG_ AFE_wakeup : 32|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  BCU,BMS
+ SG_ Calibration_Start : 40|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  BCU,BMS
+ SG_ Calibration_Stop : 48|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  BCU,BMS
+ SG_ SoftReset : 56|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  BCU,BMS
+
+BO_ 1825 DBGbms_CMD1ack_MSG32: 8 BMS
+ SG_ FbShutdownAFE_L : 0|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  VIU
+ SG_ FbShutdownAFE_H : 8|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  VIU
+ SG_ Fb_Fdis_nouse : 16|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  VIU
+ SG_ Fb_BMS_OFF : 24|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  VIU
+ SG_ Fb_AFE_wakeup : 32|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  VIU
+ SG_ Fb_Calibration_Start : 40|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  VIU
+ SG_ Fb_Calibration_Stop : 48|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  VIU
+ SG_ Fb_SoftReset : 56|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  VIU
+
+BO_ 1826 DBGbms_CMD2_MSG33: 8 VIU
+ SG_ Dmd_Vtg_setobc : 0|16@1+ (0.1,0) [0|65535] "V"  BMS
+ SG_ DBG_Pwm_alg_Sw : 16|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  BMS
+ SG_ DBG_CanTx_Stop_Sw : 24|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  BMS
+ SG_ CV_Cmd_Sw_setobc : 32|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  BMS
+ SG_ CAN_Sleep_Start : 40|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  BMS
+ SG_ Dmd_Curr_setobc : 48|16@1+ (0.01,0) [0|65535] "A"  BMS
+
+BO_ 1827 DBGbms_CMD2ack_MSG34: 8 BMS
+ SG_ Fb_Dmd_Vtg_setobc : 0|16@1+ (0.1,0) [0|65535] "V"  VIU
+ SG_ Fb_DBG_dtuHB_Stop_Sw : 16|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  VIU
+ SG_ Fb_DBG_CanTx_Stop_Sw : 24|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  VIU
+ SG_ Fb_CV_Cmd_Sw_setobc : 32|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  VIU
+ SG_ Fb_CAN_Sleep_Start : 40|8@1+ (1,0) [0|255] "Binary Data (0 or 1)"  VIU
+ SG_ Fb_Dmd_Curr_setobc : 48|16@1+ (0.01,0) [0|65535] "A"  VIU
+
+BO_ 1828 DBGbms_CMD3_MSG35: 8 VIU
+ SG_ Sleep_Wake_Trig : 0|8@1+ (1,0) [0|255] "Binary Data"  BMS
+
+BO_ 1829 DBGbms_CMD3ack_MSG36: 8 BMS
+ SG_ Fb_Sleep_Wake_Trig : 0|8@1+ (1,0) [0|255] "Binary Data"  VIU
+
+BO_ 1830 DBGbms_CMD4_MSG37: 8 VIU
+ SG_ LPM_perTriseHDis_Motor : 0|16@1+ (0.0001,0) [0|65535] "LPM"  BMS
+ SG_ LPM_perTriseHDis_DTU : 16|16@1+ (0.0001,0) [0|65535] "LPM"  BMS
+ SG_ LPM_perTriseHDis_BatmaxT : 32|16@1+ (0.0001,0) [0|65535] "LPM"  BMS
+ SG_ LPM_perTriseHDis_DelT : 48|16@1+ (0.0001,0) [0|65535] "LPM"  BMS
+
+BO_ 1831 DBGbms_CMD4ack_MSG38: 8 BMS
+ SG_ FbLPM_perTriseHDis_Motor : 0|16@1+ (0.0001,0) [0|65535] "LPM"  VIU
+ SG_ FbLPM_perTriseHDis_DTU : 16|16@1+ (0.0001,0) [0|65535] "LPM"  VIU
+ SG_ FbLPM_perTriseHDis_BatmaxT : 32|16@1+ (0.0001,0) [0|65535] "LPM"  VIU
+ SG_ FbLPM_perTriseHDis_DelT : 48|16@1+ (0.0001,0) [0|65535] "LPM"  VIU
+
+BO_ 1832 DBGbms_CMD5_MSG39: 8 VIU
+ SG_ LPM_perTriseHDis_BMSFET : 0|16@1+ (0.0001,0) [0|65535] "LPM"  BMS
+ SG_ Cs_start_temp_Motor : 16|8@1+ (1,0) [0|255] "degC"  BMS
+ SG_ Cs_start_temp_DTU : 24|8@1+ (1,0) [0|255] "degC"  BMS
+ SG_ Cs_start_temp_BatmaxT : 32|8@1+ (1,0) [0|255] "degC"  BMS
+ SG_ Cs_start_temp_DelT : 40|8@1+ (1,0) [0|255] "degC"  BMS
+ SG_ Cs_start_temp_BMSFET : 48|8@1+ (1,0) [0|255] "degC"  BMS
+ SG_ Cs_dutyext_set : 56|8@1+ (1,0) [0|255] "degC"  BMS
+
+BO_ 1833 DBGbms_CMD5ack_MSG40: 8 BMS
+ SG_ FbLPM_perTriseHDis_BMSFET : 0|16@1+ (0.0001,0) [0|65535] "LPM"  VIU
+
+BO_ 1836 DBGbcu_CMD1_MSG1: 8 VIU
+ SG_ PKE_Avail_setbcu : 0|1@1+ (1,0) [0|1] "x"  BCU
+ SG_ dont_use0 : 1|1@1+ (1,0) [0|1] "x"  BCU
+
+BO_ 1837 DBGbcu_CMD1ack_MSG2: 8 BCU
+ SG_ Fb_PKE_Avail_setbcu : 0|1@1+ (1,0) [0|1] "x"  VIU
+ SG_ Fb_dont_use1 : 1|1@1+ (1,0) [0|1] "x"  VIU
+
+BO_ 1904 DBGbcu_OPcurr_MSG3: 8 BCU
+ SG_ stflow_tsk_cnt : 0|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ io_tsk_cnt : 8|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ leftind_delcurr : 16|16@1+ (1,0) [0|65535] "x"  VIU
+ SG_ rind_delcurr : 32|16@1+ (1,0) [0|65535] "x"  VIU
+ SG_ bothind_delcurr : 48|16@1+ (1,0) [0|65535] "x"  VIU
+
+BO_ 1908 BCU_debug_Msg1: 8 BCU
+ SG_ dtu_rx_data_counter : 0|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ can1rx_qcounter : 8|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ can2rx_qcounter : 16|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ bmsrx_fan_duty : 24|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ dturx_start_sw_sts : 32|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ can_rx_check_cntr : 40|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ viu_uds_gway_act : 48|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ obd_uds_gway_act : 56|8@1+ (1,0) [0|255] "x"  VIU
+
+BO_ 1907 BCU_Msdi_stat: 8 BCU
+ SG_ int_status1 : 0|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ int_status2 : 8|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ misc_status1 : 16|8@1+ (1,0) [0|255] "x"  VIU
+ SG_ misc_status2 : 24|8@1+ (1,0) [0|255] "x"  VIU
+
+BO_ 1905 BCU_Dbug_task1: 8 BCU
+ SG_ tskio_stackpk : 0|16@1+ (1,0) [0|65535] "x"  VIU
+ SG_ tskstflow_stackpk : 16|16@1+ (1,0) [0|65535] "x"  VIU
+ SG_ tskcan_stackpk : 32|16@1+ (1,0) [0|65535] "x"  VIU
+ SG_ tskperd_stackpk : 48|16@1+ (1,0) [0|65535] "x"  VIU
+
+BO_ 1906 BCU_Dbug_task2: 8 BCU
+ SG_ tskpke_stackpk : 0|16@1+ (1,0) [0|65535] "x"  VIU
+ SG_ tskop_stackpk : 16|16@1+ (1,0) [0|65535] "x"  VIU
+ SG_ tskuds_stackpk : 32|16@1+ (1,0) [0|65535] "x"  VIU
+ SG_ spi_peak_tout : 48|16@1+ (1,0) [0|65535] "x"  VIU
+
+BO_ 853 BCU_Int_VerNo_RespMsg5: 8 BCU
+ SG_ BCU_isw_calib_verNo : 0|6@1+ (1,0) [0|63] ""  VIU
+ SG_ BCU_isw_bugfix_verNo : 6|6@1+ (1,0) [0|63] ""  VIU
+ SG_ BCU_isw_min_verNo : 12|6@1+ (1,0) [0|63] ""  VIU
+ SG_ BCU_isw_major_verNo : 18|6@1+ (1,0) [0|63] ""  VIU
+ SG_ BCU_iecu_no : 24|4@1+ (1,0) [0|15] ""  VIU
+ SG_ BCU_ivariant_no : 28|3@1+ (1,0) [0|7] ""  VIU
+ SG_ BCU_imodel_no : 31|6@1+ (1,0) [0|63] ""  VIU
+ SG_ BCU_icompany_no : 37|3@1+ (1,0) [0|7] ""  VIU
+ SG_ BCU_ihw_verNo : 40|16@1+ (1,0) [0|65535] ""  VIU
+ SG_ BCU_icommProtcol_verNo : 56|8@1+ (1,0) [0|255] ""  VIU
+
+BO_ 1936 DBGVic_MSPupdate_Cmd1: 8 VIU
+ SG_ OBC_msp_updateCmd : 0|1@1+ (1,0) [0|1] "x"  OBC
+
+
+BO_ 1864 DBGdtu_CMD1_MSG2: 8 DTU
+ SG_ cla_run_debug : 0|8@1+ (1,0) [0|255] "count"  VIU
+
+BO_ 1920 DBGOBC_MSPupdate_MSG1: 8 OBC
+ SG_ OBC_msp_updateACK : 0|1@1+ (1,0) [0|1] "x"  VIU
+
+BO_ 1921 DBGOBC_intrnal_version_MSG1: 8 OBC
+ SG_ OBC_internal_version : 0|16@1+ (1,0) [0|65535] "x"  VIU
+
+
+
+VAL_ 1806 BMSstate 0 "NA" 1 "DEAD" 2 "INIT" 3 "PCHG" 4 "CHG_TRICKLE" 5 "CHG_UV" 6 "CHG_NORMAL" 7 "DSG_NORMAL" 8 "DSG_NOCHG" 9 "DSG_LIMP" 10 "BOOT" 11 "SLEEP_UV" 12 "SLEEP_DPDSG" 13 "RESVD" 14 "FAULT_CRITICAL" 15 "VACATION" ;
+VAL_ 1806 FET_State_pchg 0 "OFF" 1 "ON" ;
+VAL_ 1806 FET_State_chg 0 "OFF" 1 "ON" ;
+VAL_ 1806 FET_State_dsg 0 "OFF" 1 "ON" ;
+VAL_ 1806 PumpSysState 0 "NA" 1 "NORMAL" 2 "NOLOAD" 3 "OLOAD" ;
+VAL_ 1807 CC_CV_state 0 "NORMAL_CC; 1" 2 "SECOND_CC" 3 "FINAL_CV" 4 "FULLCHG" ;
+VAL_ 1821 cov_warnbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1821 cuv_warnbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1821 del_v_warnbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1821 cot_warnbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1821 cut_warnbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1821 del_ct_warnbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1821 fot_warnbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1821 csot_warnbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1821 afedieot_warnbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1821 occ_warnbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1821 ocd_warnbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1821 pusoc_warnbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1821 hvil_warnbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1821 imd_warnbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1821 crit_lvl1_warnbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1821 crit_lvl2_warnbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1821 hostl_i2c_warnbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1821 hostu_i2c_warnbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1821 pump_oload_warnbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 afe_cov_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 afe_cuv_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 afe_cot_chg_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 afe_cot_dchg_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 afe_cut_chg_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 afe_cut_dchg_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 afe_oc_chg_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 afe_oc_dchg_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 afe_sc_detect_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 afe_oload_detect_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 afe_fet_off_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 afe_oc_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 afe_otf_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 afe_chgfoff_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 afe_dsgfoff_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 ddsg_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 del_cv_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 pchg_tout_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 del_ct_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 hostl_i2c_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 hostu_i2c_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 cot_chg_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 cot_dsg_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 cut_chg_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 cut_dsg_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 fot_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 csot_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 afedieot_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 imd_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 hostl_fail_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 hostu_fail_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 afel_fail_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 afeu_fail_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 cs_ic_fail_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 imd_ic_fail_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 adc_ic_fail_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 can_ic_fail_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 aps_scd_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 aps_ot_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 aps_ov_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 aps_oc_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 opp_cchg_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 opp_cdsg_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 pchg_pk_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 crit_rel_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 pchg_rot_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 pchg_rtow_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 chg_hb_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 hvil_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 dsgoff_rel_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 hazard_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 hw_scd_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 sysfail_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 other_i2c_fail_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 aps_oc_lat_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 aps_oc_permlat_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 ext_opdis_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 false_chgr_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 occ1_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 occ2_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 1822 occ3_fltbms 0 "NOT_ACT" 1 "ACTIVE" ;
+VAL_ 778 BMS_iecu_no 3 "BMS" ;
+VAL_ 853 BCU_iecu_no 3 "BMS" ;
+VAL_ 1863 Rotor_direction 1 "FWD" 2 "REV" 3 "STABLE" ;
+

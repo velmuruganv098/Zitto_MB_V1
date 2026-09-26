@@ -46,6 +46,8 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -77,7 +79,11 @@ import com.zitto.vcumaster.core.HubState
 import com.zitto.vcumaster.ui.components.Pill
 import com.zitto.vcumaster.ui.components.Ribbon
 import com.zitto.vcumaster.ui.components.rememberNow
+import com.zitto.vcumaster.core.long
+import com.zitto.vcumaster.core.str
+import com.zitto.vcumaster.ui.screens.BatteryScreen
 import com.zitto.vcumaster.ui.screens.ConnectScreen
+import com.zitto.vcumaster.ui.screens.MotorScreen
 import com.zitto.vcumaster.ui.screens.DeviceScreen
 import com.zitto.vcumaster.ui.screens.LiveScreen
 import com.zitto.vcumaster.ui.screens.SensorsScreen
@@ -88,14 +94,31 @@ import com.zitto.vcumaster.ui.theme.Mono
 import kotlinx.coroutines.launch
 import java.io.File
 
-enum class Tab(val key: String, val label: String, val title: String, val icon: ImageVector) {
-    CONNECT("connect", "Link", "Connection", Icons.Filled.Bluetooth),
-    LIVE("live", "Live", "Live data", Icons.AutoMirrored.Filled.List),
-    SENSORS("system", "Sensors", "IMU and current", Icons.Filled.Sensors),
-    VEHICLE("vehicle", "Vehicle", "Vehicle", Icons.Filled.DirectionsCar),
-    UPDATES("updates", "OTA/DBC", "OTA and DBC", Icons.Filled.SystemUpdateAlt),
-    DEVICE("device", "Device", "ESP32 and S32K", Icons.Filled.Memory),
+/** Bottom-bar groups: the desktop rail's "Link", "Vehicle CAN" and "Board" sections. */
+enum class Group(val key: String, val label: String, val icon: ImageVector) {
+    LINK("link", "Link", Icons.Filled.Bluetooth),
+    CAN("can", "Vehicle CAN", Icons.Filled.DirectionsCar),
+    BOARD("board", "Board", Icons.Filled.Memory),
 }
+
+enum class Tab(val key: String, val label: String, val title: String, val group: Group) {
+    CONNECT("connect", "Connection", "Connection", Group.LINK),
+    LIVE("live", "Live data", "Live data", Group.LINK),
+    BMS("bms", "Battery", "Battery (BMS)", Group.CAN),
+    MCU("mcu", "Motor", "Motor (MCU)", Group.CAN),
+    VEHICLE("vehicle", "Vehicle", "Vehicle and signals", Group.CAN),
+    SENSORS("system", "IMU & current", "IMU and current sensing", Group.BOARD),
+    DEVICE("device", "Device", "ESP32 and S32K144", Group.BOARD),
+    UPDATES("updates", "OTA & DBC", "Firmware and CAN databases", Group.BOARD),
+}
+
+/** Open a tab and remember it as the last one of its group. */
+fun UiPrefs.open(t: Tab) {
+    rememberGroupTab(t.group.key, t.key)
+    setTabName(t.key)
+}
+
+fun UiPrefs.openKey(key: String) = Tab.entries.firstOrNull { it.key == key }?.let { open(it) }
 
 private class ToastVisuals(
     override val message: String,
@@ -196,14 +219,17 @@ fun AppRoot(hub: Hub, prefs: UiPrefs) {
         topBar = { TopBar(tab, st, hub, prefs) },
         bottomBar = {
             NavigationBar(containerColor = v.panel, tonalElevation = 0.dp) {
-                for (t in Tab.entries) {
+                for (g in Group.entries) {
                     NavigationBarItem(
-                        selected = t == tab,
-                        onClick = { prefs.setTabName(t.key) },
+                        selected = g == tab.group,
+                        onClick = {
+                            val first = Tab.entries.first { it.group == g }
+                            prefs.openKey(prefs.groupTab(g.key, first.key)) ?: prefs.open(first)
+                        },
                         icon = {
                             Box {
-                                Icon(t.icon, contentDescription = t.label)
-                                if (t == Tab.CONNECT) {
+                                Icon(g.icon, contentDescription = g.label)
+                                if (g == Group.LINK) {
                                     Box(
                                         Modifier.align(Alignment.TopEnd).padding(0.dp)
                                             .background(if (st.link.connected) v.ok else Color.Transparent, MaterialTheme.shapes.small)
@@ -212,7 +238,7 @@ fun AppRoot(hub: Hub, prefs: UiPrefs) {
                                 }
                             }
                         },
-                        label = { Text(t.label, fontSize = 11.sp, maxLines = 1) },
+                        label = { Text(g.label, fontSize = 11.sp, maxLines = 1) },
                         alwaysShowLabel = true,
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = v.ink, selectedTextColor = v.ink,
@@ -234,13 +260,16 @@ fun AppRoot(hub: Hub, prefs: UiPrefs) {
         },
     ) { pad ->
         Box(Modifier.fillMaxSize().padding(pad)) {
+            val goto: (String) -> Unit = { prefs.openKey(it) }
             when (tab) {
                 Tab.CONNECT -> ConnectScreen(st, hub, prefs, gate)
                 Tab.LIVE -> LiveScreen(st, hub, prefs)
-                Tab.SENSORS -> SensorsScreen(st, prefs)
+                Tab.BMS -> BatteryScreen(st, prefs, goto)
+                Tab.MCU -> MotorScreen(st, prefs, goto)
                 Tab.VEHICLE -> VehicleScreen(st, hub, prefs)
-                Tab.UPDATES -> UpdatesScreen(st, hub, prefs)
+                Tab.SENSORS -> SensorsScreen(st, hub, prefs)
                 Tab.DEVICE -> DeviceScreen(st, hub, prefs)
+                Tab.UPDATES -> UpdatesScreen(st, hub, prefs)
             }
         }
     }
@@ -265,12 +294,26 @@ private fun TopBar(tab: Tab, st: HubState, hub: Hub, prefs: UiPrefs) {
         Row(Modifier.fillMaxWidth().padding(start = 16.dp, end = 4.dp, top = 6.dp), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text(tab.title, style = MaterialTheme.typography.titleLarge, color = v.ink, maxLines = 1)
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text("${st.rate} msg/s", fontSize = 12.sp, color = v.ink3, fontFamily = Mono)
-                    Text("${st.latest.bridge?.get("crc_errors") ?: 0} CRC err", fontSize = 12.sp, color = v.ink3, fontFamily = Mono)
+                    Text("${st.latest.bridge?.get("crc_errors") ?: 0} CRC", fontSize = 12.sp, color = v.ink3, fontFamily = Mono)
+                    for (bus in listOf(1, 2)) {
+                        val c = if (bus == 1) st.latest.can1 else st.latest.can2
+                        val bad = c != null && (c.long("bus_off") != 0L || c.str("state_name") == "ERROR")
+                        val color = when { c == null -> v.ink3; bad -> v.err; c.long("ready") != 0L -> v.ok; else -> v.focus }
+                        val text = when {
+                            c == null -> "CAN$bus –"
+                            c.long("ready") != 0L -> "CAN$bus ${c.str("baud")}k"
+                            else -> "CAN$bus ${(c.str("state_name") ?: "").lowercase()}"
+                        }
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Box(Modifier.width(6.dp).heightIn(min = 6.dp, max = 6.dp).background(color, MaterialTheme.shapes.small))
+                            Text(" $text", fontSize = 11.5.sp, color = if (c == null) v.ink3 else v.ink2, fontFamily = Mono, maxLines = 1)
+                        }
+                    }
                 }
             }
-            Pill(pillText, dot, border) { prefs.setTabName(Tab.CONNECT.key) }
+            Pill(pillText, dot, border) { prefs.open(Tab.CONNECT) }
             Spacer(Modifier.width(4.dp))
             val rec = st.recording
             TextButton(onClick = { hub.toggleRecord() }) {
@@ -300,7 +343,18 @@ private fun TopBar(tab: Tab, st: HubState, hub: Hub, prefs: UiPrefs) {
             }
         }
         Ribbon(st.ribbon, now, Modifier.padding(horizontal = 16.dp, vertical = 4.dp))
-        HorizontalDivider(color = v.rule)
+        val sub = Tab.entries.filter { it.group == tab.group }
+        TabRow(
+            selectedTabIndex = sub.indexOf(tab), containerColor = v.panel, contentColor = v.ink,
+            divider = { HorizontalDivider(color = v.rule) },
+        ) {
+            for (t in sub) {
+                Tab(
+                    selected = t == tab, onClick = { prefs.open(t) },
+                    text = { Text(t.label, fontSize = 12.5.sp, maxLines = 1, color = if (t == tab) v.ink else v.ink3) },
+                )
+            }
+        }
     }
     if (logs) LogsDialog(hub) { logs = false }
     if (about) {
@@ -311,9 +365,12 @@ private fun TopBar(tab: Tab, st: HubState, hub: Hub, prefs: UiPrefs) {
             text = {
                 Text(
                     "BLE bench console for the Zitto_MB_V1 VCU (NXP S32K144 + ESP32-S3 bridge).\n\n" +
-                        "S32K144 ─UART2 115200─> ESP32-S3 bridge ─BLE Nordic UART─> this phone.\n\n" +
+                        "S32K144 ─UART2 500000─> ESP32-S3 bridge ─BLE Nordic UART─> this phone.\n\n" +
                         "Flash esp32/uart_ble_bridge_vcumaster.ino on the bridge for RAW commands " +
-                        "(modules, status, reset, LED, flash, OTA). INFO should report RAW=1.",
+                        "(modules, status, reset, LED, flash, IMU zero, OTA). INFO should report RAW=1.\n\n" +
+                            "Version 2.0.0 follows the desktop VCU Master V0.0073: Battery (BMS) and Motor (MCU) windows laid out " +
+                            "from the DBC, a built-in library of 189 DBC files with automatic matching of the frames on the bus, " +
+                            "data-integrity counters, S32K command acknowledgements and board movement from the IMU.",
                 )
             },
         )

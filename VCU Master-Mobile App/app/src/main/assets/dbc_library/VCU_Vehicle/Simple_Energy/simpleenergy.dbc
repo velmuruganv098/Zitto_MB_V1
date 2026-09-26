@@ -1,0 +1,1512 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: Motor_Controller BCM BMS_Portable_battery BMS_Fixed_battery HMI
+VAL_TABLE_ BMS_State 9 "Calibration" 8 "FOTA" 7 "Shutdown" 6 "Standby" 5 "Fault" 4 "BP_Transition" 3 "Discharging" 2 "Charging" 1 "Idle" 0 "POST" ;
+VAL_TABLE_ HMI_Page_Status 4 "Navigation screen" 3 "Menu screen" 2 "Call screen" 1 "Music Screen" 0 "Home Screen" ;
+VAL_TABLE_ LimphomeModeCntrl 2 "Disable Limp home mode" 1 "Enable limp home mode" 0 "No action" ;
+VAL_TABLE_ Motor_rotation_direction 1 "Reverse direction" 0 "Forward direction" ;
+VAL_TABLE_ MC_Regen_Status 1 "Regenerative braking happening" 0 "No Regenerative braking" ;
+VAL_TABLE_ MC_Ready_status 1 "Motor controller ready" 0 "Motor controller not ready" ;
+VAL_TABLE_ Portable_Battery_dis_Command 1 "Disable portable battery" 0 "No action" ;
+VAL_TABLE_ Portable_Battery_en_Command 1 "Enable portable battery" 0 "No action" ;
+VAL_TABLE_ Reset_status 2 "Resetting to application" 1 "Resetting to bootloader" 0 "Not resetting. " ;
+VAL_TABLE_ Motot_On_Off_status 1 "Motor_on" 0 "Motor_off" ;
+VAL_TABLE_ Shutdown_status 1 "Shutdown accepted and on process" 0 "Shutdown not possible" ;
+VAL_TABLE_ Shutdown_command 1 "Shutdown the vehicle" 0 "No action" ;
+VAL_TABLE_ Portable_battery_Conn_status 1 "Portable battery connected" 0 "portable battery not connected" ;
+VAL_TABLE_ Enable_disable_status 1 "Enabled" 0 "Disabled" ;
+VAL_TABLE_ HMI_Mode_Commands 6 "Switch to reverse mode" 5 "Switch to park mode" 4 "Switch to Sonic mode" 3 "Switch to Dash mode" 2 "Switch to Ride mode" 1 "Switch to eco mode" 0 "No action" ;
+VAL_TABLE_ BCMModeCommand 4 "Change to Sonic mode" 3 "Change to Dash mode" 2 "Change to ride mode" 1 "Change to eco mode" 0 "No action" ;
+VAL_TABLE_ motor_Start_Stop_Command 2 "Stop the motor" 1 "Start motor" 0 "Stop the motor" ;
+VAL_TABLE_ HighpowerMode_enabled_Status 1 "Only eco mode available" 0 "enabled. All modes available" ;
+VAL_TABLE_ Light_OnOff_Status 1 "Light On" 0 "Light off" ;
+VAL_TABLE_ Unlock_Command 1 "Deactivate lock and unlock" 0 "No action" ;
+VAL_TABLE_ Lock_command 1 "activate lock" 0 "No action" ;
+VAL_TABLE_ Lock_status 1 "Locked" 0 "Unlocked" ;
+VAL_TABLE_ Cruise_control_status 1 "Cruise control enabled" 0 "Cruise control disabled" ;
+VAL_TABLE_ Cruise_Control_enable_Command 2 "Enable cruise control" 1 "Disable cruise control" 0 "No action" ;
+VAL_TABLE_ CellBalancing_status 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_TABLE_ SOS_Theft_status 2 "Theft" 1 "SOS " 0 "No problems" ;
+VAL_TABLE_ Stand_Sensor_status 1 "Stand is lifted" 0 "Stand is not lifted" ;
+VAL_TABLE_ Switch_pressed 1 "Switch pressed" 0 "switch not pressed" ;
+VAL_TABLE_ ToggleBattery 1 "Shift to receving battery" 0 "No action" ;
+VAL_TABLE_ Key_status 1 "Key is turned on" 0 "Key is turned off" ;
+VAL_TABLE_ Vehicle_lock_Command 1 "Vehicle lock" 0 "No action" ;
+VAL_TABLE_ Vehicle_unlock_Command 1 "Vehicle Unlock" 0 "No action" ;
+VAL_TABLE_ Current_Mode_status_table 7 "Crawl" 6 "Reverse" 5 "Park" 4 "Sonic" 3 "Dash" 2 "Ride" 1 "Eco" ;
+VAL_TABLE_ Selected_battery 1 "Portable battery is selected" 0 "Fixed battery is selected" ;
+VAL_TABLE_ Controller_Reset_Status 2 "Resetting to application" 1 "Resetting to bootloader" 0 "Resetting failed" ;
+VAL_TABLE_ Reset_Command_Mode 2 "Reset to application" 1 "Reset to bootloader" 0 "No action" ;
+VAL_TABLE_ Battery_fully_discharged_status 1 "Battery fully discharged" 0 "Battery not fully discharged" ;
+VAL_TABLE_ Battery_Fullycharged_status 1 "Battery fully charged" 0 "Battery not fully charged" ;
+VAL_TABLE_ Discharging_enable_status 1 "Discharging enabled" 0 "Discharging disabled" ;
+VAL_TABLE_ Charging_enable_status 1 "Charging enabled" 0 "Charging disabled" ;
+VAL_TABLE_ Vehicle_Connected_Charger 2 "Public charger connected" 1 "Home charger connected" 0 "No charger connected" ;
+VAL_TABLE_ Alert_table 1 "Alert" 0 "No alert" ;
+VAL_TABLE_ Warning_table 1 "Warning" 0 "no warning" ;
+VAL_TABLE_ Fault_table 1 "Fault" 0 "No fault" ;
+VAL_TABLE_ Vehicle_status_table 6 "Shutdown" 5 "Charging" 4 "Theft" 3 "Fault" 2 "Operational" 1 "Locked" ;
+
+
+BO_ 2492071923 MCU_All_HWVersionNumber: 8 Vector__XXX
+ SG_ MC_HWVN : 0|64@1+ (1,0) [0|1.84467440737096E+019] "Sr" Vector__XXX
+
+BO_ 2492006374 HMI_All_HWVersionNumber: 8 HMI
+ SG_ HMI_HWVN : 0|64@1+ (1,0) [0|1.84467440737096E+019] "Sr" Vector__XXX
+
+BO_ 2491940850 BMSP_All_HWVersionNumber: 8 BMS_Portable_battery
+ SG_ BMSP_HWVN : 0|64@1+ (1,0) [0|1.84467440737096E+019] "Sr" Vector__XXX
+
+BO_ 2491875313 BMSF_All_HWVersionNumber: 8 BMS_Fixed_battery
+ SG_ BMSF_HWVN : 0|64@1+ (1,0) [0|1.84467440737096E+019] "Sr" Vector__XXX
+
+BO_ 2491809780 BCM_All_HWVersionNumber: 8 BCM
+ SG_ BCM_HWVN : 0|64@1+ (1,0) [0|1.84467440737096E+019] "Sr" Vector__XXX
+
+BO_ 2423259121 BMSF_HMI_FETTemp_111: 8 BMS_Fixed_battery
+ SG_ BMSF_FETtemperature_2 : 16|16@1- (0.01,0) [-327.68|327.67] "C"  BCM
+ SG_ BMSF_FETtemperature_1 : 0|16@1- (0.01,0) [-327.68|327.67] "C"  BCM
+
+BO_ 2423193586 BMSP_HMI_FETTemp_110: 8 BMS_Portable_battery
+ SG_ BMSP_FETtemperature_2 : 16|16@1- (0.01,0) [-327.68|327.67] "C"  BCM
+ SG_ BMSP_FETtemperature_1 : 0|16@1- (0.01,0) [-327.68|327.67] "C"  BCM
+
+BO_ 2353070067 MC_All_FaultFlags_64: 8 Motor_Controller
+ SG_ MC_Wphase_Hall_Abnormal_fault : 41|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_VPhase_Hall_Abnormal_fault : 40|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_Wphase_HallDisconnect_fault : 39|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_Vphase_HallDisconnect_fault : 38|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_UPhase_HallDisconnect_fault : 37|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_LowVoltSupply_UnderVolt_fault : 36|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_Excess_DriveboardSupply_fault : 35|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_ControllerDrive_fault : 34|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_ResolverConnector_fault : 33|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_DrivePower_Undervolt_fault : 32|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_Hw_Overvoltage_fault : 31|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_Hw_Overcurrent_fault : 30|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_Motor_TempSens_Disconn_fault : 29|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_Motor_Overspeed_fault : 28|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_Abnormal_CAN_comm_fault : 27|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_Excess_SpeedDeviation_fault : 26|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_DC_BusUnderVolt_fault : 25|1@1+ (1,0) [0|0] "Boolean"  BCM
+ SG_ MC_Analog_InputOverrun_fault : 24|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_MotorStalling_fault : 23|1@1+ (1,0) [0|0] "Boolean"  BCM
+ SG_ MC_Driver_PowerOverrun_fault : 22|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_Hw_OverVoltage_Baseline_fault : 21|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_DrivePara_ReadWrite_fault : 20|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_HighSpeed_DriveEnable_fault : 19|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_Abnorm_SpeedDir_GearRes_fault : 18|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_MutualExclusion_fault : 17|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_HighPressure_Interlock_fault : 16|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_LowVltg_UnderVltg_fault : 15|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_LowVoltg_OverVltg_fault : 14|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_Abnormal_resolver_sig_fault : 13|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_DriveTempSens_disconn_fault : 12|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_Drive_OverTemp_fault : 10|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_MotorOverTemperature_fault : 11|1@1+ (1,0) [0|0] "Boolean"  BCM
+ SG_ MC_Output_PhaseLoss_fault : 9|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_Abnormal_Gearshift_fault : 8|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_MotorOutputGnd_ShortCkt_fault : 7|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_UPhase_Hall_fault : 6|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_MotorOverload_fault : 5|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_DriveOverload_fault : 4|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_MotorParameterTuning_fault : 3|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_DriveProtection_fault : 2|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ MC_OverVoltage_fault : 1|1@1+ (1,0) [0|0] "Boolean"  BCM
+ SG_ MC_OverCurrent_fault : 0|1@1+ (1,0) [0|0] "Boolean"  BCM
+
+BO_ 2349793268 BCM_All_ErrorStatus_14: 8 BCM
+ SG_ BCM_E_MotorController_Short : 45|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_E_MotorController_OT : 44|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_E_MotorController_Open : 43|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_E_DCDCUnstable_Fault : 42|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_E_Bootlight_Short : 41|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_E_Bootlight_OT : 40|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_E_Bootlight_Open : 39|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ Charger_E_Temperature_fault : 38|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ Charger_E_StoppedWorking_fault : 37|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ Charger_E_InputVoltage_fault : 36|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ Charger_E_Hardware_fault : 35|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ Charger_E_Communicaton_fault : 34|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_E_SelfCheck_fault : 33|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_E_PortableBatteryConn_fault : 32|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_E_MCComm_fault : 31|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_E_CruiseControl_fault : 30|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_E_ChargerConn_fault : 29|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_E_BMSComm_fault : 28|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_E_BatterySwitching_fault : 27|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_E_USB_Short : 26|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_E_USB_OT : 25|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_E_USB_Open : 24|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_E_StopLight_Short : 23|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_E_StopLight_OT : 22|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_E_StopLight_Open : 21|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_E_RIndicatorlightRight_Short : 20|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_E_RIndicatorlightRight_OT : 19|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_E_RIndicatorlightRight_Open : 18|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_E_RIndicatorlightLeft_Short : 17|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_E_RIndicatorlightLeft_OT : 16|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_E_RIndicatorlightLeft_Open : 15|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_E_Horn_OT : 13|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_E_Horn_Open : 12|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_E_Highbeam_OT : 10|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_E_Highbeam_Open : 9|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_E_FIndicatorlightRight_Short : 8|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_E_FIndicatorlightRight_OT : 7|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_E_FIndicatorlightRight_Open : 6|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_E_FIndicatorlightLeft_OT : 4|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_E_FIndicatorlightLeft_Open : 3|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_E_BrakeLight_Short : 2|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_E_BrakeLight_OT : 1|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_E_BrakeLight_Open : 0|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_E_Horn_Short : 14|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_E_Highbeam_Short : 11|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_E_FIndicatorlightLeft_Short : 5|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+
+BO_ 2349721332 BCM_HMI_Range_13: 8 BCM
+ SG_ BCM_RangePB : 56|8@1+ (1,0) [0|255] "Km" Vector__XXX
+ SG_ BCM_RangeFB : 48|8@1+ (1,0) [0|255] "Km" Vector__XXX
+ SG_ BCM_RangeDisplay : 0|16@1+ (0.01,0) [0|655.35] "Km" Vector__XXX
+ SG_ BCM_RangeSonic : 40|8@1+ (1,0) [0|255] "Km" Vector__XXX
+ SG_ BCM_RangeRide : 32|8@1+ (1,0) [0|255] "Km" Vector__XXX
+ SG_ BCM_RangeEco : 24|8@1+ (1,0) [0|255] "Km" Vector__XXX
+ SG_ BCM_RangeDash : 16|8@1+ (1,0) [0|255] "Km" Vector__XXX
+
+BO_ 2282553076 BCM_BMS_BattSwitching_12: 8 BCM
+ SG_ BCM_BattSw_PBDschgFET_Control : 5|1@1+ (1,0) [0|0] "Enable"  BMS_Fixed_battery,BMS_Portable_battery
+ SG_ BCM_BattSw_FBDschgFET_Control : 4|1@1+ (1,0) [0|0] "Enable"  BMS_Fixed_battery,BMS_Portable_battery
+ SG_ BCM_BattSw_PBChgFET_Control : 3|1@1+ (1,0) [0|0] "Enable"  BMS_Fixed_battery,BMS_Portable_battery
+ SG_ BCM_BattSw_FBChgFET_Control : 2|1@1+ (1,0) [0|0] "Enable"  BMS_Fixed_battery,BMS_Portable_battery
+ SG_ BCM_BattSw_TransitionCommand : 0|1@1+ (1,0) [0|0] "Enable"  BMS_Fixed_battery,BMS_Portable_battery
+
+BO_ 2352676850 BMSP_Telemetry3_58: 8 BMS_Portable_battery
+ SG_ BMSP_ChargeWh : 16|16@1+ (1,0) [0|65535] "kwh" Vector__XXX
+ SG_ BMSP_PackVoltage : 32|16@1+ (0.001,0) [0|65.535] "kwh"  HMI
+ SG_ BMSP_DischargeWh : 0|16@1+ (1,0) [0|65535] "kwh"  HMI
+ SG_ BMSP_Ah : 48|16@1+ (0.01,0) [0|655.35] "kwh"  HMI
+
+BO_ 2352611313 BMSF_Telemetry3_57: 8 BMS_Fixed_battery
+ SG_ BMSF_ChargeWh : 16|16@1+ (1,0) [0|65535] "kwh" Vector__XXX
+ SG_ BMSF_Ah : 48|16@1+ (0.01,0) [0|655.35] "kwh"  HMI
+ SG_ BMSF_PackVoltage : 32|16@1+ (0.001,0) [0|65.535] "kwh"  HMI
+ SG_ BMSF_DischargeWh : 0|16@1+ (1,0) [0|65535] "kwh"  HMI
+
+BO_ 2349069300 BCM_MC_RideControl_3: 8 BCM
+ SG_ Motor_Imax : 0|16@1+ (0.01,0) [0|655.35] "Amps"  Motor_Controller
+
+BO_ 2348875763 MC_All_RideStatus_0: 8 Motor_Controller
+ SG_ Motor_Imax_Status : 0|16@1+ (0.01,0) [0|655.35] "Amps"  HMI
+
+BO_ 2491744243 MotorController_All_SWIN: 8 Motor_Controller
+ SG_ MC_SWVN : 0|64@1+ (1,0) [0|1.84467440737096E+019] "Sr" Vector__XXX
+
+BO_ 2491678694 HMI_All_SWIN: 8 HMI
+ SG_ HMI_SWIN : 0|64@1+ (1,0) [0|1.84467440737096E+019] "Sr" Vector__XXX
+
+BO_ 2491613170 BMSP_All_SWIN: 8 BMS_Portable_battery
+ SG_ BMSP_SWIN : 0|64@1+ (1,0) [0|1.84467440737096E+019] "Sr"  HMI
+
+BO_ 2491547633 BMSF_All_SWIN: 8 BMS_Fixed_battery
+ SG_ BMSF_SWIN : 0|64@1+ (1,0) [0|1.84467440737096E+019] "Sr"  HMI
+
+BO_ 2491482100 BCM_All_SWIN: 8 BCM
+ SG_ BCM_SWIN : 0|64@1+ (1,0) [0|1.84467440737096E+019] "Sr"  HMI
+
+BO_ 2423908082 BMSP_HMI_BatTemp_121: 8 BMS_Portable_battery
+ SG_ BatteryP_temperature_7 : 48|8@1- (1,0) [0|0] "C"  BCM,HMI
+ SG_ BatteryP_temperature_6 : 40|8@1- (1,0) [0|0] "C"  BCM,HMI
+ SG_ BatteryP_temperature_5 : 32|8@1- (1,0) [0|0] "C"  BCM,HMI
+ SG_ BatteryP_temperature_4 : 24|8@1- (1,0) [0|0] "C"  BCM,HMI
+ SG_ BatteryP_temperature_3 : 16|8@1- (1,0) [0|0] "C"  BCM,HMI
+ SG_ BatteryP_temperature_2 : 8|8@1- (1,0) [0|0] "C"  BCM,HMI
+ SG_ BatteryP_temperature_1 : 0|8@1- (1,0) [0|0] "C"  BCM,HMI
+
+BO_ 2423842545 BMSF_HMI_BatTemp_120: 8 BMS_Fixed_battery
+ SG_ BatteryF_temperature_7 : 48|8@1- (1,0) [0|0] "C"  BCM,HMI
+ SG_ BatteryF_temperature_6 : 40|8@1- (1,0) [0|0] "C"  BCM,HMI
+ SG_ BatteryF_temperature_5 : 32|8@1- (1,0) [0|0] "C"  BCM,HMI
+ SG_ BatteryF_temperature_4 : 24|8@1- (1,0) [0|0] "C"  BCM,HMI
+ SG_ BatteryF_temperature_3 : 16|8@1- (1,0) [0|0] "C"  BCM,HMI
+ SG_ BatteryF_temperature_2 : 8|8@1- (1,0) [0|0] "C"  BCM,HMI
+ SG_ BatteryF_temperature_1 : 0|8@1- (1,0) [0|0] "C"  BCM,HMI
+
+BO_ 2423777010 BMSP_HMI_CellV4_119: 8 BMS_Portable_battery
+ SG_ BP_Cellbalancing_9 : 40|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BP_Cellbalancing_8 : 39|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BP_Cellbalancing_7 : 38|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BP_Cellbalancing_6 : 37|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BP_Cellbalancing_5 : 36|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BP_Cellbalancing_4 : 35|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BP_Cellbalancing_3 : 34|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BP_Cellbalancing_2 : 33|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BP_Cellbalancing_14 : 45|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BP_Cellbalancing_13 : 44|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BP_Cellbalancing_12 : 43|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BP_Cellbalancing_11 : 42|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BP_Cellbalancing_10 : 41|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BP_Cellbalancing_1 : 32|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BP_CellVoltage14 : 16|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+ SG_ BP_CellVoltage13 : 0|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+
+BO_ 2423711474 BMSP_HMI_CellV3_118: 8 BMS_Portable_battery
+ SG_ BP_CellVoltage9 : 48|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+ SG_ BP_CellVoltage12 : 32|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+ SG_ BP_CellVoltage11 : 16|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+ SG_ BP_CellVoltage10 : 0|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+
+BO_ 2423645938 BMSP_HMI_CellV2_117: 8 BMS_Portable_battery
+ SG_ BP_CellVoltage8 : 48|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+ SG_ BP_CellVoltage7 : 32|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+ SG_ BP_CellVoltage6 : 16|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+ SG_ BP_CellVoltage5 : 0|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+
+BO_ 2423580402 BMSP_HMI_CellV1_116: 8 BMS_Portable_battery
+ SG_ BP_CellVoltage4 : 48|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+ SG_ BP_CellVoltage3 : 32|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+ SG_ BP_CellVoltage2 : 16|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+ SG_ BP_CellVoltage1 : 0|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+
+BO_ 2423514865 BMSF_HMI_CellV4_115: 8 BMS_Fixed_battery
+ SG_ BF_Cellbalancing_14 : 45|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BF_Cellbalancing_13 : 44|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BF_Cellbalancing_12 : 43|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BF_Cellbalancing_11 : 42|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BF_Cellbalancing_10 : 41|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BF_Cellbalancing_9 : 40|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BF_Cellbalancing_8 : 39|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BF_Cellbalancing_7 : 38|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BF_Cellbalancing_6 : 37|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BF_Cellbalancing_5 : 36|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BF_Cellbalancing_4 : 35|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BF_Cellbalancing_3 : 34|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BF_Cellbalancing_2 : 33|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BF_Cellbalancing_1 : 32|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BF_CellVoltage14 : 16|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+ SG_ BF_CellVoltage13 : 0|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+
+BO_ 2423449329 BMSF_HMI_CellV3_114: 8 BMS_Fixed_battery
+ SG_ BF_CellVoltage9 : 48|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+ SG_ BF_CellVoltage12 : 32|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+ SG_ BF_CellVoltage11 : 16|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+ SG_ BF_CellVoltage10 : 0|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+
+BO_ 2423383793 BMSF_HMI_CellV2_113: 8 BMS_Fixed_battery
+ SG_ BF_CellVoltage8 : 48|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+ SG_ BF_CellVoltage7 : 32|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+ SG_ BF_CellVoltage6 : 16|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+ SG_ BF_CellVoltage5 : 0|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+
+BO_ 2423318257 BMSF_HMI_CellV1_112: 8 BMS_Fixed_battery
+ SG_ BF_CellVoltage4 : 48|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+ SG_ BF_CellVoltage3 : 32|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+ SG_ BF_CellVoltage2 : 16|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+ SG_ BF_CellVoltage1 : 0|16@1+ (0.0001,0) [0|6.5535] "V"  BCM,HMI
+
+BO_ 2285436914 PB_All_ShutdownStatus_56: 7 BMS_Portable_battery
+ SG_ PB_Shutdown_status : 0|8@1+ (1,0) [0|2] "Status"  HMI
+
+BO_ 2285371377 BF_All_ShutdownStatus_55: 7 BMS_Fixed_battery
+ SG_ FB_Shutdown_status : 0|8@1+ (1,0) [0|2] "Status"  HMI
+
+BO_ 2218196710 HMI_All_SOS_54: 2 HMI
+ SG_ SOSorTHeft_type : 0|16@1+ (1,0) [0|0] "SOS" Vector__XXX
+
+BO_ 2352346342 HMI_BCM_IMU2_53: 8 HMI
+ SG_ Vehicle_Angle : 32|16@1+ (1,0) [0|360] "Degree"  BCM
+ SG_ HMI_IMUAxis_6 : 16|12@1+ (1,0) [0|4095] "Axis"  BCM
+ SG_ HMI_IMUAxis_5 : 0|12@1+ (1,0) [0|4095] "Axis"  BCM
+
+BO_ 2352280806 HMI_BCM_IMU1_52: 8 HMI
+ SG_ HMI_IMUAxis_4 : 48|12@1+ (1,0) [0|4095] "Axis"  BCM
+ SG_ HMI_IMUAxis_3 : 32|12@1+ (1,0) [0|4095] "Axis"  BCM
+ SG_ HMI_IMUAxis_2 : 16|12@1+ (1,0) [0|4095] "Axis"  BCM
+ SG_ HMI_IMUAxis_1 : 0|12@1+ (1,0) [0|4095] "Axis"  BCM
+
+BO_ 2349528052 BCM_MC_Control_10: 8 BCM
+ SG_ Ignition_Command : 0|8@1+ (1,0) [0|255] "On-Off"  Motor_Controller
+ SG_ CruiseControl_en : 16|8@1+ (1,0) [0|255] "Enable"  Motor_Controller
+ SG_ BCM_ModeCommand : 8|8@1+ (1,0) [0|255] "Mode"  Motor_Controller
+
+BO_ 2284060660 BCM_All_Shutdown_35: 8 BCM
+ SG_ HMI_Shutdown_Command : 1|1@1+ (1,0) [0|2] "Command" Vector__XXX
+ SG_ BMS_ShutdownCommand : 8|1@1+ (1,0) [0|2] "Command"  BMS_Fixed_battery,BMS_Portable_battery
+ SG_ HMI_Shutdown_Ack : 0|1@1+ (1,0) [0|2] "Command"  HMI
+
+BO_ 2350907378 BMSP_All_telemetry2_31: 8 BMS_Portable_battery
+ SG_ BP_Cycle_count : 16|16@1+ (1,0) [0|65535] "no"  HMI
+ SG_ BMSP_ChargingVoltage : 48|16@1+ (0.001,0) [0|65.535] "Amps"  HMI
+ SG_ BMSP_ChargingCurrent : 32|16@1+ (0.001,0) [0|65.535] "Amps"  HMI
+ SG_ BMSP_temperature : 0|16@1- (0.01,0) [-327.68|327.67] "C"  BCM,HMI
+
+BO_ 2350841841 BMSF_All_Telemetry2_30: 8 BMS_Fixed_battery
+ SG_ BMSF_ChargeCycle_count : 16|16@1+ (1,0) [0|65535] "no"  HMI
+ SG_ BMSF_ChargingCurrent : 32|16@1+ (0.001,0) [0|65.535] "Amps"  HMI
+ SG_ BMSF_ChargingVoltage : 48|16@1+ (0.001,0) [0|65.535] "Amps"  HMI
+ SG_ BMSF_MaxBattTemperature : 0|16@1- (0.01,0) [-327.68|327.67] "C"  BCM,HMI
+
+BO_ 2350776306 BMSP_All_Telemetry_29: 8 BMS_Portable_battery
+ SG_ BMSP_U_SOC : 8|8@1+ (1,0) [0|100] "%" Vector__XXX
+ SG_ BMSP_Current : 40|16@1- (0.01,0) [-327.68|327.67] "Volt"  BCM,HMI
+ SG_ BMSP_Votlage : 24|16@1+ (0.001,0) [0|65.535] "Volt"  HMI
+ SG_ BMSP_SOH : 16|8@1+ (1,0) [0|100] "%"  HMI
+ SG_ BMSP_A_SOC : 0|8@1+ (1,0) [0|100] "%"  BCM,HMI
+
+BO_ 2350710769 BMSF_All_Telemetry_28: 8 BMS_Fixed_battery
+ SG_ BMSF_U_SOC : 8|8@1+ (1,0) [0|100] "%" Vector__XXX
+ SG_ BMSF_Current : 40|16@1- (0.01,0) [-327.68|327.67] "Volt"  BCM,HMI
+ SG_ BMSF_BattVotlage : 24|16@1+ (0.001,0) [0|65.535] "Volt"  BCM,HMI
+ SG_ BMSF_SOH : 16|8@1+ (1,0) [0|100] "%"  HMI
+ SG_ BMSF_A_SOC : 0|8@1+ (1,0) [0|100] "%"  BCM,HMI
+
+BO_ 2350645234 BMSP_All_Status_27: 8 BMS_Portable_battery
+ SG_ BMSP_PrechargeTimeout : 6|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BMSP_DockConnectionStatus : 5|1@1+ (1,0) [0|1] "Status"  BCM
+ SG_ BMSP_FETOverTemperature_Fault : 47|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ BMSP_FETOverTemperature_Alert : 39|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ BMSP_Busbar_Disconnect : 46|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ BMSP_SMBusComm_Fail : 45|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ BMSP_I2CComm_Fail : 44|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ BMSP_CurrentSensor_Fail : 43|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ BMSP_BattOverTempChg_Alert : 33|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ BMSP_BattUnderTempChg_Alert : 32|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ BMSP_ThermalOverRun : 37|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ BMSP_ChargeFET_Open : 29|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ BMSP_ChargeFET_Short : 28|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ BMSP_DischargeFET_Open : 27|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ BMSP_DischargeFET_Short : 26|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ BMSP_BattOverTempChg_Fault : 25|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ BMSP_BattUnderTempChg_fault : 24|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ BMSP_PackOverVolt_Alert : 23|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ BMSP_BattOverTempDsg_Alert : 22|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ BMSP_BattUnderTempDsg_Alert : 21|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ BMSP_PackOverVolt_fault : 15|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ BMSP_BattOverTempDsg_fault : 14|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ BMSP_BattUnderTempDsg_fault : 13|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ BMSP_SoftwareState : 56|8@1+ (1,0) [0|255] ""  BCM
+ SG_ BMSP_HwShortcircuit_LatchedFault : 38|1@1+ (1,0) [0|1] "Status"  BCM
+ SG_ BMSP_REGOUT_Status : 4|1@1+ (1,0) [0|1] "Status"  BCM
+ SG_ BMSP_TempSensor_short : 31|1@1+ (1,0) [0|1] ""  BCM,HMI
+ SG_ BMSP_TempSensor_open : 30|1@1+ (1,0) [0|1] ""  BCM,HMI
+ SG_ BMSP_Shunt_Status : 36|1@1+ (1,0) [0|1] ""  BCM,HMI
+ SG_ BMSP_Cell_ShortFault : 35|1@1+ (1,0) [0|1] ""  BCM,HMI
+ SG_ BMSP_Cell_openFault : 34|1@1+ (1,0) [0|1] ""  BCM,HMI
+ SG_ BMSP_AFE_Fail : 40|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BMSP_ShortCircuitDischarge_fault : 12|1@1+ (1,0) [0|1] "Boolean"  BCM,HMI
+ SG_ BMSP_ShortCircuitDischarge_Alert : 20|1@1+ (1,0) [0|1] "Boolean"  BCM,HMI
+ SG_ BMSP_OverCurrentDischarge_fault : 11|1@1+ (1,0) [0|1] "Boolean"  BCM,HMI
+ SG_ BMSP_OverCurrentDischarge_Alert : 19|1@1+ (1,0) [0|1] "Boolean"  BCM,HMI
+ SG_ BMSP_OverCurrentCharge_fault : 10|1@1+ (1,0) [0|1] "Boolean"  BCM,HMI
+ SG_ BMSP_OverCurrentCharge_Alert : 18|1@1+ (1,0) [0|1] "Boolean"  BCM,HMI
+ SG_ BMSP_EEPROM_Fail : 41|1@1+ (1,0) [0|1] "Boolean"  BCM,HMI
+ SG_ BMSP_CompanionIC_fail : 42|1@1+ (1,0) [0|1] "Boolean"  BCM,HMI
+ SG_ BMSP_CellUnderVolt_fault : 8|1@1+ (1,0) [0|1] "Boolean"  BCM,HMI
+ SG_ BMSP_CellUnderVolt_Alert : 16|1@1+ (1,0) [0|1] "Boolean"  BCM,HMI
+ SG_ BMSP_CellOverVolt_fault : 9|1@1+ (1,0) [0|1] "Boolean"  BCM,HMI
+ SG_ BMSP_CellOverVolt_Alert : 17|1@1+ (1,0) [0|1] "Boolean"  BCM,HMI
+ SG_ Vehicle_key_status_PB : 7|1@1+ (1,0) [0|255] "On-Off"  BCM,HMI
+ SG_ BMSP_Discharging_en_Status : 3|1@1+ (1,0) [0|1] "Boolean"  HMI,BCM
+ SG_ BMSP_Charging_en_status : 2|1@1+ (1,0) [0|1] "Boolean"  HMI,BCM
+ SG_ BMSP_Fully_discharged : 1|1@1+ (1,0) [0|1] "Boolean"  HMI,BCM
+ SG_ BMSP_Fully_charged : 0|1@1+ (1,0) [0|1] "Boolean"  HMI,BCM
+
+BO_ 2350579697 BMSF_All_Status_26: 8 BMS_Fixed_battery
+ SG_ BMSF_PrechargeTimeout : 48|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BMSF_DockConnectionStatus : 5|1@1+ (1,0) [0|1] "Status"  BCM
+ SG_ BMSF_FETOverTemperature_Fault : 47|1@1+ (1,0) [0|0] "Boolean"  BCM
+ SG_ BMSF_FETOverTemperature_Alert : 39|1@1+ (1,0) [0|0] "Boolean"  BCM
+ SG_ BMSF_ThermalOverRun : 37|1@1+ (1,0) [0|0] "Boolean"  BCM
+ SG_ BMSF_SoftwareState : 56|8@1+ (1,0) [0|0] ""  BCM
+ SG_ BMSF_Busbar_Disconnect : 46|1@1+ (1,0) [0|0] "Boolean"  BCM
+ SG_ BMSF_SMBusComm_Fail : 45|1@1+ (1,0) [0|0] "Boolean"  BCM
+ SG_ BMSF_I2CComm_Fail : 44|1@1+ (1,0) [0|0] "Boolean"  BCM
+ SG_ BMSF_CurrentSensor_Fail : 43|1@1+ (1,0) [0|0] "Boolean"  BCM
+ SG_ BMSF_DischargeFET_Open : 27|1@1+ (1,0) [0|0] "Boolean"  BCM
+ SG_ BMSF_ChargeFET_Open : 29|1@1+ (1,0) [0|0] "Boolean"  BCM
+ SG_ BMSF_BattUnderTempChg_fault : 24|1@1+ (1,0) [0|0] "Boolean"  BCM
+ SG_ BMSF_BattUnderTempChg_Alert : 32|1@1+ (1,0) [0|0] "Boolean"  BCM
+ SG_ BMSF_BattOverTempChg_Fault : 25|1@1+ (1,0) [0|0] "Boolean"  BCM
+ SG_ BMSF_BattOverTempChg_Alert : 33|1@1+ (1,0) [0|0] "Boolean"  BCM
+ SG_ BMSF_BattUnderTempDsg_fault : 13|1@1+ (1,0) [0|0] "Boolean"  BCM
+ SG_ BMSF_BattUnderTempDsg_Alert : 21|1@1+ (1,0) [0|0] "Boolean"  BCM
+ SG_ BMSF_HwShortcircuit_LatchedFault : 38|1@1+ (1,0) [0|1] "Status"  BCM
+ SG_ BMSF_REGOUT_Status : 4|1@1+ (1,0) [0|1] "Status"  BCM
+ SG_ BMSF_TempSensor_short : 31|1@1+ (1,0) [0|1] ""  BCM,HMI
+ SG_ BMSF_TempSensor_open : 30|1@1+ (1,0) [0|1] ""  BCM,HMI
+ SG_ BMSF_Shunt_Status : 36|1@1+ (1,0) [0|1] ""  BCM,HMI
+ SG_ BMSF_Cell_ShortFault : 35|1@1+ (1,0) [0|1] ""  BCM,HMI
+ SG_ BMSF_Cell_openFault : 34|1@1+ (1,0) [0|1] ""  BCM,HMI
+ SG_ BMSF_OverCurrentDischarge_Alert : 19|1@1+ (1,0) [0|1] "Boolean"  BCM,HMI
+ SG_ BMSF_OverCurrentCharge_Alert : 18|1@1+ (1,0) [0|1] "Boolean"  BCM,HMI
+ SG_ BMSF_PackOverVolt_Alert : 23|1@1+ (1,0) [0|1] "Boolean"  BCM,HMI
+ SG_ BMSF_EEPROM_Fail : 41|1@1+ (1,0) [0|0] "Boolean"  BCM,HMI
+ SG_ BMSF_CellUnderVolt_Alert : 16|1@1+ (1,0) [0|0] "Boolean"  BCM,HMI
+ SG_ BMSF_CellOverVolt_Alert : 17|1@1+ (1,0) [0|0] "Boolean"  BCM,HMI
+ SG_ BMSF_BattOverTempDsg_Alert : 22|1@1+ (1,0) [0|0] "Boolean"  BCM,HMI
+ SG_ BMSF_CompanionIC_fail : 42|1@1+ (1,0) [0|0] "Boolean"  BCM,HMI
+ SG_ BMSF_DischargeFET_Short : 26|1@1+ (1,0) [0|0] "Boolean"  BCM,HMI
+ SG_ BMSF_ChargeFET_Short : 28|1@1+ (1,0) [0|0] "Boolean"  BCM,HMI
+ SG_ BMSF_AFE_Fail : 40|1@1+ (1,0) [0|1] "Boolean"  BCM,HMI
+ SG_ BMSF_ShortCircuitDischarge_fault : 12|1@1+ (1,0) [0|0] "Boolean"  BCM,HMI
+ SG_ BMSF_BattOverTempDsg_fault : 14|1@1+ (1,0) [0|0] "Boolean"  BCM,HMI
+ SG_ BMSF_PackOverVolt_fault : 15|1@1+ (1,0) [0|1] "Boolean"  BCM,HMI
+ SG_ BMSF_ShortCircuitDischarge_Alert : 20|1@1+ (1,0) [0|0] "Boolean"  BCM,HMI
+ SG_ BMSF_OverCurrentDischarge_fault : 11|1@1+ (1,0) [0|1] "Boolean"  BCM,HMI
+ SG_ BMSF_OverCurrentCharge_fault : 10|1@1+ (1,0) [0|1] "Boolean"  BCM,HMI
+ SG_ BMSF_CellUnderVolt_fault : 8|1@1+ (1,0) [0|0] "Boolean"  BCM,HMI
+ SG_ BMSF_CellOverVolt_fault : 9|1@1+ (1,0) [0|0] "Boolean"  BCM,HMI
+ SG_ Vehicle_key_status_FB : 7|1@1+ (1,0) [0|255] "On-Off"  BCM,HMI
+ SG_ BMSF_Discharging_en_Status : 3|1@1+ (1,0) [0|1] "Boolean"  HMI,BCM
+ SG_ BMSF_Charging_en_status : 2|1@1+ (1,0) [0|1] "Boolean"  HMI,BCM
+ SG_ BMSF_Fully_discharged : 1|1@1+ (1,0) [0|1] "Boolean"  HMI,BCM
+ SG_ BMSF_Fully_charged : 0|1@1+ (1,0) [0|1] "Boolean"  HMI,BCM
+
+BO_ 2350507764 BCM_HMI_Display_25: 8 BCM
+ SG_ ChargingTimeLeft : 48|16@1+ (1,0) [0|100] "Minutes" Vector__XXX
+ SG_ EffectiveSOC : 40|8@1+ (1,0) [0|100] "%" Vector__XXX
+ SG_ Calibrated_VehicleSpeed : 32|8@1+ (1,0) [0|255] "Km" Vector__XXX
+ SG_ ODO_MeterReading : 0|32@1+ (0.1,0) [0|429496729.5] "Km"  HMI
+
+BO_ 2350448628 BCM_All_Status_24: 8 BCM
+ SG_ BCM_Warning_BatteryLow : 26|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_ChargerDocked : 25|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_Selected_Battery : 24|1@1+ (1,0) [0|0] "Charger" Vector__XXX
+ SG_ BCM_L_USB_Status : 4|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_ChargingOnProgress : 48|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_Warning_SystemShuttingdown : 23|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_Warning_SonicUnavailable : 22|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_Warning_PortableBatteryInUse : 21|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_Warning_PortableB_Disengaged : 20|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_Warning_OnlyEco : 19|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_Warning_ChargingStopped : 18|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_Warning_ChargingCompleted : 17|1@1+ (1,0) [0|0] "Boolean" Vector__XXX
+ SG_ BCM_L_StopLight_Status : 7|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_L_LowBeam_Status : 5|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_L_Horn_Status : 3|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_L_HighBeam_Status : 2|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_L_BrakeLight_Status : 1|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_Warning_Igwithoutbrake : 16|1@1+ (1,0) [0|0] "Boolean"  HMI
+ SG_ BCM_Connected_charger : 40|8@1+ (1,0) [0|0] "Charger"  BMS_Fixed_battery,BMS_Portable_battery,HMI
+ SG_ PortableBattery_enabled : 0|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ Vehicle_State : 8|8@1+ (1,0) [0|6] "State"  HMI
+
+BO_ 2350376692 BCM_HMI_StatusCommands_23: 8 BCM
+ SG_ BCM_Sw_Park_Status : 21|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_L_Hazard_Status : 15|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_H_KeyOnoff_Command : 28|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_H_EnableTouch_Command : 27|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_Sw_HighBeam_status : 7|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_H_SOMPower_Command : 32|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_H_PlayPause_Command : 24|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_H_CallReject_Command : 26|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_H_CallAccept_Command : 25|1@1+ (1,0) [0|1] "Boolean" Vector__XXX
+ SG_ BCM_Sw_Rightindicator_status : 6|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BCM_Sw_Leftindicator_status : 5|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BCM_Sw_Bootspace_Status : 20|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BCM_Sw_Horn_Status : 19|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BCM_Sw_Rightbrake_Status : 18|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BCM_Sw_Leftbrake_status : 17|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BCM_Sw_Ignition_Status : 16|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ Portable_battery_conn_Status : 14|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BCM_Sw_KIllSwitch_Status : 13|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ Portable_battery_lock_Status : 12|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BCM_Sw_Standsensor_status : 11|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BCM_L_RightIndicator_Status : 10|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BCM_L_Leftindicator_status : 9|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BCM_L_HighBeam_Status : 8|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BCM_Sw_NavigationBottom_Status : 4|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BCM_Sw_NavigationTop_Status : 3|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BCM_Sw_NavigationRight_Status : 2|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BCM_Sw_NavigationLeft_Status : 1|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ BCM_Sw_NavigationMiddle_Status : 0|1@1+ (1,0) [0|1] "Boolean"  HMI
+
+BO_ 2350252006 HMI_All_Time_21: 6 HMI
+ SG_ HMI_Second : 40|8@1+ (1,0) [0|60] "Sec"  BCM
+ SG_ HMI_Minute : 32|8@1+ (1,0) [0|0] "Min"  BCM
+ SG_ HMI_Hour : 24|8@1+ (1,0) [0|60] "Hour"  BCM
+ SG_ HMI_Year : 16|8@1+ (1,2000) [2000|2255] "Year"  BCM
+ SG_ HMI_Month : 8|8@1+ (1,0) [0|12] "Month"  BCM
+ SG_ HMI_Day : 0|8@1+ (1,0) [0|31] "Day"  BCM
+
+BO_ 2283074790 HMI_BCM_Control_20: 8 HMI
+ SG_ Portable_battery_disable : 7|1@1+ (1,0) [0|0] "Boolean"  BCM
+ SG_ PortableBattery_enable : 6|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ PortableBattery_unlock : 5|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ Seat_unlock : 4|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ Handlebar_Unlock : 3|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ HandleBar_Lock : 2|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ Vehicle_unlock : 1|1@1+ (1,0) [0|1] "Boolean"  BCM
+ SG_ Vehicle_Lock : 0|1@1+ (1,0) [0|1] "Boolean"  BCM
+
+BO_ 2349593574 HMI_BCM_Input_11: 8 HMI
+ SG_ HMI_HazardEnableDisable : 32|1@1+ (1,0) [0|0] "Status"  BCM
+ SG_ HMI_CallProgress_Status : 25|1@1+ (1,0) [0|0] "Status"  BCM
+ SG_ HMI_Shutdown_Initiate : 8|8@1+ (1,0) [0|2] "Init"  BCM
+ SG_ HMI_PageStatus : 16|8@1+ (1,0) [0|0] "Page"  BCM
+ SG_ HMI_MusicPlaying_Status : 24|1@1+ (1,0) [0|0] "Status"  BCM
+ SG_ Mode_Command : 0|8@1+ (1,0) [0|255] "Mode"  BCM,Motor_Controller
+
+BO_ 2349006835 MC_All_Telemetry_2: 8 Motor_Controller
+ SG_ MC_Temperature : 48|8@1- (1,0) [-128|127] "C"  BCM,HMI
+ SG_ MC_AC_Voltage : 40|8@1+ (1,0) [0|255] "Volt"  HMI
+ SG_ MC_DC_Voltage : 32|8@1+ (1,0) [0|0] "volt"  HMI
+ SG_ MC_DC_Current : 16|16@1- (0.1,0) [-3276.8|3276.7] "Amps"  HMI
+ SG_ MC_AC_Current : 0|16@1- (0.1,0) [-3276.8|3276.7] "Amps"  HMI
+
+BO_ 2348941299 MC_All_Telemetry_1: 8 Motor_Controller
+ SG_ Motor_ReverseForward_status : 30|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ MC_RegenerativeBraking_status : 29|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ MC_Ready_Status : 28|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ Motor_Lock_Status : 27|1@1+ (1,0) [0|1] "Boolean"  HMI
+ SG_ Motor_Derate_Status : 26|1@1+ (1,0) [0|0] "Boolean"  HMI
+ SG_ Motor_temperature : 48|8@1- (1,0) [0|255] "C"  BCM,HMI
+ SG_ Vehicle_Speed : 40|8@1+ (1,0) [0|255] "Km/h"  HMI,BCM
+ SG_ Current_Mode_Status : 32|8@1+ (1,0) [0|5] "Mode"  HMI,BCM
+ SG_ CruiseControl_status : 25|1@1+ (1,0) [0|1] "Boolean"  HMI,BCM
+ SG_ Motor_OnOff_status : 24|1@1+ (1,0) [0|1] "Boolean"  HMI,BCM
+ SG_ Throttle_percentage : 16|8@1+ (1,0) [0|100] "%"  BCM,HMI
+ SG_ Motor_Speed : 0|16@1- (1,0) [-32768|32767] "Rpm"  HMI,BCM
+
+
+
+CM_ SG_ 2423259121 BMSF_FETtemperature_2 "Average temperatuer of fixed battery
+";
+CM_ SG_ 2423259121 BMSF_FETtemperature_1 "Average temperatuer of fixed battery
+";
+CM_ SG_ 2423193586 BMSP_FETtemperature_2 "Average temperatuer of fixed battery
+";
+CM_ SG_ 2423193586 BMSP_FETtemperature_1 "Average temperatuer of fixed battery
+";
+CM_ BO_ 2349793268 "
+";
+CM_ BO_ 2349721332 "Control signals from BCM to motor controller
+0 - no action
+> 0  different control";
+CM_ SG_ 2423908082 BatteryP_temperature_7 "Portable battery temperature sensor 7 reading.
+See the document for the sensor 7 position";
+CM_ SG_ 2423908082 BatteryP_temperature_6 "Portable battery temperature sensor 6 reading.
+See the document for the sensor 6 position";
+CM_ SG_ 2423908082 BatteryP_temperature_5 "Portable battery temperature sensor 5 reading.
+See the document for the sensor 5 position";
+CM_ SG_ 2423908082 BatteryP_temperature_4 "Portable battery temperature sensor 4 reading.
+See the document for the sensor 4 position";
+CM_ SG_ 2423908082 BatteryP_temperature_3 "Portable battery temperature sensor 3 reading.
+See the document for the sensor 3 position";
+CM_ SG_ 2423908082 BatteryP_temperature_2 "Portable battery temperature sensor 2 reading.
+See the document for the sensor 2 position";
+CM_ SG_ 2423908082 BatteryP_temperature_1 "Portable battery temperature sensor 1 reading.
+See the document for the sensor 1 position";
+CM_ SG_ 2423842545 BatteryF_temperature_7 "Fixed battery temperature sensor 7 reading.
+See the document for the sensor 7 position";
+CM_ SG_ 2423842545 BatteryF_temperature_6 "Fixed battery temperature sensor 6 reading.
+See the document for the sensor 6 position";
+CM_ SG_ 2423842545 BatteryF_temperature_5 "Fixed battery temperature sensor 5 reading.
+See the document for the sensor 5 position";
+CM_ SG_ 2423842545 BatteryF_temperature_4 "Fixed battery temperature sensor 4 reading.
+See the document for the sensor 4 position";
+CM_ SG_ 2423842545 BatteryF_temperature_3 "Fixed battery temperature sensor 3 reading.
+See the document for the sensor 3 position";
+CM_ SG_ 2423842545 BatteryF_temperature_2 "Fixed battery temperature sensor 2 reading.
+See the document for the sensor 2 position";
+CM_ SG_ 2423842545 BatteryF_temperature_1 "Fixed battery temperature sensor 1 reading.
+See the document for the sensor 1 position";
+CM_ SG_ 2423777010 BP_CellVoltage14 "Portable battery cell voltage 14";
+CM_ SG_ 2423777010 BP_CellVoltage13 "Portable battery cell voltage 13";
+CM_ SG_ 2423711474 BP_CellVoltage9 "Portable battery cell voltage 9";
+CM_ SG_ 2423711474 BP_CellVoltage12 "Portable battery cell voltage 12";
+CM_ SG_ 2423711474 BP_CellVoltage11 "Portable battery cell voltage 11
+";
+CM_ SG_ 2423711474 BP_CellVoltage10 "Portable battery cell voltage 10
+";
+CM_ SG_ 2423645938 BP_CellVoltage8 "Portable battery cell voltage 8";
+CM_ SG_ 2423645938 BP_CellVoltage7 "Portable battery cell voltage 7";
+CM_ SG_ 2423645938 BP_CellVoltage6 "Portable battery cell voltage 6";
+CM_ SG_ 2423645938 BP_CellVoltage5 "Portable battery cell voltage 5";
+CM_ SG_ 2423580402 BP_CellVoltage4 "Portable battery cell voltage 4";
+CM_ SG_ 2423580402 BP_CellVoltage3 "Portable battery cell voltage 3";
+CM_ SG_ 2423580402 BP_CellVoltage2 "Portable battery cell voltage 2";
+CM_ SG_ 2423580402 BP_CellVoltage1 "Portable battery cell voltage 1";
+CM_ SG_ 2423514865 BF_CellVoltage14 "Fixed battery Cell voltage 14";
+CM_ SG_ 2423514865 BF_CellVoltage13 "Fixed battery Cell voltage 13";
+CM_ SG_ 2423449329 BF_CellVoltage9 "Fixed battery Cell voltage 9";
+CM_ SG_ 2423449329 BF_CellVoltage12 "Fixed battery Cell voltage 12";
+CM_ SG_ 2423449329 BF_CellVoltage11 "Fixed battery Cell voltage 11
+";
+CM_ SG_ 2423449329 BF_CellVoltage10 "Fixed battery Cell voltage 10";
+CM_ SG_ 2423383793 BF_CellVoltage8 "Fixed battery Cell voltage 8";
+CM_ SG_ 2423383793 BF_CellVoltage7 "Fixed battery Cell voltage 7";
+CM_ SG_ 2423383793 BF_CellVoltage6 "Fixed battery Cell voltage 6";
+CM_ SG_ 2423383793 BF_CellVoltage5 "Fixed battery Cell voltage 5";
+CM_ SG_ 2423318257 BF_CellVoltage4 "Fixed battery Cell voltage 4";
+CM_ SG_ 2423318257 BF_CellVoltage3 "Fixed battery Cell voltage 3";
+CM_ SG_ 2423318257 BF_CellVoltage2 "Fixed battery Cell voltage 2";
+CM_ SG_ 2423318257 BF_CellVoltage1 "Fixed battery Cell voltage 1 ";
+CM_ BO_ 2285436914 "HMI sends shutdown command to every ECU
+";
+CM_ SG_ 2285436914 PB_Shutdown_status "Portable battery shutdown status along with time if needed";
+CM_ SG_ 2285371377 FB_Shutdown_status "Portable battery shutdown status";
+CM_ SG_ 2218196710 SOSorTHeft_type "Infromation related to theft or SOS
+1st byte 
+0 - no problem
+1 -  SOS
+2 -  theft
+
+2nd byte 
+infromation related to theft or sos
+";
+CM_ SG_ 2352346342 HMI_IMUAxis_6 "IMU Axis data 6";
+CM_ SG_ 2352346342 HMI_IMUAxis_5 "IMU Axis data 5";
+CM_ SG_ 2352280806 HMI_IMUAxis_4 "IMU Axis data 4";
+CM_ SG_ 2352280806 HMI_IMUAxis_3 "IMU Axis data 3";
+CM_ SG_ 2352280806 HMI_IMUAxis_2 "IMU Axis data 2";
+CM_ SG_ 2352280806 HMI_IMUAxis_1 "IMU Axis data 1 ";
+CM_ BO_ 2349528052 "Control signals from BCM to motor controller
+0 - no action
+> 0  different control";
+CM_ SG_ 2349528052 Ignition_Command "motor start command to motor controller.
+0 - No action
+1- stop motor
+2 - start motor";
+CM_ SG_ 2349528052 CruiseControl_en "Cruise control enable disable command
+1 - enable
+0 - disable";
+CM_ SG_ 2349528052 BCM_ModeCommand "This signal commands mode change.
+0 - no action
+1 - Eco
+2 - Ride
+3 - Dash
+4 - Sonic";
+CM_ SG_ 2284060660 HMI_Shutdown_Command "Shutdown status BCM to all
+0 - shutdown rejected
+1 - shutdown allowed";
+CM_ SG_ 2284060660 BMS_ShutdownCommand "Shutdown status BCM to all
+0 - shutdown rejected
+1 - shutdown allowed";
+CM_ SG_ 2284060660 HMI_Shutdown_Ack "Shutdown status BCM to all
+0 - shutdown rejected
+1 - shutdown allowed";
+CM_ SG_ 2350907378 BP_Cycle_count "Portable battery charge discharge cycle count";
+CM_ SG_ 2350907378 BMSP_ChargingVoltage "Charging voltage of portable battery if charging state";
+CM_ SG_ 2350907378 BMSP_ChargingCurrent "Charging current in Portable battery if charging state";
+CM_ SG_ 2350907378 BMSP_temperature "Portable battery BMS - temperature";
+CM_ BO_ 2350841841 "Fixed battery telemetry
+";
+CM_ SG_ 2350841841 BMSF_ChargeCycle_count "Fixed battery charge discharge cycle count";
+CM_ SG_ 2350841841 BMSF_ChargingCurrent "Charging current in fixed battery if charging state";
+CM_ SG_ 2350841841 BMSF_ChargingVoltage "Charging voltage of fixed battery if charging state";
+CM_ SG_ 2350841841 BMSF_MaxBattTemperature "Fixed battery BMS  board temperature";
+CM_ SG_ 2350776306 BMSP_U_SOC "Portable battery - SOC";
+CM_ SG_ 2350776306 BMSP_Current "Current flow from or in potable battery.
+Negative denotes discharge
+positive denoted charge";
+CM_ SG_ 2350776306 BMSP_Votlage "Portable battery -Voltage";
+CM_ SG_ 2350776306 BMSP_SOH "Portable battery - SOH";
+CM_ SG_ 2350776306 BMSP_A_SOC "Portable battery - SOC";
+CM_ BO_ 2350710769 "Fixed battery telemetry. 
+";
+CM_ SG_ 2350710769 BMSF_U_SOC "Fixed battery - SOC";
+CM_ SG_ 2350710769 BMSF_Current "Current flow from or in Fixed battery
+Negative denotes discharge
+positive denoted charge";
+CM_ SG_ 2350710769 BMSF_BattVotlage "Fixed battery voltage";
+CM_ SG_ 2350710769 BMSF_SOH "Fixed battery - SOH
+";
+CM_ SG_ 2350710769 BMSF_A_SOC "Fixed battery - SOC";
+CM_ BO_ 2350645234 "portable battery status";
+CM_ SG_ 2350645234 Vehicle_key_status_PB "Vehicle key status according to Fixed battery
+0 - key off
+1 -  key on";
+CM_ SG_ 2350645234 BMSP_Discharging_en_Status "Fixed battery discharging enabled of disabled.
+0 - disabled
+1 - enabled";
+CM_ SG_ 2350645234 BMSP_Charging_en_status "Portable battery charging enable or disabl status
+0 - disabled
+1 - enabled";
+CM_ SG_ 2350645234 BMSP_Fully_discharged "FIxed battery fully discharged status
+1 - fully discharged
+0 - not fully discharged";
+CM_ SG_ 2350645234 BMSP_Fully_charged "FIxed battery fully charged status
+1 - fully charged
+0 - not fully charged";
+CM_ BO_ 2350579697 "Fixed battery status
+
+";
+CM_ SG_ 2350579697 Vehicle_key_status_FB "Vehicle key status according to Fixed battery
+0 - key off
+1 -  key on";
+CM_ SG_ 2350579697 BMSF_Discharging_en_Status "Fixed battery discharging enabled of disabled.
+0 - disabled
+1 - enabled";
+CM_ SG_ 2350579697 BMSF_Charging_en_status "Fixed battery charging enable or disabl status
+0 - disabled
+1 - enabled";
+CM_ SG_ 2350579697 BMSF_Fully_discharged "FIxed battery fully discharged status
+1 - fully discharged
+0 - not fully discharged";
+CM_ SG_ 2350579697 BMSF_Fully_charged "FIxed battery fully charged status
+1 - fully charged
+0 - not fully charged";
+CM_ BO_ 2350507764 "ODO meter reading from BCM is send to HMI for display
+";
+CM_ SG_ 2350507764 ODO_MeterReading "ODO meter reading from BCM
+4 bytes is alloted";
+CM_ SG_ 2350448628 BCM_Selected_Battery "This denotes connected charger type
+
+0 - not connected
+1 - Home charger
+2- Public charger
+ ";
+CM_ SG_ 2350448628 BCM_L_USB_Status "HIgh beam status from BCM
+1 - high beam on
+0 - hig beam off";
+CM_ SG_ 2350448628 BCM_L_StopLight_Status "HIgh beam status from BCM
+1 - high beam on
+0 - hig beam off";
+CM_ SG_ 2350448628 BCM_L_LowBeam_Status "HIgh beam status from BCM
+1 - high beam on
+0 - hig beam off";
+CM_ SG_ 2350448628 BCM_L_Horn_Status "HIgh beam status from BCM
+1 - high beam on
+0 - hig beam off";
+CM_ SG_ 2350448628 BCM_L_HighBeam_Status "HIgh beam status from BCM
+1 - high beam on
+0 - hig beam off";
+CM_ SG_ 2350448628 BCM_L_BrakeLight_Status "HIgh beam status from BCM
+1 - high beam on
+0 - hig beam off";
+CM_ SG_ 2350448628 BCM_Connected_charger "This denotes connected charger type
+
+0 - not connected
+1 - Home charger
+2- Public charger
+ ";
+CM_ SG_ 2350448628 PortableBattery_enabled "Porttable battery enbaled or disbaled status.
+0 - disabled 
+1 - enabled";
+CM_ SG_ 2350448628 Vehicle_State "Vehicle state from BCM.
+";
+CM_ BO_ 2350376692 "send by BCM to HMI every 100ms
+includes the information on switches connected to bcm";
+CM_ SG_ 2350376692 BCM_Sw_Park_Status "Horn switch status
+1 - horn pressed
+0 - not pressed";
+CM_ SG_ 2350376692 BCM_L_Hazard_Status "Left indicator status. This denotes if the light is on or off
+0 - Off
+1 - On
+When an indicator is on, this bit will be toggling high and low
+";
+CM_ SG_ 2350376692 BCM_H_KeyOnoff_Command "Stand sensor status from BCM to HMI.
+0 - stand lifted
+1 = stand not lifted";
+CM_ SG_ 2350376692 BCM_H_EnableTouch_Command "Stand sensor status from BCM to HMI.
+0 - stand lifted
+1 = stand not lifted";
+CM_ SG_ 2350376692 BCM_Sw_HighBeam_status "Left indicator status. This denotes if the light is on or off
+0 - Off
+1 - On
+When an indicator is on, this bit will be toggling high and low
+";
+CM_ SG_ 2350376692 BCM_H_SOMPower_Command "Stand sensor status from BCM to HMI.
+0 - stand lifted
+1 = stand not lifted";
+CM_ SG_ 2350376692 BCM_H_PlayPause_Command "Stand sensor status from BCM to HMI.
+0 - stand lifted
+1 = stand not lifted";
+CM_ SG_ 2350376692 BCM_H_CallReject_Command "Stand sensor status from BCM to HMI.
+0 - stand lifted
+1 = stand not lifted";
+CM_ SG_ 2350376692 BCM_H_CallAccept_Command "Stand sensor status from BCM to HMI.
+0 - stand lifted
+1 = stand not lifted";
+CM_ SG_ 2350376692 BCM_Sw_Rightindicator_status "Left indicator status. This denotes if the light is on or off
+0 - Off
+1 - On
+When an indicator is on, this bit will be toggling high and low
+";
+CM_ SG_ 2350376692 BCM_Sw_Leftindicator_status "Left indicator status. This denotes if the light is on or off
+0 - Off
+1 - On
+When an indicator is on, this bit will be toggling high and low
+";
+CM_ SG_ 2350376692 BCM_Sw_Bootspace_Status "Boot space open or close status
+
+1 - open
+0 - closed";
+CM_ SG_ 2350376692 BCM_Sw_Horn_Status "Horn switch status
+1 - horn pressed
+0 - not pressed";
+CM_ SG_ 2350376692 BCM_Sw_Rightbrake_Status "Right brake status, pressed or not
+0 - not pressed
+1 - pressed ";
+CM_ SG_ 2350376692 BCM_Sw_Leftbrake_status "Left brake status
+0 - not pressed
+1 - pressed";
+CM_ SG_ 2350376692 BCM_Sw_Ignition_Status "ignition switch status
+0 - not pressed
+1 - pressed
+";
+CM_ SG_ 2350376692 Portable_battery_conn_Status "Portable battery connected or not status
+0 -  not connected
+1 - connected";
+CM_ SG_ 2350376692 BCM_Sw_KIllSwitch_Status "kill switch status
+0 - kill switch off
+1 - kill switch on
+";
+CM_ SG_ 2350376692 Portable_battery_lock_Status "Portable battery locked or not
+0 - not locked
+1 - locked";
+CM_ SG_ 2350376692 BCM_Sw_Standsensor_status "Stand sensor status from BCM to HMI.
+0 - stand lifted
+1 = stand not lifted";
+CM_ SG_ 2350376692 BCM_L_RightIndicator_Status "Right indicator status. This denotes if the light is on or off
+0 - Off
+1 - On
+When an indicator is on, this bit will be toggling high and low
+";
+CM_ SG_ 2350376692 BCM_L_Leftindicator_status "Left indicator status. This denotes if the light is on or off
+0 - Off
+1 - On
+When an indicator is on, this bit will be toggling high and low
+";
+CM_ SG_ 2350376692 BCM_L_HighBeam_Status "HIgh beam status from BCM
+1 - high beam on
+0 - hig beam off";
+CM_ SG_ 2350376692 BCM_Sw_NavigationBottom_Status "Navigation bottom button switch
+0 - not pressed
+1 - pressed";
+CM_ SG_ 2350376692 BCM_Sw_NavigationTop_Status "Navigation Top button switch
+0 - not pressed
+1 - pressed";
+CM_ SG_ 2350376692 BCM_Sw_NavigationRight_Status "Navigation right button switch
+0 - not pressed
+1 - pressed";
+CM_ SG_ 2350376692 BCM_Sw_NavigationLeft_Status "Navigation left button switch
+0 - not pressed
+1 - pressed";
+CM_ SG_ 2350376692 BCM_Sw_NavigationMiddle_Status "Navigation middle button switch
+0 - not pressed
+1 - pressed";
+CM_ BO_ 2350252006 "HMI sends set time command to fixed battery pack BMS.Along with time.";
+CM_ SG_ 2350252006 HMI_Second "HMI time - Second";
+CM_ SG_ 2350252006 HMI_Minute "HMI time - Minute";
+CM_ SG_ 2350252006 HMI_Hour "HMI time - Hour";
+CM_ SG_ 2350252006 HMI_Year "HMI time - year
+offset : 2000
+actual value = value + 2000";
+CM_ SG_ 2350252006 HMI_Month "HMI time - Month";
+CM_ SG_ 2350252006 HMI_Day "HMI time - day";
+CM_ BO_ 2283074790 "These are required at the time of secured lock and unlock features from phone
+";
+CM_ SG_ 2283074790 Portable_battery_disable "POrtable battery disable command
+0 - no action
+1 - Disable";
+CM_ SG_ 2283074790 PortableBattery_enable "Portbale battery enable command from HMI to bcm
+0 - no action
+1 - enable";
+CM_ SG_ 2283074790 PortableBattery_unlock "Portable battery unlock command 
+0 - no action
+1 - unlock
+";
+CM_ SG_ 2283074790 Seat_unlock "Seat unlock command from HMI to BCM
+.( Only used with keyless features)
+0 - no action
+1- unlock";
+CM_ SG_ 2283074790 Handlebar_Unlock "Handle bar unlock command
+1- unlock
+0 no action";
+CM_ SG_ 2283074790 HandleBar_Lock "Handle bar lock command
+1- lock
+0 no action";
+CM_ SG_ 2283074790 Vehicle_unlock "Vehicle unlock command from HMI to BCM ( if key less unlock is present)";
+CM_ SG_ 2283074790 Vehicle_Lock "Lock command from HMI to BCM.
+0 - no action
+1 -  Lock the vehicle";
+CM_ BO_ 2349593574 "HMI Sends mode command change to motor controller in this message.
+it will be send until respective status is received from motor controller
+";
+CM_ SG_ 2349593574 HMI_Shutdown_Initiate "Shutdown Initation from hmi to all. 
+0 - no action
+1 - shutdown";
+CM_ SG_ 2349593574 Mode_Command "Mode command from HMI to motor contrloller
+
+0 - no action
+1 - Eco
+2 - ride
+3 -  dash
+4 - Sonic
+5 -  park
+6 -  reverse";
+CM_ BO_ 2349006835 "Contains all the telemetry of motor controller
+";
+CM_ SG_ 2349006835 MC_Temperature "Motor controller board temperature";
+CM_ SG_ 2349006835 MC_AC_Voltage "Motor controller AC voltage";
+CM_ SG_ 2349006835 MC_DC_Voltage "Motor controller DC voltage";
+CM_ SG_ 2349006835 MC_DC_Current "Motor controller DC current.";
+CM_ SG_ 2349006835 MC_AC_Current "Motor controller AC current.";
+CM_ BO_ 2348941299 "Contains all the telemetry of motor controller
+";
+CM_ SG_ 2348941299 Motor_ReverseForward_status "Motor lock status
+0 - unlock
+1 -  lock";
+CM_ SG_ 2348941299 MC_RegenerativeBraking_status "Motor lock status
+0 - unlock
+1 -  lock";
+CM_ SG_ 2348941299 MC_Ready_Status "Motor lock status
+0 - unlock
+1 -  lock";
+CM_ SG_ 2348941299 Motor_Lock_Status "Motor lock status
+0 - unlock
+1 -  lock";
+CM_ SG_ 2348941299 Motor_Derate_Status "Status of motor if it is derated or not according to temperature etc
+0 - not derated
+1 -  derated";
+CM_ SG_ 2348941299 Motor_temperature "Motor temperature in degree celcius";
+CM_ SG_ 2348941299 Vehicle_Speed "Vehicle speed calculated from motor speed";
+CM_ SG_ 2348941299 Current_Mode_Status "Status of mode from the motor controller.
+";
+CM_ SG_ 2348941299 CruiseControl_status "Cruise control status from motor controller
+1 - enabled 
+0 - disabled";
+CM_ SG_ 2348941299 Motor_OnOff_status "Status from motorcontroller if the motor is started or off state
+0 -  motor stopped (off)
+1  - motor started (on)";
+CM_ SG_ 2348941299 Throttle_percentage "Gives the throttle position in percentage. 
+0 means left, 100 means fully held";
+CM_ SG_ 2348941299 Motor_Speed "Speed which motor is rorating in RPM
+Negative denotes rotation in reverse direction";
+BA_DEF_ BO_  "TpJ1939VarDlc" ENUM  "No","Yes";
+BA_DEF_ SG_  "SigType" ENUM  "Default","Range","RangeSigned","ASCII","Discrete","Control","ReferencePGN","DTC","StringDelimiter","StringLength","StringLengthControl","MessageCounter","MessageChecksum";
+BA_DEF_ SG_  "GenSigEVName" STRING ;
+BA_DEF_ SG_  "GenSigILSupport" ENUM  "No","Yes";
+BA_DEF_ SG_  "GenSigSendType" ENUM  "Cyclic","OnWrite","OnWriteWithRepetition","OnChange","OnChangeWithRepetition","IfActive","IfActiveWithRepetition","NoSigSendType";
+BA_DEF_ BO_  "GenMsgFastOnStart" INT 0 100000;
+BA_DEF_ SG_  "GenSigInactiveValue" INT 0 0;
+BA_DEF_ BO_  "GenMsgCycleTimeFast" INT 0 3600000;
+BA_DEF_ BO_  "GenMsgNrOfRepetition" INT 0 1000000;
+BA_DEF_ SG_  "GenSigStartValue" INT 0 2147483647;
+BA_DEF_ BO_  "GenMsgDelayTime" INT 0 1000;
+BA_DEF_ BO_  "GenMsgILSupport" ENUM  "No","Yes";
+BA_DEF_ BO_  "GenMsgStartDelayTime" INT 0 100000;
+BA_DEF_ BU_  "NodeLayerModules" STRING ;
+BA_DEF_ BU_  "ECU" STRING ;
+BA_DEF_ BU_  "NmJ1939SystemInstance" INT 0 15;
+BA_DEF_ BU_  "NmJ1939System" INT 0 127;
+BA_DEF_ BU_  "NmJ1939ManufacturerCode" INT 0 2047;
+BA_DEF_ BU_  "NmJ1939IndustryGroup" INT 0 7;
+BA_DEF_ BU_  "NmJ1939IdentityNumber" INT 0 2097151;
+BA_DEF_ BU_  "NmJ1939FunctionInstance" INT 0 7;
+BA_DEF_ BU_  "NmJ1939Function" INT 0 255;
+BA_DEF_ BU_  "NmJ1939ECUInstance" INT 0 3;
+BA_DEF_ BU_  "NmJ1939AAC" INT 0 1;
+BA_DEF_ BU_  "NmStationAddress" INT 0 255;
+BA_DEF_ BO_  "GenMsgSendType" ENUM  "cyclic","NotUsed","IfActive","NotUsed","NotUsed","NotUsed","NotUsed","NotUsed","noMsgSendType";
+BA_DEF_ BO_  "GenMsgRequestable" INT 0 1;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 3600000;
+BA_DEF_ SG_  "SPN" INT 0 524287;
+BA_DEF_  "DBName" STRING ;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_  "ProtocolType" STRING ;
+BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","J1939PG";
+BA_DEF_DEF_  "TpJ1939VarDlc" "No";
+BA_DEF_DEF_  "SigType" "Default";
+BA_DEF_DEF_  "GenSigEVName" "Env@Nodename_@Signame";
+BA_DEF_DEF_  "GenSigILSupport" "Yes";
+BA_DEF_DEF_  "GenSigSendType" "NoSigSendType";
+BA_DEF_DEF_  "GenMsgFastOnStart" 0;
+BA_DEF_DEF_  "GenSigInactiveValue" 0;
+BA_DEF_DEF_  "GenMsgCycleTimeFast" 0;
+BA_DEF_DEF_  "GenMsgNrOfRepetition" 0;
+BA_DEF_DEF_  "GenSigStartValue" 0;
+BA_DEF_DEF_  "GenMsgDelayTime" 0;
+BA_DEF_DEF_  "GenMsgILSupport" "Yes";
+BA_DEF_DEF_  "GenMsgStartDelayTime" 0;
+BA_DEF_DEF_  "NodeLayerModules" "";
+BA_DEF_DEF_  "ECU" "";
+BA_DEF_DEF_  "NmJ1939SystemInstance" 0;
+BA_DEF_DEF_  "NmJ1939System" 0;
+BA_DEF_DEF_  "NmJ1939ManufacturerCode" 0;
+BA_DEF_DEF_  "NmJ1939IndustryGroup" 0;
+BA_DEF_DEF_  "NmJ1939IdentityNumber" 0;
+BA_DEF_DEF_  "NmJ1939FunctionInstance" 0;
+BA_DEF_DEF_  "NmJ1939Function" 0;
+BA_DEF_DEF_  "NmJ1939ECUInstance" 0;
+BA_DEF_DEF_  "NmJ1939AAC" 0;
+BA_DEF_DEF_  "NmStationAddress" 254;
+BA_DEF_DEF_  "GenMsgSendType" "noMsgSendType";
+BA_DEF_DEF_  "GenMsgRequestable" 1;
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_DEF_DEF_  "SPN" 0;
+BA_DEF_DEF_  "DBName" "";
+BA_DEF_DEF_  "BusType" "CAN";
+BA_DEF_DEF_  "ProtocolType" "J1939";
+BA_DEF_DEF_  "VFrameFormat" "J1939PG";
+BA_ "DBName" "SImpleOne_internalCANBus";
+BA_ "NmStationAddress" BU_ Motor_Controller 243;
+BA_ "NmStationAddress" BU_ BCM 244;
+BA_ "NmStationAddress" BU_ BMS_Portable_battery 242;
+BA_ "NmStationAddress" BU_ BMS_Fixed_battery 241;
+BA_ "NmStationAddress" BU_ HMI 230;
+BA_ "GenMsgCycleTime" BO_ 2492071923 1000;
+BA_ "GenMsgSendType" BO_ 2492071923 0;
+BA_ "GenMsgCycleTimeFast" BO_ 2492071923 0;
+BA_ "VFrameFormat" BO_ 2492071923 3;
+BA_ "GenMsgCycleTime" BO_ 2492006374 1000;
+BA_ "GenMsgSendType" BO_ 2492006374 0;
+BA_ "VFrameFormat" BO_ 2492006374 3;
+BA_ "GenMsgCycleTime" BO_ 2491940850 1000;
+BA_ "GenMsgSendType" BO_ 2491940850 0;
+BA_ "VFrameFormat" BO_ 2491940850 3;
+BA_ "GenMsgCycleTime" BO_ 2491875313 1000;
+BA_ "GenMsgSendType" BO_ 2491875313 0;
+BA_ "VFrameFormat" BO_ 2491875313 3;
+BA_ "GenMsgCycleTime" BO_ 2491809780 1000;
+BA_ "GenMsgSendType" BO_ 2491809780 0;
+BA_ "VFrameFormat" BO_ 2491809780 3;
+BA_ "GenMsgSendType" BO_ 2423259121 0;
+BA_ "GenMsgCycleTime" BO_ 2423259121 250;
+BA_ "VFrameFormat" BO_ 2423259121 3;
+BA_ "GenMsgSendType" BO_ 2423193586 0;
+BA_ "GenMsgCycleTime" BO_ 2423193586 250;
+BA_ "VFrameFormat" BO_ 2423193586 3;
+BA_ "GenMsgSendType" BO_ 2353070067 0;
+BA_ "GenMsgCycleTime" BO_ 2353070067 100;
+BA_ "VFrameFormat" BO_ 2353070067 3;
+BA_ "GenMsgCycleTime" BO_ 2349793268 250;
+BA_ "GenMsgSendType" BO_ 2349793268 0;
+BA_ "VFrameFormat" BO_ 2349793268 3;
+BA_ "GenMsgCycleTime" BO_ 2349721332 250;
+BA_ "GenMsgSendType" BO_ 2349721332 0;
+BA_ "VFrameFormat" BO_ 2349721332 3;
+BA_ "GenMsgCycleTime" BO_ 2282553076 100;
+BA_ "GenMsgSendType" BO_ 2282553076 0;
+BA_ "VFrameFormat" BO_ 2282553076 3;
+BA_ "GenMsgSendType" BO_ 2352676850 0;
+BA_ "GenMsgCycleTime" BO_ 2352676850 250;
+BA_ "VFrameFormat" BO_ 2352676850 3;
+BA_ "GenMsgSendType" BO_ 2352611313 0;
+BA_ "GenMsgCycleTime" BO_ 2352611313 250;
+BA_ "VFrameFormat" BO_ 2352611313 3;
+BA_ "GenMsgSendType" BO_ 2349069300 0;
+BA_ "GenMsgCycleTime" BO_ 2349069300 100;
+BA_ "VFrameFormat" BO_ 2349069300 3;
+BA_ "GenMsgSendType" BO_ 2348875763 0;
+BA_ "GenMsgCycleTime" BO_ 2348875763 250;
+BA_ "VFrameFormat" BO_ 2348875763 3;
+BA_ "GenMsgCycleTimeFast" BO_ 2491744243 0;
+BA_ "GenMsgSendType" BO_ 2491744243 0;
+BA_ "GenMsgCycleTime" BO_ 2491744243 1000;
+BA_ "VFrameFormat" BO_ 2491744243 3;
+BA_ "GenMsgSendType" BO_ 2491678694 0;
+BA_ "GenMsgCycleTime" BO_ 2491678694 1000;
+BA_ "VFrameFormat" BO_ 2491678694 3;
+BA_ "GenMsgSendType" BO_ 2491613170 0;
+BA_ "GenMsgCycleTime" BO_ 2491613170 1000;
+BA_ "VFrameFormat" BO_ 2491613170 3;
+BA_ "GenMsgSendType" BO_ 2491547633 0;
+BA_ "GenMsgCycleTime" BO_ 2491547633 1000;
+BA_ "VFrameFormat" BO_ 2491547633 3;
+BA_ "GenMsgSendType" BO_ 2491482100 0;
+BA_ "GenMsgCycleTime" BO_ 2491482100 1000;
+BA_ "VFrameFormat" BO_ 2491482100 3;
+BA_ "GenMsgSendType" BO_ 2423908082 0;
+BA_ "GenMsgCycleTime" BO_ 2423908082 250;
+BA_ "VFrameFormat" BO_ 2423908082 3;
+BA_ "GenMsgSendType" BO_ 2423842545 0;
+BA_ "GenMsgCycleTime" BO_ 2423842545 250;
+BA_ "VFrameFormat" BO_ 2423842545 3;
+BA_ "GenMsgSendType" BO_ 2423777010 0;
+BA_ "GenMsgCycleTime" BO_ 2423777010 250;
+BA_ "VFrameFormat" BO_ 2423777010 3;
+BA_ "GenMsgSendType" BO_ 2423711474 0;
+BA_ "GenMsgCycleTime" BO_ 2423711474 250;
+BA_ "VFrameFormat" BO_ 2423711474 3;
+BA_ "GenMsgSendType" BO_ 2423645938 0;
+BA_ "GenMsgCycleTime" BO_ 2423645938 250;
+BA_ "VFrameFormat" BO_ 2423645938 3;
+BA_ "GenMsgSendType" BO_ 2423580402 0;
+BA_ "GenMsgCycleTime" BO_ 2423580402 250;
+BA_ "VFrameFormat" BO_ 2423580402 3;
+BA_ "GenMsgSendType" BO_ 2423514865 0;
+BA_ "GenMsgCycleTime" BO_ 2423514865 250;
+BA_ "VFrameFormat" BO_ 2423514865 3;
+BA_ "GenMsgSendType" BO_ 2423449329 0;
+BA_ "GenMsgCycleTime" BO_ 2423449329 250;
+BA_ "VFrameFormat" BO_ 2423449329 3;
+BA_ "GenMsgSendType" BO_ 2423383793 0;
+BA_ "GenMsgCycleTime" BO_ 2423383793 250;
+BA_ "VFrameFormat" BO_ 2423383793 3;
+BA_ "GenMsgSendType" BO_ 2423318257 0;
+BA_ "GenMsgCycleTime" BO_ 2423318257 250;
+BA_ "VFrameFormat" BO_ 2423318257 3;
+BA_ "VFrameFormat" BO_ 2285436914 3;
+BA_ "VFrameFormat" BO_ 2285371377 3;
+BA_ "GenMsgSendType" BO_ 2218196710 2;
+BA_ "GenMsgCycleTime" BO_ 2218196710 100;
+BA_ "VFrameFormat" BO_ 2218196710 3;
+BA_ "GenMsgCycleTime" BO_ 2352346342 500;
+BA_ "GenMsgSendType" BO_ 2352346342 0;
+BA_ "VFrameFormat" BO_ 2352346342 3;
+BA_ "GenMsgCycleTime" BO_ 2352280806 500;
+BA_ "GenMsgSendType" BO_ 2352280806 0;
+BA_ "VFrameFormat" BO_ 2352280806 3;
+BA_ "GenMsgSendType" BO_ 2349528052 0;
+BA_ "GenMsgCycleTime" BO_ 2349528052 100;
+BA_ "VFrameFormat" BO_ 2349528052 3;
+BA_ "GenMsgSendType" BO_ 2284060660 0;
+BA_ "GenMsgCycleTime" BO_ 2284060660 250;
+BA_ "VFrameFormat" BO_ 2284060660 3;
+BA_ "GenMsgCycleTime" BO_ 2350907378 1000;
+BA_ "GenMsgSendType" BO_ 2350907378 0;
+BA_ "VFrameFormat" BO_ 2350907378 3;
+BA_ "GenMsgCycleTime" BO_ 2350841841 1000;
+BA_ "GenMsgSendType" BO_ 2350841841 0;
+BA_ "VFrameFormat" BO_ 2350841841 3;
+BA_ "GenMsgCycleTime" BO_ 2350776306 250;
+BA_ "GenMsgSendType" BO_ 2350776306 0;
+BA_ "VFrameFormat" BO_ 2350776306 3;
+BA_ "GenMsgCycleTime" BO_ 2350710769 250;
+BA_ "GenMsgSendType" BO_ 2350710769 0;
+BA_ "VFrameFormat" BO_ 2350710769 3;
+BA_ "GenMsgCycleTime" BO_ 2350645234 250;
+BA_ "GenMsgSendType" BO_ 2350645234 0;
+BA_ "VFrameFormat" BO_ 2350645234 3;
+BA_ "GenMsgCycleTime" BO_ 2350579697 250;
+BA_ "GenMsgSendType" BO_ 2350579697 0;
+BA_ "VFrameFormat" BO_ 2350579697 3;
+BA_ "GenMsgCycleTime" BO_ 2350507764 250;
+BA_ "GenMsgSendType" BO_ 2350507764 0;
+BA_ "VFrameFormat" BO_ 2350507764 3;
+BA_ "GenMsgCycleTime" BO_ 2350448628 100;
+BA_ "GenMsgSendType" BO_ 2350448628 0;
+BA_ "VFrameFormat" BO_ 2350448628 3;
+BA_ "GenMsgSendType" BO_ 2350376692 0;
+BA_ "GenMsgCycleTime" BO_ 2350376692 100;
+BA_ "VFrameFormat" BO_ 2350376692 3;
+BA_ "GenMsgSendType" BO_ 2350252006 0;
+BA_ "GenMsgCycleTime" BO_ 2350252006 1000;
+BA_ "VFrameFormat" BO_ 2350252006 3;
+BA_ "GenMsgSendType" BO_ 2283074790 0;
+BA_ "GenMsgCycleTime" BO_ 2283074790 100;
+BA_ "VFrameFormat" BO_ 2283074790 3;
+BA_ "GenMsgSendType" BO_ 2349593574 0;
+BA_ "GenMsgCycleTime" BO_ 2349593574 100;
+BA_ "VFrameFormat" BO_ 2349593574 3;
+BA_ "GenMsgCycleTime" BO_ 2349006835 250;
+BA_ "GenMsgSendType" BO_ 2349006835 0;
+BA_ "VFrameFormat" BO_ 2349006835 3;
+BA_ "GenMsgCycleTime" BO_ 2348941299 100;
+BA_ "GenMsgSendType" BO_ 2348941299 0;
+BA_ "VFrameFormat" BO_ 2348941299 3;
+BA_ "GenSigStartValue" SG_ 2350252006 HMI_Year 0;
+VAL_ 2353070067 MC_Wphase_Hall_Abnormal_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_VPhase_Hall_Abnormal_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_Wphase_HallDisconnect_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_Vphase_HallDisconnect_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_UPhase_HallDisconnect_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_LowVoltSupply_UnderVolt_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_Excess_DriveboardSupply_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_ControllerDrive_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_ResolverConnector_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_DrivePower_Undervolt_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_Hw_Overvoltage_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_Hw_Overcurrent_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_Motor_TempSens_Disconn_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_Motor_Overspeed_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_Abnormal_CAN_comm_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_Excess_SpeedDeviation_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_DC_BusUnderVolt_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_Analog_InputOverrun_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_MotorStalling_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_Driver_PowerOverrun_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_Hw_OverVoltage_Baseline_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_DrivePara_ReadWrite_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_HighSpeed_DriveEnable_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_Abnorm_SpeedDir_GearRes_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_MutualExclusion_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_HighPressure_Interlock_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_LowVltg_UnderVltg_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_LowVoltg_OverVltg_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_Abnormal_resolver_sig_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_DriveTempSens_disconn_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_Drive_OverTemp_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_MotorOverTemperature_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_Output_PhaseLoss_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_Abnormal_Gearshift_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_MotorOutputGnd_ShortCkt_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_UPhase_Hall_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_MotorOverload_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_DriveOverload_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_MotorParameterTuning_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_DriveProtection_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_OverVoltage_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2353070067 MC_OverCurrent_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_MotorController_Short 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_MotorController_OT 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_MotorController_Open 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_DCDCUnstable_Fault 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_Bootlight_Short 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_Bootlight_OT 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_Bootlight_Open 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 Charger_E_Temperature_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 Charger_E_StoppedWorking_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 Charger_E_InputVoltage_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 Charger_E_Hardware_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 Charger_E_Communicaton_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_SelfCheck_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_PortableBatteryConn_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_MCComm_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_CruiseControl_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_ChargerConn_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_BMSComm_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_BatterySwitching_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_USB_Short 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_USB_OT 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_USB_Open 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_StopLight_Short 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_StopLight_OT 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_StopLight_Open 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_RIndicatorlightRight_Short 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_RIndicatorlightRight_OT 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_RIndicatorlightRight_Open 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_RIndicatorlightLeft_Short 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_RIndicatorlightLeft_OT 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_RIndicatorlightLeft_Open 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_Horn_OT 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_Horn_Open 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_Highbeam_OT 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_Highbeam_Open 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_FIndicatorlightRight_Short 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_FIndicatorlightRight_OT 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_FIndicatorlightRight_Open 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_FIndicatorlightLeft_OT 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_FIndicatorlightLeft_Open 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_BrakeLight_Short 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_BrakeLight_OT 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_BrakeLight_Open 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_Horn_Short 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_Highbeam_Short 1 "Fault" 0 "No fault" ;
+VAL_ 2349793268 BCM_E_FIndicatorlightLeft_Short 1 "Fault" 0 "No fault" ;
+VAL_ 2423777010 BP_Cellbalancing_9 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423777010 BP_Cellbalancing_8 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423777010 BP_Cellbalancing_7 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423777010 BP_Cellbalancing_6 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423777010 BP_Cellbalancing_5 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423777010 BP_Cellbalancing_4 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423777010 BP_Cellbalancing_3 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423777010 BP_Cellbalancing_2 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423777010 BP_Cellbalancing_14 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423777010 BP_Cellbalancing_13 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423777010 BP_Cellbalancing_12 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423777010 BP_Cellbalancing_11 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423777010 BP_Cellbalancing_10 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423777010 BP_Cellbalancing_1 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423514865 BF_Cellbalancing_14 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423514865 BF_Cellbalancing_13 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423514865 BF_Cellbalancing_12 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423514865 BF_Cellbalancing_11 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423514865 BF_Cellbalancing_10 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423514865 BF_Cellbalancing_9 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423514865 BF_Cellbalancing_8 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423514865 BF_Cellbalancing_7 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423514865 BF_Cellbalancing_6 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423514865 BF_Cellbalancing_5 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423514865 BF_Cellbalancing_4 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423514865 BF_Cellbalancing_3 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423514865 BF_Cellbalancing_2 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2423514865 BF_Cellbalancing_1 1 "Cell banlancing is on process" 0 "Cell balancing not occuring" ;
+VAL_ 2285436914 PB_Shutdown_status 1 "Shutdown accepted and on process" 0 "Shutdown not possible" ;
+VAL_ 2285371377 FB_Shutdown_status 1 "Shutdown accepted and on process" 0 "Shutdown not possible" ;
+VAL_ 2218196710 SOSorTHeft_type 2 "Theft" 1 "SOS " 0 "No problems" ;
+VAL_ 2349528052 Ignition_Command 2 "Stop the motor" 1 "Start motor" 0 "Description for the value '0x0'" ;
+VAL_ 2349528052 CruiseControl_en 2 "Enable cruise control" 1 "Disable cruise control" 0 "No action" ;
+VAL_ 2349528052 BCM_ModeCommand 7 "Change to Crawl" 6 "Change to Reverse" 5 "Change to Park forward" 4 "Change to Sonic mode" 3 "Change to Dash mode" 2 "Change to ride mode" 1 "Change to eco mode" 0 "No action" ;
+VAL_ 2284060660 HMI_Shutdown_Command 1 "Shutdown accepted and on process" 0 "Shutdown not possible" ;
+VAL_ 2284060660 BMS_ShutdownCommand 1 "Shutdown the vehicle" 0 "No action" ;
+VAL_ 2284060660 HMI_Shutdown_Ack 1 "Shutdown accepted and on process" 0 "Shutdown not possible" ;
+VAL_ 2350645234 BMSP_PrechargeTimeout 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_FETOverTemperature_Fault 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_FETOverTemperature_Alert 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_Busbar_Disconnect 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_SMBusComm_Fail 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_I2CComm_Fail 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_CurrentSensor_Fail 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_BattOverTempChg_Alert 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_BattUnderTempChg_Alert 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_ThermalOverRun 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_ChargeFET_Open 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_ChargeFET_Short 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_DischargeFET_Open 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_DischargeFET_Short 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_BattOverTempChg_Fault 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_BattUnderTempChg_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_PackOverVolt_Alert 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_BattOverTempDsg_Alert 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_BattUnderTempDsg_Alert 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_PackOverVolt_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_BattOverTempDsg_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_BattUnderTempDsg_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_SoftwareState 9 "Calibration" 8 "FOTA" 7 "Shutdown" 6 "Standby" 5 "Fault" 4 "BP_Transition" 3 "Discharging" 2 "Charging" 1 "Idle" 0 "POST" ;
+VAL_ 2350645234 BMSP_TempSensor_short 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_TempSensor_open 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_Shunt_Status 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_Cell_ShortFault 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_Cell_openFault 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_AFE_Fail 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_ShortCircuitDischarge_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_ShortCircuitDischarge_Alert 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_OverCurrentDischarge_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_OverCurrentDischarge_Alert 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_OverCurrentCharge_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_OverCurrentCharge_Alert 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_EEPROM_Fail 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_CompanionIC_fail 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_CellUnderVolt_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_CellUnderVolt_Alert 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_CellOverVolt_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 BMSP_CellOverVolt_Alert 1 "Fault" 0 "No fault" ;
+VAL_ 2350645234 Vehicle_key_status_PB 1 "Key is turned on" 0 "Key is turned off" ;
+VAL_ 2350645234 BMSP_Discharging_en_Status 1 "Discharging enabled" 0 "Discharging disabled" ;
+VAL_ 2350645234 BMSP_Charging_en_status 1 "Charging enabled" 0 "Charging disabled" ;
+VAL_ 2350645234 BMSP_Fully_discharged 1 "Battery fully discharged" 0 "Battery not fully discharged" ;
+VAL_ 2350645234 BMSP_Fully_charged 1 "Battery fully charged" 0 "Battery not fully charged" ;
+VAL_ 2350579697 BMSF_PrechargeTimeout 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_FETOverTemperature_Fault 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_FETOverTemperature_Alert 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_ThermalOverRun 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_SoftwareState 9 "Calibration" 8 "FOTA" 7 "Shutdown" 6 "Standby" 5 "Fault" 4 "BP_Transition" 3 "Discharging" 2 "Charging" 1 "Idle" 0 "POST" ;
+VAL_ 2350579697 BMSF_Busbar_Disconnect 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_SMBusComm_Fail 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_I2CComm_Fail 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_CurrentSensor_Fail 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_DischargeFET_Open 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_ChargeFET_Open 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_BattUnderTempChg_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_BattUnderTempChg_Alert 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_BattOverTempChg_Fault 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_BattOverTempChg_Alert 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_BattUnderTempDsg_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_BattUnderTempDsg_Alert 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_TempSensor_short 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_TempSensor_open 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_Shunt_Status 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_Cell_ShortFault 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_Cell_openFault 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_OverCurrentDischarge_Alert 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_OverCurrentCharge_Alert 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_PackOverVolt_Alert 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_EEPROM_Fail 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_CellUnderVolt_Alert 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_CellOverVolt_Alert 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_BattOverTempDsg_Alert 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_CompanionIC_fail 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_DischargeFET_Short 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_ChargeFET_Short 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_AFE_Fail 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_ShortCircuitDischarge_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_BattOverTempDsg_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_PackOverVolt_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_ShortCircuitDischarge_Alert 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_OverCurrentDischarge_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_OverCurrentCharge_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_CellUnderVolt_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 BMSF_CellOverVolt_fault 1 "Fault" 0 "No fault" ;
+VAL_ 2350579697 Vehicle_key_status_FB 1 "Key is turned on" 0 "Key is turned off" ;
+VAL_ 2350579697 BMSF_Discharging_en_Status 1 "Discharging enabled" 0 "Discharging disabled" ;
+VAL_ 2350579697 BMSF_Charging_en_status 1 "Charging enabled" 0 "Charging disabled" ;
+VAL_ 2350448628 BCM_Warning_BatteryLow 1 "Warning" 0 "no warning" ;
+VAL_ 2350448628 BCM_ChargerDocked 1 "Enabled" 0 "Disabled" ;
+VAL_ 2350448628 BCM_Selected_Battery 1 "Portable battery is selected" 0 "Fixed battery is selected" ;
+VAL_ 2350448628 BCM_L_USB_Status 1 "Light On" 0 "Light off" ;
+VAL_ 2350448628 BCM_ChargingOnProgress 1 "Warning" 0 "no warning" ;
+VAL_ 2350448628 BCM_Warning_SystemShuttingdown 1 "Warning" 0 "no warning" ;
+VAL_ 2350448628 BCM_Warning_SonicUnavailable 1 "Warning" 0 "no warning" ;
+VAL_ 2350448628 BCM_Warning_PortableBatteryInUse 1 "Warning" 0 "no warning" ;
+VAL_ 2350448628 BCM_Warning_PortableB_Disengaged 1 "Warning" 0 "no warning" ;
+VAL_ 2350448628 BCM_Warning_OnlyEco 1 "Warning" 0 "no warning" ;
+VAL_ 2350448628 BCM_Warning_ChargingStopped 1 "Warning" 0 "no warning" ;
+VAL_ 2350448628 BCM_Warning_ChargingCompleted 1 "Warning" 0 "no warning" ;
+VAL_ 2350448628 BCM_L_StopLight_Status 1 "Light On" 0 "Light off" ;
+VAL_ 2350448628 BCM_L_LowBeam_Status 1 "Light On" 0 "Light off" ;
+VAL_ 2350448628 BCM_L_Horn_Status 1 "Light On" 0 "Light off" ;
+VAL_ 2350448628 BCM_L_HighBeam_Status 1 "Light On" 0 "Light off" ;
+VAL_ 2350448628 BCM_L_BrakeLight_Status 1 "Light On" 0 "Light off" ;
+VAL_ 2350448628 BCM_Warning_Igwithoutbrake 1 "Warning" 0 "no warning" ;
+VAL_ 2350448628 BCM_Connected_charger 2 "Public charger connected" 1 "Home charger connected" 0 "No charger connected" ;
+VAL_ 2350448628 PortableBattery_enabled 1 "Enabled" 0 "Disabled" ;
+VAL_ 2350448628 Vehicle_State 6 "Shutdown" 5 "Charging" 4 "Theft" 3 "Fault" 2 "Operational" 1 "Locked" ;
+VAL_ 2350376692 BCM_Sw_Park_Status 1 "Switch pressed" 0 "switch not pressed" ;
+VAL_ 2350376692 BCM_L_Hazard_Status 1 "Light On" 0 "Light off" ;
+VAL_ 2350376692 BCM_Sw_HighBeam_status 1 "Switch pressed" 0 "switch not pressed" ;
+VAL_ 2350376692 BCM_Sw_Rightindicator_status 1 "Switch pressed" 0 "switch not pressed" ;
+VAL_ 2350376692 BCM_Sw_Leftindicator_status 1 "Switch pressed" 0 "switch not pressed" ;
+VAL_ 2350376692 BCM_Sw_Horn_Status 1 "Switch pressed" 0 "switch not pressed" ;
+VAL_ 2350376692 BCM_Sw_Rightbrake_Status 1 "Switch pressed" 0 "switch not pressed" ;
+VAL_ 2350376692 BCM_Sw_Leftbrake_status 1 "Switch pressed" 0 "switch not pressed" ;
+VAL_ 2350376692 BCM_Sw_Ignition_Status 1 "Switch pressed" 0 "switch not pressed" ;
+VAL_ 2350376692 Portable_battery_conn_Status 1 "Portable battery connected" 0 "portable battery not connected" ;
+VAL_ 2350376692 BCM_Sw_KIllSwitch_Status 1 "Switch pressed" 0 "switch not pressed" ;
+VAL_ 2350376692 Portable_battery_lock_Status 1 "Locked" 0 "Unlocked" ;
+VAL_ 2350376692 BCM_Sw_Standsensor_status 1 "Stand is lifted" 0 "Stand is not lifted" ;
+VAL_ 2350376692 BCM_L_RightIndicator_Status 1 "Light On" 0 "Light off" ;
+VAL_ 2350376692 BCM_L_Leftindicator_status 1 "Light On" 0 "Light off" ;
+VAL_ 2350376692 BCM_L_HighBeam_Status 1 "Light On" 0 "Light off" ;
+VAL_ 2350376692 BCM_Sw_NavigationBottom_Status 1 "Switch pressed" 0 "switch not pressed" ;
+VAL_ 2350376692 BCM_Sw_NavigationTop_Status 1 "Switch pressed" 0 "switch not pressed" ;
+VAL_ 2350376692 BCM_Sw_NavigationRight_Status 1 "Switch pressed" 0 "switch not pressed" ;
+VAL_ 2350376692 BCM_Sw_NavigationLeft_Status 1 "Switch pressed" 0 "switch not pressed" ;
+VAL_ 2350376692 BCM_Sw_NavigationMiddle_Status 1 "Switch pressed" 0 "switch not pressed" ;
+VAL_ 2283074790 Portable_battery_disable 1 "Disable portable battery" 0 "No action" ;
+VAL_ 2283074790 PortableBattery_enable 1 "Enable portable battery" 0 "No action" ;
+VAL_ 2283074790 PortableBattery_unlock 1 "Deactivate lock and unlock" 0 "No action" ;
+VAL_ 2283074790 Seat_unlock 1 "Deactivate lock and unlock" 0 "No action" ;
+VAL_ 2283074790 Handlebar_Unlock 1 "Deactivate lock and unlock" 0 "No action" ;
+VAL_ 2283074790 HandleBar_Lock 1 "activate lock" 0 "No action" ;
+VAL_ 2283074790 Vehicle_unlock 1 "Vehicle Unlock" 0 "No action" ;
+VAL_ 2283074790 Vehicle_Lock 1 "Vehicle lock" 0 "No action" ;
+VAL_ 2349593574 HMI_HazardEnableDisable 1 "Enabled" 0 "Disabled" ;
+VAL_ 2349593574 HMI_CallProgress_Status 1 "Enabled" 0 "Disabled" ;
+VAL_ 2349593574 HMI_Shutdown_Initiate 1 "Shutdown the vehicle" 0 "No action" ;
+VAL_ 2349593574 HMI_PageStatus 3 "Menu screen" 2 "Call screen" 1 "Music Screen" 0 "Home Screen" ;
+VAL_ 2349593574 HMI_MusicPlaying_Status 1 "Enabled" 0 "Disabled" ;
+VAL_ 2349593574 Mode_Command 6 "Switch to reverse mode" 5 "Switch to park mode" 4 "Switch to Sonic mode" 3 "Switch to Dash mode" 2 "Switch to Ride mode" 1 "Switch to eco mode" 0 "No action" ;
+VAL_ 2348941299 Motor_ReverseForward_status 1 "Reverse direction" 0 "Forward direction" ;
+VAL_ 2348941299 MC_RegenerativeBraking_status 1 "Regenerative braking happening" 0 "No Regenerative braking" ;
+VAL_ 2348941299 MC_Ready_Status 1 "Motor controller ready" 0 "Motor controller not ready" ;
+VAL_ 2348941299 Motor_Lock_Status 1 "Locked" 0 "Unlocked" ;
+VAL_ 2348941299 Motor_Derate_Status 1 "Enabled" 0 "Disabled" ;
+VAL_ 2348941299 Current_Mode_Status 7 "Crawl" 6 "Reverse" 5 "Park" 4 "Sonic" 3 "Dash" 2 "Ride" 1 "Eco" ;
+VAL_ 2348941299 CruiseControl_status 1 "Cruise control enabled" 0 "Cruise control disabled" ;
+VAL_ 2348941299 Motor_OnOff_status 1 "Motor_on" 0 "Motor_off" ;
+

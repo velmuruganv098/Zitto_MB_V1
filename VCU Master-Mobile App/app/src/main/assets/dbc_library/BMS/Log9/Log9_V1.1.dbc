@@ -1,0 +1,204 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: BMU ACU
+
+
+BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
+ SG_ NewSignal_0023 : 53|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0083 : 14|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ MS_SOC : 7|8@0+ (0.5,0) [0|100] "%" Vector__XXX
+ SG_ MS_Charge_Current_Limit : 15|16@0- (0.125,0) [-4000|4000] "A" Vector__XXX
+ SG_ MS_Discharge_Current_Limit : 31|16@0- (0.125,0) [-4000|4000] "A" Vector__XXX
+ SG_ MS_Operating_State : 44|5@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ MS_DTC_Accommodation : 47|3@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Connect_Voltage_Flag : 55|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ MS_Pack_Voltage : 7|16@0- (0.0625,0) [0|2047] "V" Vector__XXX
+ SG_ MS_Pack_Current : 23|16@0- (0.125,0) [-4000|-4000] "A" Vector__XXX
+ SG_ V_min_Connected : 7|16@0+ (0.000122,0) [0|4] "V" Vector__XXX
+ SG_ V_max_Connected : 23|16@0+ (0.000122,0) [0|4] "V" Vector__XXX
+ SG_ V_min_Global : 39|16@0+ (0.000122,0) [0|4] "V" Vector__XXX
+ SG_ V_max_Global : 55|16@0+ (0.000122,0) [0|4] "V" Vector__XXX
+ SG_ T_min_Connected : 7|16@0- (0.015625,0) [-200|200] "°C" Vector__XXX
+ SG_ T_max_Connected : 23|16@0- (0.015625,0) [-200|200] "°C" Vector__XXX
+ SG_ T_min_Global : 39|16@0- (0.015625,0) [-200|200] "°C" Vector__XXX
+ SG_ T_max_Global : 55|16@0- (0.015625,0) [-200|200] "°C" Vector__XXX
+ SG_ Desired_MS_BMS_State : 3|4@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ command_type : 7|4@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Ext_E_Stop : 8|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ reset_latched_DTCs : 9|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ String_Bit_Map : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Aux_Command_Bit_Map : 39|8@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2566848515 SOC_Message: 8 BMU
+ SG_ SOC : 7|8@0+ (0.5,0) [0|100] "%" Vector__XXX
+ SG_ Charging_Current_Limit : 15|16@0- (0.125,0) [-4000|4000] "A" Vector__XXX
+ SG_ Discharging_Current_Limit : 31|16@0- (0.125,0) [-4000|4000] "A" Vector__XXX
+ SG_ BMU_Operating_State : 44|5@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ DTC_Accomodation : 47|3@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2566848771 Pack_Voltage_Current: 8 BMU
+ SG_ Unswitched_Pack_Voltage : 7|16@0- (0.0625,0) [0|2047] "V" Vector__XXX
+ SG_ Pack_Current : 23|16@0- (0.125,0) [-4000|4000] "A" Vector__XXX
+ SG_ Switched_Pack_Voltage : 39|16@0- (0.0625,0) [0|2047] "V" Vector__XXX
+ SG_ Main_Positive_Contactor_cmd : 48|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Main_Negative_Contactor_cmd : 49|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ PreCharge_Contactor_cmd : 50|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Mid_Pack_Contactor_cmd : 51|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Aux_Output_cmd : 52|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Main_Positive_Contactor_Status : 56|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Main_Contactor_Negative_Status : 57|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ PreCharge_Contactor_Status : 58|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Mid_Pack_Contactor_Status : 59|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Aux_Input_Pin_Status : 60|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Aux_Output_Pin_Status : 61|1@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2566849027 Min_Max_Voltage: 8 BMU
+ SG_ V_min : 7|16@0+ (0.000122,0) [0|4] "V" Vector__XXX
+ SG_ V_max : 23|16@0+ (0.000122,0) [0|4] "V" Vector__XXX
+ SG_ V_min_ID : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ V_max_ID : 55|16@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2566849283 Min_Max_Temperature: 8 BMU
+ SG_ T_min : 7|16@0- (0.015625,0) [-200|200] "°C" Vector__XXX
+ SG_ T_max : 23|16@0- (0.015625,0) [-200|200] "°C" Vector__XXX
+ SG_ T_average : 39|16@0- (0.015625,0) [-200|200] "°C" Vector__XXX
+ SG_ T_min_ID : 55|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ T_max_ID : 63|8@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2566849539 DTC_Accommodation: 8 BMU
+ SG_ Active_Fault_1 : 7|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Active_Fault_2 : 15|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Active_Fault_3 : 23|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Active_Fault_4 : 31|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Active_Fault_5 : 39|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Active_Fault_6 : 47|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Active_Fault_7 : 55|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Active_Fault_8 : 63|8@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2566849795 BMU_Configuration: 8 BMU
+ SG_ Interface_Version : 7|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ App_ID : 15|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Build_cfg_ID : 23|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ ECU_DB_ID : 31|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Number_of_Cell_Groups : 47|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Number_of_temperatures : 63|8@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2566850051 Amp_hours: 8 BMU
+ SG_ Amp_hour_charging : 7|32@0+ (0.1,0) [0|0] "Ah" Vector__XXX
+ SG_ Amp_hour_discharging : 39|32@0+ (0.1,0) [0|0] "Ah" Vector__XXX
+
+BO_ 2566850307 Operating_Limits: 8 BMU
+ SG_ Min_Pack_Voltage : 7|16@0+ (0.0625,0) [0|2047] "V" Vector__XXX
+ SG_ Max_Pack_Voltage : 23|16@0+ (0.0625,0) [0|2047] "V" Vector__XXX
+ SG_ Min_Cell_Voltage : 39|16@0+ (0.000122,0) [0|4] "V" Vector__XXX
+ SG_ Max_Cell_Voltage : 55|16@0+ (0.000122,0) [0|4] "V" Vector__XXX
+
+BO_ 2566852611 Cell_Voltages: 8 BMU
+ SG_ V_0 : 7|16@0+ (0.000122,0) [0|4] "V" Vector__XXX
+ SG_ V_1 : 23|16@0+ (0.000122,0) [0|4] "V" Vector__XXX
+ SG_ V_2 : 39|16@0+ (0.000122,0) [0|4] "V" Vector__XXX
+ SG_ V_3 : 55|16@0+ (0.000122,0) [0|4] "V" Vector__XXX
+
+BO_ 2566885379 Cell_Temperatures: 8 BMU
+ SG_ T_0 : 7|16@0- (0.015625,0) [-200|200] "°C" Vector__XXX
+ SG_ T_1 : 23|16@0- (0.015625,0) [-200|200] "°C" Vector__XXX
+ SG_ T_2 : 39|16@0- (0.015625,0) [-200|200] "°C" Vector__XXX
+ SG_ T_3 : 55|16@0- (0.015625,0) [-200|200] "°C" Vector__XXX
+
+BO_ 2566901763 Cell_Balance: 8 BMU
+ SG_ CB_0 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CB_1 : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CB_2 : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CB_3 : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CB_4 : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CB_5 : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CB_6 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CB_7 : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2565800948 Application_Command_Message: 8 ACU
+ SG_ Desired_BMU_State : 0|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Command_Type : 4|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Contactor : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ External_E_Stop : 16|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Transmit_Cell_Voltage_Messages : 17|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Transmit_Temperature_Messages : 18|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Transmit_CellBalance_Messages : 19|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Reset_Latched_DTCs : 20|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BMU_Aux_output_command : 21|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Application_Heartbeat : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+
+
+
+CM_ BO_ 2566848515 "Periodicity = 100ms";
+CM_ BO_ 2566848771 "Periodicity = 100ms";
+CM_ BO_ 2566849027 "Periodicity = 100ms";
+CM_ BO_ 2566849283 "Periodicity = 1000ms";
+CM_ BO_ 2566849539 "Periodicity = 200ms, or upon any change";
+CM_ BO_ 2566849795 "Periodicity = 5000ms";
+CM_ BO_ 2566850051 "Periodicity = 10000ms";
+CM_ BO_ 2566850307 "Periodicity = 1000ms";
+CM_ BO_ 2566852611 "Periodicity = 50ms, 
+*Always transmit enabled in BMU configuration or request to transmit is on set in the Application Command Message. 
+";
+CM_ BO_ 2566885379 "Periodicity = 50ms, 
+*Always transmit enabled in BMU configuration or request to transmit is on set in the Application Command Message. 
+";
+CM_ BO_ 2566901763 "Periodicity = 50ms, 
+*Always transmit enabled in BMU configuration or request to transmit is on set in the Application Command Message. 
+";
+CM_ BO_ 2565800948 "Periodicity = 100ms";
+CM_ SG_ 2565800948 Command_Type "Must be set to \"0000\" indicating “Application Command Message”";
+CM_ SG_ 2565800948 External_E_Stop "Set to ‘1’, the BMU performs an emergency stop procedure. ";
+CM_ SG_ 2565800948 Transmit_Cell_Voltage_Messages "Set to ‘1’, the BMU will transmit the cell Voltage Messages";
+CM_ SG_ 2565800948 Transmit_Temperature_Messages "Set to ‘1’, the BMU will transmit the Temperature Messages";
+CM_ SG_ 2565800948 Transmit_CellBalance_Messages "Set to ‘1’, the BMU will transmit the Cell-Balance Messages";
+CM_ SG_ 2565800948 Reset_Latched_DTCs "Transition from ‘0’ to ‘1’, the BMU shall reset the state of any active DTCs that are latched (i.e. not auto-cleared).";
+CM_ SG_ 2565800948 BMU_Aux_output_command "When enabled through the BMS Configuration, sets the state of the Aux Output pin";
+VAL_ 2566848515 SOC 255 "Unknown" ;
+VAL_ 2566848771 Main_Positive_Contactor_cmd 0 "Open" 1 "Closed" ;
+VAL_ 2566848771 Main_Negative_Contactor_cmd 0 "Open" 1 "Closed" ;
+VAL_ 2566848771 PreCharge_Contactor_cmd 0 "Open" 1 "Closed" ;
+VAL_ 2566848771 Mid_Pack_Contactor_cmd 0 "Open" 1 "Closed" ;
+VAL_ 2566848771 Aux_Output_cmd 0 "Open" 1 "Closed" ;
+VAL_ 2566848771 Main_Positive_Contactor_Status 0 "Open" 1 "Closed" ;
+VAL_ 2566848771 Main_Contactor_Negative_Status 1 "Closed" 0 "Open" ;
+VAL_ 2566848771 PreCharge_Contactor_Status 1 "Closed" 0 "Open" ;
+VAL_ 2566848771 Mid_Pack_Contactor_Status 1 "Closed" 0 "Open" ;
+VAL_ 2566848771 Aux_Input_Pin_Status 1 "Closed" 0 "Open" ;
+VAL_ 2566848771 Aux_Output_Pin_Status 1 "Closed" 0 "Open" ;
+VAL_ 2565800948 Desired_BMU_State 1 "POWER-UP" 2 "IDLE" 3 "PRE-CHARGE" 4 "READY" 5 "STOPPING" 6 "POWER-DOWN PREP" 7 "POWER-DOWN READY" ;
+VAL_ 2565800948 Contactor 0 "Open" 1 "Closed" ;
+

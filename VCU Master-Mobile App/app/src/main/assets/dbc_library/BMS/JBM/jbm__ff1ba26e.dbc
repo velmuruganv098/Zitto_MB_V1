@@ -1,0 +1,77 @@
+VERSION "" 
+
+NS_ :
+    NS_DESC_
+    CM_
+    BA_DEF_
+    BA_
+    VAL_
+    CAT_DEF_
+    CAT_
+    FILTER
+    BA_DEF_DEF_
+    EV_DATA_
+    ENVVAR_DATA_
+    SGTYPE_
+    SGTYPE_VAL_
+    BA_DEF_SGTYPE_
+    BA_SGTYPE_
+    SIGTYPE_VAL_
+    SIGGROUP_
+    SIG_VALTYPE_
+    SIGTYPE_
+    BO_TX_BU_
+    BA_DEF_REL_
+    BA_REL_
+    BA_DEF_DEF_REL_
+    BU_SG_REL_
+    BU_EV_REL_
+    BU_BO_REL_
+    SG_MUL_VAL_
+
+BS_ :
+
+BU_:
+
+BO_ 2552930803 BMS_TempPoint1: 8 Vector__XXX 
+ SG_ BMS_TempPoint1_Code : 0|8@1+ (1,0) [0|255] ""  Vector__XXX
+ SG_ BMS_TempPoint1_1 : 8|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint1_2 : 16|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint1_3 : 24|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint1_4 : 32|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint1_5 : 40|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint1_6 : 48|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint1_7 : 56|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+
+BO_ 2552996339 BMS_TempPoint2: 8 Vector__XXX 
+ SG_ BMS_TempPoint2_Code : 0|8@1+ (1,0) [0|255] ""  Vector__XXX
+ SG_ BMS_TempPoint2_1 : 8|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint2_2 : 16|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint2_3 : 24|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint2_4 : 32|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint2_5 : 40|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint2_6 : 48|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint2_7 : 56|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+
+
+BO_ 2553061875 BMS_TempPoint3: 8 Vector__XXX 
+ SG_ BMS_TempPoint3_Code : 0|8@1+ (1,0) [0|255] ""  Vector__XXX
+ SG_ BMS_TempPoint3_1 : 8|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint3_2 : 16|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint3_3 : 24|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint3_4 : 32|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint3_5 : 40|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint3_6 : 48|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint3_7 : 56|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+
+BO_ 2553127411 BMS_TempPoint4: 8 Vector__XXX 
+ SG_ BMS_TempPoint4_Code : 0|8@1+ (1,0) [0|255] ""  Vector__XXX
+ SG_ BMS_TempPoint4_1 : 8|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint4_2 : 16|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint4_3 : 24|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint4_4 : 32|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint4_5 : 40|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint4_6 : 48|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+ SG_ BMS_TempPoint4_7 : 56|8@1+ (1,-40) [-40|210] "°C"  Vector__XXX
+
+

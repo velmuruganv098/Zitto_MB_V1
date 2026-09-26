@@ -109,7 +109,28 @@ class Ring(private val cap: Int) {
     }
 }
 
-data class ScanState(val scanning: Boolean = false, val devices: List<ScanDev>? = null, val error: String? = null)
+data class ScanState(
+    val scanning: Boolean = false, val devices: List<ScanDev>? = null, val error: String? = null, val note: String? = null,
+)
+
+/** V0.0073 link integrity: S32K frame sequence gaps and CAN frames received vs the S32K's own CAN RX counter. */
+data class CanInteg(val received: Long = 0, val s32Counted: Long = 0) {
+    val missing get() = maxOf(0L, s32Counted - received)
+}
+
+data class Integrity(
+    val s32Frames: Long = 0, val s32Lost: Long = 0, val can1: CanInteg = CanInteg(), val can2: CanInteg = CanInteg(),
+    val bridge: List<Pair<String, String>> = emptyList(), val since: Double = 0.0,
+) {
+    val lossPct get() = if (s32Frames + s32Lost > 0) Math.round(10000.0 * s32Lost / (s32Frames + s32Lost)) / 100.0 else 0.0
+    val bad get() = s32Lost > 0 || can1.missing > 0 || can2.missing > 0
+}
+
+/** Command log line (Device window): cls pend | ok | err | s32. */
+data class CmdLog(val ts: String, val text: String, val cls: String)
+
+/** A module / GPIO command waiting for the S32K's CMD_ACK: pending | confirmed | failed | timeout. */
+data class Pend(val t: Double, val state: String)
 
 data class HubState(
     val link: LinkInfo = LinkInfo(),
@@ -138,6 +159,16 @@ data class HubState(
     val lastDevice: Pair<String, String?>? = null,
     val csaAvg10: Double? = null,
     val csaPeak10: Double? = null,
+    val integrity: Integrity = Integrity(),
+    val roles: RolesMeta = RolesMeta(),
+    val roleValues: Map<String, Double> = emptyMap(),
+    val roleAge: Map<String, Double> = emptyMap(),
+    val cmdLog: List<CmdLog> = emptyList(),
+    val pend: Map<String, Pend> = emptyMap(),
+    val track: List<Pair<Double, Double>> = emptyList(),
+    val libMatch: LibMatch? = null,
+    val libLoaded: Set<String> = emptySet(),
+    val autoDbc: Boolean = true,
 )
 
 /**
@@ -208,6 +239,31 @@ class Hub(private val ctx: Context) {
     private var otaJob: Job? = null
     private val otaEvents = ArrayDeque<String>()
 
+    // V0.0073: integrity, command feedback, IMU track, DBC library
+    private var integ = IntegState(now())
+    private val cmdLog = ArrayDeque<CmdLog>()
+    private val pend = LinkedHashMap<String, Pend>()
+    private val track = ArrayList<Pair<Double, Double>>()
+    private var rolesMetaCache = RolesMeta()
+    private var libMatch: LibMatch? = null
+
+    private class IntegState(val since: Double) {
+        var frames = 0L
+        var lost = 0L
+        var lastSeq: Int? = null
+        val canRx = longArrayOf(0, 0, 0)
+        val canBase = arrayOfNulls<Long>(3)
+        val canS32 = longArrayOf(0, 0, 0)
+    }
+
+    val library: DbcLibrary by lazy {
+        try {
+            DbcLibrary(ctx.assets.open(LIB_INDEX).bufferedReader().use { it.readText() })
+        } catch (_: Exception) {
+            DbcLibrary("{}")
+        }
+    }
+
     private val sampleText: String by lazy {
         ctx.assets.open(SAMPLE_DBC).bufferedReader().use { it.readText() }
     }
@@ -232,7 +288,13 @@ class Hub(private val ctx: Context) {
 
     companion object {
         const val SAMPLE_DBC = "zitto_demo_vehicle.dbc"
-        const val APP_VERSION = "1.0.0"
+        const val LIB_INDEX = "library_index.json"
+        const val LIB_DIR = "dbc_library"
+        const val APP_VERSION = "2.0.0"
+        private val EVT_RE = Regex("""^\[(CMD|GPIO|IMU)]""")
+        private val BRIDGE_KEYS = listOf(
+            "uart_frames", "frames", "crc_errors", "can_frames", "ble_lines", "ble_notifies", "ble_q_drop", "notify_err_gatt",
+        )
     }
 
     // ================================================================ helpers
@@ -266,7 +328,19 @@ class Hub(private val ctx: Context) {
                 val list = BleScanner.scan(ctx, timeoutS, nameFilter, onlyBridge) { devs ->
                     _scan.value = ScanState(true, devs + BleScanner.simDevice())
                 }
-                _scan.value = ScanState(false, list + BleScanner.simDevice())
+                var note: String? = null
+                if (list.none { it.bridge }) {
+                    val l = link
+                    note = if (l != null && l.connected && l.kind != "sim") {
+                        "This phone is already connected to the bridge - it does not advertise while connected."
+                    } else {
+                        "The bridge is not advertising. It accepts one BLE client at a time and stops advertising " +
+                            "while connected: close VCU Master on the PC or any other phone using it, or power-cycle " +
+                            "the ESP32, then scan again." +
+                            (settings.lastAddress?.let { " Last bridge: ${settings.lastName ?: ""} $it." } ?: "")
+                    }
+                }
+                _scan.value = ScanState(false, list + BleScanner.simDevice(), note = note)
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
@@ -322,6 +396,12 @@ class Hub(private val ctx: Context) {
                 f["pitch_deg"] = round2(Math.toDegrees(atan2(-ax, if (h == 0.0) 1e-9 else h)))
                 f["accel_g"] = round(sqrt(ax * ax + ay * ay + az * az)) / 1000.0
                 latest = latest.copy(imu = f, imuT = t)
+                if (f.containsKey("pos_x_mm")) {
+                    val x = f.dbl("pos_x_mm"); val y = f.dbl("pos_y_mm")
+                    val last = track.lastOrNull()
+                    if (last == null || hypot(x - last.first, y - last.second) > 0.5) track += x to y
+                    if (track.size > 600) track.removeAt(0)
+                }
                 rings["ax"]!!.add(t, ax); rings["ay"]!!.add(t, ay); rings["az"]!!.add(t, az)
                 rings["gx"]!!.add(t, f.dbl("gx_mdps") / 1000); rings["gy"]!!.add(t, f.dbl("gy_mdps") / 1000)
                 rings["gz"]!!.add(t, f.dbl("gz_mdps") / 1000)
@@ -348,6 +428,7 @@ class Hub(private val ctx: Context) {
             }
             "CMD_ACK" -> {
                 latest = latest.copy(lastAck = f)
+                if ("ESP" !in p.raw) onAck(f)
                 Regex("""ESP gpio=(\d+) state=(\d)""").find(p.raw)?.let {
                     latest = latest.copy(espGpio = latest.espGpio + (it.groupValues[1].toInt() to it.groupValues[2].toInt()))
                 }
@@ -358,7 +439,12 @@ class Hub(private val ctx: Context) {
                 dec = dbc.decode(f.long("bus").toInt(), f.long("id"), f["ext"] == true, data, t)
             }
         }
+        if (p.type == "LOG") {
+            val text = f["text"] as? String ?: ""
+            if (EVT_RE.containsMatchIn(text)) addCmdLog("S32K $text", "s32")
+        }
         val rec = Rec(nextId++, t, p.raw, p.seq, p.type, p.tags, f, dec)
+        trackIntegrity(rec)
         store(rec)
 
         val iter = waiters.iterator()
@@ -372,6 +458,168 @@ class Hub(private val ctx: Context) {
     }
 
     private fun round2(v: Double) = round(v * 100) / 100
+
+    // ================================================================ integrity (V0.0073)
+    private fun trackIntegrity(r: Rec) {
+        val I = integ
+        r.seq?.let { seq ->
+            I.lastSeq?.let { last ->
+                val gap = (seq - last - 1) and 0xFF
+                if (gap < 200) I.lost += gap          // larger = S32K reset / reconnect, not loss
+            }
+            I.lastSeq = seq
+            I.frames++
+        }
+        val b = r.fields.long("bus").toInt()
+        if (b !in 1..2) return
+        if (r.type == "CAN") {
+            I.canRx[b]++
+        } else if (r.type == "CAN_STATUS" && r.fields["rx"] is Long) {
+            val rx = r.fields["rx"] as Long
+            val base = I.canBase[b]
+            if (base == null || rx < base) I.canBase[b] = rx - I.canRx[b]
+            I.canS32[b] = rx - I.canBase[b]!!
+        }
+    }
+
+    private fun integrity(): Integrity {
+        val I = integ
+        val B = latest.bridge ?: emptyMap()
+        return Integrity(
+            s32Frames = I.frames, s32Lost = I.lost,
+            can1 = CanInteg(I.canRx[1], I.canS32[1]), can2 = CanInteg(I.canRx[2], I.canS32[2]),
+            bridge = BRIDGE_KEYS.filter { B.containsKey(it) }.map { it to (B.str(it) ?: "") }, since = I.since,
+        )
+    }
+
+    // ================================================================ command feedback (V0.0073)
+    private fun addCmdLog(text: String, cls: String) {
+        cmdLog.addFirst(CmdLog(Fmt.clock(now()), text, cls))
+        while (cmdLog.size > 40) cmdLog.removeLast()
+        dirty = true
+    }
+
+    /** A module / GPIO box glows while pending and turns green only on the S32K's CMD_ACK. */
+    private fun pending(kind: String, id: String, what: String) {
+        pend["$kind:$id"] = Pend(now(), "pending")
+        addCmdLog("sent $what - waiting for S32K", "pend")
+    }
+
+    private fun onAck(f: Map<String, Any?>) {
+        val cmd = f.long("cmd")
+        val ok = f.long("result", -1) == 0L
+        val id = f.long("gpio_id").toInt()
+        val st = f.long("state")
+        var key: String? = null
+        val label = when (cmd) {
+            1L -> {
+                val m = Protocol.MODULES.entries.firstOrNull { it.value == id }?.key ?: "$id"
+                key = "mod:$m"
+                "MODULE $m -> ${if (st != 0L) "ENABLED" else "DISABLED"}"
+            }
+            2L -> { key = "gpio:$id"; "GPIO $id read-back ${if (st != 0L) "HIGH" else "LOW"}" }
+            else -> "command 0x${cmd.toString(16)}"
+        }
+        addCmdLog("S32K ACK $label ${if (ok) "OK" else "FAILED (code ${f.str("result")})"}", if (ok) "ok" else "err")
+        if (key != null && pend.containsKey(key)) pend[key] = Pend(now(), if (ok) "confirmed" else "failed")
+    }
+
+    private fun agePending() {
+        val t = now()
+        val it = pend.entries.iterator()
+        val timedOut = ArrayList<String>()
+        while (it.hasNext()) {
+            val e = it.next()
+            val p = e.value
+            if (p.state == "pending" && t - p.t > 2) {
+                e.setValue(Pend(t, "timeout"))
+                timedOut += e.key.replace(":", " ")
+            } else if ((p.state == "confirmed" && t - p.t > 4) || ((p.state == "failed" || p.state == "timeout") && t - p.t > 8)) {
+                it.remove()
+            }
+        }
+        for (k in timedOut) {
+            addCmdLog("no ACK from S32K for $k within 2 s", "err")
+            toast("No confirmation from the S32K for $k", true)
+        }
+    }
+
+    // ================================================================ DBC library / auto-match (V0.0073)
+    private fun libLoadedIds(): Set<String> = settings.dbcLib.values.toSet()
+
+    private fun matchNow(): LibMatch {
+        val unk = dbc.unknownIds(now())
+        val ranked = library.match(unk.keys, exclude = libLoadedIds()).map { r ->
+            val item = library.byId.getValue(r.id)
+            val buses = sortedSetOf<Int>()
+            for (k in item.ids) unk[k]?.let { buses.addAll(it) }
+            r.copy(buses = buses.toList())
+        }
+        val ids = unk.entries.map { (k, b) -> "${DbcLibrary.idText(k)} (CAN${b.sorted().joinToString(",")})" }.sorted().take(40)
+        return LibMatch(unk.size, ranked, ids)
+    }
+
+    private fun loadDbcText(name: String, text: String, buses: List<Int>, libId: String? = null): DbcDatabase {
+        val db = dbc.load(name, text, buses)
+        File(dbcDir, name).writeText(text)
+        settings.dbc[name] = buses
+        if (libId != null) settings.dbcLib[name] = libId else settings.dbcLib.remove(name)
+        settings.save()
+        return db
+    }
+
+    private fun loadFromLibrary(libId: String, buses: List<Int>): Pair<String, DbcDatabase> {
+        if (!library.has(libId)) throw HubError("That DBC is not in the library")
+        val text = ctx.assets.open("$LIB_DIR/$libId").bufferedReader(Charsets.ISO_8859_1).use { it.readText() }
+        val parts = libId.split("/")
+        var name = parts.last()
+        if (name in dbc.dbcs && settings.dbcLib[name] != libId) name = "${parts.getOrElse(parts.size - 2) { "lib" }}_$name"   // two vendors' can.dbc
+        val db = try { loadDbcText(name, text, buses, libId) } catch (e: HubError) { throw e } catch (e: Exception) {
+            throw HubError("DBC parse error: ${e.message}")
+        }
+        return name to db
+    }
+
+    /** Load the library DBC that explains the unknown frames on the bus (once per DBC). */
+    private fun autoDbc() {
+        val m = matchNow()
+        libMatch = m
+        if (!settings.autoDbc || m.unknown == 0) return
+        val best = m.candidates.firstOrNull() ?: return
+        val extHit = best.ids.any { it.endsWith("EXT") }
+        val strong = best.matched >= 3 || (best.matched >= 2 && best.coverage >= 0.2) || (extHit && best.matched >= 1)
+        // a tie means the frames do not identify one DBC: leave it to the user
+        val second = m.candidates.getOrNull(1)
+        val tie = second != null && second.matched == best.matched && second.coverage == best.coverage
+        if (best.id in settings.autoDbcDeclined || !strong || tie) return
+        val buses = best.buses.ifEmpty { listOf(1, 2) }
+        val (name, _) = loadFromLibrary(best.id, buses)
+        val msg = "Auto-loaded $name from the DBC library on CAN${buses.joinToString("/")}: " +
+            "it defines ${best.matched} of the unknown IDs on the bus"
+        toast(msg)
+        addCmdLog(msg, "ok")
+        libMatch = matchNow()
+    }
+
+    fun libLoad(libId: String, buses: List<Int>) = act {
+        if (buses.isEmpty()) throw HubError("Pick CAN1, CAN2 or both first.")
+        settings.autoDbcDeclined.remove(libId)
+        val (name, db) = loadFromLibrary(libId, buses)
+        libMatch = matchNow()
+        toast("$name loaded on CAN${buses.joinToString("/")} (${db.messages.size} messages)")
+    }
+
+    fun setAutoDbc(on: Boolean) = act(if (on) "Automatic DBC matching on" else "Automatic DBC matching off") {
+        settings.autoDbc = on
+        settings.save()
+    }
+
+    fun libRefreshMatch() = act { libMatch = matchNow() }
+
+    fun imuZero() = act("IMU zero sent") {
+        send(Protocol.imuZero())
+        track.clear()
+    }
 
     private fun store(rec: Rec) {
         records.addLast(rec)
@@ -471,7 +719,10 @@ class Hub(private val ctx: Context) {
         act(ok) { send(c) }
     }
 
-    fun module(name: String, on: Boolean) = act("$name ${if (on) "enable" else "disable"} sent") { send(Protocol.moduleEn(name, on)) }
+    fun module(name: String, on: Boolean) = act("$name ${if (on) "enable" else "disable"} sent") {
+        pending("mod", name, "MODULE $name ${if (on) "ENABLE" else "DISABLE"}")
+        send(Protocol.moduleEn(name, on))
+    }
     fun statusReq() = act("Status requested") { send(Protocol.statusReq()) }
     fun mcuReset() = act("Reset command sent") { send(Protocol.mcuReset()) }
     fun led(period: Int, duty: Int) = act("LED settings sent") { send(Protocol.ledCtrl(period, duty)) }
@@ -490,6 +741,7 @@ class Hub(private val ctx: Context) {
 
     fun s32Gpio(id: Int, dir: Int, state: Int, raw: Boolean) = act("GPIO $id command sent") {
         if (id !in Protocol.S32_GPIO_MAP) throw HubError("S32K GPIO ID must be 1..13")
+        pending("gpio", "$id", "GPIO $id " + if (dir != 0) "OUT ${if (state != 0) "HIGH" else "LOW"}" else "IN")
         send(if (raw) Protocol.s32GpioRaw(id, dir, state) else Protocol.s32Gpio(id, dir, state))
     }
 
@@ -502,25 +754,23 @@ class Hub(private val ctx: Context) {
     fun loadDbc(nameIn: String, text: String, buses: List<Int>) = act {
         val name = File(nameIn).name
         if (!name.lowercase().endsWith(".dbc")) throw HubError("Choose a .dbc file ($name).")
-        val db = try { dbc.load(name, text, buses) } catch (e: Exception) { throw HubError("DBC parse error in $name: ${e.message}") }
-        File(dbcDir, name).writeText(text)
-        settings.dbc[name] = buses
-        settings.save()
+        val db = try { loadDbcText(name, text, buses) } catch (e: Exception) { throw HubError("DBC parse error in $name: ${e.message}") }
         toast("$name: ${db.messages.size} messages loaded")
     }
 
     fun loadSampleDbc() = act("Demo DBC loaded on CAN1 and CAN2") {
-        dbc.load(SAMPLE_DBC, sampleText, listOf(1, 2))
-        File(dbcDir, SAMPLE_DBC).writeText(sampleText)
-        settings.dbc[SAMPLE_DBC] = listOf(1, 2)
-        settings.save()
+        loadDbcText(SAMPLE_DBC, sampleText, listOf(1, 2))
     }
 
-    fun removeDbc(name: String) = act("DBC removed") {
+    fun removeDbc(name: String) = act {
         dbc.remove(name)
         settings.dbc.remove(name)
+        val lib = settings.dbcLib.remove(name)
+        if (lib != null) settings.autoDbcDeclined += lib
         File(dbcDir, name).delete()
         settings.save()
+        libMatch = matchNow()
+        toast(if (lib != null) "DBC removed. Automatic matching will not load it again; load it from the library to undo." else "DBC removed")
     }
 
     fun setDbcBuses(name: String, buses: List<Int>) = act("Bus assignment saved") {
@@ -563,6 +813,8 @@ class Hub(private val ctx: Context) {
         plotRings.values.forEach { it.clear() }
         ribbon.clear()
         dbc.resetStats()
+        integ = IntegState(now())
+        track.clear()
     }
 
     fun toggleRecord() = act {
@@ -731,11 +983,23 @@ class Hub(private val ctx: Context) {
         while (true) {
             delay(100)
             k++
-            if (dirty || k % 5 == 0) {
+            if (k % 5 == 0) agePending()
+            if (k % 10 == 0) {
+                dbc.refreshActive(now())
+                try { autoDbc() } catch (e: Exception) { toast("Auto DBC: ${e.message}", true) }   // never stop the pump
+            }
+            if (dirty || k % 2 == 0) {
                 dirty = false
                 publish()
             }
         }
+    }
+
+    private fun rolesMeta(): RolesMeta {
+        if (rolesMetaCache.version != dbc.rolesVersion) {
+            rolesMetaCache = dbc.rolesMeta()
+        }
+        return rolesMetaCache
     }
 
     private fun publish() {
@@ -773,6 +1037,16 @@ class Hub(private val ctx: Context) {
             lastDevice = settings.lastAddress?.let { it to settings.lastName },
             csaAvg10 = if (cur10.isEmpty()) null else cur10.average(),
             csaPeak10 = cur10.maxOrNull(),
+            integrity = integrity(),
+            roles = rolesMeta(),
+            roleValues = HashMap(dbc.roleValues),
+            roleAge = dbc.roleT.mapValues { n - it.value },
+            cmdLog = cmdLog.toList(),
+            pend = LinkedHashMap(pend),
+            track = track.toList(),
+            libMatch = libMatch,
+            libLoaded = libLoadedIds(),
+            autoDbc = settings.autoDbc,
         )
     }
 }

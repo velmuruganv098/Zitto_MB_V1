@@ -1,0 +1,172 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: 
+
+
+BO_ 2147483904 total_voltage_current: 8 Vector__XXX
+ SG_ crc_16 : 55|12@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ remaining_capacity_1 : 39|16@0+ (10,0) [0|0] "" Vector__XXX
+ SG_ current : 23|16@0- (0.01,0) [0|0] "" Vector__XXX
+ SG_ total_voltage : 7|16@0+ (10,0) [0|0] "" Vector__XXX
+
+BO_ 2147483905 charging_full_capacity_cycle: 8 Vector__XXX
+ SG_ crc_16 : 55|12@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ percentage_remaining_capacity : 39|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ discharge_cycle : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ full_capacity : 7|16@0+ (10,0) [0|0] "" Vector__XXX
+
+BO_ 2147483906 balanced_status_protection_Statu: 8 Vector__XXX
+ SG_ crc_16 : 55|12@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ software_lock_mos : 45|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ frontend_detection_ic_error : 44|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ short_circuit_protection : 43|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ dis_charge_overcurrent : 42|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ charge_overcurrent : 41|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ dis_charging_low_temp : 40|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ dis_charging_over_temp : 38|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ charging_low_temp : 37|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ charging_over_temp : 36|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ group_under_voltage : 35|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ group_over_voltage : 34|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ monomer_undervoltage : 33|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ monomer_overvoltage : 32|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_32 : 31|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_31 : 30|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_30 : 29|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_29 : 28|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_28 : 27|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_27 : 26|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_26 : 25|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_25 : 24|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_24 : 23|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_23 : 22|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_22 : 21|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_21 : 20|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_20 : 19|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_19 : 18|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_18 : 17|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_17 : 16|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_16 : 15|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_15 : 14|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_14 : 13|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_13 : 12|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_12 : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_11 : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_10 : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_9 : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_8 : 7|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_7 : 6|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_6 : 5|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_5 : 4|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_4 : 3|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_3 : 2|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_2 : 1|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_1 : 0|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483907 fet_control_status: 8 Vector__XXX
+ SG_ crc_16 : 55|12@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ production_year : 25|7@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ production_date : 16|5@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ production_month : 21|4@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ mos_dis_charging : 1|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ mos_charging : 0|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2147483908 ntc_number: 4 Vector__XXX
+ SG_ crc_16 : 23|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ balance_status_flag_1 : 0|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 320 device_name: 8 Vector__XXX
+
+
+
+
+
+BA_DEF_ BO_  "SystemMessageLongSymbol" STRING ;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_DEF_  "SystemMessageLongSymbol" "";
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_ "SystemMessageLongSymbol" BO_ 2147483906 "balanced_status_protection_Status";
+VAL_ 2147483906 software_lock_mos 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 frontend_detection_ic_error 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 short_circuit_protection 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 dis_charge_overcurrent 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 charge_overcurrent 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 dis_charging_low_temp 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 dis_charging_over_temp 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 charging_low_temp 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 charging_over_temp 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 group_under_voltage 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 group_over_voltage 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 monomer_undervoltage 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 monomer_overvoltage 0 "NO protection" 1 "protection state" ;
+VAL_ 2147483906 balance_status_flag_32 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_31 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_30 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_29 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_28 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_27 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_26 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_25 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_24 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_23 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_22 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_21 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_20 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_19 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_18 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_17 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_16 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_15 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_14 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_13 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_12 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_11 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_10 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_9 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_8 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_7 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_6 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_5 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_4 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_3 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_2 0 "not on" 1 "on" ;
+VAL_ 2147483906 balance_status_flag_1 0 "not on" 1 "on" ;
+VAL_ 2147483907 mos_dis_charging 0 "off" 1 "on" ;
+VAL_ 2147483907 mos_charging 0 "off" 1 "on" ;
+VAL_ 2147483908 balance_status_flag_1 0 "not on" 1 "on" ;
+
+
+

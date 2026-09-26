@@ -1,0 +1,548 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: Receiver VCU BMU TMS
+
+
+BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
+ SG_ DPUDCDCIReq : 0|12@1+ (1,-1000) [1000|4294966296] "A" Vector__XXX
+ SG_ DPUDCDCEna : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2553258483 B2V_BMSValue8: 8 BMU
+ SG_ B2V_AccDisChaEgy : 32|32@1+ (1,0) [0|4294967295] ""  VCU
+ SG_ B2V_AccChaEgy : 0|32@1+ (1,0) [0|4294967295] ""  VCU
+
+BO_ 2552537587 B2V_SoftVers: 8 BMU
+ SG_ B2V_Version_MainVers : 0|8@1+ (1,0) [0|255] ""  VCU
+ SG_ B2V_Version_MinorVers : 8|16@1+ (1,0) [0|65535] ""  VCU
+ SG_ B2V_Version_Year : 24|8@1+ (1,2000) [2000|2255] ""  VCU
+ SG_ B2V_Version_Month : 32|8@1+ (1,0) [0|255] ""  VCU
+ SG_ B2V_Version_Day : 40|8@1+ (1,0) [0|255] ""  VCU
+
+BO_ 2552603123 B2V_HardVers: 8 BMU
+ SG_ B2V_BMUHardVers : 0|16@1+ (0.01,0) [0|655.35] ""  VCU
+ SG_ B2V_LECUHardVers : 16|16@1+ (0.01,0) [0|655.35] ""  VCU
+
+BO_ 2552275443 B2V_BMSValue1: 8 BMU
+ SG_ B2V_SOC : 0|16@1+ (0.1,0) [0|6553.5] "%"  VCU
+ SG_ B2V_MaxContinuChrgI : 16|16@1+ (0.1,0) [0|6553.5] "A"  VCU
+ SG_ B2V_MaxFeedbackChrgI : 32|16@1+ (0.1,0) [0|6553.5] "A"  VCU
+ SG_ B2V_MaxDchgI : 48|16@1+ (0.1,0) [0|6553.5] "A"  VCU
+
+BO_ 2552340979 B2V_BMSValue2: 8 BMU
+ SG_ B2V_MaxChrgV : 0|16@1+ (0.1,0) [0|6553.5] "V"  VCU
+ SG_ B2V_MaxDchgV : 16|16@1+ (0.1,0) [0|6553.5] "V"  VCU
+ SG_ B2V_MaxTemp : 32|8@1+ (1,-40) [210|4294967256] "��"  VCU
+ SG_ B2V_MinTemp : 40|8@1+ (1,-40) [210|4294967256] "��"  VCU
+ SG_ B2V_SOH : 48|8@1+ (1,0) [0|100] "%"  VCU
+ SG_ B2V_RlyTimeOut : 56|4@1+ (1,0) [0|15] ""  VCU
+
+BO_ 2552406515 B2V_BMSValue3: 8 BMU
+ SG_ B2V_HVSta1 : 0|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_HVSta2 : 1|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_HVSta3 : 2|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_HVSta4 : 3|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_CurrHighFaultSta1 : 4|3@1+ (1,0) [0|7] ""  VCU
+ SG_ B2V_CurrHighFaultSta2 : 7|3@1+ (1,0) [0|7] ""  VCU
+ SG_ B2V_CurrHighFaultSta3 : 10|3@1+ (1,0) [0|7] ""  VCU
+ SG_ B2V_CurrHighFaultSta4 : 13|3@1+ (1,0) [0|7] ""  VCU
+ SG_ B2V_HVOnAllow1 : 16|3@1+ (1,0) [0|255] ""  VCU
+ SG_ B2V_HVOnAllow2 : 19|3@1+ (1,0) [0|255] ""  VCU
+ SG_ B2V_HVOnAllow3 : 22|3@1+ (1,0) [0|255] ""  VCU
+ SG_ B2V_HVOnAllow4 : 25|3@1+ (1,0) [0|255] ""  VCU
+ SG_ B2V_HVOffReq1 : 28|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_HVOffReq2 : 29|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_HVOffReq3 : 30|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_HVOffReq4 : 31|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_BMSRlyLife : 36|8@1+ (1,0) [0|255] ""  VCU
+
+BO_ 2553324019 B2V_HVB: 8 BMU
+ SG_ H2B_Str1HVB : 0|16@1+ (0.1,0) [0|6553.5] "V"  VCU
+ SG_ H2B_Str2HVB : 16|16@1+ (0.1,0) [0|6553.5] "V"  VCU
+ SG_ H2B_Str3HVB : 32|16@1+ (0.1,0) [0|6553.5] "V"  VCU
+ SG_ H2B_Str4HVB : 48|16@1+ (0.1,0) [0|6553.5] "V"  VCU
+
+BO_ 2552472051 B2V_BMSValue4: 8 BMU
+ SG_ B2V_RateCap : 0|16@1+ (1,0) [0|65535] "Ah"  VCU
+ SG_ B2V_RateHVolt : 16|16@1+ (0.1,0) [0|6553.5] "V"  VCU
+ SG_ B2V_RateEgy : 32|16@1+ (0.1,0) [0|6553.5] "kWh"  VCU
+ SG_ B2V_BattType : 48|4@1+ (1,0) [0|15] ""  VCU
+
+BO_ 2348851699 B2V_BMSCmd: 8 BMU
+ SG_ B2V_BMSSta : 0|2@1+ (1,0) [0|3] ""  VCU
+ SG_ B2V_ChrgEndReq : 2|2@1+ (1,0) [0|3] ""  VCU
+ SG_ B2V_FullChrg : 4|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_TotalI : 8|16@1+ (0.1,-3200) [3353.5|4294964096] "A"  VCU
+ SG_ B2V_BatPackNub : 24|8@1+ (1,0) [0|255] ""  VCU
+ SG_ B2V_HVP : 32|16@1+ (0.1,0) [0|6553.5] "V"  VCU
+ SG_ B2V_Life : 56|8@1+ (1,0) [0|255] ""  VCU
+
+BO_ 2553192947 B2V_BMSI: 8 BMU
+ SG_ B2V_CurrentStr1 : 0|16@1+ (0.1,-3200) [3353.5|4294964096] "A"  VCU
+ SG_ B2V_CurrentStr2 : 16|16@1+ (0.1,-3200) [3353.5|4294964096] "A"  VCU
+ SG_ B2V_CurrentStr3 : 32|16@1+ (0.1,-3200) [3353.5|4294964096] "A"  VCU
+ SG_ B2V_CurrentStr4 : 48|16@1+ (0.1,-3200) [3353.5|4294964096] "A"  VCU
+
+BO_ 2348872609 V2B_VCUCmd: 8 VCU
+ SG_ V2B_RepowerOn : 8|8@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ V2B_TMSFaultLevel : 0|2@1+ (1,0) [0|3] ""  BMU
+ SG_ V2B_VCUSta : 6|2@1+ (1,0) [0|3] ""  BMU
+ SG_ V2B_DchgPRly1Sta : 16|2@1+ (1,0) [0|3] ""  BMU
+ SG_ V2B_DchgPRly2Sta : 18|2@1+ (1,0) [0|3] ""  BMU
+ SG_ V2B_DchgPRly3Sta : 20|2@1+ (1,0) [0|3] ""  BMU
+ SG_ V2B_DchgPRly4Sta : 22|2@1+ (1,0) [0|3] ""  BMU
+ SG_ V2B_ChrgSignSta : 32|2@1+ (1,0) [0|3] ""  BMU
+ SG_ V2B_VCULife : 56|8@1+ (1,0) [0|255] ""  BMU
+
+BO_ 2417140211 B2V_CellV1: 8 BMU
+ SG_ B2V_MaxCellV1 : 0|16@1+ (0.001,0) [0|655.35] "V"  VCU
+ SG_ B2V_MaxCellVLECUNub1 : 16|8@1+ (1,0) [0|255] ""  VCU
+ SG_ B2V_MaxCellVNubInLECU1 : 24|8@1+ (1,0) [0|255] ""  VCU
+ SG_ B2V_MinCellV1 : 32|16@1+ (0.001,0) [0|655.35] "V"  VCU
+ SG_ B2V_MinCellVLECUNub1 : 48|8@1+ (1,0) [0|255] ""  VCU
+ SG_ B2V_MinCellVNubInLECU1 : 56|8@1+ (1,0) [0|255] ""  VCU
+
+BO_ 2417205747 B2V_CellV2: 8 BMU
+ SG_ B2V_MaxCellV2 : 0|16@1+ (0.001,0) [0|655.35] "V"  VCU
+ SG_ B2V_MaxCellVLECUNub2 : 16|8@1+ (1,0) [0|255] ""  VCU
+ SG_ B2V_MaxCellVNubInLECU2 : 24|8@1+ (1,0) [0|255] ""  VCU
+ SG_ B2V_MinCellV2 : 32|16@1+ (0.001,0) [0|655.35] "V"  VCU
+ SG_ B2V_MinCellVLECUNub2 : 48|8@1+ (1,0) [0|255] ""  VCU
+ SG_ B2V_MinCellVNubInLECU2 : 56|8@1+ (1,0) [0|255] ""  VCU
+
+BO_ 2417271283 B2V_CellV3: 8 BMU
+ SG_ B2V_MaxCellV3 : 0|16@1+ (0.001,0) [0|655.35] "V"  VCU
+ SG_ B2V_MaxCellVLECUNub3 : 16|8@1+ (1,0) [0|255] ""  VCU
+ SG_ B2V_MaxCellVNubInLECU3 : 24|8@1+ (1,0) [0|255] ""  VCU
+ SG_ B2V_MinCellV3 : 32|16@1+ (0.001,0) [0|655.35] "V"  VCU
+ SG_ B2V_MinCellVLECUNub3 : 48|8@1+ (1,0) [0|255] ""  VCU
+ SG_ B2V_MinCellVNubInLECU3 : 56|8@1+ (1,0) [0|255] ""  VCU
+
+BO_ 2417336819 B2V_CellV4: 8 BMU
+ SG_ B2V_MaxCellV4 : 0|16@1+ (0.001,0) [0|655.35] "V"  VCU
+ SG_ B2V_MaxCellVLECUNub4 : 16|8@1+ (1,0) [0|255] ""  VCU
+ SG_ B2V_MaxCellVNubInLECU4 : 24|8@1+ (1,0) [0|255] ""  VCU
+ SG_ B2V_MinCellV4 : 32|16@1+ (0.001,0) [0|655.35] "V"  VCU
+ SG_ B2V_MinCellVLECUNub4 : 48|8@1+ (1,0) [0|255] ""  VCU
+ SG_ B2V_MinCellVNubInLECU4 : 56|8@1+ (1,0) [0|255] ""  VCU
+
+BO_ 2417402355 B2V_CellT1: 8 BMU
+ SG_ B2V_MaxCellT1 : 0|8@1+ (1,-40) [210|4294967256] "��"  VCU
+ SG_ B2V_MaxCellTLECUNub1 : 8|8@1+ (1,0) [0|210] ""  VCU
+ SG_ B2V_MaxCellTNubInLECU1 : 16|8@1+ (1,0) [0|210] ""  VCU
+ SG_ B2V_MinCellT1 : 24|8@1+ (1,-40) [210|4294967256] "��"  VCU
+ SG_ B2V_MinCellTLECUNub1 : 32|8@1+ (1,0) [0|210] ""  VCU
+ SG_ B2V_MinCellTNubInLECU1 : 40|8@1+ (1,0) [0|210] ""  VCU
+
+BO_ 2417467891 B2V_CellT2: 8 BMU
+ SG_ B2V_MaxCellT2 : 0|8@1+ (1,-40) [210|4294967256] "��"  VCU
+ SG_ B2V_MaxCellTLECUNub2 : 8|8@1+ (1,0) [0|210] ""  VCU
+ SG_ B2V_MaxCellTNubInLECU2 : 16|8@1+ (1,0) [0|210] ""  VCU
+ SG_ B2V_MinCellT2 : 24|8@1+ (1,-40) [210|4294967256] "��"  VCU
+ SG_ B2V_MinCellTLECUNub2 : 32|8@1+ (1,0) [0|210] ""  VCU
+ SG_ B2V_MinCellTNubInLECU2 : 40|8@1+ (1,0) [0|210] ""  VCU
+
+BO_ 2417533427 B2V_CellT3: 8 BMU
+ SG_ B2V_MaxCellT3 : 0|8@1+ (1,-40) [210|4294967256] "��"  VCU
+ SG_ B2V_MaxCellTLECUNub3 : 8|8@1+ (1,0) [0|210] ""  VCU
+ SG_ B2V_MaxCellTNubInLECU3 : 16|8@1+ (1,0) [0|210] ""  VCU
+ SG_ B2V_MinCellT3 : 24|8@1+ (1,-40) [210|4294967256] "��"  VCU
+ SG_ B2V_MinCellTLECUNub3 : 32|8@1+ (1,0) [0|210] ""  VCU
+ SG_ B2V_MinCellTNubInLECU3 : 40|8@1+ (1,0) [0|210] ""  VCU
+
+BO_ 2417598963 B2V_CellT4: 8 BMU
+ SG_ B2V_MaxCellT4 : 0|8@1+ (1,-40) [210|4294967256] "��"  VCU
+ SG_ B2V_MaxCellTLECUNub4 : 8|8@1+ (1,0) [0|210] ""  VCU
+ SG_ B2V_MaxCellTNubInLECU4 : 16|8@1+ (1,0) [0|210] ""  VCU
+ SG_ B2V_MinCellT4 : 24|8@1+ (1,-40) [210|4294967256] "��"  VCU
+ SG_ B2V_MinCellTLECUNub4 : 32|8@1+ (1,0) [0|210] ""  VCU
+ SG_ B2V_MinCellTNubInLECU4 : 40|8@1+ (1,0) [0|210] ""  VCU
+
+
+BO_ 2566866419 B2T_BMS1: 8 BMU
+ SG_ B2T_TMax : 0|8@1+ (1,-40) [210|4294967256] "��"  TMS
+ SG_ B2T_Tmin : 8|8@1+ (1,-40) [210|4294967256] "��"  TMS
+ SG_ B2T_ScBatU_H : 16|8@1+ (0.1,0) [0|1000] "V"  TMS
+ SG_ B2T_ScBatU_L : 24|8@1+ (0.1,0) [0|1000] "V"  TMS
+ SG_ B2T_Mode : 32|1@1+ (1,0) [0|1] ""  TMS
+ SG_ B2T_TMSWorkMode : 33|3@1+ (1,0) [0|7] ""  TMS
+ SG_ B2T_BMUWorkMode : 36|1@1+ (1,0) [0|1] ""  TMS
+ SG_ B2T_TargetT : 40|8@1+ (1,-40) [210|4294967256] "��"  TMS
+ SG_ B2T_TAvg : 48|8@1+ (1,-40) [210|4294967256] "��"  TMS
+ SG_ B2T_Life : 56|8@1+ (1,0) [0|255] ""  TMS
+
+BO_ 2566910789 T2B_TMS1: 8 TMS
+ SG_ T2B_TIn : 0|8@1+ (1,0) [210|4294967256] "��"  BMU
+ SG_ T2B_TOut : 8|8@1+ (1,0) [210|4294967256] "��"  BMU
+ SG_ T2B_Mode : 16|1@1+ (1,0) [0|1] "V"  BMU
+ SG_ T2B_TMSWorkMode : 17|3@1+ (1,0) [0|7] ""  BMU
+ SG_ T2B_BMUWorkMode : 20|1@1+ (1,0) [0|1] ""  BMU
+ SG_ T2B_TMSRlySt : 23|1@1+ (1,0) [0|1] ""  BMU
+ SG_ T2B_CompressorRate : 24|8@1+ (1,0) [0|100] ""  BMU
+ SG_ T2B_FltCode : 32|6@1+ (1,0) [0|7] ""  BMU
+ SG_ T2B_FltLevel : 38|2@1+ (1,0) [0|1] ""  BMU
+ SG_ T2B_Life : 56|8@1+ (1,0) [0|255] ""  BMU
+
+BO_ 2417009139 B2V_Alarm: 8 BMU
+ SG_ B2V_CellVoltTooHigh2 : 0|4@1+ (1,0) [0|15] ""  VCU
+ SG_ B2V_CellVoltTooHigh3 : 4|4@1+ (1,0) [0|15] ""  VCU
+ SG_ B2V_CellVoltTooHigh4 : 8|4@1+ (1,0) [0|15] ""  VCU
+ SG_ B2V_CellVoltTooLow2 : 12|4@1+ (1,0) [0|15] ""  VCU
+ SG_ B2V_CellVoltTooLow3 : 16|4@1+ (1,0) [0|15] ""  VCU
+ SG_ B2V_CellVoltTooLow4 : 20|4@1+ (1,0) [0|15] ""  VCU
+ SG_ B2V_BatVoltTooHigh3 : 24|4@1+ (1,0) [0|15] ""  VCU
+ SG_ B2V_BatVoltTooLow3 : 28|4@1+ (1,0) [0|15] ""  VCU
+ SG_ B2V_BatTempTooHigh2 : 32|4@1+ (1,0) [0|15] ""  VCU
+ SG_ B2V_BatTempTooHigh3 : 36|4@1+ (1,0) [0|15] ""  VCU
+ SG_ B2V_BatTempTooHigh4 : 40|4@1+ (1,0) [0|15] ""  VCU
+ SG_ B2V_BatTempTooLow1 : 44|4@1+ (1,0) [0|15] ""  VCU
+ SG_ B2V_DchgOverI2 : 48|4@1+ (1,0) [0|15] ""  VCU
+ SG_ B2V_FeedbackChrgOverI2 : 52|4@1+ (1,0) [0|15] ""  VCU
+ SG_ B2V_IntranetCANComm3 : 56|4@1+ (1,0) [0|15] ""  VCU
+ SG_ B2V_SysConnFault4 : 60|4@1+ (1,0) [0|15] ""  VCU
+
+BO_ 2417074675 B2V_Alarm2: 8 BMU
+ SG_ B2V_CellVoltDiff1 : 0|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_BMSWorkVoltError3 : 1|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_TempDiff1 : 2|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_TempNotControl4 : 3|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_SOCTooLow1 : 4|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_SOCTooLow2 : 5|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_SOCTooHigh1 : 6|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_SOCJump1 : 7|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_PowerCANCom3 : 8|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_MiddleCANCom3 : 9|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_TMSCom1 : 10|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_TMSFault2 : 11|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_IncorrectConfigStr4 : 12|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_StrVDiffTooLarge3 : 13|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_ChrgSignalLose3 : 14|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_HVILFault3 : 15|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_CellVInRangeOutFault2 : 16|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_CellStandTDetectFault1 : 17|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_CellStandTDetectFault2 : 18|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_LECUBoardTTooHigh1 : 19|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_LECUVChipTTooHigh1 : 20|1@1+ (1,0) [0|1] ""  VCU
+ SG_ B2V_BlcCircultOpen1 : 21|1@1+ (1,0) [0|1] ""  VCU
+
+
+
+CM_ BO_ 3221225472 "This is a message for not used signals, created by Vector CANdb++ DBC OLE DB Provider.";
+CM_ SG_ 2552537587 B2V_Version_MainVers "Main Version Number";
+CM_ SG_ 2552537587 B2V_Version_MinorVers "Minor Version Number";
+CM_ SG_ 2552537587 B2V_Version_Year "Year";
+CM_ SG_ 2552537587 B2V_Version_Month "Month";
+CM_ SG_ 2552537587 B2V_Version_Day "Day";
+CM_ SG_ 2552603123 B2V_BMUHardVers "BMU Hardware Version��E.g:V4.04��";
+CM_ SG_ 2552603123 B2V_LECUHardVers "LECU Hardware Version��E.g:V4.04��";
+CM_ SG_ 2552275443 B2V_SOC "SOC";
+CM_ SG_ 2552275443 B2V_MaxContinuChrgI "Maximum Continuous Charging Current";
+CM_ SG_ 2552275443 B2V_MaxFeedbackChrgI "Maximum Allowable Feedback Charging Current";
+CM_ SG_ 2552275443 B2V_MaxDchgI "Maximum Allowable Discharging Current";
+CM_ SG_ 2552340979 B2V_MaxChrgV "Maximum Allowable Charging Voltage";
+CM_ SG_ 2552340979 B2V_MaxDchgV "Maximum Allowable Discharging Voltage";
+CM_ SG_ 2552340979 B2V_MaxTemp "Maximum Allowable Temperature";
+CM_ SG_ 2552340979 B2V_MinTemp "Minimum Allowable Temperature";
+CM_ SG_ 2552340979 B2V_SOH "SOH";
+CM_ SG_ 2552340979 B2V_RlyTimeOut "Relay action timeout";
+CM_ SG_ 2552406515 B2V_HVSta1 "String1 HV State";
+CM_ SG_ 2552406515 B2V_HVSta2 "String2 HV State";
+CM_ SG_ 2552406515 B2V_HVSta3 "String3 HV State";
+CM_ SG_ 2552406515 B2V_HVSta4 "String4 HV State";
+CM_ SG_ 2552406515 B2V_CurrHighFaultSta1 "BMS String1 Current Highest Fault Level";
+CM_ SG_ 2552406515 B2V_CurrHighFaultSta2 "BMS String2 Current Highest Fault Level";
+CM_ SG_ 2552406515 B2V_CurrHighFaultSta3 "BMS String3 Current Highest Fault Level";
+CM_ SG_ 2552406515 B2V_CurrHighFaultSta4 "BMS String4 Current Highest Fault Level";
+CM_ SG_ 2552406515 B2V_HVOnAllow1 "String1 Allow HV On";
+CM_ SG_ 2552406515 B2V_HVOnAllow2 "String2 Allow HV On";
+CM_ SG_ 2552406515 B2V_HVOnAllow3 "String3 Allow HV On";
+CM_ SG_ 2552406515 B2V_HVOnAllow4 "String4 Allow HV On";
+CM_ SG_ 2552406515 B2V_HVOffReq1 "String1 HV Off Request";
+CM_ SG_ 2552406515 B2V_HVOffReq2 "String2 HV Off Request";
+CM_ SG_ 2552406515 B2V_HVOffReq3 "String3 HV Off Request";
+CM_ SG_ 2552406515 B2V_HVOffReq4 "String4 HV Off Request";
+CM_ SG_ 2552406515 B2V_BMSRlyLife "BMS Life";
+CM_ SG_ 2553324019 H2B_Str1HVB "String1 HVB";
+CM_ SG_ 2553324019 H2B_Str2HVB "String2 HVB";
+CM_ SG_ 2553324019 H2B_Str3HVB "String3 HVB";
+CM_ SG_ 2553324019 H2B_Str4HVB "String4 HVB";
+CM_ SG_ 2552472051 B2V_RateCap "Battery System Rated Capacity";
+CM_ SG_ 2552472051 B2V_RateHVolt "Battery System Rated Volt";
+CM_ SG_ 2552472051 B2V_RateEgy "Battery Pack Rated Total Energy";
+CM_ SG_ 2552472051 B2V_BattType "Battery Type Information";
+CM_ SG_ 2348851699 B2V_BMSSta "BMS State";
+CM_ SG_ 2348851699 B2V_ChrgEndReq "Charge End Request";
+CM_ SG_ 2348851699 B2V_FullChrg "Full Charge";
+CM_ SG_ 2348851699 B2V_TotalI "Total Current";
+CM_ SG_ 2348851699 B2V_BatPackNub "Total Number Of Battery Pack";
+CM_ SG_ 2348851699 B2V_HVP "HVP";
+CM_ SG_ 2348851699 B2V_Life "BMS Life";
+CM_ SG_ 2553192947 B2V_CurrentStr1 "String 1 Current";
+CM_ SG_ 2553192947 B2V_CurrentStr2 "String 2 Current";
+CM_ SG_ 2553192947 B2V_CurrentStr3 "String 3 Current";
+CM_ SG_ 2553192947 B2V_CurrentStr4 "String 4 Current";
+CM_ SG_ 2348872609 V2B_TMSFaultLevel "TMS Fault Level";
+CM_ SG_ 2348872609 V2B_VCUSta "VCU State";
+CM_ SG_ 2348872609 V2B_DchgPRly1Sta "String1 Discharging Positive Relay State";
+CM_ SG_ 2348872609 V2B_DchgPRly2Sta "String2 Discharging Positive Relay State";
+CM_ SG_ 2348872609 V2B_DchgPRly3Sta "String3 Discharging Positive Relay State";
+CM_ SG_ 2348872609 V2B_DchgPRly4Sta "String4 Discharging Positive Relay State";
+CM_ SG_ 2348872609 V2B_ChrgSignSta "Charge Gun Connect State";
+CM_ SG_ 2348872609 V2B_VCULife "VCU Life";
+CM_ SG_ 2417140211 B2V_MaxCellV1 "String1 Maximum Cell Voltage";
+CM_ SG_ 2417140211 B2V_MaxCellVLECUNub1 "LECU Number of String1 Maximum Cell Voltage";
+CM_ SG_ 2417140211 B2V_MaxCellVNubInLECU1 "The Cell Number in The String1 LECU where the Maximum Cell Voltage is Located";
+CM_ SG_ 2417140211 B2V_MinCellV1 "String1 Minimum Cell Voltage";
+CM_ SG_ 2417140211 B2V_MinCellVLECUNub1 "LECU Number of String1 Minimum Cell Voltage";
+CM_ SG_ 2417140211 B2V_MinCellVNubInLECU1 "The Cell Number in The LECU where the String1 Minimum Cell Voltage is Located";
+CM_ SG_ 2417205747 B2V_MaxCellV2 "String2 Maximum Cell Voltage";
+CM_ SG_ 2417205747 B2V_MaxCellVLECUNub2 "LECU Number of String2 Maximum Cell Voltage";
+CM_ SG_ 2417205747 B2V_MaxCellVNubInLECU2 "The Cell Number in The String2 LECU where the Maximum Cell Voltage is Located";
+CM_ SG_ 2417205747 B2V_MinCellV2 "String2 Minimum Cell Voltage";
+CM_ SG_ 2417205747 B2V_MinCellVLECUNub2 "LECU Number of String2 Minimum Cell Voltage";
+CM_ SG_ 2417205747 B2V_MinCellVNubInLECU2 "The Cell Number in The LECU where the String2 Minimum Cell Voltage is Located";
+CM_ SG_ 2417271283 B2V_MaxCellV3 "String3 Maximum Cell Voltage";
+CM_ SG_ 2417271283 B2V_MaxCellVLECUNub3 "LECU Number of String3 Maximum Cell Voltage";
+CM_ SG_ 2417271283 B2V_MaxCellVNubInLECU3 "The Cell Number in The String3 LECU where the Maximum Cell Voltage is Located";
+CM_ SG_ 2417271283 B2V_MinCellV3 "String3 Minimum Cell Voltage";
+CM_ SG_ 2417271283 B2V_MinCellVLECUNub3 "LECU Number of String3 Minimum Cell Voltage";
+CM_ SG_ 2417271283 B2V_MinCellVNubInLECU3 "The Cell Number in The LECU where the String3 Minimum Cell Voltage is Located";
+CM_ SG_ 2417336819 B2V_MaxCellV4 "String4 Maximum Cell Voltage";
+CM_ SG_ 2417336819 B2V_MaxCellVLECUNub4 "LECU Number of String4 Maximum Cell Voltage";
+CM_ SG_ 2417336819 B2V_MaxCellVNubInLECU4 "The Cell Number in The String4 LECU where the Maximum Cell Voltage is Located";
+CM_ SG_ 2417336819 B2V_MinCellV4 "String4 Minimum Cell Voltage";
+CM_ SG_ 2417336819 B2V_MinCellVLECUNub4 "LECU Number of String4 Minimum Cell Voltage";
+CM_ SG_ 2417336819 B2V_MinCellVNubInLECU4 "The Cell Number in The LECU where the String4 Minimum Cell Voltage is Located";
+CM_ SG_ 2417402355 B2V_MaxCellT1 "String1 Maximum Cell Temperature";
+CM_ SG_ 2417402355 B2V_MaxCellTLECUNub1 "LECU Number of String1 Maximum Cell Temperature";
+CM_ SG_ 2417402355 B2V_MaxCellTNubInLECU1 "The Cell Number in The LECU where the String1 Maximum Cell Temperature is Located";
+CM_ SG_ 2417402355 B2V_MinCellT1 "String1 Minimum Cell Temperature";
+CM_ SG_ 2417402355 B2V_MinCellTLECUNub1 "LECU Number of String1 Minimum Cell Temperature";
+CM_ SG_ 2417402355 B2V_MinCellTNubInLECU1 "The Cell Number in The LECU where the String1 Minimum Cell Temperature is Located";
+CM_ SG_ 2417467891 B2V_MaxCellT2 "String2 Maximum Cell Temperature";
+CM_ SG_ 2417467891 B2V_MaxCellTLECUNub2 "LECU Number of String2 Maximum Cell Temperature";
+CM_ SG_ 2417467891 B2V_MaxCellTNubInLECU2 "The Cell Number in The LECU where the String2 Maximum Cell Temperature is Located";
+CM_ SG_ 2417467891 B2V_MinCellT2 "String2 Minimum Cell Temperature";
+CM_ SG_ 2417467891 B2V_MinCellTLECUNub2 "LECU Number of String2 Minimum Cell Temperature";
+CM_ SG_ 2417467891 B2V_MinCellTNubInLECU2 "The Cell Number in The LECU where the String2 Minimum Cell Temperature is Located";
+CM_ SG_ 2417533427 B2V_MaxCellT3 "String3 Maximum Cell Temperature";
+CM_ SG_ 2417533427 B2V_MaxCellTLECUNub3 "LECU Number of String3 Maximum Cell Temperature";
+CM_ SG_ 2417533427 B2V_MaxCellTNubInLECU3 "The Cell Number in The LECU where the String3 Maximum Cell Temperature is Located";
+CM_ SG_ 2417533427 B2V_MinCellT3 "String3 Minimum Cell Temperature";
+CM_ SG_ 2417533427 B2V_MinCellTLECUNub3 "LECU Number of String3 Minimum Cell Temperature";
+CM_ SG_ 2417533427 B2V_MinCellTNubInLECU3 "The Cell Number in The LECU where the String3 Minimum Cell Temperature is Located";
+CM_ SG_ 2417598963 B2V_MaxCellT4 "String4 Maximum Cell Temperature";
+CM_ SG_ 2417598963 B2V_MaxCellTLECUNub4 "LECU Number of String4 Maximum Cell Temperature";
+CM_ SG_ 2417598963 B2V_MaxCellTNubInLECU4 "The Cell Number in The LECU where the String4 Maximum Cell Temperature is Located";
+CM_ SG_ 2417598963 B2V_MinCellT4 "String4 Minimum Cell Temperature";
+CM_ SG_ 2417598963 B2V_MinCellTLECUNub4 "LECU Number of String4 Minimum Cell Temperature";
+CM_ SG_ 2417598963 B2V_MinCellTNubInLECU4 "The Cell Number in The LECU where the String4 Minimum Cell Temperature is Located";
+CM_ SG_ 2566866419 B2T_TMax "Cell Maximum Temperature";
+CM_ SG_ 2566866419 B2T_Tmin "Cell Minimum Temperature";
+CM_ SG_ 2566866419 B2T_ScBatU_H "BMS Present High Byte Voltage";
+CM_ SG_ 2566866419 B2T_ScBatU_L "BMS Present Low Byte Voltage";
+CM_ SG_ 2566866419 B2T_Mode "Mode";
+CM_ SG_ 2566866419 B2T_TMSWorkMode "Control TMS Work Mode";
+CM_ SG_ 2566866419 B2T_BMUWorkMode "BMS Work Mode";
+CM_ SG_ 2566866419 B2T_TargetT "Set Target Temperature";
+CM_ SG_ 2566866419 B2T_TAvg "Battery Average Voltage";
+CM_ SG_ 2566866419 B2T_Life "BMS Life";
+CM_ SG_ 2566910789 T2B_TIn "Inlet Temperature";
+CM_ SG_ 2566910789 T2B_TOut "Outlet Temperature";
+CM_ SG_ 2566910789 T2B_Mode "Mode";
+CM_ SG_ 2566910789 T2B_TMSWorkMode "Control TMS Work Mode";
+CM_ SG_ 2566910789 T2B_BMUWorkMode "BMS Work Mode";
+CM_ SG_ 2566910789 T2B_TMSRlySt "TMS Relay State";
+CM_ SG_ 2566910789 T2B_CompressorRate "Compressor Load Ratio";
+CM_ SG_ 2566910789 T2B_FltCode "TMS Fault Code";
+CM_ SG_ 2566910789 T2B_FltLevel "TMS Fault Level";
+CM_ SG_ 2566910789 T2B_Life "TMS Life";
+CM_ SG_ 2417009139 B2V_CellVoltTooHigh2 "Cell Voltage Too High 2";
+CM_ SG_ 2417009139 B2V_CellVoltTooHigh3 "Cell Voltage Too High 3";
+CM_ SG_ 2417009139 B2V_CellVoltTooHigh4 "Cell Voltage Too High 4";
+CM_ SG_ 2417009139 B2V_CellVoltTooLow2 "Cell Voltage Too Low 2";
+CM_ SG_ 2417009139 B2V_CellVoltTooLow3 "Cell Voltage Too Low 3";
+CM_ SG_ 2417009139 B2V_CellVoltTooLow4 "Cell Voltage Too Low 4";
+CM_ SG_ 2417009139 B2V_BatVoltTooHigh3 "Battery Voltage Too High 3";
+CM_ SG_ 2417009139 B2V_BatVoltTooLow3 "Battery Voltage Too Low 3";
+CM_ SG_ 2417009139 B2V_BatTempTooHigh2 "Battery Temperature Too High 2";
+CM_ SG_ 2417009139 B2V_BatTempTooHigh3 "Battery Temperature Too High 3";
+CM_ SG_ 2417009139 B2V_BatTempTooHigh4 "Battery Temperature Too High 4";
+CM_ SG_ 2417009139 B2V_BatTempTooLow1 "Battery Temperature Too Low 1";
+CM_ SG_ 2417009139 B2V_DchgOverI2 "Discharge Over current 2";
+CM_ SG_ 2417009139 B2V_FeedbackChrgOverI2 "Feedback Over current 2";
+CM_ SG_ 2417009139 B2V_IntranetCANComm3 "Intranet CAN Abnormal Communication 3";
+CM_ SG_ 2417009139 B2V_SysConnFault4 "System Connection Fault 4";
+CM_ SG_ 2417074675 B2V_CellVoltDiff1 "Cell Voltage Difference 1";
+CM_ SG_ 2417074675 B2V_BMSWorkVoltError3 "BMS Work Voltage Error 3";
+CM_ SG_ 2417074675 B2V_TempDiff1 "Battery Temperature Difference Too Large 1";
+CM_ SG_ 2417074675 B2V_TempNotControl4 "Temperature Lose Control 4";
+CM_ SG_ 2417074675 B2V_SOCTooLow1 "SOC Too Low 1";
+CM_ SG_ 2417074675 B2V_SOCTooLow2 "SOC Too Low 2";
+CM_ SG_ 2417074675 B2V_SOCTooHigh1 "SOC Too High 1";
+CM_ SG_ 2417074675 B2V_SOCJump1 "SOC Jump 1";
+CM_ SG_ 2417074675 B2V_PowerCANCom3 "Power CAN Abnormal Communication 3";
+CM_ SG_ 2417074675 B2V_MiddleCANCom3 "Middle CAN Abnormal Communication3";
+CM_ SG_ 2417074675 B2V_TMSCom1 "Thermal management system communication fault 1";
+CM_ SG_ 2417074675 B2V_TMSFault2 "Thermal management system fault2";
+CM_ SG_ 2417074675 B2V_IncorrectConfigStr4 "Incorrect configuration of battery string 4";
+CM_ SG_ 2417074675 B2V_StrVDiffTooLarge3 "String voltage difference is too large 3";
+CM_ SG_ 2417074675 B2V_ChrgSignalLose3 "Charge signal lose 3";
+CM_ SG_ 2417074675 B2V_HVILFault3 "HVIL fault 3";
+CM_ SG_ 2417074675 B2V_CellVInRangeOutFault2 "cell voltage in range high/low fault 2";
+CM_ SG_ 2417074675 B2V_CellStandTDetectFault1 "Cell stand temperature sensor detects fault 1";
+CM_ SG_ 2417074675 B2V_CellStandTDetectFault2 "Cell stand temperature sensor detects fault 2";
+CM_ SG_ 2417074675 B2V_LECUBoardTTooHigh1 "LECU board temperature is too high 1";
+CM_ SG_ 2417074675 B2V_LECUVChipTTooHigh1 "LECU voltage chip temperature is too high 1";
+CM_ SG_ 2417074675 B2V_BlcCircultOpen1 "balance circult open��short to battery��1";
+BA_DEF_ SG_  "GenSigStartValue" FLOAT 0 1215752192;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 10000;
+BA_DEF_DEF_  "GenSigStartValue" 0;
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_ "GenMsgCycleTime" BO_ 2553258483 100;
+BA_ "GenMsgCycleTime" BO_ 2552537587 1000;
+BA_ "GenMsgCycleTime" BO_ 2552603123 1000;
+BA_ "GenMsgCycleTime" BO_ 2552275443 100;
+BA_ "GenMsgCycleTime" BO_ 2552340979 100;
+BA_ "GenMsgCycleTime" BO_ 2552406515 100;
+BA_ "GenMsgCycleTime" BO_ 2553324019 100;
+BA_ "GenMsgCycleTime" BO_ 2552472051 100;
+BA_ "GenMsgCycleTime" BO_ 2348851699 100;
+BA_ "GenMsgCycleTime" BO_ 2553192947 100;
+BA_ "GenMsgCycleTime" BO_ 2348872609 100;
+BA_ "GenSigStartValue" SG_ 2348872609 V2B_TMSFaultLevel 0;
+BA_ "GenSigStartValue" SG_ 2348872609 V2B_ChrgSignSta 0;
+BA_ "GenSigStartValue" SG_ 2348872609 V2B_VCULife 0;
+BA_ "GenMsgCycleTime" BO_ 2417140211 1000;
+BA_ "GenMsgCycleTime" BO_ 2417205747 1000;
+BA_ "GenMsgCycleTime" BO_ 2417271283 1000;
+BA_ "GenMsgCycleTime" BO_ 2417336819 1000;
+BA_ "GenMsgCycleTime" BO_ 2417402355 1000;
+BA_ "GenMsgCycleTime" BO_ 2417467891 1000;
+BA_ "GenMsgCycleTime" BO_ 2417533427 1000;
+BA_ "GenMsgCycleTime" BO_ 2417598963 1000;
+BA_ "GenMsgCycleTime" BO_ 2552734195 50;
+BA_ "GenMsgCycleTime" BO_ 2552799731 50;
+BA_ "GenMsgCycleTime" BO_ 2552865267 50;
+BA_ "GenMsgCycleTime" BO_ 2552930803 100;
+BA_ "GenMsgCycleTime" BO_ 2552996339 100;
+BA_ "GenMsgCycleTime" BO_ 2553061875 100;
+BA_ "GenMsgCycleTime" BO_ 2553127411 100;
+BA_ "GenMsgCycleTime" BO_ 2566866419 500;
+BA_ "GenSigStartValue" SG_ 2566866419 B2T_TMax 40;
+BA_ "GenSigStartValue" SG_ 2566866419 B2T_Tmin 40;
+BA_ "GenSigStartValue" SG_ 2566866419 B2T_ScBatU_H 0;
+BA_ "GenSigStartValue" SG_ 2566866419 B2T_ScBatU_L 0;
+BA_ "GenSigStartValue" SG_ 2566866419 B2T_Mode 0;
+BA_ "GenSigStartValue" SG_ 2566866419 B2T_TMSWorkMode 0;
+BA_ "GenSigStartValue" SG_ 2566866419 B2T_BMUWorkMode 0;
+BA_ "GenSigStartValue" SG_ 2566866419 B2T_TargetT 40;
+BA_ "GenSigStartValue" SG_ 2566866419 B2T_TAvg 40;
+BA_ "GenSigStartValue" SG_ 2566866419 B2T_Life 0;
+BA_ "GenMsgCycleTime" BO_ 2566910789 500;
+BA_ "GenSigStartValue" SG_ 2566910789 T2B_TIn 40;
+BA_ "GenSigStartValue" SG_ 2566910789 T2B_TOut 40;
+BA_ "GenSigStartValue" SG_ 2566910789 T2B_Mode 0;
+BA_ "GenSigStartValue" SG_ 2566910789 T2B_TMSWorkMode 0;
+BA_ "GenSigStartValue" SG_ 2566910789 T2B_BMUWorkMode 0;
+BA_ "GenSigStartValue" SG_ 2566910789 T2B_TMSRlySt 0;
+BA_ "GenSigStartValue" SG_ 2566910789 T2B_CompressorRate 0;
+BA_ "GenSigStartValue" SG_ 2566910789 T2B_FltCode 0;
+BA_ "GenSigStartValue" SG_ 2566910789 T2B_FltLevel 0;
+BA_ "GenSigStartValue" SG_ 2566910789 T2B_Life 0;
+BA_ "GenMsgCycleTime" BO_ 2417009139 100;
+BA_ "GenMsgCycleTime" BO_ 2417074675 100;
+VAL_ 2552406515 B2V_HVSta1 0 "HV off��" 1 "HV On��" ;
+VAL_ 2552406515 B2V_HVSta2 0 "HV off��" 1 "HV On��" ;
+VAL_ 2552406515 B2V_HVSta3 0 "HV off��" 1 "HV On��" ;
+VAL_ 2552406515 B2V_HVSta4 0 "HV off��" 1 "HV On��" ;
+VAL_ 2552406515 B2V_CurrHighFaultSta1 0 "No Fault��" 1 "Fault Level 1��" 2 "Fault Level 2��" 3 "Fault Level 3��" 4 "Fault Level 4��" 5 "Fault Level 5��" ;
+VAL_ 2552406515 B2V_CurrHighFaultSta2 0 "No Fault��" 1 "Fault Level 1��" 2 "Fault Level 2��" 3 "Fault Level 3��" 4 "Fault Level 4��" 5 "Fault Level 5��" ;
+VAL_ 2552406515 B2V_CurrHighFaultSta3 0 "No Fault��" 1 "Fault Level 1��" 2 "Fault Level 2��" 3 "Fault Level 3��" 4 "Fault Level 4��" 5 "Fault Level 5��" ;
+VAL_ 2552406515 B2V_CurrHighFaultSta4 0 "No Fault��" 1 "Fault Level 1��" 2 "Fault Level 2��" 3 "Fault Level 3��" 4 "Fault Level 4��" 5 "Fault Level 5��" ;
+VAL_ 2552406515 B2V_HVOnAllow1 0 "Not Allow��" 1 "Allow��" 2 "Signal Invalid��" ;
+VAL_ 2552406515 B2V_HVOnAllow2 0 "Not Allow��" 1 "Allow��" 2 "Signal Invalid��" ;
+VAL_ 2552406515 B2V_HVOnAllow3 0 "Not Allow��" 1 "Allow��" 2 "Signal Invalid��" ;
+VAL_ 2552406515 B2V_HVOnAllow4 0 "Not Allow��" 1 "Allow��" 2 "Signal Invalid��" ;
+VAL_ 2552406515 B2V_HVOffReq1 0 "No Request��" 1 "HV off Request��" ;
+VAL_ 2552406515 B2V_HVOffReq2 0 "No Request��" 1 "HV off Request��" ;
+VAL_ 2552406515 B2V_HVOffReq3 0 "No Request��" 1 "HV off Request��" ;
+VAL_ 2552406515 B2V_HVOffReq4 0 "No Request��" 1 "HV off Request��" ;
+VAL_ 2552472051 B2V_RateCap 65535 "Signal Invalid��" ;
+VAL_ 2552472051 B2V_RateHVolt 65535 "Signal Invalid��" ;
+VAL_ 2552472051 B2V_RateEgy 65535 "Signal Invalid��" ;
+VAL_ 2552472051 B2V_BattType 1 "Lithium iron phosphate��" 2 "Lithium titanate��" 3 "Lithium cobaltate��" 4 "Ternary material��" 5 "Lithium polymer battery��" 6 "Super capacitor��" 7 "Lithium manganese oxide��" 8 "Others��" ;
+VAL_ 2348851699 B2V_BMSSta 0 "Self Check��" 1 "Standby State��" 2 "Charging State��" 3 "Discharging State��" ;
+VAL_ 2348851699 B2V_ChrgEndReq 0 "No Request��" 1 "Charge End Request��" 2 "Signal Invalid��" ;
+VAL_ 2348851699 B2V_FullChrg 0 "Not Full��" 1 "Full��" ;
+VAL_ 2348872609 V2B_TMSFaultLevel 0 "No Fault��" 1 "Level 1��" 2 "Level 2��" 3 "Level 3��" ;
+VAL_ 2348872609 V2B_VCUSta 0 "Standby State��" 1 "Charging State��" 2 "Discharging State��" ;
+VAL_ 2348872609 V2B_DchgPRly1Sta 0 "Open��" 1 "Close��" 2 "Invalid" ;
+VAL_ 2348872609 V2B_DchgPRly2Sta 0 "Open��" 1 "Close��" 2 "Invalid" ;
+VAL_ 2348872609 V2B_DchgPRly3Sta 0 "Open��" 1 "Close��" 2 "Invalid" ;
+VAL_ 2348872609 V2B_DchgPRly4Sta 0 "Open��" 1 "Close��" 2 "Invalid" ;
+VAL_ 2348872609 V2B_ChrgSignSta 0 "No Connect��" 1 "Connect��" 3 "Signal Invalid��" ;
+VAL_ 2566866419 B2T_Mode 0 "TMS according to the working mode��" ;
+VAL_ 2566866419 B2T_TMSWorkMode 0 "Standby��" 1 "Cooling��" 2 "Warm��" 3 "Self- Circlulation��" ;
+VAL_ 2566866419 B2T_BMUWorkMode 0 "Discharging Mode��" 1 "Charging Mode��" ;
+VAL_ 2566910789 T2B_Mode 0 "TMS according to the working mode��" ;
+VAL_ 2566910789 T2B_TMSWorkMode 0 "Standby��" 1 "Cooling��" 2 "Warm��" 3 "Self- Circlulation��" ;
+VAL_ 2566910789 T2B_BMUWorkMode 0 "Discharging Mode��" 1 "Charging Mode��" ;
+VAL_ 2566910789 T2B_TMSRlySt 0 "Open��" 1 "Close��" ;
+VAL_ 2566910789 T2B_FltCode 0 "No Fault��" 1 "Bus Undervoltage��" 2 "Bus Overvoltage��" 3 "24V Low Voltage Undervoltage��<18V����" 4 "24V Low Voltage Overvoltage��>32V����" 5 "Compressor Fault��" 6 "Pump Fault��" 7 "Cooling System Fault��" 8 "Defrost Sensor Fault��" 9 "CAN Communication Fault��" 10 "Outlet Sensor Fault��" 11 "Inlet Sensor Fault��" 12 "Low Water Level Alarm��" 13 "PTC Fault��" 14 "Fan Fault��" 15 "Relay Adhesion��" 16 "PTC CAN Communication Fault��" 17 "CMP CAN Communication Fault��" 18 "Anti-freeze Protection��" 19 "Exhaust Temperature Sensor Fault��" 20 "Exhaust Temperature Protection��" ;
+VAL_ 2566910789 T2B_FltLevel 1 "Level 1��" 2 "Level 2��" 3 "Level 3��" ;
+VAL_ 2417074675 B2V_CellVoltDiff1 0 "No Fault��" 1 "Fault��" ;
+VAL_ 2417074675 B2V_BMSWorkVoltError3 0 "No Fault��" 1 "Fault��" ;
+VAL_ 2417074675 B2V_TempDiff1 0 "No Fault��" 1 "Fault��" ;
+VAL_ 2417074675 B2V_TempNotControl4 0 "No Fault��" 1 "Fault��" ;
+VAL_ 2417074675 B2V_SOCTooLow1 0 "No Fault��" 1 "Fault��" ;
+VAL_ 2417074675 B2V_SOCTooLow2 0 "No Fault��" 1 "Fault��" ;
+VAL_ 2417074675 B2V_SOCTooHigh1 0 "No Fault��" 1 "Fault��" ;
+VAL_ 2417074675 B2V_SOCJump1 0 "No Fault��" 1 "Fault��" ;
+VAL_ 2417074675 B2V_PowerCANCom3 0 "No Fault��" 1 "Fault��" ;
+VAL_ 2417074675 B2V_MiddleCANCom3 0 "No Fault��" 1 "Fault��" ;
+VAL_ 2417074675 B2V_TMSCom1 0 "No Fault��" 1 "Fault��" ;
+VAL_ 2417074675 B2V_TMSFault2 0 "No Fault��" 1 "Fault��" ;
+VAL_ 2417074675 B2V_IncorrectConfigStr4 0 "No Fault��" 1 "Fault��" ;
+VAL_ 2417074675 B2V_StrVDiffTooLarge3 0 "No Fault��" 1 "Fault��" ;
+VAL_ 2417074675 B2V_ChrgSignalLose3 0 "No Fault��" 1 "Fault��" ;
+VAL_ 2417074675 B2V_HVILFault3 0 "No Fault��" 1 "Fault��" ;
+VAL_ 2417074675 B2V_CellVInRangeOutFault2 0 "No Fault��" 1 "Fault��" ;
+VAL_ 2417074675 B2V_CellStandTDetectFault1 0 "No Fault��" 1 "Fault��" ;
+VAL_ 2417074675 B2V_CellStandTDetectFault2 0 "No Fault��" 1 "Fault��" ;
+VAL_ 2417074675 B2V_LECUBoardTTooHigh1 0 "No Fault��" 1 "Fault��" ;
+VAL_ 2417074675 B2V_LECUVChipTTooHigh1 0 "No Fault��" 1 "Fault��" ;
+VAL_ 2417074675 B2V_BlcCircultOpen1 0 "No Fault��" 1 "Fault��" ;
+

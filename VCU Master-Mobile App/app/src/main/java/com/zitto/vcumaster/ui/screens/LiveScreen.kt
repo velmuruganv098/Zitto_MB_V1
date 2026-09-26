@@ -138,6 +138,7 @@ fun LiveScreen(st: HubState, hub: Hub, prefs: UiPrefs) {
     var showFilters by remember { mutableStateOf(false) }
     var confirmClear by remember { mutableStateOf(false) }
     val list = rememberLazyListState()
+    var follow by remember { mutableStateOf(true) }
 
     val activeCustom = st.filters.filter { it.name in prefs.cfOn }
     val filter = LiveFilter(prefs.tagSel, compileSearch(search), parseIds(idsText), activeCustom)
@@ -158,13 +159,16 @@ fun LiveScreen(st: HubState, hub: Hub, prefs: UiPrefs) {
                     }
                 }
                 val lastVisible = list.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: -1
-                val atBottom = lastVisible >= rows.size - 3
+                follow = m != "latest" && lastVisible >= rows.size - 3
                 rows = r
                 total = t
-                if (m != "latest" && atBottom && r.isNotEmpty()) list.scrollToItem(r.size - 1)
             }
             delay(300)
         }
+    }
+    // follow the tail once the new rows are composed (scrolling before that measures a stale item count)
+    LaunchedEffect(rows) {
+        if (follow && rows.isNotEmpty()) list.scrollToItem(rows.size - 1)
     }
 
     fun export(csv: Boolean) {

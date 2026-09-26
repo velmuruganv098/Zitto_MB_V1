@@ -1,0 +1,685 @@
+VERSION ""
+
+
+NS_ :
+  CM_
+  BA_DEF_
+  BA_
+  VAL_
+  BA_DEF_DEF_
+  SIG_VALTYPE_
+
+BS_:
+
+BU_: Vector__XXX
+
+
+BO_ 2559574336 SOC_TotalVoltage_Current_B1_Tx: 8 Vector__XXX
+
+BO_ 2559639872 MaxMinVoltage_B1_Tx: 8 Vector__XXX
+
+BO_ 2559705408 MaxMinTemperature_B1_Tx: 8 Vector__XXX
+
+BO_ 2559770944 ChargeDischargeMOSStatus_B1_Tx: 8 Vector__XXX
+
+BO_ 2559836480 Status_Information_B1_Tx: 8 Vector__XXX
+
+BO_ 2559967552 CellTemperature_B1_Tx: 8 Vector__XXX
+
+BO_ 2560033088 CellBalanceState_B1_Tx: 8 Vector__XXX
+
+BO_ 2560098624 BatteryFailureStatus_B1_Tx: 8 Vector__XXX
+
+BO_ 2559590401 SOC_TotalVoltage_Current_B1_Rx: 8 Vector__XXX
+SG_ CumulativeTotalVoltage : 7|16@0+ (0.1,0) [0|6553.5] "Volt" Vector__XXX
+SG_ GatherTotlalVoltage : 23|16@0+ (0.1,0) [0|6553.5] "Volt" Vector__XXX
+SG_ BMSCurrent : 39|16@0+ (0.1,-3000) [-3000|3553.5] "Amp" Vector__XXX
+SG_ SOC : 55|16@0+ (0.1,0) [0|6553.5] "%" Vector__XXX
+
+BO_ 2559655937 MaxMinVoltage_B1_Rx: 8 Vector__XXX
+SG_ MaxCellVolt : 7|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ NoofCellWithMaxiVoltage : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ MinCellVolt : 31|16@0+ (1,0) [0|1] "mV" Vector__XXX
+SG_ NoofCellWithMinVoltage : 47|8@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2559721473 MaxMinTemperature_B1_Rx: 8 Vector__XXX
+SG_ MaxTemp : 7|8@0+ (1,-40) [-40|215] "DegC" Vector__XXX
+SG_ NoofCellWithMaxTemp : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ MinTemp : 23|8@0+ (1,-40) [-40|215] "DegC" Vector__XXX
+SG_ NoofCellWithMinTemp : 31|8@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2559787009 ChargeDischargeMOSStatus_B1_Rx: 8 Vector__XXX
+SG_ State : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChargeMOSstate : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Remain_Capacity : 39|32@0+ (1,0) [0|1] "mAH" Vector__XXX
+SG_ DischargeMOSstate : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ BMS_life : 31|8@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2559852545 Status_Information_B1_Rx: 8 Vector__XXX
+SG_ NoOfBattertyString : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ NoofTemperature : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Charger_Status : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Load_Status : 31|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DI_State : 35|4@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DO_State : 39|4@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2559902016 CellVoltages_B1_Tx: 8 Vector__XXX
+
+BO_ 2559983617 CellTemperature_B1_Rx: 8 Vector__XXX
+SG_ celltempframeNumber : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CellTemp1x : 15|8@0+ (1,-40) [-40|215] "" Vector__XXX
+SG_ cellTemp2x : 23|8@0+ (1,-40) [-40|215] "" Vector__XXX
+SG_ celltemp3x : 31|8@0+ (1,-40) [-40|215] "" Vector__XXX
+
+BO_ 2560049153 CellBalanceState_B1_Rx: 8 Vector__XXX
+
+BO_ 2559590402 SOC_TotalVoltage_Current_B2_Rx: 8 Vector__XXX
+SG_ CumulativeTotalVoltage : 7|16@0+ (0.1,0) [0|6553.5] "Volt" Vector__XXX
+SG_ GatherTotlalVoltage : 23|16@0+ (0.1,0) [0|6553.5] "Volt" Vector__XXX
+SG_ BMSCurrent : 39|16@0+ (0.1,-3000) [-3000|3553.5] "Amp" Vector__XXX
+SG_ SOC : 55|16@0+ (0.1,0) [0|6553.5] "%" Vector__XXX
+
+BO_ 2559983618 CellTemperature_B2_Rx: 8 Vector__XXX
+SG_ celltempframeNumber : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CellTemp1x : 15|8@0+ (1,-40) [-40|215] "" Vector__XXX
+SG_ cellTemp2x : 23|8@0+ (1,-40) [-40|215] "" Vector__XXX
+SG_ celltemp3x : 31|8@0+ (1,-40) [-40|215] "" Vector__XXX
+
+BO_ 2559721474 MaxMinTemperature_B2_Rx: 8 Vector__XXX
+SG_ MaxTemp : 7|8@0+ (1,-40) [-40|215] "DegC" Vector__XXX
+SG_ NoofCellWithMaxTemp : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ MinTemp : 23|8@0+ (1,-40) [-40|215] "DegC" Vector__XXX
+SG_ NoofCellWithMinTemp : 31|8@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2559787011 ChargeDischargeMOSStatus_B3_Rx: 8 Vector__XXX
+SG_ State : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChargeMOSstate : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Remain_Capacity : 39|32@0+ (1,0) [0|1] "mAH" Vector__XXX
+SG_ DischargeMOSstate : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ BMS_life : 31|8@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2559721475 MaxMinTemperature_B3_Rx: 8 Vector__XXX
+SG_ MaxTemp : 7|8@0+ (1,-40) [-40|215] "DegC" Vector__XXX
+SG_ NoofCellWithMaxTemp : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ MinTemp : 23|8@0+ (1,-40) [-40|215] "DegC" Vector__XXX
+SG_ NoofCellWithMinTemp : 31|8@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2559902528 CellVoltages_B3_Tx: 8 Vector__XXX
+
+BO_ 2559640384 MaxMinVoltage_B3_Tx: 8 Vector__XXX
+
+BO_ 2559655938 MaxMinVoltage_B2_Rx: 8 Vector__XXX
+SG_ MaxCellVolt : 7|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ NoofCellWithMaxiVoltage : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ MinCellVolt : 31|16@0+ (1,0) [0|1] "mV" Vector__XXX
+SG_ NoofCellWithMinVoltage : 47|8@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2559771200 ChargeDischargeMOSStatus_B2_Tx: 8 Vector__XXX
+
+BO_ 2559787010 ChargeDischargeMOSStatus_B2_Rx: 8 Vector__XXX
+SG_ State : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChargeMOSstate : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Remain_Capacity : 39|32@0+ (1,0) [0|1] "mAH" Vector__XXX
+SG_ DischargeMOSstate : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ BMS_life : 31|8@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2559852546 Status_Information_B2_Rx: 8 Vector__XXX
+SG_ NoOfBattertyString : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ NoofTemperature : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Charger_Status : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Load_Status : 31|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DI_State : 35|4@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DO_State : 39|4@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2560049154 CellBalanceState_B2_Rx: 8 Vector__XXX
+
+BO_ 2560114689 BatteryFailureStatus_B1_Rx: 8 Vector__XXX
+SG_ CellVoltHighLevel1 : 0|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CellVoltHighLevel2 : 1|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CellVoltLowLevel1 : 2|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CellVoltLowLevel2 : 3|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SumVoltHighLevel1 : 4|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SumVoltHighLevel2 : 5|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SumVoltLowLevel1 : 6|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SumVoltLowLevel2 : 7|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgTempHighLevel1 : 8|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgTempHighLevel2 : 9|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgTempLowLevel1 : 10|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgTempLowLevel2 : 11|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgTemp_HighLevel1 : 12|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgTemp_HighLevel2 : 13|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgTemp_LowLevel1 : 14|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgTemp_LowLevel2 : 15|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgOverCurrentLevel1 : 16|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgOverCurrentLevel2 : 17|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgOverCurrentLevel1 : 18|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgOverCurrentLevel2 : 19|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SOC_HighLevel1 : 20|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SOC_HighLevel2 : 21|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SOC_LowLevel1 : 22|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SOC_LowLevel2 : 23|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DiffVoltLevel1 : 24|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DiffVoltLevel2 : 25|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DiffTempLevel1 : 26|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DiffTempLevel2 : 27|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgMOS_TempHighAlarm : 33|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgMOS_TempHighAlarm : 32|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgMOS_TempSensorErr : 34|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgMOS_TempSensorErr : 35|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgMOS_AdhesionErr : 36|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgMOS_AdhesionErr : 37|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgMOS_OpenCircuitErr : 38|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgMOS_OpenCircuitErr : 39|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ AFE_CollectChipErr : 40|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ VoltageCollectDropped : 41|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CellTempSensorErr : 42|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ EEPROM_Err : 43|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ RTC_Err : 44|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Precharge_Failure : 45|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Communication_Failure : 46|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Interal_Communication_Failure : 47|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CurrentModuleFault : 48|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SumVoltageDetectFault : 49|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ShortCircuitProtectFault : 50|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ LowVoltForbiddenChgFault : 51|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ FaultCode : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 2560114690 BatteryFailureStatus_B2_Rx: 8 Vector__XXX
+SG_ CellVoltHighLevel1 : 0|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CellVoltHighLevel2 : 1|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CellVoltLowLevel1 : 2|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CellVoltLowLevel2 : 3|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SumVoltHighLevel1 : 4|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SumVoltHighLevel2 : 5|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SumVoltLowLevel1 : 6|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SumVoltLowLevel2 : 7|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgTempHighLevel1 : 8|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgTempHighLevel2 : 9|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgTempLowLevel1 : 10|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgTempLowLevel2 : 11|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgTemp_HighLevel1 : 12|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgTemp_HighLevel2 : 13|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgTemp_LowLevel1 : 14|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgTemp_LowLevel2 : 15|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgOverCurrentLevel1 : 16|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgOverCurrentLevel2 : 17|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgOverCurrentLevel1 : 18|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgOverCurrentLevel2 : 19|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SOC_HighLevel1 : 20|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SOC_HighLevel2 : 21|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SOC_LowLevel1 : 22|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SOC_LowLevel2 : 23|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DiffVoltLevel1 : 24|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DiffVoltLevel2 : 25|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DiffTempLevel1 : 26|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DiffTempLevel2 : 27|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgMOS_TempHighAlarm : 33|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgMOS_TempHighAlarm : 32|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgMOS_TempSensorErr : 34|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgMOS_TempSensorErr : 35|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgMOS_AdhesionErr : 36|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgMOS_AdhesionErr : 37|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgMOS_OpenCircuitErr : 38|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgMOS_OpenCircuitErr : 39|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ AFE_CollectChipErr : 40|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ VoltageCollectDropped : 41|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CellTempSensorErr : 42|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ EEPROM_Err : 43|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ RTC_Err : 44|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Precharge_Failure : 45|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Communication_Failure : 46|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Interal_Communication_Failure : 47|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CurrentModuleFault : 48|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SumVoltageDetectFault : 49|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ShortCircuitProtectFault : 50|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ LowVoltForbiddenChgFault : 51|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ FaultCode : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 513 MCU_volt_current: 8 Vector__XXX
+SG_ MCU_AC_Voltage : 39|16@0- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
+SG_ MCU_DC_Voltage : 23|16@0+ (0.1,0) [0|3276.7] "" Vector__XXX
+SG_ MCU_AC_current : 55|16@0+ (0.1,-3200) [-3200|3353.5] "" Vector__XXX
+SG_ DC_Current : 7|16@0+ (0.1,0) [0|6553.5] "" Vector__XXX
+
+BO_ 529 MCU_Speed_and_Torque: 8 Vector__XXX
+SG_ ThrottlePercent : 7|8@0+ (1,0) [0|255] "%" Vector__XXX
+SG_ Motor_torque : 15|16@0- (0.1,-12.5) [-3289.3|3264.2] "Nm" Vector__XXX
+SG_ Motor_speed : 31|16@0+ (1,0) [0|65535] "RPM" Vector__XXX
+SG_ Vehicle_Speed : 47|16@0+ (0.1,0) [0|6553.5] "" Vector__XXX
+
+BO_ 545 MCU_temp_and_FaultStatus: 8 Vector__XXX
+SG_ MCU_Faultcode : 23|8@0+ (1,0) [0|255] "" Vector__XXX
+SG_ MCU_Overallstatus : 31|8@0+ (1,0) [0|255] "" Vector__XXX
+SG_ MCU_FaultStatuS : 39|8@0+ (1,0) [0|255] "" Vector__XXX
+SG_ Motor_FaultStatuS : 47|8@0+ (1,0) [0|255] "" Vector__XXX
+SG_ MotorTemperature : 15|8@0+ (1,-40) [-40|215] "" Vector__XXX
+SG_ MCU_Temp : 7|8@0+ (1,-40) [-40|215] "" Vector__XXX
+
+BO_ 561 MCU_MotorDirection: 8 Vector__XXX
+SG_ motor_direction : 0|3@1+ (1,0) [0|7] "" Vector__XXX
+
+BO_ 2560114691 BatteryFailureStatus_B3_Rx: 8 Vector__XXX
+SG_ CellVoltHighLevel1 : 0|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CellVoltHighLevel2 : 1|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CellVoltLowLevel1 : 2|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CellVoltLowLevel2 : 3|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SumVoltHighLevel1 : 4|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SumVoltHighLevel2 : 5|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SumVoltLowLevel1 : 6|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SumVoltLowLevel2 : 7|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgTempHighLevel1 : 8|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgTempHighLevel2 : 9|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgTempLowLevel1 : 10|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgTempLowLevel2 : 11|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgTemp_HighLevel1 : 12|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgTemp_HighLevel2 : 13|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgTemp_LowLevel1 : 14|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgTemp_LowLevel2 : 15|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgOverCurrentLevel1 : 16|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgOverCurrentLevel2 : 17|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgOverCurrentLevel1 : 18|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgOverCurrentLevel2 : 19|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SOC_HighLevel1 : 20|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SOC_HighLevel2 : 21|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SOC_LowLevel1 : 22|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SOC_LowLevel2 : 23|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DiffVoltLevel1 : 24|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DiffVoltLevel2 : 25|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DiffTempLevel1 : 26|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DiffTempLevel2 : 27|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgMOS_TempHighAlarm : 33|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgMOS_TempHighAlarm : 32|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgMOS_TempSensorErr : 34|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgMOS_TempSensorErr : 35|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgMOS_AdhesionErr : 36|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgMOS_AdhesionErr : 37|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ChgMOS_OpenCircuitErr : 38|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DischgMOS_OpenCircuitErr : 39|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ AFE_CollectChipErr : 40|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ VoltageCollectDropped : 41|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CellTempSensorErr : 42|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ EEPROM_Err : 43|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ RTC_Err : 44|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Precharge_Failure : 45|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Communication_Failure : 46|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Interal_Communication_Failure : 47|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CurrentModuleFault : 48|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ SumVoltageDetectFault : 49|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ ShortCircuitProtectFault : 50|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ LowVoltForbiddenChgFault : 51|1@0+ (1,0) [0|1] "" Vector__XXX
+SG_ FaultCode : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 2560049155 CellBalanceState_B3_Rx: 8 Vector__XXX
+
+BO_ 2559983619 CellTemperature_B3_Rx: 8 Vector__XXX
+SG_ celltempframeNumber : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ CellTemp1x : 15|8@0+ (1,-40) [-40|215] "" Vector__XXX
+SG_ cellTemp2x : 23|8@0+ (1,-40) [-40|215] "" Vector__XXX
+SG_ celltemp3x : 31|8@0+ (1,-40) [-40|215] "" Vector__XXX
+
+BO_ 2559918081 CellVoltages_B1_Rx: 7 Vector__XXX
+SG_ CellVoltages_B1_Rx_Mux M : 7|8@0+ (1,0) [0|0] "" Vector__XXX
+SG_ Cell1 m1 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell2 m1 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell3 m1 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell4 m2 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell5 m2 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell6 m2 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell7 m3 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell8 m3 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell9 m3 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell10 m4 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell11 m4 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell12 m4 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell13 m5 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell14 m5 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell15 m5 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell16 m6 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell17 m6 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell18 m6 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell19 m7 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell20 m7 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell21 m7 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell22 m8 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell23 m8 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell24 m8 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell25 m9 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell26 m9 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell27 m9 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell28 m10 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell29 m10 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell30 m10 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell31 m11 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell32 m11 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+
+BO_ 2560098880 BatteryFailureStatus_B2_Tx: 8 Vector__XXX
+
+BO_ 2560099136 BatteryFailureStatus_B3_Tx: 8 Vector__XXX
+
+BO_ 2560033344 CellBalanceState_B2_Tx: 8 Vector__XXX
+
+BO_ 2560033600 CellBalanceState_B3_Tx: 8 Vector__XXX
+
+BO_ 2559967808 CellTemperature_B2_Tx: 8 Vector__XXX
+
+BO_ 2559968064 CellTemperature_B3_Tx: 8 Vector__XXX
+
+BO_ 2559902272 CellVoltages_B2_Tx: 8 Vector__XXX
+
+BO_ 2559852547 Status_Information_B3_Rx: 8 Vector__XXX
+SG_ NoOfBattertyString : 7|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ NoofTemperature : 15|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Charger_Status : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ Load_Status : 31|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DI_State : 35|4@0+ (1,0) [0|1] "" Vector__XXX
+SG_ DO_State : 39|4@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2559836736 Status_Information_B2_Tx: 8 Vector__XXX
+
+BO_ 2559836992 Status_Information_B3_Tx: 8 Vector__XXX
+
+BO_ 2559771456 ChargeDischargeMOSStatus_B3_Tx: 8 Vector__XXX
+
+BO_ 2559705664 MaxMinTemperature_B2_Tx: 8 Vector__XXX
+
+BO_ 2559705920 MaxMinTemperature_B3_Tx: 8 Vector__XXX
+
+BO_ 2559655939 MaxMinVoltage_B3_Rx: 8 Vector__XXX
+SG_ MaxCellVolt : 7|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ NoofCellWithMaxiVoltage : 23|8@0+ (1,0) [0|1] "" Vector__XXX
+SG_ MinCellVolt : 31|16@0+ (1,0) [0|1] "mV" Vector__XXX
+SG_ NoofCellWithMinVoltage : 47|8@0+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2559640128 MaxMinVoltage_B2_Tx: 8 Vector__XXX
+
+BO_ 2559574592 SOC_TotalVoltage_Current_B2_Tx: 8 Vector__XXX
+
+BO_ 2559574848 SOC_TotalVoltage_Current_B3_Tx: 8 Vector__XXX
+
+BO_ 2559590403 SOC_TotalVoltage_Current_B3_Rx: 8 Vector__XXX
+SG_ CumulativeTotalVoltage : 7|16@0+ (0.1,0) [0|6553.5] "Volt" Vector__XXX
+SG_ GatherTotlalVoltage : 23|16@0+ (0.1,0) [0|6553.5] "Volt" Vector__XXX
+SG_ BMSCurrent : 39|16@0+ (0.1,-3000) [-3000|3553.5] "Amp" Vector__XXX
+SG_ SOC : 55|16@0+ (0.1,0) [0|6553.5] "%" Vector__XXX
+
+BO_ 2559918082 CellVoltages_B2_Rx: 7 Vector__XXX
+SG_ CellVoltages_B2_Rx_Mux M : 7|8@0+ (1,0) [0|0] "" Vector__XXX
+SG_ Cell1 m1 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell2 m1 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell3 m1 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell4 m2 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell5 m2 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell6 m2 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell7 m3 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell8 m3 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell9 m3 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell10 m4 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell11 m4 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell12 m4 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell13 m5 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell14 m5 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell15 m5 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell16 m6 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell17 m6 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell18 m6 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell19 m7 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell20 m7 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell21 m7 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell22 m8 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell23 m8 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell24 m8 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell25 m9 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell26 m9 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell27 m9 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell28 m10 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell29 m10 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell30 m10 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell31 m11 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell32 m11 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+
+BO_ 2559918083 CellVoltages_B3_Rx: 7 Vector__XXX
+SG_ CellVoltages_B3_Rx_Mux M : 7|8@0+ (1,0) [0|0] "" Vector__XXX
+SG_ Cell1 m1 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell2 m1 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell3 m1 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell4 m2 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell5 m2 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell6 m2 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell7 m3 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell8 m3 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell9 m3 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell10 m4 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell11 m4 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell12 m4 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell13 m5 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell14 m5 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell15 m5 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell16 m6 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell17 m6 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell18 m6 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell19 m7 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell20 m7 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell21 m7 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell22 m8 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell23 m8 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell24 m8 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell25 m9 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell26 m9 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell27 m9 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell28 m10 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell29 m10 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell30 m10 : 47|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell31 m11 : 15|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+SG_ Cell32 m11 : 31|16@0+ (1,0) [0|65535] "mV" Vector__XXX
+
+BA_DEF_  "BusType" STRING ;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_ SG_  "GenSigStartValue" FLOAT -3.4E+038 3.4E+038;
+
+BA_DEF_DEF_  "BusType" "CAN";
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_DEF_DEF_  "GenSigStartValue" 0;
+
+BA_ "BusType" "CAN";
+
+BA_ "GenMsgCycleTime" BO_ 2559574336 1000;
+BA_ "GenMsgCycleTime" BO_ 2559639872 1000;
+BA_ "GenMsgCycleTime" BO_ 2559705408 1000;
+BA_ "GenMsgCycleTime" BO_ 2559770944 1000;
+BA_ "GenMsgCycleTime" BO_ 2559836480 1000;
+BA_ "GenMsgCycleTime" BO_ 2559967552 1000;
+BA_ "GenMsgCycleTime" BO_ 2560033088 1000;
+BA_ "GenMsgCycleTime" BO_ 2560098624 1000;
+BA_ "GenMsgCycleTime" BO_ 2559902016 1000;
+BA_ "GenMsgCycleTime" BO_ 2559902528 1000;
+BA_ "GenMsgCycleTime" BO_ 2559640384 1000;
+BA_ "GenMsgCycleTime" BO_ 2559771200 1000;
+BA_ "GenMsgCycleTime" BO_ 2560098880 1000;
+BA_ "GenMsgCycleTime" BO_ 2560099136 1000;
+BA_ "GenMsgCycleTime" BO_ 2560033344 1000;
+BA_ "GenMsgCycleTime" BO_ 2560033600 1000;
+BA_ "GenMsgCycleTime" BO_ 2559967808 1000;
+BA_ "GenMsgCycleTime" BO_ 2559968064 1000;
+BA_ "GenMsgCycleTime" BO_ 2559902272 1000;
+BA_ "GenMsgCycleTime" BO_ 2559836736 1000;
+BA_ "GenMsgCycleTime" BO_ 2559836992 1000;
+BA_ "GenMsgCycleTime" BO_ 2559771456 1000;
+BA_ "GenMsgCycleTime" BO_ 2559705664 1000;
+BA_ "GenMsgCycleTime" BO_ 2559705920 1000;
+BA_ "GenMsgCycleTime" BO_ 2559640128 1000;
+BA_ "GenMsgCycleTime" BO_ 2559574592 1000;
+BA_ "GenMsgCycleTime" BO_ 2559574848 1000;
+
+BA_ "GenSigStartValue" SG_ 2559983617 CellTemp1x 40;
+BA_ "GenSigStartValue" SG_ 2559983617 cellTemp2x 40;
+BA_ "GenSigStartValue" SG_ 2559983617 celltemp3x 40;
+BA_ "GenSigStartValue" SG_ 2559983618 CellTemp1x 40;
+BA_ "GenSigStartValue" SG_ 2559983618 cellTemp2x 40;
+BA_ "GenSigStartValue" SG_ 2559983618 celltemp3x 40;
+BA_ "GenSigStartValue" SG_ 2559983619 CellTemp1x 40;
+BA_ "GenSigStartValue" SG_ 2559983619 cellTemp2x 40;
+BA_ "GenSigStartValue" SG_ 2559983619 celltemp3x 40;
+
+VAL_ 2559918081 CellVoltages_B1_Rx_Mux 1 "Multiplexer1" 2 "Multiplexer2" 3 "Multiplexer3" 4 "Multiplexer4" 5 "Multiplexer5" 6 "Multiplexer6" 7 "Multiplexer7" 8 "Multiplexer8" 9 "Multiplexer9" 10 "Multiplexer10" 11 "Multiplexer11";
+VAL_ 2559918082 CellVoltages_B2_Rx_Mux 1 "Multiplexer1" 2 "Multiplexer2" 3 "Multiplexer3" 4 "Multiplexer4" 5 "Multiplexer5" 6 "Multiplexer6" 7 "Multiplexer7" 8 "Multiplexer8" 9 "Multiplexer9" 10 "Multiplexer10" 11 "Multiplexer11";
+VAL_ 2559918083 CellVoltages_B3_Rx_Mux 1 "Multiplexer1" 2 "Multiplexer2" 3 "Multiplexer3" 4 "Multiplexer4" 5 "Multiplexer5" 6 "Multiplexer6" 7 "Multiplexer7" 8 "Multiplexer8" 9 "Multiplexer9" 10 "Multiplexer10" 11 "Multiplexer11";
+VAL_ 2559787009 ChargeMOSstate 0 "off state" 1 "ON state";
+VAL_ 2559787009 DischargeMOSstate 0 "off state" 1 "ON state";
+VAL_ 2559852545 Charger_Status 0 "Disconnected" 1 "connected";
+VAL_ 2559852545 Load_Status 0 "Disconnected" 1 "connected";
+VAL_ 2559787011 ChargeMOSstate 0 "off state" 1 "ON state";
+VAL_ 2559787011 DischargeMOSstate 0 "off state" 1 "ON state";
+VAL_ 2559787010 ChargeMOSstate 0 "off state" 1 "ON state";
+VAL_ 2559787010 DischargeMOSstate 0 "off state" 1 "ON state";
+VAL_ 2559852546 Charger_Status 0 "Disconnected" 1 "connected";
+VAL_ 2559852546 Load_Status 0 "Disconnected" 1 "connected";
+VAL_ 2560114689 CellVoltHighLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114689 CellVoltHighLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114689 CellVoltLowLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114689 CellVoltLowLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114689 SumVoltHighLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114689 SumVoltHighLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114689 SumVoltLowLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114689 SumVoltLowLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114689 ChgTempHighLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114689 ChgTempHighLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114689 ChgTempLowLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114689 ChgTempLowLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114689 DischgTemp_HighLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114689 DischgTemp_HighLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114689 DischgTemp_LowLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114689 DischgTemp_LowLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114689 ChgOverCurrentLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114689 ChgOverCurrentLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114689 DischgOverCurrentLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114689 DischgOverCurrentLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114689 SOC_HighLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114689 SOC_HighLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114689 SOC_LowLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114689 SOC_LowLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114689 DiffVoltLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114689 DiffVoltLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114689 DiffTempLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114689 DiffTempLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114689 DischgMOS_TempHighAlarm 0 "No Error" 1 "Error";
+VAL_ 2560114689 ChgMOS_TempHighAlarm 0 "No Error" 1 "Error";
+VAL_ 2560114689 ChgMOS_TempSensorErr 0 "No Error" 1 "Error";
+VAL_ 2560114689 DischgMOS_TempSensorErr 0 "No Error" 1 "Error";
+VAL_ 2560114689 ChgMOS_AdhesionErr 0 "No Error" 1 "Error";
+VAL_ 2560114689 DischgMOS_AdhesionErr 0 "No Error" 1 "Error";
+VAL_ 2560114689 ChgMOS_OpenCircuitErr 0 "No Error" 1 "Error";
+VAL_ 2560114689 DischgMOS_OpenCircuitErr 0 "No Error" 1 "Error";
+VAL_ 2560114689 AFE_CollectChipErr 0 "No Error" 1 "Error";
+VAL_ 2560114689 VoltageCollectDropped 0 "No Error" 1 "Error";
+VAL_ 2560114689 CellTempSensorErr 0 "No Error" 1 "Error";
+VAL_ 2560114689 EEPROM_Err 0 "No Error" 1 "Error";
+VAL_ 2560114689 RTC_Err 0 "No Error" 1 "Error";
+VAL_ 2560114689 Precharge_Failure 0 "No Error" 1 "Error";
+VAL_ 2560114689 Communication_Failure 0 "No Error" 1 "Error";
+VAL_ 2560114689 Interal_Communication_Failure 0 "No Error" 1 "Error";
+VAL_ 2560114689 CurrentModuleFault 0 "No Error" 1 "Error";
+VAL_ 2560114689 SumVoltageDetectFault 0 "No Error" 1 "Error";
+VAL_ 2560114689 ShortCircuitProtectFault 0 "No Error" 1 "Error";
+VAL_ 2560114689 LowVoltForbiddenChgFault 0 "No Error" 1 "Error";
+VAL_ 2560114689 FaultCode 0 "No Error" 1 "Error";
+VAL_ 2560114690 CellVoltHighLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114690 CellVoltHighLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114690 CellVoltLowLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114690 CellVoltLowLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114690 SumVoltHighLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114690 SumVoltHighLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114690 SumVoltLowLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114690 SumVoltLowLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114690 ChgTempHighLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114690 ChgTempHighLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114690 ChgTempLowLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114690 ChgTempLowLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114690 DischgTemp_HighLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114690 DischgTemp_HighLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114690 DischgTemp_LowLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114690 DischgTemp_LowLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114690 ChgOverCurrentLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114690 ChgOverCurrentLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114690 DischgOverCurrentLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114690 DischgOverCurrentLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114690 SOC_HighLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114690 SOC_HighLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114690 SOC_LowLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114690 SOC_LowLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114690 DiffVoltLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114690 DiffVoltLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114690 DiffTempLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114690 DiffTempLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114690 DischgMOS_TempHighAlarm 0 "No Error" 1 "Error";
+VAL_ 2560114690 ChgMOS_TempHighAlarm 0 "No Error" 1 "Error";
+VAL_ 2560114690 ChgMOS_TempSensorErr 0 "No Error" 1 "Error";
+VAL_ 2560114690 DischgMOS_TempSensorErr 0 "No Error" 1 "Error";
+VAL_ 2560114690 ChgMOS_AdhesionErr 0 "No Error" 1 "Error";
+VAL_ 2560114690 DischgMOS_AdhesionErr 0 "No Error" 1 "Error";
+VAL_ 2560114690 ChgMOS_OpenCircuitErr 0 "No Error" 1 "Error";
+VAL_ 2560114690 DischgMOS_OpenCircuitErr 0 "No Error" 1 "Error";
+VAL_ 2560114690 AFE_CollectChipErr 0 "No Error" 1 "Error";
+VAL_ 2560114690 VoltageCollectDropped 0 "No Error" 1 "Error";
+VAL_ 2560114690 CellTempSensorErr 0 "No Error" 1 "Error";
+VAL_ 2560114690 EEPROM_Err 0 "No Error" 1 "Error";
+VAL_ 2560114690 RTC_Err 0 "No Error" 1 "Error";
+VAL_ 2560114690 Precharge_Failure 0 "No Error" 1 "Error";
+VAL_ 2560114690 Communication_Failure 0 "No Error" 1 "Error";
+VAL_ 2560114690 Interal_Communication_Failure 0 "No Error" 1 "Error";
+VAL_ 2560114690 CurrentModuleFault 0 "No Error" 1 "Error";
+VAL_ 2560114690 SumVoltageDetectFault 0 "No Error" 1 "Error";
+VAL_ 2560114690 ShortCircuitProtectFault 0 "No Error" 1 "Error";
+VAL_ 2560114690 LowVoltForbiddenChgFault 0 "No Error" 1 "Error";
+VAL_ 2560114690 FaultCode 0 "No Error" 1 "Error";
+VAL_ 545 Motor_FaultStatuS 9 "Drive overload" 1 "Undervoltage Protection" 2 "Motor Overheat" 3 "SW overvoltage" 4 "SW overcurrent" 7 "MCU overtemp ";
+VAL_ 2560114691 CellVoltHighLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114691 CellVoltHighLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114691 CellVoltLowLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114691 CellVoltLowLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114691 SumVoltHighLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114691 SumVoltHighLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114691 SumVoltLowLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114691 SumVoltLowLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114691 ChgTempHighLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114691 ChgTempHighLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114691 ChgTempLowLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114691 ChgTempLowLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114691 DischgTemp_HighLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114691 DischgTemp_HighLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114691 DischgTemp_LowLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114691 DischgTemp_LowLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114691 ChgOverCurrentLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114691 ChgOverCurrentLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114691 DischgOverCurrentLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114691 DischgOverCurrentLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114691 SOC_HighLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114691 SOC_HighLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114691 SOC_LowLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114691 SOC_LowLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114691 DiffVoltLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114691 DiffVoltLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114691 DiffTempLevel1 0 "No Error" 1 "Error";
+VAL_ 2560114691 DiffTempLevel2 0 "No Error" 1 "Error";
+VAL_ 2560114691 DischgMOS_TempHighAlarm 0 "No Error" 1 "Error";
+VAL_ 2560114691 ChgMOS_TempHighAlarm 0 "No Error" 1 "Error";
+VAL_ 2560114691 ChgMOS_TempSensorErr 0 "No Error" 1 "Error";
+VAL_ 2560114691 DischgMOS_TempSensorErr 0 "No Error" 1 "Error";
+VAL_ 2560114691 ChgMOS_AdhesionErr 0 "No Error" 1 "Error";
+VAL_ 2560114691 DischgMOS_AdhesionErr 0 "No Error" 1 "Error";
+VAL_ 2560114691 ChgMOS_OpenCircuitErr 0 "No Error" 1 "Error";
+VAL_ 2560114691 DischgMOS_OpenCircuitErr 0 "No Error" 1 "Error";
+VAL_ 2560114691 AFE_CollectChipErr 0 "No Error" 1 "Error";
+VAL_ 2560114691 VoltageCollectDropped 0 "No Error" 1 "Error";
+VAL_ 2560114691 CellTempSensorErr 0 "No Error" 1 "Error";
+VAL_ 2560114691 EEPROM_Err 0 "No Error" 1 "Error";
+VAL_ 2560114691 RTC_Err 0 "No Error" 1 "Error";
+VAL_ 2560114691 Precharge_Failure 0 "No Error" 1 "Error";
+VAL_ 2560114691 Communication_Failure 0 "No Error" 1 "Error";
+VAL_ 2560114691 Interal_Communication_Failure 0 "No Error" 1 "Error";
+VAL_ 2560114691 CurrentModuleFault 0 "No Error" 1 "Error";
+VAL_ 2560114691 SumVoltageDetectFault 0 "No Error" 1 "Error";
+VAL_ 2560114691 ShortCircuitProtectFault 0 "No Error" 1 "Error";
+VAL_ 2560114691 LowVoltForbiddenChgFault 0 "No Error" 1 "Error";
+VAL_ 2560114691 FaultCode 0 "No Error" 1 "Error";
+VAL_ 2559852547 Charger_Status 0 "Disconnected" 1 "connected";
+VAL_ 2559852547 Load_Status 0 "Disconnected" 1 "connected";

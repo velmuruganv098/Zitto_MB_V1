@@ -1,0 +1,96 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: 
+
+
+BO_ 2147545137 WAND: 8 Vector__XXX
+ SG_ WandSensorFigureOfMerit : 16|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ WandAngle : 0|16@1+ (0.002,-64) [-64|64.51] "deg" Vector__XXX
+
+BO_ 2147545138 LDISP: 8 Vector__XXX
+ SG_ LnrDsplmntSnsrSnsrFgrOfMrt : 16|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ MeasuredLinearDisplacement : 0|16@1+ (0.1,0) [0|6425.5] "mm" Vector__XXX
+
+BO_ 2147545131 CN: 8 Vector__XXX
+ SG_ CrashChecksum : 60|4@1+ (1,0) [0|15] "count" Vector__XXX
+ SG_ CrashCounter : 56|4@1+ (1,0) [0|15] "count" Vector__XXX
+ SG_ CrashType : 0|5@1+ (1,0) [0|31] "" Vector__XXX
+
+
+
+
+CM_ BO_ 2147545137 "Wand Sensor";
+CM_ SG_ 2147545137 WandSensorFigureOfMerit "Wand Sensor Figure of Merit: Figure of Merit sensor status for a wand sensor.00b = Sensor fully functional01b = Sensor degraded10b = Sensor failed11b = Sensor not available";
+CM_ SG_ 2147545137 WandAngle "Wand Angle: A wand sensor measures the angle of deflection of a wand from its null position. This parameter reports the measured angle of a wand sensor.";
+CM_ BO_ 2147545138 "Linear Displacement Sensor";
+CM_ SG_ 2147545138 LnrDsplmntSnsrSnsrFgrOfMrt "Linear Displacement Sensor Sensor Figure of Merit: Figure of Merit sensor status of Linear Displacement Sensor.00b = Sensor fully functional01b = Sensor degraded10b = Sensor failed11b = Sensor not available";
+CM_ SG_ 2147545138 MeasuredLinearDisplacement "Measured Linear Displacement: Distance to target as measured by the Linear Displacement Sensor.";
+CM_ BO_ 2147545131 "Crash Notification";
+CM_ SG_ 2147545131 CrashChecksum "Crash Checksum: The Crash Checksum is used to verify the signal path from the airbag ECU to other devices in case of a crash.The 4 bit checksum is the sum of the high nibble and the low nibble of the sum of the identifier, the first 7 data bytes and ...";
+CM_ SG_ 2147545131 CrashCounter "Crash Counter: The Crash Counter prevents other ECUs from reacting to a faulty transmission of the Crash Notification PG and serves as a safety mechanism. The Crash Counter becomes incremented by 1 for every sent message, and wraps around to 0 when t...";
+CM_ SG_ 2147545131 CrashType "Crash Type: Type of crash event. 00000b = no crash00001b = frontal crash00010b = rear crash00100b = side crash (left)01000b = side crash (right)10000b = rolloverIt is possible to combine different Crash Types. (e.g. frontal and side crash (left) = 00...";
+BA_DEF_ SG_  "SPN" INT 0 524287;
+BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","J1939PG";
+BA_DEF_  "DatabaseVersion" STRING ;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_  "ProtocolType" STRING ;
+BA_DEF_  "DatabaseCompiler" STRING ;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_DEF_  "SPN" 0;
+BA_DEF_DEF_  "VFrameFormat" "J1939PG";
+BA_DEF_DEF_  "DatabaseVersion" "1.2";
+BA_DEF_DEF_  "BusType" "";
+BA_DEF_DEF_  "ProtocolType" "";
+BA_DEF_DEF_  "DatabaseCompiler" "";
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_ "ProtocolType" "J1939";
+BA_ "BusType" "CAN";
+BA_ "DatabaseCompiler" "CSS ELECTRONICS (WWW.CSSELECTRONICS.COM)";
+BA_ "DatabaseVersion" "1.0.0";
+BA_ "VFrameFormat" BO_ 2147545137 3;
+BA_ "SPN" SG_ 2147545137 WandSensorFigureOfMerit 5822;
+BA_ "SPN" SG_ 2147545137 WandAngle 5821;
+BA_ "VFrameFormat" BO_ 2147545138 3;
+BA_ "SPN" SG_ 2147545138 LnrDsplmntSnsrSnsrFgrOfMrt 5824;
+BA_ "SPN" SG_ 2147545138 MeasuredLinearDisplacement 5823;
+BA_ "VFrameFormat" BO_ 2147545131 3;
+BA_ "SPN" SG_ 2147545131 CrashChecksum 4975;
+BA_ "SPN" SG_ 2147545131 CrashCounter 4974;
+BA_ "SPN" SG_ 2147545131 CrashType 4973;
+
+
+
+

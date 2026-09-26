@@ -72,4 +72,31 @@ class UiPrefs(ctx: Context) {
     var winS by mutableStateOf(sp.getInt("winS", 30))
         private set
     fun setWindow(s: Int) { winS = s; sp.edit().putInt("winS", s).apply() }
+
+    /** Last tab opened in each bottom-bar group (link / can / board). */
+    fun groupTab(group: String, default: String): String = sp.getString("tab_$group", default)!!
+    fun rememberGroupTab(group: String, tab: String) { sp.edit().putString("tab_$group", tab).apply() }
+
+    // V0.0073 Battery window: cell layout ("auto" or a cell count) and grid / table view
+    var bmsLayout by mutableStateOf(sp.getString("bmsLayout", "auto")!!)
+        private set
+    fun setLayout(v: String) { bmsLayout = v; sp.edit().putString("bmsLayout", v).apply() }
+
+    var bmsView by mutableStateOf(sp.getString("bmsView", "grid")!!)
+        private set
+    fun setView(v: String) { bmsView = v; sp.edit().putString("bmsView", v).apply() }
+
+    var flagsActive by mutableStateOf(sp.getBoolean("flagsActive", false))
+        private set
+    fun showActiveFlags(v: Boolean) { flagsActive = v; sp.edit().putBoolean("flagsActive", v).apply() }
+
+    // DBC library: which buses a library DBC is loaded on
+    var libB1 by mutableStateOf(sp.getBoolean("libB1", false))
+        private set
+    var libB2 by mutableStateOf(sp.getBoolean("libB2", true))
+        private set
+    fun setLibBuses(b1: Boolean, b2: Boolean) {
+        libB1 = b1; libB2 = b2
+        sp.edit().putBoolean("libB1", b1).putBoolean("libB2", b2).apply()
+    }
 }

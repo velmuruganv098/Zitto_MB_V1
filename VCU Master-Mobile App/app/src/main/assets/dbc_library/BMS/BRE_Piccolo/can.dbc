@@ -1,0 +1,1175 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_:
+
+
+BO_ 2416377088 m_bms_app_bl_fw_version: 8 Vector__XXX
+ SG_ m_bms_app_bl_oem_patch : 40|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ m_bms_app_bl_fw_version_bugfix : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ m_bms_app_bl_fw_version_minor : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ m_bms_app_bl_fw_version_major : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ m_bms_app_bl_oem_variant : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ m_bms_app_bl_oem_lookup : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 2416377344 m_bms_oem_hw_pack_version: 8 Vector__XXX
+ SG_ m_bms_homo_fw_patch : 52|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ m_bms_homo_fw_minor : 50|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ m_bms_homo_fw_major : 48|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ m_bms_dvp_patch : 40|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ m_bms_pack_variant : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ m_bms_hw_minor : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ m_bms_hw_major : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ m_bms_oem_variant : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ m_bms_oem_lookup : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 2416377600 m_bms_fw_version: 8 Vector__XXX
+ SG_ m_bms_fw_oem_patch : 48|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ m_bms_fw_patch : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ m_bms_fw_minor : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ m_bms_fw_major : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 2416312576 m_bms_battery_unique_key: 8 Vector__XXX
+ SG_ m_bms_battery_unique_key : 0|64@1+ (1,0) [0|1.84467440737096E+019] "" Vector__XXX
+
+BO_ 2416312832 m_bms_unique_Key: 8 Vector__XXX
+ SG_ m_bms_unique_key : 0|64@1+ (1,0) [0|1.84467440737096E+019] "" Vector__XXX
+
+BO_ 2416313088 m_bms_stateflow_status: 8 Vector__XXX
+ SG_ m_bms_gun_unlock_retry_count : 60|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ m_bms_gun_lock_retry_count : 56|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ m_bms_solenoid_feedback : 53|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_gun_lock_req : 52|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_gun_unlock_failed : 51|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_gun_unlock_status : 50|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_gun_lock_failed : 49|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_gun_lock_status : 48|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_cc_on_req : 39|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_motor_enable_out : 38|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_discharge_contactor_out : 37|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_discharge_precharge_out : 36|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_charge_contactor_out : 35|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_charge_precharge_out : 34|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_proximity_pilot_in : 33|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_key_in : 32|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_dut_warning : 22|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_tp_warning : 21|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_dot_warning : 20|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_tp_alarm : 19|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_shutdown_flag_3 : 18|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_shutdown_flag_2 : 17|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_shutdown_flag_1 : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_ms_status : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_charge_disable : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_charge_complete_status : 10|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_fast_charger_detected : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_slow_charger_detected : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_discharge_path_status : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_charge_path_status : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_discharge_pf_ok : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_charge_pf_ok : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_discharge_io_ok : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_charge_io_ok : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_discharge_protection_ok : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_charge_protection_ok : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2416313344 m_bms_safety_status: 8 Vector__XXX
+ SG_ m_bms_coms_flag : 60|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_cci_flag : 59|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_dci_flag : 58|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_pvi_flag : 57|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_idp_flag : 56|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_doc1_flag : 55|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_afe_tp_flag : 53|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_ib1_flag : 52|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_ccov_flag : 51|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_sc_coc1_flag : 50|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_ccuv_flag : 49|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_icp_flag : 48|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_sc_coc_flag : 47|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_roc_flag : 46|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_scf_flag : 45|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_tso_flag : 44|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_ib_flag : 43|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_dut_flag : 41|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_cut_flag : 40|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_dot_flag : 39|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_cot_flag : 38|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_doc_flag : 37|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_coc_flag : 36|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_puv_flag : 35|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_pov_flag : 34|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_cuv_flag : 33|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_cov_flag : 32|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_coms : 28|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_cci : 27|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_dci : 26|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_pvi : 25|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_idp : 24|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_doc1 : 23|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_afe_tp : 21|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_ib1 : 20|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_ccov : 19|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_sc_coc1 : 18|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_ccuv : 17|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_icp : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_sc_coc : 15|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_roc : 14|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_scf : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_tso : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_ib : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_dut : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_cut : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_dot : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_cot : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_doc : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_coc : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_puv : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_pov : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_cuv : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_cov : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2416313600 m_bms_hop: 8 Vector__XXX
+ SG_ m_bms_pcb_temperature : 48|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+ SG_ m_bms_afe_temperature : 32|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+ SG_ m_bms_hist_coms : 28|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_cci : 27|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_dci : 26|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_pvi : 25|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_idp : 24|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_doc1 : 23|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_afe_tp : 21|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_ib1 : 20|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_ccov : 19|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_sc_coc1 : 18|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_ccuv : 17|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_icp : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_sc_coc : 15|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_roc : 14|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_scf : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_tso : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_ib : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_dut : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_cut : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_dot : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_cot : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_doc : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_coc : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_puv : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_pov : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_cuv : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ m_bms_hist_cov : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2416313856 m_bms_cell_voltage_1_4: 8 Vector__XXX
+ SG_ m_bms_cell_voltage_4 : 48|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ m_bms_cell_voltage_3 : 32|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ m_bms_cell_voltage_2 : 16|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ m_bms_cell_voltage_1 : 0|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+
+BO_ 2416314112 m_bms_cell_voltage_5_8: 8 Vector__XXX
+ SG_ m_bms_cell_voltage_8 : 48|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ m_bms_cell_voltage_7 : 32|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ m_bms_cell_voltage_6 : 16|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ m_bms_cell_voltage_5 : 0|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+
+BO_ 2416314368 m_bms_cell_voltage_9_12: 8 Vector__XXX
+ SG_ m_bms_cell_voltage_12 : 48|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ m_bms_cell_voltage_11 : 32|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ m_bms_cell_voltage_10 : 16|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ m_bms_cell_voltage_9 : 0|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+
+BO_ 2416314624 m_bms_cell_voltage_13_16: 8 Vector__XXX
+ SG_ m_bms_cell_voltage_16 : 48|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ m_bms_cell_voltage_15 : 32|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ m_bms_cell_voltage_14 : 16|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ m_bms_cell_voltage_13 : 0|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+
+BO_ 2416314880 m_bms_cell_temp_1_4: 8 Vector__XXX
+ SG_ m_bms_ct4 : 48|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+ SG_ m_bms_ct3 : 32|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+ SG_ m_bms_ct2 : 16|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+ SG_ m_bms_ct1 : 0|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+
+BO_ 2416315136 m_bms_cell_temp_5_8: 8 Vector__XXX
+ SG_ m_bms_pt3 : 32|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+ SG_ m_bms_pt2 : 16|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+ SG_ m_bms_pt1 : 0|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+
+BO_ 2416315392 m_bms_min_max_params: 8 Vector__XXX
+ SG_ m_bms_max_cell_temp : 48|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+ SG_ m_bms_min_cell_temp : 32|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+ SG_ m_bms_max_cell_voltage : 16|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ m_bms_min_cell_voltage : 0|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+
+BO_ 2416315648 m_bms_sox: 8 Vector__XXX
+ SG_ m_bms_soh : 48|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+ SG_ m_bms_sop : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ m_bms_soc_user : 16|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+ SG_ m_bms_soc_actual : 0|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+
+BO_ 2416315904 m_bms_ah_count: 8 Vector__XXX
+ SG_ m_bms_charge_cycle_count : 48|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ m_bms_last_discharge_ah : 32|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ m_bms_last_charge_ah : 16|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ m_bms_cht_cycle_count : 0|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+
+BO_ 2416316416 m_bms_misc_params_1: 8 Vector__XXX
+ SG_ m_bms_current : 48|16@1+ (0.1,-600) [-600|5953.5] "" Vector__XXX
+ SG_ m_bms_temp_imbalance : 32|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+ SG_ m_bms_voltage_imbalance : 16|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ m_bms_pack_voltage : 0|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+
+BO_ 2416316672 m_bms_misc_params_2: 8 Vector__XXX
+ SG_ m_bms_afe_adc_filtered : 48|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ m_bms_soh_days : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ m_bms_soh_calage : 16|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ m_bms_live_cs_offset : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 2416316928 m_bms_misc_params_3: 8 Vector__XXX
+ SG_ m_bms_dti_ah : 48|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ m_bms_actual_ah : 32|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ m_bms_pack_ah : 16|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ m_bms_dti_start_ah : 0|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+
+BO_ 2416317184 m_bms_misc_params_4: 8 Vector__XXX
+ SG_ m_bms_cell_balancing_status : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ m_bms_tder : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ m_bms_substate : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ m_bms_solenoid_mainstate : 12|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ m_bms_slow_charge_mainstate : 8|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ m_bms_mainstate : 0|4@1+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 2416317440 m_bms_mem_params_1: 8 Vector__XXX
+ SG_ m_bms_mem_chtz_count : 48|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ m_bms_mem_cycle_count : 32|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ m_bms_mem_soc_actual : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ m_bms_mem_cs_offset : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 2416317696 m_bms_mem_params_2: 8 Vector__XXX
+ SG_ m_bms_reset_cause : 48|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ m_bms_reset_counter_value : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ m_bms_eeprom_state : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ m_bms_mem_tder : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ m_bms_mem_cs_gain : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 2416317952 m_bms_cms_data: 8 Vector__XXX
+ SG_ m_bms_odo_low : 40|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ m_bms_odo_high : 24|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ m_bms_cms_soc : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ m_bms_cms_tder : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ m_bms_cms_cnvg_cmd : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 2416318208 m_bms_misc_params_5: 8 Vector__XXX
+ SG_ m_bms_dc_soh : 0|24@1+ (0.0001,0) [0|1677.7215] "" Vector__XXX
+
+BO_ 2416377089 s1_bms_app_bl_fw_version: 8 Vector__XXX
+ SG_ s1_bms_app_bl_oem_patch : 40|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ s1_bms_app_bl_fw_version_bugfix : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ s1_bms_app_bl_fw_version_minor : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ s1_bms_app_bl_fw_version_major : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ s1_bms_app_bl_oem_variant : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ s1_bms_app_bl_oem_lookup : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 2416377345 s1_bms_oem_hw_pack_version: 8 Vector__XXX
+ SG_ s1_bms_homo_fw_patch : 52|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ s1_bms_homo_fw_minor : 50|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ s1_bms_homo_fw_major : 48|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ s1_bms_dvp_patch : 40|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ s1_bms_pack_variant : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ s1_bms_hw_minor : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ s1_bms_hw_major : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ s1_bms_oem_variant : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ s1_bms_oem_lookup : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 2416377601 s1_bms_fw_version: 8 Vector__XXX
+ SG_ s1_bms_fw_oem_patch : 48|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ s1_bms_fw_patch : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ s1_bms_fw_minor : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ s1_bms_fw_major : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 2416312577 s1_bms_battery_unique_key: 8 Vector__XXX
+ SG_ s1_bms_battery_unique_key : 0|64@1+ (1,0) [0|1.84467440737096E+019] "" Vector__XXX
+
+BO_ 2416312833 s1_bms_unique_Key: 8 Vector__XXX
+ SG_ s1_bms_unique_key : 0|64@1+ (1,0) [0|1.84467440737096E+019] "" Vector__XXX
+
+BO_ 2416313089 s1_bms_stateflow_status: 8 Vector__XXX
+ SG_ s1_bms_gun_unlock_retry_count : 60|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ s1_bms_gun_lock_retry_count : 56|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ s1_bms_solenoid_feedback : 53|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_gun_lock_req : 52|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_gun_unlock_failed : 51|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_gun_unlock_status : 50|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_gun_lock_failed : 49|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_gun_lock_status : 48|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_cc_on_req : 39|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_motor_enable_out : 38|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_discharge_contactor_out : 37|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_discharge_precharge_out : 36|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_charge_contactor_out : 35|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_charge_precharge_out : 34|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_proximity_pilot_in : 33|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_key_in : 32|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_dut_warning : 22|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_tp_warning : 21|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_dot_warning : 20|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_tp_alarm : 19|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_shutdown_flag_3 : 18|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_shutdown_flag_2 : 17|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_shutdown_flag_1 : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_ms_status : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_charge_disable : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_charge_complete_status : 10|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_fast_charger_detected : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_slow_charger_detected : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_discharge_path_status : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_charge_path_status : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_discharge_pf_ok : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_charge_pf_ok : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_discharge_io_ok : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_charge_io_ok : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_discharge_protection_ok : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_charge_protection_ok : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2416313345 s1_bms_safety_status: 8 Vector__XXX
+ SG_ s1_bms_coms_flag : 60|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_cci_flag : 59|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_dci_flag : 58|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_pvi_flag : 57|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_idp_flag : 56|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_doc1_flag : 55|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_afe_tp_flag : 53|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_ib1_flag : 52|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_ccov_flag : 51|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_sc_coc1_flag : 50|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_ccuv_flag : 49|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_icp_flag : 48|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_sc_coc_flag : 47|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_roc_flag : 46|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_scf_flag : 45|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_tso_flag : 44|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_ib_flag : 43|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_dut_flag : 41|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_cut_flag : 40|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_dot_flag : 39|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_cot_flag : 38|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_doc_flag : 37|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_coc_flag : 36|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_puv_flag : 35|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_pov_flag : 34|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_cuv_flag : 33|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_cov_flag : 32|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_coms : 28|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_cci : 27|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_dci : 26|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_pvi : 25|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_idp : 24|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_doc1 : 23|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_afe_tp : 21|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_ib1 : 20|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_ccov : 19|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_sc_coc1 : 18|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_ccuv : 17|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_icp : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_sc_coc : 15|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_roc : 14|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_scf : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_tso : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_ib : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_dut : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_cut : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_dot : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_cot : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_doc : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_coc : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_puv : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_pov : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_cuv : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_cov : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2416313601 s1_bms_hop: 8 Vector__XXX
+ SG_ s1_bms_pcb_temperature : 48|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+ SG_ s1_bms_afe_temperature : 32|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+ SG_ s1_bms_hist_coms : 28|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_cci : 27|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_dci : 26|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_pvi : 25|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_idp : 24|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_doc1 : 23|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_afe_tp : 21|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_ib1 : 20|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_ccov : 19|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_sc_coc1 : 18|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_ccuv : 17|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_icp : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_sc_coc : 15|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_roc : 14|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_scf : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_tso : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_ib : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_dut : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_cut : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_dot : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_cot : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_doc : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_coc : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_puv : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_pov : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_cuv : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ s1_bms_hist_cov : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 2416313857 s1_bms_cell_voltage_1_4: 8 Vector__XXX
+ SG_ s1_bms_cell_voltage_4 : 48|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ s1_bms_cell_voltage_3 : 32|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ s1_bms_cell_voltage_2 : 16|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ s1_bms_cell_voltage_1 : 0|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+
+BO_ 2416314113 s1_bms_cell_voltage_5_8: 8 Vector__XXX
+ SG_ s1_bms_cell_voltage_8 : 48|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ s1_bms_cell_voltage_7 : 32|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ s1_bms_cell_voltage_6 : 16|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ s1_bms_cell_voltage_5 : 0|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+
+BO_ 2416314369 s1_bms_cell_voltage_9_12: 8 Vector__XXX
+ SG_ s1_bms_cell_voltage_12 : 48|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ s1_bms_cell_voltage_11 : 32|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ s1_bms_cell_voltage_10 : 16|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ s1_bms_cell_voltage_9 : 0|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+
+BO_ 2416314625 s1_bms_cell_voltage_13_16: 8 Vector__XXX
+ SG_ s1_bms_cell_voltage_16 : 48|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ s1_bms_cell_voltage_15 : 32|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ s1_bms_cell_voltage_14 : 16|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ s1_bms_cell_voltage_13 : 0|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+
+BO_ 2416314881 s1_bms_cell_temp_1_4: 8 Vector__XXX
+ SG_ s1_bms_ct4 : 48|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+ SG_ s1_bms_ct3 : 32|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+ SG_ s1_bms_ct2 : 16|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+ SG_ s1_bms_ct1 : 0|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+
+BO_ 2416315137 s1_bms_cell_temp_5_8: 8 Vector__XXX
+ SG_ s1_bms_pt3 : 32|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+ SG_ s1_bms_pt2 : 16|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+ SG_ s1_bms_pt1 : 0|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+
+BO_ 2416315393 s1_bms_min_max_params: 8 Vector__XXX
+ SG_ s1_bms_max_cell_temp : 48|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+ SG_ s1_bms_min_cell_temp : 32|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+ SG_ s1_bms_max_cell_voltage : 16|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ s1_bms_min_cell_voltage : 0|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+
+BO_ 2416315649 s1_bms_sox: 8 Vector__XXX
+ SG_ s1_bms_soh : 48|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+ SG_ s1_bms_sop : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ s1_bms_soc_user : 16|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+ SG_ s1_bms_soc_actual : 0|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+
+BO_ 2416315905 s1_bms_ah_count: 8 Vector__XXX
+ SG_ s1_bms_charge_cycle_count : 48|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ s1_bms_last_discharge_ah : 32|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ s1_bms_last_charge_ah : 16|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ s1_bms_cht_cycle_count : 0|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+
+BO_ 2416316417 s1_bms_misc_params_1: 8 Vector__XXX
+ SG_ s1_bms_current : 48|16@1+ (0.1,-600) [-600|5953.5] "" Vector__XXX
+ SG_ s1_bms_temp_imbalance : 32|16@1+ (0.01,-100) [-100|555.35] "" Vector__XXX
+ SG_ s1_bms_voltage_imbalance : 16|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ s1_bms_pack_voltage : 0|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+
+BO_ 2416316673 s1_bms_misc_params_2: 8 Vector__XXX
+ SG_ s1_bms_afe_adc_filtered : 48|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ s1_bms_soh_days : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ s1_bms_soh_calage : 16|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ s1_bms_live_cs_offset : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 2416316929 s1_bms_misc_params_3: 8 Vector__XXX
+ SG_ s1_bms_dti_ah : 48|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ s1_bms_actual_ah : 32|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ s1_bms_pack_ah : 16|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ s1_bms_dti_start_ah : 0|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+
+BO_ 2416317185 s1_bms_misc_params_4: 8 Vector__XXX
+ SG_ s1_bms_cell_balancing_status : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ s1_bms_tder : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ s1_bms_substate : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ s1_bms_solenoid_mainstate : 12|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ s1_bms_slow_charge_mainstate : 8|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ s1_bms_mainstate : 0|4@1+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 2416317441 s1_bms_mem_params_1: 8 Vector__XXX
+ SG_ s1_bms_mem_chtz_count : 48|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ s1_bms_mem_cycle_count : 32|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ s1_bms_mem_soc_actual : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ s1_bms_mem_cs_offset : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 2416317697 s1_bms_mem_params_2: 8 Vector__XXX
+ SG_ s1_bms_reset_cause : 48|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ s1_bms_reset_counter_value : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ s1_bms_eeprom_state : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ s1_bms_mem_tder : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ s1_bms_mem_cs_gain : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 2416317953 s1_bms_cms_data: 8 Vector__XXX
+ SG_ s1_bms_odo_low : 40|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ s1_bms_odo_high : 24|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ s1_bms_cms_soc : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ s1_bms_cms_tder : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ s1_bms_cms_cnvg_cmd : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 2416318209 s1_bms_misc_params_5: 8 Vector__XXX
+ SG_ s1_bms_dc_soh : 0|24@1+ (0.0001,0) [0|1677.7215] "" Vector__XXX
+
+BO_ 2416381952 master_slave_msg1: 8 Vector__XXX
+ SG_ ms_soh : 48|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+ SG_ ms_sop : 40|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ ms_battery_temperature : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ ms_battery_state : 28|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ ms_tp_alarm : 27|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_motor_disable : 26|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_battery_alert : 25|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_charger_connected : 24|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_regen_current : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ ms_soc_level : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ ms_soc : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 2416382208 master_slave_msg2: 8 Vector__XXX
+ SG_ ms_cci_flag : 59|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_dci_flag : 58|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_pvi_flag : 57|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_doc1_flag : 55|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_dot_warn : 54|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_ib1_flag : 52|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_ccov_flag : 51|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_sc_coc1_flag : 50|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_ccuv_flag : 49|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_icp_flag : 48|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_sc_coc_flag : 47|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_roc_flag : 46|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_scf_flag : 45|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_ib_flag : 43|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_tp_warning : 42|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_dut_flag : 41|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_cut_flag : 40|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_dot_flag : 39|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_cot_flag : 38|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_doc_flag : 37|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_coc_flag : 36|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_puv_flag : 35|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_pov_flag : 34|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_cuv_flag : 33|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_cov_flag : 32|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ms_charge_ah : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ ms_discharge_ah : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ ms_cycle_count : 0|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+
+BO_ 2416382464 master_slave_msg3: 8 Vector__XXX
+ SG_ ms_current : 48|16@1+ (0.1,-600) [-600|5953.5] "" Vector__XXX
+ SG_ ms_max_cell_voltage : 32|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ ms_min_cell_voltage : 16|16@1+ (0.0001,0) [0|6.5535] "" Vector__XXX
+ SG_ ms_pack_voltage : 0|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+
+BO_ 2416382720 master_slave_msg4: 8 Vector__XXX
+ SG_ ms_kwh_capacity : 32|16@1+ (0.01,0) [0|655.35] "" Vector__XXX
+ SG_ ms_pack_nominal_voltage : 16|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ ms_default_capacity : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ ms_dod : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 2415920848 bms_bb_hb_msg: 8 Vector__XXX
+ SG_ bb_hb_byte7 : 56|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ bb_hb_byte6 : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ bb_hb_byte5 : 40|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ bb_hb_byte4 : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ bb_hb_byte3 : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ bb_hb_byte2 : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ bb_hb_byte1 : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ bb_hb_byte0 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 2415920864 bms_immb_enable_msg: 8 Vector__XXX
+ SG_ cloud_unique_id : 32|32@1+ (1,0) [0|4294967295] "" Vector__XXX
+ SG_ cloud_special_level : 2|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ cloud_onboard_cmd : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 2415920865 bms_immb_config_msg: 8 Vector__XXX
+ SG_ cloud_immb_level : 4|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ cloud_immb_cmd : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 2415920880 m_bms_immb_status_msg: 8 Vector__XXX
+ SG_ m_bms_immb_fw_compatibilty : 32|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ m_bms_immb_status : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ m_bms_immb_substate : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ m_bms_immb_mainstate : 12|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ m_bms_immb_level : 8|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ m_bms_immb_cmd_status : 6|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ m_bms_immb_health_status : 4|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ m_bms_immb_source : 2|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ m_bms_immb_onboard_status : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 2415920881 s1_bms_immb_status_msg: 8 Vector__XXX
+ SG_ s1_bms_immb_fw_compatibilty : 32|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ s1_bms_immb_status : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ s1_bms_immb_substate : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ s1_bms_immb_mainstate : 12|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ s1_bms_immb_level : 8|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ s1_bms_immb_cmd_status : 6|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ s1_bms_immb_health_status : 4|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ s1_bms_immb_source : 2|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ s1_bms_immb_onboard_status : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 2555577092 mcu_msg3: 8 Vector__XXX
+ SG_ sig_ac_current : 0|16@1- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
+
+BO_ 2555577091 mcu_msg2: 8 Vector__XXX
+ SG_ sig_regen_status : 54|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ sig_speed_mode_indicator : 52|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ sig_mcu_temperature_fault : 51|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ sig_motor_temperature_fault : 50|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ sig_motor_direction_indicator : 48|2@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ sig_dc_voltage : 32|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ sig_dc_current : 16|16@1+ (0.1,0) [0|6553.5] "" Vector__XXX
+ SG_ sig_ac_voltage : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 2555577090 mcu_msg1: 8 Vector__XXX
+ SG_ sig_controller_error_code : 47|6@1+ (1,0) [0|63] "" Vector__XXX
+ SG_ sig_overload_error : 46|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ sig_overcurrent_error : 45|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ sig_throttle_error : 44|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ sig_motor_error : 43|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ sig_controller_error : 42|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ sig_brake : 41|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ sig_throttle_position : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ sig_motor_rpm : 16|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ sig_mcu_temperature : 8|8@1- (1,0) [-128|127] "" Vector__XXX
+ SG_ sig_motor_temperature : 0|8@1- (1,0) [-128|127] "" Vector__XXX
+
+BO_ 2416447488 bms_msg2: 8 Vector__XXX
+ SG_ sig_boost_mode_en : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 2555577093 mcu_msg4_hb: 8 Vector__XXX
+ SG_ sig_rolling_counter : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 2432761982 dyna_readback_hearbeat: 8 Vector__XXX
+ SG_ dyna_slow_charger_sw_minor : 56|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ dyna_slow_charger_sw_major : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ dyna_slow_charger_status : 40|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ dyna_slow_charger_charger_id : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ dyna_slow_charger_voltage : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ dyna_slow_charger_current : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+
+BO_ 2424406782 stecom_charger_mode_set: 8 Vector__XXX
+ SG_ dyna_out_accept_2 : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ dyna_out_accept : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 2424406270 stecom_voltage_current_control: 8 Vector__XXX
+ SG_ dyna_out_2 : 48|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ stecom_signal_6 : 40|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ stecom_signal_5 : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ stecom_signal_4 : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ stecom_signal_3 : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ dyna_out_1 : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ stecom_signal_1 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+
+
+CM_ SG_ 2416377088 m_bms_app_bl_oem_patch "Bootloader OEM patch version";
+CM_ SG_ 2416377088 m_bms_app_bl_fw_version_bugfix "Bootloader firmware version bugfix";
+CM_ SG_ 2416377088 m_bms_app_bl_fw_version_minor "Bootloader firmware version minor";
+CM_ SG_ 2416377088 m_bms_app_bl_fw_version_major "Bootloader firmware version major";
+CM_ SG_ 2416377088 m_bms_app_bl_oem_variant "Bootloader OEM variant value";
+CM_ SG_ 2416377088 m_bms_app_bl_oem_lookup "Bootloader OEM lookup value";
+CM_ SG_ 2416377344 m_bms_homo_fw_patch "Homolgation patch version";
+CM_ SG_ 2416377344 m_bms_homo_fw_minor "Homolgation minor version";
+CM_ SG_ 2416377344 m_bms_homo_fw_major "Homologation major version";
+CM_ SG_ 2416377344 m_bms_dvp_patch "Firmware patch version for the development process";
+CM_ SG_ 2416377344 m_bms_pack_variant "Identifies the pack variant type";
+CM_ SG_ 2416377344 m_bms_hw_minor "Hardware minor version";
+CM_ SG_ 2416377344 m_bms_hw_major "Hardware major version";
+CM_ SG_ 2416377344 m_bms_oem_variant "Specifies the variant of the OEM";
+CM_ SG_ 2416377344 m_bms_oem_lookup "Indicates the OEM lookup index";
+CM_ SG_ 2416377600 m_bms_fw_oem_patch "OEM patch version of the firmware";
+CM_ SG_ 2416377600 m_bms_fw_patch "Patch version of the firmware";
+CM_ SG_ 2416377600 m_bms_fw_minor "Minor version of the firmware";
+CM_ SG_ 2416377600 m_bms_fw_major "Major version of the firmware";
+CM_ SG_ 2416312576 m_bms_battery_unique_key "Unique identifier for the battery";
+CM_ SG_ 2416312832 m_bms_unique_key "Unique identifier for the BMS";
+CM_ SG_ 2416313088 m_bms_gun_unlock_retry_count "Gun unlock retry count";
+CM_ SG_ 2416313088 m_bms_gun_lock_retry_count "Gun lock retry count";
+CM_ SG_ 2416313088 m_bms_solenoid_feedback "Solenoid feedback flag";
+CM_ SG_ 2416313088 m_bms_gun_lock_req "Gun lock request flag";
+CM_ SG_ 2416313088 m_bms_gun_unlock_failed "Gun unlock failure flag";
+CM_ SG_ 2416313088 m_bms_gun_unlock_status "Gun unlock status flag";
+CM_ SG_ 2416313088 m_bms_gun_lock_failed "Gun lock failure flag";
+CM_ SG_ 2416313088 m_bms_gun_lock_status "Gun lock status flag";
+CM_ SG_ 2416313088 m_bms_cc_on_req "Charge Contactor on request flag";
+CM_ SG_ 2416313088 m_bms_motor_enable_out "Motor enable output flag";
+CM_ SG_ 2416313088 m_bms_discharge_contactor_out "Discharge contactor output flag";
+CM_ SG_ 2416313088 m_bms_discharge_precharge_out "Discharge precharge output flag";
+CM_ SG_ 2416313088 m_bms_charge_contactor_out "Charge contactor output flag";
+CM_ SG_ 2416313088 m_bms_charge_precharge_out "Charge precharge output flag";
+CM_ SG_ 2416313088 m_bms_proximity_pilot_in "Proximity pilot in flag";
+CM_ SG_ 2416313088 m_bms_key_in "Key-in status flag";
+CM_ SG_ 2416313088 m_bms_dut_warning "Discharge under temperature warning";
+CM_ SG_ 2416313088 m_bms_tp_warning "Thermal Propogation warning";
+CM_ SG_ 2416313088 m_bms_dot_warning "Discharge over temperature warning";
+CM_ SG_ 2416313088 m_bms_tp_alarm "Thermal Propogation alarm flag";
+CM_ SG_ 2416313088 m_bms_shutdown_flag_3 "Shutdown flag 3";
+CM_ SG_ 2416313088 m_bms_shutdown_flag_2 "Shutdown flag 2";
+CM_ SG_ 2416313088 m_bms_shutdown_flag_1 "Shutdown flag 1";
+CM_ SG_ 2416313088 m_bms_ms_status "Master Slave Msg Status";
+CM_ SG_ 2416313088 m_bms_charge_disable "Charge disable flag";
+CM_ SG_ 2416313088 m_bms_charge_complete_status "Charge complete status flag";
+CM_ SG_ 2416313088 m_bms_fast_charger_detected "Fast charger detected flag";
+CM_ SG_ 2416313088 m_bms_slow_charger_detected "Slow charger detected flag";
+CM_ SG_ 2416313088 m_bms_discharge_path_status "Discharge path status flag";
+CM_ SG_ 2416313088 m_bms_charge_path_status "Charge path status flag";
+CM_ SG_ 2416313088 m_bms_discharge_pf_ok "Ok to Discharge Protection Flag";
+CM_ SG_ 2416313088 m_bms_charge_pf_ok "Ok to Charge Protection Flag";
+CM_ SG_ 2416313088 m_bms_discharge_io_ok "Ok to Discharge I/O flag";
+CM_ SG_ 2416313088 m_bms_charge_io_ok "Ok to Charge I/O flag";
+CM_ SG_ 2416313088 m_bms_discharge_protection_ok "Ok to Discharge Protection Status";
+CM_ SG_ 2416313088 m_bms_charge_protection_ok "Ok to Charge Protection Status";
+CM_ SG_ 2416313344 m_bms_coms_flag "CAN Commms protections flag";
+CM_ SG_ 2416313344 m_bms_cci_flag "Charge Current Imbalance protection flag";
+CM_ SG_ 2416313344 m_bms_dci_flag "Discharge Current Imbalance protection flag";
+CM_ SG_ 2416313344 m_bms_pvi_flag "Pack Voltage Imbalance protection flag";
+CM_ SG_ 2416313344 m_bms_idp_flag "Illegal discharging protection status";
+CM_ SG_ 2416313344 m_bms_doc1_flag "Discharge overcurrent 1 protection flag";
+CM_ SG_ 2416313344 m_bms_afe_tp_flag "AFE thermal propagation protection flag";
+CM_ SG_ 2416313344 m_bms_ib1_flag "Imbalance 1 protection flag";
+CM_ SG_ 2416313344 m_bms_ccov_flag "Critical cell overvoltage protection flag";
+CM_ SG_ 2416313344 m_bms_sc_coc1_flag "Slow charge overcurrent 1 protection flag";
+CM_ SG_ 2416313344 m_bms_ccuv_flag "Critical cell undervoltage protection flag";
+CM_ SG_ 2416313344 m_bms_icp_flag "Illegal charging protection flag";
+CM_ SG_ 2416313344 m_bms_sc_coc_flag "Slow charge overcurrent protection flag";
+CM_ SG_ 2416313344 m_bms_roc_flag "Regen overcurrent protection flag";
+CM_ SG_ 2416313344 m_bms_scf_flag "SPI communication failure protection flag";
+CM_ SG_ 2416313344 m_bms_tso_flag "Temperature sensor open protection flag";
+CM_ SG_ 2416313344 m_bms_ib_flag "Imbalance protection flag";
+CM_ SG_ 2416313344 m_bms_dut_flag "Discharge under-temperature protection flag";
+CM_ SG_ 2416313344 m_bms_cut_flag "Charge under-temperature protection flag";
+CM_ SG_ 2416313344 m_bms_dot_flag "Discharge over-temperature protection flag";
+CM_ SG_ 2416313344 m_bms_cot_flag "Charge over-temperature protection flag";
+CM_ SG_ 2416313344 m_bms_doc_flag "Discharge overcurrent protection flag";
+CM_ SG_ 2416313344 m_bms_coc_flag "Charge overcurrent protection flag";
+CM_ SG_ 2416313344 m_bms_puv_flag "Pack undervoltage protection flag";
+CM_ SG_ 2416313344 m_bms_pov_flag "Pack overvoltage protection flag";
+CM_ SG_ 2416313344 m_bms_cuv_flag "Undervoltage protection flag";
+CM_ SG_ 2416313344 m_bms_cov_flag "Overvoltage protection flag";
+CM_ SG_ 2416313344 m_bms_coms "CAN Commms protections status";
+CM_ SG_ 2416313344 m_bms_cci "Charge Current Imbalance protection status";
+CM_ SG_ 2416313344 m_bms_dci "Discharge Current Imbalance protection status";
+CM_ SG_ 2416313344 m_bms_pvi "Pack Voltage Imbalance protection status";
+CM_ SG_ 2416313344 m_bms_idp "Illegal discharging protection status";
+CM_ SG_ 2416313344 m_bms_doc1 "Discharge overcurrent 1 protection status";
+CM_ SG_ 2416313344 m_bms_afe_tp "AFE thermal propagation protection status";
+CM_ SG_ 2416313344 m_bms_ib1 "Imbalance 1 protection status";
+CM_ SG_ 2416313344 m_bms_ccov "Critical cell overvoltage protection status";
+CM_ SG_ 2416313344 m_bms_sc_coc1 "Slow charge overcurrent 1 protection status";
+CM_ SG_ 2416313344 m_bms_ccuv "Critical cell undervoltage protection status";
+CM_ SG_ 2416313344 m_bms_icp "Illegal charging protection status";
+CM_ SG_ 2416313344 m_bms_sc_coc "Slow charge overcurrent protection status";
+CM_ SG_ 2416313344 m_bms_roc "Regen overcurrent protection status";
+CM_ SG_ 2416313344 m_bms_scf "SPI communication failure protection status";
+CM_ SG_ 2416313344 m_bms_tso "Temperature sensor open protection status";
+CM_ SG_ 2416313344 m_bms_ib "Imbalance protection status";
+CM_ SG_ 2416313344 m_bms_dut "Discharge under-temperature protection status";
+CM_ SG_ 2416313344 m_bms_cut "Charge under-temperature protection status";
+CM_ SG_ 2416313344 m_bms_dot "Discharge over-temperature protection status";
+CM_ SG_ 2416313344 m_bms_cot "Charge over-temperature protection status";
+CM_ SG_ 2416313344 m_bms_doc "Discharge overcurrent protection status";
+CM_ SG_ 2416313344 m_bms_coc "Charge overcurrent protection status";
+CM_ SG_ 2416313344 m_bms_puv "Pack undervoltage protection status";
+CM_ SG_ 2416313344 m_bms_pov "Pack overvoltage protection status";
+CM_ SG_ 2416313344 m_bms_cuv "Undervoltage protection status";
+CM_ SG_ 2416313344 m_bms_cov "Overvoltage protection status";
+CM_ SG_ 2416313600 m_bms_pcb_temperature "Measured PCB temperature in degrees Celsius";
+CM_ SG_ 2416313600 m_bms_afe_temperature "Internal temperature of the AFE in degrees Celsius";
+CM_ SG_ 2416313600 m_bms_hist_coms "CAN Commms protections history";
+CM_ SG_ 2416313600 m_bms_hist_cci "Charge Current Imbalance protection history";
+CM_ SG_ 2416313600 m_bms_hist_dci "Discharge Current Imbalance protection history";
+CM_ SG_ 2416313600 m_bms_hist_pvi "Pack Voltage Imbalance protection history";
+CM_ SG_ 2416313600 m_bms_hist_idp "Illegal discharging protection status";
+CM_ SG_ 2416313600 m_bms_hist_doc1 "Discharge overcurrent 1 protection history";
+CM_ SG_ 2416313600 m_bms_hist_afe_tp "AFE Thermal propogation protection history";
+CM_ SG_ 2416313600 m_bms_hist_ib1 "Imbalance 1 protection history";
+CM_ SG_ 2416313600 m_bms_hist_ccov "Critical Cell overvoltage protection history";
+CM_ SG_ 2416313600 m_bms_hist_sc_coc1 "Slow charge overcurrent 1 protection history";
+CM_ SG_ 2416313600 m_bms_hist_ccuv "Critical Cell undervoltage protection history";
+CM_ SG_ 2416313600 m_bms_hist_icp "Illegal charging protection history";
+CM_ SG_ 2416313600 m_bms_hist_sc_coc "Slow charge overcurrent protection history";
+CM_ SG_ 2416313600 m_bms_hist_roc "Regen Over current protection history";
+CM_ SG_ 2416313600 m_bms_hist_scf "SPI Communication Failure protection history";
+CM_ SG_ 2416313600 m_bms_hist_tso "Temperature sensor open protection history";
+CM_ SG_ 2416313600 m_bms_hist_ib "Imbalance protection history";
+CM_ SG_ 2416313600 m_bms_hist_dut "Discharge under-temperature protection history";
+CM_ SG_ 2416313600 m_bms_hist_cut "Charge under-temperature protection history";
+CM_ SG_ 2416313600 m_bms_hist_dot "Discharge over-temperature protection history";
+CM_ SG_ 2416313600 m_bms_hist_cot "Charge over-temperature protection history";
+CM_ SG_ 2416313600 m_bms_hist_doc "Discharge overcurrent protection history";
+CM_ SG_ 2416313600 m_bms_hist_coc "Charge overcurrent protection history";
+CM_ SG_ 2416313600 m_bms_hist_puv "Pack undervoltage protection history";
+CM_ SG_ 2416313600 m_bms_hist_pov "Pack overvoltage protection history";
+CM_ SG_ 2416313600 m_bms_hist_cuv "Undervoltage protection history";
+CM_ SG_ 2416313600 m_bms_hist_cov "Overvoltage protection history";
+CM_ SG_ 2416313856 m_bms_cell_voltage_4 "Voltage of cell 4 in the battery pack";
+CM_ SG_ 2416313856 m_bms_cell_voltage_3 "Voltage of cell 3 in the battery pack";
+CM_ SG_ 2416313856 m_bms_cell_voltage_2 "Voltage of cell 2 in the battery pack";
+CM_ SG_ 2416313856 m_bms_cell_voltage_1 "Voltage of cell 1 in the battery pack";
+CM_ SG_ 2416314112 m_bms_cell_voltage_8 "Voltage of cell 8 in the battery pack";
+CM_ SG_ 2416314112 m_bms_cell_voltage_7 "Voltage of cell 7 in the battery pack";
+CM_ SG_ 2416314112 m_bms_cell_voltage_6 "Voltage of cell 6 in the battery pack";
+CM_ SG_ 2416314112 m_bms_cell_voltage_5 "Voltage of cell 5 in the battery pack";
+CM_ SG_ 2416314368 m_bms_cell_voltage_12 "Voltage of cell 12 in the battery pack";
+CM_ SG_ 2416314368 m_bms_cell_voltage_11 "Voltage of cell 11 in the battery pack";
+CM_ SG_ 2416314368 m_bms_cell_voltage_10 "Voltage of cell 10 in the battery pack";
+CM_ SG_ 2416314368 m_bms_cell_voltage_9 "Voltage of cell 9 in the battery pack";
+CM_ SG_ 2416314624 m_bms_cell_voltage_16 "Voltage of cell 16 in the battery pack";
+CM_ SG_ 2416314624 m_bms_cell_voltage_15 "Voltage of cell 15 in the battery pack";
+CM_ SG_ 2416314624 m_bms_cell_voltage_14 "Voltage of cell 14 in the battery pack";
+CM_ SG_ 2416314624 m_bms_cell_voltage_13 "Voltage of cell 13 in the battery pack";
+CM_ SG_ 2416314880 m_bms_ct4 "Temperature of m2_ct1";
+CM_ SG_ 2416314880 m_bms_ct3 "Temperature of m1_ct3";
+CM_ SG_ 2416314880 m_bms_ct2 "Temperature of m1_ct2";
+CM_ SG_ 2416314880 m_bms_ct1 "Temperature of m1_ct1";
+CM_ SG_ 2416315136 m_bms_pt3 "Temperature of shunt resistor";
+CM_ SG_ 2416315136 m_bms_pt2 "Temperature of discharge contactor";
+CM_ SG_ 2416315136 m_bms_pt1 "Temperature of charge contactor";
+CM_ SG_ 2416315392 m_bms_max_cell_temp "Maximum cell temperature measured in the battery pack";
+CM_ SG_ 2416315392 m_bms_min_cell_temp "Minimum cell temperature measured in the battery pack";
+CM_ SG_ 2416315392 m_bms_max_cell_voltage "Maximum cell voltage measured in the battery pack";
+CM_ SG_ 2416315392 m_bms_min_cell_voltage "Minimum cell voltage measured in the battery pack";
+CM_ SG_ 2416315648 m_bms_soh "State of health (SOH) of the battery";
+CM_ SG_ 2416315648 m_bms_sop "State of power (SOP) of the battery";
+CM_ SG_ 2416315648 m_bms_soc_user "State of charge (SOC) for the user";
+CM_ SG_ 2416315648 m_bms_soc_actual "Actual state of charge (SOC) of the battery in percentage";
+CM_ SG_ 2416315904 m_bms_charge_cycle_count "Number of Charging Cycles of BMS";
+CM_ SG_ 2416315904 m_bms_last_discharge_ah "Last Discharge Ah of BMS";
+CM_ SG_ 2416315904 m_bms_last_charge_ah "Last Charge Ah of BMS";
+CM_ SG_ 2416315904 m_bms_cht_cycle_count "Number of characterization cycles performed";
+CM_ SG_ 2416316416 m_bms_current "Current Value of BMS";
+CM_ SG_ 2416316416 m_bms_temp_imbalance "Temperature imbalance in the battery pack";
+CM_ SG_ 2416316416 m_bms_voltage_imbalance "Voltage imbalance of cells in the battery pack";
+CM_ SG_ 2416316416 m_bms_pack_voltage "Summation of all the cell voltages ";
+CM_ SG_ 2416316672 m_bms_afe_adc_filtered "Filtered ADC value of Current Sensor";
+CM_ SG_ 2416316672 m_bms_soh_days "SoH (State of Health) days";
+CM_ SG_ 2416316672 m_bms_soh_calage "SoH calender age value";
+CM_ SG_ 2416316672 m_bms_live_cs_offset "Live current sensor offset value";
+CM_ SG_ 2416316928 m_bms_dti_ah "Discrete Time Integrator Ah";
+CM_ SG_ 2416316928 m_bms_actual_ah "BMS actual Ah value";
+CM_ SG_ 2416316928 m_bms_pack_ah "BMS pack Ah value";
+CM_ SG_ 2416316928 m_bms_dti_start_ah "BMS DTI start Ah value";
+CM_ SG_ 2416317184 m_bms_cell_balancing_status "Status of cell balancing";
+CM_ SG_ 2416317184 m_bms_tder "Temperature derating (TDER) value in the BMS";
+CM_ SG_ 2416317184 m_bms_substate "Substate of the BMS";
+CM_ SG_ 2416317184 m_bms_solenoid_mainstate "Solenoid main state of the BMS";
+CM_ SG_ 2416317184 m_bms_slow_charge_mainstate "Slow charge main state of the BMS";
+CM_ SG_ 2416317184 m_bms_mainstate "Main state of the BMS";
+CM_ SG_ 2416317440 m_bms_mem_chtz_count "Characterization Cycle Count Value in EEPROM";
+CM_ SG_ 2416317440 m_bms_mem_cycle_count "Cycle Count Value in EEPROM";
+CM_ SG_ 2416317440 m_bms_mem_soc_actual "Stored SOC value retrieved from EEPROM";
+CM_ SG_ 2416317440 m_bms_mem_cs_offset "Current Sensor offset value in EEPROM";
+CM_ SG_ 2416317696 m_bms_reset_cause "Cause of the last system reset";
+CM_ SG_ 2416317696 m_bms_reset_counter_value "Value of Reset Counter Value";
+CM_ SG_ 2416317696 m_bms_eeprom_state "States of EEPROM Statemachine";
+CM_ SG_ 2416317696 m_bms_mem_tder "Temperature deration value stored in EEPROM";
+CM_ SG_ 2416317696 m_bms_mem_cs_gain "Current Sensor Gain Value in EEPROM";
+CM_ SG_ 2416317952 m_bms_odo_low "Low byte of odometer reading";
+CM_ SG_ 2416317952 m_bms_odo_high "High byte of odometer reading";
+CM_ SG_ 2416317952 m_bms_cms_soc "SOC value from the station";
+CM_ SG_ 2416317952 m_bms_cms_tder "Temperature deration value from the station";
+CM_ SG_ 2416317952 m_bms_cms_cnvg_cmd "Command from station for SOC convergence";
+CM_ SG_ 2416318208 m_bms_dc_soh "SoH of Discharge contactor";
+CM_ SG_ 2416377089 s1_bms_app_bl_oem_patch "Bootloader OEM patch version";
+CM_ SG_ 2416377089 s1_bms_app_bl_fw_version_bugfix "Bootloader firmware version bugfix";
+CM_ SG_ 2416377089 s1_bms_app_bl_fw_version_minor "Bootloader firmware version minor";
+CM_ SG_ 2416377089 s1_bms_app_bl_fw_version_major "Bootloader firmware version major";
+CM_ SG_ 2416377089 s1_bms_app_bl_oem_variant "Bootloader OEM variant value";
+CM_ SG_ 2416377089 s1_bms_app_bl_oem_lookup "Bootloader OEM lookup value";
+CM_ SG_ 2416377345 s1_bms_homo_fw_patch "Homolgation patch version";
+CM_ SG_ 2416377345 s1_bms_homo_fw_minor "Homolgation minor version";
+CM_ SG_ 2416377345 s1_bms_homo_fw_major "Homologation major version";
+CM_ SG_ 2416377345 s1_bms_dvp_patch "Firmware patch version for the development process";
+CM_ SG_ 2416377345 s1_bms_pack_variant "Identifies the pack variant type";
+CM_ SG_ 2416377345 s1_bms_hw_minor "Hardware minor version";
+CM_ SG_ 2416377345 s1_bms_hw_major "Hardware major version";
+CM_ SG_ 2416377345 s1_bms_oem_variant "Specifies the variant of the OEM";
+CM_ SG_ 2416377345 s1_bms_oem_lookup "Indicates the OEM lookup index";
+CM_ SG_ 2416377601 s1_bms_fw_oem_patch "OEM patch version of the firmware";
+CM_ SG_ 2416377601 s1_bms_fw_patch "Patch version of the firmware";
+CM_ SG_ 2416377601 s1_bms_fw_minor "Minor version of the firmware";
+CM_ SG_ 2416377601 s1_bms_fw_major "Major version of the firmware";
+CM_ SG_ 2416312577 s1_bms_battery_unique_key "Unique identifier for the battery";
+CM_ SG_ 2416312833 s1_bms_unique_key "Unique identifier for the BMS";
+CM_ SG_ 2416313089 s1_bms_gun_unlock_retry_count "Gun unlock retry count";
+CM_ SG_ 2416313089 s1_bms_gun_lock_retry_count "Gun lock retry count";
+CM_ SG_ 2416313089 s1_bms_solenoid_feedback "Solenoid feedback flag";
+CM_ SG_ 2416313089 s1_bms_gun_lock_req "Gun lock request flag";
+CM_ SG_ 2416313089 s1_bms_gun_unlock_failed "Gun unlock failure flag";
+CM_ SG_ 2416313089 s1_bms_gun_unlock_status "Gun unlock status flag";
+CM_ SG_ 2416313089 s1_bms_gun_lock_failed "Gun lock failure flag";
+CM_ SG_ 2416313089 s1_bms_gun_lock_status "Gun lock status flag";
+CM_ SG_ 2416313089 s1_bms_cc_on_req "Charge Contactor on request flag";
+CM_ SG_ 2416313089 s1_bms_motor_enable_out "Motor enable output flag";
+CM_ SG_ 2416313089 s1_bms_discharge_contactor_out "Discharge contactor output flag";
+CM_ SG_ 2416313089 s1_bms_discharge_precharge_out "Discharge precharge output flag";
+CM_ SG_ 2416313089 s1_bms_charge_contactor_out "Charge contactor output flag";
+CM_ SG_ 2416313089 s1_bms_charge_precharge_out "Charge precharge output flag";
+CM_ SG_ 2416313089 s1_bms_proximity_pilot_in "Proximity pilot in flag";
+CM_ SG_ 2416313089 s1_bms_key_in "Key-in status flag";
+CM_ SG_ 2416313089 s1_bms_dut_warning "Discharge under temperature warning";
+CM_ SG_ 2416313089 s1_bms_tp_warning "Thermal Propogation warning";
+CM_ SG_ 2416313089 s1_bms_dot_warning "Discharge over temperature warning";
+CM_ SG_ 2416313089 s1_bms_tp_alarm "Thermal Propogation alarm flag";
+CM_ SG_ 2416313089 s1_bms_shutdown_flag_3 "Shutdown flag 3";
+CM_ SG_ 2416313089 s1_bms_shutdown_flag_2 "Shutdown flag 2";
+CM_ SG_ 2416313089 s1_bms_shutdown_flag_1 "Shutdown flag 1";
+CM_ SG_ 2416313089 s1_bms_ms_status "Master Slave Msg Status";
+CM_ SG_ 2416313089 s1_bms_charge_disable "Charge disable flag";
+CM_ SG_ 2416313089 s1_bms_charge_complete_status "Charge complete status flag";
+CM_ SG_ 2416313089 s1_bms_fast_charger_detected "Fast charger detected flag";
+CM_ SG_ 2416313089 s1_bms_slow_charger_detected "Slow charger detected flag";
+CM_ SG_ 2416313089 s1_bms_discharge_path_status "Discharge path status flag";
+CM_ SG_ 2416313089 s1_bms_charge_path_status "Charge path status flag";
+CM_ SG_ 2416313089 s1_bms_discharge_pf_ok "Ok to Discharge Protection Flag";
+CM_ SG_ 2416313089 s1_bms_charge_pf_ok "Ok to Charge Protection Flag";
+CM_ SG_ 2416313089 s1_bms_discharge_io_ok "Ok to Discharge I/O flag";
+CM_ SG_ 2416313089 s1_bms_charge_io_ok "Ok to Charge I/O flag";
+CM_ SG_ 2416313089 s1_bms_discharge_protection_ok "Ok to Discharge Protection Status";
+CM_ SG_ 2416313089 s1_bms_charge_protection_ok "Ok to Charge Protection Status";
+CM_ SG_ 2416313345 s1_bms_coms_flag "CAN Commms protections flag";
+CM_ SG_ 2416313345 s1_bms_cci_flag "Charge Current Imbalance protection flag";
+CM_ SG_ 2416313345 s1_bms_dci_flag "Discharge Current Imbalance protection flag";
+CM_ SG_ 2416313345 s1_bms_pvi_flag "Pack Voltage Imbalance protection flag";
+CM_ SG_ 2416313345 s1_bms_idp_flag "Illegal discharging protection status";
+CM_ SG_ 2416313345 s1_bms_doc1_flag "Discharge overcurrent 1 protection flag";
+CM_ SG_ 2416313345 s1_bms_afe_tp_flag "AFE thermal propagation protection flag";
+CM_ SG_ 2416313345 s1_bms_ib1_flag "Imbalance 1 protection flag";
+CM_ SG_ 2416313345 s1_bms_ccov_flag "Critical cell overvoltage protection flag";
+CM_ SG_ 2416313345 s1_bms_sc_coc1_flag "Slow charge overcurrent 1 protection flag";
+CM_ SG_ 2416313345 s1_bms_ccuv_flag "Critical cell undervoltage protection flag";
+CM_ SG_ 2416313345 s1_bms_icp_flag "Illegal charging protection flag";
+CM_ SG_ 2416313345 s1_bms_sc_coc_flag "Slow charge overcurrent protection flag";
+CM_ SG_ 2416313345 s1_bms_roc_flag "Regen overcurrent protection flag";
+CM_ SG_ 2416313345 s1_bms_scf_flag "SPI communication failure protection flag";
+CM_ SG_ 2416313345 s1_bms_tso_flag "Temperature sensor open protection flag";
+CM_ SG_ 2416313345 s1_bms_ib_flag "Imbalance protection flag";
+CM_ SG_ 2416313345 s1_bms_dut_flag "Discharge under-temperature protection flag";
+CM_ SG_ 2416313345 s1_bms_cut_flag "Charge under-temperature protection flag";
+CM_ SG_ 2416313345 s1_bms_dot_flag "Discharge over-temperature protection flag";
+CM_ SG_ 2416313345 s1_bms_cot_flag "Charge over-temperature protection flag";
+CM_ SG_ 2416313345 s1_bms_doc_flag "Discharge overcurrent protection flag";
+CM_ SG_ 2416313345 s1_bms_coc_flag "Charge overcurrent protection flag";
+CM_ SG_ 2416313345 s1_bms_puv_flag "Pack undervoltage protection flag";
+CM_ SG_ 2416313345 s1_bms_pov_flag "Pack overvoltage protection flag";
+CM_ SG_ 2416313345 s1_bms_cuv_flag "Undervoltage protection flag";
+CM_ SG_ 2416313345 s1_bms_cov_flag "Overvoltage protection flag";
+CM_ SG_ 2416313345 s1_bms_coms "CAN Commms protections status";
+CM_ SG_ 2416313345 s1_bms_cci "Charge Current Imbalance protection status";
+CM_ SG_ 2416313345 s1_bms_dci "Discharge Current Imbalance protection status";
+CM_ SG_ 2416313345 s1_bms_pvi "Pack Voltage Imbalance protection status";
+CM_ SG_ 2416313345 s1_bms_idp "Illegal discharging protection status";
+CM_ SG_ 2416313345 s1_bms_doc1 "Discharge overcurrent 1 protection status";
+CM_ SG_ 2416313345 s1_bms_afe_tp "AFE thermal propagation protection status";
+CM_ SG_ 2416313345 s1_bms_ib1 "Imbalance 1 protection status";
+CM_ SG_ 2416313345 s1_bms_ccov "Critical cell overvoltage protection status";
+CM_ SG_ 2416313345 s1_bms_sc_coc1 "Slow charge overcurrent 1 protection status";
+CM_ SG_ 2416313345 s1_bms_ccuv "Critical cell undervoltage protection status";
+CM_ SG_ 2416313345 s1_bms_icp "Illegal charging protection status";
+CM_ SG_ 2416313345 s1_bms_sc_coc "Slow charge overcurrent protection status";
+CM_ SG_ 2416313345 s1_bms_roc "Regen overcurrent protection status";
+CM_ SG_ 2416313345 s1_bms_scf "SPI communication failure protection status";
+CM_ SG_ 2416313345 s1_bms_tso "Temperature sensor open protection status";
+CM_ SG_ 2416313345 s1_bms_ib "Imbalance protection status";
+CM_ SG_ 2416313345 s1_bms_dut "Discharge under-temperature protection status";
+CM_ SG_ 2416313345 s1_bms_cut "Charge under-temperature protection status";
+CM_ SG_ 2416313345 s1_bms_dot "Discharge over-temperature protection status";
+CM_ SG_ 2416313345 s1_bms_cot "Charge over-temperature protection status";
+CM_ SG_ 2416313345 s1_bms_doc "Discharge overcurrent protection status";
+CM_ SG_ 2416313345 s1_bms_coc "Charge overcurrent protection status";
+CM_ SG_ 2416313345 s1_bms_puv "Pack undervoltage protection status";
+CM_ SG_ 2416313345 s1_bms_pov "Pack overvoltage protection status";
+CM_ SG_ 2416313345 s1_bms_cuv "Undervoltage protection status";
+CM_ SG_ 2416313345 s1_bms_cov "Overvoltage protection status";
+CM_ SG_ 2416313601 s1_bms_pcb_temperature "Measured PCB temperature in degrees Celsius";
+CM_ SG_ 2416313601 s1_bms_afe_temperature "Internal temperature of the AFE in degrees Celsius";
+CM_ SG_ 2416313601 s1_bms_hist_coms "CAN Commms protections history";
+CM_ SG_ 2416313601 s1_bms_hist_cci "Charge Current Imbalance protection history";
+CM_ SG_ 2416313601 s1_bms_hist_dci "Discharge Current Imbalance protection history";
+CM_ SG_ 2416313601 s1_bms_hist_pvi "Pack Voltage Imbalance protection history";
+CM_ SG_ 2416313601 s1_bms_hist_idp "Illegal discharging protection status";
+CM_ SG_ 2416313601 s1_bms_hist_doc1 "Discharge overcurrent 1 protection history";
+CM_ SG_ 2416313601 s1_bms_hist_afe_tp "AFE Thermal propogation protection history";
+CM_ SG_ 2416313601 s1_bms_hist_ib1 "Imbalance 1 protection history";
+CM_ SG_ 2416313601 s1_bms_hist_ccov "Critical Cell overvoltage protection history";
+CM_ SG_ 2416313601 s1_bms_hist_sc_coc1 "Slow charge overcurrent 1 protection history";
+CM_ SG_ 2416313601 s1_bms_hist_ccuv "Critical Cell undervoltage protection history";
+CM_ SG_ 2416313601 s1_bms_hist_icp "Illegal charging protection history";
+CM_ SG_ 2416313601 s1_bms_hist_sc_coc "Slow charge overcurrent protection history";
+CM_ SG_ 2416313601 s1_bms_hist_roc "Regen Over current protection history";
+CM_ SG_ 2416313601 s1_bms_hist_scf "SPI Communication Failure protection history";
+CM_ SG_ 2416313601 s1_bms_hist_tso "Temperature sensor open protection history";
+CM_ SG_ 2416313601 s1_bms_hist_ib "Imbalance protection history";
+CM_ SG_ 2416313601 s1_bms_hist_dut "Discharge under-temperature protection history";
+CM_ SG_ 2416313601 s1_bms_hist_cut "Charge under-temperature protection history";
+CM_ SG_ 2416313601 s1_bms_hist_dot "Discharge over-temperature protection history";
+CM_ SG_ 2416313601 s1_bms_hist_cot "Charge over-temperature protection history";
+CM_ SG_ 2416313601 s1_bms_hist_doc "Discharge overcurrent protection history";
+CM_ SG_ 2416313601 s1_bms_hist_coc "Charge overcurrent protection history";
+CM_ SG_ 2416313601 s1_bms_hist_puv "Pack undervoltage protection history";
+CM_ SG_ 2416313601 s1_bms_hist_pov "Pack overvoltage protection history";
+CM_ SG_ 2416313601 s1_bms_hist_cuv "Undervoltage protection history";
+CM_ SG_ 2416313601 s1_bms_hist_cov "Overvoltage protection history";
+CM_ SG_ 2416313857 s1_bms_cell_voltage_4 "Voltage of cell 4 in the battery pack";
+CM_ SG_ 2416313857 s1_bms_cell_voltage_3 "Voltage of cell 3 in the battery pack";
+CM_ SG_ 2416313857 s1_bms_cell_voltage_2 "Voltage of cell 2 in the battery pack";
+CM_ SG_ 2416313857 s1_bms_cell_voltage_1 "Voltage of cell 1 in the battery pack";
+CM_ SG_ 2416314113 s1_bms_cell_voltage_8 "Voltage of cell 8 in the battery pack";
+CM_ SG_ 2416314113 s1_bms_cell_voltage_7 "Voltage of cell 7 in the battery pack";
+CM_ SG_ 2416314113 s1_bms_cell_voltage_6 "Voltage of cell 6 in the battery pack";
+CM_ SG_ 2416314113 s1_bms_cell_voltage_5 "Voltage of cell 5 in the battery pack";
+CM_ SG_ 2416314369 s1_bms_cell_voltage_12 "Voltage of cell 12 in the battery pack";
+CM_ SG_ 2416314369 s1_bms_cell_voltage_11 "Voltage of cell 11 in the battery pack";
+CM_ SG_ 2416314369 s1_bms_cell_voltage_10 "Voltage of cell 10 in the battery pack";
+CM_ SG_ 2416314369 s1_bms_cell_voltage_9 "Voltage of cell 9 in the battery pack";
+CM_ SG_ 2416314625 s1_bms_cell_voltage_16 "Voltage of cell 16 in the battery pack";
+CM_ SG_ 2416314625 s1_bms_cell_voltage_15 "Voltage of cell 15 in the battery pack";
+CM_ SG_ 2416314625 s1_bms_cell_voltage_14 "Voltage of cell 14 in the battery pack";
+CM_ SG_ 2416314625 s1_bms_cell_voltage_13 "Voltage of cell 13 in the battery pack";
+CM_ SG_ 2416314881 s1_bms_ct4 "Temperature of m2_ct1";
+CM_ SG_ 2416314881 s1_bms_ct3 "Temperature of m1_ct3";
+CM_ SG_ 2416314881 s1_bms_ct2 "Temperature of m1_ct2";
+CM_ SG_ 2416314881 s1_bms_ct1 "Temperature of m1_ct1";
+CM_ SG_ 2416315137 s1_bms_pt3 "Temperature of shunt resistor";
+CM_ SG_ 2416315137 s1_bms_pt2 "Temperature of discharge contactor";
+CM_ SG_ 2416315137 s1_bms_pt1 "Temperature of charge contactor";
+CM_ SG_ 2416315393 s1_bms_max_cell_temp "Maximum cell temperature measured in the battery pack";
+CM_ SG_ 2416315393 s1_bms_min_cell_temp "Minimum cell temperature measured in the battery pack";
+CM_ SG_ 2416315393 s1_bms_max_cell_voltage "Maximum cell voltage measured in the battery pack";
+CM_ SG_ 2416315393 s1_bms_min_cell_voltage "Minimum cell voltage measured in the battery pack";
+CM_ SG_ 2416315649 s1_bms_soh "State of health (SOH) of the battery";
+CM_ SG_ 2416315649 s1_bms_sop "State of power (SOP) of the battery";
+CM_ SG_ 2416315649 s1_bms_soc_user "State of charge (SOC) for the user";
+CM_ SG_ 2416315649 s1_bms_soc_actual "Actual state of charge (SOC) of the battery in percentage";
+CM_ SG_ 2416315905 s1_bms_charge_cycle_count "Number of Charging Cycles of BMS";
+CM_ SG_ 2416315905 s1_bms_last_discharge_ah "Last Discharge Ah of BMS";
+CM_ SG_ 2416315905 s1_bms_last_charge_ah "Last Charge Ah of BMS";
+CM_ SG_ 2416315905 s1_bms_cht_cycle_count "Number of characterization cycles performed";
+CM_ SG_ 2416316417 s1_bms_current "Current Value of BMS";
+CM_ SG_ 2416316417 s1_bms_temp_imbalance "Temperature imbalance in the battery pack";
+CM_ SG_ 2416316417 s1_bms_voltage_imbalance "Voltage imbalance of cells in the battery pack";
+CM_ SG_ 2416316417 s1_bms_pack_voltage "Summation of all the cell voltages ";
+CM_ SG_ 2416316673 s1_bms_afe_adc_filtered "Filtered ADC value of Current Sensor";
+CM_ SG_ 2416316673 s1_bms_soh_days "SoH (State of Health) days";
+CM_ SG_ 2416316673 s1_bms_soh_calage "SoH calender age value";
+CM_ SG_ 2416316673 s1_bms_live_cs_offset "Live current sensor offset value";
+CM_ SG_ 2416316929 s1_bms_dti_ah "Discrete Time Integrator Ah";
+CM_ SG_ 2416316929 s1_bms_actual_ah "BMS actual Ah value";
+CM_ SG_ 2416316929 s1_bms_pack_ah "BMS pack Ah value";
+CM_ SG_ 2416316929 s1_bms_dti_start_ah "BMS DTI start Ah value";
+CM_ SG_ 2416317185 s1_bms_cell_balancing_status "Status of cell balancing";
+CM_ SG_ 2416317185 s1_bms_tder "Temperature derating (TDER) value in the BMS";
+CM_ SG_ 2416317185 s1_bms_substate "Substate of the BMS";
+CM_ SG_ 2416317185 s1_bms_solenoid_mainstate "Solenoid main state of the BMS";
+CM_ SG_ 2416317185 s1_bms_slow_charge_mainstate "Slow charge main state of the BMS";
+CM_ SG_ 2416317185 s1_bms_mainstate "Main state of the BMS";
+CM_ SG_ 2416317441 s1_bms_mem_chtz_count "Characterization Cycle Count Value in EEPROM";
+CM_ SG_ 2416317441 s1_bms_mem_cycle_count "Cycle Count Value in EEPROM";
+CM_ SG_ 2416317441 s1_bms_mem_soc_actual "Stored SOC value retrieved from EEPROM";
+CM_ SG_ 2416317441 s1_bms_mem_cs_offset "Current Sensor offset value in EEPROM";
+CM_ SG_ 2416317697 s1_bms_reset_cause "Cause of the last system reset";
+CM_ SG_ 2416317697 s1_bms_reset_counter_value "Value of Reset Counter Value";
+CM_ SG_ 2416317697 s1_bms_eeprom_state "States of EEPROM Statemachine";
+CM_ SG_ 2416317697 s1_bms_mem_tder "Temperature deration value stored in EEPROM";
+CM_ SG_ 2416317697 s1_bms_mem_cs_gain "Current Sensor Gain Value in EEPROM";
+CM_ SG_ 2416317953 s1_bms_odo_low "Low byte of odometer reading";
+CM_ SG_ 2416317953 s1_bms_odo_high "High byte of odometer reading";
+CM_ SG_ 2416317953 s1_bms_cms_soc "SOC value from the station";
+CM_ SG_ 2416317953 s1_bms_cms_tder "Temperature deration value from the station";
+CM_ SG_ 2416317953 s1_bms_cms_cnvg_cmd "Command from station for SOC convergence";
+CM_ SG_ 2416318209 s1_bms_dc_soh "SoH of Discharge contactor";
+CM_ SG_ 2415920848 bb_hb_byte7 "Heartbeat byte 7";
+CM_ SG_ 2415920848 bb_hb_byte6 "Heartbeat byte 6";
+CM_ SG_ 2415920848 bb_hb_byte5 "Heartbeat byte 5";
+CM_ SG_ 2415920848 bb_hb_byte4 "Heartbeat byte 4";
+CM_ SG_ 2415920848 bb_hb_byte3 "Heartbeat byte 3";
+CM_ SG_ 2415920848 bb_hb_byte2 "Heartbeat byte 2";
+CM_ SG_ 2415920848 bb_hb_byte1 "Heartbeat byte 1";
+CM_ SG_ 2415920848 bb_hb_byte0 "Heartbeat byte 0 ";
+CM_ SG_ 2415920864 cloud_unique_id "Cloud immobilisation unique id";
+CM_ SG_ 2415920864 cloud_special_level "Cloud immobilisation special level";
+CM_ SG_ 2415920864 cloud_onboard_cmd "Cloud immobilisation onboard command";
+CM_ SG_ 2415920865 cloud_immb_level "Cloud immobilisation level";
+CM_ SG_ 2415920865 cloud_immb_cmd "Cloud immobilisation command";
+CM_ SG_ 2415920880 m_bms_immb_fw_compatibilty "BMS immobilisation firmware compatibility";
+CM_ SG_ 2415920880 m_bms_immb_status "BMS immobilisation status ";
+CM_ SG_ 2415920880 m_bms_immb_substate "BMS immobilisation substate";
+CM_ SG_ 2415920880 m_bms_immb_mainstate "BMS immobilisation main state";
+CM_ SG_ 2415920880 m_bms_immb_level "BMS immobilisation level acknowledgment";
+CM_ SG_ 2415920880 m_bms_immb_cmd_status "BMS immobilisation command status";
+CM_ SG_ 2415920880 m_bms_immb_health_status "BMS immobilisation health status";
+CM_ SG_ 2415920880 m_bms_immb_source "BMS immobilisation source";
+CM_ SG_ 2415920880 m_bms_immb_onboard_status "BMS immobilisation onboard status";
+CM_ SG_ 2415920881 s1_bms_immb_fw_compatibilty "BMS immobilisation firmware compatibility";
+CM_ SG_ 2415920881 s1_bms_immb_status "BMS immobilisation status ";
+CM_ SG_ 2415920881 s1_bms_immb_substate "BMS immobilisation substate";
+CM_ SG_ 2415920881 s1_bms_immb_mainstate "BMS immobilisation main state";
+CM_ SG_ 2415920881 s1_bms_immb_level "BMS immobilisation level acknowledgment";
+CM_ SG_ 2415920881 s1_bms_immb_cmd_status "BMS immobilisation command status";
+CM_ SG_ 2415920881 s1_bms_immb_health_status "BMS immobilisation health status";
+CM_ SG_ 2415920881 s1_bms_immb_source "BMS immobilisation source";
+CM_ SG_ 2415920881 s1_bms_immb_onboard_status "BMS immobilisation onboard status";
+CM_ SG_ 2555577092 sig_ac_current "Measured alternating current flowing through the motor";
+CM_ SG_ 2555577091 sig_regen_status "Indicates whether regenerative braking is active ";
+CM_ SG_ 2555577091 sig_speed_mode_indicator "Indicates current speed mode (0: NA, 1: ECO/Normal, 2: Boost) ";
+CM_ SG_ 2555577091 sig_mcu_temperature_fault "True when MCU (Motor Control Unit) temperature exceeds safety threshold";
+CM_ SG_ 2555577091 sig_motor_temperature_fault "True when motor temperature exceeds safe operating limits";
+CM_ SG_ 2555577091 sig_motor_direction_indicator "Indicates current direction of motor rotation (0: NA, 1: Neutral, 2: Forward, 3: Reverse)";
+CM_ SG_ 2555577091 sig_dc_voltage "Measured direct voltage supplied by the battery";
+CM_ SG_ 2555577091 sig_dc_current "Measured direct current flowing from the battery";
+CM_ SG_ 2555577091 sig_ac_voltage "Measured alternating voltage applied to the motor";
+CM_ SG_ 2555577090 sig_controller_error_code "Encoded value representing specific controller fault or error type";
+CM_ SG_ 2555577090 sig_overload_error "Indicates the system is under excessive load";
+CM_ SG_ 2555577090 sig_overcurrent_error "Signals if current exceeds predefined safe limits";
+CM_ SG_ 2555577090 sig_throttle_error "Indicates a fault in the throttle input or sensor";
+CM_ SG_ 2555577090 sig_motor_error "True when a fault or malfunction is detected in the motor";
+CM_ SG_ 2555577090 sig_controller_error "True when a fault or error is detected in the motor controller";
+CM_ SG_ 2555577090 sig_brake "Indicates whether the brake is engaged";
+CM_ SG_ 2555577090 sig_throttle_position "Current position of the throttle input (0 to 100)";
+CM_ SG_ 2555577090 sig_motor_rpm "Motor speed in revolutions per minute";
+CM_ SG_ 2555577090 sig_mcu_temperature "Current temperature of the motor controller unit";
+CM_ SG_ 2555577090 sig_motor_temperature "Current temperature of the motor";
+CM_ SG_ 2416447488 sig_boost_mode_en "boost_en = 0xAA - Enable , 0x55 - Disable, others - no change in selection. Also default selection is enabled unless 0x55 is sent over can";
+CM_ SG_ 2555577093 sig_rolling_counter "Data should be sent in incremental order from 0 to 255 in every 100 ms and resets after 255.";
+
